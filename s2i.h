@@ -1,0 +1,90 @@
+#ifndef S2I_H_
+#define S2I_H_
+
+#include "rb.h"
+
+#include <string.h>
+
+typedef struct s2i_node {
+  struct rb_node rb_node;
+  char *key;
+  int value;
+} *s2i_node_t;
+
+#define s2i_container_of(x) container_of(container_of(x, struct rb_node, bn_node), struct s2i_node, rb_node)
+#define s2i_bn_node(x) &(x->rb_node.bn_node)
+
+static const int k_s2i_invalid = -1;
+
+static int s2i_compare(bn_node_t x, bn_node_t y) {
+  char *s1 = s2i_container_of(x)->key;
+  char *s2 = s2i_container_of(y)->key;
+  return strcmp(s1, s2);
+}
+
+static int s2i_compare_str(bn_node_t x, char *s2) {
+  char *s1 = s2i_container_of(x)->key;
+  return strcmp(s1, s2);
+}
+
+static void s2i_free_node(s2i_node_t n) {
+  free(n->key);
+  free(n);
+}
+
+static void s2i_free(bn_tree_t t) {
+  bn_node_t cur, prev = NULL_PTR;
+  bn_postorder_foreach_inline(cur, t) {
+    if (prev) {
+      s2i_free_node(s2i_container_of(prev));
+    }
+    prev = cur;
+  }
+  if (prev) {
+    s2i_free_node(s2i_container_of(prev));
+  }
+  free(t);
+}
+
+static s2i_node_t s2i_create_node(char *key, int value) {
+  s2i_node_t n = malloc(sizeof(struct s2i_node));
+  rb_node_init((&n->rb_node), NULL_PTR, NULL_PTR, NULL_PTR, RB_BLACK);
+  n->key = strdup(key);
+  n->value = value;
+  return n;
+}
+
+static bn_tree_t s2i_create() {
+  return bn_create_tree(NULL_PTR);
+}
+
+static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {
+  s2i_node_t n = s2i_create_node(key, value);
+  rb_insert(t, s2i_bn_node(n), s2i_compare);
+  return s2i_container_of(n);
+}
+
+static s2i_node_t s2i_search(bn_tree_t t, char *key) {
+  bn_node_t r = bns_search(t->root, key, s2i_compare_str);
+  return r? s2i_container_of(r): NULL_PTR;
+}
+
+static int s2i_value(bn_tree_t t, char *key) {
+  s2i_node_t n = s2i_search(t, key);
+  if (n) {
+    return n->value;
+  }
+  return k_s2i_invalid;
+}
+
+static int s2i_delete(bn_tree_t t, char *key) {
+  s2i_node_t n = s2i_search(t, key);
+  if (n) {
+    rb_delete(t, s2i_bn_node(n));
+    s2i_free_node(n);
+    return 1;
+  }
+  return 0;
+}
+
+#endif  // S2I_H_

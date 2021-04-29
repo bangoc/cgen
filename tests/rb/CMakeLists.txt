@@ -1,0 +1,2 @@
+add_executable(bn_left_rotate_t bn_left_rotate_t.c)
+add_executable(rb_insert_delete_t rb_insert_delete_t.c)

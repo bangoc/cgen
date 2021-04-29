@@ -1,0 +1,5 @@
+add_executable(bn_most_t bn_most_t.c)
+add_executable(bn_transplant_t bn_transplant_t.c)
+add_executable(bns_suc_pred_t bns_suc_pred_t.c)
+add_executable(bns_search_t bns_search_t.c)
+add_executable(bn_foreach_t bn_foreach_t.c)
