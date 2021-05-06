@@ -41,4 +41,15 @@ static int vv_grow(vptr_vec_t *v, size_t newcapacity) {
   return 0;
 }
 
+static int vv_push_back(vptr_vec_t *v, vptr value) {
+  size_t __cap = vv_capacity(*v);
+  if (__cap <= vv_size(*v)) {
+    vv_grow(v, !__cap ? __cap + 1 : __cap * 2);
+  }
+  vptr_vec_t vec = *v;
+  vec[vv_size(vec)] = value;
+  ((size_t*)vec)[-2] += 1;
+  return 0;
+}
+
 #endif  // VV_H_
