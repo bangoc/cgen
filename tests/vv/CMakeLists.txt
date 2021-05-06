@@ -1,2 +1,3 @@
 add_executable(vv_size_cap_grow_t size_cap_grow_t.c)
 add_executable(vv_push_back_t push_back_t.c)
+add_executable(vv_svec_push_back_t svec_push_back_t.c)

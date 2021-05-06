@@ -2,7 +2,7 @@
 #include "tests/base/utils.h"
 
 int t1() {
-  vptr_vec_t v = vv_create();
+  vector_t v = vv_create();
   void *v1 = (void*)1;
   void *v2 = (void*)2;
   void *v3 = (void*)3;
