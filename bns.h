@@ -1,3 +1,7 @@
+/*
+  (C) 2021 Nguyen Ba Ngoc (bangoc)
+*/
+
 #ifndef BNS_H_
 #define BNS_H_
 

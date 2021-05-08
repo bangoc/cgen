@@ -1,1 +1,1 @@
-add_executable(s2i_t s2i_t.c)
+add_executable(s2i_ut s2i_ut.c)

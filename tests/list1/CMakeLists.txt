@@ -1,1 +1,1 @@
-add_executable(list1_t list1_t.c)
+add_executable(list1_ut list1_ut.c)

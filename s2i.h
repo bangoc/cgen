@@ -1,3 +1,7 @@
+/*
+  (C) 2021 Nguyen Ba Ngoc (bangoc)
+*/
+
 #ifndef S2I_H_
 #define S2I_H_
 

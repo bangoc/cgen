@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct list1_node_s {
-  struct list1_node_s *next;
+typedef struct list1_node {
+  struct list1_node *next;
 } *list1_node_t;
 
 typedef struct list1_s {

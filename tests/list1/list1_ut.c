@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  struct list1_node_s n1, n2, n3;
+  struct list1_node n1, n2, n3;
   list1_t list = list1_create();
   CHECK_MSG(list->size == 0, "Init size");
   CHECK_MSG(list->first == NULL, "Init first");

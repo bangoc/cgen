@@ -1,3 +1,7 @@
+/*
+  (C) 2021 Nguyen Ba Ngoc (bangoc)
+*/
+
 #ifndef CORE_H_
 #define CORE_H_
 
