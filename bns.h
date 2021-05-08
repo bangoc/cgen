@@ -3,7 +3,7 @@
 
 #include "bn.h"
 
-typedef int (*bns_criteria_t)(bn_node_t, void *);
+typedef int (*bns_criteria_t)();
 
 static bn_node_t bns_minimum(bn_node_t x) {
   return bn_left_most(x);

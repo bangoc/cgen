@@ -20,7 +20,6 @@ static vector_t vv_create() {
   return (vector_t)&((size_t*)calloc(2, sizeof(size_t)))[2];
 }
 
-
 static size_t vv_capacity(vector_t const v) {
   return ((v) ? ((size_t *)(v))[-1] : (size_t)0);
 }

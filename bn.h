@@ -1,6 +1,8 @@
 #ifndef BN_H_
 #define BN_H_
 
+#include "core.h"
+
 #include <stdlib.h>
 #include <stddef.h>
 
@@ -20,8 +22,6 @@ typedef struct bn_tree {
 typedef int (*bn_callback_t)(bn_node_t, void *);
 typedef int (*bn_compare_t)(bn_node_t, bn_node_t);
 
-#define container_of(ptr, type, member) \
-  ((type *)((void*)ptr - offsetof(type, member)))
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
 
