@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct list1_node {
   struct list1_node *next;
@@ -69,6 +70,10 @@ static list1_node_t list1_remove_first(list1_t list) {
     list->last = NULL;
   }
   return node;
+}
+
+static bool list1_empty(list1_t list) {
+  return list->size == 0;
 }
 
 #endif  // LIST1_H_

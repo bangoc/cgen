@@ -12,4 +12,6 @@ typedef union {
   void *v;
 } gtype;
 
+#define INVALID_VALUE ((gtype){.i = -1})
+
 #endif  // GTYPE_H_
