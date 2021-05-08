@@ -1,6 +1,6 @@
 add_subdirectory(bn)
 add_subdirectory(rb)
 add_subdirectory(s2i)
-add_subdirectory(vv)
+add_subdirectory(gtv)
 add_subdirectory(list1)
-add_subdirectory(gt_list1)
+add_subdirectory(gtl1)

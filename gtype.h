@@ -6,7 +6,7 @@
 #define GTYPE_H_
 
 typedef union {
-  long l;
+  long i;
   double d;
   char *s;
   void *v;
