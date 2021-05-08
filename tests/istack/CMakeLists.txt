@@ -1,0 +1,1 @@
+add_executable(istack_ut istack_ut.c)
