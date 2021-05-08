@@ -2,14 +2,14 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef SVEC_H_
-#define SVEC_H_
+#ifndef IVEC_H_
+#define IVEC_H_
 
 #include "gtv.h"
 #include <string.h>
 
 // ========== Khai báo hàm ===============
-static int svec_push_back(vector_t *v, char *s);
+static int ivec_push_back(vector_t *v, long value);
 static void svec_free(vector_t *v);
 
 // ========== Macro viết nhanh ===========
@@ -17,15 +17,11 @@ static void svec_free(vector_t *v);
 
 // ========== Định nghĩa hàm =============
 
-static int svec_push_back(vector_t *v, char *s) {
-  char *dup = strdup(s);
-  return gtv_push_back(v, (gtype){.s = dup});
+static int ivec_push_back(vector_t *v, long value) {
+  return gtv_push_back(v, (gtype){.i = value});
 }
 
 static void svec_free(vector_t *v) {
-  for (int i = 0; i < gtv_size(*v); ++i) {
-    free((*v)[i].s);
-  }
   gtv_free(v);
   *v = 0;
 }
