@@ -15,10 +15,27 @@ typedef struct s2i_node {
   int value;
 } *s2i_node_t;
 
+static const int k_s2i_invalid = -1;
+
+// ========== Khai báo hàm ===============
+
+static s2i_node_t s2i_create_node(char *key, int value);
+static bn_tree_t s2i_create();
+static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value);
+static s2i_node_t s2i_search(bn_tree_t t, char *key);
+static int s2i_value(bn_tree_t t, char *key);
+static int s2i_delete(bn_tree_t t, char *key);
+static int s2i_compare(bn_node_t x, bn_node_t y);
+static int s2i_compare_str(bn_node_t x, char *s2);
+static void s2i_free_node(s2i_node_t n);
+static void s2i_free(bn_tree_t t);
+
+// ========== Macro viết nhanh ===========
+
 #define s2i_container_of(x) container_of(container_of(x, struct rb_node, bn_node), struct s2i_node, rb_node)
 #define s2i_bn_node(x) &(x->rb_node.bn_node)
 
-static const int k_s2i_invalid = -1;
+// ========== Định nghĩa hàm =============
 
 static int s2i_compare(bn_node_t x, bn_node_t y) {
   char *s1 = s2i_container_of(x)->key;

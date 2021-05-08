@@ -13,6 +13,20 @@
 
 typedef gtype *vector_t;
 
+// ========== Khai báo hàm ===============
+
+static vector_t gtv_create();
+static size_t gtv_capacity(vector_t const v);
+static size_t gtv_size(vector_t const v);
+static int gtv_grow(vector_t *v, size_t newcapacity);
+static int gtv_push_back(vector_t *v, gtype value);
+static void gtv_free(vector_t *v);
+
+// ========== Macro viết nhanh ===========
+
+
+// ========== Định nghĩa hàm =============
+
 static vector_t gtv_create() {
   return (vector_t)&((size_t*)calloc(2, sizeof(size_t)))[2];
 }

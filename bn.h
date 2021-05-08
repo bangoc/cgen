@@ -29,6 +29,21 @@ typedef int (*bn_compare_t)(bn_node_t, bn_node_t);
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
 
+// ========== Khai báo hàm ===============
+
+static bn_node_t bn_create_node();
+static bn_tree_t bn_create_tree(bn_node_t node);
+static bn_node_t bn_first_postorder(bn_tree_t t);
+static bn_node_t bn_next_postorder(bn_node_t node);
+static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
+
+// ========== Macro viết nhanh ===========
+
+#define bn_postorder_foreach_inline(cur, tree) \
+  for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
+
+// ========== Định nghĩa hàm =============
+
 static bn_node_t bn_create_node() {
   bn_node_t n = malloc(sizeof(struct bn_node));
   bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR);
@@ -118,8 +133,5 @@ static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u) {
     }
   }
 }
-
-#define bn_postorder_foreach_inline(cur, tree) \
-  for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
 #endif  // BN_H_

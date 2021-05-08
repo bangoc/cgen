@@ -9,6 +9,20 @@
 
 typedef int (*bns_criteria_t)();
 
+// ========== Khai báo hàm ===============
+
+static bn_node_t bns_minimum(bn_node_t x);
+static bn_node_t bns_maximum(bn_node_t x);
+static bn_node_t bns_successor(bn_node_t x);
+static bn_node_t bns_predecessor(bn_node_t x);
+static bn_node_t bns_search(bn_node_t root, void *criteria,
+        bns_criteria_t cmp);
+
+// ========== Macro viết nhanh ===========
+
+
+// ========== Định nghĩa hàm =============
+
 static bn_node_t bns_minimum(bn_node_t x) {
   return bn_left_most(x);
 }

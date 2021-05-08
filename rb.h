@@ -24,15 +24,28 @@ typedef struct rb_node {
   Trong triển khai này mình sử dụng NULL thay vì lính canh (một
   rbi_node đặc biệt) để tương thích tốt hơn với các api của cây nhị
   phân tìm kiếm cơ bản.
- */
 
-/* Nút NULL được quy ước là nút đen */
+  Nút NULL được quy ước là nút đen
+*/
+
+// ========== Khai báo hàm ===============
+
+static rb_node_t rb_create_node();
+static bn_tree_t rb_create_tree();
+static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp);
+static int rb_delete(bn_tree_t t, bn_node_t z);
+
+
+// ========== Macro viết nhanh ===========
+
 #define rb_color(x) (x? (container_of(x, struct rb_node, bn_node))->color: RB_BLACK)
 #define rb_set_color(x, new_color) (container_of(x, struct rb_node, bn_node))->color = new_color
 #define rb_bn_node(n) (n? ((bn_node_t)&(n->bn_node)): NULL_PTR)
 #define rb_node_init(n, left_value, right_value, top_value, color_value) \
   bn_node_init(rb_bn_node(n), left_value, right_value, top_value); \
   n->color = color_value
+
+// ========== Định nghĩa hàm =============
 
 static rb_node_t rb_create_node() {
   rb_node_t n = malloc(sizeof(struct rb_node));

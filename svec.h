@@ -8,6 +8,15 @@
 #include "gtv.h"
 #include <string.h>
 
+// ========== Khai báo hàm ===============
+static int svec_push_back(vector_t *v, char *s);
+static void svec_free(vector_t *v);
+
+// ========== Macro viết nhanh ===========
+
+
+// ========== Định nghĩa hàm =============
+
 static int svec_push_back(vector_t *v, char *s) {
   char *dup = strdup(s);
   return gtv_push_back(v, (gtype){.s =dup});

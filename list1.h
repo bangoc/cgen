@@ -17,6 +17,18 @@ typedef struct list1_s {
   list1_node_t first, last;
 } *list1_t;
 
+// ========== Khai báo hàm ===============
+
+static list1_t list1_create();
+static list1_t list1_append(list1_t list, list1_node_t node);
+static list1_t list1_prepend(list1_t list, list1_node_t node);
+static list1_node_t list1_remove_first(list1_t list);
+
+// ========== Macro viết nhanh ===========
+
+
+// ========== Định nghĩa hàm =============
+
 static list1_t list1_create() {
   list1_t l = calloc(1, sizeof(struct list1_s));
   return l;

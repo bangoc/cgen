@@ -14,6 +14,19 @@ typedef struct gtl_node {
   gtype val;
 } *gtl_node_t;
 
+// ========== Khai báo hàm ===============
+
+static gtl_node_t gtl_make_node(gtype value);
+static list1_t gtl_append(list1_t list, gtl_node_t val);
+static list1_t gtl_prepend(list1_t list, gtl_node_t val);
+static gtl_node_t gtl_remove_first(list1_t list);
+
+// ========== Macro viết nhanh ===========
+
+#define gtl_node_value(pnode) (container_of(pnode, struct gtl_node, node)->val)
+
+// ========== Định nghĩa hàm =============
+
 static gtl_node_t gtl_make_node(gtype value) {
   gtl_node_t node = malloc(sizeof(struct gtl_node));
   node->val = value;
@@ -36,7 +49,5 @@ static gtl_node_t gtl_remove_first(list1_t list) {
   }
   return NULL;
 }
-
-#define gtl_node_value(pnode) (container_of(pnode, struct gtl_node, node)->val)
 
 #endif  // GTYPE_LIST1_H_
