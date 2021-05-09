@@ -1,3 +1,7 @@
+/*
+  (C) 2021 Nguyen Ba Ngoc (bangoc)
+*/
+
 #ifndef D2WHEAP_H_
 #define D2WHEAP_H_
 

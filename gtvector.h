@@ -71,6 +71,7 @@ static int gtv_push_back(vector_t *v, gtype value) {
 static void gtv_free(vector_t *v) {
   void *p = &(((size_t*)(*v))[-2]);
   free(p);
+  *v = NULL;
 }
 
 static size_t gtv_setsize(vector_t const v, size_t newsize) {

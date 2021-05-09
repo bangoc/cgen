@@ -3,6 +3,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 
 add_subdirectory(tests)
+add_subdirectory(examples)
 
 include(CTest)
 add_test(NAME BNLeftRotate COMMAND bn_left_rotate_ut)
