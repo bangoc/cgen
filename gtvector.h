@@ -21,6 +21,8 @@ static size_t gtv_size(vector_t const v);
 static int gtv_grow(vector_t *v, size_t newcapacity);
 static int gtv_push_back(vector_t *v, gtype value);
 static void gtv_free(vector_t *v);
+static size_t gtv_setsize(vector_t const v, size_t newsize);
+static size_t gtv_set_value_with_index(vector_t *v, gtype value, long idx);
 
 // ========== Macro viết nhanh ===========
 
@@ -69,6 +71,23 @@ static int gtv_push_back(vector_t *v, gtype value) {
 static void gtv_free(vector_t *v) {
   void *p = &(((size_t*)(*v))[-2]);
   free(p);
+}
+
+static size_t gtv_setsize(vector_t const v, size_t newsize) {
+  size_t capacity = gtv_capacity(v);
+  if (newsize <= capacity && v) {
+    ((size_t *)(v))[-2] = (newsize);
+    return newsize;
+  }
+  return 0;
+}
+
+static size_t gtv_set_value_with_index(vector_t *v, gtype value, long idx) {
+  if (idx >= gtv_capacity(*v)) {
+    gtv_grow(v, 2 * idx + 1);
+  }
+  (*v)[idx] = value;
+  return gtv_capacity(*v);
 }
 
 #endif  // GT_VECTOR_H_
