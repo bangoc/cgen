@@ -2,10 +2,10 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef SVEC_H_
-#define SVEC_H_
+#ifndef SVECTOR_H_
+#define SVECTOR_H_
 
-#include "gtv.h"
+#include "gtvector.h"
 #include <string.h>
 
 // ========== Khai báo hàm ===============
@@ -30,4 +30,4 @@ static void svec_free(vector_t *v) {
   *v = 0;
 }
 
-#endif  // SVEC_H_
+#endif  // SVECTOR_H_

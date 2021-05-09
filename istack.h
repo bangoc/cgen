@@ -1,7 +1,7 @@
 #ifndef ISTACK_H_
 #define ISTACK_H_
 
-#include "gtl1.h"
+#include "gtlist1.h"
 
 // ========== Khai báo hàm ===============
 

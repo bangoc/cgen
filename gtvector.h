@@ -2,8 +2,8 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef VV_H_
-#define VV_H_
+#ifndef GT_VECTOR_H_
+#define GT_VECTOR_H_
 
 #include "gtype.h"
 
@@ -71,4 +71,4 @@ static void gtv_free(vector_t *v) {
   free(p);
 }
 
-#endif  // VV_H_
+#endif  // GT_VECTOR_H_

@@ -2,8 +2,8 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef GTYPE_LIST1_H_
-#define GTYPE_LIST1_H_
+#ifndef GT_LIST1_H_
+#define GT_LIST1_H_
 
 #include "core.h"
 #include "list1.h"
@@ -50,4 +50,4 @@ static gtl_node_t gtl_remove_first(list1_t list) {
   return NULL;
 }
 
-#endif  // GTYPE_LIST1_H_
+#endif  // GT_LIST1_H_

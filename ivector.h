@@ -5,7 +5,7 @@
 #ifndef IVEC_H_
 #define IVEC_H_
 
-#include "gtv.h"
+#include "gtvector.h"
 #include <string.h>
 
 // ========== Khai báo hàm ===============
