@@ -9,6 +9,11 @@ typedef struct str_cache {
   vector_t is;
 } *str_cache_t;
 
+void cache_print(str_cache_t cache) {
+  s2i_postorder_print(cache->si);
+  svec_print(cache->is);
+}
+
 str_cache_t create_cache() {
   str_cache_t sc = malloc(sizeof(struct str_cache));
   sc->si = bn_create_tree(NULL);
@@ -51,6 +56,7 @@ int main() {
     }
     long id = safe_save_str(cache, s);
     printf("Id = %ld\n", id);
+    cache_print(cache);
   }
   for (;;) {
     printf("Input id: ");

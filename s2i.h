@@ -8,11 +8,12 @@
 #include "rb.h"
 
 #include <string.h>
+#include <stdio.h>
 
 typedef struct s2i_node {
   struct rb_node rb_node;
   char *key;
-  int value;
+  long value;
 } *s2i_node_t;
 
 static const int k_s2i_invalid = -1;
@@ -29,6 +30,7 @@ static int s2i_compare(bn_node_t x, bn_node_t y);
 static int s2i_compare_str(bn_node_t x, char *s2);
 static void s2i_free_node(s2i_node_t n);
 static void s2i_free(bn_tree_t *t);
+static void s2i_postorder_print(bn_tree_t tree);
 
 // ========== Macro viết nhanh ===========
 
@@ -67,6 +69,13 @@ static void s2i_free(bn_tree_t *tp) {
   }
   free(t);
   *tp = NULL_PTR;
+}
+
+static void s2i_postorder_print(bn_tree_t tree) {
+  bn_node_t cur;
+  bn_postorder_foreach_inline(cur, tree) {
+    printf("%s: %ld\n", s2i_container_of(cur)->key, s2i_container_of(cur)->value);
+  }
 }
 
 static s2i_node_t s2i_create_node(char *key, int value) {
