@@ -20,7 +20,7 @@ str_cache_t create_cache() {
   sc->is = gtv_create();
 }
 
-long safe_save_str(str_cache_t cache, char *s) {
+long get_save_str_id(str_cache_t cache, char *s) {
   long id = s2i_value(cache->si, s);
   if (id != k_s2i_invalid) {
     return id;
@@ -54,7 +54,7 @@ int main() {
     if (strcmp(s, "stop") == 0) {
       break;
     }
-    long id = safe_save_str(cache, s);
+    long id = get_save_str_id(cache, s);
     printf("Id = %ld\n", id);
     cache_print(cache);
   }
