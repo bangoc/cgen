@@ -43,7 +43,8 @@ typedef struct rb_node {
 
 static rb_node_t rb_create_node();
 static bn_tree_t rb_create_tree();
-static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp);
+static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z,
+                           bn_compare_t cmp);
 static int rb_delete(bn_tree_t t, bn_node_t z);
 
 
@@ -55,6 +56,9 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 #define rb_node_init(n, left_value, right_value, top_value, color_value) \
   bn_node_init(rb_bn_node(n), left_value, right_value, top_value); \
   n->color = color_value
+#define rb_is_red(node) (rb_color(node) == RB_RED)
+#define rb_is_black(node) (rb_color(node) == RB_BLACK)
+#define rb_set_black(node) rb_set_color(node, RB_BLACK)
 
 // ========== Định nghĩa hàm =============
 
@@ -147,79 +151,6 @@ static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp) {
   rb_insert_fixup(t, z);
   return t;
 }
-
-static bn_tree_t rb_delete_fixup(bn_tree_t t, bn_node_t x) {
-  while (x != t->root && rb_color(x) == RB_BLACK) {
-    if (x == x->top->left) {
-#define IMPL_DELETE_FIXUP(left, right) \
-      bn_node_t w = x->top->right; \
-      if (rb_color(w) == RB_RED) { \
-        rb_set_color(w, RB_BLACK); \
-        rb_set_color(x->top, RB_RED); \
-        bn_ ##left ##_rotate(t, x->top); \
-        w = x->top->right; \
-      } \
-      if (rb_color(w->left) == RB_BLACK && \
-          rb_color(w->right) == RB_BLACK) { \
-        rb_set_color(w, RB_RED); \
-        x = x->top; \
-      } else if (rb_color(w->right) == RB_BLACK) { \
-        rb_set_color(w->left, RB_BLACK); \
-        rb_set_color(w, RB_RED); \
-        bn_ ##right ##_rotate(t, w); \
-        w = x->top->right; \
-      } \
-      rb_set_color(w, rb_color(x->top)); \
-      rb_set_color(x->top, RB_BLACK); \
-      rb_set_color(w->right, RB_BLACK); \
-      bn_left_rotate(t, x->top); \
-      x = t->root
-      IMPL_DELETE_FIXUP(left, right);
-    } else {
-      IMPL_DELETE_FIXUP(right, left);
-    }
-  }
-  rb_set_color(x, RB_BLACK);
-  return t;
-}
-
-#undef IMPL_DELETE_FIXUP
-
-static int rb_delete_old(bn_tree_t t, bn_node_t z) {
-  bn_node_t y = z;
-  rb_node_color_t y_original_color = rb_color(y);
-  bn_node_t x;
-  if (z->left == NULL_PTR) {
-    x = z->right;
-    bn_transplant(t, z, z->right);
-  } else if (z->right == NULL_PTR) {
-    x = z->left;
-    bn_transplant(t, z, z->left);
-  } else {
-    y = bns_minimum(z->right);
-    y_original_color = rb_color(y);
-    x = y->right;
-    if (y->top == z) {
-      x->top = y;
-    } else {
-      bn_transplant(t, y, z->right);
-      y->right = z->right;
-      y->right->top = y;
-    }
-    bn_transplant(t, z, y);
-    y->left = z->left;
-    y->left->top = y;
-    rb_set_color(y, rb_color(z));
-  }
-  if (y_original_color == RB_BLACK) {
-    rb_delete_fixup(t, x);
-  }
-  return 1;
-}
-
-#define rb_is_red(node) (rb_color(node) == RB_RED)
-#define rb_is_black(node) (rb_color(node) == RB_BLACK)
-#define rb_set_black(node) rb_set_color(node, RB_BLACK)
 
 static void rb_set_parent_color(bn_node_t n, bn_node_t parent,
                                 rb_node_color_t color) {

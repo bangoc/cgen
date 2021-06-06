@@ -16,9 +16,7 @@ int node_values(bn_node_t bn_node,
     bn_node_t top) {
   my_rb_node_t nd = container_of(container_of(bn_node, struct rb_node, bn_node),
           struct my_rb_node, rb_node);
-  if (!nd) {
-    return 1;
-  }
+  CHECK_MSG(nd, "Node NULL");
   CHECK_MSG(nd->key == key, "Different key");
   CHECK_MSG(nd->value == value, "Different value");
   CHECK_MSG(nd->rb_node.color == color, "Different color");
@@ -60,6 +58,12 @@ int t1() {
   rb_delete(t, my_rb_bn_node(n1));
   CHECK(node_values(t->root, 2, 2, RB_BLACK, NULL_PTR, my_rb_bn_node(n3), NULL_PTR) == 0);
   CHECK(node_values(t->root->right, 3, 3, RB_RED, NULL_PTR, NULL_PTR, my_rb_bn_node(n2)) == 0);
+
+  rb_delete(t, my_rb_bn_node(n2));
+  CHECK(node_values(t->root, 3, 3, RB_BLACK, NULL_PTR, NULL_PTR, NULL_PTR) == 0);
+
+  rb_delete(t, my_rb_bn_node(n3));
+  CHECK(t->root == NULL_PTR);
   return 0;
 }
 
