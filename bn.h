@@ -56,6 +56,10 @@ static bn_tree_t bn_create_tree(bn_node_t node) {
   return tree;
 }
 
+static void bn_free(bn_tree_t t) {
+  free(t);
+}
+
 static bn_node_t bn_left_most(bn_node_t x) {
   bn_node_t y;
   #define bn_MOST(x, child, out) \

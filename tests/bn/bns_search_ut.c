@@ -12,9 +12,9 @@ struct bns_node {
   int value;
 };
 
-int bns_compare(bn_node_t node, void *key) {
+int bns_compare(bn_node_t node, bn_node_t query) {
   int value1 = container_of(node, struct bns_node, bnt)->value;
-  int value2 = *((int*)key);
+  int value2 = container_of(query, struct bns_node, bnt)->value;
   return value1 - value2;
 }
 
@@ -42,13 +42,13 @@ int main() {
               5
             4
   */
-  int v1 = 1, v2 = 2, v3 = 3, v4 = 4, v5 = 5, v6 = 6, v_1 = -1;
-  CHECK_MSG(bns_search(t->root, &v1, bns_compare) == &n1.bnt, "Failed search 1");
-  CHECK_MSG(bns_search(t->root, &v2, bns_compare) == &n2.bnt, "Failed search 2");
-  CHECK_MSG(bns_search(t->root, &v3, bns_compare) == &n3.bnt, "Failed search 3");
-  CHECK_MSG(bns_search(t->root, &v4, bns_compare) == &n4.bnt, "Failed search 4");
-  CHECK_MSG(bns_search(t->root, &v5, bns_compare) == &n5.bnt, "Failed search 5");
-  CHECK_MSG(bns_search(t->root, &v6, bns_compare) == NULL_PTR, "Failed search 6");
-  CHECK_MSG(bns_search(t->root, &v_1, bns_compare) == NULL_PTR, "Failed search -1");
+  CHECK_MSG(bns_search(t->root, &n1.bnt, bns_compare) == &n1.bnt, "Failed search 1");
+  CHECK_MSG(bns_search(t->root, &n2.bnt, bns_compare) == &n2.bnt, "Failed search 2");
+  CHECK_MSG(bns_search(t->root, &n3.bnt, bns_compare) == &n3.bnt, "Failed search 3");
+  CHECK_MSG(bns_search(t->root, &n4.bnt, bns_compare) == &n4.bnt, "Failed search 4");
+  CHECK_MSG(bns_search(t->root, &n5.bnt, bns_compare) == &n5.bnt, "Failed search 5");
+  CHECK_MSG(bns_search(t->root, &n6.bnt, bns_compare) == NULL_PTR, "Failed search 6");
+  CHECK_MSG(bns_search(t->root, &n_1.bnt, bns_compare) == NULL_PTR, "Failed search -1");
+  bn_free(t);
   return 0;
 }

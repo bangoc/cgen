@@ -13,7 +13,7 @@ static bn_node_t bns_minimum(bn_node_t x);
 static bn_node_t bns_maximum(bn_node_t x);
 static bn_node_t bns_successor(bn_node_t x);
 static bn_node_t bns_predecessor(bn_node_t x);
-static bn_node_t bns_search(bn_node_t root, void *criteria,
+static bn_node_t bns_search(bn_node_t root, bn_node_t query,
         bn_compare_t cmp);
 
 // ========== Macro viết nhanh ===========
@@ -53,7 +53,7 @@ static bn_node_t bns_predecessor(bn_node_t x) {
   return y;
 }
 
-static bn_node_t bns_search(bn_node_t root, void *query,
+static bn_node_t bns_search(bn_node_t root, bn_node_t query,
         bn_compare_t cmp) {
   int tmp = -1;
   if (root == NULL_PTR || (tmp = cmp(root, query)) == 0) {
