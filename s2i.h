@@ -16,7 +16,7 @@ typedef struct s2i_node {
   long value;
 } *s2i_node_t;
 
-static const int k_s2i_invalid = -1;
+static int k_s2i_invalid = -1;
 
 // ========== Khai báo hàm ===============
 
@@ -24,7 +24,8 @@ static s2i_node_t s2i_create_node(char *key, int value);
 static bn_tree_t s2i_create();
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value);
 static s2i_node_t s2i_search(bn_tree_t t, char *key);
-static int s2i_value(bn_tree_t t, char *key);
+static int s2i_value_ref(bn_tree_t t, char *key, long **value);
+static long s2i_value(bn_tree_t t, char *key);
 static int s2i_delete(bn_tree_t t, char *key);
 static int s2i_compare(bn_node_t x, bn_node_t y);
 static int s2i_compare_str(bn_node_t x, char *s2);
@@ -103,10 +104,21 @@ static s2i_node_t s2i_search(bn_tree_t t, char *key) {
   return r? s2i_container_of(r): NULL_PTR;
 }
 
-static int s2i_value(bn_tree_t t, char *key) {
+static int s2i_value_ref(bn_tree_t t, char *key, long **value) {
   s2i_node_t n = s2i_search(t, key);
   if (n) {
-    return n->value;
+    *value = &(n->value);
+    return 0;
+  }
+  *value = NULL_PTR;
+  return 1;
+}
+
+static long s2i_value(bn_tree_t t, char *key) {
+  long *value = NULL_PTR;
+  s2i_value_ref(t, key, &value);
+  if (value) {
+    return *value;
   }
   return k_s2i_invalid;
 }
