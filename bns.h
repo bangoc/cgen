@@ -7,8 +7,6 @@
 
 #include "bn.h"
 
-typedef int (*bns_criteria_t)();
-
 // ========== Khai báo hàm ===============
 
 static bn_node_t bns_minimum(bn_node_t x);
@@ -16,7 +14,7 @@ static bn_node_t bns_maximum(bn_node_t x);
 static bn_node_t bns_successor(bn_node_t x);
 static bn_node_t bns_predecessor(bn_node_t x);
 static bn_node_t bns_search(bn_node_t root, void *criteria,
-        bns_criteria_t cmp);
+        bn_compare_t cmp);
 
 // ========== Macro viết nhanh ===========
 
@@ -55,16 +53,16 @@ static bn_node_t bns_predecessor(bn_node_t x) {
   return y;
 }
 
-static bn_node_t bns_search(bn_node_t root, void *criteria,
-        bns_criteria_t cmp) {
-  int cached_cmp = -1;
-  if (root == NULL_PTR || (cached_cmp = cmp(root, criteria)) == 0) {
+static bn_node_t bns_search(bn_node_t root, void *query,
+        bn_compare_t cmp) {
+  int tmp = -1;
+  if (root == NULL_PTR || (tmp = cmp(root, query)) == 0) {
     return root;
   }
-  if (cached_cmp > 0) {
-    return bns_search(root->left, criteria, cmp);
+  if (tmp > 0) {
+    return bns_search(root->left, query, cmp);
   }
-  return bns_search(root->right, criteria, cmp);
+  return bns_search(root->right, query, cmp);
 }
 
 #endif  // BSNT_H_

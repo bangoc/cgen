@@ -36,17 +36,19 @@ static void s2i_postorder_print(bn_tree_t tree);
 
 #define s2i_container_of(x) container_of(container_of(x, struct rb_node, bn_node), struct s2i_node, rb_node)
 #define s2i_bn_node(x) &(x->rb_node.bn_node)
+#define s2i_key_from_bn_node(n) ((s2i_node_t)s2i_container_of(n))->key
+#define s2i_value_from_bn_node(n) ((s2i_node_t)s2i_container_of(n))->value
 
 // ========== Định nghĩa hàm =============
 
 static int s2i_compare(bn_node_t x, bn_node_t y) {
-  char *s1 = s2i_container_of(x)->key;
-  char *s2 = s2i_container_of(y)->key;
+  char *s1 = s2i_key_from_bn_node(x);
+  char *s2 = s2i_key_from_bn_node(y);
   return strcmp(s1, s2);
 }
 
 static int s2i_compare_str(bn_node_t x, char *s2) {
-  char *s1 = s2i_container_of(x)->key;
+  char *s1 = s2i_key_from_bn_node(x);
   return strcmp(s1, s2);
 }
 
@@ -93,7 +95,7 @@ static bn_tree_t s2i_create() {
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {
   s2i_node_t n = s2i_create_node(key, value);
   rb_insert(t, s2i_bn_node(n), s2i_compare);
-  return s2i_container_of(n);
+  return n;
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, char *key) {

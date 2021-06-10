@@ -24,7 +24,7 @@ typedef struct bn_tree {
 } *bn_tree_t;
 
 typedef int (*bn_callback_t)(bn_node_t, void *);
-typedef int (*bn_compare_t)(bn_node_t, bn_node_t);
+typedef int (*bn_compare_t)();
 
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
