@@ -23,7 +23,7 @@ typedef struct bn_tree {
   bn_node_t root;
 } *bn_tree_t;
 
-typedef int (*bn_callback_t)(bn_node_t, void *);
+typedef int (*bn_callback_t)();
 typedef int (*bn_compare_t)();
 
 #define bn_node_init(n, left_value, right_value, top_value) \
