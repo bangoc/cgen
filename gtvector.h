@@ -25,7 +25,8 @@ static size_t gtv_setsize(vector_t const v, size_t newsize);
 static size_t gtv_set_value_with_index(vector_t *v, gtype value, long idx);
 
 // ========== Macro viết nhanh ===========
-
+#define gtv_val_at(vec, i, typname) ((typname)vec[i].v)
+#define gtv_ref_at(vec, i, typname) ((typname)&vec[i].v)
 
 // ========== Định nghĩa hàm =============
 

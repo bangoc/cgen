@@ -434,15 +434,13 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
     tmp = p;
     rb_change_child(node, successor, tmp, t);
     if (child2) {
-      rb_set_parent_color(successor, p, c);
       rb_set_parent_color(child2, parent, RB_BLACK);
       rebalance = NULL_PTR;
     } else {
-      bn_node_t p2 = rb_parent(successor);
       rb_node_color_t c2 = rb_color(successor);
-      rb_set_parent_color(successor, p, c);
       rebalance = c2 == RB_BLACK? parent: NULL_PTR;
     }
+    rb_set_parent_color(successor, p, c);
     tmp = successor;
   }
   if (rebalance) {
