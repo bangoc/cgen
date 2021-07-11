@@ -56,6 +56,7 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 #define rb_node_init(n, left_value, right_value, top_value, color_value) \
   bn_node_init(rb_bn_node(n), left_value, right_value, top_value); \
   n->color = color_value
+#define rb_node_init_null(n) bn_node_init_null(rb_bn_node(n)); n->color = RB_BLACK
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
@@ -64,7 +65,7 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 
 static rb_node_t rb_create_node() {
   rb_node_t n = malloc(sizeof(struct rb_node));
-  rb_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR, RB_BLACK);
+  rb_node_init_null(n);
   return n;
 }
 

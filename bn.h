@@ -29,6 +29,8 @@ typedef int (*bn_compare_t)();
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
 
+#define bn_node_init_null(n) bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
+
 // ========== Khai báo hàm ===============
 
 static bn_node_t bn_create_node();
@@ -46,7 +48,7 @@ static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
 
 static bn_node_t bn_create_node() {
   bn_node_t n = malloc(sizeof(struct bn_node));
-  bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR);
+  bn_node_init_null(n);
   return n;
 }
 
