@@ -39,6 +39,9 @@ static bn_node_t bn_first_postorder(bn_tree_t t);
 static bn_node_t bn_next_postorder(bn_node_t node);
 static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
 
+static bn_node_t bn_prev_inorder(bn_node_t x);
+static bn_node_t bn_next_inorder(bn_node_t x);
+
 // ========== Macro viết nhanh ===========
 
 #define bn_postorder_foreach_inline(cur, tree) \
@@ -135,6 +138,54 @@ static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u) {
   bn_node_t n = bn_first_postorder(t);
   for (; n != NULL; n = bn_next_postorder(n)) {
     if (op(n, u)) {
+      break;
+    }
+  }
+}
+
+static bn_node_t bn_next_inorder(bn_node_t x)  {
+  bn_node_t y;
+#define BNS_NEAREST(x, left, right, out) \
+  do { \
+    if (x->right != NULL_PTR) { \
+      out = bn_ ##left ##_most(x->right); \
+    } else { \
+      out = x->top; \
+      while (out != NULL_PTR && x == out->right) {\
+        x = out; \
+        out = out->top; \
+      } \
+    } \
+  } while (0)
+  BNS_NEAREST(x, left, right, y);
+  return y;
+}
+
+static bn_node_t bn_prev_inorder(bn_node_t x) {
+  bn_node_t y;
+  BNS_NEAREST(x, right, left, y);
+  return y;
+}
+
+static void bn_inorder_lnr_foreach(bn_tree_t t, bn_callback_t op, void *u) {
+  if (!t->root) {
+    return;
+  }
+  bn_node_t nd = bn_left_most(t->root);
+  for (; nd != NULL_PTR; nd = bn_next_inorder(nd)) {
+    if (op(nd, u)) {
+      break;
+    }
+  }
+}
+
+static void bn_inorder_rnl_foreach(bn_tree_t t, bn_callback_t op, void *u) {
+  if (!t->root) {
+    return;
+  }
+  bn_node_t nd = bn_right_most(t->root);
+  for (; nd != NULL_PTR; nd = bn_prev_inorder(nd)) {
+    if (op(nd, u)) {
       break;
     }
   }

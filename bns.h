@@ -9,10 +9,6 @@
 
 // ========== Khai báo hàm ===============
 
-static bn_node_t bns_minimum(bn_node_t x);
-static bn_node_t bns_maximum(bn_node_t x);
-static bn_node_t bns_successor(bn_node_t x);
-static bn_node_t bns_predecessor(bn_node_t x);
 static bn_node_t bns_search(bn_node_t root, bn_node_t query,
         bn_compare_t cmp);
 
@@ -20,38 +16,6 @@ static bn_node_t bns_search(bn_node_t root, bn_node_t query,
 
 
 // ========== Định nghĩa hàm =============
-
-static bn_node_t bns_minimum(bn_node_t x) {
-  return bn_left_most(x);
-}
-
-static bn_node_t bns_maximum(bn_node_t x) {
-  return bn_right_most(x);
-}
-
-static bn_node_t bns_successor(bn_node_t x)  {
-  bn_node_t y;
-#define BNS_NEAREST(x, left, right, out) \
-  do { \
-    if (x->right != NULL_PTR) { \
-      out = bn_ ##left ##_most(x->right); \
-    } else { \
-      out = x->top; \
-      while (out != NULL_PTR && x == out->right) {\
-        x = out; \
-        out = out->top; \
-      } \
-    } \
-  } while (0)
-  BNS_NEAREST(x, left, right, y);
-  return y;
-}
-
-static bn_node_t bns_predecessor(bn_node_t x) {
-  bn_node_t y;
-  BNS_NEAREST(x, right, left, y);
-  return y;
-}
 
 static bn_node_t bns_search(bn_node_t root, bn_node_t query,
         bn_compare_t cmp) {
