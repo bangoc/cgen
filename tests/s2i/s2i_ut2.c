@@ -10,7 +10,7 @@ int g_id = 0;
 
 
 int main(){
-  s2i = s2i_create();
+  s2i = bn_create_tree(NULL_PTR);
   i2s = gtv_create();
 
   s2i_insert(s2i,"aa",1);

@@ -21,7 +21,6 @@ static int k_s2i_invalid = -1;
 // ========== Khai báo hàm ===============
 
 static s2i_node_t s2i_create_node(char *key, int value);
-static bn_tree_t s2i_create();
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value);
 static s2i_node_t s2i_search(bn_tree_t t, char *key);
 static int s2i_value_ref(bn_tree_t t, char *key, long **value);
@@ -81,10 +80,6 @@ static s2i_node_t s2i_create_node(char *key, int value) {
   n->key = strdup(key);
   n->value = value;
   return n;
-}
-
-static bn_tree_t s2i_create() {
-  return bn_create_tree(NULL_PTR);
 }
 
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {

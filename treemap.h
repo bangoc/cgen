@@ -17,7 +17,6 @@ static gtype k_tm_invalid = (gtype){.i = -1};
 
 // ========== Khai báo hàm ===============
 
-static bn_tree_t tm_create();
 static treemap_node_t tm_create_node(gtype key, gtype value);
 static treemap_node_t tm_insert(bn_tree_t t, gtype key, gtype value,
                       bn_compare_t cmp);
@@ -40,13 +39,9 @@ static int tm_delete(bn_tree_t t, gtype key,
 #define tm_key_from_bn_node(n) ((treemap_node_t)tm_container_of(n))->key
 #define tm_value_from_bn_node(n) ((treemap_node_t)tm_container_of(n))->value
 #define tm_postorder_foreach_inline(cur, t) \
-  for (bn_node_t tmp = bn_first_postorder(t), cur = tm_container_of(tmp); tmp != NULL_PTR; tmp = bn_next_postorder(tmp), cur = tm_container_of(tmp))
+  for (void *tmp = bn_first_postorder(t), *cur = tm_container_of(tmp); tmp != NULL_PTR; tmp = bn_next_postorder(tmp), cur = tm_container_of(tmp))
 
 // ========== Định nghĩa hàm =============
-
-static bn_tree_t tm_create() {
-  return bn_create_tree(NULL_PTR);
-}
 
 static treemap_node_t tm_create_node(gtype key, gtype value) {
   treemap_node_t n = malloc(sizeof(struct treemap_node));

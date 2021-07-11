@@ -14,7 +14,7 @@ int tm_delete_callback(treemap_node_t n) {
 }
 
 int main() {
-  bn_tree_t t = tm_create();
+  bn_tree_t t = bn_create_tree(NULL_PTR);
   char *s1 = "1111111111",
        *s2 = "2222222222",
        *s3 = "3333333333",
@@ -58,12 +58,12 @@ int main() {
   query = (gtype){.s = sf};
   tm_value_ref(t, query, &value, tm_compare_str);
   CHECK_MSG(value == NULL_PTR, "Failed not found F");
-  treemap_node_t cur, prev = NULL_PTR;
+  treemap_node_t prev = NULL_PTR;
   tm_postorder_foreach_inline(cur, t) {
     if (prev) {
       free(prev);
     }
-    prev = cur;
+    prev = (treemap_node_t)cur;
   }
   if (prev) {
     free(prev);

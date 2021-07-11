@@ -4,7 +4,8 @@
 #include <stdio.h>
 
 int t1() {
-  bn_tree_t t = s2i_create();
+  bn_tree_t t = bn_create_tree(NULL_PTR);
+  CHECK_MSG(s2i_value(t, "Mot") == k_s2i_invalid, "Failed search empty");
   s2i_insert(t, "Mot", 1);
   s2i_insert(t, "Hai", 2);
   s2i_insert(t, "Ba", 3);

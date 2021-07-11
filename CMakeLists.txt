@@ -1,3 +1,4 @@
+project(cgen)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
@@ -26,3 +27,4 @@ add_test(NAME IStack COMMAND istack_ut)
 add_test(NAME GTP2WHeap COMMAND gtp2wheap_ut)
 add_test(NAME D2WHeap COMMAND d2wheap_ut)
 add_test(NAME TreeMap COMMAND treemap_ut)
+add_test(NAME RBBuild COMMAND rb_build_ut)
