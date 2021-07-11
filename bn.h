@@ -25,6 +25,7 @@ typedef struct bn_tree {
 
 typedef int (*bn_callback_t)();
 typedef int (*bn_compare_t)();
+typedef void (*bn_free_node_t)();
 
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
@@ -35,6 +36,7 @@ typedef int (*bn_compare_t)();
 
 static bn_node_t bn_create_node();
 static bn_tree_t bn_create_tree(bn_node_t node);
+static void bn_free_tree(bn_tree_t *t, bn_free_node_t fn);
 static bn_node_t bn_first_postorder(bn_tree_t t);
 static bn_node_t bn_next_postorder(bn_node_t node);
 static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
@@ -48,6 +50,22 @@ static bn_node_t bn_next_inorder(bn_node_t x);
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
 // ========== Định nghĩa hàm =============
+
+static void bn_free_tree(bn_tree_t *tp, bn_free_node_t fn) {
+  bn_tree_t t = *tp;
+  bn_node_t cur, prev = NULL_PTR;
+  bn_postorder_foreach_inline(cur, t) {
+    if (prev) {
+      fn(prev);
+    }
+    prev = cur;
+  }
+  if (prev) {
+    fn(prev);
+  }
+  free(t);
+  *tp = NULL_PTR;
+}
 
 static bn_node_t bn_create_node() {
   bn_node_t n = malloc(sizeof(struct bn_node));

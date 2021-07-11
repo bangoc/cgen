@@ -13,6 +13,10 @@ int tm_delete_callback(treemap_node_t n) {
   free(n);
 }
 
+void tm_bn_free_node(bn_node_t n) {
+  free(n);
+}
+
 int main() {
   bn_tree_t t = bn_create_tree(NULL_PTR);
   char *s1 = "1111111111",
@@ -59,16 +63,7 @@ int main() {
   tm_value_ref(t, query, &value, tm_compare_str);
   CHECK_MSG(value == NULL_PTR, "Failed not found F");
   treemap_node_t prev = NULL_PTR;
-  tm_postorder_foreach_inline(cur, t) {
-    if (prev) {
-      free(prev);
-    }
-    prev = (treemap_node_t)cur;
-  }
-  if (prev) {
-    free(prev);
-  }
-  free(t);
+  bn_free_tree(&t, tm_bn_free_node);
   printf("Treemap ut OK\n");
   return 0;
 }

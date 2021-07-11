@@ -51,20 +51,12 @@ static void s2i_free_node(s2i_node_t n) {
   free(n);
 }
 
+static void s2i_bn_free_node(bn_node_t n) {
+  s2i_free_node(s2i_container_of(n));
+}
+
 static void s2i_free(bn_tree_t *tp) {
-  bn_tree_t t = *tp;
-  bn_node_t cur, prev = NULL_PTR;
-  bn_postorder_foreach_inline(cur, t) {
-    if (prev) {
-      s2i_free_node(s2i_container_of(prev));
-    }
-    prev = cur;
-  }
-  if (prev) {
-    s2i_free_node(s2i_container_of(prev));
-  }
-  free(t);
-  *tp = NULL_PTR;
+  bn_free_tree(tp, s2i_bn_free_node);
 }
 
 static void s2i_postorder_print(bn_tree_t tree) {
