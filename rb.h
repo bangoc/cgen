@@ -49,17 +49,17 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 
 
 // ========== Macro viết nhanh ===========
-
-#define rb_color(x) (x? (container_of(x, struct rb_node, bn_node))->color: RB_BLACK)
-#define rb_set_color(x, new_color) (container_of(x, struct rb_node, bn_node))->color = new_color
-#define rb_bn_node(n) (n? ((bn_node_t)&(n->bn_node)): NULL_PTR)
+#define to_rb(n) ((rb_node_t)n)
+#define rb_color(n) (n? to_rb(n)->color: RB_BLACK)
+#define rb_set_color(n, new_color) to_rb(n)->color = new_color
 #define rb_node_init(n, left_value, right_value, top_value, color_value) \
-  bn_node_init(rb_bn_node(n), left_value, right_value, top_value); \
-  n->color = color_value
-#define rb_node_init_null(n) bn_node_init_null(rb_bn_node(n)); n->color = RB_BLACK
+  bn_node_init(to_bn(n), to_bn(left_value), to_bn(right_value), to_bn(top_value)); \
+  rb_set_color(n, color_value)
+#define rb_node_init_null(n) bn_node_init_null(to_bn(n)); rb_set_color(n, RB_BLACK)
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
+#define rb_set_red(node) rb_set_color(node, RB_RED)
 
 // ========== Định nghĩa hàm =============
 

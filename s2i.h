@@ -33,10 +33,9 @@ static void s2i_postorder_print(bn_tree_t tree);
 
 // ========== Macro viết nhanh ===========
 
-#define s2i_container_of(x) container_of(container_of(x, struct rb_node, bn_node), struct s2i_node, rb_node)
-#define s2i_bn_node(x) &(x->rb_node.bn_node)
-#define s2i_key_from_bn_node(n) ((s2i_node_t)s2i_container_of(n))->key
-#define s2i_value_from_bn_node(n) ((s2i_node_t)s2i_container_of(n))->value
+#define to_s2i(n) ((s2i_node_t)n)
+#define s2i_key_from_bn_node(n) to_s2i(n)->key
+#define s2i_value_from_bn_node(n) to_s2i(n)->value
 
 // ========== Định nghĩa hàm =============
 
@@ -52,7 +51,7 @@ static void s2i_free_node(s2i_node_t n) {
 }
 
 static void s2i_bn_free_node(bn_node_t n) {
-  s2i_free_node(s2i_container_of(n));
+  s2i_free_node(to_s2i(n));
 }
 
 static void s2i_free(bn_tree_t *tp) {
@@ -62,7 +61,7 @@ static void s2i_free(bn_tree_t *tp) {
 static void s2i_postorder_print(bn_tree_t tree) {
   bn_node_t cur;
   bn_postorder_foreach_inline(cur, tree) {
-    printf("%s: %ld\n", s2i_container_of(cur)->key, s2i_container_of(cur)->value);
+    printf("%s: %ld\n", to_s2i(cur)->key, to_s2i(cur)->value);
   }
 }
 
@@ -76,15 +75,15 @@ static s2i_node_t s2i_create_node(char *key, int value) {
 
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {
   s2i_node_t n = s2i_create_node(key, value);
-  rb_insert(t, s2i_bn_node(n), s2i_compare);
+  rb_insert(t, to_bn(n), s2i_compare);
   return n;
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, char *key) {
   static struct s2i_node query;
   query.key = key;
-  bn_node_t r = bns_search(t->root, s2i_bn_node((&query)), s2i_compare);
-  return r? s2i_container_of(r): NULL_PTR;
+  bn_node_t r = bns_search(t->root, to_bn(&query), s2i_compare);
+  return to_s2i(r);
 }
 
 static int s2i_value_ref(bn_tree_t t, char *key, long **value) {
@@ -109,7 +108,7 @@ static long s2i_value(bn_tree_t t, char *key) {
 static int s2i_delete(bn_tree_t t, char *key) {
   s2i_node_t n = s2i_search(t, key);
   if (n) {
-    rb_delete(t, s2i_bn_node(n));
+    rb_delete(t, to_bn(n));
     s2i_free_node(n);
     return 1;
   }

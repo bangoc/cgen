@@ -19,15 +19,12 @@ static rbi_node_t rbi_search(bn_tree_t t, int value);
 
 // ========== Macro viết nhanh ===========
 
-#define rbi_container_of(x) container_of(container_of(x, struct rb_node, bn_node), \
-                                struct rbi_node, rb_node)
-#define rbi_bn_node(x) &((x)->rb_node.bn_node)
+#define to_rbi(n) ((rbi_node_t)n)
 
 // ========== Định nghĩa hàm =============
 
 static int rbi_value(bn_node_t x) {
-  rbi_node_t nd = rbi_container_of(x);
-  return nd->value;
+  return to_rbi(x)->value;
 }
 
 static int rbi_compare(bn_node_t x, bn_node_t y) {
@@ -43,15 +40,15 @@ static rbi_node_t rbi_create_node(int value) {
 
 static rbi_node_t rbi_insert(bn_tree_t t, int value) {
   rbi_node_t n = rbi_create_node(value);
-  rb_insert(t, rbi_bn_node(n), rbi_compare);
+  rb_insert(t, to_bn(n), rbi_compare);
   return n;
 }
 
 static rbi_node_t rbi_search(bn_tree_t t, int value) {
   static struct rbi_node query;
   query.value = value;
-  bn_node_t r = bns_search(t->root, rbi_bn_node(&query), rbi_compare);
-  return r? rbi_container_of(r): NULL_PTR;
+  bn_node_t r = bns_search(t->root, to_bn(&query), rbi_compare);
+  return to_rbi(r);
 }
 
 #endif  // TESTS_RB_RBI_H_

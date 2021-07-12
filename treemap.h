@@ -32,14 +32,11 @@ static int tm_delete(bn_tree_t t, gtype key,
 
 // ========== Macro viết nhanh ===========
 
-#define tm_container_of(x) container_of(\
-      container_of(x, struct rb_node, bn_node), \
-      struct treemap_node, rb_node)
-#define tm_bn_node(x) &(x->rb_node.bn_node)
-#define tm_key_from_bn_node(n) ((treemap_node_t)tm_container_of(n))->key
-#define tm_value_from_bn_node(n) ((treemap_node_t)tm_container_of(n))->value
+#define to_tm(n) ((treemap_node_t)n)
+#define tm_key_from_bn_node(n) to_tm(n)->key
+#define tm_value_from_bn_node(n) to_tm(n)->value
 #define tm_postorder_foreach_inline(cur, t) \
-  for (void *tmp = bn_first_postorder(t), *cur = tm_container_of(tmp); tmp != NULL_PTR; tmp = bn_next_postorder(tmp), cur = tm_container_of(tmp))
+  for (void *cur = bn_first_postorder(t); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
 // ========== Định nghĩa hàm =============
 
@@ -55,15 +52,15 @@ static treemap_node_t tm_insert(bn_tree_t t,
                       gtype key, gtype value,
                       bn_compare_t cmp) {
   treemap_node_t n = tm_create_node(key, value);
-  rb_insert(t, tm_bn_node(n), cmp);
+  rb_insert(t, to_bn(n), cmp);
   return n;
 }
 
 static treemap_node_t tm_search(bn_tree_t t, gtype key, bn_compare_t cmp) {
   static struct treemap_node query;
   query.key = key;
-  bn_node_t n = bns_search(t->root, tm_bn_node((&query)), cmp);
-  return tm_container_of(n);
+  bn_node_t n = bns_search(t->root, to_bn(&query), cmp);
+  return to_tm(n);
 }
 
 static int tm_value_ref(bn_tree_t t, gtype key, gtype **value,
@@ -89,7 +86,7 @@ static gtype tm_value(bn_tree_t t, gtype key, bn_compare_t cmp) {
 static int tm_delete(bn_tree_t t, gtype key, bn_compare_t cmp, bn_callback_t cb) {
   treemap_node_t n = tm_search(t, key, cmp);
   if (n) {
-    rb_delete(t, tm_bn_node(n));
+    rb_delete(t, to_bn(n));
     if (cb) {
       cb(n);
     }

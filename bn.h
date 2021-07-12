@@ -27,6 +27,7 @@ typedef int (*bn_callback_t)();
 typedef int (*bn_compare_t)();
 typedef void (*bn_free_node_t)();
 
+#define to_bn(n) ((bn_node_t)n)
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
 

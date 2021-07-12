@@ -12,9 +12,11 @@ struct bns_node {
   int value;
 };
 
-int bns_compare(bn_node_t node, bn_node_t query) {
-  int value1 = container_of(node, struct bns_node, bnt)->value;
-  int value2 = container_of(query, struct bns_node, bnt)->value;
+#define to_bns(n) ((struct bns_node *)n)
+
+int bns_compare(bn_node_t n1, bn_node_t n2) {
+  int value1 = to_bns(n1)->value;
+  int value2 = to_bns(n2)->value;
   return value1 - value2;
 }
 
