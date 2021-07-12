@@ -16,6 +16,7 @@ typedef struct rbi_node {
 static rbi_node_t rbi_create_node(int value);
 static rbi_node_t rbi_insert(bn_tree_t t, int value);
 static rbi_node_t rbi_search(bn_tree_t t, int value);
+static rbi_node_t rbi_delete(bn_tree_t t, int value);
 
 // ========== Macro viết nhanh ===========
 
@@ -49,6 +50,16 @@ static rbi_node_t rbi_search(bn_tree_t t, int value) {
   query.value = value;
   bn_node_t r = bns_search(t->root, to_bn(&query), rbi_compare);
   return to_rbi(r);
+}
+
+static rbi_node_t rbi_delete(bn_tree_t t, int value) {
+  rbi_node_t n = rbi_search(t, value);
+  if (t) {
+    if (rb_delete(t, to_bn(n)) == 1) {
+      return n;
+    }
+  }
+  return NULL_PTR;
 }
 
 #endif  // TESTS_RB_RBI_H_

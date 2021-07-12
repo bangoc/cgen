@@ -1,28 +1,6 @@
 #include "rbi.h"
+#include "rbi_helper.h"
 #include "tests/base/utils.h"
-
-struct match_args {
-  int *arr;
-  int n;
-  int i;
-  int ok;
-};
-
-int match_callback(bn_node_t nd, struct match_args *u) {
-  int value = rbi_value(nd);
-  if (u->i < u->n && u->arr[u->i] == value) {
-    ++(u->i);
-    return 0;
-  }
-  u->ok = 0;
-  return 1;
-}
-
-int lnr_match(bn_tree_t t, int *arr, int n) {
-  struct match_args args = {arr, n, 0, 1};
-  bn_inorder_lnr_foreach(t, match_callback, &args);
-  return args.ok;
-}
 
 int main() {
   bn_tree_t t = bn_create_tree(NULL_PTR);

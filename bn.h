@@ -27,12 +27,6 @@ typedef int (*bn_callback_t)();
 typedef int (*bn_compare_t)();
 typedef void (*bn_free_node_t)();
 
-#define to_bn(n) ((bn_node_t)n)
-#define bn_node_init(n, left_value, right_value, top_value) \
-  n->left = left_value; n->right = right_value; n->top = top_value
-
-#define bn_node_init_null(n) bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
-
 // ========== Khai báo hàm ===============
 
 static bn_node_t bn_create_node();
@@ -46,6 +40,13 @@ static bn_node_t bn_prev_inorder(bn_node_t x);
 static bn_node_t bn_next_inorder(bn_node_t x);
 
 // ========== Macro viết nhanh ===========
+
+#define to_bn(n) ((bn_node_t)n)
+#define bn_node_init(n, left_value, right_value, top_value) \
+  n->left = left_value; n->right = right_value; n->top = top_value
+
+#define bn_node_init_null(n) bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
+#define bn_connect(n1, link, n2) to_bn(n1)->link = to_bn(n2)
 
 #define bn_postorder_foreach_inline(cur, tree) \
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
