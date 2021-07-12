@@ -54,7 +54,7 @@ static rbi_node_t rbi_search(bn_tree_t t, int value) {
 
 static rbi_node_t rbi_delete(bn_tree_t t, int value) {
   rbi_node_t n = rbi_search(t, value);
-  if (t) {
+  if (n) {
     if (rb_delete(t, to_bn(n)) == 1) {
       return n;
     }
