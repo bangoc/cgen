@@ -27,9 +27,10 @@ static int s2i_value_ref(bn_tree_t t, char *key, long **value);
 static long s2i_value(bn_tree_t t, char *key);
 static int s2i_delete(bn_tree_t t, char *key);
 static int s2i_compare(bn_node_t x, bn_node_t y);
-static void s2i_free_node(s2i_node_t n);
+static void s2i_free_node(bn_node_t n);
 static void s2i_free(bn_tree_t *t);
 static void s2i_postorder_print(bn_tree_t tree);
+static void s2i_node_print(bn_node_t n);
 
 // ========== Macro viết nhanh ===========
 
@@ -45,17 +46,14 @@ static int s2i_compare(bn_node_t x, bn_node_t y) {
   return strcmp(s1, s2);
 }
 
-static void s2i_free_node(s2i_node_t n) {
-  free(n->key);
+static void s2i_free_node(bn_node_t n) {
+  s2i_node_t p = to_s2i(n);
+  free(p->key);
   free(n);
 }
 
-static void s2i_bn_free_node(bn_node_t n) {
-  s2i_free_node(to_s2i(n));
-}
-
 static void s2i_free(bn_tree_t *tp) {
-  bn_free_tree(tp, s2i_bn_free_node);
+  bn_free_tree(tp, s2i_free_node);
 }
 
 static void s2i_postorder_print(bn_tree_t tree) {
@@ -109,10 +107,15 @@ static int s2i_delete(bn_tree_t t, char *key) {
   s2i_node_t n = s2i_search(t, key);
   if (n) {
     rb_delete(t, to_bn(n));
-    s2i_free_node(n);
+    s2i_free_node(to_bn(n));
     return 1;
   }
   return 0;
+}
+
+static void s2i_node_print(bn_node_t n) {
+  s2i_node_t tmp = to_s2i(n);
+  printf("(%s, %ld)\n", tmp->key, tmp->value);
 }
 
 #endif  // S2I_H_

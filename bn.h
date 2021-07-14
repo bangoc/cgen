@@ -7,6 +7,7 @@
 
 #include "core.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
 
@@ -26,6 +27,7 @@ typedef struct bn_tree {
 typedef int (*bn_callback_t)();
 typedef int (*bn_compare_t)();
 typedef void (*bn_free_node_t)();
+typedef void (*bn_node_print_t)();
 
 // ========== Khai báo hàm ===============
 
@@ -38,6 +40,8 @@ static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
 
 static bn_node_t bn_prev_inorder(bn_node_t x);
 static bn_node_t bn_next_inorder(bn_node_t x);
+static void bn_pprint(bn_node_t root, bn_node_print_t nprt,
+      int spaces, int inc);
 
 // ========== Macro viết nhanh ===========
 
@@ -208,6 +212,23 @@ static void bn_inorder_rnl_foreach(bn_tree_t t, bn_callback_t op, void *u) {
     if (op(nd, u)) {
       break;
     }
+  }
+}
+
+static void bn_pprint(bn_node_t root, bn_node_print_t nprt,
+      int spaces, int step) {
+  if (!root) {
+    return;
+  }
+  if (root->right) {
+    bn_pprint(root->right, nprt, spaces + step, step);
+  }
+  for (int i = 0; i < spaces; ++i) {
+    printf(" ");
+  }
+  nprt(root);
+  if (root->left) {
+    bn_pprint(root->left, nprt, spaces + step, step);
   }
 }
 

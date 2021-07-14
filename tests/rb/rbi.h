@@ -17,6 +17,7 @@ static rbi_node_t rbi_create_node(int value);
 static rbi_node_t rbi_insert(bn_tree_t t, int value);
 static rbi_node_t rbi_search(bn_tree_t t, int value);
 static rbi_node_t rbi_delete(bn_tree_t t, int value);
+static void rbi_node_print(bn_node_t n);
 
 // ========== Macro viết nhanh ===========
 
@@ -60,6 +61,10 @@ static rbi_node_t rbi_delete(bn_tree_t t, int value) {
     }
   }
   return NULL_PTR;
+}
+
+static void rbi_node_print(bn_node_t n) {
+  printf("%d\n", rbi_value(n));
 }
 
 #endif  // TESTS_RB_RBI_H_
