@@ -28,6 +28,8 @@ typedef enum {
   RB_BLACK = 1
 } rb_node_color_t;
 
+static const char * color_names[] = {"Đỏ", "Đen"};
+
 typedef struct rb_node {
   struct bn_node bn_node;
   rb_node_color_t color;
@@ -52,6 +54,7 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 // ========== Macro viết nhanh ===========
 #define to_rb(n) ((rb_node_t)n)
 #define rb_color(n) (n? to_rb(n)->color: RB_BLACK)
+#define rb_color_str(n) color_names[(int)rb_color(n)]
 #define rb_set_color(n, new_color) to_rb(n)->color = new_color
 #define rb_node_init(n, left_value, right_value, top_value, color_value) \
   bn_node_init(to_bn(n), to_bn(left_value), to_bn(right_value), to_bn(top_value)); \

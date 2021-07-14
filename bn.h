@@ -40,8 +40,7 @@ static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
 
 static bn_node_t bn_prev_inorder(bn_node_t x);
 static bn_node_t bn_next_inorder(bn_node_t x);
-static void bn_pprint(bn_node_t root, bn_node_print_t nprt,
-      int spaces, int inc);
+static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 
 // ========== Macro viết nhanh ===========
 
@@ -215,21 +214,29 @@ static void bn_inorder_rnl_foreach(bn_tree_t t, bn_callback_t op, void *u) {
   }
 }
 
-static void bn_pprint(bn_node_t root, bn_node_print_t nprt,
+static void bn_pprint_internal(bn_node_t root, bn_node_print_t nprt,
       int spaces, int step) {
   if (!root) {
     return;
   }
   if (root->right) {
-    bn_pprint(root->right, nprt, spaces + step, step);
+    bn_pprint_internal(root->right, nprt, spaces + step, step);
   }
   for (int i = 0; i < spaces; ++i) {
     printf(" ");
   }
   nprt(root);
   if (root->left) {
-    bn_pprint(root->left, nprt, spaces + step, step);
+    bn_pprint_internal(root->left, nprt, spaces + step, step);
   }
+}
+
+static int g_bn_pprint_spaces_at_begin = 0;
+static int g_bn_pprint_step = 3;
+
+static void bn_pprint(bn_tree_t t, bn_node_print_t nprt) {
+  bn_pprint_internal(t->root, nprt, g_bn_pprint_spaces_at_begin,
+        g_bn_pprint_step);
 }
 
 #endif  // BN_H_
