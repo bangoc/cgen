@@ -2,15 +2,21 @@
 #define TESTS_RB_RBI_HELPER_H_
 
 struct match_args {
-  int *arr;
+  void *arr;
   int n;
   int i;
   int ok;
 };
 
-static int match_callback(bn_node_t nd, struct match_args *u) {
+struct attrib {
+  int value;
+  int color;
+};
+
+static int match_value_callback(bn_node_t nd, struct match_args *u) {
   int value = rbi_value(nd);
-  if (u->i < u->n && u->arr[u->i] == value) {
+  int tmp = ((int*)u->arr)[u->i];
+  if (u->i < u->n && tmp == value) {
     ++(u->i);
     return 0;
   }
@@ -18,7 +24,42 @@ static int match_callback(bn_node_t nd, struct match_args *u) {
   return 1;
 }
 
-int lnr_match(bn_tree_t t, int *arr, int n) {
+static int match_color_callback(bn_node_t nd, struct match_args *u) {
+  int color = (int)rb_color(nd);
+  int tmp = ((int*)u->arr)[u->i];
+  if (u->i < u->n && tmp == color) {
+    ++(u->i);
+    return 0;
+  }
+  u->ok = 0;
+  return 1;
+}
+
+static int match_callback(bn_node_t nd, struct match_args *u) {
+  int value = rbi_value(nd);
+  int color = (int)rb_color(nd);
+  struct attrib *p = ((struct attrib*)u->arr) + u->i;
+  if (u->i < u->n && p->value == value && p->color == color) {
+    ++(u->i);
+    return 0;
+  }
+  u->ok = 0;
+  return 1;
+}
+
+static int lnr_match_value(bn_tree_t t, int *arr, int n) {
+  struct match_args args = {arr, n, 0, 1};
+  bn_inorder_lnr_foreach(t, match_value_callback, &args);
+  return args.ok;
+}
+
+static int lnr_match_color(bn_tree_t t, int *arr, int n) {
+  struct match_args args = {arr, n, 0, 1};
+  bn_inorder_lnr_foreach(t, match_color_callback, &args);
+  return args.ok;
+}
+
+static int lnr_match_attrib(bn_tree_t t, struct attrib *arr, int n) {
   struct match_args args = {arr, n, 0, 1};
   bn_inorder_lnr_foreach(t, match_callback, &args);
   return args.ok;

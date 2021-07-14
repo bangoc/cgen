@@ -22,9 +22,10 @@
  *    cùng số lượng nút đen.
  */
 
+// đỏ = 0, đen = 1 như vậy chúng ta có tổng giá trị mầu = số lượng nút đen
 typedef enum {
-  RB_BLACK,
-  RB_RED
+  RB_RED = 0,
+  RB_BLACK = 1
 } rb_node_color_t;
 
 typedef struct rb_node {
@@ -195,7 +196,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
     /*
     * Các tính chất bất biến trong vòng lặp:
     * - node là nút đen (hoặc NULL trong lần lặp đầu tiên)
-    * - node không phải là nút gốc (top khác NULL_PTR)
+    * - node không phải là nút gốc (top của nó khác NULL_PTR)
     * - Tất cả các đường dẫn tới nút lá đi qua parent va node có số
     *   lượng nút đen ít hơn 1 so với các đường dẫn khác.
     */
@@ -305,7 +306,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
     } else {
       sibling = parent->left;
       if (rb_is_red(sibling)) {
-        // Trường hợp 1 - Xoay trái tại parent
+        // Trường hợp 1 - Xoay phải tại parent
         tmp1 = sibling->right;
         parent->left = tmp1;
         sibling->right = parent;
@@ -341,7 +342,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
         tmp1 = sibling;
         sibling = tmp2;
       }
-      // Trường hợp 4 - Xoay phải ở parent và lật mầu
+      // Trường hợp 4 - Xoay phải ở parent và lật mầu các nút
       tmp2 = sibling->right;
       parent->left = tmp2;
       sibling->right = parent;
