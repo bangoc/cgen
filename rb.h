@@ -408,7 +408,7 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
       parent = successor;
       child2 = successor->right;
     } else {
-      /* Trường hợp 3: Nút liền sau node là nút trái nhất trong của
+      /* Trường hợp 3: Nút liền sau node là nút trái nhất trong
        * cây con phải của node
        *
        *    (n)          (s)

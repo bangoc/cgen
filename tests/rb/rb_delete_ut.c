@@ -211,10 +211,47 @@ int test_delete_red_node_red_successor() {
       -5B  7B  20B   38B
   */
   free(rbi_delete(t, 35));
-  printf("------------------------\n");
   CHECK_MSG(lnr_match_attrib(t, (struct attrib[]){{-5, 1}, {5, 0}, {7, 1},
             {10, 1}, {20, 1}, {36, 0}, {38, 1}}, 7), "Thuộc tính sau khi xóa 35");
 
+  return 0;
+}
+
+int test_delete_black_node_black_successor_no_child() {
+  rbi_node_t root = rbi_create_node(10);
+  bn_tree_t t = bn_create_tree(to_bn(root));
+  rbi_node_t m10 = rbi_create_node(-10);
+
+  // Cây con trái
+  bn_connect(m10, top, root);
+
+  // Cây con phải
+  rbi_node_t n30 = rbi_create_node(30);
+  rb_set_red(n30);
+  bn_connect(n30, top, root);
+  rbi_node_t n20 = rbi_create_node(20);
+  bn_connect(n20, top, n30);
+  rbi_node_t n38 = rbi_create_node(38);
+  bn_connect(n38, top, n30);
+  bn_connect(n30, left, n20);
+  bn_connect(n30, right, n38);
+
+  bn_connect(root, left, m10);
+  bn_connect(root, right, n30);
+
+  /*
+                        10B  <-- Xóa
+                 -10B     30R
+     Nút liền sau -->   20B  38B
+     -------Kết quả---->
+                        20B
+                 -10B     30B
+                              38R
+
+  */
+  free(rbi_delete(t, 10));
+  CHECK_MSG(lnr_match_attrib(t, (struct attrib[]){{-10, 1}, {20, 1},
+      {30, 1}, {38, 0}}, 4), "Thuộc tính sau khi xóa 10");
   return 0;
 }
 
@@ -223,5 +260,7 @@ int main() {
   CHECK_MSG(test_delete_root_2nodes() == 0, "lỗi ở test_delete_root_2nodes");
   CHECK_MSG(test_delete_single_deep_child() == 0, "lỗi ở test_delete_single_deep_child");
   CHECK_MSG(test_delete_red_node_red_successor() == 0, "lỗi ở test_delete_red_node_red_successor");
+  CHECK_MSG(test_delete_black_node_black_successor_no_child() == 0,
+        "lỗi ở test_delete_black_node_black_successor_no_child");
   return 0;
 }
