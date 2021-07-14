@@ -166,9 +166,62 @@ int test_delete_single_deep_child() {
   return 0;
 }
 
+int test_delete_red_node_red_successor() {
+  rbi_node_t r = rbi_create_node(10);
+  bn_tree_t t = bn_create_tree(to_bn(r));
+
+  //  Nhánh trái
+  rbi_node_t n5 = rbi_create_node(5);
+  rb_set_red(n5);
+  rbi_node_t m5 = rbi_create_node(-5);
+  bn_connect(m5, top, n5);
+  bn_connect(n5, left, m5);
+  rbi_node_t n7 = rbi_create_node(7);
+  bn_connect(n7, top, n5);
+  bn_connect(n5, right, n7);
+
+  // Nhánh phải
+  rbi_node_t n35 = rbi_create_node(35);
+  rb_set_red(n35);
+  rbi_node_t n20 = rbi_create_node(20);
+  bn_connect(n20, top, n35);
+  bn_connect(n35, left, n20);
+  rbi_node_t n38 = rbi_create_node(38);
+  bn_connect(n38, top, n35);
+  bn_connect(n35, right, n38);
+
+  rbi_node_t n36 = rbi_create_node(36);
+  rb_set_red(n36);
+  bn_connect(n36, top, n38);
+  bn_connect(n38, left, n36);
+
+  bn_connect(n5, top, r);
+  bn_connect(r, left, n5);
+  bn_connect(n35, top, r);
+  bn_connect(r, right, n35);
+
+  /*
+            10B
+         5R       35R         <-- Xóa
+      -5B  7B  20B   38B
+                    36R
+    ---- Thu được -------
+            10B
+         5R       36R
+      -5B  7B  20B   38B
+  */
+  free(rbi_delete(t, 35));
+  printf("------------------------\n");
+  CHECK_MSG(lnr_match_attrib(t, (struct attrib[]){{-5, 1}, {5, 0}, {7, 1},
+            {10, 1}, {20, 1}, {36, 0}, {38, 1}}, 7), "Thuộc tính sau khi xóa 35");
+
+  return 0;
+}
+
 int main() {
   CHECK_MSG(test_delete_root() == 0, "lỗi ở test_delete_root");
   CHECK_MSG(test_delete_root_2nodes() == 0, "lỗi ở test_delete_root_2nodes");
   CHECK_MSG(test_delete_single_deep_child() == 0, "lỗi ở test_delete_single_deep_child");
+  CHECK_MSG(test_delete_red_node_red_successor() == 0, "lỗi ở test_delete_red_node_red_successor");
   return 0;
 }
