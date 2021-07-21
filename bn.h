@@ -36,11 +36,15 @@ static bn_tree_t bn_create_tree(bn_node_t node);
 static void bn_free_tree(bn_tree_t *t, bn_free_node_t fn);
 static bn_node_t bn_first_postorder(bn_tree_t t);
 static bn_node_t bn_next_postorder(bn_node_t node);
-static void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u);
+static void bn_postorder_foreach(bn_tree_t t,
+  bn_callback_t op, void *u);
 
 static bn_node_t bn_prev_inorder(bn_node_t x);
 static bn_node_t bn_next_inorder(bn_node_t x);
 static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
+
+// hỗ trợ kiểm thử
+static int bn_same_tree(bn_tree_t t1, bn_tree_t t2, bn_compare_t cmp);
 
 // ========== Macro viết nhanh ===========
 
@@ -48,8 +52,11 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
 
-#define bn_node_init_null(n) bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
+#define bn_node_init_null(n) \
+    bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
 #define bn_connect(n1, link, n2) to_bn(n1)->link = to_bn(n2)
+#define bn_connect2(n1, link1, n2, link2) bn_connect(n1, link1, n2); \
+    bn_connect(n2, link2, n1)
 
 #define bn_postorder_foreach_inline(cur, tree) \
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
@@ -238,5 +245,25 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt) {
   bn_pprint_internal(t->root, nprt, g_bn_pprint_spaces_at_begin,
         g_bn_pprint_step);
 }
+
+static int bn_same_tree_internal(bn_node_t n1, bn_node_t n2, bn_compare_t cmp) {
+  if (n1 == NULL_PTR && n2 == NULL_PTR) {
+    return 1;
+  }
+
+  if ((n1 == NULL_PTR && n2 != NULL_PTR) || (n1 != NULL_PTR && n2 == NULL_PTR)) {
+    return 0;
+  }
+
+  return cmp(n1, n2) == 0 &&
+         bn_same_tree_internal(n1->left, n2->left, cmp) &&
+         bn_same_tree_internal(n1->right, n2->right, cmp);
+}
+
+static int bn_same_tree(bn_tree_t t1,
+    bn_tree_t t2, bn_compare_t cmp) {
+  return bn_same_tree_internal(t1->root, t2->root, cmp);
+}
+
 
 #endif  // BN_H_
