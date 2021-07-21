@@ -43,9 +43,6 @@ static bn_node_t bn_prev_inorder(bn_node_t x);
 static bn_node_t bn_next_inorder(bn_node_t x);
 static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 
-// hỗ trợ kiểm thử
-static int bn_same_tree(bn_tree_t t1, bn_tree_t t2, bn_compare_t cmp);
-
 // ========== Macro viết nhanh ===========
 
 #define to_bn(n) ((bn_node_t)n)
@@ -245,25 +242,5 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt) {
   bn_pprint_internal(t->root, nprt, g_bn_pprint_spaces_at_begin,
         g_bn_pprint_step);
 }
-
-static int bn_same_tree_internal(bn_node_t n1, bn_node_t n2, bn_compare_t cmp) {
-  if (n1 == NULL_PTR && n2 == NULL_PTR) {
-    return 1;
-  }
-
-  if ((n1 == NULL_PTR && n2 != NULL_PTR) || (n1 != NULL_PTR && n2 == NULL_PTR)) {
-    return 0;
-  }
-
-  return cmp(n1, n2) == 0 &&
-         bn_same_tree_internal(n1->left, n2->left, cmp) &&
-         bn_same_tree_internal(n1->right, n2->right, cmp);
-}
-
-static int bn_same_tree(bn_tree_t t1,
-    bn_tree_t t2, bn_compare_t cmp) {
-  return bn_same_tree_internal(t1->root, t2->root, cmp);
-}
-
 
 #endif  // BN_H_

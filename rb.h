@@ -369,8 +369,8 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
   if (!tmp) {
     /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
      *
-     * Nếu có một con thì nó phải là nút đỏ do tính chất 5,
-     * và node phải là nút đen theo tính chất 4. Chúng ta điều chỉnh
+     * Nếu có một con thì nút con phải là nút đỏ do tính chất 5,
+     * và nó phải là nút đen theo tính chất 4. Chúng ta điều chỉnh
      * mầu trong lân cận để tránh gọi hàm sửa mầu sau này.
      */
     p = rb_parent(node);
