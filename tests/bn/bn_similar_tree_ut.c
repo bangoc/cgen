@@ -1,5 +1,5 @@
 #include "bn.h"
-#include "tests/base/bn_utils.h"
+#include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
 int bn_similar_null(bn_node_t n1, bn_node_t n2) {

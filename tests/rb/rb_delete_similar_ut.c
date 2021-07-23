@@ -1,5 +1,5 @@
 #include "tests/rb/rbi.h"
-#include "tests/base/bn_utils.h"
+#include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
 bn_tree_t make_tree1() {

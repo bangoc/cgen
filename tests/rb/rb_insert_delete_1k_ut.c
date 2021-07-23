@@ -1,6 +1,5 @@
 #include "rbi.h"
-#include "rbi_helper.h"
-#include "tests/base/bn_utils.h"
+#include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
 #define N 1000

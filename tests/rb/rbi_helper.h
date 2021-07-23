@@ -1,6 +1,8 @@
 #ifndef TESTS_RB_RBI_HELPER_H_
 #define TESTS_RB_RBI_HELPER_H_
 
+#include "tests/rb/rbi.h"
+
 struct match_args {
   void *arr;
   int n;

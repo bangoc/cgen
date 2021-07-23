@@ -1,6 +1,6 @@
 #include "rbi.h"
 
-#include "tests/base/bn_utils.h"
+#include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
 int t1() {

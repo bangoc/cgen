@@ -1,5 +1,5 @@
 #include "rbi.h"
-#include "tests/base/bn_utils.h"
+#include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
 #include <stdlib.h>
