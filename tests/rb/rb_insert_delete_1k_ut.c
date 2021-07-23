@@ -21,7 +21,8 @@ int main() {
 
   // delete
   for (int i = N - 1; i >= 0; --i) {
-    rbi_delete(t, a[i]);
+    rbi_node_t nd = rbi_delete(t, a[i]);
+    CHECK_MSG(nd && nd->value == a[i], "Lỗi giá trị trả về bởi hàm xóa.");
     CHECK_MSG(lnr_match_value(t, a, i), "Lỗi xóa giá trị");
     CHECK_MSG(rb_is_valid(t), "Lỗi cây đỏ-đen");
   }
