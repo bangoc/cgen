@@ -195,8 +195,8 @@ static void rb_rotate_set_parents(bn_node_t old_node,
 
 static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
   bn_node_t node = NULL, sibling,
-                   c,  // Con của sibling ở phía gần node (close)
-                   d;  // Con của sibling ở phía xa node (distant)
+          cn,  // Con của sibling ở phía gần node (close nephew)
+          dn;  // Con của sibling ở phía xa node (distant nephew)
   while (true) {
     /*
     * Các tính chất bất biến trong vòng lặp:
@@ -208,39 +208,43 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
     sibling = parent->right;
     if (node != sibling) {  // node == parent->left
 #define ERASE_COLOR_SYMMETRY(left, right) \
+      /* Trong các ký hiệu cây chữ cái đầu viết thường là nút đỏ, \
+       *    chữ cái đầu viết hoa là nút đen, \
+       *    nút được để trong ngoặc có thể là đỏ hoặc đen. \
+      */ \
       if (rb_is_red(sibling)) { \
         /* \
          * Trường hợp 1 - Xoay trái ở parent      \
          *                                        \
          *     P               S                  \
          *    / \             / \                 \
-         *   N   s    -->    p   Sr               \
+         *   N   s    -->    p   Dn               \
          *      / \         / \                   \
-         *     Sl  Sr      N   Sl                 \
+         *     Cn  Dn      N   Cn <- sibling mới  \
          */                                       \
-        c = sibling->left; \
-        bn_connect2(parent, right, c, top); \
+        cn = sibling->left; \
+        bn_connect2(parent, right, cn, top); \
         bn_connect1(sibling, left, parent); \
         rb_rotate_set_parents(parent, sibling, t, RB_RED); \
-        sibling = c; \
+        sibling = cn; \
       } \
-      d = sibling->right; \
-      if (!d || rb_is_black(d)) { \
-        c = sibling->left; \
-        if (!c || rb_is_black(c)) { \
+      dn = sibling->right; \
+      if (!dn || rb_is_black(dn)) { \
+        cn = sibling->left; \
+        if (!cn || rb_is_black(cn)) { \
           /*  \
-           * Trường hợp 2 - Lật mầu sibling, p có thể có mầu bất kỳ  \
+           * Trường hợp 2 - Đảo mầu sibling, p có thể có mầu bất kỳ  \
            *                                                         \
            *    (p)           (p)                                    \
            *    / \           / \                                    \
            *   N   S    -->  N   s                                   \
            *      / \           / \                                  \
-           *     Sl  Sr        Sl  Sr                                \
+           *     Cn  Dn        Cn  Dn                                \
            *                                                         \
            * Điều này dẫn tới vi phạm ràng buộc 5), vi phạm này có   \
-           * thể được khắc phục bằng cách lật mầu p thành đen nếu nó \
-           * là nút đỏ, hoặc đệ quy tại p. Nút p có mầu đỏ sau khi   \
-           * xử lý trường hợp 1.                                     \
+           * thể được khắc phục bằng cách đảo mầu p thành đen nếu nó \
+           * là nút đỏ, hoặc đệ quy tại p nếu ngược lại. Nút p có    \
+           * mầu đỏ sau khi xử lý trường hợp 1.                      \
            */                                                        \
           rb_set_color(sibling, RB_RED); \
           if (rb_is_red(parent)) { \
@@ -260,51 +264,53 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
          *                                                           \
          *              (p)           (p)                            \
          *              / \           / \                            \
-         *             N   S    -->  N   sl                          \
+         *             N   S    -->  N   cn                          \
          *                / \             \                          \
-         *           c-> sl  Sr <-(d)      S                         \
-         *                 <-d              \                        \
-         *                                   Sr                      \
-         * Lưu ý: p có thể là nút đỏ, và như vậy cả p và sl đều là   \
-         * các nút đỏ sau khi xoay (vi phạm ràng buộc 4). Vấn đề này \
-         * được xử lý trong trường hợp 4 (trong                      \
-         * rb_rotate_set_parents() mầu của sl được thiết lập bằng    \
-         * mầu của p và mầu của p được thiết lập bằng RB_BLACK)      \
+         *               cn  Dn            S                         \
+         *                                  \                        \
+         *                                   Dn                      \
+         * Lưu ý: + p có thể là nút đỏ, và như vậy cả p và Cn đều    \
+         * là các nút đỏ sau khi xoay (vi phạm ràng buộc 4).         \
+         * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm một    \
+         * nút đen (S, vi phạm tính chất 5).                         \
+         * Các vấn đề  này được xử lý trong trường hợp 4 (trong      \
+         * rb_rotate_set_parents() - cn được tô bằng mầu của p       \
+         * và p được tô mầu đen)                                     \
          *                                                           \
-         *   (p)            (sl)                                     \
+         *   (p)            (cn)                                     \
          *   / \            /  \                                     \
-         *  N   sl   -->   P    S                                    \
+         *  N   cn   -->   P    S                                    \
          *       \        /      \                                   \
-         *        S      N        Sr                                 \
+         *        S      N        Dn                                 \
          *         \                                                 \
-         *          Sr                                               \
+         *          Dn                                               \
          */                                                          \
-        bn_node_t tmp = c->right; \
-        bn_connect2(c, right, sibling, top); \
-        parent->right = c; \
+        bn_node_t tmp = cn->right; \
+        bn_connect2(cn, right, sibling, top); \
+        parent->right = cn; \
         sibling->left = tmp; \
         if (tmp) { \
           bn_connect1(tmp, top, sibling); \
         } \
-        d = sibling; \
-        sibling = c; \
+        dn = sibling; \
+        sibling = cn; \
       } \
-      /* Trường hợp 4 - Xoay trái ở parent + lật mầu                 \
-       * (p và sl có thể có mầu bất kỳ ở đây. Sau khi xoay p có mầu  \
-       * đen, s có mầu của p, và sl giữ mầu của nó)                  \
+      /* Trường hợp 4 - Xoay trái ở parent + đảo mầu                 \
+       * (p và cn có thể có mầu bất kỳ ở đây. Sau khi xoay p có mầu  \
+       * đen, s có mầu của p, và cn giữ mầu của nó)                  \
        *                                                             \
        *      (p)             (s)                                    \
        *      / \             / \                                    \
-       *     N   S     -->   P   Sr                                  \
+       *     N   S     -->   P   Dn                                  \
        *        / \         / \                                      \
-       *      (sl) sr      N  (sl)                                   \
+       *      (cn) dn      N  (cn)                                   \
        */                                                            \
-      c = sibling->left; \
-      parent->right = c; \
+      cn = sibling->left; \
+      parent->right = cn; \
       sibling->left = parent; \
-      rb_set_color(d, RB_BLACK); \
-      if (c) { \
-        rb_set_parent(c, parent); \
+      rb_set_color(dn, RB_BLACK); \
+      if (cn) { \
+        rb_set_parent(cn, parent); \
       } \
       rb_rotate_set_parents(parent, sibling, t, RB_BLACK); \
       break
@@ -312,6 +318,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
     } else {
       sibling = parent->left;
       ERASE_COLOR_SYMMETRY(right, left);
+#undef ERASE_COLOR_SYMMETRY
     }
   }
   return t;
