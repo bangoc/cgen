@@ -271,8 +271,12 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
          *                                   Dn                      \
          * Lưu ý: + p có thể là nút đỏ, và như vậy cả p và Cn đều    \
          * là các nút đỏ sau khi xoay (vi phạm ràng buộc 4).         \
-         * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm một    \
-         * nút đen (S, vi phạm tính chất 5).                         \
+         *                                                           \
+         * + Trong triển khai này chúng ta chỉ thực hiện một phần    \
+         * các thao tác xoay phải tại sibling, vì vậy sau khi xử lý  \
+         * trường hợp 3 đường đi từ p qua cn sau đó rẽ về phía N bị  \
+         * giảm một nút đen (S, vi phạm tính chất 5).                \
+         *                                                           \
          * Các vấn đề  này được xử lý trong trường hợp 4 (trong      \
          * rb_rotate_set_parents() - cn được tô bằng mầu của p       \
          * và p được tô mầu đen)                                     \
