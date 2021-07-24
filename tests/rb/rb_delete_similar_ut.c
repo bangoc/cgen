@@ -179,8 +179,8 @@ int delete_red_node_no_child() {
            5B
       3B          6B
   */
-  bn_connect(n6, right, NULL_PTR);
-  bn_connect(n8, top, NULL_PTR);
+  bn_connect1(n6, right, NULL_PTR);
+  bn_connect1(n8, top, NULL_PTR);
 
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa thêm nút 8 trong cây 1");
   return 0;

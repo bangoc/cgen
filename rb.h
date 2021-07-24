@@ -220,7 +220,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
          */                                       \
         c = sibling->left; \
         bn_connect2(parent, right, c, top); \
-        bn_connect(sibling, left, parent); \
+        bn_connect1(sibling, left, parent); \
         rb_rotate_set_parents(parent, sibling, t, RB_RED); \
         sibling = c; \
       } \
@@ -284,7 +284,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
         parent->right = c; \
         sibling->left = tmp; \
         if (tmp) { \
-          bn_connect(tmp, top, sibling); \
+          bn_connect1(tmp, top, sibling); \
         } \
         d = sibling; \
         sibling = c; \

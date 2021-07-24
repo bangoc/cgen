@@ -51,9 +51,9 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 
 #define bn_node_init_null(n) \
     bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
-#define bn_connect(n1, link, n2) to_bn(n1)->link = to_bn(n2)
-#define bn_connect2(n1, link1, n2, link2) bn_connect(n1, link1, n2); \
-    bn_connect(n2, link2, n1)
+#define bn_connect1(n1, link, n2) to_bn(n1)->link = to_bn(n2)
+#define bn_connect2(n1, link1, n2, link2) bn_connect1(n1, link1, n2); \
+    bn_connect1(n2, link2, n1)
 
 #define bn_postorder_foreach_inline(cur, tree) \
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
