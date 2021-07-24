@@ -240,7 +240,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
            * là nút đỏ, hoặc đệ quy tại p. Nút p có mầu đỏ sau khi
            * xử lý trường hợp 1.
            */
-          rb_set_parent_color(sibling, parent, RB_RED);
+          rb_set_color(sibling, RB_RED);
           if (rb_is_red(parent)) {
             rb_set_black(parent);
           } else {
@@ -322,7 +322,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
         tmp2 = sibling->right;
         if (!tmp2 || rb_is_black(tmp2)) {
           // Trường hợp 2 - Lật mầu sibling
-          rb_set_parent_color(sibling, parent, RB_RED);
+          rb_set_color(sibling, RB_RED);
           if (rb_is_red(parent)) {
             rb_set_black(parent);
           } else {
