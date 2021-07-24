@@ -1,8 +1,8 @@
 # cgen
 Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản
 
-### Làm sao để sử dụng thư viện trong một ứng dụng khác?
-Thư viện được thiết kế chỉ bao gồm các tệp tiêu đề sao cho bạn có thể chèn vào rồi sử dụng luôn.
+### Làm sao để sử dụng cgen trong một ứng dụng khác?
+Thư viện cgen được thiết kế chỉ bao gồm các tệp tiêu đề sao cho bạn chỉ cần chèn vào để sử dụng.
 Ví dụ, để sử dụng bảng tham chiếu s2i bạn chỉ cần:
 
 ```C
