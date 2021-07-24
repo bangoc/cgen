@@ -194,165 +194,124 @@ static void rb_rotate_set_parents(bn_node_t old_node,
 }
 
 static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
-  bn_node_t node = NULL, sibling, tmp1, tmp2;
+  bn_node_t node = NULL, sibling,
+                   c,  // Con của sibling ở phía gần node (close)
+                   d;  // Con của sibling ở phía xa node (distant)
   while (true) {
     /*
     * Các tính chất bất biến trong vòng lặp:
     * - node là nút đen (hoặc NULL trong lần lặp đầu tiên)
     * - node không phải là nút gốc (top của nó khác NULL_PTR)
-    * - Tất cả các đường dẫn tới nút lá đi qua parent va node có số
+    * - Tất cả các đường dẫn tới lá đi qua parent va node có số
     *   lượng nút đen ít hơn 1 so với các đường dẫn khác.
     */
     sibling = parent->right;
     if (node != sibling) {  // node == parent->left
-      if (rb_is_red(sibling)) {
-        /*
-         * Trường hợp 1 - Xoay trái ở parent
-         *
-         *     P               S
-         *    / \             / \
-         *   N   s    -->    p   Sr
-         *      / \         / \
-         *     Sl  Sr      N   Sl
-         */
-        tmp1 = sibling->left;
-        bn_connect2(parent, right, tmp1, top);
-        bn_connect(sibling, left, parent);
-        rb_rotate_set_parents(parent, sibling, t, RB_RED);
-        sibling = tmp1;
-      }
-      tmp1 = sibling->right;
-      if (!tmp1 || rb_is_black(tmp1)) {
-        tmp2 = sibling->left;
-        if (!tmp2 || rb_is_black(tmp2)) {
-          /*
-           * Trường hợp 2 - Lật mầu sibling, p có thể có mầu bất kỳ
-           *
-           *    (p)           (p)
-           *    / \           / \
-           *   N   S    -->  N   s
-           *      / \           / \
-           *     Sl  Sr        Sl  Sr
-           *
-           * Điều này dẫn tới vi phạm ràng buộc 5), vi phạm này có
-           * thể được khắc phục bằng cách lật mầu p thành đen nếu nó
-           * là nút đỏ, hoặc đệ quy tại p. Nút p có mầu đỏ sau khi
-           * xử lý trường hợp 1.
-           */
-          rb_set_color(sibling, RB_RED);
-          if (rb_is_red(parent)) {
-            rb_set_black(parent);
-          } else {
-            node = parent;
-            parent = rb_parent(node);
-            if (parent) {
-              continue;
-            }
-          }
-          break;
-        }
-        /*
-         * Trường hợp 3 - Xoay phải tại sibling (p có thể có mầu bất
-         * kỳ)
-         *
-         *   (p)           (p)
-         *   / \           / \
-         *  N   S    -->  N   sl
-         *     / \             \
-         *    sl  Sr            S
-         *                       \
-         *                        Sr
-         * Lưu ý: p có thể là nút đỏ, và như vậy cả p và sl đều là
-         * các nút đỏ sau khi xoay (vi phạm ràng buộc 4). Vấn đề này
-         * được xử lý trong trường hợp 4 (trong
-         * rb_rotate_set_parents() mầu của sl được thiết lập bằng
-         * mầu của p và mầu của p được thiết lập bằng RB_BLACK)
-         *
-         *   (p)            (sl)
-         *   / \            /  \
-         *  N   sl   -->   P    S
-         *       \        /      \
-         *        S      N        Sr
-         *         \
-         *          Sr
-         */
-        tmp1 = tmp2->right;
-        sibling->left = tmp1;
-        tmp2->right = sibling;
-        parent->right = tmp2;
-        if (tmp1) {
-          rb_set_parent_color(tmp1, sibling, RB_BLACK);
-        }
-        tmp1 = sibling;
-        sibling = tmp2;
-      }
-      /* Trường hợp 4 - Xoay trái ở parent + lật mầu
-       * (p và sl có thể có mầu bất kỳ ở đây. Sau khi xoay p có mầu
-       * đen, s có mầu của p, và sl giữ mầu của nó)
-       *
-       *      (p)             (s)
-       *      / \             / \
-       *     N   S     -->   P   Sr
-       *        / \         / \
-       *      (sl) sr      N  (sl)
-       */
-      tmp2 = sibling->left;
-      parent->right = tmp2;
-      sibling->left = parent;
-      rb_set_parent_color(tmp1, sibling, RB_BLACK);
-      if (tmp2) {
-        rb_set_parent(tmp2, parent);
-      }
-      rb_rotate_set_parents(parent, sibling, t, RB_BLACK);
-      break;
+#define ERASE_COLOR_SYMMETRY(left, right) \
+      if (rb_is_red(sibling)) { \
+        /* \
+         * Trường hợp 1 - Xoay trái ở parent      \
+         *                                        \
+         *     P               S                  \
+         *    / \             / \                 \
+         *   N   s    -->    p   Sr               \
+         *      / \         / \                   \
+         *     Sl  Sr      N   Sl                 \
+         */                                       \
+        c = sibling->left; \
+        bn_connect2(parent, right, c, top); \
+        bn_connect(sibling, left, parent); \
+        rb_rotate_set_parents(parent, sibling, t, RB_RED); \
+        sibling = c; \
+      } \
+      d = sibling->right; \
+      if (!d || rb_is_black(d)) { \
+        c = sibling->left; \
+        if (!c || rb_is_black(c)) { \
+          /*  \
+           * Trường hợp 2 - Lật mầu sibling, p có thể có mầu bất kỳ  \
+           *                                                         \
+           *    (p)           (p)                                    \
+           *    / \           / \                                    \
+           *   N   S    -->  N   s                                   \
+           *      / \           / \                                  \
+           *     Sl  Sr        Sl  Sr                                \
+           *                                                         \
+           * Điều này dẫn tới vi phạm ràng buộc 5), vi phạm này có   \
+           * thể được khắc phục bằng cách lật mầu p thành đen nếu nó \
+           * là nút đỏ, hoặc đệ quy tại p. Nút p có mầu đỏ sau khi   \
+           * xử lý trường hợp 1.                                     \
+           */                                                        \
+          rb_set_color(sibling, RB_RED); \
+          if (rb_is_red(parent)) { \
+            rb_set_black(parent); \
+          } else { \
+            node = parent; \
+            parent = rb_parent(node); \
+            if (parent) { \
+              continue; \
+            } \
+          } \
+          break; \
+        } \
+        /* \
+         * Trường hợp 3 - Xoay phải tại sibling (p có thể có mầu bất \
+         * kỳ)                                                       \
+         *                                                           \
+         *              (p)           (p)                            \
+         *              / \           / \                            \
+         *             N   S    -->  N   sl                          \
+         *                / \             \                          \
+         *           c-> sl  Sr <-(d)      S                         \
+         *                 <-d              \                        \
+         *                                   Sr                      \
+         * Lưu ý: p có thể là nút đỏ, và như vậy cả p và sl đều là   \
+         * các nút đỏ sau khi xoay (vi phạm ràng buộc 4). Vấn đề này \
+         * được xử lý trong trường hợp 4 (trong                      \
+         * rb_rotate_set_parents() mầu của sl được thiết lập bằng    \
+         * mầu của p và mầu của p được thiết lập bằng RB_BLACK)      \
+         *                                                           \
+         *   (p)            (sl)                                     \
+         *   / \            /  \                                     \
+         *  N   sl   -->   P    S                                    \
+         *       \        /      \                                   \
+         *        S      N        Sr                                 \
+         *         \                                                 \
+         *          Sr                                               \
+         */                                                          \
+        bn_node_t tmp = c->right; \
+        bn_connect2(c, right, sibling, top); \
+        parent->right = c; \
+        sibling->left = tmp; \
+        if (tmp) { \
+          bn_connect(tmp, top, sibling); \
+        } \
+        d = sibling; \
+        sibling = c; \
+      } \
+      /* Trường hợp 4 - Xoay trái ở parent + lật mầu                 \
+       * (p và sl có thể có mầu bất kỳ ở đây. Sau khi xoay p có mầu  \
+       * đen, s có mầu của p, và sl giữ mầu của nó)                  \
+       *                                                             \
+       *      (p)             (s)                                    \
+       *      / \             / \                                    \
+       *     N   S     -->   P   Sr                                  \
+       *        / \         / \                                      \
+       *      (sl) sr      N  (sl)                                   \
+       */                                                            \
+      c = sibling->left; \
+      parent->right = c; \
+      sibling->left = parent; \
+      rb_set_color(d, RB_BLACK); \
+      if (c) { \
+        rb_set_parent(c, parent); \
+      } \
+      rb_rotate_set_parents(parent, sibling, t, RB_BLACK); \
+      break
+      ERASE_COLOR_SYMMETRY(left, right);
     } else {
       sibling = parent->left;
-      if (rb_is_red(sibling)) {
-        // Trường hợp 1 - Xoay phải tại parent
-        tmp1 = sibling->right;
-        bn_connect2(parent, left, tmp1, top);
-        bn_connect(sibling, right, parent);
-        rb_rotate_set_parents(parent, sibling, t, RB_RED);
-        sibling = tmp1;
-      }
-      tmp1 = sibling->left;
-      if (!tmp1 || rb_is_black(tmp1)) {
-        tmp2 = sibling->right;
-        if (!tmp2 || rb_is_black(tmp2)) {
-          // Trường hợp 2 - Lật mầu sibling
-          rb_set_color(sibling, RB_RED);
-          if (rb_is_red(parent)) {
-            rb_set_black(parent);
-          } else {
-            node = parent;
-            parent = rb_parent(node);
-            if (parent) {
-              continue;
-            }
-          }
-          break;
-        }
-        // Trường hợp 3 - Xoay trái ở sibling
-        tmp1 = tmp2->left;
-        sibling->right = tmp1;
-        tmp2->left = sibling;
-        parent->left = tmp2;
-        if (tmp1) {
-          rb_set_parent_color(tmp1, sibling, RB_BLACK);
-        }
-        tmp1 = sibling;
-        sibling = tmp2;
-      }
-      // Trường hợp 4 - Xoay phải ở parent và lật mầu các nút
-      tmp2 = sibling->right;
-      parent->left = tmp2;
-      sibling->right = parent;
-      rb_set_parent_color(tmp1, sibling, RB_BLACK);
-      if (tmp2) {
-        rb_set_parent(tmp2, parent);
-      }
-      rb_rotate_set_parents(parent, sibling, t, RB_BLACK);
-      break;
+      ERASE_COLOR_SYMMETRY(right, left);
     }
   }
   return t;
