@@ -216,9 +216,8 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
          *     Sl  Sr      N   Sl
          */
         tmp1 = sibling->left;
-        parent->right = tmp1;
-        sibling->left = parent;
-        rb_set_parent_color(tmp1, parent, RB_BLACK);
+        bn_connect2(parent, right, tmp1, top);
+        bn_connect(sibling, left, parent);
         rb_rotate_set_parents(parent, sibling, t, RB_RED);
         sibling = tmp1;
       }
@@ -311,9 +310,8 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
       if (rb_is_red(sibling)) {
         // Trường hợp 1 - Xoay phải tại parent
         tmp1 = sibling->right;
-        parent->left = tmp1;
-        sibling->right = parent;
-        rb_set_parent_color(tmp1, parent, RB_BLACK);
+        bn_connect2(parent, left, tmp1, top);
+        bn_connect(sibling, right, parent);
         rb_rotate_set_parents(parent, sibling, t, RB_RED);
         sibling = tmp1;
       }
