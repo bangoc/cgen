@@ -39,3 +39,5 @@ add_test(NAME RBInsertDeleteDuplicates COMMAND
                 rb_insert_delete_duplicates_ut)
 add_test(NAME S2IInsertDup COMMAND s2i_insert_dup_ut)
 add_test(NAME S2ISetDup COMMAND s2i_set_dup_ut)
+add_test(NAME BNSSearchGTE COMMAND bns_search_gte_ut)
+add_test(NAME BNSSearchLTE COMMAND bns_search_lte_ut)

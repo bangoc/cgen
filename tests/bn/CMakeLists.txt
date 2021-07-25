@@ -1,6 +1,5 @@
 add_executable(bn_most_ut bn_most_ut.c)
 add_executable(bn_transplant_ut bn_transplant_ut.c)
 add_executable(bn_next_prev_inorder_ut bn_next_prev_inorder_ut.c)
-add_executable(bns_search_ut bns_search_ut.c)
 add_executable(bn_foreach_ut bn_foreach_ut.c)
 add_executable(bn_similar_tree_ut bn_similar_tree_ut.c)

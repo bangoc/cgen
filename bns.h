@@ -11,6 +11,8 @@
 
 static bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp);
+
+// gte = greater than or equal, lte = less than or equal
 static bn_node_t bns_search_gte(bn_node_t root, const void *query,
         bn_compare_t cmp);
 static bn_node_t bns_search_lte(bn_node_t root, const void *query,
