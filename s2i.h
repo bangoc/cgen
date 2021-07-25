@@ -30,7 +30,7 @@ static int s2i_compare(bn_node_t x, bn_node_t y);
 static void s2i_free_node(bn_node_t n);
 static void s2i_free(bn_tree_t *t);
 static void s2i_postorder_print(bn_tree_t tree);
-static void s2i_node_print(bn_node_t n);
+static void s2i_print_node(bn_node_t n);
 
 // ========== Macro viết nhanh ===========
 
@@ -113,9 +113,9 @@ static int s2i_delete(bn_tree_t t, char *key) {
   return 0;
 }
 
-static void s2i_node_print(bn_node_t n) {
+static void s2i_print_node(bn_node_t n) {
   s2i_node_t tmp = to_s2i(n);
-  printf("(%s, %ld)\n", tmp->key, tmp->value);
+  printf("(%s, %ld) - %s\n", tmp->key, tmp->value, rb_color_str(n));
 }
 
 #endif  // S2I_H_
