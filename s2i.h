@@ -73,7 +73,7 @@ static s2i_node_t s2i_create_node(char *key, int value) {
 
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {
   s2i_node_t n = s2i_create_node(key, value);
-  rb_insert(t, to_bn(n), s2i_compare);
+  rb_insert_unique(t, to_bn(n), s2i_compare);
   return n;
 }
 
