@@ -11,6 +11,10 @@
 
 static bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp);
+static bn_node_t bns_search_gte(bn_node_t root, const void *query,
+        bn_compare_t cmp);
+static bn_node_t bns_search_lte(bn_node_t root, const void *query,
+        bn_compare_t cmp);
 
 static bn_node_t bns_can_hold(bn_node_t root, const void *data,
         bn_compare_t cmp);
@@ -31,6 +35,36 @@ static bn_node_t bns_search(bn_node_t root, const void *query,
     return root;
   }
   return bns_search(bns_child(root, order), query, cmp);
+}
+
+static bn_node_t bns_search_gte(bn_node_t root, const void *query,
+        bn_compare_t cmp) {
+  if (!root || cmp(query, root) == 0) {
+    return root;
+  }
+  if (cmp(query, root) > 0) {
+    return bns_search_gte(root->right, query, cmp);
+  }
+  bn_node_t res = bns_search_gte(root->left, query, cmp);
+  if (res) {
+    return res;
+  }
+  return root;
+}
+
+static bn_node_t bns_search_lte(bn_node_t root, const void *query,
+                                bn_compare_t cmp) {
+  if (!root || cmp(query, root) == 0) {
+    return root;
+  }
+  if (cmp(query, root) < 0) {
+    return bns_search_lte(root->left, query, cmp);
+  }
+  bn_node_t res = bns_search_lte(root->right, query, cmp);
+  if (res) {
+    return res;
+  }
+  return root;
 }
 
 static bn_node_t bns_can_hold(bn_node_t x, const void *data,
