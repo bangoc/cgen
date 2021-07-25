@@ -134,53 +134,23 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
 #undef IMPL_INSERT_FIXUP
 
 static bn_node_t rb_insert_internal(bn_tree_t t,
-          bn_node_t z, bn_node_t y, int order) {
-  /*
-   * z là nút đang được đưa vào cây
-   * y là đỉnh của z
-   */
-  z->top = y;
-  if (y == NULL_PTR) {
-    t->root = z;
+          bn_node_t node, bn_node_t parent, bn_compare_t cmp) {
+  node->top = parent;
+  if (parent == NULL_PTR) {
+    t->root = node;
   } else {
-    bns_set_child(y, order, z);
+    bns_set_child(parent, cmp(node, parent), node);
   }
-  z->left = NULL_PTR;
-  z->right = NULL_PTR;
-  rb_set_color(z, RB_RED);
-  rb_insert_fixup(t, z);
-  return z;
+  node->left = NULL_PTR;
+  node->right = NULL_PTR;
+  rb_set_red(node);
+  rb_insert_fixup(t, node);
+  return node;
 }
 
-static bn_node_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp) {
-  bn_node_t y = NULL_PTR,
-            x = t->root;
-  int order;
-  while (x != NULL_PTR) {
-    y = x;
-    order = cmp(z, x);
-    x = bns_child(x, order);
-  }
-  return rb_insert_internal(t, z, y, order);
-}
-
-static bn_node_t rb_insert_unique(bn_tree_t t, bn_node_t z,
-                           bn_compare_t cmp) {
-  bn_node_t y = NULL_PTR,
-            x = t->root;
-  int order;
-  while (x != NULL_PTR) {
-    y = x;
-    order = cmp(z, x);
-    if (order < 0) {
-      x = x->left;
-    } else if (order > 0) {
-      x = x->right;
-    } else {
-      return x == z? NULL_PTR: x;
-    }
-  }
-  return rb_insert_internal(t, z, y, order);
+static bn_node_t rb_insert(bn_tree_t t, bn_node_t node, bn_compare_t cmp) {
+  bn_node_t parent = bns_can_hold(t->root, node, cmp);
+  return rb_insert_internal(t, node, parent, cmp);
 }
 
 static void rb_set_parent_color(bn_node_t n, bn_node_t parent,

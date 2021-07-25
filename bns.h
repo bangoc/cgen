@@ -12,6 +12,9 @@
 static bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
+static bn_node_t bns_can_hold(bn_node_t root, const void *data,
+        bn_compare_t cmp);
+
 // ========== Macro viết nhanh ===========
 
 #define bns_child(n, order) (order < 0? to_bn(n)->left: \
@@ -28,6 +31,16 @@ static bn_node_t bns_search(bn_node_t root, const void *query,
     return root;
   }
   return bns_search(bns_child(root, order), query, cmp);
+}
+
+static bn_node_t bns_can_hold(bn_node_t x, const void *data,
+        bn_compare_t cmp) {
+  bn_node_t y = NULL_PTR;
+  while (x != NULL_PTR) {
+    y = x;
+    x = bns_child(x, cmp(data, x));
+  }
+  return y;
 }
 
 #endif  // BSNT_H_

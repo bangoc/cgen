@@ -32,7 +32,7 @@ static int s2i_value_ref(bn_tree_t t, const char *key, long **value);
 static long s2i_value(bn_tree_t t, const char *key);
 static int s2i_delete(bn_tree_t t, const char *key);
 static int s2i_compare(bn_node_t x, bn_node_t y);
-static int s2i_compare_search(void *q, bn_node_t n);
+static int s2i_compare_data(const void *q, bn_node_t n);
 static void s2i_free_node(bn_node_t n);
 static void s2i_free(bn_tree_t *t);
 static void s2i_postorder_print(bn_tree_t tree);
@@ -52,7 +52,7 @@ static int s2i_compare(bn_node_t x, bn_node_t y) {
   return strcmp(s1, s2);
 }
 
-static int s2i_compare_search(void *q, bn_node_t n) {
+static int s2i_compare_data(const void *q, bn_node_t n) {
   const char *s1 = (char*)q;
   const char *s2 = s2i_node_key(n);
   return strcmp(s1, s2);
@@ -84,26 +84,28 @@ static bn_node_t s2i_create_node(const char *key, long value) {
 }
 
 static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
-  bn_node_t n = s2i_create_node(key, value);
-  bn_node_t x = rb_insert_unique(t, n, s2i_compare);
-  if (x != n) { // existed
-    s2i_free_node(to_bn(n));
+  bn_node_t y = bns_can_hold(t->root, key, s2i_compare_data);
+  if (y && s2i_compare_data(key, y) == 0) {
+    return y;
   }
-  return x;
+  bn_node_t n = s2i_create_node(key, value);
+  rb_insert_internal(t, n, y, s2i_compare);
+  return n;
 }
 
 static bn_node_t s2i_set(bn_tree_t t, const char *key, long value) {
-  bn_node_t n = s2i_create_node(key, value);
-  bn_node_t x = rb_insert_unique(t, n, s2i_compare);
-  if (x != n) { // existed
-    s2i_free_node(to_bn(n));
-    to_s2i(x)->value = value;
+  bn_node_t y = bns_can_hold(t->root, key, s2i_compare_data);
+  if (y && s2i_compare_data(key, y) == 0) {
+    to_s2i(y)->value = value;
+    return y;
   }
-  return x;
+  bn_node_t n = s2i_create_node(key, value);
+  rb_insert_internal(t, n, y, s2i_compare);
+  return n;
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, const char *key) {
-  bn_node_t r = bns_search(t->root, key, s2i_compare_search);
+  bn_node_t r = bns_search(t->root, key, s2i_compare_data);
   return to_s2i(r);
 }
 
