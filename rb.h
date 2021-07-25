@@ -46,7 +46,7 @@ typedef struct rb_node {
 
 static rb_node_t rb_create_node();
 static bn_tree_t rb_create_tree();
-static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z,
+static bn_node_t rb_insert(bn_tree_t t, bn_node_t z,
                            bn_compare_t cmp);
 static int rb_delete(bn_tree_t t, bn_node_t z);
 
@@ -131,7 +131,7 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
 
 #undef IMPL_INSERT_FIXUP
 
-static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp) {
+static bn_node_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp) {
   bn_node_t y = NULL_PTR;
   bn_node_t x = t->root;
   while (x != NULL_PTR) {
@@ -154,7 +154,7 @@ static bn_tree_t rb_insert(bn_tree_t t, bn_node_t z, bn_compare_t cmp) {
   z->right = NULL_PTR;
   rb_set_color(z, RB_RED);
   rb_insert_fixup(t, z);
-  return t;
+  return z;
 }
 
 static void rb_set_parent_color(bn_node_t n, bn_node_t parent,
