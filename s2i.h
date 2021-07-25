@@ -20,8 +20,8 @@ static int k_s2i_invalid = -1;
 
 // ========== Khai báo hàm ===============
 
-static s2i_node_t s2i_create_node(char *key, int value);
-static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value);
+static bn_node_t s2i_create_node(char *key, int value);
+static bn_node_t s2i_insert(bn_tree_t t, char *key, int value);
 static s2i_node_t s2i_search(bn_tree_t t, char *key);
 static int s2i_value_ref(bn_tree_t t, char *key, long **value);
 static long s2i_value(bn_tree_t t, char *key);
@@ -35,14 +35,14 @@ static void s2i_print_node(bn_node_t n);
 // ========== Macro viết nhanh ===========
 
 #define to_s2i(n) ((s2i_node_t)n)
-#define s2i_key_from_bn_node(n) to_s2i(n)->key
-#define s2i_value_from_bn_node(n) to_s2i(n)->value
+#define s2i_node_key(n) to_s2i(n)->key
+#define s2i_node_value(n) to_s2i(n)->value
 
 // ========== Định nghĩa hàm =============
 
 static int s2i_compare(bn_node_t x, bn_node_t y) {
-  char *s1 = s2i_key_from_bn_node(x);
-  char *s2 = s2i_key_from_bn_node(y);
+  char *s1 = s2i_node_key(x);
+  char *s2 = s2i_node_key(y);
   return strcmp(s1, s2);
 }
 
@@ -63,21 +63,21 @@ static void s2i_postorder_print(bn_tree_t tree) {
   }
 }
 
-static s2i_node_t s2i_create_node(char *key, int value) {
+static bn_node_t s2i_create_node(char *key, int value) {
   s2i_node_t n = malloc(sizeof(struct s2i_node));
   rb_node_init_null((&n->rb_node));
   n->key = strdup(key);
   n->value = value;
-  return n;
+  return to_bn(n);
 }
 
-static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {
-  s2i_node_t n = s2i_create_node(key, value);
+static bn_node_t s2i_insert(bn_tree_t t, char *key, int value) {
+  bn_node_t n = s2i_create_node(key, value);
   bn_node_t x = rb_insert_unique(t, to_bn(n), s2i_compare);
   if (x != to_bn(n)) { // existed
     s2i_free_node(to_bn(n));
   }
-  return to_s2i(x);
+  return x;
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, char *key) {
