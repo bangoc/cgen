@@ -73,8 +73,11 @@ static s2i_node_t s2i_create_node(char *key, int value) {
 
 static s2i_node_t s2i_insert(bn_tree_t t, char *key, int value) {
   s2i_node_t n = s2i_create_node(key, value);
-  rb_insert_unique(t, to_bn(n), s2i_compare);
-  return n;
+  bn_node_t x = rb_insert_unique(t, to_bn(n), s2i_compare);
+  if (x != to_bn(n)) { // existed
+    s2i_free_node(to_bn(n));
+  }
+  return to_s2i(x);
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, char *key) {
