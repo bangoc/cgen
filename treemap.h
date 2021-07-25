@@ -17,8 +17,10 @@ static gtype k_tm_invalid = (gtype){.i = -1};
 
 // ========== Khai báo hàm ===============
 
-static treemap_node_t tm_create_node(gtype key, gtype value);
-static treemap_node_t tm_insert(bn_tree_t t, gtype key, gtype value,
+static bn_node_t tm_create_node(gtype key, gtype value);
+
+// Nếu đã có khóa thì bỏ qua và trả về nút tương ứng với khóa
+static bn_node_t tm_insert(bn_tree_t t, gtype key, gtype value,
                       bn_compare_t cmp);
 static int tm_value_ref(bn_tree_t t, gtype key, gtype **value,
                           bn_compare_t cmp);
@@ -33,33 +35,39 @@ static int tm_delete(bn_tree_t t, gtype key,
 // ========== Macro viết nhanh ===========
 
 #define to_tm(n) ((treemap_node_t)n)
-#define tm_key_from_bn_node(n) to_tm(n)->key
-#define tm_value_from_bn_node(n) to_tm(n)->value
+#define tm_node_key(n) to_tm(n)->key
+#define tm_node_value(n) to_tm(n)->value
 #define tm_postorder_foreach_inline(cur, t) \
   for (void *cur = bn_first_postorder(t); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
 // ========== Định nghĩa hàm =============
 
-static treemap_node_t tm_create_node(gtype key, gtype value) {
+static bn_node_t tm_create_node(gtype key, gtype value) {
   treemap_node_t n = malloc(sizeof(struct treemap_node));
   rb_node_init_null((&n->rb_node));
   n->key = key;
   n->value = value;
-  return n;
+  return to_bn(n);
 }
 
-static treemap_node_t tm_insert(bn_tree_t t,
+static bn_node_t tm_insert(bn_tree_t t,
                       gtype key, gtype value,
                       bn_compare_t cmp) {
-  treemap_node_t n = tm_create_node(key, value);
-  rb_insert(t, to_bn(n), cmp);
+  bn_node_t y = bns_can_hold(t->root, &key, cmp);
+  if (y && cmp(&key, y) == 0) {
+    return y;
+  }
+  bn_node_t n = tm_create_node(key, value);
+  int order;
+  if (y) {
+    order = cmp(&key, y);
+  }
+  rb_insert_internal(t, n, y, order);
   return n;
 }
 
 static treemap_node_t tm_search(bn_tree_t t, gtype key, bn_compare_t cmp) {
-  static struct treemap_node query;
-  query.key = key;
-  bn_node_t n = bns_search(t->root, to_bn(&query), cmp);
+  bn_node_t n = bns_search(t->root, &key, cmp);
   return to_tm(n);
 }
 

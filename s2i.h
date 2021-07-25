@@ -31,7 +31,6 @@ static s2i_node_t s2i_search(bn_tree_t t, const char *key);
 static int s2i_value_ref(bn_tree_t t, const char *key, long **value);
 static long s2i_value(bn_tree_t t, const char *key);
 static int s2i_delete(bn_tree_t t, const char *key);
-static int s2i_compare(bn_node_t x, bn_node_t y);
 static int s2i_compare_data(const void *q, bn_node_t n);
 static void s2i_free_node(bn_node_t n);
 static void s2i_free(bn_tree_t *t);
@@ -45,12 +44,6 @@ static void s2i_print_node(bn_node_t n);
 #define s2i_node_value(n) to_s2i(n)->value
 
 // ========== Định nghĩa hàm =============
-
-static int s2i_compare(bn_node_t x, bn_node_t y) {
-  const char *s1 = s2i_node_key(x);
-  const char *s2 = s2i_node_key(y);
-  return strcmp(s1, s2);
-}
 
 static int s2i_compare_data(const void *q, bn_node_t n) {
   const char *s1 = (char*)q;
@@ -89,18 +82,17 @@ static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
     return y;
   }
   bn_node_t n = s2i_create_node(key, value);
-  rb_insert_internal(t, n, y, s2i_compare);
+  int order;
+  if (y) {
+    order = s2i_compare_data(key, y);
+  }
+  rb_insert_internal(t, n, y, order);
   return n;
 }
 
 static bn_node_t s2i_set(bn_tree_t t, const char *key, long value) {
-  bn_node_t y = bns_can_hold(t->root, key, s2i_compare_data);
-  if (y && s2i_compare_data(key, y) == 0) {
-    to_s2i(y)->value = value;
-    return y;
-  }
-  bn_node_t n = s2i_create_node(key, value);
-  rb_insert_internal(t, n, y, s2i_compare);
+  bn_node_t n = s2i_insert(t, key, value);
+  to_s2i(n)->value = value;
   return n;
 }
 

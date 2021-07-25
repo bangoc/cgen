@@ -3,9 +3,9 @@
 
 #include <string.h>
 
-int tm_compare_str(bn_node_t n1, bn_node_t n2) {
-  gtype k1 = tm_key_from_bn_node(n1),
-        k2 = tm_key_from_bn_node(n2);
+int tm_compare_str(const void *data, bn_node_t n2) {
+  gtype k1 = *((gtype*)data),
+        k2 = tm_node_key(n2);
   return strcmp(k1.s, k2.s);
 }
 
@@ -31,10 +31,10 @@ int main() {
        *sd = "Nguyen Van D",
        *se = "Nguyen Van E",
        *sf = "Nguyen Van F";
-  tm_insert(t, (gtype){.s = sa},
-      (gtype){.s = s1}, tm_compare_str);
   tm_insert(t, (gtype){.s = sb},
       (gtype){.s = s2}, tm_compare_str);
+  tm_insert(t, (gtype){.s = sa},
+      (gtype){.s = s1}, tm_compare_str);
   tm_insert(t, (gtype){.s = sc},
       (gtype){.s = s3}, tm_compare_str);
   tm_insert(t, (gtype){.s = sd},
