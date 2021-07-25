@@ -20,18 +20,19 @@ static int k_s2i_invalid = -1;
 
 // ========== Khai báo hàm ===============
 
-static bn_node_t s2i_create_node(char *key, long value);
+static bn_node_t s2i_create_node(const char *key, long value);
 
 // Lưu cặp key & value, bỏ qua nếu key đã tồn tại
-static bn_node_t s2i_insert(bn_tree_t t, char *key, long value);
+static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value);
 
 // Lưu cặp key & value, cập nhật value nếu key đã tồn tại
-static bn_node_t s2i_set(bn_tree_t t, char *key, long value);
-static s2i_node_t s2i_search(bn_tree_t t, char *key);
-static int s2i_value_ref(bn_tree_t t, char *key, long **value);
-static long s2i_value(bn_tree_t t, char *key);
-static int s2i_delete(bn_tree_t t, char *key);
+static bn_node_t s2i_set(bn_tree_t t, const char *key, long value);
+static s2i_node_t s2i_search(bn_tree_t t, const char *key);
+static int s2i_value_ref(bn_tree_t t, const char *key, long **value);
+static long s2i_value(bn_tree_t t, const char *key);
+static int s2i_delete(bn_tree_t t, const char *key);
 static int s2i_compare(bn_node_t x, bn_node_t y);
+static int s2i_compare_search(void *q, bn_node_t n);
 static void s2i_free_node(bn_node_t n);
 static void s2i_free(bn_tree_t *t);
 static void s2i_postorder_print(bn_tree_t tree);
@@ -46,8 +47,14 @@ static void s2i_print_node(bn_node_t n);
 // ========== Định nghĩa hàm =============
 
 static int s2i_compare(bn_node_t x, bn_node_t y) {
-  char *s1 = s2i_node_key(x);
-  char *s2 = s2i_node_key(y);
+  const char *s1 = s2i_node_key(x);
+  const char *s2 = s2i_node_key(y);
+  return strcmp(s1, s2);
+}
+
+static int s2i_compare_search(void *q, bn_node_t n) {
+  const char *s1 = (char*)q;
+  const char *s2 = s2i_node_key(n);
   return strcmp(s1, s2);
 }
 
@@ -68,7 +75,7 @@ static void s2i_postorder_print(bn_tree_t tree) {
   }
 }
 
-static bn_node_t s2i_create_node(char *key, long value) {
+static bn_node_t s2i_create_node(const char *key, long value) {
   s2i_node_t n = malloc(sizeof(struct s2i_node));
   rb_node_init_null((&n->rb_node));
   n->key = strdup(key);
@@ -76,7 +83,7 @@ static bn_node_t s2i_create_node(char *key, long value) {
   return to_bn(n);
 }
 
-static bn_node_t s2i_insert(bn_tree_t t, char *key, long value) {
+static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
   bn_node_t n = s2i_create_node(key, value);
   bn_node_t x = rb_insert_unique(t, n, s2i_compare);
   if (x != n) { // existed
@@ -85,7 +92,7 @@ static bn_node_t s2i_insert(bn_tree_t t, char *key, long value) {
   return x;
 }
 
-static bn_node_t s2i_set(bn_tree_t t, char *key, long value) {
+static bn_node_t s2i_set(bn_tree_t t, const char *key, long value) {
   bn_node_t n = s2i_create_node(key, value);
   bn_node_t x = rb_insert_unique(t, n, s2i_compare);
   if (x != n) { // existed
@@ -95,14 +102,12 @@ static bn_node_t s2i_set(bn_tree_t t, char *key, long value) {
   return x;
 }
 
-static s2i_node_t s2i_search(bn_tree_t t, char *key) {
-  static struct s2i_node query;
-  query.key = key;
-  bn_node_t r = bns_search(t->root, to_bn(&query), s2i_compare);
+static s2i_node_t s2i_search(bn_tree_t t, const char *key) {
+  bn_node_t r = bns_search(t->root, key, s2i_compare_search);
   return to_s2i(r);
 }
 
-static int s2i_value_ref(bn_tree_t t, char *key, long **value) {
+static int s2i_value_ref(bn_tree_t t, const char *key, long **value) {
   s2i_node_t n = s2i_search(t, key);
   if (n) {
     *value = &(n->value);
@@ -112,7 +117,7 @@ static int s2i_value_ref(bn_tree_t t, char *key, long **value) {
   return 1;
 }
 
-static long s2i_value(bn_tree_t t, char *key) {
+static long s2i_value(bn_tree_t t, const char *key) {
   long *value = NULL_PTR;
   s2i_value_ref(t, key, &value);
   if (value) {
@@ -121,7 +126,7 @@ static long s2i_value(bn_tree_t t, char *key) {
   return k_s2i_invalid;
 }
 
-static int s2i_delete(bn_tree_t t, char *key) {
+static int s2i_delete(bn_tree_t t, const char *key) {
   s2i_node_t n = s2i_search(t, key);
   if (n) {
     rb_delete(t, to_bn(n));

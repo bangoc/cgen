@@ -9,7 +9,7 @@
 
 // ========== Khai báo hàm ===============
 
-static bn_node_t bns_search(bn_node_t root, bn_node_t query,
+static bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
 // ========== Macro viết nhanh ===========
@@ -21,7 +21,7 @@ static bn_node_t bns_search(bn_node_t root, bn_node_t query,
 
 // ========== Định nghĩa hàm =============
 
-static bn_node_t bns_search(bn_node_t root, bn_node_t query,
+static bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp) {
   int order;
   if (root == NULL_PTR || (order = cmp(query, root)) == 0) {
