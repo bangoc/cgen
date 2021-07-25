@@ -38,3 +38,4 @@ add_test(NAME RBRandInsertDelete COMMAND
 add_test(NAME RBInsertDeleteDuplicates COMMAND
                 rb_insert_delete_duplicates_ut)
 add_test(NAME S2IInsertDup COMMAND s2i_insert_dup_ut)
+add_test(NAME S2ISetDup COMMAND s2i_set_dup_ut)
