@@ -77,36 +77,19 @@ static bn_tree_t rb_create_tree() {
   return bn_create_tree(NULL_PTR);
 }
 
-#define bn_change_child(old_node, new_node, parent, t) \
-  do { \
-    if (parent) { \
-      if (parent->left == old_node) { \
-        parent->left = new_node; \
-      } else { \
-        parent->right = new_node; \
-      } \
-    } else { \
-      t->root = new_node; \
-    } \
-  } while (0)
-
-
-#define IMPL_ROTATION(t, x, left, right) \
-static bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
-  bn_node_t y = x->right; \
-  x->right = y->left; \
-  if (y->left != NULL_PTR) { \
-    y->left->top = x; \
-  } \
-  y->top = x->top; \
-  bn_change_child(x, y, x->top, t); \
-  bn_connect2(y, left, x, top); \
-  return y; \
+static void rb_set_parent_color(bn_node_t n, bn_node_t parent,
+                                rb_node_color_t color) {
+  n->top = parent;
+  rb_set_color(n, color);
 }
 
-IMPL_ROTATION(t, x, left, right)
-IMPL_ROTATION(t, x, right, left)
-#undef IMPL_ROTATION
+static void rb_rotate_set_parents(bn_node_t old_node,
+            bn_node_t new_node, bn_tree_t t, rb_node_color_t color) {
+  bn_node_t parent = old_node->top;
+  rb_set_parent_color(new_node, parent, rb_color(old_node));
+  rb_set_parent_color(old_node, new_node, color);
+  bn_change_child(old_node, new_node, parent, t);
+}
 
 static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z, bn_node_t n) {
   while (true) {
@@ -143,7 +126,7 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z, bn_node_t n) {
         } \
       } else { \
         if (bn_is_ ##right(z)) { \
-          /*      P                   p           \
+          /*      P                   P           \
                n    U  thành>>>   z <-n  U        \
                 z               n  <-z            \
            */ \
@@ -204,20 +187,6 @@ static bn_node_t rb_insert(bn_tree_t t, bn_node_t node, bn_compare_t cmp) {
     order = cmp(node, parent);
   }
   return rb_insert_internal(t, node, parent, order);
-}
-
-static void rb_set_parent_color(bn_node_t n, bn_node_t parent,
-                                rb_node_color_t color) {
-  n->top = parent;
-  rb_set_color(n, color);
-}
-
-static void rb_rotate_set_parents(bn_node_t old_node,
-            bn_node_t new_node, bn_tree_t t, rb_node_color_t color) {
-  bn_node_t parent = old_node->top;
-  rb_set_parent_color(new_node, old_node->top, rb_color(old_node));
-  rb_set_parent_color(old_node, new_node, color);
-  bn_change_child(old_node, new_node, parent, t);
 }
 
 static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {

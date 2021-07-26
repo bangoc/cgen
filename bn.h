@@ -61,7 +61,38 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 #define bn_is_left(n) (to_bn(n) == to_bn(n)->top->left)
 #define bn_is_right(n) (to_bn(n) == to_bn(n)->top->right)
 
+#define bn_change_child(old_node, new_node, parent, t) \
+  do { \
+    if (parent) { \
+      if (parent->left == old_node) { \
+        parent->left = new_node; \
+      } else { \
+        parent->right = new_node; \
+      } \
+    } else { \
+      t->root = new_node; \
+    } \
+  } while (0)
+
+
+#define BN_IMPL_ROTATION(t, x, left, right) \
+static bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
+  bn_node_t y = x->right; \
+  x->right = y->left; \
+  if (y->left != NULL_PTR) { \
+    y->left->top = x; \
+  } \
+  y->top = x->top; \
+  bn_change_child(x, y, x->top, t); \
+  bn_connect2(y, left, x, top); \
+  return y; \
+}
+
 // ========== Định nghĩa hàm =============
+
+BN_IMPL_ROTATION(t, x, left, right)
+BN_IMPL_ROTATION(t, x, right, left)
+#undef BN_IMPL_ROTATION
 
 static void bn_free_tree(bn_tree_t *tp, bn_free_node_t fn) {
   bn_tree_t t = *tp;
