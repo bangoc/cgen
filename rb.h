@@ -77,6 +77,20 @@ static bn_tree_t rb_create_tree() {
   return bn_create_tree(NULL_PTR);
 }
 
+#define bn_change_child(old_node, new_node, parent, t) \
+  do { \
+    if (parent) { \
+      if (parent->left == old_node) { \
+        parent->left = new_node; \
+      } else { \
+        parent->right = new_node; \
+      } \
+    } else { \
+      t->root = new_node; \
+    } \
+  } while (0)
+
+
 #define IMPL_ROTATION(t, x, left, right) \
 static bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
   bn_node_t y = x->right; \
@@ -85,13 +99,7 @@ static bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
     y->left->top = x; \
   } \
   y->top = x->top; \
-  if (x->top == NULL_PTR) { \
-    t->root = y; \
-  } else if (x == x->top->left) { \
-    x->top->left = y; \
-  } else { \
-    x->top->right = y; \
-  } \
+  bn_change_child(x, y, x->top, t); \
   bn_connect2(y, left, x, top); \
   return y; \
 }
@@ -204,34 +212,12 @@ static void rb_set_parent_color(bn_node_t n, bn_node_t parent,
   rb_set_color(n, color);
 }
 
-static void rb_change_child(bn_node_t old_node, bn_node_t new_node,
-                            bn_node_t parent, bn_tree_t t) {
-  if (parent) {
-    if (parent->left == old_node) {
-      parent->left = new_node;
-    } else {
-      parent->right = new_node;
-    }
-  } else {
-    t->root = new_node;
-  }
-}
-
-static void rb_set_parent(bn_node_t node, bn_node_t parent) {
-  node->top = parent;
-}
-
-static bn_node_t rb_parent(bn_node_t node) {
-  return node->top;
-}
-
 static void rb_rotate_set_parents(bn_node_t old_node,
             bn_node_t new_node, bn_tree_t t, rb_node_color_t color) {
-  bn_node_t parent = rb_parent(old_node);
-  rb_set_parent_color(new_node,
-                      rb_parent(old_node), rb_color(old_node));
+  bn_node_t parent = old_node->top;
+  rb_set_parent_color(new_node, old_node->top, rb_color(old_node));
   rb_set_parent_color(old_node, new_node, color);
-  rb_change_child(old_node, new_node, parent, t);
+  bn_change_child(old_node, new_node, parent, t);
 }
 
 static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
@@ -292,7 +278,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
             rb_set_black(parent); \
           } else { \
             node = parent; \
-            parent = rb_parent(node); \
+            parent = node->top; \
             if (parent) { \
               continue; \
             } \
@@ -355,7 +341,7 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
       sibling->left = parent; \
       rb_set_color(dn, RB_BLACK); \
       if (cn) { \
-        rb_set_parent(cn, parent); \
+        cn->top = parent; \
       } \
       rb_rotate_set_parents(parent, sibling, t, RB_BLACK); \
       break
@@ -382,10 +368,10 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
      * và nó phải là nút đen theo tính chất 4. Chúng ta điều chỉnh
      * mầu trong lân cận để tránh gọi hàm sửa mầu sau này.
      */
-    p = rb_parent(node);
+    p = node->top;
     c = rb_color(node);
     parent = p;
-    rb_change_child(node, child, parent, t);
+    bn_change_child(node, child, parent, t);
     if (child) {
       rb_set_parent_color(child, p, c);
       rebalance = NULL_PTR;
@@ -395,11 +381,11 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
     tmp = parent;
   } else if (!child) {
     // Vẫn trường hợp 1 nhưng nút con là node->left
-    p = rb_parent(node);
+    p = node->top;
     c = rb_color(node);
     rb_set_parent_color(tmp, p, c);
     parent = p;
-    rb_change_child(node, tmp, parent, t);
+    bn_change_child(node, tmp, parent, t);
     rebalance = NULL_PTR;
     tmp = parent;
   } else {
@@ -438,15 +424,15 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
       child2 = successor->right;
       parent->left = child2;
       successor->right = child;
-      rb_set_parent(child, successor);
+      child->top = successor;
     }
     tmp = node->left;
     successor->left = tmp;
-    rb_set_parent(tmp, successor);
-    p = rb_parent(node);
+    tmp->top = successor;
+    p = node->top;
     c = rb_color(node);
     tmp = p;
-    rb_change_child(node, successor, tmp, t);
+    bn_change_child(node, successor, tmp, t);
     if (child2) {
       rb_set_parent_color(child2, parent, RB_BLACK);
       rebalance = NULL_PTR;
