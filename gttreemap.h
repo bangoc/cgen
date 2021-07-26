@@ -2,8 +2,8 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef TREEMAP_H_
-#define TREEMAP_H_
+#ifndef GTTREEMAP_H_
+#define GTTREEMAP_H_
 
 #include "rb.h"
 #include "gtype.h"
@@ -103,4 +103,4 @@ static int tm_delete(bn_tree_t t, gtype key, bn_compare_t cmp, bn_callback_t cb)
   return 0;
 }
 
-#endif  // TREEMAP_H_
+#endif  // GTTREEMAP_H_

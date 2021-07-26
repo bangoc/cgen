@@ -1,4 +1,4 @@
-#include "treemap.h"
+#include "gttreemap.h"
 #include "tests/base/utils.h"
 
 #include <string.h>
