@@ -59,7 +59,7 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 #define rb_node_init(n, left_value, right_value, top_value, color_value) \
   bn_node_init(to_bn(n), to_bn(left_value), to_bn(right_value), to_bn(top_value)); \
   rb_set_color(n, color_value)
-#define rb_node_init_null(n) bn_node_init_null(to_bn(n)); rb_set_color(n, RB_BLACK)
+#define rb_node_init_null(n) bn_node_init_null(to_bn(n)); rb_set_color(n, RB_RED)
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
@@ -100,35 +100,70 @@ IMPL_ROTATION(t, x, left, right)
 IMPL_ROTATION(t, x, right, left)
 #undef IMPL_ROTATION
 
-static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
-  bn_node_t n = z->top;
-  while (rb_is_red(n)) {
-    // n có mầu đỏ vì vậy n->top != NULL_PTR
+static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z, bn_node_t n) {
+  while (true) {
+    /* Các bất biến của vòng lặp:
+     *  + n là đỉnh của z, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn z-n:
+     *    z và n là các nút đỏ (tính chất 4). Vấn đề này được khắc phục
+     *    trong quá trình z được đẩy lên phía gốc.
+     * Ban đầu z là nút mới được thêm vào,
+     *  sau mỗi vòng lặp z tiến gần hơn về phía gốc của cây.
+     *  + n->top != NULL_PTR (bởi vì n có mầu đỏ)
+     */
     if (bn_is_left(n)) {
 #define IMPL_INSERT_FIXUP(left, right) \
       bn_node_t u = n->top->right; \
       if (rb_is_red(u)) { \
+        /*     P                p  <- z                          \
+             n  u  thành>>>   N   U                              \
+          ->z <-     có thể vi phạm tính chất 4 nếu p->top là đỏ \
+          z có thể là con trái hoặc con phải của n               \
+         */ \
         rb_set_black(n); \
         rb_set_black(u); \
         rb_set_red(n->top); \
         z = n->top; \
         n = z->top; \
+        if (n == NULL_PTR) { \
+          /* z là gốc của cây */ \
+          rb_set_black(z); \
+          break; \
+        } \
+        if (rb_is_black(n)) { \
+          /* Các tính chất đã được thỏa mãn */ \
+          break; \
+        } \
       } else { \
         if (bn_is_ ##right(z)) { \
+          /*      P                   p           \
+               n    U  thành>>>   z <-n  U        \
+                z               n  <-z            \
+           */ \
           bn_ ##left ##_rotate(t, n); \
           z = n; \
           n = z->top; \
         } \
+        /*   \
+         + z là con trái của n                        \
+                P                     p               \
+             n     U  lật mầu >>   N   U              \
+           z                      z                   \
+          >>> sau khi xoay phải ở P thành =>>>        \
+              N                                       \
+            z    p                                    \
+                  U                                   \
+            Thỏa mãn các tính chất của cây đỏ đen     \
+         */                                           \
         rb_set_color(n, RB_BLACK); \
         rb_set_color(n->top, RB_RED); \
         bn_ ##right ##_rotate(t, n->top); \
+        break;  \
       }
       IMPL_INSERT_FIXUP(left, right)
     } else {
       IMPL_INSERT_FIXUP(right, left)
     }
   }
-  rb_set_black(t->root);
   return t;
 }
 
@@ -137,15 +172,20 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
 static bn_node_t rb_insert_internal(bn_tree_t t,
           bn_node_t node, bn_node_t parent, int order) {
   node->top = parent;
-  if (parent == NULL_PTR) {
-    t->root = node;
-  } else {
-    bns_set_child(parent, order, node);
-  }
   node->left = NULL_PTR;
   node->right = NULL_PTR;
-  rb_set_red(node);
-  rb_insert_fixup(t, node);
+  if (parent == NULL_PTR) {
+    t->root = node;
+    rb_set_black(node);
+  } else {
+    bns_set_child(parent, order, node);
+    rb_set_red(node);
+    if (rb_is_red(parent)) {
+      // vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4)
+      // có thể bị vi phạm.
+      rb_insert_fixup(t, node, parent);
+    }
+  }
   return node;
 }
 

@@ -5,6 +5,6 @@
 #include <stdbool.h>
 
 #define CHECK(op) if (!(op)) { return 1; }
-#define CHECK_MSG(op, msg) if (!(op)) { printf("%s\n", msg); return 1; }
+#define CHECK_MSG(op, msg) if (!(op)) { printf("%s (%s:%d)\n", msg, __FILE__, __LINE__); return 1; }
 
 #endif  // TESTS_BASE_UTILS_H_
