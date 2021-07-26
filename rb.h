@@ -48,8 +48,6 @@ static rb_node_t rb_create_node();
 static bn_tree_t rb_create_tree();
 static bn_node_t rb_insert(bn_tree_t t, bn_node_t z,
                            bn_compare_t cmp);
-static bn_node_t rb_insert_unique(bn_tree_t t, bn_node_t z,
-                           bn_compare_t cmp);
 static int rb_delete(bn_tree_t t, bn_node_t z);
 
 
@@ -94,8 +92,7 @@ static bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
   } else { \
     x->top->right = y; \
   } \
-  y->left = x; \
-  x->top = y; \
+  bn_connect2(y, left, x, top); \
   return y; \
 }
 
@@ -104,22 +101,22 @@ IMPL_ROTATION(t, x, right, left)
 #undef IMPL_ROTATION
 
 static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
-  while (rb_color(z->top) == RB_RED) {
+  while (rb_is_red(z->top)) {
     if (z->top == z->top->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
       bn_node_t y = z->top->top->right; \
-      if (rb_color(y) == RB_RED) { \
-        rb_set_color(z->top, RB_BLACK); \
-        rb_set_color(y, RB_BLACK); \
-        rb_set_color(z->top->top, RB_RED); \
+      if (rb_is_red(y)) { \
+        rb_set_black(z->top); \
+        rb_set_black(y); \
+        rb_set_red(z->top->top); \
         z = z->top->top; \
       } else { \
         if (z == z->top->right) { \
           z = z->top; \
           bn_ ##left ##_rotate(t, z); \
         } \
-        rb_set_color(z->top, RB_BLACK); \
-        rb_set_color(z->top->top, RB_RED); \
+        rb_set_black(z->top); \
+        rb_set_red(z->top->top); \
         bn_ ##right ##_rotate(t, z->top->top); \
       }
       IMPL_INSERT_FIXUP(left, right)
@@ -127,7 +124,7 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
       IMPL_INSERT_FIXUP(right, left)
     }
   }
-  rb_set_color(t->root, RB_BLACK);
+  rb_set_black(t->root);
   return t;
 }
 
