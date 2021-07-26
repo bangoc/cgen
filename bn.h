@@ -58,6 +58,9 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 #define bn_postorder_foreach_inline(cur, tree) \
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
+#define bn_is_left(n) (to_bn(n) == to_bn(n)->top->left)
+#define bn_is_right(n) (to_bn(n) == to_bn(n)->top->right)
+
 // ========== Định nghĩa hàm =============
 
 static void bn_free_tree(bn_tree_t *tp, bn_free_node_t fn) {

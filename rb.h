@@ -101,23 +101,28 @@ IMPL_ROTATION(t, x, right, left)
 #undef IMPL_ROTATION
 
 static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z) {
+  bn_node_t n;
   while (rb_is_red(z->top)) {
-    if (z->top == z->top->top->left) {
+    n = z->top;
+
+    // z->top có mầu đỏ vì vậy z->top->top (n->top) != NULL_PTR
+    if (bn_is_left(n)) {
 #define IMPL_INSERT_FIXUP(left, right) \
-      bn_node_t y = z->top->top->right; \
-      if (rb_is_red(y)) { \
-        rb_set_black(z->top); \
-        rb_set_black(y); \
-        rb_set_red(z->top->top); \
-        z = z->top->top; \
+      bn_node_t u = n->top->right; \
+      if (rb_is_red(u)) { \
+        rb_set_black(n); \
+        rb_set_black(u); \
+        rb_set_red(n->top); \
+        z = n->top; \
       } else { \
-        if (z == z->top->right) { \
-          z = z->top; \
-          bn_ ##left ##_rotate(t, z); \
+        if (bn_is_ ##right(z)) { \
+          bn_ ##left ##_rotate(t, n); \
+          z = n; \
+          n = n->top; \
         } \
-        rb_set_black(z->top); \
-        rb_set_red(z->top->top); \
-        bn_ ##right ##_rotate(t, z->top->top); \
+        rb_set_color(n, RB_BLACK); \
+        rb_set_color(n->top, RB_RED); \
+        bn_ ##right ##_rotate(t, n->top); \
       }
       IMPL_INSERT_FIXUP(left, right)
     } else {
