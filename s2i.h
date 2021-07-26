@@ -70,7 +70,7 @@ static void s2i_postorder_print(bn_tree_t tree) {
 
 static bn_node_t s2i_create_node(const char *key, long value) {
   s2i_node_t n = malloc(sizeof(struct s2i_node));
-  rb_node_init_null((&n->rb_node));
+  rb_node_init_null_links((&n->rb_node));
   n->key = strdup(key);
   n->value = value;
   return to_bn(n);

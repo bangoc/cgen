@@ -34,7 +34,7 @@ static int rbi_compare(bn_node_t x, bn_node_t y) {
 
 static rbi_node_t rbi_create_node(int value) {
   rbi_node_t n = malloc(sizeof(struct rbi_node));
-  rb_node_init_null((&n->rb_node));
+  rb_node_init_null_links((&n->rb_node));
   n->value = value;
   return n;
 }

@@ -44,7 +44,7 @@ static int tm_delete(bn_tree_t t, gtype key,
 
 static bn_node_t tm_create_node(gtype key, gtype value) {
   treemap_node_t n = malloc(sizeof(struct treemap_node));
-  rb_node_init_null((&n->rb_node));
+  rb_node_init_null_links((&n->rb_node));
   n->key = key;
   n->value = value;
   return to_bn(n);

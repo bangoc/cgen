@@ -49,7 +49,7 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 #define bn_node_init(n, left_value, right_value, top_value) \
   n->left = left_value; n->right = right_value; n->top = top_value
 
-#define bn_node_init_null(n) \
+#define bn_node_init_null_links(n) \
     bn_node_init(n, NULL_PTR, NULL_PTR, NULL_PTR)
 #define bn_connect1(n1, link, n2) to_bn(n1)->link = to_bn(n2)
 #define bn_connect2(n1, link1, n2, link2) bn_connect1(n1, link1, n2); \
@@ -81,7 +81,7 @@ static void bn_free_tree(bn_tree_t *tp, bn_free_node_t fn) {
 
 static bn_node_t bn_create_node() {
   bn_node_t n = malloc(sizeof(struct bn_node));
-  bn_node_init_null(n);
+  bn_node_init_null_links(n);
   return n;
 }
 
