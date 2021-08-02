@@ -45,7 +45,6 @@ typedef struct rb_node {
 // ========== Khai báo hàm ===============
 
 static rb_node_t rb_create_node();
-static bn_tree_t rb_create_tree();
 static bn_node_t rb_insert(bn_tree_t t, bn_node_t z,
                            bn_compare_t cmp);
 static int rb_delete(bn_tree_t t, bn_node_t z);
@@ -76,67 +75,79 @@ static rb_node_t rb_create_node() {
   return n;
 }
 
-static bn_tree_t rb_create_tree() {
-  return bn_create_tree(NULL_PTR);
-}
-
-static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t z, bn_node_t n) {
+static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
+  /*
+   * Các biến:
+   * t - con trỏ tới cây (tree)
+   * n - ban đầu là nút mới được thêm vào (node)
+   * p - là đỉnh của n (parent, n->top)
+   * u - nút đối xứng của p trong cây, chú bác của n (uncle)
+   * gp - ông của n, là đỉnh của p (grandparent, p->top)
+   *
+   * Trong các ví dụ minh họa thì nút có tên được viết hoa là nút đen,
+   *    nút có tên viết thường là nút đỏ, nút có thể là đen hoặc đỏ
+   *    (không ảnh hưởng đển tính đúng đắn) thì được đặt trong dấu ()
+   */
   while (true) {
     /* Các bất biến của vòng lặp:
-     *  + n là đỉnh của z, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn z-n:
-     *    z và n là các nút đỏ (tính chất 4). Vấn đề này được khắc phục
-     *    trong quá trình z được đẩy lên phía gốc.
-     * Ban đầu z là nút mới được thêm vào,
-     *  sau mỗi vòng lặp z tiến gần hơn về phía gốc của cây.
-     *  + n->top != NULL_PTR (bởi vì n có mầu đỏ)
+     *  + p là đỉnh của n, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn
+     *    p-n: n và p là các nút đỏ (tính chất 4). Vấn đề này được
+     *    khắc phục trong quá trình n được đẩy lên phía gốc.
+     * Ban đầu n là nút mới được thêm vào, sau mỗi vòng lặp n tiến
+     * gần hơn về phía gốc của cây. Vòng lặp dừng lại khi p ==
+     * NULL_PTR (n là gốc của cây) hoặc p được tô mầu đen.
+     *
+     * Trong vòng lặp chúng ta có
+     *  + n->top != NULL_PTR và p->top != NULL_PTR (bởi vì n và p
+     * là các nút đỏ)
      */
-    if (bn_is_left(n)) {
+    if (bn_is_left(p)) {
 #define IMPL_INSERT_FIXUP(left, right) \
-      bn_node_t u = n->top->right; \
+      bn_node_t u = p->top->right; \
       if (rb_is_red(u)) { \
-        /*     P                p  <- z                          \
-             n  u  thành>>>   N   U                              \
-          ->z <-     có thể vi phạm tính chất 4 nếu p->top là đỏ \
-          z có thể là con trái hoặc con phải của n               \
+        /*     GP                gp  <- n mới                      \
+             p   u  thành>>>   P    U                              \
+          ->n <-     có thể vi phạm tính chất 4 nếu gp->top là đỏ,\
+                     n có thể là con trái hoặc con phải của p     \
          */ \
-        rb_set_black(n); \
+        rb_set_black(p); \
         rb_set_black(u); \
-        rb_set_red(n->top); \
-        z = n->top; \
-        n = z->top; \
-        if (n == NULL_PTR) { \
-          /* z là gốc của cây */ \
-          rb_set_black(z); \
+        rb_set_red(p->top); \
+        n = p->top; \
+        p = n->top; \
+        if (p == NULL_PTR) { \
+          /* n là gốc của cây */ \
+          rb_set_black(n); \
           break; \
         } \
-        if (rb_is_black(n)) { \
+        if (rb_is_black(p)) { \
           /* Các tính chất đã được thỏa mãn */ \
           break; \
         } \
       } else { \
-        if (bn_is_ ##right(z)) { \
-          /*      P                   P           \
-               n    U  thành>>>   z <-n  U        \
-                z               n  <-z            \
+        if (bn_is_ ##right(n)) { \
+          /*     GP                  GP           \
+               p    U  thành>>>   n <-p  U        \
+                n               p  <-n mới        \
            */ \
-          bn_ ##left ##_rotate(t, n); \
-          z = n; \
-          n = z->top; \
+          bn_ ##left ##_rotate(t, p); \
+          n = p; \
+          p = n->top; \
         } \
         /*   \
-         + z là con trái của n                        \
-                P                     p               \
-             n     U  lật mầu >>   N   U              \
-           z                      z                   \
-          >>> sau khi xoay phải ở P thành =>>>        \
-              N                                       \
-            z    p                                    \
-                  U                                   \
+         + n là con trái của p                        \
+                GP                   gp               \
+             p     U  lật mầu >>   P   U              \
+           n                      n                   \
+          >>> & sau khi xoay phải ở GP thành =>>>     \
+              P                                       \
+            n    gp                                   \
+                    U                                 \
             Thỏa mãn các tính chất của cây đỏ đen     \
          */                                           \
-        rb_set_color(n, RB_BLACK); \
-        rb_set_color(n->top, RB_RED); \
-        bn_ ##right ##_rotate(t, n->top); \
+        rb_set_color(p, RB_BLACK); \
+        rb_set_color(p->top, RB_RED); \
+        bn_ ##right ##_rotate(t, p->top); \
         break;  \
       }
       IMPL_INSERT_FIXUP(left, right)
