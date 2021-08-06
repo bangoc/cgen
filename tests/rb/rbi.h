@@ -46,7 +46,12 @@ static rbi_node_t rbi_create_color_node(int value, rb_node_color_t color) {
 
 static rbi_node_t rbi_insert(bn_tree_t t, int value) {
   rbi_node_t n = rbi_create_node(value);
-  rb_insert(t, to_bn(n), rbi_compare);
+  bn_node_t y = bns_can_hold(t->root, n, rbi_compare);
+  int order;
+  if (y) {
+    order = rbi_compare(n, y);
+  }
+  rb_insert_internal(t, n, y, order);
   return n;
 }
 

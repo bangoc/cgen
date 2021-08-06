@@ -23,10 +23,9 @@ static bn_node_t bns_can_hold(bn_node_t root, const void *data,
 
 // ========== Macro viết nhanh ===========
 
-#define bns_child(n, order) (order < 0? to_bn(n)->left: \
-                                        to_bn(n)->right)
-#define bns_set_child(n, order, z) if (order < 0) \
-        to_bn(n)->left = to_bn(z); else to_bn(n)->right = to_bn(z)
+#define bns_child(n, order) (order < 0? n->left: n->right)
+#define bns_set_child(n, order, child) \
+    if (order < 0) n->left = child; else n->right = child
 
 // ========== Định nghĩa hàm =============
 
