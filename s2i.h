@@ -76,16 +76,15 @@ static bn_node_t s2i_create_node(const char *key, long value) {
 }
 
 static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
-  bn_node_t y = bns_can_hold(t->root, key, s2i_compare_data);
-  if (y && s2i_compare_data(key, y) == 0) {
-    return y;
+  bn_node_t same = NULL_PTR,
+            parent = NULL_PTR;
+  bn_node_t *loc = bns_find_insert_location(&t->root,
+        key, s2i_compare_data, &same, &parent);
+  if (same) {
+    return same;
   }
   bn_node_t n = s2i_create_node(key, value);
-  int order;
-  if (y) {
-    order = s2i_compare_data(key, y);
-  }
-  rb_insert_internal(t, n, y, order);
+  rb_insert(t, n, loc, parent);
   return n;
 }
 

@@ -52,17 +52,15 @@ static bn_node_t tm_create_node(gtype key, gtype value) {
 static bn_node_t tm_insert(bn_tree_t t,
                       gtype key, gtype value,
                       bn_compare_t cmp) {
-  bn_node_t y = bns_can_hold(t->root, &key, cmp);
-  if (y && cmp(&key, y) == 0) {
-    return y;
+  bn_node_t same = NULL_PTR,
+            parent = NULL_PTR;
+  bn_node_t *loc = bns_find_insert_location(&t->root,
+        &key, cmp, &same, &parent);
+  if (same) {
+    return same;
   }
   bn_node_t n = tm_create_node(key, value);
-  int order;
-  if (y) {
-    order = cmp(&key, y);
-  }
-  rb_insert_internal(t, n, y, order);
-  return n;
+  return rb_insert(t, n, loc, parent);
 }
 
 static treemap_node_t tm_search(bn_tree_t t, gtype key, bn_compare_t cmp) {

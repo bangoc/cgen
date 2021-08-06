@@ -15,7 +15,7 @@ typedef struct rbi_node {
 // ========== Khai báo hàm ===============
 static rbi_node_t rbi_create_node(int value);
 static rbi_node_t rbi_create_color_node(int value, rb_node_color_t color);
-static rbi_node_t rbi_insert(bn_tree_t t, int value);
+static bn_node_t rbi_insert(bn_tree_t t, int value);
 static rbi_node_t rbi_search(bn_tree_t t, int value);
 static rbi_node_t rbi_delete(bn_tree_t t, int value);
 static void rbi_print_node(bn_node_t n);
@@ -44,15 +44,13 @@ static rbi_node_t rbi_create_color_node(int value, rb_node_color_t color) {
   return n;
 }
 
-static rbi_node_t rbi_insert(bn_tree_t t, int value) {
-  rbi_node_t n = rbi_create_node(value);
-  bn_node_t y = bns_can_hold(t->root, n, rbi_compare);
-  int order;
-  if (y) {
-    order = rbi_compare(n, y);
-  }
-  rb_insert_internal(t, n, y, order);
-  return n;
+static bn_node_t rbi_insert(bn_tree_t t, int value) {
+  bn_node_t n = to_bn(rbi_create_node(value));
+  bn_node_t same = NULL_PTR,
+            par = NULL_PTR;
+  bn_node_t *loc = bns_find_insert_location(&t->root,
+        n, rbi_compare, &same, &par);
+  return rb_insert(t, n, loc, par);
 }
 
 static rbi_node_t rbi_search(bn_tree_t t, int value) {

@@ -45,8 +45,8 @@ typedef struct rb_node {
 // ========== Khai báo hàm ===============
 
 static rb_node_t rb_create_node();
-static bn_node_t rb_insert(bn_tree_t t, bn_node_t z,
-                           bn_compare_t cmp);
+static bn_node_t rb_insert(bn_tree_t t,
+          bn_node_t node, bn_node_t *loc, bn_node_t parent);
 static int rb_delete(bn_tree_t t, bn_node_t z);
 
 
@@ -67,7 +67,7 @@ static rb_node_t rb_create_node() {
   return calloc(1, sizeof(struct rb_node));
 }
 
-static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
+static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
   /*
    * Các biến:
    * t - con trỏ tới cây (tree)
@@ -148,19 +148,18 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
       IMPL_INSERT_FIXUP(right, left)
     }
   }
-  return t;
 }
 
 #undef IMPL_INSERT_FIXUP
 
-static bn_node_t rb_insert_internal(bn_tree_t t,
-          bn_node_t node, bn_node_t parent, int order) {
-  node->top = parent;
+static bn_node_t rb_insert(bn_tree_t t,
+          bn_node_t node, bn_node_t *loc, bn_node_t parent) {
+  *loc = node;
   if (parent == NULL_PTR) {
-    t->root = node;
+    // loc là gốc của cây
     rb_set_black(node);
   } else {
-    bns_set_child(parent, order, node);
+    node->top = parent;
     // Hàm tạo cần đảm bảo node là nút đỏ
     if (rb_is_red(parent)) {
       // vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4)
@@ -169,15 +168,6 @@ static bn_node_t rb_insert_internal(bn_tree_t t,
     }
   }
   return node;
-}
-
-static bn_node_t rb_insert(bn_tree_t t, bn_node_t node, bn_compare_t cmp) {
-  bn_node_t parent = bns_can_hold(t->root, node, cmp);
-  int order;
-  if (parent) {
-    order = cmp(node, parent);
-  }
-  return rb_insert_internal(t, node, parent, order);
 }
 
 static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {

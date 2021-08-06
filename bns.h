@@ -18,8 +18,9 @@ static bn_node_t bns_search_gte(bn_node_t root, const void *query,
 static bn_node_t bns_search_lte(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
-static bn_node_t bns_can_hold(bn_node_t root, const void *data,
-        bn_compare_t cmp);
+static bn_node_t *bns_find_insert_location(bn_node_t *proot,
+            const void *data,
+            bn_compare_t cmp, bn_node_t *same, bn_node_t *par);
 
 // ========== Macro viết nhanh ===========
 
@@ -68,14 +69,29 @@ static bn_node_t bns_search_lte(bn_node_t root, const void *query,
   return root;
 }
 
-static bn_node_t bns_can_hold(bn_node_t x, const void *data,
-        bn_compare_t cmp) {
-  bn_node_t y = NULL_PTR;
-  while (x != NULL_PTR) {
-    y = x;
-    x = bns_child(x, cmp(data, x));
+static bn_node_t *bns_find_insert_location(bn_node_t *proot,
+            const void *data,
+            bn_compare_t cmp, bn_node_t *same, bn_node_t *par) {
+  bn_node_t x = *proot;
+  while (x) {
+    *par = x;
+    int order = cmp(data, x);
+    if (order < 0) {
+      if (x->left == NULL_PTR) {
+        return &x->left;
+      }
+      x = x->left;
+    } else {
+      if (order == 0) {
+        *same = x;
+      }
+      if (x->right == NULL_PTR) {
+        return &x->right;
+      }
+      x = x->right;
+    }
   }
-  return y;
+  return proot;
 }
 
 #endif  // BSNT_H_
