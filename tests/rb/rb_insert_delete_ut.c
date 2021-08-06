@@ -38,16 +38,16 @@ int compare(bn_node_t x, bn_node_t y) {
 
 int t1() {
   bn_tree_t t = bn_create_tree(NULL_PTR);
-  struct my_rb_node n1 = {{{NULL_PTR, NULL_PTR, NULL_PTR}, RB_BLACK}, 1, 1};
+  struct my_rb_node n1 = {{{NULL_PTR, NULL_PTR, NULL_PTR}, RB_RED}, 1, 1};
   rb_insert(t, to_bn(&n1), compare);
   CHECK(node_values(t->root, 1, 1, RB_BLACK, NULL_PTR, NULL_PTR, NULL_PTR) == 0);
 
-  struct my_rb_node n2 = {{{NULL_PTR, NULL_PTR, NULL_PTR}, RB_BLACK}, 2, 2};
+  struct my_rb_node n2 = {{{NULL_PTR, NULL_PTR, NULL_PTR}, RB_RED}, 2, 2};
   rb_insert(t, to_bn(&n2), compare);
   CHECK(node_values(t->root, 1, 1, RB_BLACK, NULL_PTR, to_bn(&n2), NULL_PTR) == 0);
   CHECK(node_values(t->root->right, 2, 2, RB_RED, NULL_PTR, NULL_PTR, to_bn(&n1)) == 0);
 
-  struct my_rb_node n3 = {{{NULL_PTR, NULL_PTR, NULL_PTR}, RB_BLACK}, 3, 3};
+  struct my_rb_node n3 = {{{NULL_PTR, NULL_PTR, NULL_PTR}, RB_RED}, 3, 3};
   rb_insert(t, to_bn(&n3), compare);
   CHECK(node_values(t->root, 2, 2, RB_BLACK, to_bn(&n1), to_bn(&n3), NULL_PTR) == 0);
   CHECK(node_values(t->root->left, 1, 1, RB_RED, NULL_PTR, NULL_PTR, to_bn(&n2)) == 0);

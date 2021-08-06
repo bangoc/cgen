@@ -58,9 +58,6 @@ static void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 #define bn_postorder_foreach_inline(cur, tree) \
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
-#define bn_is_left(n) (to_bn(n) == to_bn(n)->top->left)
-#define bn_is_right(n) (to_bn(n) == to_bn(n)->top->right)
-
 #define bn_change_child(old_node, new_node, parent, t) \
   do { \
     if (parent) { \
@@ -84,7 +81,8 @@ static bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
   } \
   y->top = x->top; \
   bn_change_child(x, y, x->top, t); \
-  bn_connect2(y, left, x, top); \
+  y->left = x; \
+  x->top = y; \
   return y; \
 }
 
@@ -111,9 +109,7 @@ static void bn_free_tree(bn_tree_t *tp, bn_free_node_t fn) {
 }
 
 static bn_node_t bn_create_node() {
-  bn_node_t n = malloc(sizeof(struct bn_node));
-  bn_node_init_null_links(n);
-  return n;
+  return calloc(1, sizeof(struct bn_node));
 }
 
 static bn_tree_t bn_create_tree(bn_node_t node) {

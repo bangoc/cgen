@@ -37,7 +37,7 @@ typedef struct rb_node {
 
 /*
   Trong triển khai này NULL được sử dụng thay vì lính canh để tương
-  thích tốt hơn với các api của cây nhị và cây nhị phân tìm kiếm.*
+  thích tốt hơn với các hàm ngoại.*
 
   Nút NULL được quy ước là nút đen
 */
@@ -63,16 +63,12 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
 #define rb_set_red(node) rb_set_color(node, RB_RED)
-#define rb_set_parent_color(n, parent, color) \
-  to_bn(n)->top = to_bn(parent); \
-  rb_set_color(n, color)
 
 // ========== Định nghĩa hàm =============
 
 static rb_node_t rb_create_node() {
-  rb_node_t n = malloc(sizeof(struct rb_node));
-  rb_node_init_null_links(n);
-  return n;
+  // Mặc định giá trị 0 là đỏ
+  return calloc(1, sizeof(struct rb_node));
 }
 
 static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
@@ -101,7 +97,8 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
      *  + n->top != NULL_PTR và p->top != NULL_PTR (bởi vì n và p
      * là các nút đỏ)
      */
-    if (bn_is_left(p)) {
+
+    if (p == p->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
       bn_node_t u = p->top->right; \
       if (rb_is_red(u)) { \
@@ -125,7 +122,7 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
           break; \
         } \
       } else { \
-        if (bn_is_ ##right(n)) { \
+        if (n == n->top->right) { \
           /*     GP                  GP           \
                p    U  thành>>>   n <-p  U        \
                 n               p  <-n mới        \
@@ -163,14 +160,12 @@ static bn_tree_t rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 static bn_node_t rb_insert_internal(bn_tree_t t,
           bn_node_t node, bn_node_t parent, int order) {
   node->top = parent;
-  node->left = NULL_PTR;
-  node->right = NULL_PTR;
   if (parent == NULL_PTR) {
     t->root = node;
     rb_set_black(node);
   } else {
     bns_set_child(parent, order, node);
-    rb_set_red(node);
+    // Hàm tạo cần đảm bảo node là nút đỏ
     if (rb_is_red(parent)) {
       // vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4)
       // có thể bị vi phạm.
@@ -189,7 +184,7 @@ static bn_node_t rb_insert(bn_tree_t t, bn_node_t node, bn_compare_t cmp) {
   return rb_insert_internal(t, node, parent, order);
 }
 
-static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
+static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
   bn_node_t node = NULL, sibling,
           cn,  // Con của sibling ở phía gần node (close nephew)
           dn;  // Con của sibling ở phía xa node (distant nephew)
@@ -224,9 +219,9 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
         sibling = parent->right; \
       } \
       dn = sibling->right; \
-      if (!dn || rb_is_black(dn)) { \
+      if (rb_is_black(dn)) { \
         cn = sibling->left; \
-        if (!cn || rb_is_black(cn)) { \
+        if (rb_is_black(cn)) { \
           /*  \
            * Trường hợp 2 - Đảo mầu sibling, p có thể có mầu bất kỳ  \
            *                                                         \
@@ -309,10 +304,13 @@ static bn_tree_t rb_erase_color(bn_tree_t t, bn_node_t parent) {
 #undef ERASE_COLOR_SYMMETRY
     }
   }
-  return t;
 }
 
-static int rb_erase(bn_tree_t t, bn_node_t node) {
+#define rb_set_parent_color(n, parent, color) \
+  n->top = parent; \
+  rb_set_color(n, color)
+
+static int rb_delete(bn_tree_t t, bn_node_t node) {
   bn_node_t child = node->right,
             tmp = node->left,
             parent, rebalance;
@@ -401,13 +399,11 @@ static int rb_erase(bn_tree_t t, bn_node_t node) {
     tmp = successor;
   }
   if (rebalance) {
-    rb_erase_color(t, rebalance);
+    rb_delete_fix_color(t, rebalance);
   }
   return 1;
 }
 
-static int rb_delete(bn_tree_t t, bn_node_t z) {
-  return rb_erase(t, z);
-}
+#undef rb_set_parent_color
 
 #endif  // RBI_H_
