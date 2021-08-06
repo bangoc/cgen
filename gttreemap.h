@@ -43,8 +43,7 @@ static int tm_delete(bn_tree_t t, gtype key,
 // ========== Định nghĩa hàm =============
 
 static bn_node_t tm_create_node(gtype key, gtype value) {
-  treemap_node_t n = malloc(sizeof(struct treemap_node));
-  rb_node_init_null_links((&n->rb_node));
+  treemap_node_t n = calloc(1, sizeof(struct treemap_node));
   n->key = key;
   n->value = value;
   return to_bn(n);

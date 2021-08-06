@@ -55,10 +55,6 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 #define rb_color(n) (n? to_rb(n)->color: RB_BLACK)
 #define rb_color_str(n) color_names[(int)rb_color(n)]
 #define rb_set_color(n, new_color) to_rb(n)->color = new_color
-#define rb_node_init(n, left_value, right_value, top_value, color_value) \
-  bn_node_init(to_bn(n), to_bn(left_value), to_bn(right_value), to_bn(top_value)); \
-  rb_set_color(n, color_value)
-#define rb_node_init_null_links(n) bn_node_init_null_links(to_bn(n)); rb_set_color(n, RB_RED)
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
