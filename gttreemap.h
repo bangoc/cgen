@@ -52,10 +52,9 @@ static bn_node_t tm_create_node(gtype key, gtype value) {
 static bn_node_t tm_insert(bn_tree_t t,
                       gtype key, gtype value,
                       bn_compare_t cmp) {
-  bn_node_t same = NULL_PTR,
-            parent = NULL_PTR;
-  bn_node_t *loc = bns_find_insert_location(&t->root,
-        &key, cmp, &same, &parent);
+  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t *loc;
+  bns_find_insert_location(loc, t->root, &key, cmp, same, parent);
   if (same) {
     return same;
   }

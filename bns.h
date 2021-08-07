@@ -18,17 +18,29 @@ static bn_node_t bns_search_gte(bn_node_t root, const void *query,
 static bn_node_t bns_search_lte(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
-static bn_node_t *bns_find_insert_location(bn_node_t *proot,
-            const void *data,
-            bn_compare_t cmp, bn_node_t *same, bn_node_t *par);
-
 // ========== Macro viết nhanh ===========
 
 #define bns_child(n, order) (order < 0? n->left: n->right)
+#define bns_child_ref(n, order) (order < 0? &n->left: &n->right)
 #define bns_set_child(n, order, child) \
     if (order < 0) n->left = child; else n->right = child
 
 // ========== Định nghĩa hàm =============
+
+#define bns_find_insert_location(loc, root, data, cmp, same, parent) \
+  do { \
+    bn_node_t x = root; \
+    int order; \
+    while (x) { \
+      parent = x; \
+      order = cmp(data, x); \
+      if (!order) { \
+        same = x; \
+      } \
+      x = bns_child(x, order); \
+    } \
+    loc = parent? bns_child_ref(parent, order): &root; \
+  } while (0)
 
 static bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp) {
@@ -67,31 +79,6 @@ static bn_node_t bns_search_lte(bn_node_t root, const void *query,
     return res;
   }
   return root;
-}
-
-static bn_node_t *bns_find_insert_location(bn_node_t *proot,
-            const void *data,
-            bn_compare_t cmp, bn_node_t *same, bn_node_t *par) {
-  bn_node_t x = *proot;
-  while (x) {
-    *par = x;
-    int order = cmp(data, x);
-    if (order < 0) {
-      if (x->left == NULL_PTR) {
-        return &x->left;
-      }
-      x = x->left;
-    } else {
-      if (order == 0) {
-        *same = x;
-      }
-      if (x->right == NULL_PTR) {
-        return &x->right;
-      }
-      x = x->right;
-    }
-  }
-  return proot;
 }
 
 #endif  // BSNT_H_

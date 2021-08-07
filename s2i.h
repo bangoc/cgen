@@ -76,10 +76,9 @@ static bn_node_t s2i_create_node(const char *key, long value) {
 }
 
 static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
-  bn_node_t same = NULL_PTR,
-            parent = NULL_PTR;
-  bn_node_t *loc = bns_find_insert_location(&t->root,
-        key, s2i_compare_data, &same, &parent);
+  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t *loc;
+  bns_find_insert_location(loc, t->root, key, s2i_compare_data, same, parent);
   if (same) {
     return same;
   }

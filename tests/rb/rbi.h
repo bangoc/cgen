@@ -48,8 +48,8 @@ static bn_node_t rbi_insert(bn_tree_t t, int value) {
   bn_node_t n = to_bn(rbi_create_node(value));
   bn_node_t same = NULL_PTR,
             par = NULL_PTR;
-  bn_node_t *loc = bns_find_insert_location(&t->root,
-        n, rbi_compare, &same, &par);
+  bn_node_t *loc;
+  bns_find_insert_location(loc, t->root, n, rbi_compare, same, par);
   return rb_insert(t, n, loc, par);
 }
 
