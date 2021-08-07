@@ -55,6 +55,46 @@ static bn_node_t bns_search_lte(bn_node_t root, const void *query,
     } \
   } while (0)
 
+#define bns_search_gte_inline(out, root, query, cmp) \
+  do {\
+    int order; \
+    bn_node_t x = root; \
+    out = NULL_PTR; \
+    while (x) { \
+      order = cmp(query, x); \
+      if (!order) { \
+        out = x; \
+        break; \
+      } \
+      if (order < 0) { \
+        out = x; \
+        x = x->left; \
+        continue; \
+      } \
+      x = x->right; \
+    } \
+  } while (0)
+
+#define bns_search_lte_inline(out, root, query, cmp) \
+  do { \
+    int order; \
+    bn_node_t x = root; \
+    out = NULL_PTR; \
+    while (x) { \
+      order = cmp(query, x); \
+      if (!order) { \
+        out = x; \
+        break; \
+      } \
+      if (order > 0) { \
+        out = x; \
+        x = x->right; \
+        continue; \
+      } \
+      x = x->left; \
+    } \
+  } while (0)
+
 // ========== Định nghĩa hàm =============
 
 static bn_node_t bns_search(bn_node_t root, const void *query,
@@ -66,32 +106,16 @@ static bn_node_t bns_search(bn_node_t root, const void *query,
 
 static bn_node_t bns_search_gte(bn_node_t root, const void *query,
         bn_compare_t cmp) {
-  if (!root || cmp(query, root) == 0) {
-    return root;
-  }
-  if (cmp(query, root) > 0) {
-    return bns_search_gte(root->right, query, cmp);
-  }
-  bn_node_t res = bns_search_gte(root->left, query, cmp);
-  if (res) {
-    return res;
-  }
-  return root;
+  bn_node_t out;
+  bns_search_gte_inline(out, root, query, cmp);
+  return out;
 }
 
 static bn_node_t bns_search_lte(bn_node_t root, const void *query,
                                 bn_compare_t cmp) {
-  if (!root || cmp(query, root) == 0) {
-    return root;
-  }
-  if (cmp(query, root) < 0) {
-    return bns_search_lte(root->left, query, cmp);
-  }
-  bn_node_t res = bns_search_lte(root->right, query, cmp);
-  if (res) {
-    return res;
-  }
-  return root;
+  bn_node_t out;
+  bns_search_lte_inline(out, root, query, cmp);
+  return out;
 }
 
 #endif  // BSNT_H_
