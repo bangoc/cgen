@@ -31,7 +31,7 @@ static s2i_node_t s2i_search(bn_tree_t t, const char *key);
 static int s2i_value_ref(bn_tree_t t, const char *key, long **value);
 static long s2i_value(bn_tree_t t, const char *key);
 static int s2i_delete(bn_tree_t t, const char *key);
-static int s2i_compare_data(const void *q, bn_node_t n);
+static int s2i_compare_data(const char *q, bn_node_t n);
 static void s2i_free_node(bn_node_t n);
 static void s2i_free(bn_tree_t *t);
 static void s2i_postorder_print(bn_tree_t tree);
@@ -45,7 +45,7 @@ static void s2i_print_node(bn_node_t n);
 
 // ========== Định nghĩa hàm =============
 
-static int s2i_compare_data(const void *q, bn_node_t n) {
+static int s2i_compare_data(const char *q, bn_node_t n) {
   const char *s1 = (char*)q;
   const char *s2 = s2i_node_key(n);
   return strcmp(s1, s2);
@@ -94,8 +94,9 @@ static bn_node_t s2i_set(bn_tree_t t, const char *key, long value) {
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, const char *key) {
-  bn_node_t r = bns_search(t->root, key, s2i_compare_data);
-  return to_s2i(r);
+  bn_node_t result ;
+  bns_search_inline(result, t->root, key, s2i_compare_data);
+  return to_s2i(result);
 }
 
 static int s2i_value_ref(bn_tree_t t, const char *key, long **value) {

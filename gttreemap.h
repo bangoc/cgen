@@ -63,7 +63,8 @@ static bn_node_t tm_insert(bn_tree_t t,
 }
 
 static treemap_node_t tm_search(bn_tree_t t, gtype key, bn_compare_t cmp) {
-  bn_node_t n = bns_search(t->root, &key, cmp);
+  bn_node_t n;
+  bns_search_inline(n, t->root, &key, cmp);
   return to_tm(n);
 }
 

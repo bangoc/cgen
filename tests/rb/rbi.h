@@ -32,6 +32,10 @@ static int rbi_compare(bn_node_t x, bn_node_t y) {
   return rbi_value(x) - rbi_value(y);
 }
 
+static int rbi_compare_data(int value, bn_node_t y) {
+  return value - rbi_value(y);
+}
+
 static rbi_node_t rbi_create_node(int value) {
   rbi_node_t n = calloc(1, sizeof(struct rbi_node));
   n->value = value;
@@ -45,19 +49,17 @@ static rbi_node_t rbi_create_color_node(int value, rb_node_color_t color) {
 }
 
 static bn_node_t rbi_insert(bn_tree_t t, int value) {
-  bn_node_t n = to_bn(rbi_create_node(value));
-  bn_node_t same = NULL_PTR,
-            par = NULL_PTR;
+  bn_node_t same = NULL_PTR, par = NULL_PTR;
   bn_node_t *loc;
-  bns_find_insert_location(loc, t->root, n, rbi_compare, same, par);
+  bns_find_insert_location(loc, t->root, value, rbi_compare_data, same, par);
+  bn_node_t n = to_bn(rbi_create_node(value));
   return rb_insert(t, n, loc, par);
 }
 
 static rbi_node_t rbi_search(bn_tree_t t, int value) {
-  static struct rbi_node query;
-  query.value = value;
-  bn_node_t r = bns_search(t->root, to_bn(&query), rbi_compare);
-  return to_rbi(r);
+  bn_node_t result;
+  bns_search_inline(result, t->root, value, rbi_compare_data);
+  return to_rbi(result);
 }
 
 static rbi_node_t rbi_delete(bn_tree_t t, int value) {
