@@ -27,6 +27,7 @@ static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value);
 
 // Lưu cặp key & value, cập nhật value nếu key đã tồn tại
 static bn_node_t s2i_set(bn_tree_t t, const char *key, long value);
+
 static s2i_node_t s2i_search(bn_tree_t t, const char *key);
 static int s2i_value_ref(bn_tree_t t, const char *key, long **value);
 static long s2i_value(bn_tree_t t, const char *key);
@@ -89,6 +90,8 @@ static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
 
 static bn_node_t s2i_set(bn_tree_t t, const char *key, long value) {
   bn_node_t n = s2i_insert(t, key, value);
+
+  // TODO: Loại bỏ thao tác dư thừa trong trường hợp chưa có key
   to_s2i(n)->value = value;
   return n;
 }
