@@ -14,37 +14,12 @@ typedef struct gtl_node {
   gtype val;
 } *gtl_node_t;
 
-// ========== Khai báo hàm ===============
-
-static gtl_node_t gtl_make_node(gtype value);
-static list1_t gtl_append(list1_t list, gtl_node_t val);
-static list1_t gtl_prepend(list1_t list, gtl_node_t val);
-static gtl_node_t gtl_remove_first(list1_t list);
-
-// ========== Macro viết nhanh ===========
+gtl_node_t gtl_make_node(gtype value);
+list1_t gtl_append(list1_t list, gtl_node_t val);
+list1_t gtl_prepend(list1_t list, gtl_node_t val);
+gtl_node_t gtl_remove_first(list1_t list);
 
 #define to_gtl(n) ((gtl_node_t)n)
 #define gtl_node_value(n) to_gtl(n)->val
-
-// ========== Định nghĩa hàm =============
-
-static gtl_node_t gtl_make_node(gtype value) {
-  gtl_node_t node = malloc(sizeof(struct gtl_node));
-  node->val = value;
-  return node;
-}
-
-static list1_t gtl_append(list1_t list, gtl_node_t val) {
-  return list1_append(list, &val->node);
-}
-
-static list1_t gtl_prepend(list1_t list, gtl_node_t val) {
-  return list1_prepend(list, &val->node);
-}
-
-static gtl_node_t gtl_remove_first(list1_t list) {
-  list1_node_t node = list1_remove_first(list);
-  return to_gtl(node);
-}
 
 #endif  // GT_LIST1_H_

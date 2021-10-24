@@ -6,6 +6,10 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 add_subdirectory(tests)
 add_subdirectory(examples)
 
+set(C_SRC src/list1.c src/gtlist1.c src/iqueue.c src/istack.c)
+
+add_library(bkc STATIC ${C_SRC})
+
 include(CTest)
 add_test(NAME BNLeftRotate COMMAND bn_left_rotate_ut)
 add_test(NAME RBInsertDelete COMMAND rb_insert_delete_ut)
