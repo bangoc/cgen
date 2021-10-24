@@ -28,8 +28,8 @@ void dll_free_list(dll_t list);
 
 void dll_push_back(dll_t list, dll_node_t nn);
 void dll_push_front(dll_t list, dll_node_t nn);
-void dll_pop_back(dll_t list);
 void dll_pop_front(dll_t list);
+void dll_pop_back(dll_t list);
 dll_node_t dll_front(dll_t list);
 dll_node_t dll_back(dll_t list);
 dll_node_t dll_inserta(dll_t list, dll_node_t pos, dll_node_t nn);
@@ -42,6 +42,29 @@ void dll_clear(dll_t list);
 void dll_pprint_node(dll_node_t);
 void dll_pprint_list(dll_t);
 
+/* Giao diện cho gtype */
+
+#include "gtype.h"
+
+typedef struct dll_node_g_s {
+  struct dll_node_s base;
+  gtype value;
+} *dll_node_g_t;
+
+#define to_dll_node_g(n)((dll_node_g_t)n)
+#define dll_node_g_value(n) (to_dll_node_g(n)->value)
+
+dll_node_t dll_create_node_g(gtype value);
+void dll_push_back_g(dll_t list, gtype value);
+void dll_push_front_g(dll_t list, gtype value);
+gtype dll_pop_front_g(dll_t list);
+gtype dll_pop_back_g(dll_t list);
+gtype dll_front_g(dll_t list);
+gtype dll_back_g(dll_t list);
+dll_node_t dll_inserta_g(dll_t list, dll_node_t pos, gtype value);
+dll_node_t dll_insertb_g(dll_t list, dll_node_t pos, gtype value);
+
+
 /* Giao diện cho kiểu int */
 
 typedef struct dll_node_i_s {
@@ -49,8 +72,8 @@ typedef struct dll_node_i_s {
   int value;
 } *dll_node_i_t;
 
-#define to_node_i(n) ((dll_node_i_t)n)
-#define node_i_value(n) to_node_i(n)->value
+#define to_dll_node_i(n) ((dll_node_i_t)n)
+#define dll_node_i_value(n) (to_dll_node_i(n)->value)
 
 dll_node_t dll_create_node_i(int value);
 

@@ -8,7 +8,7 @@
 #include "tests/dll/helper.h"
 
 int test_dll_create_node_i() {
-  dll_node_i_t n = to_node_i(dll_create_node_i(90));
+  dll_node_i_t n = to_dll_node_i(dll_create_node_i(90));
   ASSERT(n->base.prev == NULL, "base->prev");
   ASSERT(n->base.next == NULL, "base->next");
   ASSERT(n->value == 90, "value 90");

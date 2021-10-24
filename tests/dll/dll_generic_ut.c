@@ -157,6 +157,11 @@ int test_dll_is_empty() {
   dll_pop_front(list);
   ASSERT(dll_is_empty(list), "Empty after pop_front");
 
+  list->front = n1;
+  ASSERT(!dll_is_empty(list), "Wrong state");
+
+  list->front = NULL;
+
   dll_free_list(list);
   return 0;
 }

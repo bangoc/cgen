@@ -11,10 +11,10 @@ typedef struct sll_node_s {
 } *sll_node_t;
 
 typedef struct sll_s {
-  long size;
   sll_node_t front;
   sll_node_t back;
   void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
+  long size;
 } *sll_t;
 
 sll_node_t sll_create_node();
