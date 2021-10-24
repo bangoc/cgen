@@ -6,7 +6,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 add_subdirectory(tests)
 add_subdirectory(examples)
 
-set(C_SRC src/list1.c src/gtlist1.c src/iqueue.c src/istack.c)
+set(C_SRC src/list1.c)
 
 add_library(bkc STATIC ${C_SRC})
 
