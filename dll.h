@@ -20,6 +20,12 @@ typedef struct dll_s {
 
 #define to_dll(n) ((dll_node_t)n)
 
+#define dll_traverse(cur, list) \
+  for (dll_node_t cur = list->front; cur != NULL; cur = cur->next)
+
+#define dll_rtraverse(cur, list) \
+  for (dll_node_t cur = list->back; cur != NULL; cur = cur->prev)
+
 /* Giao diện khái quát */
 
 dll_node_t dll_create_node();
@@ -63,7 +69,6 @@ gtype dll_front_g(dll_t list);
 gtype dll_back_g(dll_t list);
 dll_node_t dll_inserta_g(dll_t list, dll_node_t pos, gtype value);
 dll_node_t dll_insertb_g(dll_t list, dll_node_t pos, gtype value);
-
 
 /* Giao diện cho kiểu int */
 

@@ -61,13 +61,13 @@ void sll_pop_front(sll_t list) {
   }
   sll_node_t tmp = list->front;
   list->front = list->front->next;
-  --list->size;
   if (list->size == 0) {
     list->back = NULL;
   }
   if (list->fn) {
     list->fn(tmp);
   }
+  --list->size;
 }
 
 sll_node_t sll_front(sll_t list) {
