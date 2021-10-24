@@ -166,30 +166,30 @@ int test_dll_is_empty() {
   return 0;
 }
 
-int test_dll_length() {
+int test_dll_size() {
   dll_t list = dll_create_list();
-  ASSERT(dll_length(list) == 0, "Length == 0 after create");
+  ASSERT(list->size == 0, "Length == 0 after create");
 
   dll_node_t n1 = dll_create_node();
   dll_node_t n2 = dll_create_node();
   dll_node_t n3 = dll_create_node();
   dll_push_back(list, n1);
-  ASSERT(dll_length(list) == 1, "Length == 1 push_back");
+  ASSERT(list->size == 1, "Length == 1 push_back");
 
   dll_push_back(list, n2);
-  ASSERT(dll_length(list) == 2, "Length == 2 push_back");
+  ASSERT(list->size == 2, "Length == 2 push_back");
 
   dll_push_back(list, n3);
-  ASSERT(dll_length(list) == 3, "Length == 3 push_back");
+  ASSERT(list->size == 3, "Length == 3 push_back");
 
   dll_pop_front(list);
-  ASSERT(dll_length(list) == 2, "Length == 2 pop_front");
+  ASSERT(list->size == 2, "Length == 2 pop_front");
 
   dll_pop_back(list);
-  ASSERT(dll_length(list) == 1, "Length == 1 pop_back");
+  ASSERT(list->size == 1, "Length == 1 pop_back");
 
   dll_pop_front(list);
-  ASSERT(dll_length(list) == 0, "Length == 0 pop_front");
+  ASSERT(list->size == 0, "Length == 0 pop_front");
 
   dll_free_list(list);
   return 0;
@@ -252,7 +252,7 @@ int main() {
   ASSERT(test_dll_front_back() == 0, "dll front & back");
   ASSERT(test_dll_insert_ab() == 0, "dll_insert_ab");
   ASSERT(test_dll_is_empty() == 0, "dll_is_empty");
-  ASSERT(test_dll_length() == 0, "dll_length");
+  ASSERT(test_dll_size() == 0, "dll->size");
   ASSERT(test_dll_erase() == 0, "dll_erase");
   ASSERT(test_dll_clear() == 0, "dll_clear");
   printf("Test Ok!\n");

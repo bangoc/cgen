@@ -15,6 +15,7 @@ typedef struct dll_s {
   dll_node_t front;
   dll_node_t back;
   void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
+  long size;
 } *dll_t;
 
 #define to_dll(n) ((dll_node_t)n)
@@ -35,7 +36,6 @@ dll_node_t dll_back(dll_t list);
 dll_node_t dll_inserta(dll_t list, dll_node_t pos, dll_node_t nn);
 dll_node_t dll_insertb(dll_t list, dll_node_t pos, dll_node_t nn);
 int dll_is_empty(dll_t list);
-long dll_length(dll_t list);
 void dll_erase(dll_t list, dll_node_t pos);
 void dll_clear(dll_t list);
 

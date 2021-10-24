@@ -21,6 +21,7 @@ dll_t dll_create_list() {
   dll_t list = malloc(sizeof(struct dll_s));
   list->front = list->back = NULL;
   list->fn = dll_free_node;
+  list->size = 0;
   return list;
 }
 
@@ -39,6 +40,7 @@ void dll_push_back(dll_t list, dll_node_t nn) {
     nn->prev = list->back;
     list->back = nn;
   }
+  list->size++;
 }
 
 void dll_push_front(dll_t list, dll_node_t nn) {
@@ -49,6 +51,7 @@ void dll_push_front(dll_t list, dll_node_t nn) {
     nn->next = list->front;
     list->front = nn;
   }
+  list->size++;
 }
 
 void dll_pop_back(dll_t list) {
@@ -63,6 +66,7 @@ void dll_pop_back(dll_t list) {
     list->front = NULL;
   }
   list->fn(tmp);
+  list->size--;
 }
 
 void dll_pop_front(dll_t list) {
@@ -77,6 +81,7 @@ void dll_pop_front(dll_t list) {
     list->back = NULL;
   }
   list->fn(tmp);
+  list->size--;
 }
 
 dll_node_t dll_front(dll_t list) {
@@ -89,45 +94,50 @@ dll_node_t dll_back(dll_t list) {
 
 /* insert nn after pos in list. push_back if pos == NULL */
 dll_node_t dll_inserta(dll_t list, dll_node_t pos, dll_node_t nn) {
-  if (pos) {
-    dll_node_t tmp = pos->next;
-    pos->next = nn;
-    nn->prev = pos;
-    nn->next = tmp;
-    if (tmp) {
-      tmp->prev = nn;
-    } else {
-      list->back = nn;
-    }
-  } else {
+  if (!pos) {
     dll_push_back(list, nn);
+    return nn;
   }
+
+  dll_node_t tmp = pos->next;
+  pos->next = nn;
+  nn->prev = pos;
+  nn->next = tmp;
+  if (tmp) {
+    tmp->prev = nn;
+  } else {
+    list->back = nn;
+  }
+  list->size++;
   return nn;
 }
 
 /* insert nn before pos in list. push_front is pos == NULL */
 dll_node_t dll_insertb(dll_t list, dll_node_t pos, dll_node_t nn) {
-  if (pos) {
-    dll_node_t tmp = pos->prev;
-    pos->prev = nn;
-    nn->next = pos;
-    nn->prev = tmp;
-    if (tmp) {
-      tmp->next = nn;
-    } else {
-      list->front = nn;
-    }
-  } else {
+  if (!pos) {
     dll_push_front(list, nn);
+    return nn;
   }
+
+  dll_node_t tmp = pos->prev;
+  pos->prev = nn;
+  nn->next = pos;
+  nn->prev = tmp;
+  if (tmp) {
+    tmp->next = nn;
+  } else {
+    list->front = nn;
+  }
+  list->size++;
   return nn;
 }
 
 int dll_is_empty(dll_t list) {
-  return list->front == NULL && list->back == NULL;
+  return list->front == NULL && list->back == NULL
+         && list->size == 0;
 }
 
-long dll_length(dll_t list) {
+long _dll_length(dll_t list) {
   long len = 0;
   dll_node_t n = dll_front(list);
   while (n) {
@@ -153,6 +163,7 @@ void dll_erase(dll_t list, dll_node_t pos) {
   p1->next = p2;
   p2->prev = p1;
   list->fn(pos);
+  list->size--;
 }
 
 void dll_clear(dll_t list) {
