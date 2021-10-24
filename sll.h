@@ -6,51 +6,64 @@
 #ifndef SLL_H_
 #define SLL_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
 typedef struct sll_node_s {
   struct sll_node_s *next;
 } *sll_node_t;
 
 typedef struct sll_s {
-  size_t size;
-  sll_node_t front, back;
+  long size;
+  sll_node_t front;
+  sll_node_t back;
+  void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
 } *sll_t;
 
-sll_t sll_create();
-sll_t sll_push_back(sll_t list, sll_node_t node);
-sll_t sll_push_front(sll_t list, sll_node_t node);
-sll_node_t sll_pop_front(sll_t list);
-bool sll_empty(sll_t list);
+sll_node_t sll_create_node();
+void sll_free_node(sll_node_t node);
+sll_t sll_create_list();
+void sll_free_list(sll_t list);
+
+void sll_push_back(sll_t list, sll_node_t node);
+void sll_push_front(sll_t list, sll_node_t node);
+void sll_pop_front(sll_t list);
+sll_node_t sll_front(sll_t list);
+int sll_is_empty(sll_t list);
 
 /* Giao diện gtype */
 
 #include "gtype.h"
 
-typedef struct gsl_node_s {
-  struct sll_node_s node;
-  gtype val;
-} *gsl_node_t;
+typedef struct sll_node_g_s {
+  struct sll_node_s base;
+  gtype value;
+} *sll_node_g_t;
 
-gsl_node_t gsl_make_node(gtype value);
-sll_t gsl_push_back(sll_t list, gsl_node_t val);
-sll_t gsl_push_front(sll_t list, gsl_node_t val);
-gsl_node_t gsl_pop_front(sll_t list);
+sll_node_t sll_create_node_g(gtype value);
+void sll_push_back_g(sll_t list, gtype value);
+void sll_push_front_g(sll_t list, gtype value);
+gtype sll_pop_front_g(sll_t list);
+gtype sll_front_g(sll_t list);
 
-#define to_gsl(n) ((gsl_node_t)n)
-#define gsl_node_value(n) to_gsl(n)->val
+#define to_sll_node_g(n) ((sll_node_g_t)n)
+#define sll_node_g_value(n) (to_sll_node_g(n)->value)
 
-/* Giao diện stack số nguyên dựa trên giao diện gtype */
+/* Giao diện stack số nguyên dựa trên sll */
 
-sll_t ist_push(sll_t list, long value);
-long ist_pop(sll_t list);
-long ist_top(sll_t list);
+typedef struct sll_node_l_s {
+  struct sll_node_s base;
+  long value;
+} *sll_node_l_t;
+
+#define to_sll_node_l(n) ((sll_node_l_t)n)
+#define sll_node_l_value(n) (to_sll_node_l(n)->value)
+
+sll_node_t sll_create_node_l(long value);
+void sll_stack_push_l(sll_t list, long value);
+long sll_stack_pop_l(sll_t list);
+long sll_stack_top_l(sll_t list);
 
 /* Giao diện queue số nguyên dựa trên giao diện gtype */
-sll_t iqu_enqueue(sll_t list, long value);
-long iqu_dequeue(sll_t list);
-long iqu_peek(sll_t list);
+void sll_queue_enqueue_l(sll_t list, long value);
+long sll_queue_dequeue_l(sll_t list);
+long sll_queue_peek_l(sll_t list);
 
 #endif  // SLL_H_

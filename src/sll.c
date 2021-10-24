@@ -1,11 +1,32 @@
 #include "sll.h"
 
-sll_t sll_create() {
-  sll_t l = calloc(1, sizeof(struct sll_s));
-  return l;
+#include <stdlib.h>
+#include <stdio.h>
+
+sll_node_t sll_create_node() {
+  sll_node_t n = malloc(sizeof(struct sll_node_s));
+  n->next = NULL;
+  return n;
 }
 
-sll_t sll_push_back(sll_t list, sll_node_t node) {
+void sll_free_node(sll_node_t node) {
+  free(node);
+}
+
+sll_t sll_create_list() {
+  sll_t list = malloc(sizeof(struct sll_s));
+  list->fn = sll_free_node;
+  return list;
+}
+
+void sll_free_list(sll_t list) {
+  while (!sll_is_empty(list)) {
+    sll_pop_front(list);
+  }
+  free(list);
+}
+
+void sll_push_back(sll_t list, sll_node_t node) {
   node->next = NULL;
   if (list->front == NULL) {
     list->front = list->back = node;
@@ -14,10 +35,9 @@ sll_t sll_push_back(sll_t list, sll_node_t node) {
     list->back = node;
   }
   list->size++;
-  return list;
 }
 
-sll_t sll_push_front(sll_t list, sll_node_t node) {
+void sll_push_front(sll_t list, sll_node_t node) {
   if (list->front == NULL) {
     list->front = list->back = node;
     node->next = NULL;
@@ -26,87 +46,99 @@ sll_t sll_push_front(sll_t list, sll_node_t node) {
     list->front = node;
   }
   ++list->size;
-  return list;
 }
 
-sll_node_t sll_pop_front(sll_t list) {
+void sll_pop_front(sll_t list) {
   if (list->size == 0) {
-    return NULL;
+    return;
   }
-  sll_node_t node = list->front;
+  sll_node_t tmp = list->front;
   list->front = list->front->next;
   --list->size;
   if (list->size == 0) {
     list->back = NULL;
   }
-  return node;
+  if (list->fn) {
+    list->fn(tmp);
+  }
 }
 
-bool sll_empty(sll_t list) {
+sll_node_t sll_front(sll_t list) {
+  return list->front;
+}
+
+int sll_is_empty(sll_t list) {
   return list->size == 0;
 }
 
 /* Triển khai giao diện gtype */
 
-gsl_node_t gsl_make_node(gtype value) {
-  gsl_node_t node = malloc(sizeof(struct gsl_node_s));
-  node->val = value;
-  return node;
+sll_node_t sll_create_node_g(gtype value) {
+  sll_node_g_t nn = malloc(sizeof(struct sll_node_g_s));
+  nn->base.next = NULL;
+  nn->value = value;
+  return (sll_node_t)nn;
 }
 
-sll_t gsl_push_back(sll_t list, gsl_node_t val) {
-  return sll_push_back(list, &val->node);
+void sll_push_back_g(sll_t list, gtype value) {
+  sll_node_t node = sll_create_node_g(value);
+  sll_push_back(list, node);
 }
 
-sll_t gsl_push_front(sll_t list, gsl_node_t val) {
-  return sll_push_front(list, &val->node);
+void sll_push_front_g(sll_t list, gtype value) {
+  sll_node_t node = sll_create_node_g(value);
+  sll_push_front(list, node);
 }
 
-gsl_node_t gsl_pop_front(sll_t list) {
-  sll_node_t node = sll_pop_front(list);
-  return to_gsl(node);
+gtype sll_pop_front_g(sll_t list) {
+  gtype value = sll_front_g(list);
+  sll_pop_front(list);
+  return value;
+}
+
+gtype sll_front_g(sll_t list) {
+  sll_node_t front = sll_front(list);
+  return sll_node_g_value(front);
 }
 
 /* Triển khai giao diện stack số nguyên */
-sll_t ist_push(sll_t list, long value) {
-  return gsl_push_front(list, gsl_make_node((gtype){.i = value}));
+
+sll_node_t sll_create_node_l(long value) {
+  sll_node_l_t nn = malloc(sizeof(struct sll_node_l_s));
+  nn->base.next = NULL;
+  nn->value = value;
+  return (sll_node_t)nn;
 }
 
-long ist_pop(sll_t list) {
-  gsl_node_t node = gsl_pop_front(list);
-  if (node) {
-    long value = node->val.i;
-    free(node);
-    return value;
-  }
-  return INVALID_VALUE.i;
+void sll_stack_push_l(sll_t list, long value) {
+  sll_node_t nn = sll_create_node_l(value);
+  return sll_push_front(list, nn);
 }
 
-long ist_top(sll_t list) {
-  if (list && list->front) {
-    gsl_node_value(list).i;
-  }
-  return INVALID_VALUE.i;
+long sll_stack_pop_l(sll_t list) {
+  long value = sll_stack_top_l(list);
+  sll_pop_front(list);
+  return value;
+}
+
+long sll_stack_top_l(sll_t list) {
+  sll_node_t tmp = sll_front(list);
+  return sll_node_l_value(tmp);
 }
 
 /* Triển khai giao diện queue số nguyên */
-sll_t iqu_enqueue(sll_t list, long value) {
-  return gsl_push_back(list, gsl_make_node((gtype){.i = value}));
+void sll_queue_enqueue_l(sll_t list, long value) {
+  sll_node_t nn = sll_create_node_l(value);
+  return sll_push_back(list, nn);
 }
 
-long iqu_dequeue(sll_t list) {
-  gsl_node_t node = gsl_pop_front(list);
-  if (node) {
-    long value = node->val.i;
-    free(node);
-    return value;
-  }
-  return INVALID_VALUE.i;
+long sll_queue_dequeue_l(sll_t list) {
+  long value = sll_queue_peek_l(list);
+  sll_pop_front(list);
+  return value;
 }
 
-long iqu_peek(sll_t list) {
-  if (list && list->front) {
-    gsl_node_value(list).i;
-  }
-  return INVALID_VALUE.i;
+long sll_queue_peek_l(sll_t list) {
+  sll_node_t tmp = sll_front(list);
+  return sll_node_l_value(tmp);
 }
