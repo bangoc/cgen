@@ -71,6 +71,23 @@ int sll_is_empty(sll_t list) {
   return list->size == 0;
 }
 
+void sll_pprint_node(sll_node_t node) {
+  printf("[%p]", node);
+}
+
+
+void _sll_pprint_list(sll_t list, void (*pn)()) {
+  for (sll_node_t cur = list->front; cur != NULL; cur = cur->next) {
+    pn(cur);
+    printf(" => ");
+  }
+  printf("NULL\n");
+}
+
+void sll_pprint_list(sll_t list) {
+  _sll_pprint_list(list, sll_pprint_node);
+}
+
 /* Triển khai giao diện gtype */
 
 sll_node_t sll_create_node_g(gtype value) {
@@ -124,6 +141,15 @@ long sll_stack_pop_l(sll_t list) {
 long sll_stack_top_l(sll_t list) {
   sll_node_t tmp = sll_front(list);
   return sll_node_l_value(tmp);
+}
+
+void sll_pprint_node_l(sll_node_t node) {
+  printf("[%ld]", sll_node_l_value(node));
+}
+
+
+void sll_pprint_list_l(sll_t list) {
+  _sll_pprint_list(list, sll_pprint_node_l);
 }
 
 /* Triển khai giao diện queue số nguyên */
