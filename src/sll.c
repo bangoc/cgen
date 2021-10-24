@@ -1,3 +1,7 @@
+/*
+  (C) Nguyen Ba Ngoc, 2021
+*/
+
 #include "sll.h"
 
 #include <stdlib.h>

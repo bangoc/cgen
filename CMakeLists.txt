@@ -6,7 +6,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -w")
 add_subdirectory(tests)
 add_subdirectory(examples)
 
-set(C_SRC src/sll.c)
+set(C_SRC src/sll.c src/dll.c)
 
 add_library(bkc STATIC ${C_SRC})
 
@@ -46,3 +46,5 @@ add_test(NAME S2ISetDup COMMAND s2i_set_dup_ut)
 add_test(NAME BNSSearchGTE COMMAND bns_search_gte_ut)
 add_test(NAME BNSSearchLTE COMMAND bns_search_lte_ut)
 add_test(NAME BNSSearchLteGte1K COMMAND bns_search_lte_gte_1k_ut)
+add_test(NAME DLLGeneric COMMAND dll_generic_ut)
+add_test(NAME DLLInt COMMAND dll_int_ut)
