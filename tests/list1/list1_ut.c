@@ -1,39 +1,39 @@
-#include "list1.h"
+#include "sll.h"
 
 #include "tests/base/utils.h"
 
 int main() {
-  struct list1_node n1, n2, n3;
-  list1_t list = list1_create();
+  struct sll_node_s n1, n2, n3;
+  sll_t list = sll_create();
   CHECK_MSG(list->size == 0, "Init size");
-  CHECK_MSG(list->first == NULL, "Init first");
-  CHECK_MSG(list->last == NULL, "Init last");
+  CHECK_MSG(list->front == NULL, "Init first");
+  CHECK_MSG(list->back == NULL, "Init last");
 
-  list1_append(list, &n2);
+  sll_push_back(list, &n2);
   CHECK_MSG(list->size == 1, "Append 2 size");
-  CHECK_MSG(list->first == &n2, "Append 2 first");
-  CHECK_MSG(list->last = &n2, "Append 2 last");
+  CHECK_MSG(list->front == &n2, "Append 2 first");
+  CHECK_MSG(list->back = &n2, "Append 2 last");
 
-  list1_append(list, &n3);
+  sll_push_back(list, &n3);
   CHECK_MSG(list->size == 2, "Append 3 size");
-  CHECK_MSG(list->first == &n2, "Append 3 first");
-  CHECK_MSG(list->last = &n3, "Append 3 last");
+  CHECK_MSG(list->front == &n2, "Append 3 first");
+  CHECK_MSG(list->back = &n3, "Append 3 last");
 
-  list1_prepend(list, &n1);
+  sll_push_front(list, &n1);
   CHECK_MSG(list->size == 3, "Prepend 1 size");
-  CHECK_MSG(list->first == &n1, "Prepend 1 first");
+  CHECK_MSG(list->front == &n1, "Prepend 1 first");
 
-  CHECK_MSG(list1_remove_first(list) == &n1, "Remove return n1");
+  CHECK_MSG(sll_pop_front(list) == &n1, "Remove return n1");
   CHECK_MSG(list->size == 2, "Remove n1 size");
-  CHECK_MSG(list->first == &n2, "Remove n1 first");
+  CHECK_MSG(list->front == &n2, "Remove n1 first");
 
-  CHECK_MSG(list1_remove_first(list) == &n2, "Remove return n2");
+  CHECK_MSG(sll_pop_front(list) == &n2, "Remove return n2");
   CHECK_MSG(list->size == 1, "Remove n2 size");
-  CHECK_MSG(list->first == &n3, "Remove n2 first");
+  CHECK_MSG(list->front == &n3, "Remove n2 first");
 
-  CHECK_MSG(list1_remove_first(list) == &n3, "Remove return n3");
+  CHECK_MSG(sll_pop_front(list) == &n3, "Remove return n3");
   CHECK_MSG(list->size == 0, "Remove n3 size");
-  CHECK_MSG(list->first == NULL, "Remove n3 first");
-  CHECK_MSG(list->last == NULL, "Remove n3 last");
+  CHECK_MSG(list->front == NULL, "Remove n3 first");
+  CHECK_MSG(list->back == NULL, "Remove n3 last");
   return 0;
 }
