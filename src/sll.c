@@ -19,6 +19,9 @@ void sll_free_node(sll_node_t node) {
 
 sll_t sll_create_list() {
   sll_t list = malloc(sizeof(struct sll_s));
+  list->front = NULL;
+  list->back = NULL;
+  list->size = 0;
   list->fn = sll_free_node;
   return list;
 }
@@ -72,7 +75,7 @@ sll_node_t sll_front(sll_t list) {
 }
 
 int sll_is_empty(sll_t list) {
-  return list->size == 0;
+  return list->size == 0 && list->front == NULL && list->back == NULL;
 }
 
 void sll_pprint_node(sll_node_t node) {

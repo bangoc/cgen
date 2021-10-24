@@ -2,7 +2,9 @@
 
 #include "tests/base/utils.h"
 
-int main() {
+#include <stdlib.h>
+
+int sll_t1() {
   sll_node_t n1 = sll_create_node(),
              n2 = sll_create_node(),
              n3 = sll_create_node();
@@ -40,5 +42,30 @@ int main() {
   CHECK_MSG(list->front == NULL, "Remove n3 first");
   CHECK_MSG(list->back == NULL, "Remove n3 last");
   sll_free_list(list);
+  return 0;
+}
+
+int test_create_list() {
+  #define N 1000
+  int *a = malloc(N * sizeof(int));
+  for (int i = 0; i < N; ++i) {
+    a[i] = i;
+  }
+  free(a);
+  sll_t lists[N];
+  for (int i = 0; i < N; ++i) {
+    lists[i] = sll_create_list();
+    ASSERT(sll_is_empty(lists[i]), "Empty on create");
+  }
+  for (int i = 0; i < N; ++i) {
+    sll_free_list(lists[i]);
+  }
+  #undef N
+  return 0;
+}
+
+int main() {
+  ASSERT(sll_t1() == 0, "t1 (old tests)");
+  ASSERT(test_create_list() == 0, "create_list");
   return 0;
 }
