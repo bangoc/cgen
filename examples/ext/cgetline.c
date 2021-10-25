@@ -15,5 +15,8 @@ int main(int argc, char *argv[]) {
     printf("%ld %s\n", (long)strlen(s), s);
   }
   fclose(inp);
+  if (s) {
+    free(s);
+  }
   return 0;
 }
