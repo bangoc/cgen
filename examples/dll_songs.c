@@ -33,7 +33,7 @@ int main() {
   int stt = 1;
   dll_traverse(cur, list) {
     song_t s = (song_t)(dll_node_g_value(cur).v);
-    printf("%3d %s\n", stt, s->name);
+    printf("%3d %s\n", stt++, s->name);
   }
 
   // Free memory
