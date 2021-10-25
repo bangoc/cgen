@@ -147,6 +147,15 @@ long _dll_length(dll_t list) {
   return len;
 }
 
+long dll_length(dll_t list) {
+#ifdef DEBUG_MODE
+  if (_dll_length(list) != list->size) {
+    fprintf(stderr, "!Wrong list->size");
+  }
+#endif  // DEBUG_MODE
+  return list->size;
+}
+
 void dll_erase(dll_t list, dll_node_t pos) {
   if (pos == list->front) {
     dll_pop_front(list);

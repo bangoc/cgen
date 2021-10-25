@@ -1,4 +1,7 @@
-#include "dll.h"
+// #include "dll.h"
+
+/* Hỗ trợ biên dịch với gcc */
+#include "cgen.ic"
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -26,7 +29,6 @@ int main() {
   dll_inserta_g(list, list->front, create_song_g("Lemon tree"));
   dll_insertb_g(list, list->back, create_song_g("Opera No 2"));
 
-
   // Print songs list
   int stt = 1;
   dll_traverse(cur, list) {
@@ -34,7 +36,7 @@ int main() {
     printf("%3d %s\n", stt, s->name);
   }
 
-  // free memory
+  // Free memory
   dll_traverse(cur, list) {
     free(dll_node_g_value(cur).v);
   }

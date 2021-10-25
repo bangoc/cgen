@@ -2,6 +2,7 @@
 #define CGEN_HC_
 
 #include "src/sll.c"
+#include "src/dll.c"
 
 
 #endif  // CGEN_HC_
