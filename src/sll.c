@@ -166,18 +166,18 @@ void sll_pprint_list_l(sll_t list) {
 }
 
 /* Triển khai giao diện queue số nguyên */
-void sll_queue_enqueue_l(sll_t list, long value) {
+void sll_fifo_enqueue_l(sll_t list, long value) {
   sll_node_t nn = sll_create_node_l(value);
   return sll_push_back(list, nn);
 }
 
-long sll_queue_dequeue_l(sll_t list) {
-  long value = sll_queue_peek_l(list);
+long sll_fifo_dequeue_l(sll_t list) {
+  long value = sll_fifo_peek_l(list);
   sll_pop_front(list);
   return value;
 }
 
-long sll_queue_peek_l(sll_t list) {
+long sll_fifo_peek_l(sll_t list) {
   sll_node_t tmp = sll_front(list);
   return sll_node_l_value(tmp);
 }

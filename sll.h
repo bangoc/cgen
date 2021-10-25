@@ -68,8 +68,8 @@ long sll_stack_pop_l(sll_t list);
 long sll_stack_top_l(sll_t list);
 
 /* Giao diện queue kiểu long dựa trên giao diện sll */
-void sll_queue_enqueue_l(sll_t list, long value);
-long sll_queue_dequeue_l(sll_t list);
-long sll_queue_peek_l(sll_t list);
+void sll_fifo_enqueue_l(sll_t list, long value);
+long sll_fifo_dequeue_l(sll_t list);
+long sll_fifo_peek_l(sll_t list);
 
 #endif  // SLL_H_
