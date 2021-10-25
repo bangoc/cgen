@@ -21,7 +21,6 @@ dll_t dll_create_list() {
   dll_t list = malloc(sizeof(struct dll_s));
   list->front = list->back = NULL;
   list->fn = dll_free_node;
-  list->size = 0;
   return list;
 }
 
@@ -40,7 +39,6 @@ void dll_push_back(dll_t list, dll_node_t nn) {
     nn->prev = list->back;
     list->back = nn;
   }
-  list->size++;
 }
 
 void dll_push_front(dll_t list, dll_node_t nn) {
@@ -51,7 +49,6 @@ void dll_push_front(dll_t list, dll_node_t nn) {
     nn->next = list->front;
     list->front = nn;
   }
-  list->size++;
 }
 
 void dll_pop_back(dll_t list) {
@@ -66,7 +63,6 @@ void dll_pop_back(dll_t list) {
     list->front = NULL;
   }
   list->fn(tmp);
-  list->size--;
 }
 
 void dll_pop_front(dll_t list) {
@@ -81,7 +77,6 @@ void dll_pop_front(dll_t list) {
     list->back = NULL;
   }
   list->fn(tmp);
-  list->size--;
 }
 
 dll_node_t dll_front(dll_t list) {
@@ -108,7 +103,6 @@ dll_node_t dll_inserta(dll_t list, dll_node_t pos, dll_node_t nn) {
   } else {
     list->back = nn;
   }
-  list->size++;
   return nn;
 }
 
@@ -128,16 +122,14 @@ dll_node_t dll_insertb(dll_t list, dll_node_t pos, dll_node_t nn) {
   } else {
     list->front = nn;
   }
-  list->size++;
   return nn;
 }
 
 int dll_is_empty(dll_t list) {
-  return list->front == NULL && list->back == NULL
-         && list->size == 0;
+  return list->front == NULL && list->back == NULL;
 }
 
-long _dll_length(dll_t list) {
+long dll_length(dll_t list) {
   long len = 0;
   dll_node_t n = dll_front(list);
   while (n) {
@@ -145,15 +137,6 @@ long _dll_length(dll_t list) {
     n = n->next;
   }
   return len;
-}
-
-long dll_length(dll_t list) {
-#ifdef DEBUG_MODE
-  if (_dll_length(list) != list->size) {
-    fprintf(stderr, "!Wrong list->size");
-  }
-#endif  // DEBUG_MODE
-  return list->size;
 }
 
 void dll_erase(dll_t list, dll_node_t pos) {
@@ -172,7 +155,6 @@ void dll_erase(dll_t list, dll_node_t pos) {
   p1->next = p2;
   p2->prev = p1;
   list->fn(pos);
-  list->size--;
 }
 
 void dll_clear(dll_t list) {

@@ -14,7 +14,6 @@ typedef struct sll_s {
   sll_node_t front;
   sll_node_t back;
   void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
-  long size;
 } *sll_t;
 
 sll_node_t sll_create_node();
@@ -27,6 +26,7 @@ void sll_push_front(sll_t list, sll_node_t node);
 void sll_pop_front(sll_t list);
 sll_node_t sll_front(sll_t list);
 int sll_is_empty(sll_t list);
+long sll_length(sll_t list);
 
 void sll_pprint_node(sll_node_t node);
 void sll_pprint_list(sll_t list);

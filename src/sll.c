@@ -21,7 +21,6 @@ sll_t sll_create_list() {
   sll_t list = malloc(sizeof(struct sll_s));
   list->front = NULL;
   list->back = NULL;
-  list->size = 0;
   list->fn = sll_free_node;
   return list;
 }
@@ -41,7 +40,6 @@ void sll_push_back(sll_t list, sll_node_t node) {
     list->back->next = node;
     list->back = node;
   }
-  list->size++;
 }
 
 void sll_push_front(sll_t list, sll_node_t node) {
@@ -52,22 +50,20 @@ void sll_push_front(sll_t list, sll_node_t node) {
     node->next = list->front;
     list->front = node;
   }
-  ++list->size;
 }
 
 void sll_pop_front(sll_t list) {
-  if (list->size == 0) {
+  if (sll_is_empty(list)) {
     return;
   }
   sll_node_t tmp = list->front;
   list->front = list->front->next;
-  if (list->size == 0) {
+  if (list->front == NULL) {
     list->back = NULL;
   }
   if (list->fn) {
     list->fn(tmp);
   }
-  --list->size;
 }
 
 sll_node_t sll_front(sll_t list) {
@@ -75,7 +71,17 @@ sll_node_t sll_front(sll_t list) {
 }
 
 int sll_is_empty(sll_t list) {
-  return list->size == 0 && list->front == NULL && list->back == NULL;
+  return list->front == NULL && list->back == NULL;
+}
+
+long sll_length(sll_t list) {
+  long len = 0;
+  sll_node_t n = sll_front(list);
+  while (n) {
+    ++len;
+    n = n->next;
+  }
+  return len;
 }
 
 void sll_pprint_node(sll_node_t node) {

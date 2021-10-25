@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 static int dll_sequence(dll_t list, dll_node_t *a, int n) {
-  if (list->size != n) {
+  if (dll_length(list) != n) {
     return 0;
   }
 
@@ -38,7 +38,7 @@ static int dll_sequence(dll_t list, dll_node_t *a, int n) {
 }
 
 static int dll_sequence_i(dll_t list, int *a, int n) {
-  if (list->size != n) {
+  if (dll_length(list) != n) {
     return 0;
   }
   dll_node_t p = list->front;
@@ -65,7 +65,7 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
 }
 
 static int dll_sequence_g(dll_t list, gtype *a, int n, int(*cmp)()) {
-  if (list->size != n) {
+  if (dll_length(list) != n) {
     return 0;
   }
   dll_node_t p = list->front;
