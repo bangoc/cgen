@@ -79,6 +79,7 @@ SllG SllG_create() {
   MEMBER(list, SllG, PushFront);
   MEMBER(list, SllG, PopFront);
   MEMBER(list, SllG, Front);
+  MEMBER(list, SllG, PPrint);
 }
 
 void SllGPushBack(SllG list, gtype value) {
@@ -105,4 +106,12 @@ gtype SllGFront(SllG list) {
   SllNode node = base->Front(base);
   gtype value = sll_node_g_value(node);
   return value;
+}
+
+void SllGPPrint(SllG _list) {
+  sll_t list = (sll_t)_list;
+  for (sll_node_t cur = list->front; cur != NULL; cur = cur->next) {
+    printf("%ld ", (long)sll_node_g_value(cur).i);
+  }
+  printf("\n");
 }

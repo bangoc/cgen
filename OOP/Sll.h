@@ -50,6 +50,7 @@ typedef struct {
   void (*PushFront)();
   gtype (*PopFront)();
   gtype (*Front)();
+  void (*PPrint)();
 } SllGS, *SllG;
 
 SllNodeG SllNodeG_create(gtype value);
@@ -59,5 +60,6 @@ void SllGPushBack(SllG list, gtype value);
 void SllGPushFront(SllG list, gtype value);
 gtype SllGPopFront(SllG list);
 gtype SllGFront(SllG list);
+void SllGPPrint(SllG list);
 
 #endif  // OOSLL_H_
