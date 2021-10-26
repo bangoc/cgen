@@ -1,6 +1,10 @@
 #ifndef OOP_SLL_H_
 #define OOP_SLL_H_
 
+/*
+  (C) Nguyen Ba Ngoc, 2021
+*/
+
 #include "core.h"
 
 #include "sll.h"
