@@ -4,32 +4,7 @@
 
 #include <stdlib.h>
 
-Sll Sll_create() {
-  sll_t sll = sll_create_list();
-  Sll list = realloc(sll, sizeof(SllS));
-  MEMBER(list, Sll, PushBack);
-  MEMBER(list, Sll, PushFront);
-  MEMBER(list, Sll, PopFront);
-  MEMBER(list, Sll, Front);
-  MEMBER(list, Sll, IsEmpty);
-  MEMBER(list, Sll, Length);
-  MEMBER(list, Sll, PPrintNode);
-  MEMBER(list, Sll, PPrint);
-  return list;
-}
-
-SllNode SllNode_create() {
-  return (SllNode)sll_create_node();
-}
-
-void Sll_free(Sll list) {
-  sll_t sll = realloc(list, sizeof(struct sll_s));
-  sll_free_list(sll);
-}
-
-void SllNode_free(SllNode node) {
-  sll_free_node((sll_node_t)node);
-}
+#define MEMBER(obj, Class, Method) obj->Method = Class ## Method
 
 void SllPushBack(Sll list, SllNode nn) {
   sll_push_back((sll_t)list, (sll_node_t)nn);
@@ -63,60 +38,92 @@ void SllPPrint(Sll list) {
   sll_pprint_list((sll_t)list);
 }
 
+
+Sll Sll_create() {
+  sll_t sll = sll_create_list();
+  Sll list = realloc(sll, sizeof(SllS));
+  MEMBER(list, Sll, PushBack);
+  MEMBER(list, Sll, PushFront);
+  MEMBER(list, Sll, PopFront);
+  MEMBER(list, Sll, Front);
+  MEMBER(list, Sll, IsEmpty);
+  MEMBER(list, Sll, Length);
+  MEMBER(list, Sll, PPrintNode);
+  MEMBER(list, Sll, PPrint);
+  return list;
+}
+
+SllNode SllNode_create() {
+  return (SllNode)sll_create_node();
+}
+
+void Sll_free(Sll list) {
+  sll_t sll = realloc(list, sizeof(struct sll_s));
+  sll_free_list(sll);
+}
+
+void SllNode_free(SllNode node) {
+  sll_free_node((sll_node_t)node);
+}
+
 /* Giao diện gtype */
 
-SllNodeG SllNodeG_create(gtype value) {
-  SllNode tmp = New(SllNode);
-  SllNodeG nn = realloc(tmp, sizeof(SllNodeGS));
-  nn->value = value;
-  return nn;
-}
-
-SllG SllG_create() {
-  Sll tmp = New(Sll);
-  SllG list = realloc(tmp, sizeof(SllGS));
-  MEMBER(list, SllG, PushBack);
-  MEMBER(list, SllG, PushFront);
-  MEMBER(list, SllG, PopFront);
-  MEMBER(list, SllG, Front);
-  MEMBER(list, SllG, PPrint);
-}
-
-void SllG_free(SllG list) {
+void SllGt_free(SllGt list) {
   Sll tmp = realloc(list, sizeof(SllS));
   Delete(Sll, tmp);
 }
 
-void SllGPushBack(SllG list, gtype value) {
-  SllNodeG nn = New(SllNodeG, value);
+void SllGtPushBack(SllGt list, gtype value) {
+  SllNodeGt nn = New(SllNodeGt, value);
   Sll base = (Sll)list;
   base->PushBack(base, nn);
 }
 
-void SllGPushFront(SllG list, gtype value) {
-  SllNodeG nn = New(SllNodeG, value);
+void SllGtPushFront(SllGt list, gtype value) {
+  SllNodeGt nn = New(SllNodeGt, value);
   Sll base = (Sll)list;
   base->PushFront(base, nn);
 }
 
-gtype SllGPopFront(SllG list) {
+gtype SllGtPopFront(SllGt list) {
   gtype value = list->Front(list);
   Sll base = (Sll)list;
   base->PopFront(base);
   return value;
 }
 
-gtype SllGFront(SllG list) {
+gtype SllGtFront(SllGt list) {
   Sll base = (Sll)list;
   SllNode node = base->Front(base);
   gtype value = sll_node_g_value(node);
   return value;
 }
 
-void SllGPPrint(SllG _list) {
-  sll_t list = (sll_t)_list;
-  for (sll_node_t cur = list->front; cur != NULL; cur = cur->next) {
-    printf("%ld ", (long)sll_node_g_value(cur).i);
-  }
-  printf("\n");
+SllNodeGt SllNodeGt_create(gtype value) {
+  SllNode tmp = New(SllNode);
+  SllNodeGt nn = realloc(tmp, sizeof(SllNodeGtS));
+  nn->value = value;
+  return nn;
 }
+
+void SllGtForeach(SllGt list, int (*op)()) {
+  sll_t sll = (sll_t)list;
+  sll_traverse(cur, sll) {
+    SllNodeGt gn = (SllNodeGt)cur;
+    if (op(gn->value)) {
+      break;
+    }
+  }
+}
+
+SllGt SllGt_create() {
+  Sll tmp = New(Sll);
+  SllGt list = realloc(tmp, sizeof(SllGtS));
+  MEMBER(list, SllGt, PushBack);
+  MEMBER(list, SllGt, PushFront);
+  MEMBER(list, SllGt, PopFront);
+  MEMBER(list, SllGt, Front);
+  MEMBER(list, SllGt, Foreach);
+}
+
+#undef MEMBER

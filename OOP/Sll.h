@@ -1,5 +1,5 @@
-#ifndef OOSLL_H_
-#define OOSLL_H_
+#ifndef OOP_SLL_H_
+#define OOP_SLL_H_
 
 #include "core.h"
 
@@ -26,23 +26,12 @@ SllNode SllNode_create();
 void Sll_free(Sll list);
 void SllNode_free(SllNode node);
 
-void SllPushBack(Sll list, SllNode nn);
-void SllPushFront(Sll list, SllNode nn);
-void SllPopFront(Sll list);
-SllNode SllFront(Sll list);
-int SllIsEmpty(Sll list);
-long SllLength(Sll list);
-void SllPPrintNode(SllNode node);
-void SllPPrint(Sll list);
-
-#define MEMBER(obj, Class, Method) obj->Method = Class ## Method
-
 #include "gtype.h"
 
 typedef struct {
   SllNodeS base;
   gtype value;
-} SllNodeGS, *SllNodeG;
+} SllNodeGtS, *SllNodeGt;
 
 typedef struct {
   SllS base;
@@ -50,17 +39,11 @@ typedef struct {
   void (*PushFront)();
   gtype (*PopFront)();
   gtype (*Front)();
-  void (*PPrint)();
-} SllGS, *SllG;
+  void (*Foreach)();
+} SllGtS, *SllGt;
 
-SllNodeG SllNodeG_create(gtype value);
-SllG SllG_create();
-void SllG_free(SllG list);
+SllNodeGt SllNodeGt_create(gtype value);
+SllGt SllGt_create();
+void SllGt_free(SllGt list);
 
-void SllGPushBack(SllG list, gtype value);
-void SllGPushFront(SllG list, gtype value);
-gtype SllGPopFront(SllG list);
-gtype SllGFront(SllG list);
-void SllGPPrint(SllG list);
-
-#endif  // OOSLL_H_
+#endif  // OOP_SLL_H_
