@@ -82,6 +82,11 @@ SllG SllG_create() {
   MEMBER(list, SllG, PPrint);
 }
 
+void SllG_free(SllG list) {
+  Sll tmp = realloc(list, sizeof(SllS));
+  Delete(Sll, tmp);
+}
+
 void SllGPushBack(SllG list, gtype value) {
   SllNodeG nn = New(SllNodeG, value);
   Sll base = (Sll)list;

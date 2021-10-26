@@ -8,5 +8,6 @@ int main() {
   list->PushFront(list, (gtype){.i = 30});
   list->PushBack(list, (gtype){.i = 1000});
   list->PPrint(list);
+  Delete(SllG, list);
   return 0;
 }

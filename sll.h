@@ -31,6 +31,9 @@ long sll_length(sll_t list);
 void sll_pprint_node(sll_node_t node);
 void sll_pprint_list(sll_t list);
 
+#define sll_traverse(cur, list) \
+  for (sll_node_t cur = list->front; cur != NULL; cur = cur->next)
+
 /* Giao diện gtype */
 
 #include "gtype.h"

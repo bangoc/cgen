@@ -55,6 +55,7 @@ typedef struct {
 
 SllNodeG SllNodeG_create(gtype value);
 SllG SllG_create();
+void SllG_free(SllG list);
 
 void SllGPushBack(SllG list, gtype value);
 void SllGPushFront(SllG list, gtype value);
