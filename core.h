@@ -10,4 +10,13 @@
 #define container_of(ptr, type, member) \
   ((type *)((void*)ptr - offsetof(type, member)))
 
+#define New(TYPE, ...) TYPE ## _create(  __VA_ARGS__ )
+
+#define Delete(TYPE, ptr) do        \
+        {       \
+          TYPE ## _free(ptr); \
+          /*free(ptr);*/    \
+        }       \
+        while(0)
+
 #endif  // CORE_H_
