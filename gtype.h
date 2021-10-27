@@ -16,6 +16,10 @@ typedef union {
 
 #define INVALID_VALUE ((gtype){.i = -1})
 #define gtype_value(type, val) ((gtype){.type = val})
+#define gtype_i(value) gtype_value(i, value)
+#define gtype_d(value) gtype_value(d, value)
+#define gtype_s(value) gtype_value(s, value)
+#define gtype_v(value) gtype_value(v, value)
 
 typedef int (*gtype_cmp_t)(gtype, gtype);
 

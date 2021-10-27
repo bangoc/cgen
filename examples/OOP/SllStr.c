@@ -1,7 +1,7 @@
 #include "OOP/cgen.ic"
 
 gtype gtype_str(const char *str) {
-  return (gtype){.s = strdup(str)};
+  return gtype_s(strdup(str));
 }
 
 int print_s(gtype value) {
