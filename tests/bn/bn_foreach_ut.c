@@ -38,7 +38,7 @@ int main() {
   nodes[3] = n5;
   nodes[4] = n3;
   idx = 0;
-  bn_postorder_foreach(t, my_callback, NULL);
+  bn_foreach_lrn(t, my_callback, NULL);
   CHECK_MSG(idx == 5, "Wrong index");
   idx = 0;
   bn_node_t cur;

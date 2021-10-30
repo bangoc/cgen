@@ -71,7 +71,7 @@ bn_node_t bn_first_postorder(bn_tree_t t) {
   return bn_left_deepest_node(t->root);
 }
 
-void bn_postorder_foreach(bn_tree_t t, bn_callback_t op, void *u) {
+void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u) {
   bn_node_t n = bn_first_postorder(t);
   for (; n != NULL; n = bn_next_postorder(n)) {
     if (op(n, u)) {
@@ -123,7 +123,7 @@ bn_node_t bn_prev_inorder(bn_node_t x) {
   return y;
 }
 
-void bn_inorder_lnr_foreach(bn_tree_t t, bn_callback_t op, void *u) {
+void bn_foreach_lnr(bn_tree_t t, bn_callback_t op, void *u) {
   if (!t->root) {
     return;
   }
@@ -135,7 +135,7 @@ void bn_inorder_lnr_foreach(bn_tree_t t, bn_callback_t op, void *u) {
   }
 }
 
-void bn_inorder_rnl_foreach(bn_tree_t t, bn_callback_t op, void *u) {
+void bn_foreach_rnl(bn_tree_t t, bn_callback_t op, void *u) {
   if (!t->root) {
     return;
   }
