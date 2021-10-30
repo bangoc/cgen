@@ -1,21 +1,19 @@
+#ifndef BNS_H_
+#define BNS_H_
+
 /*
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef BNS_H_
-#define BNS_H_
-
 #include "bn.h"
 
-// ========== Khai báo hàm ===============
-
-static bn_node_t bns_search(bn_node_t root, const void *query,
+bn_node_t bns_search(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
 // gte = greater than or equal, lte = less than or equal
-static bn_node_t bns_search_gte(bn_node_t root, const void *query,
+bn_node_t bns_search_gte(bn_node_t root, const void *query,
         bn_compare_t cmp);
-static bn_node_t bns_search_lte(bn_node_t root, const void *query,
+bn_node_t bns_search_lte(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
 // ========== Macro viết nhanh ===========
@@ -94,28 +92,5 @@ static bn_node_t bns_search_lte(bn_node_t root, const void *query,
       x = x->left; \
     } \
   } while (0)
-
-// ========== Định nghĩa hàm =============
-
-static bn_node_t bns_search(bn_node_t root, const void *query,
-        bn_compare_t cmp) {
-  bn_node_t result;
-  bns_search_inline(result, root, query, cmp);
-  return result;
-}
-
-static bn_node_t bns_search_gte(bn_node_t root, const void *query,
-        bn_compare_t cmp) {
-  bn_node_t out;
-  bns_search_gte_inline(out, root, query, cmp);
-  return out;
-}
-
-static bn_node_t bns_search_lte(bn_node_t root, const void *query,
-                                bn_compare_t cmp) {
-  bn_node_t out;
-  bns_search_lte_inline(out, root, query, cmp);
-  return out;
-}
 
 #endif  // BSNT_H_
