@@ -62,6 +62,34 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 
 // ========== Định nghĩa hàm =============
 
+#define bn_change_child(old_node, new_node, parent, t) \
+  do { \
+    if (parent) { \
+      if (parent->left == old_node) { \
+        parent->left = new_node; \
+      } else { \
+        parent->right = new_node; \
+      } \
+    } else { \
+      t->root = new_node; \
+    } \
+  } while (0)
+
+/* Xoay từ trái sang phải hoặc xoay từ phải sang trái */
+/* x là trục xoay */
+#define bn_rotate(t, x, right, left) \
+  do { \
+    bn_node_t y = x->right; \
+    x->right = y->left; \
+    if (y->left != NULL_PTR) { \
+      y->left->top = x; \
+    } \
+    y->top = x->top; \
+    bn_change_child(x, y, x->top, t); \
+    y->left = x; \
+    x->top = y; \
+  } while (0)
+
 static rb_node_t rb_create_node() {
   // Mặc định giá trị 0 là đỏ
   return calloc(1, sizeof(struct rb_node));

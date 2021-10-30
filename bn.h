@@ -55,39 +55,4 @@ void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 #define bn_postorder_foreach_inline(cur, tree) \
   for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
-#define BN_DECL_ROTATION(t, x, left, right) \
-    bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x)
-
-BN_DECL_ROTATION(t, x, left, right);
-BN_DECL_ROTATION(t, x, right, left);
-#undef BN_DECL_ROTATION
-
-#define bn_change_child(old_node, new_node, parent, t) \
-  do { \
-    if (parent) { \
-      if (parent->left == old_node) { \
-        parent->left = new_node; \
-      } else { \
-        parent->right = new_node; \
-      } \
-    } else { \
-      t->root = new_node; \
-    } \
-  } while (0)
-
-/* Xoay từ trái sang phải hoặc xoay từ phải sang trái */
-/* x là trục xoay */
-#define bn_rotate(t, x, right, left) \
-  do { \
-    bn_node_t y = x->right; \
-    x->right = y->left; \
-    if (y->left != NULL_PTR) { \
-      y->left->top = x; \
-    } \
-    y->top = x->top; \
-    bn_change_child(x, y, x->top, t); \
-    y->left = x; \
-    x->top = y; \
-  } while (0)
-
 #endif  // BN_H_
