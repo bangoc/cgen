@@ -34,7 +34,7 @@ static long s2i_value(bn_tree_t t, const char *key);
 static int s2i_delete(bn_tree_t t, const char *key);
 static int s2i_compare_data(const char *q, bn_node_t n);
 static void s2i_free_node(bn_node_t n);
-static void s2i_free(bn_tree_t *t);
+static void s2i_free(bn_tree_t *tp);
 static void s2i_postorder_print(bn_tree_t tree);
 static void s2i_print_node(bn_node_t n);
 
@@ -59,12 +59,12 @@ static void s2i_free_node(bn_node_t n) {
 }
 
 static void s2i_free(bn_tree_t *tp) {
-  bn_free_tree(tp, s2i_free_node);
+  bn_free_tree(tp);
 }
 
 static void s2i_postorder_print(bn_tree_t tree) {
   bn_node_t cur;
-  bn_postorder_foreach_inline(cur, tree) {
+  bn_travese_lrn(cur, tree) {
     printf("%s: %ld\n", to_s2i(cur)->key, to_s2i(cur)->value);
   }
 }

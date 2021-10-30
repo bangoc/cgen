@@ -35,24 +35,25 @@ typedef void (*bn_free_node_t)();
 typedef void (*bn_node_print_t)();
 
 bn_node_t bn_create_node();
-bn_tree_t bn_create_tree(bn_node_t node);
-void bn_free_tree(bn_tree_t *t, bn_free_node_t fn);
-void bn_free(bn_tree_t t);
-bn_tree_t bn_transplant(bn_tree_t t, bn_node_t u, bn_node_t v);
-bn_node_t bn_left_most(bn_node_t x);
-bn_node_t bn_right_most(bn_node_t x);
-bn_node_t bn_first_postorder(bn_tree_t t);
-bn_node_t bn_next_postorder(bn_node_t node);
+void bn_free_node(bn_node_t node);
+bn_tree_t bn_create_tree(bn_node_t root);
+void bn_free_tree(bn_tree_t *t);
 void bn_postorder_foreach(bn_tree_t t,
   bn_callback_t op, void *u);
 void bn_inorder_lnr_foreach(bn_tree_t t, bn_callback_t op, void *u);
 void bn_inorder_rnl_foreach(bn_tree_t t, bn_callback_t op, void *u);
-
-bn_node_t bn_prev_inorder(bn_node_t x);
-bn_node_t bn_next_inorder(bn_node_t x);
 void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 
-#define bn_postorder_foreach_inline(cur, tree) \
-  for (cur = bn_first_postorder(tree); cur != NULL_PTR; cur = bn_next_postorder(cur))
+bn_node_t bn_left_deepest_node(bn_node_t node);
+bn_node_t bn_next_postorder(bn_node_t node);
+bn_node_t bn_first_postorder(bn_tree_t t);
+bn_node_t bn_left_most(bn_node_t x);
+bn_node_t bn_right_most(bn_node_t x);
+bn_node_t bn_next_inorder(bn_node_t x);
+bn_node_t bn_prev_inorder(bn_node_t x);
+
+#define bn_travese_lrn(cur, tree) \
+  for (bn_node_t cur = bn_first_postorder(tree); \
+       cur != NULL_PTR; cur = bn_next_postorder(cur))
 
 #endif  // BN_H_

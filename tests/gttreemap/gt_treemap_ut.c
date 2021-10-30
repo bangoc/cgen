@@ -63,7 +63,7 @@ int main() {
   tm_value_ref(t, query, &value, tm_compare_str);
   CHECK_MSG(value == NULL_PTR, "Failed not found F");
   treemap_node_t prev = NULL_PTR;
-  bn_free_tree(&t, tm_bn_free_node);
+  bn_free_tree(&t);
   printf("Treemap ut OK\n");
   return 0;
 }

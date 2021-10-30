@@ -31,5 +31,10 @@ int main() {
   CHECK_MSG(bn_prev_inorder(n3) == n2, "Failed predecessor of n3");
   CHECK_MSG(bn_prev_inorder(n4) == n3, "Failed predecessor of n4");
   CHECK_MSG(bn_prev_inorder(n5) == n4, "Failed predecessor of n5");
+  bn_free_node(n1);
+  bn_free_node(n2);
+  bn_free_node(n3);
+  bn_free_node(n4);
+  bn_free_node(n5);
   return 0;
 }

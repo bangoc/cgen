@@ -2,6 +2,11 @@
 #include "rbi_helper.h"
 #include "tests/base/utils.h"
 
+#define bn_connect1(n1, link, n2) to_bn(n1)->link = to_bn(n2)
+#define bn_connect2(n1, link1, n2, link2) bn_connect1(n1, link1, n2); \
+    bn_connect1(n2, link2, n1)
+
+
 int test_delete_root() {
   bn_tree_t t = bn_create_tree(NULL_PTR);
   rbi_node_t root = rbi_create_node(5);

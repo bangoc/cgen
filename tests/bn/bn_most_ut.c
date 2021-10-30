@@ -1,5 +1,6 @@
 #include "tests/base/utils.h"
-#include "bns.h"
+#include "bn.h"
+#include "src/bn.c"
 
 int t1() {
   bn_node_t n1 = bn_create_node();
@@ -28,6 +29,11 @@ int t1() {
   CHECK_MSG(bn_right_most(n4) == n5, "right most = n5");
   CHECK_MSG(bn_left_most(n1) == n1, "left most = n1");
   CHECK_MSG(bn_right_most(n1) == n1, "right most = n1");
+  bn_free_node(n1);
+  bn_free_node(n2);
+  bn_free_node(n3);
+  bn_free_node(n4);
+  bn_free_node(n5);
   return 0;
 }
 

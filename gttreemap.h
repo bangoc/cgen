@@ -37,8 +37,6 @@ static int tm_delete(bn_tree_t t, gtype key,
 #define to_tm(n) ((treemap_node_t)n)
 #define tm_node_key(n) to_tm(n)->key
 #define tm_node_value(n) to_tm(n)->value
-#define tm_postorder_foreach_inline(cur, t) \
-  for (void *cur = bn_first_postorder(t); cur != NULL_PTR; cur = bn_next_postorder(cur))
 
 // ========== Định nghĩa hàm =============
 

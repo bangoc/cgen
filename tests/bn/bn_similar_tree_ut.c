@@ -30,5 +30,7 @@ int main() {
   bn_connect2(n22, right, n23, top);
 
   CHECK_MSG(bn_similar_tree(t1, t2, bn_similar_null) == 1, "Hai cây 1 -> 2 -> 3");
+  bn_free_tree(&t1);
+  bn_free_tree(&t2);
   return 0;
 }

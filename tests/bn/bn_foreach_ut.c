@@ -42,9 +42,10 @@ int main() {
   CHECK_MSG(idx == 5, "Wrong index");
   idx = 0;
   bn_node_t cur;
-  bn_postorder_foreach_inline(cur, t) {
+  bn_travese_lrn(cur, t) {
     CHECK_MSG(cur == nodes[idx], "Failed inline");
     ++idx;
   }
+  bn_free_tree(&t);
   return 0;
 }

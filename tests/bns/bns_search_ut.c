@@ -51,6 +51,6 @@ int main() {
   CHECK_MSG(bns_search(t->root, &n5.bnt, bns_compare) == &n5.bnt, "Failed search 5");
   CHECK_MSG(bns_search(t->root, &n6.bnt, bns_compare) == NULL_PTR, "Failed search 6");
   CHECK_MSG(bns_search(t->root, &n_1.bnt, bns_compare) == NULL_PTR, "Failed search -1");
-  bn_free(t);
+  free(t);
   return 0;
 }
