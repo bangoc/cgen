@@ -20,18 +20,18 @@ int t1() {
       n2  n4
     n1      n5
   */
-  CHECK(bn_left_most(n3) == n1);
-  CHECK(bn_right_most(n3) == n5);
-  CHECK(bn_left_most(n2) == n1);
-  CHECK(bn_right_most(n2) == n2);
-  CHECK(bn_left_most(n4) == n4);
-  CHECK(bn_right_most(n4) == n5);
-  CHECK(bn_left_most(n1) == n1);
-  CHECK(bn_right_most(n1) == n1);
+  CHECK_MSG(bn_left_most(n3) == n1, "left_most = n1");
+  CHECK_MSG(bn_right_most(n3) == n5, "right most = n5");
+  CHECK_MSG(bn_left_most(n2) == n1, "left most = n1");
+  CHECK_MSG(bn_right_most(n2) == n2, "right most = n2");
+  CHECK_MSG(bn_left_most(n4) == n4, "left most = n4");
+  CHECK_MSG(bn_right_most(n4) == n5, "right most = n5");
+  CHECK_MSG(bn_left_most(n1) == n1, "left most = n1");
+  CHECK_MSG(bn_right_most(n1) == n1, "right most = n1");
   return 0;
 }
 
 int main() {
-  CHECK(t1() == 0);
+  CHECK_MSG(t1() == 0, "t1");
   return 0;
 }

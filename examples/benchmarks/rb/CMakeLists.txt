@@ -6,6 +6,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 add_executable(b123 bench_123.c)
 add_executable(b++123 bench_123.cc)
 
+target_link_libraries(b123 bkc)
+
 # Người dùng tự bổ xung thư mục libfdr để biên dịch nếu quan tâm
 #   có thể tài về ở địa chỉ https://github.com/bangoc/libfdr
 #   hoặc chạy lệnh: git clone https://github.com/bangoc/libfdr.git

@@ -3,6 +3,7 @@
 
 #include "src/sll.c"
 #include "src/dll.c"
+#include "src/bn.c"
 
 
 #endif  // CGEN_HC_
