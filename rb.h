@@ -123,7 +123,7 @@ static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
                p    U  thành>>>   n <-p  U        \
                 n               p  <-n mới        \
            */ \
-          bn_ ##left ##_rotate(t, p); \
+          bn_rotate(t, p, right, left); \
           n = p; \
           p = n->top; \
         } \
@@ -140,7 +140,8 @@ static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
          */                                           \
         rb_set_color(p, RB_BLACK); \
         rb_set_color(p->top, RB_RED); \
-        bn_ ##right ##_rotate(t, p->top); \
+        p = p->top; \
+        bn_rotate(t, p, left, right); \
         break;  \
       }
       IMPL_INSERT_FIXUP(left, right)
@@ -199,7 +200,7 @@ static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
          *      / \         / \                   \
          *     Cn  Dn      N   Cn <- sibling mới  \
          */                                       \
-        bn_ ##left ##_rotate(t, parent); \
+        bn_rotate(t, parent, right, left); \
         rb_set_red(parent); \
         rb_set_black(sibling); \
         sibling = parent->right; \
@@ -263,7 +264,7 @@ static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
          *         \                                                 \
          *          Dn                                               \
          */                                                          \
-        bn_ ##right ##_rotate(t, sibling); \
+        bn_rotate(t, sibling, left, right); \
         sibling = parent->right; \
       } \
       /* Trường hợp 4 - Xoay trái ở parent + đảo mầu các nút         \
@@ -278,7 +279,7 @@ static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
        *      (cn) dn      N  (cn)                                   \
        */ \
       dn = sibling->right; \
-      bn_ ##left ##_rotate(t, parent); \
+      bn_rotate(t, parent, right, left); \
       rb_set_color(sibling, rb_color(parent)); \
       rb_set_black(parent); \
       rb_set_black(dn); \

@@ -75,4 +75,19 @@ BN_DECL_ROTATION(t, x, right, left);
     } \
   } while (0)
 
+/* Xoay từ trái sang phải hoặc xoay từ phải sang trái */
+/* x là trục xoay */
+#define bn_rotate(t, x, right, left) \
+  do { \
+    bn_node_t y = x->right; \
+    x->right = y->left; \
+    if (y->left != NULL_PTR) { \
+      y->left->top = x; \
+    } \
+    y->top = x->top; \
+    bn_change_child(x, y, x->top, t); \
+    y->left = x; \
+    x->top = y; \
+  } while (0)
+
 #endif  // BN_H_

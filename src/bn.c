@@ -184,21 +184,3 @@ void bn_pprint(bn_tree_t t, bn_node_print_t nprt) {
   bn_pprint_internal(t->root, nprt, g_bn_pprint_spaces_at_begin,
         g_bn_pprint_step);
 }
-
-#define BN_IMPL_ROTATION(t, x, left, right) \
-bn_node_t bn_ ##left ##_rotate(bn_tree_t t, bn_node_t x) { \
-  bn_node_t y = x->right; \
-  x->right = y->left; \
-  if (y->left != NULL_PTR) { \
-    y->left->top = x; \
-  } \
-  y->top = x->top; \
-  bn_change_child(x, y, x->top, t); \
-  y->left = x; \
-  x->top = y; \
-  return y; \
-}
-
-BN_IMPL_ROTATION(t, x, left, right)
-BN_IMPL_ROTATION(t, x, right, left)
-#undef BN_IMPL_ROTATION

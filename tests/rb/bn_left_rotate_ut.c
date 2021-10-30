@@ -24,36 +24,37 @@ int t1() {
   n4->right = n5;
   n5->top = n4;
   t->root = n4;
-  bn_node_t y = bn_left_rotate(t, n4);
+  bn_rotate(t, n4, right, left);
   /*
             5
         4
     2
  1     3
   */
-  CHECK(t->root == n5);
-  CHECK(t->root->right == NULL_PTR);
-  CHECK(t->root->left == n4);
-  CHECK(t->root->left->right == NULL_PTR);
-  CHECK(t->root->left->left == n2);
-  CHECK(t->root->left->left->left == n1);
-  CHECK(t->root->left->left->right == n3);
-  y = bn_right_rotate(t, y);
+  CHECK_MSG(t->root == n5, "root 5");
+  CHECK_MSG(t->root->right == NULL_PTR, "right null");
+  CHECK_MSG(t->root->left == n4, "left n4");
+  CHECK_MSG(t->root->left->right == NULL_PTR, "left->right null");
+  CHECK_MSG(t->root->left->left == n2, "left left n2");
+  CHECK_MSG(t->root->left->left->left == n1, " left left left n1");
+  CHECK_MSG(t->root->left->left->right == n3, "left left right n3");
+  bn_rotate(t, n5, left, right);
   /*
            4
     2          5
   1   3
   */
-  CHECK(t->root == n4);
-  CHECK(t->root->right == n5);
-  CHECK(t->root->left == n2);
-  CHECK(t->root->left->left == n1);
-  CHECK(t->root->left->right == n3);
-  CHECK(t->root->right->right == NULL_PTR);
+  CHECK_MSG(t->root == n4, "root n4");
+  CHECK_MSG(t->root->right == n5, "root right n5");
+  CHECK_MSG(t->root->left == n2, "root left n2");
+  CHECK_MSG(t->root->left->left == n1, "left left n1");
+  CHECK_MSG(t->root->left->right == n3, "left right n3");
+  CHECK_MSG(t->root->right->right == NULL_PTR, "right right null");
   return 0;
 }
 
 int main() {
-  CHECK(t1() == 0);
+  CHECK_MSG(t1() == 0, "t1");
+  printf("Test Ok!\n");
   return 0;
 }
