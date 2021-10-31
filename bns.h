@@ -7,19 +7,10 @@
 
 #include "bn.h"
 
-bn_node_t bns_search(bn_node_t root, const void *query,
-        bn_compare_t cmp);
-
-// gte = greater than or equal, lte = less than or equal
-bn_node_t bns_search_gte(bn_node_t root, const void *query,
-        bn_compare_t cmp);
-bn_node_t bns_search_lte(bn_node_t root, const void *query,
-        bn_compare_t cmp);
-
 #define bns_child(n, order) (order < 0? n->left: n->right)
 #define bns_child_ref(n, order) (order < 0? &n->left: &n->right)
 
-#define bns_find_insert_location(loc, root, data, cmp, same, parent) \
+#define bns_insert_setup(loc, root, data, cmp, same, parent) \
   do { \
     bn_node_t x = root; \
     int order; \
@@ -34,59 +25,64 @@ bn_node_t bns_search_lte(bn_node_t root, const void *query,
     loc = parent? bns_child_ref(parent, order): &root; \
   } while (0)
 
-#define bns_search_inline(out, root, query, cmp) \
+#define bns_search_inline(o, t, u, cmp, ...) \
   do { \
     int order; \
-    bn_node_t x = root; \
-    out = NULL_PTR; \
+    bn_node_t x = t->root; \
+    bn_node_t o = NULL_PTR; \
     while (x) { \
-      order = cmp(query, x); \
+      order = cmp(u, x); \
       if (!order) { \
-        out = x; \
+        o = x; \
         break; \
       } \
       x = bns_child(x, order); \
     } \
+    __VA_ARGS__; \
   } while (0)
 
-#define bns_search_gte_inline(out, root, query, cmp) \
+// gte = greater than or equal
+#define bns_search_gte_inline(o, t, u, cmp, ...) \
   do {\
     int order; \
-    bn_node_t x = root; \
-    out = NULL_PTR; \
+    bn_node_t x = t->root; \
+    bn_node_t o = NULL_PTR; \
     while (x) { \
-      order = cmp(query, x); \
+      order = cmp(u, x); \
       if (!order) { \
-        out = x; \
+        o = x; \
         break; \
       } \
       if (order < 0) { \
-        out = x; \
+        o = x; \
         x = x->left; \
         continue; \
       } \
       x = x->right; \
     } \
+    __VA_ARGS__;\
   } while (0)
 
-#define bns_search_lte_inline(out, root, query, cmp) \
+// lte = less than or equal
+#define bns_search_lte_inline(o, t, u, cmp, ...) \
   do { \
     int order; \
-    bn_node_t x = root; \
-    out = NULL_PTR; \
+    bn_node_t x = t->root; \
+    bn_node_t o = NULL_PTR; \
     while (x) { \
-      order = cmp(query, x); \
+      order = cmp(u, x); \
       if (!order) { \
-        out = x; \
+        o = x; \
         break; \
       } \
       if (order > 0) { \
-        out = x; \
+        o = x; \
         x = x->right; \
         continue; \
       } \
       x = x->left; \
     } \
+    __VA_ARGS__; \
   } while (0)
 
 

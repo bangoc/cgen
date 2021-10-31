@@ -40,7 +40,7 @@ void my_rb_insert(bn_tree_t t, bn_node_t n) {
   bn_node_t same = NULL_PTR,
             par = NULL_PTR;
   bn_node_t *loc;
-  bns_find_insert_location(loc, t->root, n, compare, same, par);
+  bns_insert_setup(loc, t->root, n, compare, same, par);
   rb_insert(t, n, loc, par);
 }
 

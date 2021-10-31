@@ -52,7 +52,7 @@ static bn_node_t tm_insert(bn_tree_t t,
                       bn_compare_t cmp) {
   bn_node_t same = NULL_PTR, parent = NULL_PTR;
   bn_node_t *loc;
-  bns_find_insert_location(loc, t->root, &key, cmp, same, parent);
+  bns_insert_setup(loc, t->root, &key, cmp, same, parent);
   if (same) {
     return same;
   }
@@ -61,9 +61,7 @@ static bn_node_t tm_insert(bn_tree_t t,
 }
 
 static treemap_node_t tm_search(bn_tree_t t, gtype key, bn_compare_t cmp) {
-  bn_node_t n;
-  bns_search_inline(n, t->root, &key, cmp);
-  return to_tm(n);
+  bns_search_inline(n, t, &key, cmp, return to_tm(n));
 }
 
 static int tm_value_ref(bn_tree_t t, gtype key, gtype **value,

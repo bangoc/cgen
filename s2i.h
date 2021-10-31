@@ -79,7 +79,7 @@ static bn_node_t s2i_create_node(const char *key, long value) {
 static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value) {
   bn_node_t same = NULL_PTR, parent = NULL_PTR;
   bn_node_t *loc;
-  bns_find_insert_location(loc, t->root, key, s2i_compare_data, same, parent);
+  bns_insert_setup(loc, t->root, key, s2i_compare_data, same, parent);
   if (same) {
     return same;
   }
@@ -97,9 +97,7 @@ static bn_node_t s2i_set(bn_tree_t t, const char *key, long value) {
 }
 
 static s2i_node_t s2i_search(bn_tree_t t, const char *key) {
-  bn_node_t result ;
-  bns_search_inline(result, t->root, key, s2i_compare_data);
-  return to_s2i(result);
+  bns_search_inline(result, t, key, s2i_compare_data, return to_s2i(result));
 }
 
 static int s2i_value_ref(bn_tree_t t, const char *key, long **value) {

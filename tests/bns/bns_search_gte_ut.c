@@ -10,10 +10,13 @@ int main() {
   rbi_insert(t, 7);
   rbi_insert(t, 9);
   rbi_node_t n = to_rbi(rbi_create_node(10));
-  CHECK_MSG(bns_search_gte(t->root, n, rbi_compare) == NULL_PTR, "Tìm >= 10");
+  bns_search_gte_inline(out, t, to_bn(n), rbi_compare,
+      CHECK_MSG(out == NULL_PTR, "Tìm >= 10"));
   n->value = 2;
-  CHECK_MSG(to_rbi(bns_search_gte(t->root, n, rbi_compare))->value == 3, "Tìm >= 2");
+  bns_search_gte_inline(out, t, to_bn(n), rbi_compare,
+    CHECK_MSG(to_rbi(out)->value == 3, "Tìm >= 2"));
   n->value = 5;
-  CHECK_MSG(to_rbi(bns_search_gte(t->root, n, rbi_compare))->value == 5, "Tìm >= 5");
+  bns_search_gte_inline(out, t, to_bn(n), rbi_compare,
+    CHECK_MSG(to_rbi(out)->value == 5, "Tìm >= 5"));
   return 0;
 }

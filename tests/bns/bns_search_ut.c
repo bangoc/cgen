@@ -44,13 +44,20 @@ int main() {
               5
             4
   */
-  CHECK_MSG(bns_search(t->root, &n1.bnt, bns_compare) == &n1.bnt, "Failed search 1");
-  CHECK_MSG(bns_search(t->root, &n2.bnt, bns_compare) == &n2.bnt, "Failed search 2");
-  CHECK_MSG(bns_search(t->root, &n3.bnt, bns_compare) == &n3.bnt, "Failed search 3");
-  CHECK_MSG(bns_search(t->root, &n4.bnt, bns_compare) == &n4.bnt, "Failed search 4");
-  CHECK_MSG(bns_search(t->root, &n5.bnt, bns_compare) == &n5.bnt, "Failed search 5");
-  CHECK_MSG(bns_search(t->root, &n6.bnt, bns_compare) == NULL_PTR, "Failed search 6");
-  CHECK_MSG(bns_search(t->root, &n_1.bnt, bns_compare) == NULL_PTR, "Failed search -1");
+  bns_search_inline(n, t, &n1.bnt, bns_compare,
+    CHECK_MSG(n == &n1.bnt, "Failed search 1"));
+  bns_search_inline(n, t, &n2.bnt, bns_compare,
+    CHECK_MSG(n == &n2.bnt, "Failed search 2"));
+  bns_search_inline(n, t, &n3.bnt, bns_compare,
+    CHECK_MSG(n == &n3.bnt, "Failed search 3"));
+  bns_search_inline(n, t, &n4.bnt, bns_compare,
+    CHECK_MSG(n == &n4.bnt, "Failed search 4"));
+  bns_search_inline(n, t, &n5.bnt, bns_compare,
+    CHECK_MSG(n == &n5.bnt, "Failed search 5"));
+  bns_search_inline(n, t, &n6.bnt, bns_compare,
+    CHECK_MSG(n == NULL_PTR, "Failed search 6"));
+  bns_search_inline(n, t, &n_1.bnt, bns_compare,
+    CHECK_MSG(n == NULL_PTR, "Failed search -1"));
   free(t);
-  return 0;
+  TEST_OK();
 }

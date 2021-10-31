@@ -51,15 +51,13 @@ static rbi_node_t rbi_create_color_node(int value, rb_node_color_t color) {
 static bn_node_t rbi_insert(bn_tree_t t, int value) {
   bn_node_t same = NULL_PTR, par = NULL_PTR;
   bn_node_t *loc;
-  bns_find_insert_location(loc, t->root, value, rbi_compare_data, same, par);
+  bns_insert_setup(loc, t->root, value, rbi_compare_data, same, par);
   bn_node_t n = to_bn(rbi_create_node(value));
   return rb_insert(t, n, loc, par);
 }
 
 static rbi_node_t rbi_search(bn_tree_t t, int value) {
-  bn_node_t result;
-  bns_search_inline(result, t->root, value, rbi_compare_data);
-  return to_rbi(result);
+  bns_search_inline(result, t, value, rbi_compare_data, return to_rbi(result));
 }
 
 static rbi_node_t rbi_delete(bn_tree_t t, int value) {
