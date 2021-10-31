@@ -64,7 +64,7 @@ static void s2i_free(bn_tree_t *tp) {
 
 static void s2i_postorder_print(bn_tree_t tree) {
   bn_node_t cur;
-  bn_travese_lrn(cur, tree) {
+  bn_traverse_lrn(cur, tree) {
     printf("%s: %ld\n", to_s2i(cur)->key, to_s2i(cur)->value);
   }
 }

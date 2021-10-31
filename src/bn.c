@@ -21,7 +21,7 @@ bn_tree_t bn_create_tree(bn_node_t root) {
 void bn_free_tree(bn_tree_t *_t) {
   bn_tree_t t = *_t;
   bn_node_t tmp = NULL_PTR;
-  bn_travese_lrn(cur, t) {
+  bn_traverse_lrn(cur, t) {
     if (tmp) {
       free(tmp);
       tmp = cur;
@@ -63,16 +63,12 @@ bn_node_t bn_next_postorder(bn_node_t node) {
     return top;
 }
 
-bn_node_t bn_first_postorder(bn_tree_t t) {
-  if (!t->root) {
-    return NULL;
-  }
-
-  return bn_left_deepest_node(t->root);
+bn_node_t bn_first_postorder(bn_node_t n) {
+  return bn_left_deepest_node(n);
 }
 
 void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u) {
-  bn_node_t n = bn_first_postorder(t);
+  bn_node_t n = bn_first_postorder(t->root);
   for (; n != NULL; n = bn_next_postorder(n)) {
     if (op(n, u)) {
       break;
@@ -170,4 +166,12 @@ int g_bn_pprint_step = 3;
 void bn_pprint(bn_tree_t t, bn_node_print_t nprt) {
   bn_pprint_internal(t->root, nprt, g_bn_pprint_spaces_at_begin,
         g_bn_pprint_step);
+}
+
+long bn_size(bn_tree_t t) {
+  long cc = 0;
+  bn_traverse_lrn(cur, t)  {
+    ++cc;
+  }
+  return cc;
 }

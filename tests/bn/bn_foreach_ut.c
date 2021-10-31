@@ -42,7 +42,7 @@ int main() {
   CHECK_MSG(idx == 5, "Wrong index");
   idx = 0;
   bn_node_t cur;
-  bn_travese_lrn(cur, t) {
+  bn_traverse_lrn(cur, t) {
     CHECK_MSG(cur == nodes[idx], "Failed inline");
     ++idx;
   }
