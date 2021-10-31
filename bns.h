@@ -18,15 +18,6 @@ bn_node_t bns_search_lte(bn_node_t root, const void *query,
 
 #define bns_child(n, order) (order < 0? n->left: n->right)
 #define bns_child_ref(n, order) (order < 0? &n->left: &n->right)
-#define bns_set_child(n, order, child) \
-  do {  \
-    if (order < 0) {  \
-      n->left = child;  \
-    } else {  \
-      n->right = child;  \
-    }  \
-    child->top = n;  \
-  } while(0)
 
 #define bns_find_insert_location(loc, root, data, cmp, same, parent) \
   do { \

@@ -41,22 +41,20 @@ bn_tree_t bns_create_tree_g(bn_node_t root, bn_compare_t cmp) {
 
 bn_node_t bns_insert_g(bn_tree_t t, gtype key) {
   bn_node_t nn = bns_create_node_g(key);
-  if (!t->root) {
-    t->root = nn;
-  } else {
-    bn_compare_t cmp = to_bns_tree_g(t)->cmp;
-    bn_node_t x = t->root;
-    while (x) {
-      int order = cmp(key, bns_node_g_key(x));
-      bn_node_t tmp = bns_child(x, order);
-      if (tmp) {
-        x = tmp;
-      } else {
-        bns_set_child(x, order, nn);
-        break;
-      }
+  bn_node_t top = t->root;
+  bn_node_t *loc = &(t->root);
+  bn_compare_t cmp = to_bns_tree_g(t)->cmp;
+  while (top) {
+    int order = cmp(key, bns_node_g_key(top));
+    bn_node_t tmp = bns_child(top, order);
+    if (tmp) {
+      top = tmp;
+    } else {
+      loc = bns_child_ref(top, order);
+      break;
     }
   }
+  bn_insert(t, nn, loc, top);
   return nn;
 }
 
