@@ -43,6 +43,7 @@ void bn_foreach_lnr(bn_tree_t t, bn_callback_t op, void *u);
 void bn_foreach_rnl(bn_tree_t t, bn_callback_t op, void *u);
 void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
 long bn_size(bn_tree_t t);
+long bn_edge_height(bn_tree_t t);
 
 bn_node_t bn_left_deepest_node(bn_node_t node);
 bn_node_t bn_next_postorder(bn_node_t node);
