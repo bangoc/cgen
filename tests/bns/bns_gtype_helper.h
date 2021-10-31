@@ -1,5 +1,5 @@
-#ifndef TESTS_BNS_H_
-#define TESTS_BNS_H_
+#ifndef TESTS_BNS_BNS_GTYPE_HELPER_H_
+#define TESTS_BNS_BNS_GTYPE_HELPER_H_
 
 #include "bns.h"
 
@@ -15,4 +15,4 @@ int lnr_match_g(bn_tree_t t, gtype *a, int n) {
   return i == n;
 }
 
-#endif  // TESTS_BNS_H_
+#endif  // TESTS_BNS_BNS_GTYPE_HELPER_H_

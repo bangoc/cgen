@@ -42,6 +42,16 @@ bn_node_t bns_search_g(bn_tree_t t, gtype key) {
   bns_search_inline(o, t, key, cmp, return o);
 }
 
+bn_node_t bns_search_gte_g(bn_tree_t t, gtype key) {
+  bn_compare_t cmp = to_bns_tree_g(t)->cmp;
+  bns_search_gte_inline(o, t, key, cmp, return o);
+}
+
+bn_node_t bns_search_lte_g(bn_tree_t t, gtype key) {
+  bn_compare_t cmp = to_bns_tree_g(t)->cmp;
+  bns_search_lte_inline(o, t, key, cmp, return o);
+}
+
 void bns_delete_g(bn_tree_t t, bn_node_t n) {
   bn_node_t lc = n->left,
             rc = n->right,

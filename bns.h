@@ -110,6 +110,8 @@ bn_tree_t bns_create_tree_g(bn_node_t root, bn_compare_t cmp);
 
 bn_node_t bns_insert_g(bn_tree_t t, gtype key);
 bn_node_t bns_search_g(bn_tree_t t, gtype key);
+bn_node_t bns_search_gte_g(bn_tree_t t, gtype key);
+bn_node_t bns_search_lte_g(bn_tree_t t, gtype key);
 void bns_delete_g(bn_tree_t t, bn_node_t n);
 
 void bns_pprint_i(bn_node_t n);
