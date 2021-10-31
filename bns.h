@@ -16,12 +16,17 @@ bn_node_t bns_search_gte(bn_node_t root, const void *query,
 bn_node_t bns_search_lte(bn_node_t root, const void *query,
         bn_compare_t cmp);
 
-// ========== Macro viết nhanh ===========
-
 #define bns_child(n, order) (order < 0? n->left: n->right)
 #define bns_child_ref(n, order) (order < 0? &n->left: &n->right)
 #define bns_set_child(n, order, child) \
-    if (order < 0) n->left = child; else n->right = child
+  do {  \
+    if (order < 0) {  \
+      n->left = child;  \
+    } else {  \
+      n->right = child;  \
+    }  \
+    child->top = n;  \
+  } while(0)
 
 #define bns_find_insert_location(loc, root, data, cmp, same, parent) \
   do { \
@@ -92,5 +97,34 @@ bn_node_t bns_search_lte(bn_node_t root, const void *query,
       x = x->left; \
     } \
   } while (0)
+
+
+/* Giao diện hỗ trợ gtype */
+
+#include "gtype.h"
+
+typedef struct bns_node_g {
+  struct bn_node base;
+  gtype key;
+} *bns_node_g_t;
+
+#define to_bns_node_g(n) ((bns_node_g_t)n)
+#define bns_node_g_key(n) (to_bns_node_g(n)->key)
+
+typedef struct bns_tree_g {
+  struct bn_tree base;
+  bn_compare_t cmp;
+} *bns_tree_g_t;
+
+#define to_bns_tree_g(t) ((bns_tree_g_t)t)
+
+bn_node_t bns_create_node_g(gtype key);
+bn_tree_t bns_create_tree_g(bn_node_t root, bn_compare_t cmp);
+
+bn_node_t bns_insert_g(bn_tree_t t, gtype key);
+bn_node_t bns_search_g(bn_tree_t t, gtype key);
+void bns_delete_g(bn_tree_t t, bn_node_t n);
+
+void bns_pprint_i(bn_node_t n);
 
 #endif  // BSNT_H_

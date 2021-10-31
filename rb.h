@@ -62,19 +62,6 @@ static int rb_delete(bn_tree_t t, bn_node_t z);
 
 // ========== Định nghĩa hàm =============
 
-#define bn_change_child(old_node, new_node, parent, t) \
-  do { \
-    if (parent) { \
-      if (parent->left == old_node) { \
-        parent->left = new_node; \
-      } else { \
-        parent->right = new_node; \
-      } \
-    } else { \
-      t->root = new_node; \
-    } \
-  } while (0)
-
 /* Xoay từ trái sang phải hoặc xoay từ phải sang trái */
 /* x là trục xoay */
 #define bn_rotate(t, x, right, left) \

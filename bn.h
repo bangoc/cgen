@@ -63,4 +63,17 @@ bn_node_t bn_prev_inorder(bn_node_t x);
   for (bn_node_t cur = bn_right_most(t->root); \
        cur != NULL_PTR; cur = bn_prev_inorder(cur))
 
+#define bn_change_child(old_node, new_node, parent, t) \
+  do { \
+    if (parent) { \
+      if (parent->left == old_node) { \
+        parent->left = new_node; \
+      } else { \
+        parent->right = new_node; \
+      } \
+    } else { \
+      t->root = new_node; \
+    } \
+  } while (0)
+
 #endif  // BN_H_
