@@ -4,7 +4,7 @@
 #include "bns.h"
 
 int t1() {
-  bn_tree_t t = bns_create_tree_g(NULL_PTR, bns_gcmp_i);
+  bn_tree_t t = bns_create_tree_g(NULL_PTR, gtype_cmp_i);
   bns_insert_g(t, gtype_i(20));
   bns_insert_g(t, gtype_i(10));
   bns_insert_g(t, gtype_i(30));
@@ -17,6 +17,7 @@ int t1() {
   */
   ASSERT(bn_size(t) == 5, "size 5");
 
+  bn_pprint(t, bns_pprint_i);
   ASSERT(lnr_match_g(t, (gtype[]){gtype_i(8), gtype_i(10),
     gtype_i(20), gtype_i(30), gtype_i(50)}, 5), "Match sequence 5");
 

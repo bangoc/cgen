@@ -4,7 +4,7 @@
 #include "tests/bns/bns_gtype_helper.h"
 
 int t1() {
-  bn_tree_t t = bns_create_tree_g(NULL_PTR, bns_gcmp_i);
+  bn_tree_t t = bns_create_tree_g(NULL_PTR, gtype_cmp_i);
   bns_insert_g(t, gtype_i(30));
   bns_insert_g(t, gtype_i(20));
   bns_insert_g(t, gtype_i(10));

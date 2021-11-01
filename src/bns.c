@@ -24,7 +24,7 @@ bn_node_t bns_insert_g(bn_tree_t t, gtype key) {
   bn_node_t *loc = &(t->root);
   bn_compare_t cmp = to_bns_tree_g(t)->cmp;
   while (top) {
-    int order = cmp(key, top);
+    int order = bns_gcmp(key, top);
     bn_node_t tmp = bns_child(top, order);
     if (tmp) {
       top = tmp;
@@ -39,17 +39,17 @@ bn_node_t bns_insert_g(bn_tree_t t, gtype key) {
 
 bn_node_t bns_search_g(bn_tree_t t, gtype key) {
   bn_compare_t cmp = to_bns_tree_g(t)->cmp;
-  bns_search_inline(o, t, key, cmp, return o);
+  bns_search_inline(o, t, key, bns_gcmp, return o);
 }
 
 bn_node_t bns_search_gte_g(bn_tree_t t, gtype key) {
   bn_compare_t cmp = to_bns_tree_g(t)->cmp;
-  bns_search_gte_inline(o, t, key, cmp, return o);
+  bns_search_gte_inline(o, t, key, bns_gcmp, return o);
 }
 
 bn_node_t bns_search_lte_g(bn_tree_t t, gtype key) {
   bn_compare_t cmp = to_bns_tree_g(t)->cmp;
-  bns_search_lte_inline(o, t, key, cmp, return o);
+  bns_search_lte_inline(o, t, key, bns_gcmp, return o);
 }
 
 void bns_delete_g(bn_tree_t t, bn_node_t n) {
@@ -87,12 +87,4 @@ void bns_pprint_i(bn_node_t n) {
 
 void bns_pprint_d(bn_node_t n) {
   printf("%f\n", bns_node_g_key(n).d);
-}
-
-int bns_gcmp_i(gtype u, bn_node_t n) {
-  return gtype_cmp_i(u, bns_node_g_key(n));
-}
-
-int bns_gcmp_d(gtype u, bn_node_t n) {
-  return gtype_cmp_d(u, bns_node_g_key(n));
 }

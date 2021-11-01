@@ -104,6 +104,7 @@ typedef struct bns_tree_g {
 } *bns_tree_g_t;
 
 #define to_bns_tree_g(t) ((bns_tree_g_t)t)
+#define bns_gcmp(u, x) cmp(u, bns_node_g_key(x))
 
 bn_node_t bns_create_node_g(gtype key);
 bn_tree_t bns_create_tree_g(bn_node_t root, bn_compare_t cmp);
@@ -116,8 +117,5 @@ void bns_delete_g(bn_tree_t t, bn_node_t n);
 
 void bns_pprint_i(bn_node_t n);
 void bns_pprint_d(bn_node_t n);
-
-int bns_gcmp_i(gtype u, bn_node_t n);
-int bns_gcmp_d(gtype u, bn_node_t n);
 
 #endif  // BSNT_H_

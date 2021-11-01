@@ -9,7 +9,7 @@
 #include "cgen.ic"
 
 int main() {
-  bn_tree_t t = bns_create_tree_g(NULL, bns_gcmp_d);
+  bn_tree_t t = bns_create_tree_g(NULL, gtype_cmp_d);
   double val;
   printf("Nhập vào một dãy số thực không âm (nhập 1 số âm bất kỳ để kết thúc nhập): \n");
   for (;;) {
