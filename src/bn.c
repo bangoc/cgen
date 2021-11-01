@@ -35,6 +35,9 @@ void bn_free_tree(bn_tree_t *_t) {
 }
 
 bn_node_t bn_left_deepest_node(bn_node_t node) {
+  if (!node) {
+    return NULL;
+  }
   for (;;) {
     if (node->left) {
       node = node->left;
@@ -77,6 +80,9 @@ void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u) {
 }
 
 bn_node_t bn_left_most(bn_node_t x) {
+  if (!x) {
+    return NULL;
+  }
   bn_node_t y;
   #define bn_MOST(x, child, out) \
   out = x; \
@@ -90,12 +96,18 @@ bn_node_t bn_left_most(bn_node_t x) {
 }
 
 bn_node_t bn_right_most(bn_node_t x) {
+  if (!x) {
+    return NULL;
+  }
   bn_node_t y;
   bn_MOST(x, right, y);
   return y;
 }
 
 bn_node_t bn_next_inorder(bn_node_t x)  {
+  if (!x) {
+    return NULL;
+  }
   bn_node_t y;
 #define BNS_NEAREST(x, left, right, out) \
   do { \
@@ -114,6 +126,9 @@ bn_node_t bn_next_inorder(bn_node_t x)  {
 }
 
 bn_node_t bn_prev_inorder(bn_node_t x) {
+  if (!x) {
+    return NULL;
+  }
   bn_node_t y;
   BNS_NEAREST(x, right, left, y);
   return y;

@@ -4,6 +4,7 @@
 #include "src/sll.c"
 #include "src/dll.c"
 #include "src/bn.c"
+#include "src/bns.c"
 
 
 #endif  // CGEN_HC_

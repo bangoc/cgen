@@ -115,7 +115,9 @@ bn_node_t bns_search_lte_g(bn_tree_t t, gtype key);
 void bns_delete_g(bn_tree_t t, bn_node_t n);
 
 void bns_pprint_i(bn_node_t n);
+void bns_pprint_d(bn_node_t n);
 
 int bns_gcmp_i(gtype u, bn_node_t n);
+int bns_gcmp_d(gtype u, bn_node_t n);
 
 #endif  // BSNT_H_

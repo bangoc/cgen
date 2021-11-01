@@ -85,6 +85,14 @@ void bns_pprint_i(bn_node_t n) {
   printf("%ld\n", bns_node_g_key(n).i);
 }
 
+void bns_pprint_d(bn_node_t n) {
+  printf("%f\n", bns_node_g_key(n).d);
+}
+
 int bns_gcmp_i(gtype u, bn_node_t n) {
   return gtype_cmp_i(u, bns_node_g_key(n));
+}
+
+int bns_gcmp_d(gtype u, bn_node_t n) {
+  return gtype_cmp_d(u, bns_node_g_key(n));
 }

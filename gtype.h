@@ -28,7 +28,12 @@ static int gtype_cmp_i(gtype v1, gtype v2) {
 }
 
 static int gtype_cmp_d(gtype v1, gtype v2) {
-  return v1.d - v2.d;
+  if (v1.d < v2.d) {
+    return -1;
+  } else if (v1.d > v2.d) {
+    return 1;
+  }
+  return 0;
 }
 
 static int gtype_cmd_s(gtype v1, gtype v2) {
