@@ -81,10 +81,6 @@ void bns_delete_g(bn_tree_t t, bn_node_t n) {
   }
 }
 
-void bns_pprint_i(bn_node_t n) {
-  printf("%ld\n", bns_node_g_key(n).i);
-}
-
-void bns_pprint_d(bn_node_t n) {
-  printf("%f\n", bns_node_g_key(n).d);
+void bns_pprint(bn_tree_t t, gtype_print_t gpp) {
+  bn_pprint_inline(t, 0, 3, bns_gpp);
 }

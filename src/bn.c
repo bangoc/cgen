@@ -191,7 +191,7 @@ long bn_size(bn_tree_t t) {
   return cc;
 }
 
-static long _bn_depth(bn_node_t n) {
+long bn_distance(bn_node_t n) {
   long cc = -1;
   while (n != NULL_PTR) {
     n = n->top;
@@ -204,7 +204,7 @@ long bn_edge_height(bn_tree_t t) {
   long max = 0;
   bn_traverse_lnr(n, t) {
     if (n && !n->left && !n->right) {
-      long tmp = _bn_depth(n);
+      long tmp = bn_distance(n);
       if (tmp > max) {
         max = tmp;
       }

@@ -22,7 +22,7 @@ int main() {
   long sz = bn_size(t);
   printf("Số lượng số không âm đã nhập: %ld\n", sz);
   if (sz > 0) {
-    bn_pprint(t, bns_pprint_d);
+    bns_pprint(t, gtype_print_d);
     printf("Các số theo thứ tự tăng dần: ");
     bn_traverse_lnr(cur, t) {
       printf(" %f", bns_node_g_key(cur).d);

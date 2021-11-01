@@ -5,6 +5,7 @@
 #ifndef GTYPE_H_
 #define GTYPE_H_
 
+#include <stdio.h>
 #include <string.h>
 
 typedef union {
@@ -38,6 +39,20 @@ static int gtype_cmp_d(gtype v1, gtype v2) {
 
 static int gtype_cmd_s(gtype v1, gtype v2) {
   return strcmp(v1.s, v2.s);
+}
+
+typedef void (*gtype_print_t)(gtype);
+
+static void gtype_print_i(gtype value) {
+  printf("%ld\n", value.i);
+}
+
+static void gtype_print_d(gtype value) {
+  printf("%f\n", value.d);
+}
+
+static void gtype_print_s(gtype value) {
+  printf("%s\n", value.s);
 }
 
 #endif  // GTYPE_H_
