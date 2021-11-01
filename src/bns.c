@@ -82,5 +82,7 @@ void bns_delete_g(bn_tree_t t, bn_node_t n) {
 }
 
 void bns_pprint(bn_tree_t t, gtype_print_t gpp) {
-  bn_pprint_inline(t, 0, 3, bns_gpp);
+  extern int g_bn_pprint_spaces_at_begin;
+  extern int g_bn_pprint_step;
+  bn_pprint_inline(t, g_bn_pprint_spaces_at_begin, g_bn_pprint_step, bns_gpp);
 }
