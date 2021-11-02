@@ -37,7 +37,7 @@ static int gtype_cmp_d(gtype v1, gtype v2) {
   return 0;
 }
 
-static int gtype_cmd_s(gtype v1, gtype v2) {
+static int gtype_cmp_s(gtype v1, gtype v2) {
   return strcmp(v1.s, v2.s);
 }
 
