@@ -61,4 +61,18 @@ static char *cgetline(char **lineptr, size_t n, FILE *inp) {
 #undef CGETLINE_BUFF_SIZE
 }
 
+static void clear_stdin() {
+  while (getchar() != '\n');
+}
+
+static void remove_tail_lf(char *s) {
+  if (!s) {
+    return;
+  }
+  char *p = s + strlen(s) - 1;
+  if (*p == '\n') {
+    *p = '\0';
+  }
+}
+
 #endif  // EXT_IO_H_
