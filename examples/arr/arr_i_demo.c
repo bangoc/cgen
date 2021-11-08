@@ -1,3 +1,8 @@
+/*
+  (C) Nguyen Ba Ngoc 2021
+  Minh họa sử dụng hàm append
+*/
+
 #include "arr.h"
 
 #include <stdio.h>

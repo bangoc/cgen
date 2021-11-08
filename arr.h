@@ -45,13 +45,6 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
     a = NULL; \
   } while (0)
 
-#define arr_set_size(a, newsize) \
-  do { \
-    if (newsize < arr_cap(a)) { \
-      arr_size(a) = newsize; \
-    } \
-  } while (0)
-
 #define arr_set_capacity(a, newcap) \
   do { \
     size_t *tmp = ARR_BEG(a); \
@@ -63,6 +56,17 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
       } \
       tmp[ARR_CAP] = newcap; \
       (*((void**)a)) = (void*)(tmp + ARR_ATT_MAX); \
+    } \
+  } while (0)
+
+#define arr_set_size(a, newsize) \
+  do { \
+    size_t c = arr_cap(a); \
+    if (newsize > c) {  \
+      arr_set_capacity(a, newsize); \
+    } \
+    if (newsize <= arr_cap(a)) { \
+      arr_size(a) = newsize; \
     } \
   } while (0)
 
