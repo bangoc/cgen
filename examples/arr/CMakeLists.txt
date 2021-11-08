@@ -1,0 +1,1 @@
+add_executable(arr_i_demo arr_i_demo.c)

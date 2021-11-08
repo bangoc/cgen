@@ -72,7 +72,7 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
 #define arr_t(etyp) etyp **
 
 #define arr_decl(name, cap, etyp) \
-    etyp **name = arr_create(cap, etyp);
+    etyp **name = (etyp**)arr_create(cap, etyp)
 
 #define arr_append(a, elem) \
    do { \
