@@ -1,0 +1,1 @@
+add_executable(arr_i_ut arr_i_ut.c)
