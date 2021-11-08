@@ -1,23 +1,29 @@
+#include "arr.h"
 #include "s2i.h"
-#include "svector.h"
 
 #include <string.h>
 #include <stdlib.h>
 
 typedef struct str_cache {
   bn_tree_t si;
-  vector_t is;
+  arr_t(char*) is;
 } *str_cache_t;
+
+void as_print(arr_t(char*) is) {
+  for (int i = 0; i < arr_size(is); ++i) {
+    printf("%-5d: %s\n", i, ARR(is)[i]);
+  }
+}
 
 void cache_print(str_cache_t cache) {
   s2i_postorder_print(cache->si);
-  svec_print(cache->is);
+  as_print(cache->is);
 }
 
 str_cache_t create_cache() {
   str_cache_t sc = malloc(sizeof(struct str_cache));
   sc->si = bn_create_tree(NULL);
-  sc->is = gtv_create();
+  sc->is = arr_create(0, char*);
 }
 
 long get_save_str_id(str_cache_t cache, char *s) {
@@ -25,22 +31,25 @@ long get_save_str_id(str_cache_t cache, char *s) {
   if (id != k_s2i_invalid) {
     return id;
   }
-  svec_push_back(&cache->is, s);
-  id = gtv_size(cache->is) - 1;
+  arr_append(cache->is, strdup(s));
+  id = arr_size(cache->is) - 1;
   s2i_insert(cache->si, s, id);
   return id;
 }
 
 char *get_by_id(str_cache_t cache, long id) {
-  if (id >= 0 && id < gtv_size(cache->is)) {
-    return cache->is[id].s;
+  if (id >= 0 && id < arr_size(cache->is)) {
+    return ARR(cache->is)[id];
   }
   return NULL;
 }
 
 void free_cache(str_cache_t *cache) {
   s2i_free(&(*cache)->si);
-  gtv_free(&(*cache)->is);
+  for (int i = 0; i < arr_size((*cache)->is); ++i) {
+    free(ARR((*cache)->is)[i]);
+  }
+  arr_free((*cache)->is);
   free(*cache);
   *cache = NULL;
 }

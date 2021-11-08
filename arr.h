@@ -33,7 +33,7 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
 
 #define ARR_BEG(a) (((size_t*)ARR(a)) - ARR_ATT_MAX)
 #define arr_size(a) (ARR_BEG(a)[ARR_SZ])
-#define arr_cap(a) (ARR_BEG(a)[ARR_CAP])
+#define arr_capacity(a) (ARR_BEG(a)[ARR_CAP])
 #define arr_elem_sz(a) (ARR_BEG(a)[ARR_ELEM_SZ])
 #define arr_inc(a) (ARR_BEG(a)[ARR_INC])
 
@@ -61,17 +61,17 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
 
 #define arr_set_size(a, newsize) \
   do { \
-    size_t c = arr_cap(a); \
+    size_t c = arr_capacity(a); \
     if (newsize > c) {  \
       arr_set_capacity(a, newsize); \
     } \
-    if (newsize <= arr_cap(a)) { \
+    if (newsize <= arr_capacity(a)) { \
       arr_size(a) = newsize; \
     } \
   } while (0)
 
 #define arr_create(cap, etyp) \
-   arr_create_internal(cap, sizeof(etyp))
+   (etyp**)arr_create_internal(cap, sizeof(etyp))
 
 #define arr_t(etyp) etyp **
 

@@ -59,6 +59,10 @@ static void s2i_free_node(bn_node_t n) {
 }
 
 static void s2i_free(bn_tree_t *tp) {
+  bn_tree_t t = *tp;
+  bn_traverse_lnr(cur, t) {
+    free(to_s2i(cur)->key);
+  }
   bn_free_tree(tp);
 }
 
