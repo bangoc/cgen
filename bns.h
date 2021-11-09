@@ -105,7 +105,13 @@ typedef struct bns_tree_g {
 
 #define to_bns_tree_g(t) ((bns_tree_g_t)t)
 #define bns_tree_g_cmp(t) (to_bns_tree_g(t)->cmp)
-#define bns_gcmp(u, x) cmp(u, bns_node_g_key(x))
+
+// Hỗ trợ giản lược cách viết bns_tree_g_cmp(t)(v1, v2)
+//                      thành bns_gcmp(t, v1, v2)
+#define bns_gcmp(t, v1, v2) bns_tree_g_cmp(t)(v1, v2)
+
+// Chỉ dùng bên trong cho triển khai
+#define bns_cmp_conv(u, x) cmp(u, bns_node_g_key(x))
 
 bn_node_t bns_create_node_g(gtype key);
 bn_tree_t bns_create_tree_g(bn_node_t root, bn_compare_t cmp);
