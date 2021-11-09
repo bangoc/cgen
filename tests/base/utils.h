@@ -10,6 +10,8 @@
 #define ASSERT(op, msg) if (!(op)) { \
   printf("%s (%s:%d)\n", msg, __FILE__, __LINE__); return 1; }
 
+#define ASSERT_ECHO(op) ASSERT(op, #op)
+
 #define DEBUG_MSG(msg) printf("%s (%s:%d)\n", msg, __FILE__, __LINE__);
 
 #define TEST_OK() \

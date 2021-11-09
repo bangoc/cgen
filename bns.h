@@ -104,6 +104,7 @@ typedef struct bns_tree_g {
 } *bns_tree_g_t;
 
 #define to_bns_tree_g(t) ((bns_tree_g_t)t)
+#define bns_tree_g_cmp(t) (to_bns_tree_g(t)->cmp)
 #define bns_gcmp(u, x) cmp(u, bns_node_g_key(x))
 
 bn_node_t bns_create_node_g(gtype key);
