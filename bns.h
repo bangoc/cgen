@@ -107,8 +107,8 @@ typedef struct bns_tree_g {
 #define bns_tree_g_cmp(t) (to_bns_tree_g(t)->cmp)
 
 // Hỗ trợ giản lược cách viết bns_tree_g_cmp(t)(v1, v2)
-//                      thành bns_gcmp(t, v1, v2)
-#define bns_gcmp(t, v1, v2) bns_tree_g_cmp(t)(v1, v2)
+//                      thành bns_cmp_g(t, v1, v2)
+#define bns_cmp_g(t, v1, v2) bns_tree_g_cmp(t)(v1, v2)
 
 // Chỉ dùng bên trong cho triển khai
 #define bns_cmp_conv(u, x) cmp(u, bns_node_g_key(x))
