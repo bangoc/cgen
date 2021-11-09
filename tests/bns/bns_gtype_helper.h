@@ -3,7 +3,7 @@
 
 #include "bns.h"
 
-int lnr_match_g(bn_tree_t t, gtype *a, int n) {
+static int lnr_match_g(bn_tree_t t, gtype *a, int n) {
   bn_compare_t cmp = to_bns_tree_g(t)->cmp;
   int i = 0;
   bn_traverse_lnr(cur, t) {
