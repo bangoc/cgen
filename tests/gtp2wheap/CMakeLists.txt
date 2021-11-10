@@ -1,1 +1,0 @@
-add_executable(gtp2wheap_ut gtp2wheap_ut.c)

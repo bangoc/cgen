@@ -1,0 +1,5 @@
+add_executable(d2wheap_ut d2wheap_ut.c)
+add_executable(gtp2wheap_ut gtp2wheap_ut.c)
+foreach(p d2wheap_ut gtp2wheap_ut)
+  target_link_libraries(${p} bkc)
+endforeach()

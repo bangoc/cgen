@@ -1,1 +1,0 @@
-add_executable(d2wheap_ut d2wheap_ut.c)
