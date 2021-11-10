@@ -14,11 +14,11 @@ int t1() {
       n2   n4
   */
   bn_tree_t t = bn_create_tree(NULL_PTR);
-  bn_insert(t, n3, (&(t->root)), NULL_PTR);
-  bn_insert(t, n1, (&(n3->left)), n3);
-  bn_insert(t, n2, (&(n1->right)), n1);
-  bn_insert(t, n5, (&(n3->right)), n3);
-  bn_insert(t, n4, (&(n5->left)), n5);
+  bn_insert(n3, (&(t->root)), NULL_PTR);
+  bn_insert(n1, (&(n3->left)), n3);
+  bn_insert(n2, (&(n1->right)), n1);
+  bn_insert(n5, (&(n3->right)), n3);
+  bn_insert(n4, (&(n5->left)), n5);
 
   ASSERT(t->root == n3, "root n3");
   ASSERT(t->root->left == n1, "root left n1");

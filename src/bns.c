@@ -33,7 +33,7 @@ bn_node_t bns_insert_g(bn_tree_t t, gtype key) {
       break;
     }
   }
-  bn_insert(t, nn, loc, top);
+  bn_insert(nn, loc, top);
   return nn;
 }
 

@@ -87,14 +87,8 @@ bn_node_t bn_prev_inorder(bn_node_t x);
     } \
   } while (0)
 
-#define bn_insert(t, nn, loc, par) \
-  do { \
+#define bn_insert(nn, loc, par) \
     *loc = nn; \
-    if (par == NULL_PTR) { \
-      t->root = nn; \
-    } else { \
-      nn->top = par; \
-    } \
-  } while(0)
+    nn->top = par \
 
 #endif  // BN_H_
