@@ -40,7 +40,7 @@ int t1() {
   bn_transplant(t, n4, n5);
   CHECK_MSG(t->root->right == n5, "Failed root right n5");
   bn_free_node(n4);
-  bn_free_tree(&t);
+  bn_free_tree(t);
   return 0;
 }
 

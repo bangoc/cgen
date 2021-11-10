@@ -18,5 +18,5 @@ Ví dụ, để sử dụng bảng tham chiếu s2i bạn chỉ cần:
   s2i_insert(t, "Ba", 3);
   s2i_value(t, "Hai");
   s2i_delete(t, "Ba");
-  s2i_free(&t);
+  s2i_free(t);
 ```

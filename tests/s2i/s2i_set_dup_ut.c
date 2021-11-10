@@ -15,6 +15,6 @@ int main() {
   CHECK_MSG(s2i_value(t, "Một") == 10, "Giá trị khóa Một sau khi lưu cùng khóa");
   CHECK_MSG(s2i_delete(t, "Một") == 1, "Xóa Một (có tồn tại)");
   CHECK_MSG(s2i_delete(t, "Một") == 0, "Xóa Một (không tồn tại)");
-  s2i_free(&t);
+  s2i_free(t);
   return 0;
 }

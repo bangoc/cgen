@@ -18,20 +18,14 @@ bn_tree_t bn_create_tree(bn_node_t root) {
   return tree;
 }
 
-void bn_free_tree(bn_tree_t *_t) {
-  bn_tree_t t = *_t;
+void bn_free_tree(bn_tree_t t) {
   bn_node_t tmp = NULL_PTR;
   bn_traverse_lrn(cur, t) {
-    if (tmp) {
-      free(tmp);
-      tmp = cur;
-    } else {
-      tmp = cur;
-    }
+    free(tmp);
+    tmp = cur;
   }
   free(tmp);
   free(t);
-  *_t = NULL;
 }
 
 bn_node_t bn_left_deepest_node(bn_node_t node) {

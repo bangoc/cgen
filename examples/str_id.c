@@ -45,7 +45,7 @@ char *get_by_id(str_cache_t cache, long id) {
 }
 
 void free_cache(str_cache_t *cache) {
-  s2i_free(&(*cache)->si);
+  s2i_free((*cache)->si);
   for (int i = 0; i < arr_size((*cache)->is); ++i) {
     free(ARR((*cache)->is)[i]);
   }

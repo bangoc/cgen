@@ -32,7 +32,7 @@ int t1() {
   CHECK(s2i_value(t, "Bon") == k_s2i_invalid);
   CHECK(s2i_delete(t, "Tam") == 1);
   CHECK(s2i_value(t, "Tam") == k_s2i_invalid);
-  s2i_free(&t);
+  s2i_free(t);
   return 0;
 }
 

@@ -17,6 +17,6 @@ int main() {
   s2i_insert(t, "Chín", 9);
   s2i_insert(t, "Mười", 10);
   bn_pprint(t, s2i_custom_node_print);
-  s2i_free(&t);
+  s2i_free(t);
   return 0;
 }

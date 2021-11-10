@@ -25,7 +25,7 @@ int t1() {
   ASSERT(t->root->right == n5, "root right n5");
   ASSERT(t->root->left->right == n2, "root left right n2");
   ASSERT(t->root->right->left == n4, "root right left n4");
-  bn_free_tree(&t);
+  bn_free_tree(t);
   return 0;
 }
 

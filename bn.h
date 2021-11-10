@@ -37,7 +37,7 @@ typedef void (*bn_node_print_t)();
 bn_node_t bn_create_node();
 void bn_free_node(bn_node_t node);
 bn_tree_t bn_create_tree(bn_node_t root);
-void bn_free_tree(bn_tree_t *t);
+void bn_free_tree(bn_tree_t t);
 void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u);
 void bn_foreach_lnr(bn_tree_t t, bn_callback_t op, void *u);
 void bn_foreach_rnl(bn_tree_t t, bn_callback_t op, void *u);

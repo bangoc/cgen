@@ -18,6 +18,6 @@ int main(){
   s2i_insert(s2i,"dd",4);
   s2i_delete(s2i, "bb");
   s2i_delete(s2i, "cc");
-  s2i_free(&s2i); //giai phong bo nho cho cay s2i
+  s2i_free(s2i); //giai phong bo nho cho cay s2i
   return 0;
 }

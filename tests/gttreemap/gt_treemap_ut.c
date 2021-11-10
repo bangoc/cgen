@@ -3,10 +3,6 @@
 
 #include <string.h>
 
-void tm_bn_free_node(bn_node_t n) {
-  free(n);
-}
-
 int main() {
   tmt t = tm_create(gtype_cmp_s);
   char *s1 = "1111111111",
@@ -33,9 +29,9 @@ int main() {
   CHECK_MSG(strcmp(tm_value(t, gtype_s(sd))->s, s5) == 0, "Failed D Value");
   CHECK_MSG(strcmp(tm_value(t, gtype_s(se))->s, s6) == 0, "Failed E Value");
   CHECK_MSG(strcmp(tm_value(t, gtype_s(sf))->s, s7) == 0, "Failed F Value");
-  tm_delete(t, gtype_s(sd));
-  tm_delete(t, gtype_s(se));
-  tm_delete(t, gtype_s(sf));
+  free(tm_delete(t, gtype_s(sd)));
+  free(tm_delete(t, gtype_s(se)));
+  free(tm_delete(t, gtype_s(sf)));
   gtype *value = NULL_PTR;
   gtype query = {.s = sd};
   CHECK_MSG(tm_value(t, query) == NULL_PTR, "Failed not found D");
@@ -43,7 +39,7 @@ int main() {
   CHECK_MSG(tm_value(t, query) == NULL_PTR, "Failed not found E");
   query = gtype_s(sf);
   CHECK_MSG(tm_value(t, query) == NULL_PTR, "Failed not found F");
-  bn_free_tree((bn_tree_t*)&t);
+  bn_free_tree((bn_tree_t)t);
   printf("Treemap ut OK\n");
   return 0;
 }

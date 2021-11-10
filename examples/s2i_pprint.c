@@ -41,6 +41,6 @@ int main() {
    *           (Ba, 3) - Đen
    * Đối với cấu trúc tra cứu thì khóa phải là duy nhất.
    */
-  s2i_free(&t);
+  s2i_free(t);
   return 0;
 }

@@ -46,6 +46,6 @@ int main() {
     CHECK_MSG(cur == nodes[idx], "Failed inline");
     ++idx;
   }
-  bn_free_tree(&t);
+  bn_free_tree(t);
   return 0;
 }

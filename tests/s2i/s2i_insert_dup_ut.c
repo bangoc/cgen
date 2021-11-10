@@ -23,6 +23,6 @@ int main() {
   CHECK_MSG(s2i_delete(t, "Hai") == 1, "Xóa Hai (có tồn tại)");
   CHECK_MSG(s2i_value(t, "Hai") == k_s2i_invalid, "Giá trị khóa Hai sau khi xóa");
   CHECK_MSG(s2i_delete(t, "Hai") == 0, "Xóa Hai (không tồn tại)");
-  s2i_free(&t);
+  s2i_free(t);
   return 0;
 }

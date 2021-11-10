@@ -33,6 +33,6 @@ int main() {
     }
     printf("\n");
   }
-  bn_free_tree(&t);
+  bn_free_tree(t);
   return 0;
 }

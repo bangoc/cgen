@@ -34,7 +34,7 @@ int t1() {
   ASSERT(lnr_match_g(t, (gtype[]){gtype_i(8), gtype_i(20),
       gtype_i(30)}, 3), "Match sequence 3");
 
-  bn_free_tree(&t);
+  bn_free_tree(t);
   return 0;
 }
 
