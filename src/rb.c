@@ -93,20 +93,17 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 
 #undef IMPL_INSERT_FIXUP
 
+// Gọi hàm cần đảm bảo node là nút đỏ
 bn_node_t rb_insert(bn_tree_t t,
           bn_node_t node, bn_node_t *loc, bn_node_t parent) {
-  *loc = node;
+  bn_insert(node, loc, parent);
   if (parent == NULL_PTR) {
     // loc là gốc của cây
     rb_set_black(node);
-  } else {
-    node->top = parent;
-    // Hàm tạo cần đảm bảo node là nút đỏ
-    if (rb_is_red(parent)) {
-      // vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4)
-      // có thể bị vi phạm.
-      rb_insert_fixup(t, node, parent);
-    }
+  } else if (rb_is_red(parent)) {
+    // vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4)
+    // có thể bị vi phạm.
+    rb_insert_fixup(t, node, parent);
   }
   return node;
 }
