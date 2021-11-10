@@ -42,7 +42,7 @@ void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u);
 void bn_foreach_lnr(bn_tree_t t, bn_callback_t op, void *u);
 void bn_foreach_rnl(bn_tree_t t, bn_callback_t op, void *u);
 void bn_pprint(bn_tree_t t, bn_node_print_t nprt);
-long bn_size(bn_tree_t t);
+size_t bn_size(bn_tree_t t);
 long bn_distance(bn_node_t n);  // # cạnh tới gốc
 long bn_edge_height(bn_tree_t t);
 

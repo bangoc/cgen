@@ -7,7 +7,7 @@ add_subdirectory(tests)
 add_subdirectory(examples)
 
 set(C_SRC src/sll.c src/dll.c src/bn.c src/bns.c
-          src/rb.c src/tm.c src/s2i.c)
+          src/rb.c src/tm.c src/s2i.c src/rbs.c)
 
 add_library(bkc STATIC ${C_SRC})
 
@@ -55,3 +55,4 @@ add_test(NAME BNEdgeHeight COMMAND bn_edge_height_ut)
 add_test(NAME BNGenericInsert COMMAND bn_insert_ut)
 add_test(NAME BNSSearchLteGteGtype COMMAND bns_search_lte_gte_g_ut)
 add_test(NAME ArrIUt COMMAND arr_i_ut)
+add_test(NAME RbsIUt COMMAND rbs_i_ut)

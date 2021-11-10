@@ -177,8 +177,8 @@ void bn_pprint(bn_tree_t t, bn_node_print_t nprt) {
         g_bn_pprint_step);
 }
 
-long bn_size(bn_tree_t t) {
-  long cc = 0;
+size_t bn_size(bn_tree_t t) {
+  size_t cc = 0;
   bn_traverse_lrn(cur, t)  {
     ++cc;
   }
