@@ -40,7 +40,7 @@ rbm_node_t rbm_delete(rbm_t t, gtype key);
     bn_free_tree((bn_tree_t)m); \
   } while (0)
 
-#define tm_traverse(cur, tm) \
+#define rbm_traverse(cur, tm) \
   for (rbm_node_t cur = to_rbm(bn_left_most(tm->t.root)); \
        cur != NULL_PTR; cur = to_rbm(bn_next_inorder(to_bn(cur))))
 

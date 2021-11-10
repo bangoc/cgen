@@ -10,7 +10,7 @@ int main() {
   rbm_insert(m, gtype_s("Tran Van D"), gtype_i(5));
   rbm_insert(m, gtype_s("Nguyen Van B"), gtype_i(3));
   rbm_insert(m, gtype_s("Nguyen Van C"), gtype_i(120));
-  tm_traverse(n, m) {
+  rbm_traverse(n, m) {
     printf("%s: %ld\n", n->key.s, n->value.i);
   }
   rbm_free(m);
