@@ -5,19 +5,19 @@
 
 #include <stdio.h>
 
-bn_tree_t s2i = NULL; //cay chua string -> int
+s2i_t si = NULL; //cay chua string -> int
 int g_id = 0;
 
 
 int main(){
-  s2i = bn_create_tree(NULL_PTR);
+  si = s2i_create();
 
-  s2i_insert(s2i,"aa",1);
-  s2i_insert(s2i,"bb",2);
-  s2i_insert(s2i,"cc",3);
-  s2i_insert(s2i,"dd",4);
-  s2i_delete(s2i, "bb");
-  s2i_delete(s2i, "cc");
-  s2i_free(s2i); //giai phong bo nho cho cay s2i
+  s2i_insert(si, "aa",1);
+  s2i_insert(si, "bb",2);
+  s2i_insert(si, "cc",3);
+  s2i_insert(si, "dd",4);
+  s2i_delete(si, "bb");
+  s2i_delete(si, "cc");
+  s2i_free(si);
   return 0;
 }

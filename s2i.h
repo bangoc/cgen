@@ -15,27 +15,31 @@ typedef struct s2i_node {
   long value;
 } *s2i_node_t;
 
-static int k_s2i_invalid = -1;
+typedef struct s2i_s {
+  struct bn_tree t;
+  int invalid_id;
+} *s2i_t;
 
 // ========== Khai báo hàm ===============
 
-bn_node_t s2i_create_node(const char *key, long value);
+s2i_node_t s2i_create_node(const char *key, long value);
+s2i_t s2i_create();
 
 // Lưu cặp key & value, bỏ qua nếu key đã tồn tại
-bn_node_t s2i_insert(bn_tree_t t, const char *key, long value);
+s2i_node_t s2i_insert(s2i_t si, const char *key, long value);
 
 // Lưu cặp key & value, cập nhật value nếu key đã tồn tại
-bn_node_t s2i_set(bn_tree_t t, const char *key, long value);
+s2i_node_t s2i_set(s2i_t si, const char *key, long value);
 
-s2i_node_t s2i_search(bn_tree_t t, const char *key);
-long *s2i_vref(bn_tree_t t, const char *key);
-long s2i_value(bn_tree_t t, const char *key);
-int s2i_delete(bn_tree_t t, const char *key);
+s2i_node_t s2i_search(s2i_t si, const char *key);
+long *s2i_vref(s2i_t si, const char *key);
+long s2i_value(s2i_t si, const char *key);
+int s2i_delete(s2i_t si, const char *key);
 int s2i_compare_data(const char *q, bn_node_t n);
-void s2i_free_node(bn_node_t n);
-void s2i_free(bn_tree_t tp);
-void s2i_postorder_print(bn_tree_t tree);
-void s2i_print_node(bn_node_t n);
+void s2i_free_node(s2i_node_t n);
+void s2i_free(s2i_t si);
+void s2i_postorder_print(s2i_t tree);
+void s2i_print_node(s2i_node_t n);
 
 // ========== Macro viết nhanh ===========
 

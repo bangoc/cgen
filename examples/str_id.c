@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 typedef struct str_cache {
-  bn_tree_t si;
+  s2i_t si;
   arr_t(char*) is;
 } *str_cache_t;
 
@@ -22,14 +22,14 @@ void cache_print(str_cache_t cache) {
 
 str_cache_t create_cache() {
   str_cache_t sc = malloc(sizeof(struct str_cache));
-  sc->si = bn_create_tree(NULL);
+  sc->si = s2i_create();
   sc->is = arr_create(0, char*);
 }
 
 long get_save_str_id(str_cache_t cache, char *s) {
-  long id = s2i_value(cache->si, s);
-  if (id != k_s2i_invalid) {
-    return id;
+  long *id = s2i_vref(cache->si, s);
+  if (id) {
+    return *id;
   }
   arr_append(cache->is, strdup(s));
   id = arr_size(cache->is) - 1;
