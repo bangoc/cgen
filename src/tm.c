@@ -34,7 +34,7 @@ tnt tm_search(tmt t, gtype key) {
   bns_search_inline(n, ((bn_tree_t)t), key, tm_cmp_conv, return to_tm(n));
 }
 
-gtype *tm_value(tmt t, gtype key) {
+gtype *tm_vref(tmt t, gtype key) {
   tnt n = tm_search(t, key);
   if (n) {
     return &n->value;

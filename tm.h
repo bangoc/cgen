@@ -25,7 +25,7 @@ tmt tm_create(bn_compare_t cmp);
 
 // Nếu đã có khóa thì bỏ qua và trả về nút tương ứng với khóa
 tnt tm_insert(tmt t, gtype key, gtype value);
-gtype *tm_value(tmt t, gtype key);
+gtype *tm_vref(tmt t, gtype key);
 tnt tm_search(tmt t, gtype key);
 tnt tm_delete(tmt t, gtype key);
 

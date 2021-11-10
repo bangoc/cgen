@@ -29,7 +29,7 @@ static bn_node_t s2i_insert(bn_tree_t t, const char *key, long value);
 static bn_node_t s2i_set(bn_tree_t t, const char *key, long value);
 
 static s2i_node_t s2i_search(bn_tree_t t, const char *key);
-static int s2i_value_ref(bn_tree_t t, const char *key, long **value);
+static long *s2i_vref(bn_tree_t t, const char *key);
 static long s2i_value(bn_tree_t t, const char *key);
 static int s2i_delete(bn_tree_t t, const char *key);
 static int s2i_compare_data(const char *q, bn_node_t n);
@@ -103,19 +103,16 @@ static s2i_node_t s2i_search(bn_tree_t t, const char *key) {
   bns_search_inline(result, t, key, s2i_compare_data, return to_s2i(result));
 }
 
-static int s2i_value_ref(bn_tree_t t, const char *key, long **value) {
+static long *s2i_vref(bn_tree_t t, const char *key) {
   s2i_node_t n = s2i_search(t, key);
   if (n) {
-    *value = &(n->value);
-    return 0;
+    return &(n->value);
   }
-  *value = NULL_PTR;
-  return 1;
+  return NULL_PTR;
 }
 
 static long s2i_value(bn_tree_t t, const char *key) {
-  long *value = NULL_PTR;
-  s2i_value_ref(t, key, &value);
+  long *value = s2i_vref(t, key);
   if (value) {
     return *value;
   }

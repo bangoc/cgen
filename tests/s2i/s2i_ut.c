@@ -5,7 +5,7 @@
 
 int t1() {
   bn_tree_t t = bn_create_tree(NULL_PTR);
-  CHECK_MSG(s2i_value(t, "Mot") == k_s2i_invalid, "Failed search empty");
+  CHECK_MSG(s2i_vref(t, "Mot") == NULL, "Failed search empty");
   s2i_insert(t, "Mot", 1);
   s2i_insert(t, "Hai", 2);
   s2i_insert(t, "Ba", 3);
@@ -24,14 +24,14 @@ int t1() {
   CHECK_MSG(s2i_value(t, "Bay") == 7, "Failed 7");
   CHECK_MSG(s2i_value(t, "Tam") == 8, "Failed 8");
   CHECK_MSG(s2i_value(t, "Chin") == 9, "Failed 9");
-  CHECK_MSG(s2i_value(t, "Muoi") == k_s2i_invalid, "Failed 10");
-  CHECK_MSG(s2i_value(t, "Khong") == k_s2i_invalid, "Failed 0");
+  CHECK_MSG(s2i_vref(t, "Muoi") == NULL, "Failed 10");
+  CHECK_MSG(s2i_vref(t, "Khong") == NULL, "Failed 0");
 
   CHECK(s2i_delete(t, "Bon") == 1);
   CHECK(s2i_delete(t, "Muoi") == 0);
-  CHECK(s2i_value(t, "Bon") == k_s2i_invalid);
+  CHECK(s2i_vref(t, "Bon") == NULL);
   CHECK(s2i_delete(t, "Tam") == 1);
-  CHECK(s2i_value(t, "Tam") == k_s2i_invalid);
+  CHECK(s2i_vref(t, "Tam") == NULL);
   s2i_free(t);
   return 0;
 }
