@@ -43,8 +43,7 @@ int main() {
   CHECK_MSG(tm_value(t, query) == NULL_PTR, "Failed not found E");
   query = (gtype){.s = sf};
   CHECK_MSG(tm_value(t, query) == NULL_PTR, "Failed not found F");
-  tm_node_t prev = NULL_PTR;
-  bn_free_tree(&t);
+  bn_free_tree((bn_tree_t*)&t);
   printf("Treemap ut OK\n");
   return 0;
 }
