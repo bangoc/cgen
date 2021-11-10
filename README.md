@@ -1,8 +1,6 @@
 # cgen
 Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản
 
-(đang được cập nhật)
-
 # Hướng dẫn biên dịch
 
 Tệp mã nguồn, ví dụ main.c:
@@ -20,7 +18,9 @@ Trong đó cgen.h là tệp tổng hợp các tệp tiêu đề của cgen.
 gcc -o prog main.c ${CGEN_PATH}/all.c -I ${CGEN_PATH}
 ```
 
-Trong đó ${CGEN_PATH} là đường dẫn tới thư mục cgen.
+Trong đó ${CGEN_PATH} là đường dẫn tới thư mục cgen;
+
+all.c là tệp tổng hợp các tệp .c (mã nguồn) của cgen.
 
 ## 2. Biên dịch với ninja và cmake
 
