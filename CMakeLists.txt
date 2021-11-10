@@ -7,7 +7,7 @@ add_subdirectory(tests)
 add_subdirectory(examples)
 
 set(C_SRC src/sll.c src/dll.c src/bn.c src/bns.c
-          src/rb.c src/tm.c)
+          src/rb.c src/tm.c src/s2i.c)
 
 add_library(bkc STATIC ${C_SRC})
 
