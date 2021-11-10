@@ -16,7 +16,7 @@ int main() {
   s2i_insert(si, "Tám", 8);
   s2i_insert(si, "Chín", 9);
   s2i_insert(si, "Mười", 10);
-  bn_pprint(si, s2i_custom_node_print);
+  bn_pprint((bn_tree_t)si, s2i_custom_node_print);
   s2i_free(si);
   return 0;
 }

@@ -1,11 +1,6 @@
 #ifndef CGEN_HC_
 #define CGEN_HC_
 
-#include "ext/io.h"
-#include "src/sll.c"
-#include "src/dll.c"
-#include "src/bn.c"
-#include "src/bns.c"
-
+#include "all.c"
 
 #endif  // CGEN_HC_

@@ -32,9 +32,9 @@ long get_save_str_id(str_cache_t cache, char *s) {
     return *id;
   }
   arr_append(cache->is, strdup(s));
-  id = arr_size(cache->is) - 1;
-  s2i_insert(cache->si, s, id);
-  return id;
+  long id2 = arr_size(cache->is) - 1;
+  s2i_insert(cache->si, s, id2);
+  return id2;
 }
 
 char *get_by_id(str_cache_t cache, long id) {

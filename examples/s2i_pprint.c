@@ -14,7 +14,7 @@ int main() {
   s2i_insert(si, "Tám", 28);
   s2i_insert(si, "Chín", 9);
   s2i_insert(si, "Mười", 10);
-  bn_pprint(si, s2i_print_node);
+  bn_pprint((bn_tree_t)si, s2i_print_node);
   /* Trùng lặp khóa:
    *             (Tám, 28) - Đỏ
    *          (Tám, 18) - Đen

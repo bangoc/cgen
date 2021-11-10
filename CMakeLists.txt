@@ -1,16 +1,12 @@
 project(cgen)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -w")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 
 add_subdirectory(tests)
 add_subdirectory(examples)
 
-set(C_SRC src/sll.c src/dll.c src/bn.c src/bns.c
-          src/rb.c src/rbm.c src/s2i.c src/rbs.c
-          src/p2w.c)
-
-add_library(bkc STATIC ${C_SRC})
+add_library(bkc STATIC all.c)
 
 include(CTest)
 add_test(NAME BNLeftRotate COMMAND bn_left_rotate_ut)

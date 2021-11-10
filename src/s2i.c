@@ -46,7 +46,7 @@ s2i_node_t s2i_set(s2i_t si, const char *key, long value) {
   bns_insert_setup(loc, t->root, key, s2i_compare_data, same, parent);
   if (same) {
     s2i_node_value(same) = value;
-    return same;
+    return to_s2i(same);
   }
   s2i_node_t n = s2i_create_node(key, value);
   rb_insert(t, to_bn(n), loc, parent);
