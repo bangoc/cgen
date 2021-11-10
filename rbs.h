@@ -36,4 +36,8 @@ void rbs_free(rbs_t s);
   for (rbs_node_t cur = to_rbs(bn_left_most(s->t.root)); \
        cur != NULL_PTR; cur = to_rbs(bn_next_inorder(to_bn(cur))))
 
+#define rbs_free(s) \
+    do {  \
+      bn_free_tree((bn_tree_t)s); \
+    } while (0)
 #endif  // RBS_H_

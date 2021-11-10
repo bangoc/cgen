@@ -48,10 +48,6 @@ rbs_node_t rbs_delete(rbs_t s, gtype elem) {
   return n;
 }
 
-void rbs_free(rbs_t s) {
-  bn_free_tree((bn_tree_t)s);
-}
-
 size_t rbs_size(rbs_t s) {
   return bn_size((bn_tree_t)s);
 }
