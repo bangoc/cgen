@@ -20,7 +20,7 @@ int t1() {
   }
   ASSERT(arr_size(a) == n, "append n elements");
   ASSERT(arr_capacity(a) >= n, "capacity changed");
-  for (size_t i = 0; i < arr_size(a); ++i) {
+  for (long i = 0; i < arr_size(a); ++i) {
     ASSERT((*a)[i] == i, "Value");
   }
   arr_free(a);

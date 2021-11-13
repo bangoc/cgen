@@ -29,13 +29,13 @@
  *    Trong trường hợp không thể cấp phát được bộ nhớ để lưu
  *    dòng, hàm trả về NULL và *lineptr == NULL.
  */
-static char *cgetline(char **lineptr, size_t n, FILE *inp) {
+static char *cgetline(char **lineptr, long n, FILE *inp) {
 #ifndef CGETLINE_BUFF_SIZE
   #define CGETLINE_BUFF_SIZE 1024
 #endif  // CGETLINE_BUFF_SIZE
 
   static char buff[CGETLINE_BUFF_SIZE];
-  size_t idx = 0, len, tmp;
+  long idx = 0, len, tmp;
 
   while (fgets(buff, CGETLINE_BUFF_SIZE, inp)) {
     len = strlen(buff);

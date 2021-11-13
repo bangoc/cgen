@@ -25,7 +25,7 @@ rbs_t rbs_create(bn_compare_t cmp);
 rbs_node_t rbs_insert(rbs_t s, gtype elem);
 rbs_node_t rbs_search(rbs_t s, gtype elem);
 rbs_node_t rbs_delete(rbs_t s, gtype elem);
-size_t rbs_size(rbs_t s);
+long rbs_size(rbs_t s);
 void rbs_free(rbs_t s);
 
 // ========== Macro viết nhanh ===========

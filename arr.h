@@ -17,8 +17,8 @@ enum arr_attrib {
   ARR_ATT_MAX
 };
 
-static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
-  size_t* a = malloc(ARR_ATT_MAX * sizeof(size_t) + cap * elem_sz);
+static inline void **arr_create_internal(long cap, long elem_sz) {
+  long* a = malloc(ARR_ATT_MAX * sizeof(long) + cap * elem_sz);
   if (a) {
     a[ARR_SZ] = 0;
     a[ARR_CAP] = cap;
@@ -31,7 +31,7 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
   return NULL;
 }
 
-#define ARR_BEG(a) (((size_t*)ARR(a)) - ARR_ATT_MAX)
+#define ARR_BEG(a) (((long*)ARR(a)) - ARR_ATT_MAX)
 #define arr_size(a) (ARR_BEG(a)[ARR_SZ])
 #define arr_capacity(a) (ARR_BEG(a)[ARR_CAP])
 #define arr_elem_sz(a) (ARR_BEG(a)[ARR_ELEM_SZ])
@@ -47,9 +47,9 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
 
 #define arr_set_capacity(a, newcap) \
   do { \
-    size_t *tmp = ARR_BEG(a); \
-    size_t elem_sz = tmp[ARR_ELEM_SZ]; \
-    tmp = realloc(tmp, ARR_ATT_MAX * sizeof(size_t) + newcap * elem_sz); \
+    long *tmp = ARR_BEG(a); \
+    long elem_sz = tmp[ARR_ELEM_SZ]; \
+    tmp = realloc(tmp, ARR_ATT_MAX * sizeof(long) + newcap * elem_sz); \
     if (tmp) { \
       if (tmp[ARR_SZ] > newcap) { \
         tmp[ARR_SZ] = newcap; \
@@ -61,7 +61,7 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
 
 #define arr_set_size(a, newsize) \
   do { \
-    size_t c = arr_capacity(a); \
+    long c = arr_capacity(a); \
     if (newsize > c) {  \
       arr_set_capacity(a, newsize); \
     } \
@@ -80,11 +80,11 @@ static inline void **arr_create_internal(size_t cap, size_t elem_sz) {
 
 #define arr_append(a, elem) \
    do { \
-     size_t *tmp = ARR_BEG(a); \
+     long *tmp = ARR_BEG(a); \
      if (tmp[ARR_SZ] >= tmp[ARR_CAP]) { \
-       size_t c = tmp[ARR_CAP]; \
-       size_t inc = tmp[ARR_INC]; \
-       size_t newcap = c > 100? c + c * inc / 100: c + inc; \
+       long c = tmp[ARR_CAP]; \
+       long inc = tmp[ARR_INC]; \
+       long newcap = c > 100? c + c * inc / 100: c + inc; \
        arr_set_capacity(a, newcap); \
        tmp = ARR_BEG(a); \
      } \

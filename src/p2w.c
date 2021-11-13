@@ -37,7 +37,7 @@ void p2w_free(p2wheap_t *h) {
   *h = NULL;
 }
 
-size_t p2w_size(const p2wheap_t h) {
+long p2w_size(const p2wheap_t h) {
   return arr_size(h->data);
 }
 
@@ -69,7 +69,7 @@ void p2w_shift_up(p2wheap_t h, long elem, gtype_cmp_t cmp) {
 }
 
 void p2w_sink(p2wheap_t h, long head, gtype_cmp_t cmp) {
-  size_t size = p2w_size(h);
+  long size = p2w_size(h);
   if (LEFTCHILD(head) >= size) {
     /* no subtrees */
   } else if (RIGHTCHILD(head) == size ||
@@ -100,7 +100,7 @@ bool p2w_empty(const p2wheap_t h) {
 }
 
 int p2w_push_with_index(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
-  size_t size = arr_size(h->data);
+  long size = arr_size(h->data);
   arr_append(h->data, elem);
   arr_append(h->index, gtype_i(idx));
   arr_set_value_with_index(h->index2, gtype_i(size + 2), idx);
@@ -109,7 +109,7 @@ int p2w_push_with_index(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
   return 0;
 }
 
-size_t p2w_max_size(const p2wheap_t h) {
+long p2w_max_size(const p2wheap_t h) {
   return h->size;
 }
 
@@ -184,7 +184,7 @@ int p2w_modify(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
 }
 
 bool p2w_check(p2wheap_t h, gtype_cmp_t cmp) {
-  size_t size = p2w_size(h);
+  long size = p2w_size(h);
   int ecode = 0;
   for (long i = 0; i < size; i++) {
     if (LEFTCHILD(i) >= size) {
