@@ -65,14 +65,15 @@ static void clear_stdin() {
   while (getchar() != '\n');
 }
 
-static void remove_tail_lf(char *s) {
+static char *remove_tail_lf(char *s) {
   if (!s) {
-    return;
+    return s;
   }
   char *p = s + strlen(s) - 1;
   if (*p == '\n') {
     *p = '\0';
   }
+  return s;
 }
 
 #endif  // EXT_IO_H_
