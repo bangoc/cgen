@@ -33,8 +33,8 @@ rbm_node_t rbm_delete(rbm_t t, gtype key);
 // ========== Macro viết nhanh ===========
 
 #define to_rbm(n) ((rbm_node_t)n)
-#define rbm_node_key(n) to_rbm(n)->key
-#define rbm_node_value(n) to_rbm(n)->value
+#define rbm_node_key(n) (to_rbm(n)->key)
+#define rbm_node_value(n) (to_rbm(n)->value)
 #define rbm_free(m) \
   do { \
     bn_free_tree((bn_tree_t)m); \
