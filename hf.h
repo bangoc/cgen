@@ -1,5 +1,5 @@
-#ifndef HM_H_
-#define HM_H_
+#ifndef HF_H_
+#define HF_H_
 
 #include <stdint.h>
 
@@ -7,10 +7,7 @@
 extern "C" {
 #endif
 
-/*
-  A generic hash function
-*/
-
+// Một hàm băm khái quát
 static uint32_t hgen(const void *data, long length) {
   register long i = length;
   register uint32_t hv = 0;
@@ -31,4 +28,4 @@ static uint32_t hgen(const void *data, long length) {
 }
 #endif
 
-#endif  // HM_H_
+#endif  // HF_H_

@@ -3,7 +3,7 @@
   Minh họa hàm băm khái quát
 */
 
-#include "hm.h"
+#include "hf.h"
 
 #include <stdio.h>
 #include <string.h>
