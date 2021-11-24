@@ -6,6 +6,7 @@
 #define CORE_H_
 
 #include <stddef.h>
+#include <time.h>
 
 #define container_of(ptr, type, member) \
   ((type *)((void*)ptr - offsetof(type, member)))
@@ -18,5 +19,18 @@
           /*free(ptr);*/    \
         }       \
         while(0)
+
+#define BENCH(NAME, ITER, ...)    do { \
+        double sum = 0, start, stop; \
+        for (int i = 0; i < ITER; ++i) { \
+          start = clock(); \
+          { __VA_ARGS__; } \
+          stop = clock(); \
+          sum += stop - start; \
+        } \
+        printf("%s - Trung bình %d lần = %.5g s\n", \
+              NAME, ITER,  sum/CLOCKS_PER_SEC); \
+    } while (0)
+
 
 #endif  // CORE_H_

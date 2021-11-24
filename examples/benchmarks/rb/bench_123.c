@@ -1,4 +1,4 @@
-#include "examples/benchmarks/bench.h"
+#include "core.h"
 #include "tests/rb/rbi.h"
 
 #include <stdio.h>
@@ -26,13 +26,13 @@ int main(int argc, char *argv[]) {
   bn_tree_t t = bn_create_tree(NULL_PTR);
   for (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
-    BENCH(desc,
+    BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
               rbi_insert(t, value++);
             }
           );
     sprintf(desc, "%ld x search from %ld (s): ", len, len * point);
-    BENCH(desc,
+    BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
               rbi_search(t, len * point + i);
             }
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
   value = 0;
   for  (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x delete from %ld (s): ", len, n - len * point);
-    BENCH(desc,
+    BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
               rbi_delete(t, value++);
             }
