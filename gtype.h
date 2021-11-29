@@ -22,6 +22,13 @@ typedef union {
 #define gtype_s(value) gtype_value(s, value)
 #define gtype_v(value) gtype_value(v, value)
 
+#define gtype_swap(v1, v2) \
+  do { \
+    gtype tmp = v1; \
+    v1 = v2; \
+    v2 = tmp; \
+  } while (0)
+
 typedef int (*gtype_cmp_t)(gtype, gtype);
 
 static int gtype_cmp_i(gtype v1, gtype v2) {

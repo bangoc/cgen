@@ -1,6 +1,10 @@
 #ifndef P1W_H_
 #define P1W_H_
 
+/*
+  (C) Nguyen Ba Ngoc 2021
+*/
+
 #include "arr.h"
 #include "gtype.h"
 
@@ -10,13 +14,10 @@ typedef struct p1w_s {
 } *p1w_t;
 
 p1w_t create_p1w(gtype_cmp_t cmp);
-p1w_t p1w_from_arr(arr_t(gtype) arr, gtype_cmp_t cmp);
-p1w_t p1w_from_arr2(gtype* a, long n, gtype_cmp_t cmp);
 gtype p1w_peek(p1w_t h);
 gtype p1w_dequeue(p1w_t h);
 int p1w_enqueue(p1w_t h, gtype value);
 long p1w_size(p1w_t h);
-gtype *p1w_arr(p1w_t h);
 
 #define p1w_is_empty(h) \
   (p1w_size(h) == 0)

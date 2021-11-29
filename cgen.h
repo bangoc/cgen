@@ -7,6 +7,8 @@
 #include "core.h"
 #include "dll.h"
 #include "gtype.h"
+#include "heap.h"
+#include "p1w.h"
 #include "p2w.h"
 #include "rb.h"
 #include "rbm.h"
