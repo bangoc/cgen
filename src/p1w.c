@@ -14,7 +14,7 @@
     v2 = tmp; \
   } while (0)
 
-#define P1WP(i) (((i + 1) >> 1) - 1)
+#define P1WP(i) (((i) - 1) >> 1)
 #define P1WL(i) (((i) << 1) + 1)
 #define P1WR(i) (((i) << 1) + 2)
 
