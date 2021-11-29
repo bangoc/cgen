@@ -7,7 +7,8 @@
 
 #include <stdlib.h>
 
-#define ARR(pa) (*pa)
+#define ARR(pa) (*(pa))
+#define arr_t(etyp) etyp **
 
 enum arr_attrib {
   ARR_SZ = 0,
@@ -71,12 +72,10 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
   } while (0)
 
 #define arr_create(cap, etyp) \
-   (etyp**)arr_create_internal(cap, sizeof(etyp))
-
-#define arr_t(etyp) etyp **
+   (arr_t(etyp))arr_create_internal(cap, sizeof(etyp))
 
 #define arr_decl(name, cap, etyp) \
-    etyp **name = (etyp**)arr_create(cap, etyp)
+   arr_t(etyp) name = arr_create(cap, etyp)
 
 #define arr_append(a, elem) \
    do { \
