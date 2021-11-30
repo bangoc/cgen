@@ -11,7 +11,7 @@
 #define HLEFT(i) (((i) << 1) + 1)
 #define HRIGHT(i) (((i) << 1) + 2)
 
-static void heapify_g(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
+static void shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
   for (;;) {
     long l = HLEFT(i),
          r = HRIGHT(i),
@@ -30,9 +30,20 @@ static void heapify_g(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
   }
 }
 
+static void shift_up_g(gtype *a, long idx, gtype_cmp_t cmp) {
+  while (idx > 0) {
+    long i = HTOP(idx);
+    if (cmp(a[idx], a[i]) <= 0) {
+      break;
+    }
+    gtype_swap(a[idx], a[i]);
+    idx = i;
+  }
+}
+
 static void make_heap_g(gtype *a, const long sz, gtype_cmp_t cmp) {
   for (long i = sz / 2; i >= 0; --i) {
-    heapify_g(a, i, sz, cmp);
+    shift_down_g(a, i, sz, cmp);
   }
 }
 

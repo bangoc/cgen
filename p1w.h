@@ -13,10 +13,11 @@ typedef struct p1w_s {
   gtype_cmp_t cmp;
 } *p1w_t;
 
-p1w_t create_p1w(gtype_cmp_t cmp);
+p1w_t p1w_create(gtype_cmp_t cmp);
 gtype p1w_peek(p1w_t h);
 gtype p1w_dequeue(p1w_t h);
 int p1w_enqueue(p1w_t h, gtype value);
+void p1w_root(p1w_t h, gtype value);
 long p1w_size(p1w_t h);
 
 #define p1w_is_empty(h) \
