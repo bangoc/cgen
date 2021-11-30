@@ -28,8 +28,12 @@
           stop = clock(); \
           sum += stop - start; \
         } \
-        printf("%s - Trung bình %d lần = %.5g s\n", \
-              NAME, ITER,  sum/CLOCKS_PER_SEC); \
+        if (ITER > 1) { \
+          printf("%s (trung bình %d lượt) = %.5g s\n", \
+                NAME, ITER,  (sum/CLOCKS_PER_SEC) / ITER); \
+        } else { \
+          printf("%s: %5g s\n", NAME, sum/CLOCKS_PER_SEC); \
+        }\
     } while (0)
 
 
