@@ -9,7 +9,7 @@
 #include "gtype.h"
 
 typedef struct rbm_node {
-  struct rb_node rb_node;
+  struct rb_node_s rb_node;
   gtype key, value;
 } *rbm_node_t;
 

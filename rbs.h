@@ -10,7 +10,7 @@
 #include "rb.h"
 
 typedef struct rbs_node {
-  struct rb_node rb_node;
+  struct rb_node_s rb_node;
   gtype value;
 } *rbs_node_t;
 

@@ -30,7 +30,7 @@ typedef enum {
 
 extern const char * color_names[];
 
-typedef struct rb_node {
+typedef struct rb_node_s {
   struct bn_node bn_node;
   rb_node_color_t color;
 } *rb_node_t;

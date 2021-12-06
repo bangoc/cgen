@@ -10,7 +10,7 @@
 #include <stdio.h>
 
 typedef struct s2i_node {
-  struct rb_node rb_node;
+  struct rb_node_s rb_node;
   char *key;
   long value;
 } *s2i_node_t;

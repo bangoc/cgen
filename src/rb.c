@@ -4,7 +4,7 @@ const char * color_names[] = {"Đỏ", "Đen"};
 
 rb_node_t rb_create_node() {
   // Mặc định giá trị 0 là đỏ
-  return calloc(1, sizeof(struct rb_node));
+  return calloc(1, sizeof(struct rb_node_s));
 }
 
 void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {

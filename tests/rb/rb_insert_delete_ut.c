@@ -2,7 +2,7 @@
 #include "tests/base/utils.h"
 
 typedef struct my_rb_node {
-  struct rb_node rb_node;
+  struct rb_node_s rb_node;
   int key;
   int value;
 } *my_rb_node_t;

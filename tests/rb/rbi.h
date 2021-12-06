@@ -8,7 +8,7 @@
 #include "rb.h"
 
 typedef struct rbi_node {
-  struct rb_node rb_node;
+  struct rb_node_s rb_node;
   int value;
 } *rbi_node_t;
 
