@@ -7,17 +7,12 @@
 #define CHECK(op) if (!(op)) { return 1; }
 #define CHECK_MSG(op, msg) if (!(op)) { printf("%s (%s:%d)\n", msg, __FILE__, __LINE__); return 1; }
 
-#define ASSERT(op, msg) if (!(op)) { \
-  printf("%s (%s:%d)\n", msg, __FILE__, __LINE__); return 1; }
-
-#define ASSERT_ECHO(op) ASSERT(op, #op)
+#define CHECK_ECHO(op) CHECK_MSG(op, #op)
 
 #define DEBUG_MSG(msg) printf("%s (%s:%d)\n", msg, __FILE__, __LINE__);
 
 #define TEST_OK() \
-  do { \
     printf("Test Ok!\n"); \
-    return 0; \
-  } while (0)
+    return 0 \
 
 #endif  // TESTS_BASE_UTILS_H_

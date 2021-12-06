@@ -18,11 +18,11 @@ int t1() {
   bn_connect2(n2, right, n3, top);
   bn_connect2(n3, left, n5, top);
   bn_tree_t t = bn_create_tree(n2);
-  ASSERT(bn_edge_height(t) == 2, "Edge height = 2");
+  CHECK_MSG(bn_edge_height(t) == 2, "Edge height = 2");
   return 0;
 }
 
 int main() {
-  ASSERT(t1() == 0, "t1()");
+  CHECK_MSG(t1() == 0, "t1()");
   TEST_OK();
 }

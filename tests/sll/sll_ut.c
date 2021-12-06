@@ -55,7 +55,7 @@ int test_create_list() {
   sll_t lists[N];
   for (int i = 0; i < N; ++i) {
     lists[i] = sll_create_list();
-    ASSERT(sll_is_empty(lists[i]), "Empty on create");
+    CHECK_MSG(sll_is_empty(lists[i]), "Empty on create");
   }
   for (int i = 0; i < N; ++i) {
     sll_free_list(lists[i]);
@@ -65,7 +65,7 @@ int test_create_list() {
 }
 
 int main() {
-  ASSERT(sll_t1() == 0, "t1 (old tests)");
-  ASSERT(test_create_list() == 0, "create_list");
+  CHECK_MSG(sll_t1() == 0, "t1 (old tests)");
+  CHECK_MSG(test_create_list() == 0, "create_list");
   return 0;
 }

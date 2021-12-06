@@ -23,6 +23,7 @@ gtype p1w_peek(p1w_t h) {
 gtype p1w_dequeue(p1w_t h) {
   long sz = arr_size(h->data);
   gtype *a = P1WARR(h);
+  gtype tmp = a[0];
   gtype_swap(a[0], a[sz - 1]);
   arr_set_size(h->data, sz - 1);
   switch (h->typ) {
@@ -35,7 +36,7 @@ gtype p1w_dequeue(p1w_t h) {
       max_shift_down_g(a, 0, sz - 1, h->cmp);
       break;
   }
-  return a[sz - 1];
+  return tmp;
 }
 
 int p1w_enqueue(p1w_t h, gtype value) {
@@ -52,7 +53,6 @@ int p1w_enqueue(p1w_t h, gtype value) {
       max_shift_up_g(a, j, h->cmp);
       break;
   }
-  max_shift_up_g(a, j, h->cmp);
   return 0;
 }
 

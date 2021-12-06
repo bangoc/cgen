@@ -15,23 +15,23 @@ int t1() {
       10  30
      8     50
   */
-  ASSERT(bn_size(t) == 5, "size 5");
+  CHECK_MSG(bn_size(t) == 5, "size 5");
 
   bns_pprint(t, gtype_print_i);
-  ASSERT(lnr_match_g(t, (gtype[]){gtype_i(8), gtype_i(10),
+  CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_i(8), gtype_i(10),
     gtype_i(20), gtype_i(30), gtype_i(50)}, 5), "Match sequence 5");
 
   bn_node_t tmp = bns_search_g(t, gtype_i(10));
-  ASSERT(tmp && bns_node_g_key(tmp).i == 10, "key 10");
+  CHECK_MSG(tmp && bns_node_g_key(tmp).i == 10, "key 10");
   bns_delete_g(t, tmp);
   free(tmp);
 
   tmp = bns_search_g(t, gtype_i(50));
-  ASSERT(tmp && bns_node_g_key(tmp).i == 50, "key 50");
+  CHECK_MSG(tmp && bns_node_g_key(tmp).i == 50, "key 50");
   bns_delete_g(t, tmp);
   free(tmp);
 
-  ASSERT(lnr_match_g(t, (gtype[]){gtype_i(8), gtype_i(20),
+  CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_i(8), gtype_i(20),
       gtype_i(30)}, 3), "Match sequence 3");
 
   bn_free_tree(t);
@@ -39,7 +39,7 @@ int t1() {
 }
 
 int main() {
-  ASSERT(t1() == 0, "t1()");
+  CHECK_MSG(t1() == 0, "t1()");
   printf("Test Ok\n");
   return 0;
 }

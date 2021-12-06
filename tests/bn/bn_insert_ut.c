@@ -20,16 +20,16 @@ int t1() {
   bn_insert(n5, (&(n3->right)), n3);
   bn_insert(n4, (&(n5->left)), n5);
 
-  ASSERT(t->root == n3, "root n3");
-  ASSERT(t->root->left == n1, "root left n1");
-  ASSERT(t->root->right == n5, "root right n5");
-  ASSERT(t->root->left->right == n2, "root left right n2");
-  ASSERT(t->root->right->left == n4, "root right left n4");
+  CHECK_MSG(t->root == n3, "root n3");
+  CHECK_MSG(t->root->left == n1, "root left n1");
+  CHECK_MSG(t->root->right == n5, "root right n5");
+  CHECK_MSG(t->root->left->right == n2, "root left right n2");
+  CHECK_MSG(t->root->right->left == n4, "root right left n4");
   bn_free_tree(t);
   return 0;
 }
 
 int main() {
-  ASSERT(t1() == 0, "t1");
+  CHECK_MSG(t1() == 0, "t1");
   TEST_OK();
 }
