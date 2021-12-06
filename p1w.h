@@ -8,12 +8,19 @@
 #include "arr.h"
 #include "gtype.h"
 
+typedef enum {
+  PRIORITY_MIN = 0,
+  PRIORITY_MAX,
+  PRIORITY_TYPES_COUNT
+} p1w_types;
+
 typedef struct p1w_s {
   arr_t(gtype) data;
+  p1w_types typ;
   gtype_cmp_t cmp;
 } *p1w_t;
 
-p1w_t p1w_create(gtype_cmp_t cmp);
+p1w_t p1w_create(p1w_types typ, gtype_cmp_t cmp);
 gtype p1w_peek(p1w_t h);
 gtype p1w_dequeue(p1w_t h);
 int p1w_enqueue(p1w_t h, gtype value);
