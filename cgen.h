@@ -8,6 +8,8 @@
 #include "dll.h"
 #include "gtype.h"
 #include "heap.h"
+#include "hfunc.h"
+#include "hmap.h"
 #include "p1w.h"
 #include "p2w.h"
 #include "rb.h"
