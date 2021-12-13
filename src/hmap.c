@@ -101,8 +101,8 @@ int hmap_nnodes(hmap_t tab) {
     o = NULL; \
     uint *hashes = ARR(m->hashes); \
     gtype *arr = ARR(m->kv); \
-    int idx = c? c - arr: 0; \
-    for (int i = idx + 1; i < m->size; ++i) { \
+    int idx = c? c - arr + 1: 0; \
+    for (int i = idx; i < m->size; ++i) { \
       if (HASH_IS_REAL(hashes[i])) { \
         o = arr + i; \
         break; \
