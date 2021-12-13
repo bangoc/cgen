@@ -36,6 +36,10 @@ void hmap_clear(hmap_t tab);
 void hmap_free(hmap_t tab);
 int hmap_nnodes(hmap_t tab);
 
-
+gtype *hmap_next_pkey(hmap_t, gtype*);
+gtype *hmap_next_pvalue(hmap_t, gtype*);
+#define hmap_traverse(key, value, map) \
+  for(gtype *key = hmap_next_pkey(map, NULL), *value = hmap_next_pvalue(map, NULL); \
+     key && value; key = hmap_next_pkey(map, key), value = hmap_next_pvalue(map, value)) \
 
 #endif  // HMAP_H_

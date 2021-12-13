@@ -96,6 +96,32 @@ int hmap_nnodes(hmap_t tab) {
   return tab->nnodes;
 }
 
+#define hmap_next_pkey_or_pvalue(m, c, kv, o) \
+  do { \
+    o = NULL; \
+    uint *hashes = ARR(m->hashes); \
+    gtype *arr = ARR(m->kv); \
+    int idx = c? c - arr: 0; \
+    for (int i = idx + 1; i < m->size; ++i) { \
+      if (HASH_IS_REAL(hashes[i])) { \
+        o = arr + i; \
+        break; \
+      } \
+    } \
+  } while (0)
+
+gtype *hmap_next_pkey(hmap_t map, gtype* curr) {
+  gtype * r;
+  hmap_next_pkey_or_pvalue(map, curr, keys, r);
+  return r;
+}
+
+gtype *hmap_next_pvalue(hmap_t map, gtype* curr) {
+  gtype * r;
+  hmap_next_pkey_or_pvalue(map, curr, values, r);
+  return r;
+}
+
 static const int prime_mod [] =
 {
   1,          /* 1 << 0 */
