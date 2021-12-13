@@ -2,6 +2,7 @@
 #include "src/bns.c"
 #include "src/dll.c"
 #include "src/heap.c"
+#include "src/hmap.c"
 #include "src/p1w.c"
 #include "src/p2w.c"
 #include "src/rb.c"

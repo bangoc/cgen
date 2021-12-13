@@ -6,7 +6,12 @@
 #define GTYPE_H_
 
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
+#include <stdlib.h>
+
+typedef unsigned int uint;
+typedef uint32_t uint32;
 
 typedef union {
   long i;
@@ -30,6 +35,7 @@ typedef union {
   } while (0)
 
 typedef int (*gtype_cmp_t)(gtype, gtype);
+typedef void (*gtype_free_t)(gtype);
 
 static int gtype_cmp_i(gtype v1, gtype v2) {
   return v1.i - v2.i;
@@ -60,6 +66,10 @@ static void gtype_print_d(gtype value) {
 
 static void gtype_print_s(gtype value) {
   printf("%s\n", value.s);
+}
+
+static void gtype_free_s(gtype v) {
+  free(v.s);
 }
 
 #endif  // GTYPE_H_

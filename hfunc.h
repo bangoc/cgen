@@ -1,7 +1,7 @@
-#ifndef HF_H_
-#define HF_H_
+#ifndef HFUNC_H_
+#define HFUNC_H_
 
-#include <stdint.h>
+#include "gtype.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,8 +24,25 @@ static uint32_t hgen(const void *data, long length) {
   return hv;
 }
 
+static uint gtype_hash_s(gtype v) {
+  const signed char *p;
+  uint h = 5381;
+  for (p = v.s; *p != '\0'; ++p) {
+    h = (h << 5) + h + *p;
+  }
+  return h;
+}
+
+static uint gtype_hash_d(gtype v) {
+  return (uint) v.d;
+}
+
+static uint gtype_hash_i(gtype v) {
+  return (uint) v.i;
+}
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // HF_H_
+#endif  // HFUNC_H_

@@ -1,0 +1,6 @@
+add_executable(hmap_small_ut hmap_small_ut.c)
+add_executable(hmap_nnode_ut hmap_nnode_ut.c)
+add_executable(hmap_randi_ut hmap_randi_ut.c)
+foreach (p hmap_small_ut hmap_nnode_ut hmap_randi_ut)
+  target_link_libraries(${p} bkc)
+endforeach()

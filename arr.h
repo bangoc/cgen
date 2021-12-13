@@ -9,6 +9,7 @@
 
 #define ARR(pa) (*(pa))
 #define arr_t(etyp) etyp **
+#define ELEM(a, i) (ARR(a)[i])
 
 enum arr_attrib {
   ARR_SZ = 0,
