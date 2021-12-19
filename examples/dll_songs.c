@@ -18,7 +18,7 @@ gtype create_song_g(const char *name) {
 }
 
 int main() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
 
   // Add songs to list
   gdl_push_back(list, create_song_g("Seasons in the sun"));

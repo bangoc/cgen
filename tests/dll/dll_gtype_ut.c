@@ -17,7 +17,7 @@ int test_create_node_g() {
 }
 
 int test_push_back_front_g() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   CHECK_MSG(list->front == NULL, "front NULL");
   CHECK_MSG(list->back == NULL, "back NULL");
 
@@ -61,7 +61,7 @@ int test_push_back_front_g() {
 }
 
 int test_insert_ab() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   CHECK_MSG(list->front == NULL, "front NULL");
   CHECK_MSG(list->back == NULL, "back NULL");
 

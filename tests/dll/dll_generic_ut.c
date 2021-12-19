@@ -20,8 +20,8 @@ int test_dll_create_node() {
   return 0;
 }
 
-int test_dll_create_list() {
-  dll_t list = dll_create_list();
+int test_dll_create_list(dll_free_node) {
+  dll_t list = dll_create_list(dll_free_node);
   if (!list) {
     DEBUG_MSG("Null list");
     return 1;
@@ -33,7 +33,7 @@ int test_dll_create_list() {
   return 0;
 }
 int test_dll_push_t1() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   dll_node_t n1 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(dll_sequence(list, (dll_node_t[]){n1}, 1), "push_back empty list");
@@ -43,7 +43,7 @@ int test_dll_push_t1() {
   CHECK_MSG(dll_sequence(list, (dll_node_t[]){n2, n1}, 2), "push_front 2 node");
 
   dll_free_list(list);
-  list = dll_create_list();
+  list = dll_create_list(dll_free_node);
   n1 = dll_create_node();
   dll_push_front(list, n1);
   CHECK_MSG(dll_sequence(list, (dll_node_t[]){n1}, 1), "push_front empty list");
@@ -58,7 +58,7 @@ int test_dll_push_t1() {
 }
 
 int test_dll_pop_t1() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   dll_node_t n1 = dll_create_node();
   dll_node_t n2 = dll_create_node();
   dll_node_t n3 = dll_create_node();
@@ -90,7 +90,7 @@ int test_dll_pop_t1() {
 }
 
 int test_dll_front_back() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   CHECK_MSG(dll_front(list) == NULL, "front empty");
   CHECK_MSG(dll_back(list) == NULL, "back empty");
 
@@ -110,7 +110,7 @@ int test_dll_front_back() {
 }
 
 int test_dll_insert_ab() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   dll_node_t n1 = dll_create_node();
   dll_node_t n2 = dll_create_node();
   dll_inserta(list, NULL, n1);
@@ -127,7 +127,7 @@ int test_dll_insert_ab() {
   CHECK_MSG(dll_sequence(list, (dll_node_t[]){n5, n1, n3, n2}, 4), "before n1");
 
   dll_free_list(list);
-  list = dll_create_list();
+  list = dll_create_list(dll_free_node);
   n1 = dll_create_node();
   dll_insertb(list, NULL, n1);
   n2 = dll_create_node();
@@ -147,7 +147,7 @@ int test_dll_insert_ab() {
 }
 
 int test_dll_is_empty() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   CHECK_MSG(dll_is_empty(list), "Empty after create");
 
   dll_node_t n1 = dll_create_node();
@@ -167,7 +167,7 @@ int test_dll_is_empty() {
 }
 
 int test_dll_length() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   CHECK_MSG(dll_length(list) == 0, "Length == 0 after create");
 
   dll_node_t n1 = dll_create_node();
@@ -196,7 +196,7 @@ int test_dll_length() {
 }
 
 int test_dll_erase() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   dll_node_t n1 = dll_create_node(),
       n2 = dll_create_node(),
       n3 = dll_create_node(),
@@ -229,7 +229,7 @@ int test_dll_erase() {
 }
 
 int test_dll_clear() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create_list(dll_free_node);
   dll_node_t n1 = dll_create_node(),
       n2 = dll_create_node(),
       n3 = dll_create_node();
@@ -246,7 +246,7 @@ int test_dll_clear() {
 
 int main() {
   CHECK_MSG(test_dll_create_node() == 0, "dll_create_node");
-  CHECK_MSG(test_dll_create_list() == 0, "dll_create_list");
+  CHECK_MSG(test_dll_create_list(dll_free_node) == 0, "dll_create_list");
   CHECK_MSG(test_dll_push_t1() == 0, "dll_push_t1");
   CHECK_MSG(test_dll_pop_t1() == 0, "dll_pop_t1");
   CHECK_MSG(test_dll_front_back() == 0, "dll front & back");
