@@ -8,26 +8,26 @@
 
 #include "base/dll.h"
 
-typedef struct dll_node_i_s {
+typedef struct idn_s {
   struct dll_node_s base;
   int value;
-} *dll_node_i_t;
+} *idn_t;
 
-#define to_dll_node_i(n) ((dll_node_i_t)n)
-#define dll_node_i_value(n) (to_dll_node_i(n)->value)
+#define to_idn(n) ((idn_t)n)
+#define idn_value(n) (to_idn(n)->value)
 
-dll_node_t dll_create_node_i(int value);
+idn_t idn_create(int value);
 
-void dll_push_back_i(dll_t list, int value);
-void dll_push_front_i(dll_t list, int value);
-int dll_pop_back_i(dll_t list);
-int dll_pop_front_i(dll_t list);
-int dll_front_i(dll_t list);
-int dll_back_i(dll_t list);
-dll_node_t dll_inserta_i(dll_t list, dll_node_t pos, int value);
-dll_node_t dll_insertb_i(dll_t list, dll_node_t pos, int value);
+void idl_push_back(dll_t list, int value);
+void idl_push_front(dll_t list, int value);
+int idl_pop_back(dll_t list);
+int idl_pop_front(dll_t list);
+int idl_front(dll_t list);
+int idl_back(dll_t list);
+idn_t idl_insert_a(dll_t list, idn_t pos, int value);
+idn_t idl_insertb(dll_t list, idn_t pos, int value);
 
-void dll_pprint_node_i(dll_node_t);
-void dll_pprint_list_i(dll_t);
+void idn_pprint(idn_t);
+void idl_pprint(dll_t);
 
 #endif // SPEC_IDL_H_

@@ -4,55 +4,57 @@
 
 #include "spec/idl.h"
 
-dll_node_t dll_create_node_i(int value) {
-  dll_node_i_t n = malloc(sizeof(struct dll_node_i_s));
+idn_t idn_create(int value) {
+  idn_t n = malloc(sizeof(struct idn_s));
   n->base.prev = n->base.next = NULL;
   n->value = value;
-  return (dll_node_t)n;
+  return n;
 }
 
-void dll_push_back_i(dll_t list, int value) {
-  dll_node_t nn = dll_create_node_i(value);
-  dll_push_back(list, nn);
+void idl_push_back(dll_t list, int value) {
+  idn_t nn = idn_create(value);
+  dll_push_back(list, to_dll_node(nn));
 }
 
-void dll_push_front_i(dll_t list, int value) {
-  dll_node_t nn = dll_create_node_i(value);
-  dll_push_front(list, nn);
+void idl_push_front(dll_t list, int value) {
+  idn_t nn = idn_create(value);
+  dll_push_front(list, to_dll_node(nn));
 }
 
-int dll_pop_back_i(dll_t list) {
-  int value = dll_back_i(list);
+int idl_pop_back(dll_t list) {
+  int value = idl_back(list);
   dll_pop_back(list);
   return value;
 }
 
-int dll_pop_front_i(dll_t list) {
-  int value = dll_front_i(list);
+int idl_pop_front(dll_t list) {
+  int value = idl_front(list);
   dll_pop_front(list);
   return value;
 }
 
-int dll_front_i(dll_t list) {
-  return dll_node_i_value(dll_front(list));
+int idl_front(dll_t list) {
+  return idn_value(dll_front(list));
 }
 
-int dll_back_i(dll_t list) {
-  return dll_node_i_value(dll_back(list));
+int idl_back(dll_t list) {
+  return idn_value(dll_back(list));
 }
 
-dll_node_t dll_inserta_i(dll_t list, dll_node_t pos, int value) {
-  return dll_inserta(list, pos, dll_create_node_i(value));
+idn_t idl_insert_a(dll_t list, idn_t pos, int value) {
+  return to_idn(dll_inserta(list, to_dll_node(pos),
+      to_dll_node(idn_create(value))));
 }
 
-dll_node_t dll_insertb_i(dll_t list, dll_node_t pos, int value) {
-  return dll_insertb(list, pos, dll_create_node_i(value));
+idn_t idl_insertb(dll_t list, idn_t pos, int value) {
+  return to_idn(dll_insertb(list, to_dll_node(pos),
+      to_dll_node(idn_create(value))));
 }
 
-void dll_pprint_node_i(dll_node_t node) {
-  printf("[%d]", dll_node_i_value(node));
+void idn_pprint(idn_t node) {
+  printf("[%d]", idn_value(node));
 }
 
-void dll_pprint_list_i(dll_t list) {
-  _dll_pprint_list(list, dll_pprint_node_i);
+void idl_pprint(dll_t list) {
+  _dll_pprint_list(list, idn_pprint);
 }

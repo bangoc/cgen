@@ -43,7 +43,7 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   }
   dll_node_t p = list->front;
   for (int i = 0; i < n; ++i) {
-    if (dll_node_i_value(p) != a[i]) {
+    if (idn_value(p) != a[i]) {
       return 0;
     }
     p = p->next;
@@ -53,7 +53,7 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   }
   p = list->back;
   for (int i = n - 1; i >= 0; --i) {
-    if (dll_node_i_value(p) != a[i]) {
+    if (idn_value(p) != a[i]) {
       return 0;
     }
     p = p->prev;
