@@ -70,7 +70,7 @@ static int dll_sequence_g(dll_t list, gtype *a, int n, int(*cmp)()) {
   }
   dll_node_t p = list->front;
   for (int i = 0; i < n; ++i) {
-    if (cmp(dll_node_g_value(p), a[i]) != 0) {
+    if (cmp(gdn_value(p), a[i]) != 0) {
       return 0;
     }
     p = p->next;
@@ -80,7 +80,7 @@ static int dll_sequence_g(dll_t list, gtype *a, int n, int(*cmp)()) {
   }
   p = list->back;
   for (int i = n - 1; i >= 0; --i) {
-    if (cmp(dll_node_g_value(p), a[i]) != 0) {
+    if (cmp(gdn_value(p), a[i]) != 0) {
       return 0;
     }
     p = p->prev;

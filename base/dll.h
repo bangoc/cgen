@@ -17,7 +17,7 @@ typedef struct dll_s {
   void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
 } *dll_t;
 
-#define to_dll(n) ((dll_node_t)n)
+#define to_dll_node(n) ((dll_node_t)n)
 
 #define dll_traverse(cur, list) \
   for (dll_node_t cur = list->front; cur != NULL; cur = cur->next)

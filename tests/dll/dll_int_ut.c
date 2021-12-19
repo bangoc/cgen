@@ -12,7 +12,7 @@ int test_dll_create_node_i() {
   CHECK_MSG(n->base.prev == NULL, "base->prev");
   CHECK_MSG(n->base.next == NULL, "base->next");
   CHECK_MSG(n->value == 90, "value 90");
-  dll_free_node(to_dll(n));
+  dll_free_node(to_dll_node(n));
   return 0;
 }
 

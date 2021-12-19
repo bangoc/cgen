@@ -4,49 +4,49 @@
 
 #include "gdl.h"
 
-dll_node_t dll_create_node_g(gtype value) {
-  dll_node_g_t nn = malloc(sizeof(struct dll_node_g_s));
+gdn_t gdl_create_node(gtype value) {
+  gdn_t nn = malloc(sizeof(struct gdl_node_s));
   nn->base.prev = nn->base.next = NULL;
   nn->value = value;
-  return to_dll(nn);
+  return nn;
 }
 
-void dll_push_back_g(dll_t list, gtype value) {
-  dll_push_back(list, dll_create_node_g(value));
+void gdl_push_back(dll_t list, gtype value) {
+  dll_push_back(list, to_dll_node(gdl_create_node(value)));
 }
 
-void dll_push_front_g(dll_t list, gtype value) {
-  dll_push_front(list, dll_create_node_g(value));
+void gdl_push_front(dll_t list, gtype value) {
+  dll_push_front(list, to_dll_node(gdl_create_node(value)));
 }
 
-gtype dll_pop_front_g(dll_t list) {
-  gtype tmp = dll_front_g(list);
+gtype gdl_pop_front(dll_t list) {
+  gtype tmp = gdl_front(list);
   dll_pop_front(list);
   return tmp;
 }
 
-gtype dll_pop_back_g(dll_t list) {
-  gtype tmp = dll_back_g(list);
+gtype gdl_pop_back(dll_t list) {
+  gtype tmp = gdl_back(list);
   dll_pop_back(list);
   return tmp;
 }
 
-gtype dll_front_g(dll_t list) {
-  return dll_node_g_value(list->front);
+gtype gdl_front(dll_t list) {
+  return gdn_value(list->front);
 }
 
-gtype dll_back_g(dll_t list) {
-  return dll_node_g_value(list->back);
+gtype gdl_back(dll_t list) {
+  return gdn_value(list->back);
 }
 
-dll_node_t dll_inserta_g(dll_t list, dll_node_t pos, gtype value) {
-  dll_node_t nn = dll_create_node_g(value);
-  dll_inserta(list, pos, nn);
+gdn_t gdl_inserta(dll_t list, gdn_t pos, gtype value) {
+  gdn_t nn = gdl_create_node(value);
+  dll_inserta(list, to_dll_node(pos), to_dll_node(nn));
   return nn;
 }
 
-dll_node_t dll_insertb_g(dll_t list, dll_node_t pos, gtype value) {
-  dll_node_t nn = dll_create_node_g(value);
-  dll_insertb(list, pos, nn);
+gdn_t gdl_insertb(dll_t list, gdn_t pos, gtype value) {
+  gdn_t nn = gdl_create_node(value);
+  dll_insertb(list, to_dll_node(pos), to_dll_node(nn));
   return nn;
 }

@@ -9,22 +9,24 @@
 #include "base/dll.h"
 #include "gtype.h"
 
-typedef struct dll_node_g_s {
+typedef struct gdl_node_s {
   struct dll_node_s base;
   gtype value;
-} *dll_node_g_t;
+} *gdn_t;
 
-#define to_dll_node_g(n)((dll_node_g_t)n)
-#define dll_node_g_value(n) (to_dll_node_g(n)->value)
+#define to_gdn(n)((gdn_t)n)
+#define gdn_value(n) (to_gdn(n)->value)
+#define gdn_next(n) (to_dll_node(n)->next)
+#define gdn_prev(n) (to_dll_node(n)->next)
 
-dll_node_t dll_create_node_g(gtype value);
-void dll_push_back_g(dll_t list, gtype value);
-void dll_push_front_g(dll_t list, gtype value);
-gtype dll_pop_front_g(dll_t list);
-gtype dll_pop_back_g(dll_t list);
-gtype dll_front_g(dll_t list);
-gtype dll_back_g(dll_t list);
-dll_node_t dll_inserta_g(dll_t list, dll_node_t pos, gtype value);
-dll_node_t dll_insertb_g(dll_t list, dll_node_t pos, gtype value);
+gdn_t gdl_create_node(gtype value);
+void gdl_push_back(dll_t list, gtype value);
+void gdl_push_front(dll_t list, gtype value);
+gtype gdl_pop_front(dll_t list);
+gtype gdl_pop_back(dll_t list);
+gtype gdl_front(dll_t list);
+gtype gdl_back(dll_t list);
+gdn_t gdl_inserta(dll_t list, gdn_t pos, gtype value);
+gdn_t gdl_insertb(dll_t list, gdn_t pos, gtype value);
 
 #endif  // GDL_H_
