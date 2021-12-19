@@ -3,13 +3,13 @@
 
 /*
   (C) Nguyen Ba Ngoc 2021
-  Gtype Double linked list
+  gtype double linked list
 */
 
 #include "base/dll.h"
 #include "gtype.h"
 
-typedef struct gdl_node_s {
+typedef struct gdn_s {
   struct dll_node_s base;
   gtype value;
 } *gdn_t;

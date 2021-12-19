@@ -5,7 +5,7 @@
 #include "gdl.h"
 
 gdn_t gdn_create(gtype value) {
-  gdn_t nn = malloc(sizeof(struct gdl_node_s));
+  gdn_t nn = malloc(sizeof(struct gdn_s));
   nn->base.prev = nn->base.next = NULL;
   nn->value = value;
   return nn;
