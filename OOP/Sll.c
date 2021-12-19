@@ -99,7 +99,7 @@ gtype SllGtPopFront(SllGt list) {
 gtype SllGtFront(SllGt list) {
   Sll base = (Sll)list;
   SllNode node = base->Front(base);
-  gtype value = sll_node_g_value(node);
+  gtype value = gsn_value(node);
   return value;
 }
 

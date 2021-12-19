@@ -11,6 +11,9 @@ typedef struct sll_s {
   void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
 } *sll_t;
 
+#define to_sll_node(n) ((sll_node_t)n)
+#define to_sll_list(list) ((sll_t)list)
+
 sll_node_t sll_create_node();
 void sll_free_node(sll_node_t node);
 sll_t sll_create_list();
