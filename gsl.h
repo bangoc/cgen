@@ -14,14 +14,23 @@ typedef struct gsn_s {
   gtype value;
 } *gsn_t;
 
-sll_node_t gsl_create_node(gtype value);
-void gsl_push_back(sll_t list, gtype value);
-void gsl_push_front(sll_t list, gtype value);
-gtype gsl_pop_front(sll_t list);
-gtype gsl_front(sll_t list);
+typedef struct gsl_s {
+  struct sll_s base;
+  gtype_free_t free_value;
+} *gsl_t;
+
+gsn_t gsn_create(gtype value);
+gsl_t gsl_create(gtype_free_t free_value);
+void gsl_push_back(gsl_t list, gtype value);
+void gsl_push_front(gsl_t list, gtype value);
+void gsl_pop_front(gsl_t list);
+gtype gsl_front(gsl_t list);
+gsn_t gsl_front_node(gsl_t list);
 
 #define to_gsn(n) ((gsn_t)n)
 #define gsn_value(n) (to_gsn(n)->value)
 #define gsn_next(n) (to_sll_node(n)->next)
+#define gsl_traverse(cur, list) \
+  for (gsn_t cur = gsl_front_node(list); cur; cur = gsn_next(cur))
 
 #endif  // GSL_H_

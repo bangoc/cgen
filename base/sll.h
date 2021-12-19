@@ -8,14 +8,12 @@ typedef struct sll_node_s {
 typedef struct sll_s {
   sll_node_t front;
   sll_node_t back;
-  void (*fn)();  // Hàm giải phóng bộ nhớ cho nút
 } *sll_t;
 
 #define to_sll_node(n) ((sll_node_t)n)
 #define to_sll_list(list) ((sll_t)list)
 
 sll_node_t sll_create_node();
-void sll_free_node(sll_node_t node);
 sll_t sll_create_list();
 void sll_free_list(sll_t list);
 
@@ -32,4 +30,5 @@ void sll_pprint_list(sll_t list);
 #define sll_traverse(cur, list) \
   for (sll_node_t cur = list->front; cur != NULL; cur = cur->next)
 
+#define sll_free_node(n) free(n)
 #endif

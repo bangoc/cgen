@@ -13,15 +13,10 @@ sll_node_t sll_create_node() {
   return n;
 }
 
-void sll_free_node(sll_node_t node) {
-  free(node);
-}
-
 sll_t sll_create_list() {
   sll_t list = malloc(sizeof(struct sll_s));
   list->front = NULL;
   list->back = NULL;
-  list->fn = sll_free_node;
   return list;
 }
 
@@ -61,9 +56,7 @@ void sll_pop_front(sll_t list) {
   if (list->front == NULL) {
     list->back = NULL;
   }
-  if (list->fn) {
-    list->fn(tmp);
-  }
+  sll_free_node(tmp);
 }
 
 sll_node_t sll_front(sll_t list) {

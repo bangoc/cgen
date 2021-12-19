@@ -4,30 +4,42 @@
 
 #include "gsl.h"
 
-sll_node_t gsl_create_node(gtype value) {
-  gsn_t nn = malloc(sizeof(struct gsn_s));
-  nn->base.next = NULL;
+gsn_t gsn_create(gtype value) {
+  sll_node_t tmp = sll_create_node();
+  gsn_t nn = realloc(tmp, sizeof(struct gsn_s));
   nn->value = value;
-  return (sll_node_t)nn;
+  return nn;
 }
 
-void gsl_push_back(sll_t list, gtype value) {
-  sll_node_t node = gsl_create_node(value);
-  sll_push_back(list, node);
+gsl_t gsl_create(gtype_free_t free_value) {
+  sll_t tmp = sll_create_list();
+  gsl_t list = realloc(tmp, sizeof(struct gsl_s));
+  list->free_value = free_value;
+  return list;
 }
 
-void gsl_push_front(sll_t list, gtype value) {
-  sll_node_t node = gsl_create_node(value);
-  sll_push_front(list, node);
+void gsl_push_back(gsl_t list, gtype value) {
+  gsn_t node = gsn_create(value);
+  sll_push_back(to_sll_list(list), to_sll_node(node));
 }
 
-gtype gsl_pop_front(sll_t list) {
-  gtype value = gsl_front(list);
-  sll_pop_front(list);
-  return value;
+void gsl_push_front(gsl_t list, gtype value) {
+  sll_node_t node = gsn_create(value);
+  sll_push_front(to_sll_list(list), to_sll_node(node));
 }
 
-gtype gsl_front(sll_t list) {
-  sll_node_t front = sll_front(list);
+void gsl_pop_front(gsl_t list) {
+  if (list->free_value) {
+    list->free_value(gsl_front(list));
+  }
+  sll_pop_front(to_sll_list(list));
+}
+
+gtype gsl_front(gsl_t list) {
+  sll_node_t front = list->base.front;
   return gsn_value(front);
+}
+
+gsn_t gsl_front_node(gsl_t list) {
+  return to_gsn(list->base.front);
 }
