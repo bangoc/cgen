@@ -6,8 +6,10 @@
 #include "base/bns.h"
 #include "base/core.h"
 #include "base/dll.h"
+#include "base/sll.h"
 #include "base/rb.h"
 #include "gdl.h"
+#include "gsl.h"
 #include "gtype.h"
 #include "heap.h"
 #include "hfunc.h"
@@ -17,7 +19,7 @@
 #include "rbm.h"
 #include "rbs.h"
 #include "s2i.h"
-#include "sll.h"
 #include "spec/idl.h"
+#include "spec/isl.h"
 
 #endif  // CGEN_H_
