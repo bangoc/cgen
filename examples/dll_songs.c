@@ -17,27 +17,27 @@ gtype create_song_g(const char *name) {
   return (gtype){.v = (void*)s};
 }
 
+void free_song_g(gtype g) {
+  free(g.v);
+}
+
 int main() {
-  dll_t list = dll_create_list(dll_free_node);
+  gdl_t list = gdl_create(free_song_g);
 
   // Add songs to list
   gdl_push_back(list, create_song_g("Seasons in the sun"));
   gdl_push_back(list, create_song_g("Black or White"));
   gdl_push_front(list, create_song_g("Beautiful in white"));
-  gdl_inserta(list, list->front, create_song_g("Lemon tree"));
-  gdl_insertb(list, list->back, create_song_g("Opera No 2"));
+  gdl_inserta(list, gdl_front_node(list), create_song_g("Lemon tree"));
+  gdl_insertb(list, gdl_back_node(list), create_song_g("Opera No 2"));
 
   // Print songs list
   int stt = 1;
-  dll_traverse(cur, list) {
+  gdl_traverse(cur, list) {
     song_t s = (song_t)(gdn_value(cur).v);
     printf("%3d %s\n", stt++, s->name);
   }
 
-  // Free memory
-  dll_traverse(cur, list) {
-    free(gdn_value(cur).v);
-  }
-  dll_free_list(list);
+  gdl_free(list);
   return 0;
 }

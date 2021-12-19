@@ -11,15 +11,13 @@ typedef struct dll_node_s {
   struct dll_node_s *prev;
 } *dll_node_t;
 
-typedef void (*dll_node_free_t)(dll_node_t);
-
 typedef struct dll_s {
   dll_node_t front;
   dll_node_t back;
-  dll_node_free_t fn;  // Hàm giải phóng bộ nhớ cho nút
 } *dll_t;
 
 #define to_dll_node(n) ((dll_node_t)n)
+#define to_dll_list(list) ((dll_t)list)
 
 #define dll_traverse(cur, list) \
   for (dll_node_t cur = list->front; cur != NULL; cur = cur->next)
@@ -30,8 +28,7 @@ typedef struct dll_s {
 /* Giao diện khái quát */
 
 dll_node_t dll_create_node();
-void dll_free_node(dll_node_t node);
-dll_t dll_create_list(dll_node_free_t fn);
+dll_t dll_create_list();
 void dll_free_list(dll_t list);
 
 void dll_push_back(dll_t list, dll_node_t nn);
@@ -49,5 +46,6 @@ void dll_clear(dll_t list);
 
 void dll_pprint_node(dll_node_t);
 void dll_pprint_list(dll_t);
+#define dll_free_node(n) free(n)
 
 #endif  // BASE_DLL_H_

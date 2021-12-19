@@ -8,7 +8,7 @@
 #include "tests/dll/helper.h"
 
 int test_create_node_g() {
-  gdn_t nn = (gdn_t)gdl_create_node((gtype){.i = 102});
+  gdn_t nn = (gdn_t)gdn_create((gtype){.i = 102});
   CHECK_MSG(nn->base.next == NULL, "base.next NULL");
   CHECK_MSG(nn->base.prev == NULL, "base.prev NULL");
   CHECK_MSG(gdn_value(nn).i == 102, "value 102");
@@ -16,10 +16,22 @@ int test_create_node_g() {
   return 0;
 }
 
+gtype pop_value_front(gdl_t list) {
+  gtype tmp = gdl_front(list);
+  gdl_pop_front(list);
+  return tmp;
+}
+
+gtype pop_value_back(gdl_t list) {
+  gtype tmp = gdl_back(list);
+  gdl_pop_back(list);
+  return tmp;
+}
+
 int test_push_back_front_g() {
-  dll_t list = dll_create_list(dll_free_node);
-  CHECK_MSG(list->front == NULL, "front NULL");
-  CHECK_MSG(list->back == NULL, "back NULL");
+  gdl_t list = gdl_create(NULL);
+  CHECK_MSG(gdl_front_node(list) == NULL, "front NULL");
+  CHECK_MSG(gdl_back_node(list) == NULL, "back NULL");
 
   gtype v3 = {.i = 3},
         v5 = {.i = 5},
@@ -36,14 +48,14 @@ int test_push_back_front_g() {
   CHECK_MSG(dll_sequence_g(list, (gtype[]){v6, v2, v3, v5, v9}, 5, gtype_cmp_i),
                 "sequence 5 values");
 
-  CHECK_MSG(gdl_pop_front(list).i == 6, "pop front 6");
-  CHECK_MSG(gdl_pop_back(list).i == 9, "pop back 9");
+  CHECK_MSG(pop_value_front(list).i == 6, "pop front 6");
+  CHECK_MSG(pop_value_back(list).i == 9, "pop back 9");
   CHECK_MSG(gdl_front(list).i == 2, "front 2");
   CHECK_MSG(gdl_back(list).i == 5, "back 5");
 
-  CHECK_MSG(gdl_pop_front(list).i == 2, "pop front 2");
-  CHECK_MSG(gdl_pop_back(list).i == 5, "pop back 5");
-  CHECK_MSG(gdl_pop_front(list).i == 3, "pop front 3");
+  CHECK_MSG(pop_value_front(list).i == 2, "pop front 2");
+  CHECK_MSG(pop_value_back(list).i == 5, "pop back 5");
+  CHECK_MSG(pop_value_front(list).i == 3, "pop front 3");
   CHECK_MSG(dll_is_empty(list), "list should be empty");
 
   gdl_push_front(list, v2);
@@ -52,18 +64,18 @@ int test_push_back_front_g() {
   CHECK_MSG(dll_sequence_g(list, (gtype[]){v3, v2, v6}, 3, gtype_cmp_i),
           "push 3 values");
 
-  CHECK_MSG(gdl_pop_back(list).i == 6, "pop back 6");
-  CHECK_MSG(gdl_pop_front(list).i == 3, "pop front 3");
-  CHECK_MSG(gdl_pop_back(list).i == 2, "pop back 2");
+  CHECK_MSG(pop_value_back(list).i == 6, "pop back 6");
+  CHECK_MSG(pop_value_front(list).i == 3, "pop front 3");
+  CHECK_MSG(pop_value_back(list).i == 2, "pop back 2");
   CHECK_MSG(dll_is_empty(list), "list should be empty");
   dll_free_list(list);
   return 0;
 }
 
 int test_insert_ab() {
-  dll_t list = dll_create_list(dll_free_node);
-  CHECK_MSG(list->front == NULL, "front NULL");
-  CHECK_MSG(list->back == NULL, "back NULL");
+  gdl_t list = gdl_create(NULL);
+  CHECK_MSG(gdl_front_node(list) == NULL, "front NULL");
+  CHECK_MSG(gdl_back_node(list) == NULL, "back NULL");
 
   gtype v1 = {.i = 1},
         v2 = {.i = 2},
@@ -71,8 +83,8 @@ int test_insert_ab() {
         v6 = {.i = 6},
         v9 = {.i = 9};
   dll_node_t tmp = gdl_inserta(list, NULL, v1);
-  CHECK_MSG(tmp == list->front, "insert 1 front");
-  CHECK_MSG(tmp == list->back, "insert 1 back");
+  CHECK_MSG(tmp == gdl_front_node(list), "insert 1 front");
+  CHECK_MSG(tmp == gdl_back_node(list), "insert 1 back");
 
   gdl_insertb(list, NULL, v2);
   CHECK_MSG(gdl_front(list).i == 2, "front 2");
@@ -93,7 +105,7 @@ int test_insert_ab() {
   tmp = gdl_inserta(list, tmp, v6);
   tmp = gdl_insertb(list, tmp, v9);
   CHECK_MSG(dll_sequence_g(list, (gtype[]){v1, v3, v9, v6, v2}, 5, gtype_cmp_i),
-         "inssertba 5 values (another sequence)");
+         "insertba 5 values (another sequence)");
 
   dll_free_list(list);
   return 0;

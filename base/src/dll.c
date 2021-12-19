@@ -13,14 +13,9 @@ dll_node_t dll_create_node() {
   return n;
 }
 
-void dll_free_node(dll_node_t node) {
-  free(node);
-}
-
-dll_t dll_create_list(dll_node_free_t fn) {
+dll_t dll_create_list() {
   dll_t list = malloc(sizeof(struct dll_s));
   list->front = list->back = NULL;
-  list->fn = fn;
   return list;
 }
 
@@ -62,9 +57,7 @@ void dll_pop_back(dll_t list) {
   } else {
     list->front = NULL;
   }
-  if (list->fn) {
-    list->fn(tmp);
-  }
+  dll_free_node(tmp);
 }
 
 void dll_pop_front(dll_t list) {
@@ -78,9 +71,7 @@ void dll_pop_front(dll_t list) {
   } else {
     list->back = NULL;
   }
-  if (list->fn) {
-    list->fn(tmp);
-  }
+  dll_free_node(tmp);
 }
 
 dll_node_t dll_front(dll_t list) {
@@ -153,14 +144,11 @@ void dll_erase(dll_t list, dll_node_t pos) {
     return;
   }
 
-  // front < pos < back
   dll_node_t p1 = pos->prev,
              p2 = pos->next;
   p1->next = p2;
   p2->prev = p1;
-  if (list->fn) {
-    list->fn(pos);
-  }
+  dll_free_node(pos);
 }
 
 void dll_clear(dll_t list) {

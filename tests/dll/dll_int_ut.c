@@ -17,7 +17,7 @@ int test_dll_create_node_i() {
 }
 
 int test_dll_push_back_i() {
-  dll_t list = dll_create_list(dll_free_node);
+  dll_t list = dll_create_list();
   dll_push_back_i(list, 1);
   dll_push_back_i(list, 2);
   dll_push_back_i(list, 3);
@@ -27,7 +27,7 @@ int test_dll_push_back_i() {
 }
 
 int test_dll_push_front_i() {
-  dll_t list = dll_create_list(dll_free_node);
+  dll_t list = dll_create_list();
   dll_push_front_i(list, 1);
   dll_push_front_i(list, 2);
   dll_push_front_i(list, 3);
@@ -37,7 +37,7 @@ int test_dll_push_front_i() {
 }
 
 int test_dll_pop_front_back_i() {
-  dll_t list = dll_create_list(dll_free_node);
+  dll_t list = dll_create_list();
   dll_push_front_i(list, 1);
   dll_push_front_i(list, 2);
   dll_push_back_i(list, 3);
@@ -52,7 +52,7 @@ int test_dll_pop_front_back_i() {
 }
 
 int test_dll_insert_abi() {
-  dll_t list = dll_create_list(dll_free_node);
+  dll_t list = dll_create_list();
   dll_inserta_i(list, NULL, 1);
   dll_insertb_i(list, list->front, 2);
   dll_insertb_i(list, list->front, 3);
