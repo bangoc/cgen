@@ -1,11 +1,11 @@
-#ifndef BN_H_
-#define BN_H_
+#ifndef BASE_BN_H_
+#define BASE_BN_H_
 
 /*
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#include "core.h"
+#include "base/core.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -91,4 +91,4 @@ bn_node_t bn_prev_inorder(bn_node_t x);
     *loc = nn; \
     nn->top = par \
 
-#endif  // BN_H_
+#endif  // BASE_BN_H_

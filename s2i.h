@@ -5,7 +5,7 @@
 #ifndef S2I_H_
 #define S2I_H_
 
-#include "rb.h"
+#include "base/rb.h"
 
 #include <stdio.h>
 

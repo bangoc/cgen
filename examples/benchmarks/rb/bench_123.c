@@ -1,4 +1,4 @@
-#include "core.h"
+#include "base/core.h"
 #include "tests/rb/rbi.h"
 
 #include <stdio.h>

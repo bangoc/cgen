@@ -1,4 +1,4 @@
-#include "bns.h"
+#include "base/bns.h"
 
 /* Giao diện hỗ trợ gtype */
 

@@ -2,7 +2,7 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#include "bn.h"
+#include "base/bn.h"
 
 bn_node_t bn_create_node() {
   return calloc(1, sizeof(struct bn_node));

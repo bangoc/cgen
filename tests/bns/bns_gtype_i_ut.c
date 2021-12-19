@@ -1,7 +1,7 @@
 #include "tests/base/utils.h"
 #include "tests/bns/bns_gtype_helper.h"
 
-#include "bns.h"
+#include "base/bns.h"
 
 int t1() {
   bn_tree_t t = bns_create_tree_g(NULL_PTR, gtype_cmp_i);

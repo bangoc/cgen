@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "bns.h"
+#include "base/bns.h"
 
 int *make_pointer_i(int value) {
   int *p = malloc(sizeof(int));

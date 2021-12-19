@@ -7,7 +7,7 @@
 
 
 #include "gtype.h"
-#include "rb.h"
+#include "base/rb.h"
 
 typedef struct rbs_node {
   struct rb_node_s rb_node;

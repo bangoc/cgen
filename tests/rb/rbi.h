@@ -5,7 +5,7 @@
 #ifndef TESTS_RB_RBI_H_
 #define TESTS_RB_RBI_H_
 
-#include "rb.h"
+#include "base/rb.h"
 
 typedef struct rbi_node {
   struct rb_node_s rb_node;

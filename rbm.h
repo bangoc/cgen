@@ -5,7 +5,7 @@
 #ifndef RBM_H_
 #define RBM_H_
 
-#include "rb.h"
+#include "base/rb.h"
 #include "gtype.h"
 
 typedef struct rbm_node {

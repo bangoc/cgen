@@ -1,11 +1,11 @@
-#ifndef BNS_H_
-#define BNS_H_
+#ifndef BASE_BNS_H_
+#define BASE_BNS_H_
 
 /*
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#include "bn.h"
+#include "base/bn.h"
 
 #define bns_child(n, order) (order < 0? n->left: n->right)
 #define bns_child_ref(n, order) (order < 0? &n->left: &n->right)
@@ -125,4 +125,4 @@ void bns_delete_g(bn_tree_t t, bn_node_t n);
 void bns_pprint(bn_tree_t, gtype_print_t gpp);
 #define bns_gpp(n) gpp(bns_node_g_key(n))
 
-#endif  // BSNT_H_
+#endif  // BASE_BNS_H_

@@ -1,6 +1,6 @@
 #include "tests/base/utils.h"
 
-#include "bn.h"
+#include "base/bn.h"
 
 int t1() {
   bn_node_t n1 = bn_create_node();

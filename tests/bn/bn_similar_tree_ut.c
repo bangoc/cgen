@@ -1,4 +1,4 @@
-#include "bn.h"
+#include "base/bn.h"
 #include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 

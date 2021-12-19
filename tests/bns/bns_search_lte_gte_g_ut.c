@@ -1,4 +1,4 @@
-#include "bns.h"
+#include "base/bns.h"
 
 #include "tests/base/utils.h"
 #include "tests/bns/bns_gtype_helper.h"

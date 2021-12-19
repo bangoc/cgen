@@ -7,8 +7,8 @@
 #ifndef RB_H_
 #define RB_H_
 
-#include "bn.h"
-#include "bns.h"
+#include "base/bn.h"
+#include "base/bns.h"
 
 #include <stdbool.h>
 

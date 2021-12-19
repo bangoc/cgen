@@ -2,9 +2,9 @@
 #define CGEN_H_
 
 #include "arr.h"
-#include "bn.h"
-#include "bns.h"
-#include "core.h"
+#include "base/bn.h"
+#include "base/bns.h"
+#include "base/core.h"
 #include "dll.h"
 #include "gtype.h"
 #include "heap.h"
@@ -12,7 +12,7 @@
 #include "hmap.h"
 #include "p1w.h"
 #include "p2w.h"
-#include "rb.h"
+#include "base/rb.h"
 #include "rbm.h"
 #include "rbs.h"
 #include "s2i.h"

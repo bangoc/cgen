@@ -2,8 +2,8 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef CORE_H_
-#define CORE_H_
+#ifndef BASE_CORE_H_
+#define BASE_CORE_H_
 
 #include <stddef.h>
 #include <time.h>
@@ -37,4 +37,4 @@
     } while (0)
 
 
-#endif  // CORE_H_
+#endif  // BASE_CORE_H_
