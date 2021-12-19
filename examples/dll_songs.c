@@ -1,5 +1,3 @@
-// #include "dll.h"
-
 /* Hỗ trợ biên dịch với gcc */
 #include "cgen.ic"
 

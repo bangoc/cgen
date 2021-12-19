@@ -1,7 +1,7 @@
 project(cgen)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -w")
 
 add_subdirectory(tests)
 add_subdirectory(examples)

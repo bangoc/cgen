@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc, 2021
 */
 
-#include "dll.h"
+#include "gdl.h"
 
 #include "tests/base/utils.h"
 #include "tests/dll/helper.h"
