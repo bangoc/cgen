@@ -5,9 +5,9 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "arr.h"
+#include "base/arr.h"
 #include "gtype.h"
-#include "hfunc.h"
+#include "base/hfunc.h"
 
 #include <stdint.h>
 

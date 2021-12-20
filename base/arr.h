@@ -1,5 +1,5 @@
-#ifndef ARR_H_
-#define ARR_H_
+#ifndef BASE_ARR_H_
+#define BASE_ARR_H_
 
 /*
   (C) Nguyen Ba Ngoc 2021
@@ -94,4 +94,4 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
      } \
    } while (0)
 
-#endif  // ARR_H_
+#endif  // BASE_ARR_H_

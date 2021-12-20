@@ -3,7 +3,7 @@
   Minh họa mảng giá trị int cấp phát động.
 */
 
-#include "arr.h"
+#include "base/arr.h"
 
 #include "tests/base/utils.h"
 

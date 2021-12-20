@@ -1,5 +1,5 @@
-#ifndef HFUNC_H_
-#define HFUNC_H_
+#ifndef BASE_HFUNC_H_
+#define BASE_HFUNC_H_
 
 #include "gtype.h"
 
@@ -45,4 +45,4 @@ static uint gtype_hash_i(gtype v) {
 }
 #endif
 
-#endif  // HFUNC_H_
+#endif  // BASE_HFUNC_H_
