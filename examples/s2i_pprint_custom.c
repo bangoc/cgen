@@ -1,4 +1,4 @@
-#include "s2i.h"
+#include "spec/s2i.h"
 
 void s2i_custom_node_print(bn_node_t n) {
   printf("%s:%s\n", to_s2i(n)->key, rb_color_str(n));

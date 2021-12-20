@@ -1,9 +1,10 @@
 /*
   (C) 2021 Nguyen Ba Ngoc (bangoc)
+  Ánh xạ chuỗi => số (đóng gói cây đỏ-đen)
 */
 
-#ifndef S2I_H_
-#define S2I_H_
+#ifndef SPEC_S2I_H_
+#define SPEC_S2I_H_
 
 #include "base/rb.h"
 
@@ -47,4 +48,4 @@ void s2i_print_node(s2i_node_t n);
 #define s2i_node_key(n) to_s2i(n)->key
 #define s2i_node_value(n) to_s2i(n)->value
 
-#endif  // S2I_H_
+#endif  // SPEC_S2I_H_

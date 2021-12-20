@@ -1,5 +1,5 @@
 #include "arr.h"
-#include "s2i.h"
+#include "spec/s2i.h"
 
 #include <string.h>
 #include <stdlib.h>

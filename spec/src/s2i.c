@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "s2i.h"
+#include "spec/s2i.h"
 
 #include <string.h>
 

@@ -1,4 +1,4 @@
-#include "s2i.h"
+#include "spec/s2i.h"
 #include "tests/base/utils.h"
 
 #include <stdio.h>

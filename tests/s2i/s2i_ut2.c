@@ -1,7 +1,7 @@
 /*
   first reported by Lê Văn Duẩn
 */
-#include "s2i.h"
+#include "spec/s2i.h"
 
 #include <stdio.h>
 

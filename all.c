@@ -4,6 +4,7 @@
 #include "base/src/sll.c"
 #include "spec/src/idl.c"
 #include "spec/src/isl.c"
+#include "spec/src/s2i.c"
 #include "src/gdl.c"
 #include "src/gsl.c"
 #include "src/heap.c"
@@ -13,4 +14,3 @@
 #include "src/rb.c"
 #include "src/rbm.c"
 #include "src/rbs.c"
-#include "src/s2i.c"

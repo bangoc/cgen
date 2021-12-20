@@ -6,6 +6,7 @@
 #include "base/bns.h"
 #include "base/core.h"
 #include "base/dll.h"
+#include "spec/s2i.h"
 #include "base/sll.h"
 #include "base/rb.h"
 #include "gdl.h"
@@ -18,7 +19,6 @@
 #include "p2w.h"
 #include "rbm.h"
 #include "rbs.h"
-#include "s2i.h"
 #include "spec/idl.h"
 #include "spec/isl.h"
 
