@@ -24,17 +24,17 @@ rbm_t rbm_create(gtype_cmp_t cmp,
   return m;
 }
 
-rbm_node_t rbm_insert(rbm_t t, gtype key, gtype value) {
+rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
   bn_node_t same = NULL_PTR, parent = NULL_PTR;
   bn_node_t *loc;
   gtype_cmp_t cmp = t->cmp;
   bns_insert_setup(loc, t->t.root, key, tm_cmp_conv, same, parent);
   if (same) {
-    return to_rbm(same);
+    return (rbm_ires){to_rbm(same), 0};
   }
   rbm_node_t n = rbm_create_node(key, value);
   rb_insert((bn_tree_t)t, to_bn(n), loc, parent);
-  return n;
+  return (rbm_ires){n, 1};
 }
 
 rbm_node_t rbm_search(rbm_t t, gtype key) {
