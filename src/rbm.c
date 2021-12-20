@@ -14,6 +14,16 @@ rbm_node_t rbm_create_node(gtype key, gtype value) {
   return n;
 }
 
+rbm_t rbm_create(bn_compare_t cmp,
+    gtype_free_t free_key, gtype_free_t free_value) {
+  bn_tree_t t = bn_create_tree(NULL_PTR);
+  rbm_t m = realloc(t, sizeof(struct rbm_s));
+  m->cmp = cmp;
+  m->free_key = free_key;
+  m->free_value = free_value;
+  return m;
+}
+
 rbm_node_t rbm_insert(rbm_t t, gtype key, gtype value) {
   bn_node_t same = NULL_PTR, parent = NULL_PTR;
   bn_node_t *loc;
@@ -25,13 +35,6 @@ rbm_node_t rbm_insert(rbm_t t, gtype key, gtype value) {
   rbm_node_t n = rbm_create_node(key, value);
   rb_insert((bn_tree_t)t, to_bn(n), loc, parent);
   return n;
-}
-
-rbm_t rbm_create(bn_compare_t cmp) {
-  bn_tree_t t = bn_create_tree(NULL_PTR);
-  rbm_t m = realloc(t, sizeof(struct rbm_s));
-  m->cmp = cmp;
-  return m;
 }
 
 rbm_node_t rbm_search(rbm_t t, gtype key) {
@@ -47,10 +50,18 @@ gtype *rbm_vref(rbm_t t, gtype key) {
   return NULL;
 }
 
-rbm_node_t rbm_delete(rbm_t t, gtype key) {
+int rbm_remove(rbm_t t, gtype key) {
   rbm_node_t n = rbm_search(t, key);
-  if (n) {
-    rb_delete((bn_tree_t)t, to_bn(n));
+  if (!n) {
+    return 0;
   }
-  return n;
+  rb_delete((bn_tree_t)t, to_bn(n));
+  if (t->free_key) {
+    t->free_key(n->key);
+  }
+  if (t->free_value) {
+    t->free_value(n->value);
+  }
+  free(n);
+  return 1;
 }

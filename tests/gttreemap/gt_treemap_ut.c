@@ -4,7 +4,7 @@
 #include <string.h>
 
 int main() {
-  rbm_t t = rbm_create(gtype_cmp_s);
+  rbm_t t = rbm_create(gtype_cmp_s, NULL, NULL);
   char *s1 = "1111111111",
        *s2 = "2222222222",
        *s3 = "3333333333",
@@ -29,11 +29,10 @@ int main() {
   CHECK_MSG(strcmp(rbm_vref(t, gtype_s(sd))->s, s5) == 0, "Failed D Value");
   CHECK_MSG(strcmp(rbm_vref(t, gtype_s(se))->s, s6) == 0, "Failed E Value");
   CHECK_MSG(strcmp(rbm_vref(t, gtype_s(sf))->s, s7) == 0, "Failed F Value");
-  free(rbm_delete(t, gtype_s(sd)));
-  free(rbm_delete(t, gtype_s(se)));
-  free(rbm_delete(t, gtype_s(sf)));
-  gtype *value = NULL_PTR;
-  gtype query = {.s = sd};
+  CHECK_MSG(rbm_remove(t, gtype_s(sd)) == 1, "remove sd");
+  CHECK_MSG(rbm_remove(t, gtype_s(se)) == 1, "remove se");
+  CHECK_MSG(rbm_remove(t, gtype_s(sf)) == 1, "remove sf");
+  gtype *value = NULL_PTR, query = {.s = sd};
   CHECK_MSG(rbm_vref(t, query) == NULL_PTR, "Failed not found D");
   query = gtype_s(se);
   CHECK_MSG(rbm_vref(t, query) == NULL_PTR, "Failed not found E");

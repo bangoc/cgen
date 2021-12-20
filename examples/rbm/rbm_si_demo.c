@@ -5,7 +5,7 @@
 #include "rbm.h"
 
 int main() {
-  rbm_t m = rbm_create(gtype_cmp_s);
+  rbm_t m = rbm_create(gtype_cmp_s, NULL, NULL);
   rbm_insert(m, gtype_s("Nguyen Van A"), gtype_i(1));
   rbm_insert(m, gtype_s("Tran Van D"), gtype_i(5));
   rbm_insert(m, gtype_s("Nguyen Van B"), gtype_i(3));
