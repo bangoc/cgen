@@ -21,7 +21,7 @@ typedef struct gsl_s {
 
 #define to_gsn(n) ((gsn_t)(n))
 #define gsn_value(n) (to_gsn(n)->value)
-#define gsn_next(n) (to_sln(n)->next)
+#define gsn_next(n) (to_gsn(to_sln(n)->next))
 
 #define gsl_front(list) (to_gsn((list)->base.front))
 #define gsl_front_value(list) (gsl_front(list)->value)
