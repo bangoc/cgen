@@ -74,14 +74,6 @@ void dll_pop_front(dll_t list) {
   dln_free(tmp);
 }
 
-dln_t dll_front(dll_t list) {
-  return list->front;
-}
-
-dln_t dll_back(dll_t list) {
-  return list->back;
-}
-
 /* insert nn after pos in list. push_back if pos == NULL */
 dln_t dll_inserta(dll_t list, dln_t pos, dln_t nn) {
   if (!pos) {

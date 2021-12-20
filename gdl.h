@@ -19,13 +19,13 @@ typedef struct gdl_s {
   gtype_free_t free_value;
 } *gdl_t;
 
-#define to_gdn(n)((gdn_t)n)
+#define to_gdn(n)((gdn_t)(n))
 #define gdn_value(n) (to_gdn(n)->value)
 #define gdn_next(n) (to_gdn(to_dln(n)->next))
 #define gdn_prev(n) (to_gdn(to_dln(n)->next))
 
-#define gdl_front(list) (to_gdn(list->base.front))
-#define gdl_back(list) (to_gdn(list->base.back))
+#define gdl_front(list) (to_gdn((list)->base.front))
+#define gdl_back(list) (to_gdn((list)->base.back))
 #define gdl_front_value(list) (gdl_front(list)->value)
 #define gdl_back_value(list) (gdl_back(list)->value)
 #define gdl_is_empty(list) (dll_is_empty(to_dll(list)))

@@ -42,8 +42,8 @@ int test_dll_pop_front_back_i() {
   idl_push_front(list, 2);
   idl_push_back(list, 3);
   CHECK_MSG(dll_sequence_i(list, (int[]){2, 1, 3}, 3), "push front back");
-  CHECK_MSG(idl_front(list) == 2, "front 2");
-  CHECK_MSG(idl_back(list) == 3, "back 3");
+  CHECK_MSG(idl_front_value(list) == 2, "front 2");
+  CHECK_MSG(idl_back_value(list) == 3, "back 3");
   CHECK_MSG(idl_pop_front(list) == 2, "pop_front 2");
   CHECK_MSG(idl_pop_back(list) == 3, "pop_back 3");
   CHECK_MSG(dll_sequence_i(list, (int[]){1}, 1), "one last");
@@ -54,10 +54,10 @@ int test_dll_pop_front_back_i() {
 int test_dll_insert_abi() {
   dll_t list = dll_create();
   idl_insert_a(list, NULL, 1);
-  idl_insertb(list, list->front, 2);
-  idl_insertb(list, list->front, 3);
-  idl_insert_a(list, list->front, 5);
-  idl_insert_a(list, list->back, 6);
+  idl_insertb(list, idl_front(list), 2);
+  idl_insertb(list, idl_front(list), 3);
+  idl_insert_a(list, idl_front(list), 5);
+  idl_insert_a(list, idl_back(list), 6);
   CHECK_MSG(dll_sequence_i(list, (int[]){3, 5, 2, 1, 6}, 5), "intsert ab 5");
   dll_free(list);
   return 0;

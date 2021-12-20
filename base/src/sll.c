@@ -59,10 +59,6 @@ void sll_pop_front(sll_t list) {
   sln_free(tmp);
 }
 
-sln_t sll_front(sll_t list) {
-  return list->front;
-}
-
 int sll_is_empty(sll_t list) {
   return list->front == NULL && list->back == NULL;
 }

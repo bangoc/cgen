@@ -10,18 +10,20 @@ typedef struct sll_s {
   sln_t back;
 } *sll_t;
 
-#define to_sln(n) ((sln_t)n)
-#define to_sll(list) ((sll_t)list)
+#define to_sln(n) ((sln_t)(n))
+#define sln_free(n) free(n)
+
+#define to_sll(list) ((sll_t)(list))
+#define sll_front(list) (to_sll(list)->front)
+#define sll_back(list) (to_sll(list)->back)
 
 sln_t sln_create();
 sll_t sll_create();
-#define sln_free(n) free(n)
 void sll_free(sll_t list);
 
 void sll_push_back(sll_t list, sln_t node);
 void sll_push_front(sll_t list, sln_t node);
 void sll_pop_front(sll_t list);
-sln_t sll_front(sll_t list);
 int sll_is_empty(sll_t list);
 long sll_length(sll_t list);
 

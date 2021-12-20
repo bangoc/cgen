@@ -22,23 +22,15 @@ void idl_push_front(dll_t list, int value) {
 }
 
 int idl_pop_back(dll_t list) {
-  int value = idl_back(list);
+  int value = idl_back_value(list);
   dll_pop_back(list);
   return value;
 }
 
 int idl_pop_front(dll_t list) {
-  int value = idl_front(list);
+  int value = idl_front_value(list);
   dll_pop_front(list);
   return value;
-}
-
-int idl_front(dll_t list) {
-  return idn_value(dll_front(list));
-}
-
-int idl_back(dll_t list) {
-  return idn_value(dll_back(list));
 }
 
 idn_t idl_insert_a(dll_t list, idn_t pos, int value) {

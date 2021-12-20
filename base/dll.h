@@ -16,8 +16,11 @@ typedef struct dll_s {
   dln_t back;
 } *dll_t;
 
-#define to_dln(n) ((dln_t)n)
-#define to_dll(list) ((dll_t)list)
+#define to_dln(n) ((dln_t)(n))
+#define to_dll(list) ((dll_t)(list))
+
+#define dll_front(list) (to_dll(list)->front)
+#define dll_back(list) (to_dll(list)->back)
 
 #define dll_traverse(cur, list) \
   for (dln_t cur = list->front; cur != NULL; cur = cur->next)
@@ -35,8 +38,6 @@ void dll_push_back(dll_t list, dln_t nn);
 void dll_push_front(dll_t list, dln_t nn);
 void dll_pop_front(dll_t list);
 void dll_pop_back(dll_t list);
-dln_t dll_front(dll_t list);
-dln_t dll_back(dll_t list);
 dln_t dll_inserta(dll_t list, dln_t pos, dln_t nn);
 dln_t dll_insertb(dll_t list, dln_t pos, dln_t nn);
 int dll_is_empty(dll_t list);
