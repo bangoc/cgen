@@ -5,10 +5,10 @@
 #include <stdlib.h>
 
 int sll_t1() {
-  sll_node_t n1 = sll_create_node(),
-             n2 = sll_create_node(),
-             n3 = sll_create_node();
-  sll_t list = sll_create_list();
+  sln_t n1 = sln_create(),
+             n2 = sln_create(),
+             n3 = sln_create();
+  sll_t list = sll_create();
   CHECK_MSG(sll_length(list) == 0, "Init size");
   CHECK_MSG(list->front == NULL, "Init first");
   CHECK_MSG(list->back == NULL, "Init last");
@@ -41,7 +41,7 @@ int sll_t1() {
   CHECK_MSG(sll_length(list) == 0, "Remove n3 size");
   CHECK_MSG(list->front == NULL, "Remove n3 first");
   CHECK_MSG(list->back == NULL, "Remove n3 last");
-  sll_free_list(list);
+  sll_free(list);
   return 0;
 }
 
@@ -54,11 +54,11 @@ int test_create_list() {
   free(a);
   sll_t lists[N];
   for (int i = 0; i < N; ++i) {
-    lists[i] = sll_create_list();
+    lists[i] = sll_create();
     CHECK_MSG(sll_is_empty(lists[i]), "Empty on create");
   }
   for (int i = 0; i < N; ++i) {
-    sll_free_list(lists[i]);
+    sll_free(lists[i]);
   }
   #undef N
   return 0;

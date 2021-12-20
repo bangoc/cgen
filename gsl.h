@@ -10,7 +10,7 @@
 #include "gtype.h"
 
 typedef struct gsn_s {
-  struct sll_node_s base;
+  struct sln_s base;
   gtype value;
 } *gsn_t;
 
@@ -29,7 +29,7 @@ gsn_t gsl_front_node(gsl_t list);
 
 #define to_gsn(n) ((gsn_t)n)
 #define gsn_value(n) (to_gsn(n)->value)
-#define gsn_next(n) (to_sll_node(n)->next)
+#define gsn_next(n) (to_sln(n)->next)
 #define gsl_traverse(cur, list) \
   for (gsn_t cur = gsl_front_node(list); cur; cur = gsn_next(cur))
 

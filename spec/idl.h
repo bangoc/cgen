@@ -9,7 +9,7 @@
 #include "base/dll.h"
 
 typedef struct idn_s {
-  struct dll_node_s base;
+  struct dln_s base;
   int value;
 } *idn_t;
 

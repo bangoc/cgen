@@ -7,26 +7,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-dll_node_t dll_create_node() {
-  dll_node_t n = malloc(sizeof(struct dll_node_s));
+dln_t dln_create() {
+  dln_t n = malloc(sizeof(struct dln_s));
   n->next = n->prev = NULL;
   return n;
 }
 
-dll_t dll_create_list() {
+dll_t dll_create() {
   dll_t list = malloc(sizeof(struct dll_s));
   list->front = list->back = NULL;
   return list;
 }
 
-void dll_free_list(dll_t list) {
+void dll_free(dll_t list) {
   while (!dll_is_empty(list)) {
     dll_pop_front(list);
   }
   free(list);
 }
 
-void dll_push_back(dll_t list, dll_node_t nn) {
+void dll_push_back(dll_t list, dln_t nn) {
   if (list->back == NULL) {
     list->front = list->back = nn;
   } else {
@@ -36,7 +36,7 @@ void dll_push_back(dll_t list, dll_node_t nn) {
   }
 }
 
-void dll_push_front(dll_t list, dll_node_t nn) {
+void dll_push_front(dll_t list, dln_t nn) {
   if (list->front == NULL) {
     list->front = list->back = nn;
   } else {
@@ -50,46 +50,46 @@ void dll_pop_back(dll_t list) {
   if (dll_is_empty(list)) {
     return;
   }
-  dll_node_t tmp = list->back;
+  dln_t tmp = list->back;
   list->back = tmp->prev;
   if (list->back) {
     list->back->next = NULL;
   } else {
     list->front = NULL;
   }
-  dll_free_node(tmp);
+  dln_free(tmp);
 }
 
 void dll_pop_front(dll_t list) {
   if (dll_is_empty(list)) {
     return;
   }
-  dll_node_t tmp = list->front;
+  dln_t tmp = list->front;
   list->front = tmp->next;
   if (list->front) {
     list->front->prev = NULL;
   } else {
     list->back = NULL;
   }
-  dll_free_node(tmp);
+  dln_free(tmp);
 }
 
-dll_node_t dll_front(dll_t list) {
+dln_t dll_front(dll_t list) {
   return list->front;
 }
 
-dll_node_t dll_back(dll_t list) {
+dln_t dll_back(dll_t list) {
   return list->back;
 }
 
 /* insert nn after pos in list. push_back if pos == NULL */
-dll_node_t dll_inserta(dll_t list, dll_node_t pos, dll_node_t nn) {
+dln_t dll_inserta(dll_t list, dln_t pos, dln_t nn) {
   if (!pos) {
     dll_push_back(list, nn);
     return nn;
   }
 
-  dll_node_t tmp = pos->next;
+  dln_t tmp = pos->next;
   pos->next = nn;
   nn->prev = pos;
   nn->next = tmp;
@@ -102,13 +102,13 @@ dll_node_t dll_inserta(dll_t list, dll_node_t pos, dll_node_t nn) {
 }
 
 /* insert nn before pos in list. push_front is pos == NULL */
-dll_node_t dll_insertb(dll_t list, dll_node_t pos, dll_node_t nn) {
+dln_t dll_insertb(dll_t list, dln_t pos, dln_t nn) {
   if (!pos) {
     dll_push_front(list, nn);
     return nn;
   }
 
-  dll_node_t tmp = pos->prev;
+  dln_t tmp = pos->prev;
   pos->prev = nn;
   nn->next = pos;
   nn->prev = tmp;
@@ -126,7 +126,7 @@ int dll_is_empty(dll_t list) {
 
 long dll_length(dll_t list) {
   long len = 0;
-  dll_node_t n = dll_front(list);
+  dln_t n = dll_front(list);
   while (n) {
     ++len;
     n = n->next;
@@ -134,7 +134,7 @@ long dll_length(dll_t list) {
   return len;
 }
 
-void dll_erase(dll_t list, dll_node_t pos) {
+void dll_erase(dll_t list, dln_t pos) {
   if (pos == list->front) {
     dll_pop_front(list);
     return;
@@ -144,11 +144,11 @@ void dll_erase(dll_t list, dll_node_t pos) {
     return;
   }
 
-  dll_node_t p1 = pos->prev,
+  dln_t p1 = pos->prev,
              p2 = pos->next;
   p1->next = p2;
   p2->prev = p1;
-  dll_free_node(pos);
+  dln_free(pos);
 }
 
 void dll_clear(dll_t list) {
@@ -157,14 +157,14 @@ void dll_clear(dll_t list) {
   }
 }
 
-void dll_pprint_node(dll_node_t node) {
+void dln_pprint(dln_t node) {
   printf("[%p]", node);
 }
 
-static void _dll_pprint_list(dll_t list, void (*ppn)()) {
+static void _dll_pprint(dll_t list, void (*ppn)()) {
   printf("NULL <= ");
   int first = 1;
-  for (dll_node_t cur = list->front; cur != NULL; cur = cur->next) {
+  for (dln_t cur = list->front; cur != NULL; cur = cur->next) {
     if (first) {
       first = 0;
     } else {
@@ -175,6 +175,6 @@ static void _dll_pprint_list(dll_t list, void (*ppn)()) {
   printf(" => NULL\n");
 }
 
-void dll_pprint_list(dll_t list) {
-  _dll_pprint_list(list, dll_pprint_node);
+void dll_pprint(dll_t list) {
+  _dll_pprint(list, dln_pprint);
 }

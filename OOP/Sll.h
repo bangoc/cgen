@@ -10,7 +10,7 @@
 #include "cgen.h"
 
 typedef struct {
-  struct sll_node_s sll_node;
+  struct sln_s sll_node;
 } SllNodeS, *SllNode;
 
 typedef struct {

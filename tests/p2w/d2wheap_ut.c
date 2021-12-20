@@ -1,4 +1,8 @@
-#include "p2w.h"
+/*
+  (C) Nguyen Ba Ngoc 2021
+*/
+
+#include "spec/d2w.h"
 
 #include "tests/base/utils.h"
 

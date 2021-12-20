@@ -2,7 +2,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  sll_t q = sll_create_list();
+  sll_t q = sll_create();
   isl_fifo_enq(q, 1);
   isl_fifo_enq(q, 2);
   isl_fifo_enq(q, 3);
@@ -13,6 +13,6 @@ int main() {
   CHECK_MSG(isl_fifo_deq(q) == 2, "Dequeue 2");
   CHECK_MSG(isl_fifo_deq(q) == 3, "Dequeue 3");
   CHECK_MSG(sll_is_empty(q), "Queue empty");
-  sll_free_list(q);
+  sll_free(q);
   return 0;
 }

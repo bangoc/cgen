@@ -7,27 +7,27 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-sll_node_t sll_create_node() {
-  sll_node_t n = malloc(sizeof(struct sll_node_s));
+sln_t sln_create() {
+  sln_t n = malloc(sizeof(struct sln_s));
   n->next = NULL;
   return n;
 }
 
-sll_t sll_create_list() {
+sll_t sll_create() {
   sll_t list = malloc(sizeof(struct sll_s));
   list->front = NULL;
   list->back = NULL;
   return list;
 }
 
-void sll_free_list(sll_t list) {
+void sll_free(sll_t list) {
   while (!sll_is_empty(list)) {
     sll_pop_front(list);
   }
   free(list);
 }
 
-void sll_push_back(sll_t list, sll_node_t node) {
+void sll_push_back(sll_t list, sln_t node) {
   node->next = NULL;
   if (list->front == NULL) {
     list->front = list->back = node;
@@ -37,7 +37,7 @@ void sll_push_back(sll_t list, sll_node_t node) {
   }
 }
 
-void sll_push_front(sll_t list, sll_node_t node) {
+void sll_push_front(sll_t list, sln_t node) {
   if (list->front == NULL) {
     list->front = list->back = node;
     node->next = NULL;
@@ -51,15 +51,15 @@ void sll_pop_front(sll_t list) {
   if (sll_is_empty(list)) {
     return;
   }
-  sll_node_t tmp = list->front;
+  sln_t tmp = list->front;
   list->front = list->front->next;
   if (list->front == NULL) {
     list->back = NULL;
   }
-  sll_free_node(tmp);
+  sln_free(tmp);
 }
 
-sll_node_t sll_front(sll_t list) {
+sln_t sll_front(sll_t list) {
   return list->front;
 }
 
@@ -69,7 +69,7 @@ int sll_is_empty(sll_t list) {
 
 long sll_length(sll_t list) {
   long len = 0;
-  sll_node_t n = sll_front(list);
+  sln_t n = sll_front(list);
   while (n) {
     ++len;
     n = n->next;
@@ -77,19 +77,19 @@ long sll_length(sll_t list) {
   return len;
 }
 
-void sll_pprint_node(sll_node_t node) {
+void sln_pprint(sln_t node) {
   printf("[%p]", node);
 }
 
 
-void _sll_pprint_list(sll_t list, void (*pn)()) {
-  for (sll_node_t cur = list->front; cur != NULL; cur = cur->next) {
+void _sll_pprint(sll_t list, void (*pn)()) {
+  for (sln_t cur = list->front; cur != NULL; cur = cur->next) {
     pn(cur);
     printf(" => ");
   }
   printf("NULL\n");
 }
 
-void sll_pprint_list(sll_t list) {
-  _sll_pprint_list(list, sll_pprint_node);
+void sll_pprint(sll_t list) {
+  _sll_pprint(list, sln_pprint);
 }

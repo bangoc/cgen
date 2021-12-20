@@ -38,15 +38,4 @@ gtype p2w_delete_max_index(p2wheap_t h, long *idx, gtype_cmp_t cmp);
 int p2w_modify(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp);
 bool p2w_check(p2wheap_t h, gtype_cmp_t cmp);
 
-/* Giao diện cho kiểu double */
-// ========== Khai báo hàm ===============
-
-int d2w_push_with_index(p2wheap_t h, long idx, double elem);
-double d2w_max(const p2wheap_t h);
-double d2w_get(const p2wheap_t h, long idx);
-double d2w_delete_max(p2wheap_t h);
-double d2w_deactivate_max(p2wheap_t h);
-double d2w_delete_max_index(p2wheap_t h, long *idx);
-int d2w_modify(p2wheap_t h, long idx, double elem);
-
 #endif  // P2W_H_

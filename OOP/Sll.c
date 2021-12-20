@@ -11,11 +11,11 @@
 #define MEMBER(obj, Class, Method) obj->Method = Class ## Method
 
 void SllPushBack(Sll list, SllNode nn) {
-  sll_push_back((sll_t)list, (sll_node_t)nn);
+  sll_push_back((sll_t)list, (sln_t)nn);
 }
 
 void SllPushFront(Sll list, SllNode nn) {
-  sll_push_front((sll_t)list, (sll_node_t)nn);
+  sll_push_front((sll_t)list, (sln_t)nn);
 }
 
 void SllPopFront(Sll list) {
@@ -35,16 +35,16 @@ long SllLength(Sll list) {
 }
 
 void SllPPrintNode(SllNode node) {
-  sll_pprint_node((sll_node_t)node);
+  sln_pprint((sln_t)node);
 }
 
 void SllPPrint(Sll list) {
-  sll_pprint_list((sll_t)list);
+  sll_pprint((sll_t)list);
 }
 
 
 Sll Sll_create() {
-  sll_t sll = sll_create_list();
+  sll_t sll = sll_create();
   Sll list = realloc(sll, sizeof(SllS));
   MEMBER(list, Sll, PushBack);
   MEMBER(list, Sll, PushFront);
@@ -58,16 +58,16 @@ Sll Sll_create() {
 }
 
 SllNode SllNode_create() {
-  return (SllNode)sll_create_node();
+  return (SllNode)sln_create();
 }
 
 void Sll_free(Sll list) {
   sll_t sll = realloc(list, sizeof(struct sll_s));
-  sll_free_list(sll);
+  sll_free(sll);
 }
 
 void SllNode_free(SllNode node) {
-  sll_free_node((sll_node_t)node);
+  sln_free((sln_t)node);
 }
 
 /* Giao diện gtype */

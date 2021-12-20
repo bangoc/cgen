@@ -25,6 +25,6 @@ int main() {
   CHECK_MSG(pop_value_front(list).i == 2, "Remove 2");
   CHECK_MSG(pop_value_front(list).i == 1, "Remove 1");
   CHECK_MSG(pop_value_front(list).i == 3, "Remove 3");
-  sll_free_list(list);
+  sll_free(list);
   return 0;
 }

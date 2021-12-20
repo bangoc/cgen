@@ -12,32 +12,32 @@ int test_idn_create() {
   CHECK_MSG(n->base.prev == NULL, "base->prev");
   CHECK_MSG(n->base.next == NULL, "base->next");
   CHECK_MSG(n->value == 90, "value 90");
-  dll_free_node(to_dll_node(n));
+  dln_free(to_dln(n));
   return 0;
 }
 
 int test_idl_push_back() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create();
   idl_push_back(list, 1);
   idl_push_back(list, 2);
   idl_push_back(list, 3);
   CHECK_MSG(dll_sequence_i(list, (int[]){1, 2, 3}, 3), "push_back 3");
-  dll_free_list(list);
+  dll_free(list);
   return 0;
 }
 
 int test_idl_push_front() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create();
   idl_push_front(list, 1);
   idl_push_front(list, 2);
   idl_push_front(list, 3);
   CHECK_MSG(dll_sequence_i(list, (int[]){3, 2, 1}, 3), "push_front 3");
-  dll_free_list(list);
+  dll_free(list);
   return 0;
 }
 
 int test_dll_pop_front_back_i() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create();
   idl_push_front(list, 1);
   idl_push_front(list, 2);
   idl_push_back(list, 3);
@@ -47,19 +47,19 @@ int test_dll_pop_front_back_i() {
   CHECK_MSG(idl_pop_front(list) == 2, "pop_front 2");
   CHECK_MSG(idl_pop_back(list) == 3, "pop_back 3");
   CHECK_MSG(dll_sequence_i(list, (int[]){1}, 1), "one last");
-  dll_free_list(list);
+  dll_free(list);
   return 0;
 }
 
 int test_dll_insert_abi() {
-  dll_t list = dll_create_list();
+  dll_t list = dll_create();
   idl_insert_a(list, NULL, 1);
   idl_insertb(list, list->front, 2);
   idl_insertb(list, list->front, 3);
   idl_insert_a(list, list->front, 5);
   idl_insert_a(list, list->back, 6);
   CHECK_MSG(dll_sequence_i(list, (int[]){3, 5, 2, 1, 6}, 5), "intsert ab 5");
-  dll_free_list(list);
+  dll_free(list);
   return 0;
 }
 

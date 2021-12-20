@@ -2,6 +2,7 @@
 #include "base/src/bns.c"
 #include "base/src/dll.c"
 #include "base/src/sll.c"
+#include "spec/src/d2w.c"
 #include "spec/src/idl.c"
 #include "spec/src/isl.c"
 #include "spec/src/s2i.c"

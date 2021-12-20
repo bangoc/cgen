@@ -9,12 +9,12 @@
 
 #include <stdio.h>
 
-static int dll_sequence(dll_t list, dll_node_t *a, int n) {
+static int dll_sequence(dll_t list, dln_t *a, int n) {
   if (dll_length(list) != n) {
     return 0;
   }
 
-  dll_node_t p = list->front;
+  dln_t p = list->front;
   for (int i = 0; i < n; ++i) {
     if (p != a[i]) {
       return 0;
@@ -41,7 +41,7 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   if (dll_length(list) != n) {
     return 0;
   }
-  dll_node_t p = list->front;
+  dln_t p = list->front;
   for (int i = 0; i < n; ++i) {
     if (idn_value(p) != a[i]) {
       return 0;
@@ -64,11 +64,11 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   return 1;
 }
 
-static int dll_sequence_g(dll_t list, gtype *a, int n, int(*cmp)()) {
+static int dll_sequence_g(dll_t list, gtype *a, int n, gtype_cmp_t cmp) {
   if (dll_length(list) != n) {
     return 0;
   }
-  dll_node_t p = list->front;
+  dln_t p = list->front;
   for (int i = 0; i < n; ++i) {
     if (cmp(gdn_value(p), a[i]) != 0) {
       return 0;
@@ -89,6 +89,10 @@ static int dll_sequence_g(dll_t list, gtype *a, int n, int(*cmp)()) {
     return 0;
   }
   return 1;
+}
+
+static int gdl_sequence_g(gdl_t list, gtype *a, int n, gtype_cmp_t cmp) {
+  return dll_sequence_g(to_dll(list), a, n, cmp);
 }
 
 #endif  // TESTS_DLL_HELPER_H_

@@ -1,7 +1,16 @@
+cmake_minimum_required(VERSION 2.8)
 project(cgen)
+
+option(CLEAN_WARN "Turn all warnings into errors" OFF)
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -w")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+
+if (CLEAN_WARN)
+  MESSAGE(STATUS CLEAN WARN)
+else(CLEAN_WARN)
+endif()
 
 add_subdirectory(tests)
 add_subdirectory(examples)
