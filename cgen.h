@@ -16,6 +16,7 @@
 #include "spec/s2i.h"
 #include "gdl.h"
 #include "gsl.h"
+#include "gvec.h"
 #include "hmap.h"
 #include "p1w.h"
 #include "p2w.h"

@@ -8,6 +8,7 @@
 #include "spec/src/s2i.c"
 #include "src/gdl.c"
 #include "src/gsl.c"
+#include "src/gvec.c"
 #include "src/heap.c"
 #include "src/hmap.c"
 #include "src/p1w.c"
