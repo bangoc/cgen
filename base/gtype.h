@@ -20,7 +20,6 @@ typedef union {
   void *v;
 } gtype;
 
-#define INVALID_VALUE ((gtype){.i = -1})
 #define gtype_value(type, val) ((gtype){.type = val})
 #define gtype_i(value) gtype_value(i, value)
 #define gtype_d(value) gtype_value(d, value)

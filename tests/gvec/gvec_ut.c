@@ -20,6 +20,7 @@ int t1() {
   for (int i = 0; i < n; ++i) {
     gvec_append(v, gtype_i(a[i]));
   }
+  CHECK_MSG(gvec_elem(v, 0).i == 3, "elem 0 == 3");
   CHECK_MSG(gtype_seqi(gvec_arr(v), a, n), "vec sequence");
   gvec_qsort(v, gtype_inc_cmp_i);
   CHECK_MSG(gtype_seqi(gvec_arr(v), (int[]){1, 2, 3, 5, 6, 8, 9, 10}, n), "sorted vec seq");
