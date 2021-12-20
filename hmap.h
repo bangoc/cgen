@@ -3,17 +3,16 @@
 
 /*
   (C) Nguyen Ba Ngoc 2021
+  Ánh xạ dựa trên hàm băm (hash map)
 */
 
 #include "base/arr.h"
 #include "base/gtype.h"
-#include "base/hfunc.h"
+#include "base/hashes.h"
 
 #include <stdint.h>
 
-typedef uint (*gtype_hash_t) (gtype);
-
-typedef struct hash_map {
+typedef struct hash_map_s {
   int size;
   int mod;
   uint mask;

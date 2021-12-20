@@ -3,7 +3,7 @@
   Minh họa hàm băm khái quát
 */
 
-#include "base/hfunc.h"
+#include "base/hashes.h"
 
 #include <stdio.h>
 #include <string.h>

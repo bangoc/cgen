@@ -35,6 +35,7 @@ typedef union {
 
 typedef int (*gtype_cmp_t)(gtype, gtype);
 typedef void (*gtype_free_t)(gtype);
+typedef uint (*gtype_hash_t) (gtype);
 
 static int gtype_cmp_i(gtype v1, gtype v2) {
   return v1.i - v2.i;
