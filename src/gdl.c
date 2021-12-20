@@ -11,49 +11,15 @@ gdn_t gdn_create(gtype value) {
   return nn;
 }
 
+void gdn_pprint_i(dln_t n) {
+  printf("%ld", gdn_value(n).i);
+}
+
 gdl_t gdl_create(gtype_free_t free_value) {
   dll_t tmp = dll_create();
   gdl_t list = realloc(tmp, sizeof(struct gdl_s));
   list->free_value = free_value;
   return list;
-}
-
-void gdl_push_back(gdl_t list, gtype value) {
-  dll_push_back(to_dll(list), to_dln(gdn_create(value)));
-}
-
-void gdl_push_front(gdl_t list, gtype value) {
-  dll_push_front(to_dll(list), to_dln(gdn_create(value)));
-}
-
-void gdl_pop_front(gdl_t list) {
-  if (list->free_value) {
-    list->free_value(gdl_front(list));
-  }
-  dll_pop_front(to_dll(list));
-}
-
-void gdl_pop_back(gdl_t list) {
-  if (list->free_value) {
-    list->free_value(gdl_back(list));
-  }
-  dll_pop_back(to_dll(list));
-}
-
-gtype gdl_front(gdl_t list) {
-  return gdl_front_node(list)->value;
-}
-
-gtype gdl_back(gdl_t list) {
-  return gdl_back_node(list)->value;
-}
-
-gdn_t gdl_front_node(gdl_t list) {
-  return to_gdn(to_dll(list)->front);
-}
-
-gdn_t gdl_back_node(gdl_t list) {
-  return to_gdn(to_dll(list)->back);
 }
 
 gdn_t gdl_inserta(gdl_t list, gdn_t pos, gtype value) {
@@ -66,19 +32,4 @@ gdn_t gdl_insertb(gdl_t list, gdn_t pos, gtype value) {
   gdn_t nn = gdn_create(value);
   dll_insertb(to_dll(list), to_dln(pos), to_dln(nn));
   return nn;
-}
-
-int gdl_is_empty(gdl_t list) {
-  return dll_is_empty(to_dll(list));
-}
-
-void gdl_clear(gdl_t list) {
-  while (!gdl_is_empty(list)) {
-    gdl_pop_front(list);
-  }
-}
-
-void gdl_free(gdl_t list) {
-  gdl_clear(list);
-  free(list);
 }

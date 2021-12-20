@@ -17,21 +17,21 @@ int test_create_node_g() {
 }
 
 gtype pop_value_front(gdl_t list) {
-  gtype tmp = gdl_front(list);
+  gtype tmp = gdl_front_value(list);
   gdl_pop_front(list);
   return tmp;
 }
 
 gtype pop_value_back(gdl_t list) {
-  gtype tmp = gdl_back(list);
+  gtype tmp = gdl_back_value(list);
   gdl_pop_back(list);
   return tmp;
 }
 
 int test_push_back_front_g() {
   gdl_t list = gdl_create(NULL);
-  CHECK_MSG(gdl_front_node(list) == NULL, "front NULL");
-  CHECK_MSG(gdl_back_node(list) == NULL, "back NULL");
+  CHECK_MSG(gdl_front(list) == NULL, "front NULL");
+  CHECK_MSG(gdl_back(list) == NULL, "back NULL");
 
   gtype v3 = {.i = 3},
         v5 = {.i = 5},
@@ -50,8 +50,8 @@ int test_push_back_front_g() {
 
   CHECK_MSG(pop_value_front(list).i == 6, "pop front 6");
   CHECK_MSG(pop_value_back(list).i == 9, "pop back 9");
-  CHECK_MSG(gdl_front(list).i == 2, "front 2");
-  CHECK_MSG(gdl_back(list).i == 5, "back 5");
+  CHECK_MSG(gdl_front_value(list).i == 2, "front 2");
+  CHECK_MSG(gdl_back_value(list).i == 5, "back 5");
 
   CHECK_MSG(pop_value_front(list).i == 2, "pop front 2");
   CHECK_MSG(pop_value_back(list).i == 5, "pop back 5");
@@ -74,8 +74,8 @@ int test_push_back_front_g() {
 
 int test_insert_ab() {
   gdl_t list = gdl_create(NULL);
-  CHECK_MSG(gdl_front_node(list) == NULL, "front NULL");
-  CHECK_MSG(gdl_back_node(list) == NULL, "back NULL");
+  CHECK_MSG(gdl_front(list) == NULL, "front NULL");
+  CHECK_MSG(gdl_back(list) == NULL, "back NULL");
 
   gtype v1 = {.i = 1},
         v2 = {.i = 2},
@@ -83,15 +83,15 @@ int test_insert_ab() {
         v6 = {.i = 6},
         v9 = {.i = 9};
   gdn_t tmp = gdl_inserta(list, NULL, v1);
-  CHECK_MSG(tmp == gdl_front_node(list), "insert 1 front");
-  CHECK_MSG(tmp == gdl_back_node(list), "insert 1 back");
+  CHECK_MSG(tmp == gdl_front(list), "insert 1 front");
+  CHECK_MSG(tmp == gdl_back(list), "insert 1 back");
 
   gdl_insertb(list, NULL, v2);
-  CHECK_MSG(gdl_front(list).i == 2, "front 2");
-  CHECK_MSG(gdl_back(list).i == 1, "back 1");
+  CHECK_MSG(gdl_front_value(list).i == 2, "front 2");
+  CHECK_MSG(gdl_back_value(list).i == 1, "back 1");
 
-  gdl_inserta(list, gdl_front_node(list), v3);
-  gdl_insertb(list, gdl_back_node(list), v6);
+  gdl_inserta(list, gdl_front(list), v3);
+  gdl_insertb(list, gdl_back(list), v6);
   gdl_insertb(list, NULL, v9);
   CHECK_MSG(gdl_sequence_g(list, (gtype[]){v9, v2, v3, v6, v1}, 5, gtype_cmp_i),
           "insertab 5 values");

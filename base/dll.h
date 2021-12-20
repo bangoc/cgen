@@ -45,7 +45,7 @@ void dll_erase(dll_t list, dln_t pos);
 void dll_clear(dll_t list);
 
 void dln_pprint(dln_t);
-void dll_pprint(dll_t);
+void dll_pprint(dll_t, void (*)());
 #define dln_free(n) free(n)
 
 #endif  // BASE_DLL_H_

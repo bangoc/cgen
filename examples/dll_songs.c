@@ -28,8 +28,8 @@ int main() {
   gdl_push_back(list, create_song_g("Seasons in the sun"));
   gdl_push_back(list, create_song_g("Black or White"));
   gdl_push_front(list, create_song_g("Beautiful in white"));
-  gdl_inserta(list, gdl_front_node(list), create_song_g("Lemon tree"));
-  gdl_insertb(list, gdl_back_node(list), create_song_g("Opera No 2"));
+  gdl_inserta(list, gdl_front(list), create_song_g("Lemon tree"));
+  gdl_insertb(list, gdl_back(list), create_song_g("Opera No 2"));
 
   // Print songs list
   int stt = 1;

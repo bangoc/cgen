@@ -161,7 +161,7 @@ void dln_pprint(dln_t node) {
   printf("[%p]", node);
 }
 
-static void _dll_pprint(dll_t list, void (*ppn)()) {
+void dll_pprint(dll_t list, void (*ppn)()) {
   printf("NULL <= ");
   int first = 1;
   for (dln_t cur = list->front; cur != NULL; cur = cur->next) {
@@ -173,8 +173,4 @@ static void _dll_pprint(dll_t list, void (*ppn)()) {
     ppn(cur);
   }
   printf(" => NULL\n");
-}
-
-void dll_pprint(dll_t list) {
-  _dll_pprint(list, dln_pprint);
 }

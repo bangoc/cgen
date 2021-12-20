@@ -56,5 +56,5 @@ void idn_pprint(idn_t node) {
 }
 
 void idl_pprint(dll_t list) {
-  _dll_pprint(list, idn_pprint);
+  dll_pprint(list, idn_pprint);
 }
