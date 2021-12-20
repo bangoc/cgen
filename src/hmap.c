@@ -9,7 +9,7 @@
 
 static void hmap_setup_storage(hmap_t tab);
 static inline int hmap_lookup_node(hmap_t tab, gtype key, uint *hash_return);
-static inline void hmap_maybe_resize(hmap_t tab);
+static inline int hmap_maybe_resize(hmap_t tab);
 static void hmap_remove_node(hmap_t tab, int i);
 static void hmap_free_nodes(hmap_t tab);
 
@@ -49,7 +49,9 @@ hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value) {
   tab->nnodes++;
   if (HASH_IS_UNUSED(curr_hash)) {
     tab->noccupied++;
-    hmap_maybe_resize(tab);
+    if (hmap_maybe_resize(tab) == 1) {
+      node_index = hmap_lookup_node(tab, key, NULL);
+    }
   }
   return (hmap_ires){node_index, 1};
 }
@@ -256,10 +258,12 @@ static void hmap_resize(hmap_t tab) {
   tab->noccupied = tab->nnodes;
 }
 
-static inline void hmap_maybe_resize(hmap_t tab) {
+static inline int hmap_maybe_resize(hmap_t tab) {
   uint noccupied = tab->noccupied, size = tab->size;
   if ((size > tab->nnodes * 4 && size > 1 << HASH_MIN_SHIFT) ||
       (size <= noccupied + (noccupied/16))) {
     hmap_resize(tab);
+    return 1;
   }
+  return 0;
 }

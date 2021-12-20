@@ -9,7 +9,7 @@
 
 static void hset_setup_storage(hset_t hs);
 static inline int hset_lookup_node(hset_t hs, gtype key, uint *hash_return);
-static inline void hset_maybe_resize(hset_t hs);
+static inline int hset_maybe_resize(hset_t hs);
 static void hset_remove_node(hset_t hs, int i);
 static void hset_free_nodes(hset_t hs);
 
@@ -46,7 +46,9 @@ hset_ires hset_insert(hset_t hs, gtype key) {
   hs->nnodes++;
   if (HASH_IS_UNUSED(curr_hash)) {
     hs->noccupied++;
-    hset_maybe_resize(hs);
+    if (hset_maybe_resize(hs) == 1) {
+      node_index = hset_lookup_node(hs, key, NULL);
+    }
   }
   return (hset_ires){node_index, 1};
 }
@@ -233,10 +235,12 @@ static void hset_resize(hset_t hs) {
   hs->noccupied = hs->nnodes;
 }
 
-static inline void hset_maybe_resize(hset_t hs) {
+static inline int hset_maybe_resize(hset_t hs) {
   uint noccupied = hs->noccupied, size = hs->size;
   if ((size > hs->nnodes * 4 && size > 1 << HASH_MIN_SHIFT) ||
       (size <= noccupied + (noccupied/16))) {
     hset_resize(hs);
+    return 1;
   }
+  return 0;
 }
