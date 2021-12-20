@@ -14,7 +14,7 @@ rbm_node_t rbm_create_node(gtype key, gtype value) {
   return n;
 }
 
-rbm_t rbm_create(bn_compare_t cmp,
+rbm_t rbm_create(gtype_cmp_t cmp,
     gtype_free_t free_key, gtype_free_t free_value) {
   bn_tree_t t = bn_create_tree(NULL_PTR);
   rbm_t m = realloc(t, sizeof(struct rbm_s));
@@ -27,7 +27,7 @@ rbm_t rbm_create(bn_compare_t cmp,
 rbm_node_t rbm_insert(rbm_t t, gtype key, gtype value) {
   bn_node_t same = NULL_PTR, parent = NULL_PTR;
   bn_node_t *loc;
-  bn_compare_t cmp = t->cmp;
+  gtype_cmp_t cmp = t->cmp;
   bns_insert_setup(loc, t->t.root, key, tm_cmp_conv, same, parent);
   if (same) {
     return to_rbm(same);
@@ -38,7 +38,7 @@ rbm_node_t rbm_insert(rbm_t t, gtype key, gtype value) {
 }
 
 rbm_node_t rbm_search(rbm_t t, gtype key) {
-  bn_compare_t cmp = t->cmp;
+  gtype_cmp_t cmp = t->cmp;
   bns_search_inline(n, ((bn_tree_t)t), key, tm_cmp_conv, return to_rbm(n));
 }
 

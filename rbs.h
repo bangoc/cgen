@@ -16,15 +16,16 @@ typedef struct rbs_node {
 
 typedef struct rbs {
   struct bn_tree t;
-  bn_compare_t cmp;
+  gtype_cmp_t cmp;
+  gtype_free_t free_value;
 } *rbs_t;
 
 // ========== Khai báo hàm ===============
 rbs_node_t rbs_create_node(gtype elem);
-rbs_t rbs_create(bn_compare_t cmp);
+rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_value);
 rbs_node_t rbs_insert(rbs_t s, gtype elem);
 rbs_node_t rbs_search(rbs_t s, gtype elem);
-rbs_node_t rbs_delete(rbs_t s, gtype elem);
+int rbs_remove(rbs_t s, gtype elem);
 long rbs_size(rbs_t s);
 void rbs_free(rbs_t s);
 

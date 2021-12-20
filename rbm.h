@@ -15,14 +15,14 @@ typedef struct rbm_node {
 
 typedef struct rbm_s {
   struct bn_tree t;
-  bn_compare_t cmp;
+  gtype_cmp_t cmp;
   gtype_free_t free_key, free_value;
 } *rbm_t;
 
 // ========== Khai báo hàm ===============
 
 rbm_node_t rbm_create_node(gtype key, gtype value);
-rbm_t rbm_create(bn_compare_t cmp,
+rbm_t rbm_create(gtype_cmp_t cmp,
   gtype_free_t free_key, gtype_free_t free_value);
 
 // Nếu đã có khóa thì bỏ qua và trả về nút tương ứng với khóa

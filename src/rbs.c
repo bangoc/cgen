@@ -15,17 +15,18 @@ rbs_node_t rbs_create_node(gtype elem) {
   return nn;
 }
 
-rbs_t rbs_create(bn_compare_t cmp) {
+rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_value) {
   bn_tree_t t = bn_create_tree(NULL_PTR);
   rbs_t s = realloc(t, sizeof(struct rbs));
   s->cmp = cmp;
+  s->free_value = free_value;
   return s;
 }
 
 rbs_node_t rbs_insert(rbs_t s, gtype elem) {
   bn_node_t same = NULL, par = NULL;
   bn_node_t *loc;
-  bn_compare_t cmp = s->cmp;
+  gtype_cmp_t cmp = s->cmp;
   bns_insert_setup(loc, s->t.root, elem, rbs_cmp_conv, same, par);
   if (same) {
     return to_rbs(same);
@@ -36,16 +37,21 @@ rbs_node_t rbs_insert(rbs_t s, gtype elem) {
 }
 
 rbs_node_t rbs_search(rbs_t s, gtype elem) {
-  bn_compare_t cmp = s->cmp;
+  gtype_cmp_t cmp = s->cmp;
   bns_search_inline(n, ((bn_tree_t)s), elem, rbs_cmp_conv, return to_rbs(n));
 }
 
-rbs_node_t rbs_delete(rbs_t s, gtype elem) {
+int rbs_remove(rbs_t s, gtype elem) {
   rbs_node_t n = rbs_search(s, elem);
-  if (n) {
-    rb_delete((bn_tree_t)s, to_bn(n));
+  if (!n) {
+    return 0;
   }
-  return n;
+  rb_delete((bn_tree_t)s, to_bn(n));
+  if (s->free_value) {
+    s->free_value(rbs_node_value(n));
+  }
+  free(n);
+  return 1;
 }
 
 long rbs_size(rbs_t s) {
