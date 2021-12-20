@@ -6,7 +6,7 @@
 */
 
 #include "base/arr.h"
-#include "gtype.h"
+#include "base/gtype.h"
 
 typedef enum {
   PRIORITY_MIN = 0,

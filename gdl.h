@@ -7,7 +7,7 @@
 */
 
 #include "base/dll.h"
-#include "gtype.h"
+#include "base/gtype.h"
 
 typedef struct gdn_s {
   struct dln_s base;

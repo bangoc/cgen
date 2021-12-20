@@ -6,7 +6,7 @@
 */
 
 
-#include "gtype.h"
+#include "base/gtype.h"
 #include "base/rb.h"
 
 typedef struct rbs_node {

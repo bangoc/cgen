@@ -88,7 +88,7 @@
 
 /* Giao diện hỗ trợ gtype */
 
-#include "gtype.h"
+#include "base/gtype.h"
 
 typedef struct bns_node_g {
   struct bn_node base;

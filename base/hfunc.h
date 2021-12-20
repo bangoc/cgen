@@ -1,7 +1,7 @@
 #ifndef BASE_HFUNC_H_
 #define BASE_HFUNC_H_
 
-#include "gtype.h"
+#include "base/gtype.h"
 
 #ifdef __cplusplus
 extern "C" {

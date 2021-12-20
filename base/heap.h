@@ -1,11 +1,11 @@
-#ifndef HEAP_H_
-#define HEAP_H_
+#ifndef BASE_HEAP_H_
+#define BASE_HEAP_H_
 
 /*
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "gtype.h"
+#include "base/gtype.h"
 
 #define HTOP(i) (((i) - 1) >> 1)
 #define HLEFT(i) (((i) << 1) + 1)
@@ -19,4 +19,4 @@ void max_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp);
 void max_shift_up_g(gtype *a, long idx, gtype_cmp_t cmp);
 void max_heap_g(gtype *a, const long sz, gtype_cmp_t cmp);
 
-#endif  // HEAP_H_
+#endif  // BASE_HEAP_H_

@@ -2,8 +2,8 @@
   (C) 2021 Nguyen Ba Ngoc (bangoc)
 */
 
-#ifndef GTYPE_H_
-#define GTYPE_H_
+#ifndef BASE_GTYPE_H_
+#define BASE_GTYPE_H_
 
 #include <stdio.h>
 #include <stdint.h>
@@ -72,4 +72,4 @@ static void gtype_free_s(gtype v) {
   free(v.s);
 }
 
-#endif  // GTYPE_H_
+#endif  // BASE_GTYPE_H_

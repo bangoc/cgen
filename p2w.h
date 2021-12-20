@@ -6,7 +6,7 @@
 #define P2W_H_
 
 #include "base/arr.h"
-#include "gtype.h"
+#include "base/gtype.h"
 
 #include <stdbool.h>
 

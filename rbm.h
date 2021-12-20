@@ -6,7 +6,7 @@
 #define RBM_H_
 
 #include "base/rb.h"
-#include "gtype.h"
+#include "base/gtype.h"
 
 typedef struct rbm_node {
   struct rb_node_s rb_node;

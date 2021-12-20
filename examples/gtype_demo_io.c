@@ -3,7 +3,7 @@
 */
 
 #include "ext/io.h"
-#include "gtype.h"
+#include "base/gtype.h"
 #include <stdio.h>
 #include <stdlib.h>
 

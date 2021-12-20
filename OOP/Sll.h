@@ -30,7 +30,7 @@ SllNode SllNode_create();
 void Sll_free(Sll list);
 void SllNode_free(SllNode node);
 
-#include "gtype.h"
+#include "base/gtype.h"
 
 typedef struct {
   SllNodeS base;

@@ -1,5 +1,5 @@
 #include "base/arr.h"
-#include "gtype.h"
+#include "base/gtype.h"
 
 #include "tests/base/utils.h"
 

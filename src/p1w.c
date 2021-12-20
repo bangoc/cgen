@@ -3,7 +3,7 @@
   Triển khai hàng đợi ưu tiên
 */
 
-#include "heap.h"
+#include "base/heap.h"
 #include "p1w.h"
 
 #include <stdlib.h>

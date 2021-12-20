@@ -3,7 +3,7 @@
   Triển khai min heap và max heap
 */
 
-#include "heap.h"
+#include "base/heap.h"
 
 // Định nghĩa chỉ sử dụng bên trong.
 // nprop - nghịch đảo của tính chất heap.

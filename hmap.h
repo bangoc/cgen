@@ -6,7 +6,7 @@
 */
 
 #include "base/arr.h"
-#include "gtype.h"
+#include "base/gtype.h"
 #include "base/hfunc.h"
 
 #include <stdint.h>
