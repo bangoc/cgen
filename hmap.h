@@ -27,9 +27,18 @@ typedef struct hash_map {
   gtype_free_t key_free, value_free;
 } *hmap_t;
 
+typedef struct hmap_insert_result {
+  int idx;
+  int inserted;
+} hmap_ires;
+
+#define hmap_hash_at(map, idx) (elem_ref(map->hashes, idx))
+#define hmap_key_at(map, idx) (elem_ref(map->keys, idx))
+#define hmap_value_at(map, idx) (elem_ref(map->values, idx))
+
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t key_free, gtype_free_t value_free);
-int hmap_insert(hmap_t tab, gtype key, gtype value);
+hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
 gtype *hmap_value(hmap_t tab, gtype key);
 int hmap_remove(hmap_t tab, gtype key);
 void hmap_clear(hmap_t tab);

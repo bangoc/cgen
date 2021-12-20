@@ -39,11 +39,11 @@ hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
 
 gtype *hmap_value(hmap_t tab, gtype key) {
   int node_index = hmap_lookup_node(tab, key, NULL);
-  return (HASH_IS_REAL(ELEM(tab->hashes, node_index)))?
-          &ELEM(tab->values, node_index): NULL;
+  return (HASH_IS_REAL(elem(tab->hashes, node_index)))?
+          &elem(tab->values, node_index): NULL;
 }
 
-int hmap_insert(hmap_t tab, gtype key, gtype value) {
+hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value) {
   uint *hashes = ARR(tab->hashes);
   gtype *keys = ARR(tab->keys);
   gtype *values = ARR(tab->values);
@@ -52,14 +52,7 @@ int hmap_insert(hmap_t tab, gtype key, gtype value) {
   uint curr_hash = hashes[node_index];
   int already_exists = HASH_IS_REAL(curr_hash);
   if (already_exists) {
-    if (tab->key_free) {
-      tab->key_free(key);
-    }
-    if (tab->value_free) {
-      tab->value_free(values[node_index]);
-    }
-    values[node_index] = value;
-    return node_index;
+    return (hmap_ires){node_index, 0};
   }
   hashes[node_index] = key_hash;
   keys[node_index] = key;
@@ -69,12 +62,12 @@ int hmap_insert(hmap_t tab, gtype key, gtype value) {
     tab->noccupied++;
     hmap_maybe_resize(tab);
   }
-  return node_index;
+  return (hmap_ires){node_index, 1};
 }
 
 int hmap_remove(hmap_t tab, gtype key) {
   int node_index = hmap_lookup_node(tab, key, NULL);
-  if (HASH_IS_NOTREAL(ELEM(tab->hashes, node_index))) {
+  if (HASH_IS_NOTREAL(elem(tab->hashes, node_index))) {
     return 0;
   }
   hmap_remove_node(tab, node_index);
@@ -222,8 +215,8 @@ static inline int hmap_lookup_node(hmap_t tab, gtype key, uint *hash_return) {
 }
 
 static void hmap_remove_node(hmap_t tab, int i) {
-  gtype key = ELEM(tab->keys, i), value = ELEM(tab->values, i);
-  ELEM(tab->hashes, i) = DELETED_HASH_VALUE;
+  gtype key = elem(tab->keys, i), value = elem(tab->values, i);
+  elem(tab->hashes, i) = DELETED_HASH_VALUE;
   tab->nnodes--;
   if (tab->key_free) {
     tab->key_free(key);
