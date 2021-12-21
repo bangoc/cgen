@@ -73,4 +73,8 @@ static void gtype_free_s(gtype v) {
   free(v.s);
 }
 
+static void gtype_free_v(gtype v) {
+  free(v.v);
+}
+
 #endif  // BASE_GTYPE_H_

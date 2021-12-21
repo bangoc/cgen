@@ -50,22 +50,22 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 
 #define arr_set_capacity(a, newcap) \
   do { \
-    long *tmp = ARR_BEG(a); \
-    long elem_sz = tmp[ARR_ELEM_SZ]; \
-    tmp = realloc(tmp, ARR_ATT_MAX * sizeof(long) + newcap * elem_sz); \
-    if (tmp) { \
-      if (tmp[ARR_SZ] > newcap) { \
-        tmp[ARR_SZ] = newcap; \
+    long *_tmp = ARR_BEG(a); \
+    long _elem_sz = _tmp[ARR_ELEM_SZ]; \
+    _tmp = realloc(_tmp, ARR_ATT_MAX * sizeof(long) + newcap * _elem_sz); \
+    if (_tmp) { \
+      if (_tmp[ARR_SZ] > newcap) { \
+        _tmp[ARR_SZ] = newcap; \
       } \
-      tmp[ARR_CAP] = newcap; \
-      (*((void**)a)) = (void*)(tmp + ARR_ATT_MAX); \
+      _tmp[ARR_CAP] = newcap; \
+      (*((void**)a)) = (void*)(_tmp + ARR_ATT_MAX); \
     } \
   } while (0)
 
 #define arr_set_size(a, newsize) \
   do { \
-    long c = arr_capacity(a); \
-    if (newsize > c) {  \
+    long _c = arr_capacity(a); \
+    if (newsize > _c) {  \
       arr_set_capacity(a, newsize); \
     } \
     if (newsize <= arr_capacity(a)) { \
@@ -81,17 +81,17 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 
 #define arr_append(a, elem) \
    do { \
-     long *tmp = ARR_BEG(a); \
-     if (tmp[ARR_SZ] >= tmp[ARR_CAP]) { \
-       long c = tmp[ARR_CAP]; \
-       long inc = tmp[ARR_INC]; \
-       long newcap = c > 100? c + c * inc / 100: c + inc; \
-       arr_set_capacity(a, newcap); \
-       tmp = ARR_BEG(a); \
+     long *_tmp = ARR_BEG(a); \
+     if (_tmp[ARR_SZ] >= _tmp[ARR_CAP]) { \
+       long _c = _tmp[ARR_CAP]; \
+       long _inc = _tmp[ARR_INC]; \
+       long _newcap = _c > 100? _c + _c * _inc / 100: _c + _inc; \
+       arr_set_capacity(a, _newcap); \
+       _tmp = ARR_BEG(a); \
      } \
-     if (tmp[ARR_SZ] < tmp[ARR_CAP]) { \
-       (*a)[tmp[ARR_SZ]] = elem; \
-       ++(tmp[ARR_SZ]); \
+     if (_tmp[ARR_SZ] < _tmp[ARR_CAP]) { \
+       (*a)[_tmp[ARR_SZ]] = elem; \
+       ++(_tmp[ARR_SZ]); \
      } \
    } while (0)
 
