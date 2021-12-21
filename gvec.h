@@ -21,7 +21,6 @@ typedef struct gvec_s {
 
 #define gvec_append(v, val) \
   do { \
-    int old_sz = gvec_size(v); \
     arr_append(v->arr, val); \
   } while (0)
 

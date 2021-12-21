@@ -1,4 +1,5 @@
 add_executable(gvec_ut gvec_ut.c)
-foreach (p gvec_ut)
+add_executable(gvec_v_ut gvec_v_ut.c)
+foreach (p gvec_ut gvec_v_ut)
   target_link_libraries(${p} bkc)
 endforeach()

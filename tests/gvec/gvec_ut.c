@@ -49,6 +49,8 @@ int t3() {
   }
   CHECK_MSG(gvec_size(v) == 10, "gvec size 10");
   CHECK_MSG(gtype_seqi(gvec_arr(v), (int[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10), "10 seq");
+  CHECK_MSG(gvec_arr(v)[0].i == 0, "elem 0");
+  CHECK_MSG(gvec_arr(v)[1].i == 1, "elem 1");
   gvec_remove(v, 11);
   gvec_remove(v, 8);
   gvec_remove(v, 4);
