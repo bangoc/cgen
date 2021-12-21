@@ -64,35 +64,31 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   return 1;
 }
 
-static int dll_sequence_g(dll_t list, gtype *a, int n, gtype_cmp_t cmp) {
-  if (dll_length(list) != n) {
+static int gdl_sequence_g(gdl_t list, gtype *a, int n, gtype_cmp_t cmp) {
+  if (gdl_length(list) != n) {
     return 0;
   }
-  dln_t p = list->front;
+  gtype *p = list->front;
   for (int i = 0; i < n; ++i) {
     if (cmp(gdn_value(p), a[i]) != 0) {
       return 0;
     }
-    p = p->next;
+    p = gdn_next(p);
   }
   if (p != NULL) {
     return 0;
   }
-  p = list->back;
+  p = gdl_back(list);
   for (int i = n - 1; i >= 0; --i) {
     if (cmp(gdn_value(p), a[i]) != 0) {
       return 0;
     }
-    p = p->prev;
+    p = gdn_prev(p);
   }
   if (p != NULL) {
     return 0;
   }
   return 1;
-}
-
-static int gdl_sequence_g(gdl_t list, gtype *a, int n, gtype_cmp_t cmp) {
-  return dll_sequence_g(to_dll(list), a, n, cmp);
 }
 
 #endif  // TESTS_DLL_HELPER_H_
