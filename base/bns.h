@@ -13,30 +13,30 @@
 #define bns_insert_setup(loc, root, data, cmp, same, parent) \
   do { \
     bn_node_t x = root; \
-    int order; \
+    int _order; \
     while (x) { \
       parent = x; \
-      order = cmp(data, x); \
-      if (!order) { \
+      _order = cmp(data, x); \
+      if (!_order) { \
         same = x; \
       } \
-      x = bns_child(x, order); \
+      x = bns_child(x, _order); \
     } \
-    loc = parent? bns_child_ref(parent, order): &root; \
+    loc = parent? bns_child_ref(parent, _order): &root; \
   } while (0)
 
 #define bns_search_inline(o, t, u, cmp, ...) \
   do { \
-    int order; \
-    bn_node_t x = t->root; \
+    int _order; \
+    bn_node_t _x = t->root; \
     bn_node_t o = NULL_PTR; \
-    while (x) { \
-      order = cmp(u, x); \
-      if (!order) { \
-        o = x; \
+    while (_x) { \
+      _order = cmp(u, _x); \
+      if (!_order) { \
+        o = _x; \
         break; \
       } \
-      x = bns_child(x, order); \
+      _x = bns_child(_x, _order); \
     } \
     __VA_ARGS__; \
   } while (0)
@@ -44,21 +44,21 @@
 // gte = greater than or equal
 #define bns_search_gte_inline(o, t, u, cmp, ...) \
   do {\
-    int order; \
-    bn_node_t x = t->root; \
+    int _order; \
+    bn_node_t _x = t->root; \
     bn_node_t o = NULL_PTR; \
-    while (x) { \
-      order = cmp(u, x); \
-      if (!order) { \
-        o = x; \
+    while (_x) { \
+      _order = cmp(u, _x); \
+      if (!_order) { \
+        o = _x; \
         break; \
       } \
-      if (order < 0) { \
-        o = x; \
-        x = x->left; \
+      if (_order < 0) { \
+        o = _x; \
+        _x = _x->left; \
         continue; \
       } \
-      x = x->right; \
+      _x = _x->right; \
     } \
     __VA_ARGS__;\
   } while (0)
@@ -66,21 +66,21 @@
 // lte = less than or equal
 #define bns_search_lte_inline(o, t, u, cmp, ...) \
   do { \
-    int order; \
-    bn_node_t x = t->root; \
+    int _order; \
+    bn_node_t _x = t->root; \
     bn_node_t o = NULL_PTR; \
-    while (x) { \
-      order = cmp(u, x); \
-      if (!order) { \
-        o = x; \
+    while (_x) { \
+      _order = cmp(u, _x); \
+      if (!_order) { \
+        o = _x; \
         break; \
       } \
-      if (order > 0) { \
-        o = x; \
-        x = x->right; \
+      if (_order > 0) { \
+        o = _x; \
+        _x = _x->right; \
         continue; \
       } \
-      x = x->left; \
+      _x = _x->left; \
     } \
     __VA_ARGS__; \
   } while (0)

@@ -25,39 +25,39 @@ typedef struct gsl_s {
 #define gsl_back(list) (list->back)
 #define gsl_push_back(list, value) \
   do { \
-    gtype *node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
-    gsn_value(node) = value; \
-    gsn_next(node) = NULL; \
+    gtype *_node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
+    gsn_value(_node) = value; \
+    gsn_next(_node) = NULL; \
     if (gsl_back(list)) { \
-      gsn_next(gsl_back(list)) = node; \
-      gsl_back(list) = node; \
+      gsn_next(gsl_back(list)) = _node; \
+      gsl_back(list) = _node; \
     } else { \
-      gsl_back(list) = gsl_front(list) = node; \
+      gsl_back(list) = gsl_front(list) = _node; \
     } \
   } while (0)
 
 #define gsl_push_front(list, value) \
   do { \
-    gtype *node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
-    gsn_value(node) = value; \
-    gsn_next(node) = gsl_front(list); \
+    gtype *_node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
+    gsn_value(_node) = value; \
+    gsn_next(_node) = gsl_front(list); \
     if (gsl_front(list)) { \
-      gsl_front(list) = node; \
+      gsl_front(list) = _node; \
     } else { \
-      gsl_front(list) = gsl_back(list) = node; \
+      gsl_front(list) = gsl_back(list) = _node; \
     } \
   } while (0)
 
 #define gsl_pop_front(list) \
   do { \
-    gtype *front = gsl_front(list); \
-    gtype *tmp = gsn_next(front); \
+    gtype *_front = gsl_front(list); \
+    gtype *_tmp = gsn_next(_front); \
     if (list->free_value) { \
-      list->free_value(front[GSN_VALUE]); \
+      list->free_value(_front[GSN_VALUE]); \
     } \
-    free(front); \
-    gsl_front(list) = tmp; \
-    if (!tmp) { \
+    free(_front); \
+    gsl_front(list) = _tmp; \
+    if (!_tmp) { \
       gsl_back(list) = NULL; \
     } \
   } while (0)

@@ -26,24 +26,24 @@ typedef struct gvec_s {
 
 #define gvec_remove(v, idx) \
   do { \
-    gtype *arr = ARR(v->arr); \
-    int sz = arr_size(v->arr); \
-    if (idx >= sz || idx < 0) { \
+    gtype *_arr = ARR(v->arr); \
+    int _sz = arr_size(v->arr); \
+    if (idx >= _sz || idx < 0) { \
       break; \
     } \
     if (v->free_value) { \
-      v->free_value(arr[idx]); \
+      v->free_value(_arr[idx]); \
     } \
-    for (int i = idx; i < sz - 1; ++i) { \
-      arr[i] = arr[i + 1]; \
+    for (int i = idx; i < _sz - 1; ++i) { \
+      _arr[i] = _arr[i + 1]; \
     } \
-    arr_set_size(v->arr, sz - 1); \
+    arr_set_size(v->arr, _sz - 1); \
   } while (0)
 
 #define gvec_set_capacity(v, cap) \
   do { \
-    int sz = arr_size(v->arr); \
-    if (cap < sz) { \
+    int _sz = arr_size(v->arr); \
+    if (cap < _sz) { \
       break; \
     } \
     arr_set_capacity(v->arr, cap); \
@@ -52,10 +52,10 @@ typedef struct gvec_s {
 #define gvec_free(v) \
   do{ \
     if (v->free_value) { \
-      int sz = arr_size(v->arr); \
-      gtype *arr = ARR(v->arr); \
-      for (int i = 0; i < sz; ++i) { \
-        v->free_value(arr[i]); \
+      int _sz = arr_size(v->arr); \
+      gtype *_arr = ARR(v->arr); \
+      for (int i = 0; i < _sz; ++i) { \
+        v->free_value(_arr[i]); \
       } \
     } \
     arr_free(v->arr); \

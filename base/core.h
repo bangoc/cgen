@@ -21,18 +21,18 @@
         while(0)
 
 #define BENCH(NAME, ITER, ...)    do { \
-        double sum = 0, start, stop; \
+        double _sum = 0, _start, _stop; \
         for (int i = 0; i < ITER; ++i) { \
-          start = clock(); \
+          _start = clock(); \
           { __VA_ARGS__; } \
-          stop = clock(); \
-          sum += stop - start; \
+          _stop = clock(); \
+          _sum += _stop - _start; \
         } \
         if (ITER > 1) { \
           printf("%s (trung bình %d lượt) = %.5g s\n", \
-                NAME, ITER,  (sum/CLOCKS_PER_SEC) / ITER); \
+                NAME, ITER,  (_sum/CLOCKS_PER_SEC) / ITER); \
         } else { \
-          printf("%s: %5g s\n", NAME, sum/CLOCKS_PER_SEC); \
+          printf("%s: %5g s\n", NAME, _sum/CLOCKS_PER_SEC); \
         }\
     } while (0)
 

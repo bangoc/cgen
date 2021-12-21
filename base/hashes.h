@@ -24,12 +24,12 @@ extern "C" {
 #define hashes_next_pkey_or_pvalue(m, c, kv, o) \
   do { \
     o = NULL; \
-    uint *hashes = ARR(m->hashes); \
-    gtype *arr = ARR(m->kv); \
-    int idx = c? c - arr + 1: 0; \
-    for (int i = idx; i < m->size; ++i) { \
-      if (HASH_IS_REAL(hashes[i])) { \
-        o = arr + i; \
+    uint *_hashes = ARR(m->hashes); \
+    gtype *_arr = ARR(m->kv); \
+    int _idx = c? c - _arr + 1: 0; \
+    for (int i = _idx; i < m->size; ++i) { \
+      if (HASH_IS_REAL(_hashes[i])) { \
+        o = _arr + i; \
         break; \
       } \
     } \
@@ -42,9 +42,9 @@ extern const int prime_mod [];
 
 #define evict_key_or_value(a, i, v, ov) \
   { \
-    gtype tmp = a[i]; \
+    gtype _tmp = a[i]; \
     a[i] = v; \
-    ov = tmp; \
+    ov = _tmp; \
   }
 
 // Một hàm băm khái quát

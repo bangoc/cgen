@@ -64,15 +64,15 @@ int rb_delete(bn_tree_t t, bn_node_t z);
 /* x là trục xoay */
 #define bn_rotate(t, x, right, left) \
   do { \
-    bn_node_t y = x->right; \
-    x->right = y->left; \
-    if (y->left != NULL_PTR) { \
-      y->left->top = x; \
+    bn_node_t _y = x->right; \
+    x->right = _y->left; \
+    if (_y->left != NULL_PTR) { \
+      _y->left->top = x; \
     } \
-    y->top = x->top; \
-    bn_change_child(x, y, x->top, t); \
-    y->left = x; \
-    x->top = y; \
+    _y->top = x->top; \
+    bn_change_child(x, _y, x->top, t); \
+    _y->left = x; \
+    x->top = _y; \
   } while (0)
 
 #endif  // RB_H_

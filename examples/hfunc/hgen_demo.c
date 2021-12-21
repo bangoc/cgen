@@ -10,20 +10,20 @@
 
 #define DEMO_S(str) \
   do { \
-    const char * s = str; \
-    printf("hgen(\"%s\") = %lu\n", s, (unsigned long)hgen(s, strlen(s))); \
+    const char * _s = str; \
+    printf("hgen(\"%s\") = %lu\n", _s, (unsigned long)hgen(_s, strlen(_s))); \
   } while (0)
 
 #define DEMO_D(value) \
   do {\
-    double d = value; \
-    printf("hgen(%f) = %lu\n", d, (unsigned long)hgen(&d, sizeof d)); \
+    double _d = value; \
+    printf("hgen(%f) = %lu\n", _d, (unsigned long)hgen(&_d, sizeof _d)); \
   } while (0)
 
 #define DEMO_L(value) \
   do { \
-    long l = value; \
-    printf("hgen(%ld) = %lu\n", l, (unsigned long)hgen(&l, sizeof l)); \
+    long _l = value; \
+    printf("hgen(%ld) = %lu\n", _l, (unsigned long)hgen(&_l, sizeof _l)); \
   } while (0)
 
 int main() {
