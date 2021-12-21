@@ -63,9 +63,7 @@ static char *cgetline(char **lineptr, long n, FILE *inp) {
   return idx > 0? *lineptr: NULL;
 }
 
-static void clear_stdin() {
-  while (getchar() != '\n');
-}
+#define clear_stdin() while (getchar() != '\n')
 
 static char *remove_tail_lf(char *s) {
   if (!s) {
