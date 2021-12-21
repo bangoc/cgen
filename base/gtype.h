@@ -13,11 +13,12 @@
 typedef unsigned int uint;
 typedef uint32_t uint32;
 
-typedef union {
+typedef union generic_type {
   long i;
   double d;
   char *s;
   void *v;
+  union generic_type *g;
 } gtype;
 
 #define gtype_value(type, val) ((gtype){.type = val})

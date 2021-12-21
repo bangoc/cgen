@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 gtype pop_value_front(gsl_t list) {
-  gtype tmp = gsl_front_value(list);
+  gtype tmp = gsl_front(list)[GSN_VALUE];
   gsl_pop_front(list);
   return tmp;
 }
@@ -19,12 +19,12 @@ int main() {
   gsl_push_back(list, (gtype){.i = 3});
   CHECK_MSG(gsl_length(list) == 3, "Append n3 size");
 
-  CHECK_MSG(gsn_value(gsl_front(list)).i == 2, "Value 2");
-  CHECK_MSG(gsn_value(gsn_next(gsl_front(list))).i == 1, "Value 1");
-  CHECK_MSG(gsn_value(gsn_next(gsn_next(gsl_front(list)))).i == 3, "Value 3");
+  CHECK_MSG(gsl_front(list)->i == 2, "Value 2");
+  CHECK_MSG(gsn_next(gsl_front(list))->i == 1, "Value 1");
+  CHECK_MSG(gsn_next(gsn_next(gsl_front(list)))->i == 3, "Value 3");
   CHECK_MSG(pop_value_front(list).i == 2, "Remove 2");
   CHECK_MSG(pop_value_front(list).i == 1, "Remove 1");
   CHECK_MSG(pop_value_front(list).i == 3, "Remove 3");
   gsl_free(list);
-  return 0;
+  TEST_OK();
 }
