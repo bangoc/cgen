@@ -18,6 +18,7 @@ typedef struct gvec_s {
 #define gvec_capacity(v) (arr_capacity((v)->arr))
 #define gvec_arr(v) (ARR(v->arr))
 #define gvec_elem(v, i) ((gvec_arr(v))[i])
+#define gvec_elem_idx(v, elem) ((long)(elem - gvec_arr(v)))
 
 #define gvec_append(v, val) \
   do { \
