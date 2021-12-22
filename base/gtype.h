@@ -51,6 +51,18 @@ static int gtype_cmp_s(gtype v1, gtype v2) {
   return strcmp(v1.s, v2.s);
 }
 
+static int gtype_qsort_l(const void *v1, const void *v2) {
+  return gtype_cmp_l(*((gtype*)v1), *((gtype*)v2));
+}
+
+static int gtype_qsort_d(const void *v1, const void *v2) {
+  return gtype_cmp_d(*((gtype*)v1), *((gtype*)v2));
+}
+
+static int gtype_qsort_s(const void *v1, const void *v2) {
+  return gtype_cmp_s(*((gtype*)v1), *((gtype*)v2));
+}
+
 static int gtype_print_l(gtype value) {
   printf("%ld\n", value.l);
   return 0;  // Tương thích với foreach

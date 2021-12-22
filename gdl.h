@@ -105,9 +105,6 @@ typedef struct gdl_s {
     free(list); \
   } while (0)
 
-#define gdl_traverse(cur, list) \
-  for (gtype *cur = gdl_front(list); cur; cur = gdn_next(cur))
-
 #define gdl_inserta(list, pos, value) \
   do { \
     if (!pos) { \
@@ -146,5 +143,8 @@ typedef struct gdl_s {
 
 gdl_t gdl_create(gtype_free_t free_value);
 int gdl_length(gdl_t list);
+
+#define gdl_traverse(cur, list) \
+  for (gtype *cur = gdl_front(list); cur; cur = gdn_next(cur))
 
 #endif  // GDL_H_

@@ -65,6 +65,9 @@ typedef struct gvec_s {
 #define gvec_qsort(v, cmp) \
   qsort(ARR(v->arr), gvec_size(v), sizeof(gtype), cmp)
 
+#define gvec_traverse(cur, v) \
+  for (gtype *cur = gvec_arr(v), *end = gvec_arr(v) + gvec_size(v); cur < end; ++cur)
+
 gvec_t gvec_create(int cap, gtype_free_t free_value);
 
 #endif  // GVEC_H_
