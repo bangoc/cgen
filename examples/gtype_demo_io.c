@@ -21,8 +21,8 @@ void print_contact(gtype v) {
 int main() {
   gtype v;
   printf("Nhập 1 số nguyên: ");
-  scanf("%ld", &v.i);
-  printf("Bạn đã nhập: %ld\n", v.i);
+  scanf("%ld", &v.l);
+  printf("Bạn đã nhập: %ld\n", v.l);
   printf("Nhập 1 số thực: ");
   scanf("%lf", &v.d);
   printf("Bạn đã nhập: %f\n", v.d);

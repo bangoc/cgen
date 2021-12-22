@@ -6,7 +6,7 @@
 #include <string.h>
 
 int gtype_inc_cmp_i(const void *v1, const void *v2) {
-  return ((const gtype*)v1)->i - ((const gtype*)v2)->i;
+  return ((const gtype*)v1)->l - ((const gtype*)v2)->l;
 }
 
 int gtype_inc_cmp_s(const void *v1, const void *v2) {
@@ -18,9 +18,9 @@ int t1() {
   int a[] = {3, 1, 5, 6, 8, 9, 10, 2};
   int n = sizeof(a)/ sizeof(a[0]);
   for (int i = 0; i < n; ++i) {
-    gvec_append(v, gtype_i(a[i]));
+    gvec_append(v, gtype_l(a[i]));
   }
-  CHECK_MSG(gvec_elem(v, 0).i == 3, "elem 0 == 3");
+  CHECK_MSG(gvec_elem(v, 0).l == 3, "elem 0 == 3");
   CHECK_MSG(gtype_seqi(gvec_arr(v), a, n), "vec sequence");
   gvec_qsort(v, gtype_inc_cmp_i);
   CHECK_MSG(gtype_seqi(gvec_arr(v), (int[]){1, 2, 3, 5, 6, 8, 9, 10}, n), "sorted vec seq");
@@ -45,12 +45,12 @@ int t2() {
 int t3() {
   gvec_t v = gvec_create(3, NULL);
   for (int i = 0; i < 10; ++i) {
-    gvec_append(v, gtype_i(i));
+    gvec_append(v, gtype_l(i));
   }
   CHECK_MSG(gvec_size(v) == 10, "gvec size 10");
   CHECK_MSG(gtype_seqi(gvec_arr(v), (int[]){0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, 10), "10 seq");
-  CHECK_MSG(gvec_arr(v)[0].i == 0, "elem 0");
-  CHECK_MSG(gvec_arr(v)[1].i == 1, "elem 1");
+  CHECK_MSG(gvec_arr(v)[0].l == 0, "elem 0");
+  CHECK_MSG(gvec_arr(v)[1].l == 1, "elem 1");
   gvec_remove(v, 11);
   gvec_remove(v, 8);
   gvec_remove(v, 4);

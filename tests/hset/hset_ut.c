@@ -19,16 +19,16 @@ int t1() {
 }
 
 int t2() {
-  hset_t hs = hset_create(gtype_hash_i, gtype_cmp_i, NULL);
+  hset_t hs = hset_create(gtype_hash_l, gtype_cmp_l, NULL);
   int a[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   int n = sizeof(a)/sizeof(a[0]);
   for (int i = 0; i < n; ++i) {
-    CHECK_MSG(hset_insert(hs, gtype_i(a[i])).inserted == 1, "Insert a[i]");
+    CHECK_MSG(hset_insert(hs, gtype_l(a[i])).inserted == 1, "Insert a[i]");
   }
   for (int i = 0; i < n; ++i) {
-    CHECK_MSG(hset_contains(hs, gtype_i(a[i])), "Contains a[i]");
-    hset_remove(hs, gtype_i(a[i]));
-    CHECK_MSG(hset_contains(hs, gtype_i(a[i])) == 0, "Not contain a[i]");
+    CHECK_MSG(hset_contains(hs, gtype_l(a[i])), "Contains a[i]");
+    hset_remove(hs, gtype_l(a[i]));
+    CHECK_MSG(hset_contains(hs, gtype_l(a[i])) == 0, "Not contain a[i]");
   }
   hset_free(hs);
   return 0;

@@ -3,20 +3,20 @@
 
 int main() {
   hmap_t map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
-  hmap_insert(map, gtype_s("aaa"), gtype_i(100));
-  hmap_insert(map, gtype_s("bbb"), gtype_i(200));
-  hmap_insert(map, gtype_s("ccc"), gtype_i(300));
-  hmap_insert(map, gtype_s("ddd"), gtype_i(400));
-  hmap_insert(map, gtype_s("eee"), gtype_i(500));
-  hmap_insert(map, gtype_s("fff"), gtype_i(600));
+  hmap_insert(map, gtype_s("aaa"), gtype_l(100));
+  hmap_insert(map, gtype_s("bbb"), gtype_l(200));
+  hmap_insert(map, gtype_s("ccc"), gtype_l(300));
+  hmap_insert(map, gtype_s("ddd"), gtype_l(400));
+  hmap_insert(map, gtype_s("eee"), gtype_l(500));
+  hmap_insert(map, gtype_s("fff"), gtype_l(600));
   gtype *value;
   if (value = hmap_value(map, gtype_s("ccc"))) {
-    printf("Value of ccc = %ld\n", value->i);
+    printf("Value of ccc = %ld\n", value->l);
   } else {
     printf("Surprised\n");
   }
   hmap_traverse(key, value, map) {
-    printf("%s:%ld\n", key->s, value->i);
+    printf("%s:%ld\n", key->s, value->l);
   }
   hmap_free(map);
   return 0;

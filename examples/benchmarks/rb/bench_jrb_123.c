@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
-              jrb_insert_int(t, value++, (Jval){.i = 0});
+              jrb_insert_int(t, value++, (Jval){.l = 0});
             }
           );
     sprintf(desc, "%ld x search from %ld (s): ", len, len * point);

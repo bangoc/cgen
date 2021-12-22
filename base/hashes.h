@@ -3,6 +3,8 @@
 
 #include "base/gtype.h"
 
+#include <stdint.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -20,6 +22,10 @@ extern "C" {
 #define HASH_IS_REAL(h_) ((h_) >= MIN_HASH_VALUE)
 #define HASH_IS_NOTREAL(h_) (!HASH_IS_REAL(h_))
 #define MAX(a, b) (a > b? a: b)
+
+typedef unsigned int uint;
+typedef uint32_t uint32;
+typedef uint (*gtype_hash_t) (gtype);
 
 #define hashes_next_pkey_or_pvalue(m, c, kv, o) \
   do { \
@@ -77,8 +83,8 @@ static inline uint gtype_hash_d(gtype v) {
   return (uint) v.d;
 }
 
-static inline uint gtype_hash_i(gtype v) {
-  return (uint) v.i;
+static inline uint gtype_hash_l(gtype v) {
+  return (uint) v.l;
 }
 
 #ifdef __cplusplus
