@@ -37,10 +37,10 @@
  *    Trong trường hợp không thể cấp phát được bộ nhớ để lưu
  *    dòng, hàm trả về NULL và *lineptr == NULL.
  */
-static char *cgetline(char **lineptr, long n, FILE *inp) {
+static char *cgetline(char **lineptr, long *nptr, FILE *inp) {
   char buff[CGEN_IO_BUF_SIZE];
   long idx = 0, len, tmp;
-
+  long n = nptr? *nptr: 0;
   while (fgets(buff, CGEN_IO_BUF_SIZE, inp)) {
     len = strlen(buff);
     tmp = idx + len + 1;
@@ -60,7 +60,13 @@ static char *cgetline(char **lineptr, long n, FILE *inp) {
       break;
     }
   }
-  return idx > 0? *lineptr: NULL;
+  if (idx == 0) {
+    return NULL;
+  }
+  if (nptr) {
+    *nptr = n;
+  }
+  return *lineptr;
 }
 
 #define clear_stdin() while (getchar() != '\n')
