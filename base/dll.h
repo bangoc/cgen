@@ -23,10 +23,10 @@ typedef struct dll_s {
 #define dll_back(list) (to_dll(list)->back)
 
 #define dll_traverse(cur, list) \
-  for (dln_t cur = list->front; cur != NULL; cur = cur->next)
+  for (dln_t cur = (list)->front; cur != NULL; cur = cur->next)
 
 #define dll_rtraverse(cur, list) \
-  for (dln_t cur = list->back; cur != NULL; cur = cur->prev)
+  for (dln_t cur = (list)->back; cur != NULL; cur = cur->prev)
 
 /* Giao diện khái quát */
 

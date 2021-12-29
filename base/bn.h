@@ -20,7 +20,7 @@ typedef struct bn_node {
   struct bn_node *top;
 } *bn_node_t;
 
-#define to_bn(n) ((bn_node_t)n)
+#define to_bn(n) ((bn_node_t)(n))
 #define bn_connect1(n1, link, n2) to_bn(n1)->link = to_bn(n2)
 #define bn_connect2(n1, link1, n2, link2) bn_connect1(n1, link1, n2); \
     bn_connect1(n2, link2, n1)
@@ -72,7 +72,7 @@ bn_node_t bn_prev_inorder(bn_node_t x);
       npp(cur); \
     }
 
-#define bn_is_empty(t) (t->root == NULL_PTR)
+#define bn_is_empty(t) ((t)->root == NULL_PTR)
 
 #define bn_change_child(old_node, new_node, parent, t) \
   do { \

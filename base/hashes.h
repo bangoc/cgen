@@ -21,7 +21,7 @@ extern "C" {
 #define HASH_IS_DELETED(h_) ((h_) == DELETED_HASH_VALUE)
 #define HASH_IS_REAL(h_) ((h_) >= MIN_HASH_VALUE)
 #define HASH_IS_NOTREAL(h_) (!HASH_IS_REAL(h_))
-#define MAX(a, b) (a > b? a: b)
+#define MAX(a, b) ((a) > (b)? (a): (b))
 
 typedef unsigned int uint;
 typedef uint32_t uint32;
@@ -29,13 +29,13 @@ typedef uint (*gtype_hash_t) (gtype);
 
 #define hashes_next_pkey_or_pvalue(m, c, kv, o) \
   do { \
-    o = NULL; \
-    uint *_hashes = ARR(m->hashes); \
-    gtype *_arr = ARR(m->kv); \
-    int _idx = c? c - _arr + 1: 0; \
-    for (int i = _idx; i < m->size; ++i) { \
-      if (HASH_IS_REAL(_hashes[i])) { \
-        o = _arr + i; \
+    (o) = NULL; \
+    uint *_hashes = ARR((m)->hashes); \
+    gtype *_arr = ARR((m)->kv); \
+    int _idx = (c)? (c) - _arr + 1: 0; \
+    for (int _i = _idx; _i < (m)->size; ++_i) { \
+      if (HASH_IS_REAL(_hashes[_i])) { \
+        (o) = _arr + _i; \
         break; \
       } \
     } \
@@ -43,14 +43,14 @@ typedef uint (*gtype_hash_t) (gtype);
 
 extern const int prime_mod [];
 
-#define get_status_bit(bitmap, index) ((bitmap[index/32] >> (index %32)) & 1)
-#define set_status_bit(bitmap, index) (bitmap[index / 32] |= 1U << (index % 32))
+#define get_status_bit(bitmap, index) (((bitmap)[(index)/32] >> ((index) %32)) & 1)
+#define set_status_bit(bitmap, index) ((bitmap)[(index) / 32] |= 1U << ((index) % 32))
 
 #define evict_key_or_value(a, i, v, ov) \
   { \
-    gtype _tmp = a[i]; \
-    a[i] = v; \
-    ov = _tmp; \
+    gtype _tmp = (a)[(i)]; \
+    (a)[(i)] = (v); \
+    (ov) = _tmp; \
   }
 
 // Một hàm băm khái quát

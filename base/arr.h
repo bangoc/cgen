@@ -9,8 +9,8 @@
 
 #define ARR(pa) (*(pa))
 #define arr_t(etyp) etyp **
-#define elem(a, i) (ARR(a)[i])
-#define elem_ref(a, i) (ARR(a) + i)
+#define elem(a, i) (ARR(a)[(i)])
+#define elem_ref(a, i) (ARR(a) + (i))
 
 enum arr_attrib {
   ARR_SZ = 0,
@@ -43,33 +43,33 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 #define arr_free(a) \
   do { \
     free(ARR_BEG(a)); \
-    *a = NULL; \
+    *(a) = NULL; \
     free(a); \
-    a = NULL; \
+    (a) = NULL; \
   } while (0)
 
 #define arr_set_capacity(a, newcap) \
   do { \
     long *_tmp = ARR_BEG(a); \
     long _elem_sz = _tmp[ARR_ELEM_SZ]; \
-    _tmp = realloc(_tmp, ARR_ATT_MAX * sizeof(long) + newcap * _elem_sz); \
+    _tmp = realloc(_tmp, ARR_ATT_MAX * sizeof(long) + (newcap) * _elem_sz); \
     if (_tmp) { \
-      if (_tmp[ARR_SZ] > newcap) { \
-        _tmp[ARR_SZ] = newcap; \
+      if (_tmp[ARR_SZ] > (newcap)) { \
+        _tmp[ARR_SZ] = (newcap); \
       } \
-      _tmp[ARR_CAP] = newcap; \
-      (*((void**)a)) = (void*)(_tmp + ARR_ATT_MAX); \
+      _tmp[ARR_CAP] = (newcap); \
+      (*((void**)(a))) = (void*)(_tmp + ARR_ATT_MAX); \
     } \
   } while (0)
 
 #define arr_set_size(a, newsize) \
   do { \
     long _c = arr_capacity(a); \
-    if (newsize > _c) {  \
+    if ((newsize) > _c) {  \
       arr_set_capacity(a, newsize); \
     } \
-    if (newsize <= arr_capacity(a)) { \
-      arr_size(a) = newsize; \
+    if ((newsize) <= arr_capacity(a)) { \
+      arr_size(a) = (newsize); \
     } \
   } while (0)
 
@@ -90,7 +90,7 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
        _tmp = ARR_BEG(a); \
      } \
      if (_tmp[ARR_SZ] < _tmp[ARR_CAP]) { \
-       (*a)[_tmp[ARR_SZ]] = elem; \
+       ARR(a)[_tmp[ARR_SZ]] = (elem); \
        ++(_tmp[ARR_SZ]); \
      } \
    } while (0)

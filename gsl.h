@@ -19,14 +19,14 @@ typedef struct gsl_s {
   gtype_free_t free_value;
 } *gsl_t;
 
-#define gsn_value(n) (*n)
-#define gsn_next(n) (((gtype*)n + GSN_NEXT)->g)
+#define gsn_value(n) (*(n))
+#define gsn_next(n) (((gtype*)(n) + GSN_NEXT)->g)
 #define gsl_front(list) (list->front)
 #define gsl_back(list) (list->back)
 #define gsl_push_back(list, value) \
   do { \
     gtype *_node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
-    gsn_value(_node) = value; \
+    gsn_value(_node) = (value); \
     gsn_next(_node) = NULL; \
     if (gsl_back(list)) { \
       gsn_next(gsl_back(list)) = _node; \
@@ -39,7 +39,7 @@ typedef struct gsl_s {
 #define gsl_push_front(list, value) \
   do { \
     gtype *_node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
-    gsn_value(_node) = value; \
+    gsn_value(_node) = (value); \
     gsn_next(_node) = gsl_front(list); \
     if (gsl_front(list)) { \
       gsl_front(list) = _node; \

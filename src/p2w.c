@@ -7,10 +7,10 @@
 
 #define arr_set_value_with_index(a, v, i) \
   do {\
-    if (i >= arr_capacity(a)) { \
-      arr_set_capacity(a, 2 * i + 1); \
+    if ((i) >= arr_capacity(a)) { \
+      arr_set_capacity(a, 2 * (i) + 1); \
     } \
-    ARR(a)[i] = v; \
+    ARR(a)[(i)] = (v); \
   } while (0)
 
 int p2w_init(p2wheap_t h) {

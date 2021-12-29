@@ -51,10 +51,10 @@ int rb_delete(bn_tree_t t, bn_node_t z);
 
 
 // ========== Macro viết nhanh ===========
-#define to_rb(n) ((rb_node_t)n)
-#define rb_color(n) (n? to_rb(n)->color: RB_BLACK)
+#define to_rb(n) ((rb_node_t)(n))
+#define rb_color(n) ((n)? to_rb(n)->color: RB_BLACK)
 #define rb_color_str(n) color_names[(int)rb_color(n)]
-#define rb_set_color(n, new_color) to_rb(n)->color = new_color
+#define rb_set_color(n, new_color) to_rb(n)->color = (new_color)
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
@@ -64,15 +64,15 @@ int rb_delete(bn_tree_t t, bn_node_t z);
 /* x là trục xoay */
 #define bn_rotate(t, x, right, left) \
   do { \
-    bn_node_t _y = x->right; \
-    x->right = _y->left; \
+    bn_node_t _y = (x)->right; \
+    (x)->right = _y->left; \
     if (_y->left != NULL_PTR) { \
-      _y->left->top = x; \
+      _y->left->top = (x); \
     } \
-    _y->top = x->top; \
-    bn_change_child(x, _y, x->top, t); \
-    _y->left = x; \
-    x->top = _y; \
+    _y->top = (x)->top; \
+    bn_change_child(x, _y, (x)->top, t); \
+    _y->left = (x); \
+    (x)->top = _y; \
   } while (0)
 
 #endif  // RB_H_

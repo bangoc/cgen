@@ -25,9 +25,9 @@ typedef union generic_type {
 
 #define gtype_swap(v1, v2) \
   do { \
-    gtype _tmp = v1; \
-    v1 = v2; \
-    v2 = _tmp; \
+    gtype _tmp = (v1); \
+    (v1) = (v2); \
+    (v2) = _tmp; \
   } while (0)
 
 typedef int (*gtype_cmp_t)(gtype, gtype);

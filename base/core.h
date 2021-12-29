@@ -9,7 +9,7 @@
 #include <time.h>
 
 #define container_of(ptr, type, member) \
-  ((type *)((void*)ptr - offsetof(type, member)))
+  ((type *)((void*)(ptr) - offsetof(type, member)))
 
 #define New(TYPE, ...) TYPE ## _create(  __VA_ARGS__ )
 
@@ -22,7 +22,7 @@
 
 #define BENCH(NAME, ITER, ...)    do { \
         double _sum = 0, _start, _stop; \
-        for (int i = 0; i < ITER; ++i) { \
+        for (int _i = 0; _i < ITER; ++_i) { \
           _start = clock(); \
           { __VA_ARGS__; } \
           _stop = clock(); \

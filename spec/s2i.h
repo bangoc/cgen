@@ -44,7 +44,7 @@ void s2i_print_node(s2i_node_t n);
 
 // ========== Macro viết nhanh ===========
 
-#define to_s2i(n) ((s2i_node_t)n)
+#define to_s2i(n) ((s2i_node_t)(n))
 #define s2i_node_key(n) to_s2i(n)->key
 #define s2i_node_value(n) to_s2i(n)->value
 

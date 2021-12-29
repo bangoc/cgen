@@ -31,9 +31,9 @@ typedef struct hmap_insert_result {
   int inserted;
 } hmap_ires;
 
-#define hmap_hash_at(map, idx) (elem_ref(map->hashes, idx))
-#define hmap_key_at(map, idx) (elem_ref(map->keys, idx))
-#define hmap_value_at(map, idx) (elem_ref(map->values, idx))
+#define hmap_hash_at(map, idx) (elem_ref((map)->hashes, idx))
+#define hmap_key_at(map, idx) (elem_ref((map)->keys, idx))
+#define hmap_value_at(map, idx) (elem_ref((map)->values, idx))
 
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t key_free, gtype_free_t value_free);

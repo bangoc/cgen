@@ -32,10 +32,10 @@ long p1w_size(p1w_t h);
 
 #define p1w_free(h) \
   do { \
-    arr_free(h->data); \
+    arr_free((h)->data); \
     free(h); \
   } while (0)
 
-#define P1WARR(h) (ARR(h->data))
+#define P1WARR(h) (ARR((h)->data))
 
 #endif  // P1W_H_

@@ -36,15 +36,15 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 
     if (p == p->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
-      bn_node_t u = p->top->right; \
-      if (rb_is_red(u)) { \
+      bn_node_t _u = p->top->right; \
+      if (rb_is_red(_u)) { \
         /*     GP                gp  <- n mới                      \
              p   u  thành>>>   P    U                              \
           ->n <-     có thể vi phạm tính chất 4 nếu gp->top là đỏ,\
                      n có thể là con trái hoặc con phải của p     \
          */ \
         rb_set_black(p); \
-        rb_set_black(u); \
+        rb_set_black(_u); \
         rb_set_red(p->top); \
         n = p->top; \
         p = n->top; \

@@ -20,17 +20,17 @@ typedef struct gdl_s {
   gtype_free_t free_value;
 } *gdl_t;
 
-#define gdn_value(n) (*n)
-#define gdn_next(n) (((gtype*)n + GDN_NEXT)->g)
-#define gdn_prev(n) (((gtype*)n + GDN_PREV)->g)
+#define gdn_value(n) (*(n))
+#define gdn_next(n) (((gtype*)(n) + GDN_NEXT)->g)
+#define gdn_prev(n) (((gtype*)(n) + GDN_PREV)->g)
 #define gdn_create(nn, value) \
   gtype *nn = malloc(GDN_ELEMENTS * sizeof(gtype)); \
-  gdn_value(nn) = value; \
+  gdn_value(nn) = (value); \
   gdn_next(nn) = NULL; \
   gdn_prev(nn) = NULL
 
-#define gdl_front(list) (list->front)
-#define gdl_back(list) (list->back)
+#define gdl_front(list) ((list)->front)
+#define gdl_back(list) ((list)->back)
 #define gdl_is_empty(list) (gdl_front(list) == NULL && gdl_back(list) == NULL)
 #define gdl_push_front(list, value) \
   do { \
@@ -107,14 +107,14 @@ typedef struct gdl_s {
 
 #define gdl_inserta(list, pos, value) \
   do { \
-    if (!pos) { \
+    if (!(pos)) { \
       gdl_push_back(list, value); \
       break; \
     } \
     gdn_create(_nn, value); \
     gtype *_tmp = gdn_next(pos); \
     gdn_next(pos) = _nn; \
-    gdn_prev(_nn) = pos; \
+    gdn_prev(_nn) = (pos); \
     gdn_next(_nn) = _tmp; \
     if (_tmp) { \
       gdn_prev(_tmp) = _nn; \
@@ -125,14 +125,14 @@ typedef struct gdl_s {
 
 #define gdl_insertb(list, pos, value) \
   do { \
-    if (!pos) { \
+    if (!(pos)) { \
       gdl_push_front(list, value); \
       break; \
     } \
     gdn_create(_nn, value); \
     gtype *_tmp = gdn_prev(pos); \
     gdn_prev(pos) = _nn; \
-    gdn_next(_nn) = pos; \
+    gdn_next(_nn) = (pos); \
     gdn_prev(_nn) = _tmp; \
     if (_tmp) { \
       gdn_next(_tmp) = _nn; \

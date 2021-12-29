@@ -7,28 +7,28 @@
 
 #include "base/bn.h"
 
-#define bns_child(n, order) (order < 0? n->left: n->right)
-#define bns_child_ref(n, order) (order < 0? &n->left: &n->right)
+#define bns_child(n, order) ((order) < 0? (n)->left: (n)->right)
+#define bns_child_ref(n, order) ((order) < 0? &((n)->left): &((n)->right))
 
 #define bns_insert_setup(loc, root, data, cmp, same, parent) \
   do { \
-    bn_node_t x = root; \
+    bn_node_t _x = (root); \
     int _order; \
-    while (x) { \
-      parent = x; \
-      _order = cmp(data, x); \
+    while (_x) { \
+      (parent) = _x; \
+      _order = cmp(data, _x); \
       if (!_order) { \
-        same = x; \
+        (same) = _x; \
       } \
-      x = bns_child(x, _order); \
+      _x = bns_child(_x, _order); \
     } \
-    loc = parent? bns_child_ref(parent, _order): &root; \
+    (loc) = (parent)? bns_child_ref(parent, _order): &(root); \
   } while (0)
 
 #define bns_search_inline(o, t, u, cmp, ...) \
   do { \
     int _order; \
-    bn_node_t _x = t->root; \
+    bn_node_t _x = (t)->root; \
     bn_node_t o = NULL_PTR; \
     while (_x) { \
       _order = cmp(u, _x); \
@@ -45,7 +45,7 @@
 #define bns_search_gte_inline(o, t, u, cmp, ...) \
   do {\
     int _order; \
-    bn_node_t _x = t->root; \
+    bn_node_t _x = (t)->root; \
     bn_node_t o = NULL_PTR; \
     while (_x) { \
       _order = cmp(u, _x); \
@@ -67,7 +67,7 @@
 #define bns_search_lte_inline(o, t, u, cmp, ...) \
   do { \
     int _order; \
-    bn_node_t _x = t->root; \
+    bn_node_t _x = (t)->root; \
     bn_node_t o = NULL_PTR; \
     while (_x) { \
       _order = cmp(u, _x); \
@@ -95,7 +95,7 @@ typedef struct bns_node_g {
   gtype key;
 } *bns_node_g_t;
 
-#define to_bns_node_g(n) ((bns_node_g_t)n)
+#define to_bns_node_g(n) ((bns_node_g_t)(n))
 #define bns_node_g_key(n) (to_bns_node_g(n)->key)
 
 typedef struct bns_tree_g {
@@ -103,7 +103,7 @@ typedef struct bns_tree_g {
   bn_compare_t cmp;
 } *bns_tree_g_t;
 
-#define to_bns_tree_g(t) ((bns_tree_g_t)t)
+#define to_bns_tree_g(t) ((bns_tree_g_t)(t))
 #define bns_tree_g_cmp(t) (to_bns_tree_g(t)->cmp)
 
 // Hỗ trợ giản lược cách viết bns_tree_g_cmp(t)(v1, v2)

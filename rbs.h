@@ -25,7 +25,7 @@ typedef struct rbs_insert_result {
   int inserted;
 } rbs_ires;
 
-#define to_rbs(n) ((rbs_node_t)n)
+#define to_rbs(n) ((rbs_node_t)(n))
 #define rbs_node_value(n) (to_rbs(n)->value)
 
 rbs_node_t rbs_create_node(gtype elem);
@@ -42,6 +42,6 @@ void rbs_free(rbs_t s);
 
 #define rbs_free(s) \
     do {  \
-      bn_free_tree((bn_tree_t)s); \
+      bn_free_tree((bn_tree_t)(s)); \
     } while (0)
 #endif  // RBS_H_

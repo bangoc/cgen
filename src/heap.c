@@ -11,34 +11,34 @@
 //   >   - min heap
 #define heap_shift_down(a, i, sz, nprop, cmp) \
   for (;;) { \
-    long l = HLEFT(i), r = HRIGHT(i), root = i; \
-    if (l < sz && cmp(a[root], a[l]) nprop 0) { \
-      root = l; \
+    long _lc = HLEFT(i), _rc = HRIGHT(i), _root = (i); \
+    if (_lc < (sz) && cmp((a)[_root], (a)[_lc]) nprop 0) { \
+      _root = _lc; \
     } \
-    if (r < sz && cmp(a[root], a[r]) nprop 0) { \
-      root = r; \
+    if (_rc < sz && cmp((a)[_root], (a)[_rc]) nprop 0) { \
+      _root = _rc; \
     } \
-    if (root == i) { \
+    if (_root == (i)) { \
       break; \
     } \
-    gtype_swap(a[i], a[root]); \
-    i = root; \
+    gtype_swap((a)[(i)], (a)[_root]); \
+    (i) = _root; \
   }
 
 #define heap_shift_up(a, i, nprop, cmp, swap) \
-  while (i > 0) { \
-    long j = HTOP(i); \
-    if (cmp(a[j], a[i]) nprop 0) { \
-      swap(a[i], a[j]); \
-      i = j; \
+  while ((i) > 0) { \
+    long _j = HTOP(i); \
+    if (cmp((a)[_j], (a)[(i)]) nprop 0) { \
+      swap((a)[(i)], (a)[_j]); \
+      (i) = _j; \
     } else {\
       break; \
     }\
   }
 
 #define heap_make(a, sz, nprop, cmp) \
-  for (long i = sz / 2; i >= 0; --i) { \
-    heap_shift_down(a, i, sz, nprop, cmp); \
+  for (long _i = (sz) / 2; _i >= 0; --_i) { \
+    heap_shift_down(a, _i, sz, nprop, cmp); \
   } \
 
 void min_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp) {

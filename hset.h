@@ -30,8 +30,8 @@ typedef struct hset_insert_result {
   int inserted;
 } hset_ires;
 
-#define hset_hash_at(set, idx) (elem_ref(set->hashes, idx))
-#define hset_key_at(set, idx) (elem_ref(set->keys, idx))
+#define hset_hash_at(set, idx) (elem_ref((set)->hashes, idx))
+#define hset_key_at(set, idx) (elem_ref((set)->keys, idx))
 #define INDEX_NOT_FOUND -1
 #define hset_contains(hs, value) (hset_index_of(hs, value) != INDEX_NOT_FOUND)
 

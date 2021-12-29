@@ -13,7 +13,7 @@ typedef struct idn_s {
   int value;
 } *idn_t;
 
-#define to_idn(n) ((idn_t)n)
+#define to_idn(n) ((idn_t)(n))
 #define idn_value(n) (to_idn(n)->value)
 #define idl_front(list) (to_idn(dll_front(list)))
 #define idl_back(list) (to_idn(dll_back(list)))

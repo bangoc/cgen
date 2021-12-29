@@ -79,10 +79,10 @@ bn_node_t bn_left_most(bn_node_t x) {
   }
   bn_node_t y;
   #define bn_MOST(x, child, out) \
-  out = x; \
+  (out) = (x); \
   do { \
-    while (out->child != NULL_PTR) { \
-      out = out->child; \
+    while ((out)->child != NULL_PTR) { \
+      (out) = (out)->child; \
     } \
   } while (0)
   bn_MOST(x, left, y);
@@ -105,13 +105,13 @@ bn_node_t bn_next_inorder(bn_node_t x)  {
   bn_node_t y;
 #define BNS_NEAREST(x, left, right, out) \
   do { \
-    if (x->right != NULL_PTR) { \
-      out = bn_ ##left ##_most(x->right); \
+    if ((x)->right != NULL_PTR) { \
+      (out) = bn_ ##left ##_most((x)->right); \
     } else { \
-      out = x->top; \
-      while (out != NULL_PTR && x == out->right) {\
-        x = out; \
-        out = out->top; \
+      (out) = (x)->top; \
+      while ((out) != NULL_PTR && (x) == (out)->right) {\
+        (x) = (out); \
+        (out) = (out)->top; \
       } \
     } \
   } while (0)

@@ -24,7 +24,7 @@ typedef struct rbm_insert_result {
   int inserted;
 } rbm_ires;
 
-#define to_rbm(n) ((rbm_node_t)n)
+#define to_rbm(n) ((rbm_node_t)(n))
 #define rbm_node_key(n) (to_rbm(n)->key)
 #define rbm_node_value(n) (to_rbm(n)->value)
 
@@ -39,7 +39,7 @@ int rbm_remove(rbm_t t, gtype key);
 
 #define rbm_free(m) \
   do { \
-    bn_free_tree((bn_tree_t)m); \
+    bn_free_tree((bn_tree_t)(m)); \
   } while (0)
 
 #define rbm_traverse(cur, tm) \
