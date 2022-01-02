@@ -10,10 +10,8 @@ const char* ascii_spaces = "\t\n\v\f\r ";
 
 gvec_t str_tokens(char *line, const char *delims) {
   gvec_t tokens = gvec_create(5, NULL);
-  char *tmp = strtok(line, delims);
-  while (tmp) {
-    gvec_append(tokens, gtype_s(tmp));
-    tmp = strtok(NULL, delims);
+  tok_traverse(tk, line, delims) {
+    gvec_append(tokens, gtype_s(tk));
   }
   return tokens;
 }
