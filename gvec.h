@@ -14,6 +14,8 @@ typedef struct gvec_s {
   gtype_free_t free_value;
 } *gvec_t;
 
+gvec_t gvec_create(int cap, gtype_free_t free_value);
+
 #define gvec_size(v) (arr_size((v)->arr))
 #define gvec_capacity(v) (arr_capacity((v)->arr))
 #define gvec_arr(v) (ARR((v)->arr))
@@ -68,7 +70,5 @@ typedef struct gvec_s {
 
 #define gvec_traverse(cur, v) \
   for (gtype *cur = gvec_arr(v), *end = gvec_arr(v) + gvec_size(v); cur < end; ++cur)
-
-gvec_t gvec_create(int cap, gtype_free_t free_value);
 
 #endif  // GVEC_H_

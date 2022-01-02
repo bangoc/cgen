@@ -18,3 +18,4 @@
 #include "src/p2w.c"
 #include "src/rbm.c"
 #include "src/rbs.c"
+#include "src/str.c"

@@ -23,6 +23,6 @@
 #include "p2w.h"
 #include "rbm.h"
 #include "rbs.h"
-
+#include "str.h"
 
 #endif  // CGEN_H_
