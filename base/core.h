@@ -36,5 +36,10 @@
         }\
     } while (0)
 
+#define BENCH1_START() \
+   long _bench1_start = clock()
+#define BENCH1_END() \
+   long _bench1_end = clock(); \
+   printf("Time: %.3f\n", (double)(_bench1_end - _bench1_start)/CLOCKS_PER_SEC)
 
 #endif  // BASE_CORE_H_
