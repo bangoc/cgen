@@ -57,7 +57,7 @@ extern const int prime_mod [];
 static uint32_t hgen(const void *data, long length) {
   register long i = length;
   register uint32_t hv = 0;
-  register const unsigned char *s = data;
+  register const unsigned char *s = (const unsigned char *)data;
   while (i--) {
     hv += *s++;
     hv += (hv << 10);
@@ -71,7 +71,7 @@ static uint32_t hgen(const void *data, long length) {
 }
 
 static inline uint gtype_hash_s(gtype v) {
-  const signed char *p;
+  const char *p;
   uint h = 5381;
   for (p = v.s; *p != '\0'; ++p) {
     h = (h << 5) + h + *p;
