@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>cgen: rbm.h File nguồn</title>
+<title>Thư viện cgen: rbm.h File nguồn</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">cgen
+   <div id="projectname">Thư viện cgen
    </div>
-   <div id="projectbrief">Generic containers and algorithms for programming in C</div>
+   <div id="projectbrief">Triển khai khái quát của các cấu trúc dữ liệu và giải thuật cho lập trình C</div>
   </td>
  </tr>
  </tbody>
@@ -76,34 +76,34 @@ $(function() {
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;base/rb.h&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;base/gtype.h&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="structrbm__node.html">   11</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structrbm__node.html">rbm_node</a> {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">typedef</span> <span class="keyword">struct </span>rbm_node {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  <span class="keyword">struct </span>rb_node_s rb_node;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  gtype key, value;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>} *<a class="code hl_struct" href="structrbm__node.html">rbm_node_t</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>} *rbm_node_t;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="structrbm__s.html">   16</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structrbm__s.html">rbm_s</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">typedef</span> <span class="keyword">struct </span>rbm_s {</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>  <span class="keyword">struct </span>bn_tree t;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  gtype_cmp_t cmp;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  gtype_free_t free_key, free_value;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} *<a class="code hl_struct" href="structrbm__s.html">rbm_t</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>} *rbm_t;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structrbm__insert__result.html">   22</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structrbm__insert__result.html">rbm_insert_result</a> {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  <a class="code hl_struct" href="structrbm__node.html">rbm_node_t</a> nd;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">typedef</span> <span class="keyword">struct </span>rbm_insert_result {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>  rbm_node_t nd;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keywordtype">int</span> inserted;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} <a class="code hl_struct" href="structrbm__insert__result.html">rbm_ires</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} rbm_ires;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#define to_rbm(n) ((rbm_node_t)(n))</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#define rbm_node_key(n) (to_rbm(n)-&gt;key)</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#define rbm_node_value(n) (to_rbm(n)-&gt;value)</span></div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><a class="code hl_struct" href="structrbm__node.html">rbm_node_t</a> rbm_create_node(gtype key, gtype value);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><a class="code hl_struct" href="structrbm__s.html">rbm_t</a> rbm_create(gtype_cmp_t cmp,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>rbm_node_t rbm_create_node(gtype key, gtype value);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>rbm_t rbm_create(gtype_cmp_t cmp,</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  gtype_free_t free_key, gtype_free_t free_value);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><a class="code hl_struct" href="structrbm__insert__result.html">rbm_ires</a> rbm_insert(<a class="code hl_struct" href="structrbm__s.html">rbm_t</a> t, gtype key, gtype value);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>gtype *rbm_vref(<a class="code hl_struct" href="structrbm__s.html">rbm_t</a> t, gtype key);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><a class="code hl_struct" href="structrbm__node.html">rbm_node_t</a> rbm_search(<a class="code hl_struct" href="structrbm__s.html">rbm_t</a> t, gtype key);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keywordtype">int</span> rbm_remove(<a class="code hl_struct" href="structrbm__s.html">rbm_t</a> t, gtype key);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>rbm_ires rbm_insert(rbm_t t, gtype key, gtype value);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>gtype *rbm_vref(rbm_t t, gtype key);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>rbm_node_t rbm_search(rbm_t t, gtype key);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keywordtype">int</span> rbm_remove(rbm_t t, gtype key);</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#define rbm_free(m) \</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">  do { \</span></div>
@@ -111,7 +111,7 @@ $(function() {
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">  } while (0)</span></div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> _rbm_move_next(gtype **k, gtype **v) {</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  <a class="code hl_struct" href="structrbm__node.html">rbm_node_t</a> nd = container_of(*k, <span class="keyword">struct</span> <a class="code hl_struct" href="structrbm__node.html">rbm_node</a>, key);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>  rbm_node_t nd = container_of(*k, <span class="keyword">struct</span> rbm_node, key);</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>  bn_node_t tmp = bn_next_inorder(to_bn(nd));</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>  <span class="keywordflow">if</span> (!tmp) {</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    *k = NULL_PTR;</div>
@@ -128,9 +128,6 @@ $(function() {
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">       k != NULL_PTR &amp;&amp; v != NULL_PTR; _rbm_move_next(&amp;k, &amp;v)) \</span></div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor"></span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif  </span><span class="comment">// RBM_H_</span></div>
-<div class="ttc" id="astructrbm__insert__result_html"><div class="ttname"><a href="structrbm__insert__result.html">rbm_insert_result</a></div><div class="ttdef"><b>Definition:</b> rbm.h:22</div></div>
-<div class="ttc" id="astructrbm__node_html"><div class="ttname"><a href="structrbm__node.html">rbm_node</a></div><div class="ttdef"><b>Definition:</b> rbm.h:11</div></div>
-<div class="ttc" id="astructrbm__s_html"><div class="ttname"><a href="structrbm__s.html">rbm_s</a></div><div class="ttdef"><b>Definition:</b> rbm.h:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

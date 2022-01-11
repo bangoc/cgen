@@ -27,6 +27,14 @@ var menudata={children:[
 {text:"Các trang liên quan",url:"pages.html"},
 {text:"Cấu trúc dữ liệu",url:"annotated.html",children:[
 {text:"Cấu trúc cơ sở dữ liệu (Data Structures)",url:"annotated.html"},
-{text:"Index cấu trúc cơ sở dữ liệu",url:"classes.html"}]},
+{text:"Index cấu trúc cơ sở dữ liệu",url:"classes.html"},
+{text:"Các trường dữ liệu",url:"functions.html",children:[
+{text:"Tất cả",url:"functions.html"},
+{text:"Các hàm",url:"functions_func.html"},
+{text:"Các biến",url:"functions_vars.html"}]}]},
 {text:"Files",url:"files.html",children:[
-{text:"Danh mục File",url:"files.html"}]}]}
+{text:"Danh mục File",url:"files.html"},
+{text:"Toàn cục",url:"globals.html",children:[
+{text:"Tất cả",url:"globals.html"},
+{text:"Typedefs",url:"globals_type.html"},
+{text:"Định nghĩa",url:"globals_defs.html"}]}]}]}

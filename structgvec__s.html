@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>cgen: gvec_s Struct Tham chiếu</title>
+<title>Thư viện cgen: gvec_s Struct Tham chiếu</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">cgen
+   <div id="projectname">Thư viện cgen
    </div>
-   <div id="projectbrief">Generic containers and algorithms for programming in C</div>
+   <div id="projectbrief">Triển khai khái quát của các cấu trúc dữ liệu và giải thuật cho lập trình C</div>
   </td>
  </tr>
  </tbody>
@@ -69,19 +69,94 @@ $(function() {
   <div class="headertitle"><div class="title">gvec_s Struct Tham chiếu</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="gvec_8h_source.html">gvec.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Các hàm thành viên Public</h2></td></tr>
-<tr class="memitem:a06eba18be8952998453392b3ba2f0485"><td class="memItemLeft" align="right" valign="top"><a id="a06eba18be8952998453392b3ba2f0485" name="a06eba18be8952998453392b3ba2f0485"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>arr_t</b> (gtype) arr</td></tr>
-<tr class="separator:a06eba18be8952998453392b3ba2f0485"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fb4b23fba82d78ab64cc2e5ef534e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="gvec_8h.html#a7e5d46c9c870243332c79af24d4fd413">gvec_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgvec__s.html#a71fb4b23fba82d78ab64cc2e5ef534e5">gvec_create</a> (int cap, gtype_free_t <a class="el" href="structgvec__s.html#a2abdf938b7d021bae19204db6b5999bb">free_value</a>)</td></tr>
+<tr class="separator:a71fb4b23fba82d78ab64cc2e5ef534e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 các trường đữ liệu</h2></td></tr>
-<tr class="memitem:af0a34ff91339d53fb9a13220075faa26"><td class="memItemLeft" align="right" valign="top"><a id="af0a34ff91339d53fb9a13220075faa26" name="af0a34ff91339d53fb9a13220075faa26"></a>
-gtype_free_t&#160;</td><td class="memItemRight" valign="bottom"><b>free_value</b></td></tr>
-<tr class="separator:af0a34ff91339d53fb9a13220075faa26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3eef9095ee728c2b67902107bdc8b7b5"><td class="memItemLeft" align="right" valign="top">gtype **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgvec__s.html#a3eef9095ee728c2b67902107bdc8b7b5">arr</a></td></tr>
+<tr class="separator:a3eef9095ee728c2b67902107bdc8b7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2abdf938b7d021bae19204db6b5999bb"><td class="memItemLeft" align="right" valign="top">gtype_free_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgvec__s.html#a2abdf938b7d021bae19204db6b5999bb">free_value</a></td></tr>
+<tr class="separator:a2abdf938b7d021bae19204db6b5999bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
+<div class="textblock"><p >Cấu trúc lưu các thông tin điều khiển vec-tơ.</p>
+<p >Các macros điều khiển:</p>
+<p ><a class="el" href="gvec_8h.html#aa8ae641caf214f3f9e3da46f1b3e868e">gvec_size(v)</a> - Trả về size của vec-tơ.</p>
+<p ><a class="el" href="gvec_8h.html#ad212ac716ca79436ae5ba87cdf36fd5a">gvec_capacity(v)</a> - Trả về capacity của vec-tơ. </p>
+</div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
+<a id="a71fb4b23fba82d78ab64cc2e5ef534e5" name="a71fb4b23fba82d78ab64cc2e5ef534e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71fb4b23fba82d78ab64cc2e5ef534e5">&#9670;&nbsp;</a></span>gvec_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="gvec_8h.html#a7e5d46c9c870243332c79af24d4fd413">gvec_t</a> gvec_create </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cap</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gtype_free_t&#160;</td>
+          <td class="paramname"><em>free_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Hàm tạo đối tượng vec-tơ.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cap</td><td>(capacity) Dung lượng ban đầu của vec-tơ. </td></tr>
+    <tr><td class="paramname">free_value</td><td>con trỏ hàm giải phóng bộ nhớ bên ngoài đối tượng gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Thông tin về trường</h2>
+<a id="a3eef9095ee728c2b67902107bdc8b7b5" name="a3eef9095ee728c2b67902107bdc8b7b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3eef9095ee728c2b67902107bdc8b7b5">&#9670;&nbsp;</a></span>arr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gtype** arr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Mảng cơ sở lưu các đối tượng gtype </p>
+
+</div>
+</div>
+<a id="a2abdf938b7d021bae19204db6b5999bb" name="a2abdf938b7d021bae19204db6b5999bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2abdf938b7d021bae19204db6b5999bb">&#9670;&nbsp;</a></span>free_value</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gtype_free_t free_value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng gtype trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được bỏ qua. </p>
+
+</div>
+</div>
 <hr/>Thông tin cho struct được biên soạn từ các file sau đây:<ul>
 <li><a class="el" href="gvec_8h_source.html">gvec.h</a></li>
 </ul>

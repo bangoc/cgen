@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>cgen: p1w.h File nguồn</title>
+<title>Thư viện cgen: p1w.h File nguồn</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,9 +21,9 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">cgen
+   <div id="projectname">Thư viện cgen
    </div>
-   <div id="projectbrief">Generic containers and algorithms for programming in C</div>
+   <div id="projectbrief">Triển khai khái quát của các cấu trúc dữ liệu và giải thuật cho lập trình C</div>
   </td>
  </tr>
  </tbody>
@@ -82,18 +82,18 @@ $(function() {
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  PRIORITY_TYPES_COUNT</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} p1w_types;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structp1w__s.html">   17</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structp1w__s.html">p1w_s</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">typedef</span> <span class="keyword">struct </span>p1w_s {</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  arr_t(gtype) data;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  p1w_types typ;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  gtype_cmp_t cmp;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>} *<a class="code hl_struct" href="structp1w__s.html">p1w_t</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>} *p1w_t;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><a class="code hl_struct" href="structp1w__s.html">p1w_t</a> p1w_create(p1w_types typ, gtype_cmp_t cmp);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>gtype p1w_peek(<a class="code hl_struct" href="structp1w__s.html">p1w_t</a> h);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>gtype p1w_dequeue(<a class="code hl_struct" href="structp1w__s.html">p1w_t</a> h);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">int</span> p1w_enqueue(<a class="code hl_struct" href="structp1w__s.html">p1w_t</a> h, gtype value);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> p1w_root(<a class="code hl_struct" href="structp1w__s.html">p1w_t</a> h, gtype value);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">long</span> p1w_size(<a class="code hl_struct" href="structp1w__s.html">p1w_t</a> h);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>p1w_t p1w_create(p1w_types typ, gtype_cmp_t cmp);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>gtype p1w_peek(p1w_t h);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>gtype p1w_dequeue(p1w_t h);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">int</span> p1w_enqueue(p1w_t h, gtype value);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> p1w_root(p1w_t h, gtype value);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">long</span> p1w_size(p1w_t h);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#define p1w_is_empty(h) \</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">  (p1w_size(h) == 0)</span></div>
@@ -107,7 +107,6 @@ $(function() {
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#define P1WARR(h) (ARR((h)-&gt;data))</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif  </span><span class="comment">// P1W_H_</span></div>
-<div class="ttc" id="astructp1w__s_html"><div class="ttname"><a href="structp1w__s.html">p1w_s</a></div><div class="ttdef"><b>Definition:</b> p1w.h:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
