@@ -17,6 +17,7 @@
 #include "base/gtype.h"
 
 /**
+ * \headerfile "cgen.h"
  * Cấu trúc lưu các thông tin điều khiển vec-tơ.
  *
  * Các macros điều khiển:
