@@ -74,7 +74,7 @@ $(function() {
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;base/arr.h&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;base/gtype.h&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="gtype_8h.html">base/gtype.h</a>&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">typedef</span> <span class="keyword">enum</span> {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>  PRIORITY_MIN = 0,</div>
@@ -83,16 +83,16 @@ $(function() {
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} p1w_types;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">typedef</span> <span class="keyword">struct </span>p1w_s {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  arr_t(gtype) data;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  arr_t(<a class="code hl_union" href="uniongeneric__type.html">gtype</a>) data;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  p1w_types typ;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  gtype_cmp_t cmp;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>} *p1w_t;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>p1w_t p1w_create(p1w_types typ, gtype_cmp_t cmp);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>gtype p1w_peek(p1w_t h);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>gtype p1w_dequeue(p1w_t h);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">int</span> p1w_enqueue(p1w_t h, gtype value);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> p1w_root(p1w_t h, gtype value);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> p1w_peek(p1w_t h);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> p1w_dequeue(p1w_t h);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">int</span> p1w_enqueue(p1w_t h, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> p1w_root(p1w_t h, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">long</span> p1w_size(p1w_t h);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#define p1w_is_empty(h) \</span></div>
@@ -107,6 +107,8 @@ $(function() {
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#define P1WARR(h) (ARR((h)-&gt;data))</span></div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif  </span><span class="comment">// P1W_H_</span></div>
+<div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
+<div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

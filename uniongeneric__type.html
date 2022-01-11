@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thư viện cgen: cgen</title>
+<title>Thư viện cgen: generic_type Union Tham chiếu</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,38 +62,26 @@ $(function() {
 </div>
 
 </div><!-- top -->
-<div><div class="header">
-  <div class="headertitle"><div class="title">cgen </div></div>
+<div class="header">
+  <div class="headertitle"><div class="title">generic_type Union Tham chiếu</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p >Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản</p>
-<h1>Hướng dẫn biên dịch</h1>
-<p >Tệp mã nguồn, ví dụ main.c:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cgen.h&quot;</span></div>
-<div class="line"><span class="comment">/*...*/</span></div>
-</div><!-- fragment --><p >Trong đó <a class="el" href="cgen_8h_source.html">cgen.h</a> là tệp tổng hợp các tệp tiêu đề của cgen.</p>
-<h2>1. Biên dịch với gcc trong môi trường dòng lệnh</h2>
-<div class="fragment"><div class="line">gcc -o prog main.c ${CGEN_PATH}/all.c -I ${CGEN_PATH}</div>
-</div><!-- fragment --><p >Trong đó ${CGEN_PATH} là đường dẫn tới thư mục cgen;</p>
-<p >all.c là tệp tổng hợp các tệp .c (mã nguồn) của cgen.</p>
-<h2>2. Biên dịch với ninja và cmake</h2>
-<p >Cách đơn giản nhất là đặt cgen bên trong (là thư mục con của) thư mục dự án. Giả sử thư mục dự án có cấu trúc như sau:</p>
-<div class="fragment"><div class="line">my-project</div>
-<div class="line">  cgen</div>
-<div class="line">  main.c</div>
-<div class="line">  CMakeLists.txt</div>
-<div class="line">  ...</div>
-</div><!-- fragment --><p >Tạo tệp CMakeLists.txt với các nội dung sau:</p>
-<div class="fragment"><div class="line">add_subdirectory(cgen)</div>
-<div class="line">add_executable(prog main.c)</div>
-<div class="line">target_link_libraries(prog bkc)</div>
-</div><!-- fragment --><p >Nên thực hiện biên dịch dự án trong một thư mục độc lập, ví dụ:</p>
-<div class="fragment"><div class="line">mkdir b</div>
-<div class="line">cd b</div>
-<div class="line">cmake .. -G Ninja</div>
-<div class="line">ninja</div>
-</div><!-- fragment --> </div></div><!-- contents -->
-</div><!-- PageDoc -->
+
+<p><code>#include &quot;<a class="el" href="cgen_8h_source.html">cgen.h</a>&quot;</code></p>
+<div class="dynheader">
+Sơ đồ liên kết cho generic_type:</div>
+<div class="dyncontent">
+<div class="center"><img src="uniongeneric__type__coll__graph.png" border="0" usemap="#ageneric__type_coll__map" alt="Collaboration graph"/></div>
+<map name="ageneric__type_coll__map" id="ageneric__type_coll__map">
+<area shape="rect" title=" " alt="" coords="5,5,100,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">Chú giải</a>]</span></center></div>
+<a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
+<div class="textblock"><p >Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu được triển khai. <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> có thể thay thế cho 1 nhóm kiểu dữ liệu. </p>
+</div><hr/>Thông tin cho union được biên soạn từ các file sau đây:<ul>
+<li>base/<a class="el" href="gtype_8h_source.html">gtype.h</a></li>
+</ul>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Được biên soạn bởi&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2

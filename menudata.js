@@ -24,7 +24,6 @@
 */
 var menudata={children:[
 {text:"Tranh chính",url:"index.html"},
-{text:"Các trang liên quan",url:"pages.html"},
 {text:"Cấu trúc dữ liệu",url:"annotated.html",children:[
 {text:"Cấu trúc cơ sở dữ liệu (Data Structures)",url:"annotated.html"},
 {text:"Index cấu trúc cơ sở dữ liệu",url:"classes.html"},

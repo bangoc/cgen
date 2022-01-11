@@ -71,6 +71,15 @@ $(function() {
 <div class="contents">
 
 <p><code>#include &quot;<a class="el" href="cgen_8h_source.html">cgen.h</a>&quot;</code></p>
+<div class="dynheader">
+Sơ đồ liên kết cho gvec_s:</div>
+<div class="dyncontent">
+<div class="center"><img src="structgvec__s__coll__graph.png" border="0" usemap="#agvec__s_coll__map" alt="Collaboration graph"/></div>
+<map name="agvec__s_coll__map" id="agvec__s_coll__map">
+<area shape="rect" title=" " alt="" coords="21,109,85,136"/>
+<area shape="rect" href="uniongeneric__type.html" title=" " alt="" coords="5,5,100,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">Chú giải</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Các hàm thành viên Public</h2></td></tr>
@@ -79,16 +88,25 @@ Các hàm thành viên Public</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 các trường đữ liệu</h2></td></tr>
-<tr class="memitem:a3eef9095ee728c2b67902107bdc8b7b5"><td class="memItemLeft" align="right" valign="top">gtype **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgvec__s.html#a3eef9095ee728c2b67902107bdc8b7b5">arr</a></td></tr>
+<tr class="memitem:a3eef9095ee728c2b67902107bdc8b7b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgvec__s.html#a3eef9095ee728c2b67902107bdc8b7b5">arr</a></td></tr>
 <tr class="separator:a3eef9095ee728c2b67902107bdc8b7b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2abdf938b7d021bae19204db6b5999bb"><td class="memItemLeft" align="right" valign="top">gtype_free_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgvec__s.html#a2abdf938b7d021bae19204db6b5999bb">free_value</a></td></tr>
 <tr class="separator:a2abdf938b7d021bae19204db6b5999bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
-<div class="textblock"><p >Cấu trúc lưu các thông tin điều khiển vec-tơ.</p>
+<div class="textblock"><p >Cấu trúc biểu diễn vec-tơ của các giá trị <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>.</p>
 <p >Các macros điều khiển:</p>
-<p ><a class="el" href="gvec_8h.html#aa8ae641caf214f3f9e3da46f1b3e868e">gvec_size(v)</a> - Trả về size của vec-tơ.</p>
-<p ><a class="el" href="gvec_8h.html#ad212ac716ca79436ae5ba87cdf36fd5a">gvec_capacity(v)</a> - Trả về capacity của vec-tơ. </p>
+<p ><a class="el" href="gvec_8h.html#aa8ae641caf214f3f9e3da46f1b3e868e">gvec_size(v)</a> - Kích thước của v.</p>
+<p ><a class="el" href="gvec_8h.html#ad212ac716ca79436ae5ba87cdf36fd5a">gvec_capacity(v)</a> - Dung lượng của v.</p>
+<p ><a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr(v)</a> - Mảng các phần tử của v.</p>
+<p ><a class="el" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem(v, i)</a> - Phần tử thứ i của v.</p>
+<p ><a class="el" href="gvec_8h.html#a08f4141392c2074557c08a0c8962f88e">gvec_elem_idx(v, elem_ptr)</a> - Chỉ số của phần tử được trỏ tới bởi elem_ptr trong v.</p>
+<p ><a class="el" href="gvec_8h.html#a471f5284a298bd1ede14e678d13e1ef8">gvec_append(v, val)</a> - Thêm val vào sau phần tử cuối cùng trong v.</p>
+<p ><a class="el" href="gvec_8h.html#a5f49bd4862c66d903edb32c776c4f6bb">gvec_remove(v, idx)</a> - Xóa phần tử có chỉ số idx khỏi v.</p>
+<p ><a class="el" href="gvec_8h.html#a435902fa71c91fc2375d652e71a00166">gvec_set_capacity(v, cap)</a> - Chủ động thiết lập dung lượng cho v.</p>
+<p ><a class="el" href="gvec_8h.html#a00376f59d46ad6c109d974a74894b8e1">gvec_free(v)</a> - Giải phóng bộ nhớ được cấp phát cho v.</p>
+<p ><a class="el" href="gvec_8h.html#a02cc2f9111065ed3c3a823ce47ee0fe3">gvec_qsort(v, cmp)</a> - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.</p>
+<p ><a class="el" href="gvec_8h.html#a3fb514600bc1e340c50412006acbd0c0">gvec_traverse(cur, v)</a> - Duyệt các phần tử của v theo chiều thuận. </p>
 </div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
 <a id="a71fb4b23fba82d78ab64cc2e5ef534e5" name="a71fb4b23fba82d78ab64cc2e5ef534e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a71fb4b23fba82d78ab64cc2e5ef534e5">&#9670;&nbsp;</a></span>gvec_create()</h2>
@@ -119,10 +137,11 @@ các trường đữ liệu</h2></td></tr>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">cap</td><td>(capacity) Dung lượng ban đầu của vec-tơ. </td></tr>
-    <tr><td class="paramname">free_value</td><td>con trỏ hàm giải phóng bộ nhớ bên ngoài đối tượng gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài. </td></tr>
+    <tr><td class="paramname">free_value</td><td>con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn với đối tượng <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. Sử dụng NULL nếu không có bộ nhớ bên ngoài. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng tạo được nếu thành công hoặc NULL_PTR nếu thất bại. </dd></dl>
 
 </div>
 </div>
@@ -134,11 +153,11 @@ các trường đữ liệu</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">gtype** arr</td>
+          <td class="memname"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>** arr</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Mảng cơ sở lưu các đối tượng gtype </p>
+<p >Mảng cơ sở lưu các đối tượng <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> </p>
 
 </div>
 </div>
@@ -153,7 +172,7 @@ các trường đữ liệu</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng gtype trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được bỏ qua. </p>
+<p >Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được bỏ qua. </p>
 
 </div>
 </div>
