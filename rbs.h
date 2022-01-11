@@ -36,9 +36,25 @@ int rbs_remove(rbs_t s, gtype elem);
 long rbs_size(rbs_t s);
 void rbs_free(rbs_t s);
 
+/*
 #define rbs_traverse(cur, s) \
   for (rbs_node_t cur = to_rbs(bn_left_most(s->t.root)); \
        cur != NULL_PTR; cur = to_rbs(bn_next_inorder(to_bn(cur))))
+*/
+
+static inline void _rbs_move_next(gtype **cur) {
+  rbs_node_t nd = container_of(*cur, struct rbs_node, value);
+  bn_node_t tmp = bn_next_inorder(to_bn(nd));
+  if (!tmp) {
+    *cur = NULL_PTR;
+    return;
+  }
+  *cur = &(rbs_node_value(tmp));
+}
+
+#define rbs_traverse(cur, s) \
+  for (gtype *cur = &(rbs_node_value(bn_left_most((s)->t.root))); \
+        cur != NULL_PTR; _rbs_move_next(&cur))
 
 #define rbs_free(s) \
     do {  \

@@ -42,9 +42,21 @@ int rbm_remove(rbm_t t, gtype key);
     bn_free_tree((bn_tree_t)(m)); \
   } while (0)
 
-#define rbm_traverse(cur, tm) \
-  for (rbm_node_t cur = to_rbm(bn_left_most(tm->t.root)); \
-       cur != NULL_PTR; cur = to_rbm(bn_next_inorder(to_bn(cur))))
+static inline void _rbm_move_next(gtype **k, gtype **v) {
+  rbm_node_t nd = container_of(*k, struct rbm_node, key);
+  bn_node_t tmp = bn_next_inorder(to_bn(nd));
+  if (!tmp) {
+    *k = NULL_PTR;
+    *v = NULL_PTR;
+    return;
+  }
+  *k = &(rbm_node_key(tmp));
+  *v = &(rbm_node_value(tmp));
+}
 
+#define rbm_traverse(k, v, m) \
+  for (gtype *k = &(rbm_node_key(bn_left_most((m)->t.root))), \
+             *v = &(rbm_node_value(bn_left_most((m)->t.root))); \
+       k != NULL_PTR && v != NULL_PTR; _rbm_move_next(&k, &v)) \
 
 #endif  // RBM_H_
