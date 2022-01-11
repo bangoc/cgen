@@ -1,14 +1,21 @@
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-*/
-
 #ifndef BASE_GTYPE_H_
 #define BASE_GTYPE_H_
+
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
+
+/** @file
+ * @brief Định nghĩa kiểu ::gtype và các thành phần bổ trợ.
+ */
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
+/**
+ * \headerfile "cgen.h"
+ * Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu được triển khai.
+ * ::gtype có thể thay thế cho 1 nhóm kiểu dữ liệu.
+ */
 typedef union generic_type {
   long l;
   double d;
