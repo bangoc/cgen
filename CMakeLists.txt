@@ -1,17 +1,19 @@
 cmake_minimum_required(VERSION 2.8)
 project(cgen)
 
-# Add -DCLEAN_WARN=ON/OFF into cmake command to turn ON or OFF
-option(CLEAN_WARN "Turn all warnings into errors" OFF)
+# ON by default, use -DNOWARN=ON/OFF in Cmake command to turn ON/OFF
+option(NOWARN "ON-No warnings, OFF-Tend to show all warnings" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 
-if (CLEAN_WARN)
-  MESSAGE(STATUS "No warns")
-else(CLEAN_WARN)
-  MESSAGE(STATUS "All warns")
+if (NOWARN)
+  MESSAGE(STATUS "cgen no warnings")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w")
+else(NOWARN)
+  MESSAGE(STATUS "cgen all warnings")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 endif()
 
 add_subdirectory(tests)

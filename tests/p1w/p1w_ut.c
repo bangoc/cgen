@@ -17,6 +17,7 @@ int t1() {
   CHECK_ECHO(p1w_dequeue(q).l == 10);
   CHECK_ECHO(p1w_is_empty(q));
   p1w_free(q);
+  return 0;
 }
 
 int t2() {
@@ -34,6 +35,7 @@ int t2() {
   CHECK_ECHO(p1w_dequeue(q).l == 60);
   CHECK_ECHO(p1w_is_empty(q));
   p1w_free(q);
+  return 0;
 }
 
 int main() {

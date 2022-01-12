@@ -24,6 +24,7 @@ str_cache_t create_cache() {
   str_cache_t sc = malloc(sizeof(struct str_cache));
   sc->si = s2i_create();
   sc->is = arr_create(0, char*);
+  return sc;
 }
 
 long get_save_str_id(str_cache_t cache, char *s) {

@@ -226,6 +226,7 @@ int test_dll_erase() {
   CHECK_MSG(dll_is_empty(list), "Delete n3");
 
   dll_free(list);
+  return 0;
 }
 
 int test_dll_clear() {
@@ -242,6 +243,7 @@ int test_dll_clear() {
   CHECK_MSG(dll_is_empty(list), "should be empty after clear");
 
   dll_free(list);
+  return 0;
 }
 
 int main() {

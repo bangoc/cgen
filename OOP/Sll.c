@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc, 2021
 */
 
-#include "base/src/sll.c"
+#include "cgen.h"
 
 #include "OOP/Sll.h"
 
@@ -128,6 +128,7 @@ SllGt SllGt_create() {
   MEMBER(list, SllGt, PopFront);
   MEMBER(list, SllGt, Front);
   MEMBER(list, SllGt, Foreach);
+  return list;
 }
 
 #undef MEMBER
