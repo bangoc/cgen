@@ -33,7 +33,7 @@ typedef uint (*gtype_hash_t) (gtype);
     uint *_hashes = ARR((m)->hashes); \
     gtype *_arr = ARR((m)->kv); \
     int _idx = (c)? (c) - _arr + 1: 0; \
-    for (int _i = _idx; _i < (m)->size; ++_i) { \
+    for (int _i = _idx; _i < (m)->capacity; ++_i) { \
       if (HASH_IS_REAL(_hashes[_i])) { \
         (o) = _arr + _i; \
         break; \

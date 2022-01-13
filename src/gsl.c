@@ -11,12 +11,12 @@ gsl_t gsl_create(gtype_free_t free_value) {
   return list;
 }
 
-int gsl_length(gsl_t list) {
+long gsl_size(gsl_t list) {
   gtype *tmp = gsl_front(list);
-  int len = 0;
+  long sz = 0;
   while (tmp) {
-    ++len;
+    ++sz;
     tmp = gsn_next(tmp);
   }
-  return len;
+  return sz;
 }

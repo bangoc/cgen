@@ -30,7 +30,7 @@ int t1(int n) {
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(hset_contains(hs, gtype_s(keys[i])), "Contain key i");
   }
-  CHECK_MSG(hset_nnodes(hs) == n, "nnodes == n");
+  CHECK_MSG(hset_size(hs) == n, "nnodes == n");
   hset_free(hs);
   free(keys);
   return 0;

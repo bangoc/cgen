@@ -65,7 +65,7 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
 }
 
 static int gdl_sequence_g(gdl_t list, gtype *a, int n, gtype_cmp_t cmp) {
-  if (gdl_length(list) != n) {
+  if (gdl_size(list) != n) {
     return 0;
   }
   gtype *p = list->front;

@@ -53,7 +53,3 @@ int rbs_remove(rbs_t s, gtype elem) {
   free(n);
   return 1;
 }
-
-long rbs_size(rbs_t s) {
-  return bn_size((bn_tree_t)s);
-}

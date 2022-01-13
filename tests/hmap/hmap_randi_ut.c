@@ -66,6 +66,9 @@ int t2(int n) {
     CHECK_MSG(res.inserted == 0, "Insert again");
     CHECK_MSG(strcmp(res.value->s, values[i]) == 0, "Value i");
   }
+  for (int i = 0; i < n; ++i) {
+    CHECK_MSG(hmap_remove(map, gtype_s(keys[i])) == 1, "Remove keys");
+  }
   hmap_free(map);
   free(keys);
   free(values);

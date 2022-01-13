@@ -28,10 +28,10 @@
  *
  */
 typedef struct hash_map_s {
-  int size;
+  int capacity;
   int mod;
   uint mask;
-  int nnodes;
+  int size;
   int noccupied;
   arr_t(gtype) keys;
   arr_t(gtype) values;
@@ -138,9 +138,8 @@ void hmap_free(hmap_t tab);
  * @param tab Con trỏ tới đối tượng bảng băm.
  * @return Trả về số lượng cặp khóa/giá trị đang được lưu trong tab.
  *
- * \memberof hash_map_s
  */
-int hmap_size(hmap_t tab);
+#define hmap_size(tab) (tab->size)
 
 gtype *hmap_next_pkey(hmap_t, gtype*);
 gtype *hmap_next_pvalue(hmap_t, gtype*);

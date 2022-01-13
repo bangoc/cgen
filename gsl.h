@@ -79,6 +79,6 @@ typedef struct gsl_s {
   for (gtype *cur = gsl_front(list); cur; cur = gsn_next(cur))
 
 gsl_t gsl_create(gtype_free_t free_value);
-int gsl_length(gsl_t);
+long gsl_size(gsl_t);
 
 #endif  // GSL_H_

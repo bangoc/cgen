@@ -9,14 +9,14 @@
 
 static void hset_setup_storage(hset_t hs);
 static inline int hset_lookup_node(hset_t hs, gtype key, uint *hash_return);
-static inline int hset_maybe_resize(hset_t hs);
+static inline int hset_maybe_realloc(hset_t hs);
 static void hset_remove_node(hset_t hs, int i);
 static void hset_free_nodes(hset_t hs);
 
 hset_t hset_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t key_free) {
   hset_t hs = malloc(sizeof(struct hash_set_s));
-  hs->nnodes = 0;
+  hs->size = 0;
   hs->noccupied = 0;
   hs->hash_func = hash_func;
   hs->cmp = cmp;
@@ -43,10 +43,10 @@ int hset_insert(hset_t hs, gtype key) {
   }
   hashes[node_index] = key_hash;
   keys[node_index] = key;
-  hs->nnodes++;
+  hs->size++;
   if (HASH_IS_UNUSED(curr_hash)) {
     hs->noccupied++;
-    hset_maybe_resize(hs);
+    hset_maybe_realloc(hs);
   }
   return 1;
 }
@@ -57,7 +57,7 @@ int hset_remove(hset_t hs, gtype key) {
     return 0;
   }
   hset_remove_node(hs, node_index);
-  hset_maybe_resize(hs);
+  hset_maybe_realloc(hs);
   return 1;
 }
 
@@ -71,10 +71,6 @@ void hset_free(hset_t hs) {
   free(hs);
 }
 
-int hset_nnodes(hset_t hs) {
-  return hs->nnodes;
-}
-
 gtype *hset_next_pkey(hset_t hs, gtype* curr) {
   gtype * r;
   hashes_next_pkey_or_pvalue(hs, curr, keys, r);
@@ -82,9 +78,9 @@ gtype *hset_next_pkey(hset_t hs, gtype* curr) {
 }
 
 static void hset_set_shift(hset_t hs, int shift) {
-  hs->size = 1 << shift;
+  hs->capacity = 1 << shift;
   hs->mod = prime_mod[shift];
-  hs->mask = hs->size - 1;
+  hs->mask = hs->capacity - 1;
 }
 
 static int hset_find_closest_shift(int n) {
@@ -95,8 +91,8 @@ static int hset_find_closest_shift(int n) {
   return i;
 }
 
-static void hset_set_shift_from_size(hset_t hs, int size) {
-  int shift = hset_find_closest_shift(size);
+static void hset_set_shift_from_capacity(hset_t hs, int capacity) {
+  int shift = hset_find_closest_shift(capacity);
   shift = MAX(shift, HASH_MIN_SHIFT);
   hset_set_shift(hs, shift);
 }
@@ -105,9 +101,9 @@ static void hset_set_shift_from_size(hset_t hs, int size) {
 
 static void hset_setup_storage(hset_t hs) {
   hset_set_shift(hs, HASH_MIN_SHIFT);
-  hs->hashes = arr_create(hs->size, uint);
-  memset(ARR(hs->hashes), 0, hs->size * sizeof(uint));
-  hs->keys = arr_create(hs->size, gtype);
+  hs->hashes = arr_create(hs->capacity, uint);
+  memset(ARR(hs->hashes), 0, hs->capacity * sizeof(uint));
+  hs->keys = arr_create(hs->capacity, gtype);
 }
 
 static inline int hset_lookup_node(hset_t hs, gtype key, uint *hash_return) {
@@ -147,17 +143,17 @@ static inline int hset_lookup_node(hset_t hs, gtype key, uint *hash_return) {
 static void hset_remove_node(hset_t hs, int i) {
   gtype key = elem(hs->keys, i);
   elem(hs->hashes, i) = DELETED_HASH_VALUE;
-  hs->nnodes--;
+  hs->size--;
   if (hs->key_free) {
     hs->key_free(key);
   }
 }
 
 static void hset_free_nodes(hset_t hs) {
-  int size = hs->size;
+  int capacity = hs->capacity;
   gtype *keys = ARR(hs->keys);
   uint *hashes = ARR(hs->hashes);
-  for (int i = 0; i < size; ++i) {
+  for (int i = 0; i < capacity; ++i) {
     if (HASH_IS_REAL(hashes[i])) {
       if (hs->key_free) {
         hs->key_free(keys[i]);
@@ -167,19 +163,19 @@ static void hset_free_nodes(hset_t hs) {
   arr_free(hs->keys);
   arr_free(hs->hashes);
 
-  hs->nnodes = 0;
+  hs->size = 0;
   hs->noccupied = 0;
 }
 
 static void hset_realloc_arrays(hset_t hs) {
-  arr_set_size(hs->hashes, hs->size);
-  arr_set_size(hs->keys, hs->size);
+  arr_set_capacity(hs->hashes, hs->capacity);
+  arr_set_capacity(hs->keys, hs->capacity);
 }
 
-static void resize_set(hset_t hs, uint old_size, uint32 *reallocated_buckets_bitmap) {
+static void relocate_set(hset_t hs, uint old_capacity, uint32 *reallocated_buckets_bitmap) {
   uint *hashes = ARR(hs->hashes);
   gtype *keys = ARR(hs->keys);
-  for (int i = 0; i < old_size; ++i) {
+  for (int i = 0; i < old_capacity; ++i) {
     uint node_hash = hashes[i];
     gtype key;
     if (HASH_IS_NOTREAL(node_hash)) {
@@ -212,32 +208,32 @@ static void resize_set(hset_t hs, uint old_size, uint32 *reallocated_buckets_bit
   }
 }
 
-static void hset_resize(hset_t hs) {
+static void hset_realloc(hset_t hs) {
   uint32 *reallocated_buckets_bitmap;
-  int old_size;
-  old_size = hs->size;
-  hset_set_shift_from_size(hs, hs->nnodes * 1.333);
-  if (hs->size > old_size) {
+  int old_capacity;
+  old_capacity = hs->capacity;
+  hset_set_shift_from_capacity(hs, hs->size * 1.333);
+  if (hs->capacity > old_capacity) {
     hset_realloc_arrays(hs);
-    memset(ARR(hs->hashes) + old_size, 0, (hs->size - old_size) * sizeof(uint));
-    reallocated_buckets_bitmap = calloc((hs->size + 31) / 32, sizeof(uint32));
+    memset(ARR(hs->hashes) + old_capacity, 0, (hs->capacity - old_capacity) * sizeof(uint));
+    reallocated_buckets_bitmap = calloc((hs->capacity + 31) / 32, sizeof(uint32));
   } else {
-    reallocated_buckets_bitmap = calloc((old_size + 31) / 32, sizeof(uint32));
+    reallocated_buckets_bitmap = calloc((old_capacity + 31) / 32, sizeof(uint32));
   }
 
-  resize_set(hs, old_size, reallocated_buckets_bitmap);
+  relocate_set(hs, old_capacity, reallocated_buckets_bitmap);
   free(reallocated_buckets_bitmap);
-  if (hs->size < old_size) {
+  if (hs->capacity < old_capacity) {
     hset_realloc_arrays(hs);
   }
-  hs->noccupied = hs->nnodes;
+  hs->noccupied = hs->size;
 }
 
-static inline int hset_maybe_resize(hset_t hs) {
-  uint noccupied = hs->noccupied, size = hs->size;
-  if ((size > hs->nnodes * 4 && size > 1 << HASH_MIN_SHIFT) ||
-      (size <= noccupied + (noccupied/16))) {
-    hset_resize(hs);
+static inline int hset_maybe_realloc(hset_t hs) {
+  uint noccupied = hs->noccupied, capacity = hs->capacity;
+  if ((capacity > hs->size * 4 && capacity > 1 << HASH_MIN_SHIFT) ||
+      (capacity <= noccupied + (noccupied/16))) {
+    hset_realloc(hs);
     return 1;
   }
   return 0;

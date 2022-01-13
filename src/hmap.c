@@ -9,14 +9,14 @@
 
 static void hmap_setup_storage(hmap_t tab);
 static inline int hmap_lookup_node(hmap_t tab, gtype key, uint *hash_return);
-static inline int hmap_maybe_resize(hmap_t tab);
+static inline int hmap_maybe_realloc(hmap_t tab);
 static void hmap_remove_node(hmap_t tab, int i);
 static void hmap_free_nodes(hmap_t tab);
 
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t key_free, gtype_free_t value_free) {
   hmap_t tab = malloc(sizeof(struct hash_map_s));
-  tab->nnodes = 0;
+  tab->size = 0;
   tab->noccupied = 0;
   tab->hash_func = hash_func;
   tab->cmp = cmp;
@@ -45,10 +45,10 @@ hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value) {
   hashes[node_index] = key_hash;
   ARR(tab->keys)[node_index] = key;
   values[node_index] = value;
-  tab->nnodes++;
+  tab->size++;
   if (HASH_IS_UNUSED(curr_hash)) {
     tab->noccupied++;
-    if (hmap_maybe_resize(tab) == 1) {
+    if (hmap_maybe_realloc(tab) == 1) {
       node_index = hmap_lookup_node(tab, key, NULL);
       values = ARR(tab->values);
     }
@@ -62,7 +62,7 @@ int hmap_remove(hmap_t tab, gtype key) {
     return 0;
   }
   hmap_remove_node(tab, node_index);
-  hmap_maybe_resize(tab);
+  hmap_maybe_realloc(tab);
   return 1;
 }
 
@@ -74,10 +74,6 @@ void hmap_clear(hmap_t tab) {
 void hmap_free(hmap_t tab) {
   hmap_free_nodes(tab);
   free(tab);
-}
-
-int hmap_size(hmap_t tab) {
-  return tab->nnodes;
 }
 
 gtype *hmap_next_pkey(hmap_t map, gtype* curr) {
@@ -93,9 +89,9 @@ gtype *hmap_next_pvalue(hmap_t map, gtype* curr) {
 }
 
 static void hmap_set_shift(hmap_t tab, int shift) {
-  tab->size = 1 << shift;
+  tab->capacity = 1 << shift;
   tab->mod = prime_mod[shift];
-  tab->mask = tab->size - 1;
+  tab->mask = tab->capacity - 1;
 }
 
 static int hmap_find_closest_shift(int n) {
@@ -106,8 +102,8 @@ static int hmap_find_closest_shift(int n) {
   return i;
 }
 
-static void hmap_set_shift_from_size(hmap_t tab, int size) {
-  int shift = hmap_find_closest_shift(size);
+static void hmap_set_shift_from_capacity(hmap_t tab, int capacity) {
+  int shift = hmap_find_closest_shift(capacity);
   shift = MAX(shift, HASH_MIN_SHIFT);
   hmap_set_shift(tab, shift);
 }
@@ -116,10 +112,10 @@ static void hmap_set_shift_from_size(hmap_t tab, int size) {
 
 static void hmap_setup_storage(hmap_t tab) {
   hmap_set_shift(tab, HASH_MIN_SHIFT);
-  tab->hashes = arr_create(tab->size, uint);
-  memset(ARR(tab->hashes), 0, tab->size * sizeof(uint));
-  tab->keys = arr_create(tab->size, gtype);
-  tab->values = arr_create(tab->size, gtype);
+  tab->hashes = arr_create(tab->capacity, uint);
+  memset(ARR(tab->hashes), 0, tab->capacity * sizeof(uint));
+  tab->keys = arr_create(tab->capacity, gtype);
+  tab->values = arr_create(tab->capacity, gtype);
 }
 
 static inline int hmap_lookup_node(hmap_t tab, gtype key, uint *hash_return) {
@@ -159,7 +155,7 @@ static inline int hmap_lookup_node(hmap_t tab, gtype key, uint *hash_return) {
 static void hmap_remove_node(hmap_t tab, int i) {
   gtype key = elem(tab->keys, i), value = elem(tab->values, i);
   elem(tab->hashes, i) = DELETED_HASH_VALUE;
-  tab->nnodes--;
+  tab->size--;
   if (tab->key_free) {
     tab->key_free(key);
   }
@@ -169,11 +165,11 @@ static void hmap_remove_node(hmap_t tab, int i) {
 }
 
 static void hmap_free_nodes(hmap_t tab) {
-  int size = tab->size;
+  int capacity = tab->capacity;
   gtype *keys = ARR(tab->keys);
   gtype *values = ARR(tab->values);
   uint *hashes = ARR(tab->hashes);
-  for (int i = 0; i < size; ++i) {
+  for (int i = 0; i < capacity; ++i) {
     if (HASH_IS_REAL(hashes[i])) {
       if (tab->key_free) {
         tab->key_free(keys[i]);
@@ -187,21 +183,21 @@ static void hmap_free_nodes(hmap_t tab) {
   arr_free(tab->values);
   arr_free(tab->hashes);
 
-  tab->nnodes = 0;
+  tab->size = 0;
   tab->noccupied = 0;
 }
 
 static void hmap_realloc_arrays(hmap_t tab) {
-  arr_set_size(tab->hashes, tab->size);
-  arr_set_size(tab->keys, tab->size);
-  arr_set_size(tab->values, tab->size);
+  arr_set_capacity(tab->hashes, tab->capacity);
+  arr_set_capacity(tab->keys, tab->capacity);
+  arr_set_capacity(tab->values, tab->capacity);
 }
 
-static void resize_map(hmap_t tab, uint old_size, uint32 *reallocated_buckets_bitmap) {
+static void relocate_map(hmap_t tab, uint old_capacity, uint32 *reallocated_buckets_bitmap) {
   uint *hashes = ARR(tab->hashes);
   gtype *keys = ARR(tab->keys);
   gtype *values = ARR(tab->values);
-  for (int i = 0; i < old_size; ++i) {
+  for (int i = 0; i < old_capacity; ++i) {
     uint node_hash = hashes[i];
     gtype key, value;
     if (HASH_IS_NOTREAL(node_hash)) {
@@ -237,32 +233,32 @@ static void resize_map(hmap_t tab, uint old_size, uint32 *reallocated_buckets_bi
   }
 }
 
-static void hmap_resize(hmap_t tab) {
+static void hmap_realloc(hmap_t tab) {
   uint32 *reallocated_buckets_bitmap;
-  int old_size;
-  old_size = tab->size;
-  hmap_set_shift_from_size(tab, tab->nnodes * 1.333);
-  if (tab->size > old_size) {
+  int old_capacity;
+  old_capacity = tab->capacity;
+  hmap_set_shift_from_capacity(tab, tab->size * 1.333);
+  if (tab->capacity > old_capacity) {
     hmap_realloc_arrays(tab);
-    memset(ARR(tab->hashes) + old_size, 0, (tab->size - old_size) * sizeof(uint));
-    reallocated_buckets_bitmap = calloc((tab->size + 31) / 32, sizeof(uint32));
+    memset(ARR(tab->hashes) + old_capacity, 0, (tab->capacity - old_capacity) * sizeof(uint));
+    reallocated_buckets_bitmap = calloc((tab->capacity + 31) / 32, sizeof(uint32));
   } else {
-    reallocated_buckets_bitmap = calloc((old_size + 31) / 32, sizeof(uint32));
+    reallocated_buckets_bitmap = calloc((old_capacity + 31) / 32, sizeof(uint32));
   }
 
-  resize_map(tab, old_size, reallocated_buckets_bitmap);
+  relocate_map(tab, old_capacity, reallocated_buckets_bitmap);
   free(reallocated_buckets_bitmap);
-  if (tab->size < old_size) {
+  if (tab->capacity < old_capacity) {
     hmap_realloc_arrays(tab);
   }
-  tab->noccupied = tab->nnodes;
+  tab->noccupied = tab->size;
 }
 
-static inline int hmap_maybe_resize(hmap_t tab) {
-  uint noccupied = tab->noccupied, size = tab->size;
-  if ((size > tab->nnodes * 4 && size > 1 << HASH_MIN_SHIFT) ||
-      (size <= noccupied + (noccupied/16))) {
-    hmap_resize(tab);
+static inline int hmap_maybe_realloc(hmap_t tab) {
+  uint noccupied = tab->noccupied, capacity = tab->capacity;
+  if ((capacity > tab->size * 4 && capacity > 1 << HASH_MIN_SHIFT) ||
+      (capacity <= noccupied + (noccupied/16))) {
+    hmap_realloc(tab);
     return 1;
   }
   return 0;

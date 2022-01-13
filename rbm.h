@@ -37,6 +37,8 @@ gtype *rbm_vref(rbm_t t, gtype key);
 rbm_node_t rbm_search(rbm_t t, gtype key);
 int rbm_remove(rbm_t t, gtype key);
 
+#define rbm_size(t) (bn_size((bn_tree_t)s))
+
 #define rbm_free(m) \
   do { \
     if ((m)->free_key || (m)->free_value) { \

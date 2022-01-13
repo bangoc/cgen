@@ -29,7 +29,6 @@ rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_key);
 int rbs_insert(rbs_t s, gtype elem);
 rbs_node_t rbs_search(rbs_t s, gtype elem);
 int rbs_remove(rbs_t s, gtype elem);
-long rbs_size(rbs_t s);
 
 static inline void _rbs_move_next(gtype **cur) {
   rbs_node_t nd = container_of(*cur, struct rbs_node, value);
@@ -40,6 +39,8 @@ static inline void _rbs_move_next(gtype **cur) {
   }
   *cur = &(rbs_node_value(tmp));
 }
+
+#define rbs_size(s) (bn_size((bn_tree_t)s))
 
 #define rbs_traverse(cur, s) \
   for (gtype *cur = &(rbs_node_value(bn_left_most((s)->t.root))); \

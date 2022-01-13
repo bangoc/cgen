@@ -13,10 +13,10 @@
 #include <stdint.h>
 
 typedef struct hash_set_s {
-  int size;
+  int capacity;
   int mod;
   uint mask;
-  int nnodes;
+  int size;
   int noccupied;
   arr_t(gtype) keys;
   arr_t(uint) hashes;
@@ -37,7 +37,8 @@ int hset_index_of(hset_t hs, gtype key);
 int hset_remove(hset_t hs, gtype key);
 void hset_clear(hset_t hs);
 void hset_free(hset_t hs);
-int hset_nnodes(hset_t hs);
+
+#define hset_size(hs) (hs->size)
 
 gtype *hset_next_pkey(hset_t, gtype*);
 #define hset_traverse(key, value, map) \

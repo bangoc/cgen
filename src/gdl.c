@@ -11,8 +11,8 @@ gdl_t gdl_create(gtype_free_t free_value) {
   return list;
 }
 
-int gdl_length(gdl_t list) {
-  int cc = 0;
+long gdl_size(gdl_t list) {
+  long cc = 0;
   gdl_traverse(cur, list) {
     ++cc;
   }
