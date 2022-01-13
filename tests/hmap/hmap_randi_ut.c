@@ -28,7 +28,7 @@ int t1(int n) {
     CHECK_MSG(res.inserted == 0, "Insert existed");
     CHECK_MSG(res.value->l == values[i], "Value at i");
   }
-  CHECK_MSG(hmap_nnodes(map) == n, "nnodes");
+  CHECK_MSG(hmap_size(map) == n, "nnodes");
   free(keys);
   free(values);
   hmap_free(map);

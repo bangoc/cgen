@@ -76,7 +76,7 @@ void hmap_free(hmap_t tab) {
   free(tab);
 }
 
-int hmap_nnodes(hmap_t tab) {
+int hmap_size(hmap_t tab) {
   return tab->nnodes;
 }
 
