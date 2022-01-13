@@ -39,6 +39,16 @@ int rbm_remove(rbm_t t, gtype key);
 
 #define rbm_free(m) \
   do { \
+    if ((m)->free_key || (m)->free_value) { \
+      rbm_traverse(_k, _v, (m)) { \
+        if ((m)->free_key) { \
+          (m)->free_key(*_k); \
+        } \
+        if ((m)->free_value) { \
+          (m)->free_value(*_v); \
+        } \
+      } \
+    } \
     bn_free_tree((bn_tree_t)(m)); \
   } while (0)
 
