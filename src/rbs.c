@@ -15,11 +15,11 @@ rbs_node_t rbs_create_node(gtype elem) {
   return nn;
 }
 
-rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_value) {
+rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_key) {
   bn_tree_t t = bn_create_tree(NULL_PTR);
   rbs_t s = realloc(t, sizeof(struct rbs));
   s->cmp = cmp;
-  s->free_value = free_value;
+  s->free_key = free_key;
   return s;
 }
 
@@ -47,8 +47,8 @@ int rbs_remove(rbs_t s, gtype elem) {
     return 0;
   }
   rb_delete((bn_tree_t)s, to_bn(n));
-  if (s->free_value) {
-    s->free_value(rbs_node_value(n));
+  if (s->free_key) {
+    s->free_key(rbs_node_value(n));
   }
   free(n);
   return 1;
