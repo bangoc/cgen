@@ -20,7 +20,7 @@ typedef struct rbm_s {
 } *rbm_t;
 
 typedef struct rbm_insert_result {
-  rbm_node_t nd;
+  gtype *value;
   int inserted;
 } rbm_ires;
 
