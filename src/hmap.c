@@ -34,26 +34,26 @@ gtype *hmap_value(hmap_t tab, gtype key) {
 
 hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value) {
   uint *hashes = ARR(tab->hashes);
-  gtype *keys = ARR(tab->keys);
   gtype *values = ARR(tab->values);
   uint key_hash;
   int node_index = hmap_lookup_node(tab, key, &key_hash);
   uint curr_hash = hashes[node_index];
   int already_exists = HASH_IS_REAL(curr_hash);
   if (already_exists) {
-    return (hmap_ires){node_index, 0};
+    return (hmap_ires){values + node_index, 0};
   }
   hashes[node_index] = key_hash;
-  keys[node_index] = key;
+  ARR(tab->keys)[node_index] = key;
   values[node_index] = value;
   tab->nnodes++;
   if (HASH_IS_UNUSED(curr_hash)) {
     tab->noccupied++;
     if (hmap_maybe_resize(tab) == 1) {
       node_index = hmap_lookup_node(tab, key, NULL);
+      values = ARR(tab->values);
     }
   }
-  return (hmap_ires){node_index, 1};
+  return (hmap_ires){values + node_index, 1};
 }
 
 int hmap_remove(hmap_t tab, gtype key) {

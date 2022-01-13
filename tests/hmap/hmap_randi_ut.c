@@ -19,16 +19,14 @@ int t1(int n) {
     }
     values[i] = rand();
     hmap_ires res = hmap_insert(map, gtype_l(keys[i]), gtype_l(values[i]));
-    CHECK_MSG(res.inserted == 1, "insert new");
-    CHECK_MSG(hmap_key_at(map, res.idx)->l == keys[i], "Key at i");
-    CHECK_MSG(hmap_value_at(map, res.idx)->l == values[i], "Value at i");
+    CHECK_MSG(res.inserted == 1, "inserted");
+    CHECK_MSG(res.value->l == values[i], "Value at i");
   }
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(hmap_value(map, gtype_l(keys[i]))->l == values[i], "value i");
     hmap_ires res = hmap_insert(map, gtype_l(keys[i]), gtype_l(values[i]));
     CHECK_MSG(res.inserted == 0, "Insert existed");
-    CHECK_MSG(hmap_key_at(map, res.idx)->l == keys[i], "Key at i");
-    CHECK_MSG(hmap_value_at(map, res.idx)->l == values[i], "Value at i");
+    CHECK_MSG(res.value->l == values[i], "Value at i");
   }
   CHECK_MSG(hmap_nnodes(map) == n, "nnodes");
   free(keys);
@@ -60,15 +58,13 @@ int t2(int n) {
     rands9(values[i]);
     hmap_ires res = hmap_insert(map, gtype_s(keys[i]), gtype_s(values[i]));
     CHECK_MSG(res.inserted == 1, "insert new");
-    CHECK_MSG(strcmp(hmap_key_at(map, res.idx)->s, keys[i]) == 0, "Key i");
-    CHECK_MSG(strcmp(hmap_value_at(map, res.idx)->s, values[i]) == 0, "Value i");
+    CHECK_MSG(strcmp(res.value->s, values[i]) == 0, "Value i");
   }
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(strcmp(hmap_value(map, gtype_s(keys[i]))->s, values[i]) == 0, "value i");
     hmap_ires res = hmap_insert(map, gtype_s(keys[i]), gtype_s(values[i]));
     CHECK_MSG(res.inserted == 0, "Insert again");
-    CHECK_MSG(strcmp(hmap_key_at(map, res.idx)->s, keys[i]) == 0, "Key i");
-    CHECK_MSG(strcmp(hmap_value_at(map, res.idx)->s, values[i]) == 0, "Value i");
+    CHECK_MSG(strcmp(res.value->s, values[i]) == 0, "Value i");
   }
   hmap_free(map);
   free(keys);

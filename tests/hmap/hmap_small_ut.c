@@ -36,10 +36,10 @@ int main() {
   hmap_insert(map, gtype_s("ggg"), gtype_l(19));
   hmap_insert(map, gtype_s("hhh"), gtype_l(20));
   CHECK_MSG(hmap_value(map, gtype_s("aaa"))->l == 13, "value aaa == 13");
-  int idx = hmap_insert(map, gtype_s("aaa"), gtype_l(130)).idx;
-  CHECK_MSG(hmap_value_at(map, idx)->l == 13, "value aaa == 13");
-  hmap_value_at(map, idx)->l = 130;
-  CHECK_MSG(hmap_value_at(map, idx)->l == 130, "value aaa == 130");
+  gtype *value = hmap_insert(map, gtype_s("aaa"), gtype_l(130)).value;
+  CHECK_MSG(value->l == 13, "value aaa == 13");
+  value->l = 130;
+  CHECK_MSG(hmap_value(map, gtype_s("aaa"))->l == 130, "value aaa == 130");
   hmap_free(map);
   TEST_OK();
 }
