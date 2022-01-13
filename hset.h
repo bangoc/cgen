@@ -25,11 +25,6 @@ typedef struct hash_set_s {
   gtype_free_t key_free;
 } *hset_t;
 
-typedef struct hset_insert_result {
-  int idx;
-  int inserted;
-} hset_ires;
-
 #define hset_hash_at(set, idx) (elem_ref((set)->hashes, idx))
 #define hset_key_at(set, idx) (elem_ref((set)->keys, idx))
 #define INDEX_NOT_FOUND -1
@@ -37,7 +32,7 @@ typedef struct hset_insert_result {
 
 hset_t hset_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t key_free);
-hset_ires hset_insert(hset_t hs, gtype key);
+int hset_insert(hset_t hs, gtype key);
 int hset_index_of(hset_t hs, gtype key);
 int hset_remove(hset_t hs, gtype key);
 void hset_clear(hset_t hs);

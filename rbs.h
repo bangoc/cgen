@@ -20,17 +20,12 @@ typedef struct rbs {
   gtype_free_t free_value;
 } *rbs_t;
 
-typedef struct rbs_insert_result {
-  rbs_node_t nd;
-  int inserted;
-} rbs_ires;
-
 #define to_rbs(n) ((rbs_node_t)(n))
 #define rbs_node_value(n) (to_rbs(n)->value)
 
 rbs_node_t rbs_create_node(gtype elem);
 rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_value);
-rbs_ires rbs_insert(rbs_t s, gtype elem);
+int rbs_insert(rbs_t s, gtype elem);
 rbs_node_t rbs_search(rbs_t s, gtype elem);
 int rbs_remove(rbs_t s, gtype elem);
 long rbs_size(rbs_t s);

@@ -31,7 +31,7 @@ int hset_index_of(hset_t hs, gtype key) {
           node_index: INDEX_NOT_FOUND;
 }
 
-hset_ires hset_insert(hset_t hs, gtype key) {
+int hset_insert(hset_t hs, gtype key) {
   uint *hashes = ARR(hs->hashes);
   gtype *keys = ARR(hs->keys);
   uint key_hash;
@@ -39,18 +39,16 @@ hset_ires hset_insert(hset_t hs, gtype key) {
   uint curr_hash = hashes[node_index];
   int already_exists = HASH_IS_REAL(curr_hash);
   if (already_exists) {
-    return (hset_ires){node_index, 0};
+    return 0;
   }
   hashes[node_index] = key_hash;
   keys[node_index] = key;
   hs->nnodes++;
   if (HASH_IS_UNUSED(curr_hash)) {
     hs->noccupied++;
-    if (hset_maybe_resize(hs) == 1) {
-      node_index = hset_lookup_node(hs, key, NULL);
-    }
+    hset_maybe_resize(hs);
   }
-  return (hset_ires){node_index, 1};
+  return 1;
 }
 
 int hset_remove(hset_t hs, gtype key) {

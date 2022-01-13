@@ -23,17 +23,17 @@ rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_value) {
   return s;
 }
 
-rbs_ires rbs_insert(rbs_t s, gtype elem) {
+int rbs_insert(rbs_t s, gtype elem) {
   bn_node_t same = NULL, par = NULL;
   bn_node_t *loc;
   gtype_cmp_t cmp = s->cmp;
   bns_insert_setup(loc, s->t.root, elem, rbs_cmp_conv, same, par);
   if (same) {
-    return (rbs_ires){to_rbs(same), 0};
+    return 0;
   }
   rbs_node_t n = rbs_create_node(elem);
   rb_insert((bn_tree_t)s, to_bn(n), loc, par);
-  return (rbs_ires){n, 1};
+  return 1;
 }
 
 rbs_node_t rbs_search(rbs_t s, gtype elem) {

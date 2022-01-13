@@ -23,9 +23,9 @@ int t1(int n) {
         break;
       }
     }
-    hset_ires res = hset_insert(hs, gtype_s(keys[i]));
-    CHECK_MSG(res.inserted == 1, "Insert new");
-    CHECK_MSG(strcmp(hset_key_at(hs, res.idx)->s, keys[i]) == 0, "Key i");
+    int res = hset_insert(hs, gtype_s(keys[i]));
+    CHECK_MSG(res == 1, "Insert new");
+    CHECK_MSG(hset_contains(hs, gtype_s(keys[i])), "Contains key i");
   }
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(hset_contains(hs, gtype_s(keys[i])), "Contain key i");
