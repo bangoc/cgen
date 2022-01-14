@@ -167,29 +167,29 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  * Tham khảo: #hmap_traverse(key, value, map)
  */
 #define rbm_traverse(k, v, map) \
-  for (gtype *k = &(rbm_node_key(bn_left_most((map)->t.root))), \
-             *v = &(rbm_node_value(bn_left_most((map)->t.root))); \
+  for (gtype *k = (rbm_size(map))? &(rbm_node_key(bn_left_most((map)->t.root))): NULL_PTR, \
+             *v = (rbm_size(map))? &(rbm_node_value(bn_left_most((map)->t.root))): NULL_PTR; \
        k != NULL_PTR && v != NULL_PTR; _rbm_move_next(&k, &v)) \
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho bảng m. Các hàm free_key và
  * free_value được gọi cho từng khóa và giá trị nếu != NULL.
  *
- * @param t Con trỏ tới bảng cây.
+ * @param map Con trỏ tới bảng cây.
  */
-#define rbm_free(t) \
+#define rbm_free(map) \
   do { \
-    if ((t)->free_key || (t)->free_value) { \
-      rbm_traverse(_k, _v, (t)) { \
-        if ((t)->free_key) { \
-          (t)->free_key(*_k); \
+    if ((map)->free_key || (map)->free_value) { \
+      rbm_traverse(_k, _v, (map)) { \
+        if ((map)->free_key) { \
+          (map)->free_key(*_k); \
         } \
-        if ((t)->free_value) { \
-          (t)->free_value(*_v); \
+        if ((map)->free_value) { \
+          (map)->free_value(*_v); \
         } \
       } \
     } \
-    bn_free_tree((bn_tree_t)(t)); \
+    bn_free_tree((bn_tree_t)(map)); \
   } while (0)
 
 #endif  // RBM_H_

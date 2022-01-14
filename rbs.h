@@ -44,7 +44,7 @@ static inline void _rbs_move_next(gtype **cur) {
 #define rbs_size(s) ((s)->size)
 
 #define rbs_traverse(cur, s) \
-  for (gtype *cur = &(rbs_node_value(bn_left_most((s)->t.root))); \
+  for (gtype *cur = (rbs_size(s))? &(rbs_node_value(bn_left_most((s)->t.root))): NULL_PTR; \
         cur != NULL_PTR; _rbs_move_next(&cur))
 
 #define rbs_free(s) \
