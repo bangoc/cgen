@@ -1,5 +1,5 @@
 /*
-  (C) Nguyen Ba Ngoc 2o21
+  (C) Nguyen Ba Ngoc 2021
 */
 
 #include "hmap.h"
@@ -11,7 +11,6 @@ static void hmap_setup_storage(hmap_t tab);
 static inline int hmap_lookup_node(hmap_t tab, gtype key, uint *hash_return);
 static inline int hmap_maybe_realloc(hmap_t tab);
 static void hmap_remove_node(hmap_t tab, int i);
-static void hmap_free_nodes(hmap_t tab);
 
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key, gtype_free_t free_value) {
@@ -64,16 +63,6 @@ int hmap_remove(hmap_t tab, gtype key) {
   hmap_remove_node(tab, node_index);
   hmap_maybe_realloc(tab);
   return 1;
-}
-
-void hmap_clear(hmap_t tab) {
-  hmap_free_nodes(tab);
-  hmap_setup_storage(tab);
-}
-
-void hmap_free(hmap_t tab) {
-  hmap_free_nodes(tab);
-  free(tab);
 }
 
 gtype *hmap_next_pkey(hmap_t map, gtype* curr) {
@@ -162,29 +151,6 @@ static void hmap_remove_node(hmap_t tab, int i) {
   if (tab->free_value) {
     tab->free_value(value);
   }
-}
-
-static void hmap_free_nodes(hmap_t tab) {
-  int capacity = tab->capacity;
-  gtype *keys = ARR(tab->keys);
-  gtype *values = ARR(tab->values);
-  uint *hashes = ARR(tab->hashes);
-  for (int i = 0; i < capacity; ++i) {
-    if (HASH_IS_REAL(hashes[i])) {
-      if (tab->free_key) {
-        tab->free_key(keys[i]);
-      }
-      if (tab->free_value) {
-        tab->free_value(values[i]);
-      }
-    }
-  }
-  arr_free(tab->keys);
-  arr_free(tab->values);
-  arr_free(tab->hashes);
-
-  tab->size = 0;
-  tab->noccupied = 0;
 }
 
 static void hmap_realloc_arrays(hmap_t tab) {

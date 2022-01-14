@@ -42,7 +42,7 @@ rbm_node_t rbm_search(rbm_t t, gtype key) {
   bns_search_inline(n, ((bn_tree_t)t), key, tm_cmp_conv, return to_rbm(n));
 }
 
-gtype *rbm_vref(rbm_t t, gtype key) {
+gtype *rbm_value(rbm_t t, gtype key) {
   rbm_node_t n = rbm_search(t, key);
   if (n) {
     return &n->value;
