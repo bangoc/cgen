@@ -108,8 +108,6 @@ Kèm theo graph phụ thuộc cho rbm.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Cấu trúc cơ sở dữ liệu</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrbm__node.html">rbm_node</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrbm__s.html">rbm_s</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrbm__insert__result.html">rbm_insert_result</a></td></tr>
@@ -117,7 +115,7 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Định nghĩa</h2></td></tr>
-<tr class="memitem:a95ec9a7a1a897392f9a1b66e4dee8eed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a>(t)&#160;&#160;&#160;(bn_size((bn_tree_t)s))</td></tr>
+<tr class="memitem:a95ec9a7a1a897392f9a1b66e4dee8eed"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a>(t)&#160;&#160;&#160;((t)-&gt;size)</td></tr>
 <tr class="separator:a95ec9a7a1a897392f9a1b66e4dee8eed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8d92b3892d198487df705b4502e1af2f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a8d92b3892d198487df705b4502e1af2f">rbm_traverse</a>(k,  v,  map)</td></tr>
 <tr class="separator:a8d92b3892d198487df705b4502e1af2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -126,8 +124,6 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a043a1d3bda723b4445a8f83819c3aaa5"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrbm__node.html">rbm_node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a043a1d3bda723b4445a8f83819c3aaa5">rbm_node_t</a></td></tr>
-<tr class="separator:a043a1d3bda723b4445a8f83819c3aaa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46bb68df75df03d496831ec64fd76060"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrbm__s.html">rbm_s</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a46bb68df75df03d496831ec64fd76060">rbm_t</a></td></tr>
 <tr class="separator:a46bb68df75df03d496831ec64fd76060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6dcca52c60b3d20adf9d2ed22757ce"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrbm__insert__result.html">rbm_insert_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a></td></tr>
@@ -186,7 +182,7 @@ Typedefs</h2></td></tr>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">t</td><td>)</td>
-          <td>&#160;&#160;&#160;(bn_size((bn_tree_t)s))</td>
+          <td>&#160;&#160;&#160;((t)-&gt;size)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -262,21 +258,6 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Cấu trúc kết quả trả về của hàm <a class="el" href="structrbm__s.html#a9b5419361ac0c227a505d5a5868e6d2a">rbm_insert(rbm_t t, gtype key, gtype value)</a>, cho biết trạng thái kết thúc thao tác thêm dữ liệu vào rbm. </p>
-
-</div>
-</div>
-<a id="a043a1d3bda723b4445a8f83819c3aaa5" name="a043a1d3bda723b4445a8f83819c3aaa5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a043a1d3bda723b4445a8f83819c3aaa5">&#9670;&nbsp;</a></span>rbm_node_t</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="structrbm__node.html">rbm_node</a> * <a class="el" href="rbm_8h.html#a043a1d3bda723b4445a8f83819c3aaa5">rbm_node_t</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Cấu trúc nút của rbm, là mở rộng nút của cây đỏ đen. </p>
 
 </div>
 </div>
