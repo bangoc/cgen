@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Thư viện cgen: generic_type Union Tham chiếu</title>
+<title>Thư viện cgen: rbm_s Struct Tham chiếu</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -65,45 +65,52 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Các hàm thành viên Public</a>  </div>
-  <div class="headertitle"><div class="title">generic_type Union Tham chiếu</div></div>
+  <div class="headertitle"><div class="title">rbm_s Struct Tham chiếu</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &quot;<a class="el" href="cgen_8h_source.html">cgen.h</a>&quot;</code></p>
 <div class="dynheader">
-Sơ đồ liên kết cho generic_type:</div>
+Sơ đồ liên kết cho rbm_s:</div>
 <div class="dyncontent">
-<div class="center"><img src="uniongeneric__type__coll__graph.png" border="0" usemap="#ageneric__type_coll__map" alt="Collaboration graph"/></div>
-<map name="ageneric__type_coll__map" id="ageneric__type_coll__map">
-<area shape="rect" title=" " alt="" coords="5,5,100,32"/>
+<div class="center"><img src="structrbm__s__coll__graph.png" border="0" usemap="#arbm__s_coll__map" alt="Collaboration graph"/></div>
+<map name="arbm__s_coll__map" id="arbm__s_coll__map">
+<area shape="rect" title=" " alt="" coords="23,124,82,151"/>
+<area shape="rect" href="uniongeneric__type.html" title=" " alt="" coords="5,5,100,32"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">Chú giải</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Các hàm thành viên Public</h2></td></tr>
-<tr class="memitem:a46c338d7295e88dce828ae386da16140"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="uniongeneric__type.html#a46c338d7295e88dce828ae386da16140">gtype_cmp_s</a> (<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> v1, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> v2)</td></tr>
-<tr class="separator:a46c338d7295e88dce828ae386da16140"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14819d682b69c1597dd2bbb3705f7c5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rbm_8h.html#a46bb68df75df03d496831ec64fd76060">rbm_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structrbm__s.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create</a> (gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</td></tr>
+<tr class="separator:a14819d682b69c1597dd2bbb3705f7c5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
-<div class="textblock"><p >Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu được triển khai. <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> có thể thay thế cho 1 nhóm kiểu dữ liệu. </p>
+<div class="textblock"><p >Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm <a class="el" href="structrbm__s.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a>. </p>
 </div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
-<a id="a46c338d7295e88dce828ae386da16140" name="a46c338d7295e88dce828ae386da16140"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46c338d7295e88dce828ae386da16140">&#9670;&nbsp;</a></span>gtype_cmp_s()</h2>
+<a id="a14819d682b69c1597dd2bbb3705f7c5a" name="a14819d682b69c1597dd2bbb3705f7c5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14819d682b69c1597dd2bbb3705f7c5a">&#9670;&nbsp;</a></span>rbm_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static int gtype_cmp_s </td>
+          <td class="memname"><a class="el" href="rbm_8h.html#a46bb68df75df03d496831ec64fd76060">rbm_t</a> rbm_create </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
-          <td class="paramname"><em>v1</em>, </td>
+          <td class="paramtype">gtype_cmp_t&#160;</td>
+          <td class="paramname"><em>cmp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
-          <td class="paramname"><em>v2</em>&#160;</td>
+          <td class="paramtype">gtype_free_t&#160;</td>
+          <td class="paramname"><em>free_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gtype_free_t&#160;</td>
+          <td class="paramname"><em>free_value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -112,24 +119,22 @@ Các hàm thành viên Public</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Hàm so sánh các giá trị gtype chứa con trỏ chuỗi ký tự.</p>
+<p >Hàm tạo đối tượng điều khiển bảng cây.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
-    <tr><td class="paramname">v1</td><td>Đối số thứ nhất. </td></tr>
-    <tr><td class="paramname">v2</td><td>Đỗ số thứ 2. </td></tr>
+    <tr><td class="paramname">cmp</td><td>Hàm so sánh các giá trị khóa, phải != NULL. Tham khảo: <a class="el" href="uniongeneric__type.html#a46c338d7295e88dce828ae386da16140">gtype_cmp_s(gtype v1, gtype v2)</a>. </td></tr>
+    <tr><td class="paramname">free_key</td><td>Con trỏ tới hàm giải phóng bộ nhớ ngoài được gắn với khóa, tham khảo. gtype_free_s(gtype v). Được gọi khi xóa dữ liệu nếu != NULL. Trong trường hợp không có bộ nhớ ngoài hoặc không cần xóa bộ nhớ ngoài (như tình huống đang chia sẻ bộ nhớ với 1 câu trúc lưu trữ khác) thì để = NULL. </td></tr>
+    <tr><td class="paramname">free_value</td><td>Con trỏ tới hàm giải phóng bộ nhớ ngoài được gắn với giá trị, tương tự free_key. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Giá trị trả về theo định dạng strcmp <br  />
- -1 nếu v1.s &lt; v2.s, <br  />
- 1 nếu ngược lại và v1.s &gt; v2.s, <br  />
- 0 nếu ngược lại (v1.s == v2.s). <br  />
- </dd></dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng điều khiển bảng cây.</dd></dl>
+<p>Tham khảo: <a class="el" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a> </p>
 
 </div>
 </div>
-<hr/>Thông tin cho union được biên soạn từ các file sau đây:<ul>
-<li>base/<a class="el" href="gtype_8h_source.html">gtype.h</a></li>
+<hr/>Thông tin cho struct được biên soạn từ các file sau đây:<ul>
+<li><a class="el" href="rbm_8h_source.html">rbm.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

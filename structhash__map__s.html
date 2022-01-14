@@ -82,8 +82,8 @@ Sơ đồ liên kết cho hash_map_s:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Các hàm thành viên Public</h2></td></tr>
-<tr class="memitem:a0e9c8768222512a8042cbfe1063a1271"><td class="memItemLeft" align="right" valign="top"><a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html#a0e9c8768222512a8042cbfe1063a1271">hmap_create</a> (gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t key_free, gtype_free_t value_free)</td></tr>
-<tr class="separator:a0e9c8768222512a8042cbfe1063a1271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a898bd6931c14b9572d74a26ed343b72b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create</a> (gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</td></tr>
+<tr class="separator:a898bd6931c14b9572d74a26ed343b72b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a264f5f75ecf59af9c00794dc8c2fbfa0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">hmap_insert</a> (<a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a> tab, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
 <tr class="separator:a264f5f75ecf59af9c00794dc8c2fbfa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2bbddacd21194741f137c6e8c1422736"><td class="memItemLeft" align="right" valign="top"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html#a2bbddacd21194741f137c6e8c1422736">hmap_value</a> (<a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a> tab, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key)</td></tr>
@@ -94,11 +94,11 @@ Các hàm thành viên Public</h2></td></tr>
 <tr class="separator:a012bf6b299ff7714d57350035a390ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
-<div class="textblock"><p >Cấu trúc điều khiển đối tượng bảng băm.</p>
+<div class="textblock"><p >Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm <a class="el" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a></p>
 <p >Các macro hỗ trợ: <a class="el" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">hmap_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map. </p>
 </div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
-<a id="a0e9c8768222512a8042cbfe1063a1271" name="a0e9c8768222512a8042cbfe1063a1271"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e9c8768222512a8042cbfe1063a1271">&#9670;&nbsp;</a></span>hmap_create()</h2>
+<a id="a898bd6931c14b9572d74a26ed343b72b" name="a898bd6931c14b9572d74a26ed343b72b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a898bd6931c14b9572d74a26ed343b72b">&#9670;&nbsp;</a></span>hmap_create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -119,13 +119,13 @@ Các hàm thành viên Public</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">gtype_free_t&#160;</td>
-          <td class="paramname"><em>key_free</em>, </td>
+          <td class="paramname"><em>free_key</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">gtype_free_t&#160;</td>
-          <td class="paramname"><em>value_free</em>&#160;</td>
+          <td class="paramname"><em>free_value</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -137,14 +137,15 @@ Các hàm thành viên Public</h2></td></tr>
 <p >Hàm tạo đối tượng bảng băm.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
-    <tr><td class="paramname">hash_func</td><td>Hàm băm khóa, phải != NULL. </td></tr>
+    <tr><td class="paramname">hash_func</td><td>Hàm băm khóa, phải != NULL. Tham khảo: <a class="el" href="uniongeneric__type.html#a46c338d7295e88dce828ae386da16140">gtype_cmp_s(gtype v1, gtype v2)</a>. </td></tr>
     <tr><td class="paramname">cmp</td><td>Hàm so sánh khóa, phải != NULL. </td></tr>
-    <tr><td class="paramname">key_free</td><td>Hàm giải phóng bộ nhớ động bên ngoài được gắn với khóa. Có thể == NULL nếu không có bộ nhớ ngoài. </td></tr>
-    <tr><td class="paramname">value_free</td><td>Hàm giải phóng bộ nhớ động bên ngoài được gắn với khóa. Có thể == NULL nếu không có bộ nhớ ngoài. </td></tr>
+    <tr><td class="paramname">free_key</td><td>Hàm giải phóng bộ nhớ động bên ngoài được gắn với khóa. Được gọi khi xóa dữ liệu nếu != NULL. Trong trường hợp không có bộ nhớ ngoài hoặc không cần xóa bộ nhớ ngoài (như tình huống đang chia sẻ bộ nhớ với 1 câu trúc lưu trữ khác) thì để = NULL. </td></tr>
+    <tr><td class="paramname">free_value</td><td>Hàm giải phóng bộ nhớ động bên ngoài được gắn với giá trị. Tương tự free_key. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Con trỏ tới đối tượng bảng băm được tạo. (Hiện chưa xử lý kịch) bản lỗi cấp phát bộ nhớ. </dd></dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Con trỏ tới đối tượng bảng băm được tạo. (Hiện chưa xử lý kịch) bản lỗi cấp phát bộ nhớ.</dd></dl>
+<p>Tham khảo: <a class="el" href="structrbm__s.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a> </p>
 
 </div>
 </div>
