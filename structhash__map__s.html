@@ -90,12 +90,10 @@ Các hàm thành viên Public</h2></td></tr>
 <tr class="separator:a2bbddacd21194741f137c6e8c1422736"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a798e464e01459a6f4b3392cc5969a80e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html#a798e464e01459a6f4b3392cc5969a80e">hmap_remove</a> (<a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a> tab, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key)</td></tr>
 <tr class="separator:a798e464e01459a6f4b3392cc5969a80e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a012bf6b299ff7714d57350035a390ff8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html#a012bf6b299ff7714d57350035a390ff8">hmap_free</a> (<a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a> tab)</td></tr>
-<tr class="separator:a012bf6b299ff7714d57350035a390ff8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
 <div class="textblock"><p >Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm <a class="el" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a></p>
-<p >Các macro hỗ trợ: <a class="el" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">hmap_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map. </p>
+<p >Các macro hỗ trợ: <a class="el" href="hmap_8h.html#a6567f6c8da98e8fcd12480dec2a94241">hmap_size(map)</a> - Kích thước của map <a class="el" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">hmap_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map. </p>
 </div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
 <a id="a898bd6931c14b9572d74a26ed343b72b" name="a898bd6931c14b9572d74a26ed343b72b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a898bd6931c14b9572d74a26ed343b72b">&#9670;&nbsp;</a></span>hmap_create()</h2>
@@ -149,32 +147,6 @@ Các hàm thành viên Public</h2></td></tr>
 
 </div>
 </div>
-<a id="a012bf6b299ff7714d57350035a390ff8" name="a012bf6b299ff7714d57350035a390ff8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a012bf6b299ff7714d57350035a390ff8">&#9670;&nbsp;</a></span>hmap_free()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void hmap_free </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a>&#160;</td>
-          <td class="paramname"><em>tab</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Giải phóng bộ nhớ được cấp phát cho bảng băm tab. Các hàm free_key và free_value được gọi cho từng khóa và từng giá trị nếu != NULL.</p>
-<dl class="params"><dt>Các tham số</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tab</td><td>Con trỏ tới bảng băm. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Hàm không trả về giá trị. </dd></dl>
-
-</div>
-</div>
 <a id="a264f5f75ecf59af9c00794dc8c2fbfa0" name="a264f5f75ecf59af9c00794dc8c2fbfa0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a264f5f75ecf59af9c00794dc8c2fbfa0">&#9670;&nbsp;</a></span>hmap_insert()</h2>
 
@@ -206,16 +178,17 @@ Các hàm thành viên Public</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Thêm cặp (key, value) vào bảng tab. Nếu key đã tồn tại thì bỏ qua, có thể truy cập giá trị gắn với khóa đã có trong bảng băm theo đối tượng <a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a> được trả về.</p>
+<p >Thêm cặp (key, value) vào bảng tab. Nếu key đã tồn tại thì bỏ qua, có thể truy cập giá trị đang được gắn với khóa đã có trong bảng băm bằng con trỏ <a class="el" href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">hmap_ires::value</a> trong kết quả được trả về.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">tab</td><td>Con trỏ tới bảng băm </td></tr>
-    <tr><td class="paramname">key</td><td>Khóa </td></tr>
-    <tr><td class="paramname">value</td><td>Giá trị </td></tr>
+    <tr><td class="paramname">key</td><td>Khóa được thêm vào </td></tr>
+    <tr><td class="paramname">value</td><td>Giá trị giá trị được thêm vào </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng <a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a> </dd></dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng <a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a></dd></dl>
+<p>Tham khảo: <a class="el" href="structrbm__s.html#a9b5419361ac0c227a505d5a5868e6d2a">rbm_insert(rbm_t t, gtype key, gtype value)</a> </p>
 
 </div>
 </div>
@@ -244,7 +217,7 @@ Các hàm thành viên Public</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Nếu key không có trong tab thì không làm gì, nếu ngược lại thì xóa cặp khóa &amp; giá trị tương ứng trong tab. Các hàm free_key và free_value được gọi nếu != NULL.</p>
+<p >Nếu key không có trong tab thì bỏ qua, nếu ngược lại thì xóa cặp khóa &amp; giá trị tương ứng trong tab. Các hàm free_key và free_value được gọi nếu != NULL.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">tab</td><td>Con trỏ tới bảng băm </td></tr>
@@ -252,7 +225,8 @@ Các hàm thành viên Public</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>1 nếu tồn tại khóa, 0 nếu ngược lại. </dd></dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.</dd></dl>
+<p>Tham khảo: <a class="el" href="structrbm__s.html#a47267816d215c1717525669fa88c2e59">rbm_remove(rbm_t t, gtype key)</a> </p>
 
 </div>
 </div>
@@ -285,11 +259,12 @@ Các hàm thành viên Public</h2></td></tr>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">tab</td><td>Con trỏ tới bảng băm. </td></tr>
-    <tr><td class="paramname">key</td><td>Khóa </td></tr>
+    <tr><td class="paramname">key</td><td>Khóa được sử dụng để tìm kiếm. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ tới giá trị đang được gắn với key trong tab nếu tồn tại, hoặc NULL nếu ngược lại. </dd></dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ tới giá trị đang được gắn với key trong tab nếu tồn tại, hoặc NULL nếu ngược lại.</dd></dl>
+<p>Tham khảo: <a class="el" href="structrbm__s.html#a3975052313956b5607efb0a197438e4a">rbm_value(rbm_t t, gtype key)</a> </p>
 
 </div>
 </div>

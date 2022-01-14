@@ -77,65 +77,83 @@ $(function() {
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structhash__map__s.html">   31</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structhash__map__s.html">hash_map_s</a> {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <span class="keywordtype">int</span> capacity;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keywordtype">int</span> mod;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  uint mask;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keywordtype">int</span> size;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keywordtype">int</span> noccupied;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  arr_t(<a class="code hl_union" href="uniongeneric__type.html">gtype</a>) keys;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  arr_t(<a class="code hl_union" href="uniongeneric__type.html">gtype</a>) values;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  arr_t(uint) hashes;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  gtype_hash_t hash_func;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  gtype_cmp_t cmp;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  gtype_free_t free_key;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  gtype_free_t free_value;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">   44</a></span>} *<a class="code hl_typedef" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structhmap__insert__result.html">   50</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structhmap__insert__result.html">hmap_insert_result</a> {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">   54</a></span>  <a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_variable" href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">value</a>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="structhmap__insert__result.html#a3abbdbaa76699d9fc753e730c59464e3">   61</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="structhmap__insert__result.html#a3abbdbaa76699d9fc753e730c59464e3">inserted</a>;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">   62</a></span>} <a class="code hl_typedef" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#define hmap_hash_at(map, idx) (elem_ref((map)-&gt;hashes, idx))</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#define hmap_key_at(map, idx) (elem_ref((map)-&gt;keys, idx))</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#define hmap_value_at(map, idx) (elem_ref((map)-&gt;values, idx))</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">   87</a></span><a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> <a class="code hl_function" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create</a>(gtype_hash_t hash_func, gtype_cmp_t cmp,</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>          gtype_free_t free_key, gtype_free_t free_value);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">  102</a></span><a class="code hl_struct" href="structhmap__insert__result.html">hmap_ires</a> <a class="code hl_function" href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">hmap_insert</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a2bbddacd21194741f137c6e8c1422736">  114</a></span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_function" href="structhash__map__s.html#a2bbddacd21194741f137c6e8c1422736">hmap_value</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a798e464e01459a6f4b3392cc5969a80e">  127</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="structhash__map__s.html#a798e464e01459a6f4b3392cc5969a80e">hmap_remove</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="keywordtype">void</span> hmap_clear(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab);</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a012bf6b299ff7714d57350035a390ff8">  139</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="structhash__map__s.html#a012bf6b299ff7714d57350035a390ff8">hmap_free</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="hmap_8h.html#a6567f6c8da98e8fcd12480dec2a94241">  148</a></span><span class="preprocessor">#define hmap_size(tab) (tab-&gt;size)</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *hmap_next_pkey(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a>, <a class="code hl_union" href="uniongeneric__type.html">gtype</a>*);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *hmap_next_pvalue(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a>, <a class="code hl_union" href="uniongeneric__type.html">gtype</a>*);</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">  161</a></span><span class="preprocessor">#define hmap_traverse(key, value, map) \</span></div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="preprocessor">  for(gtype *key = hmap_next_pkey(map, NULL), *value = hmap_next_pvalue(map, NULL); \</span></div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">     key &amp;&amp; value; key = hmap_next_pkey(map, key), value = hmap_next_pvalue(map, value)) \</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="preprocessor"></span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">#endif  </span><span class="comment">// HMAP_H_</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structhash__map__s.html">   32</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structhash__map__s.html">hash_map_s</a> {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keywordtype">int</span> capacity;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keywordtype">int</span> mod;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  uint mask;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keywordtype">int</span> size;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keywordtype">int</span> noccupied;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  arr_t(<a class="code hl_union" href="uniongeneric__type.html">gtype</a>) keys;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  arr_t(<a class="code hl_union" href="uniongeneric__type.html">gtype</a>) values;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>  arr_t(uint) hashes;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  gtype_hash_t hash_func;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  gtype_cmp_t cmp;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>  gtype_free_t free_key;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  gtype_free_t free_value;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">   45</a></span>} *<a class="code hl_typedef" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="structhmap__insert__result.html">   51</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structhmap__insert__result.html">hmap_insert_result</a> {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">   55</a></span>  <a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_variable" href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">value</a>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="structhmap__insert__result.html#a3abbdbaa76699d9fc753e730c59464e3">   62</a></span>  <span class="keywordtype">int</span> <a class="code hl_variable" href="structhmap__insert__result.html#a3abbdbaa76699d9fc753e730c59464e3">inserted</a>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">   63</a></span>} <a class="code hl_typedef" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#define hmap_hash_at(map, idx) (elem_ref((map)-&gt;hashes, idx))</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#define hmap_key_at(map, idx) (elem_ref((map)-&gt;keys, idx))</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#define hmap_value_at(map, idx) (elem_ref((map)-&gt;values, idx))</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">   88</a></span><a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> <a class="code hl_function" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create</a>(gtype_hash_t hash_func, gtype_cmp_t cmp,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>          gtype_free_t free_key, gtype_free_t free_value);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">  106</a></span><a class="code hl_struct" href="structhmap__insert__result.html">hmap_ires</a> <a class="code hl_function" href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">hmap_insert</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a2bbddacd21194741f137c6e8c1422736">  120</a></span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_function" href="structhash__map__s.html#a2bbddacd21194741f137c6e8c1422736">hmap_value</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="structhash__map__s.html#a798e464e01459a6f4b3392cc5969a80e">  135</a></span><span class="keywordtype">int</span> <a class="code hl_function" href="structhash__map__s.html#a798e464e01459a6f4b3392cc5969a80e">hmap_remove</a>(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a> tab, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="hmap_8h.html#a6567f6c8da98e8fcd12480dec2a94241">  144</a></span><span class="preprocessor">#define hmap_size(tab) (tab-&gt;size)</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="hmap_8h.html#aafdcb9f6bab54257cb101246b730bf49">  152</a></span><span class="preprocessor">#define hmap_free(tab) \</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="preprocessor">  do { \</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="preprocessor">    int _capacity = (tab)-&gt;capacity; \</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">    gtype *_keys = ARR((tab)-&gt;keys); \</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="preprocessor">    gtype *_values = ARR((tab)-&gt;values); \</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">    uint *_hashes = ARR((tab)-&gt;hashes); \</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="preprocessor">    for (int _i = 0; _i &lt; _capacity; ++_i) { \</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">      if (HASH_IS_REAL(_hashes[_i])) { \</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="preprocessor">        if ((tab)-&gt;free_key) { \</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span><span class="preprocessor">          (tab)-&gt;free_key(_keys[_i]); \</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="preprocessor">        } \</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span><span class="preprocessor">        if ((tab)-&gt;free_value) { \</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="preprocessor">          (tab)-&gt;free_value(_values[_i]); \</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="preprocessor">        } \</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="preprocessor">      } \</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span><span class="preprocessor">    } \</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="preprocessor">    arr_free((tab)-&gt;keys); \</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="preprocessor">    arr_free((tab)-&gt;values); \</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="preprocessor">    arr_free((tab)-&gt;hashes); \</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">    free(tab); \</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *hmap_next_pkey(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a>, <a class="code hl_union" href="uniongeneric__type.html">gtype</a>*);</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *hmap_next_pvalue(<a class="code hl_struct" href="structhash__map__s.html">hmap_t</a>, <a class="code hl_union" href="uniongeneric__type.html">gtype</a>*);</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno"><a class="line" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">  187</a></span><span class="preprocessor">#define hmap_traverse(key, value, map) \</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="preprocessor">  for(gtype *key = hmap_next_pkey(map, NULL), *value = hmap_next_pvalue(map, NULL); \</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="preprocessor">     key &amp;&amp; value; key = hmap_next_pkey(map, key), value = hmap_next_pvalue(map, value)) \</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="preprocessor"></span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">#endif  </span><span class="comment">// HMAP_H_</span></div>
 <div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
 <div class="ttc" id="ahmap_8h_html_ad6ee48932dfc13546a3f665f60b5fa08"><div class="ttname"><a href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a></div><div class="ttdeci">struct hmap_insert_result hmap_ires</div></div>
 <div class="ttc" id="ahmap_8h_html_ae152fdbf002357f7bf7a612ffe893f6b"><div class="ttname"><a href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a></div><div class="ttdeci">struct hash_map_s * hmap_t</div></div>
-<div class="ttc" id="astructhash__map__s_html"><div class="ttname"><a href="structhash__map__s.html">hash_map_s</a></div><div class="ttdef"><b>Definition:</b> hmap.h:31</div></div>
-<div class="ttc" id="astructhash__map__s_html_a012bf6b299ff7714d57350035a390ff8"><div class="ttname"><a href="structhash__map__s.html#a012bf6b299ff7714d57350035a390ff8">hash_map_s::hmap_free</a></div><div class="ttdeci">void hmap_free(hmap_t tab)</div></div>
+<div class="ttc" id="astructhash__map__s_html"><div class="ttname"><a href="structhash__map__s.html">hash_map_s</a></div><div class="ttdef"><b>Definition:</b> hmap.h:32</div></div>
 <div class="ttc" id="astructhash__map__s_html_a264f5f75ecf59af9c00794dc8c2fbfa0"><div class="ttname"><a href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">hash_map_s::hmap_insert</a></div><div class="ttdeci">hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value)</div></div>
 <div class="ttc" id="astructhash__map__s_html_a2bbddacd21194741f137c6e8c1422736"><div class="ttname"><a href="structhash__map__s.html#a2bbddacd21194741f137c6e8c1422736">hash_map_s::hmap_value</a></div><div class="ttdeci">gtype * hmap_value(hmap_t tab, gtype key)</div></div>
 <div class="ttc" id="astructhash__map__s_html_a798e464e01459a6f4b3392cc5969a80e"><div class="ttname"><a href="structhash__map__s.html#a798e464e01459a6f4b3392cc5969a80e">hash_map_s::hmap_remove</a></div><div class="ttdeci">int hmap_remove(hmap_t tab, gtype key)</div></div>
 <div class="ttc" id="astructhash__map__s_html_a898bd6931c14b9572d74a26ed343b72b"><div class="ttname"><a href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hash_map_s::hmap_create</a></div><div class="ttdeci">hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</div></div>
-<div class="ttc" id="astructhmap__insert__result_html"><div class="ttname"><a href="structhmap__insert__result.html">hmap_insert_result</a></div><div class="ttdef"><b>Definition:</b> hmap.h:50</div></div>
-<div class="ttc" id="astructhmap__insert__result_html_a3abbdbaa76699d9fc753e730c59464e3"><div class="ttname"><a href="structhmap__insert__result.html#a3abbdbaa76699d9fc753e730c59464e3">hmap_insert_result::inserted</a></div><div class="ttdeci">int inserted</div><div class="ttdef"><b>Definition:</b> hmap.h:61</div></div>
-<div class="ttc" id="astructhmap__insert__result_html_a3f0cc92d3d36d45312d212d22c6a74d4"><div class="ttname"><a href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">hmap_insert_result::value</a></div><div class="ttdeci">gtype * value</div><div class="ttdef"><b>Definition:</b> hmap.h:54</div></div>
+<div class="ttc" id="astructhmap__insert__result_html"><div class="ttname"><a href="structhmap__insert__result.html">hmap_insert_result</a></div><div class="ttdef"><b>Definition:</b> hmap.h:51</div></div>
+<div class="ttc" id="astructhmap__insert__result_html_a3abbdbaa76699d9fc753e730c59464e3"><div class="ttname"><a href="structhmap__insert__result.html#a3abbdbaa76699d9fc753e730c59464e3">hmap_insert_result::inserted</a></div><div class="ttdeci">int inserted</div><div class="ttdef"><b>Definition:</b> hmap.h:62</div></div>
+<div class="ttc" id="astructhmap__insert__result_html_a3f0cc92d3d36d45312d212d22c6a74d4"><div class="ttname"><a href="structhmap__insert__result.html#a3f0cc92d3d36d45312d212d22c6a74d4">hmap_insert_result::value</a></div><div class="ttdeci">gtype * value</div><div class="ttdef"><b>Definition:</b> hmap.h:55</div></div>
 <div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
