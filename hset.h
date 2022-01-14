@@ -22,7 +22,7 @@ typedef struct hash_set_s {
   arr_t(uint) hashes;
   gtype_hash_t hash_func;
   gtype_cmp_t cmp;
-  gtype_free_t key_free;
+  gtype_free_t free_key;
 } *hset_t;
 
 #define hset_hash_at(set, idx) (elem_ref((set)->hashes, idx))
@@ -31,7 +31,7 @@ typedef struct hash_set_s {
 #define hset_contains(hs, value) (hset_index_of(hs, value) != INDEX_NOT_FOUND)
 
 hset_t hset_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
-          gtype_free_t key_free);
+          gtype_free_t free_key);
 int hset_insert(hset_t hs, gtype key);
 int hset_index_of(hset_t hs, gtype key);
 int hset_remove(hset_t hs, gtype key);

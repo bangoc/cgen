@@ -14,13 +14,13 @@ static void hset_remove_node(hset_t hs, int i);
 static void hset_free_nodes(hset_t hs);
 
 hset_t hset_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
-          gtype_free_t key_free) {
+          gtype_free_t free_key) {
   hset_t hs = malloc(sizeof(struct hash_set_s));
   hs->size = 0;
   hs->noccupied = 0;
   hs->hash_func = hash_func;
   hs->cmp = cmp;
-  hs->key_free = key_free;
+  hs->free_key = free_key;
   hset_setup_storage(hs);
   return hs;
 }
@@ -144,8 +144,8 @@ static void hset_remove_node(hset_t hs, int i) {
   gtype key = elem(hs->keys, i);
   elem(hs->hashes, i) = DELETED_HASH_VALUE;
   hs->size--;
-  if (hs->key_free) {
-    hs->key_free(key);
+  if (hs->free_key) {
+    hs->free_key(key);
   }
 }
 
@@ -155,8 +155,8 @@ static void hset_free_nodes(hset_t hs) {
   uint *hashes = ARR(hs->hashes);
   for (int i = 0; i < capacity; ++i) {
     if (HASH_IS_REAL(hashes[i])) {
-      if (hs->key_free) {
-        hs->key_free(keys[i]);
+      if (hs->free_key) {
+        hs->free_key(keys[i]);
       }
     }
   }

@@ -54,6 +54,18 @@ static int gtype_cmp_d(gtype v1, gtype v2) {
   return 0;
 }
 
+/**
+ * Hàm so sánh các giá trị gtype chứa con trỏ chuỗi ký tự.
+ *
+ * @param v1 Đối số thứ nhất.
+ * @param v2 Đỗ số thứ 2.
+ * @return Giá trị trả về theo định dạng strcmp <br>
+ *   -1 nếu v1.s < v2.s, <br>
+ *    1 nếu ngược lại và v1.s > v2.s, <br>
+ *    0 nếu ngược lại (v1.s == v2.s). <br>
+ *
+ * \memberof generic_type
+ */
 static int gtype_cmp_s(gtype v1, gtype v2) {
   return strcmp(v1.s, v2.s);
 }
@@ -85,6 +97,12 @@ static int gtype_print_s(gtype value) {
   return 0;
 }
 
+/**
+ * Giải phóng chuỗi được trỏ đến bởi con trỏ v.s
+ *
+ * @param v Giá trị gtype chứa con trỏ tới chuỗi.
+ * @return Hàm không trả về giá trị.
+ */
 static void gtype_free_s(gtype v) {
   free(v.s);
 }

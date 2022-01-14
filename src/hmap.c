@@ -14,14 +14,14 @@ static void hmap_remove_node(hmap_t tab, int i);
 static void hmap_free_nodes(hmap_t tab);
 
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
-          gtype_free_t key_free, gtype_free_t value_free) {
+          gtype_free_t free_key, gtype_free_t free_value) {
   hmap_t tab = malloc(sizeof(struct hash_map_s));
   tab->size = 0;
   tab->noccupied = 0;
   tab->hash_func = hash_func;
   tab->cmp = cmp;
-  tab->key_free = key_free;
-  tab->value_free = value_free;
+  tab->free_key = free_key;
+  tab->free_value = free_value;
   hmap_setup_storage(tab);
   return tab;
 }
@@ -156,11 +156,11 @@ static void hmap_remove_node(hmap_t tab, int i) {
   gtype key = elem(tab->keys, i), value = elem(tab->values, i);
   elem(tab->hashes, i) = DELETED_HASH_VALUE;
   tab->size--;
-  if (tab->key_free) {
-    tab->key_free(key);
+  if (tab->free_key) {
+    tab->free_key(key);
   }
-  if (tab->value_free) {
-    tab->value_free(value);
+  if (tab->free_value) {
+    tab->free_value(value);
   }
 }
 
@@ -171,11 +171,11 @@ static void hmap_free_nodes(hmap_t tab) {
   uint *hashes = ARR(tab->hashes);
   for (int i = 0; i < capacity; ++i) {
     if (HASH_IS_REAL(hashes[i])) {
-      if (tab->key_free) {
-        tab->key_free(keys[i]);
+      if (tab->free_key) {
+        tab->free_key(keys[i]);
       }
-      if (tab->value_free) {
-        tab->value_free(values[i]);
+      if (tab->free_value) {
+        tab->free_value(values[i]);
       }
     }
   }

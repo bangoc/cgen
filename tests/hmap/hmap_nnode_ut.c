@@ -4,8 +4,8 @@
 hmap_ires hmap_insert_free_key(hmap_t map, gtype key, gtype value) {
   hmap_ires res = hmap_insert(map, key, value);
   if (!res.inserted) {
-    if (map->key_free) {
-      map->key_free(key);
+    if (map->free_key) {
+      map->free_key(key);
     }
   }
   return res;

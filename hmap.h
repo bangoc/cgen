@@ -21,7 +21,8 @@
 
 /**
  * \headerfile "cgen.h"
- * Cấu trúc điều khiển đối tượng bảng băm.
+ * Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm
+ * hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  *
  * Các macro hỗ trợ:
  *   #hmap_traverse(k, v, map) - Duyệt tuần tự các cặp trong map.
@@ -38,13 +39,13 @@ typedef struct hash_map_s {
   arr_t(uint) hashes;
   gtype_hash_t hash_func;
   gtype_cmp_t cmp;
-  gtype_free_t key_free;
-  gtype_free_t value_free;
+  gtype_free_t free_key;
+  gtype_free_t free_value;
 } *hmap_t;
 
 /**
  * \headerfile "cgen.h"
- * Kiểu trả về của hàm <hmap_insert>"()"
+ * Kiểu trả về của hàm hmap_insert(hmap_t tab, gtype key, gtype value)
  */
 typedef struct hmap_insert_result {
   /**
@@ -68,18 +69,23 @@ typedef struct hmap_insert_result {
  * Hàm tạo đối tượng bảng băm.
  *
  * @param hash_func Hàm băm khóa, phải != NULL.
+ * Tham khảo: gtype_cmp_s(gtype v1, gtype v2).
  * @param cmp Hàm so sánh khóa, phải != NULL.
- * @param key_free Hàm giải phóng bộ nhớ động bên ngoài được gắn với khóa.
- * Có thể == NULL nếu không có bộ nhớ ngoài.
- * @param value_free Hàm giải phóng bộ nhớ động bên ngoài được gắn với khóa.
- * Có thể == NULL nếu không có bộ nhớ ngoài.
+ * @param free_key Hàm giải phóng bộ nhớ động bên ngoài được gắn với khóa.
+ * Được gọi khi xóa dữ liệu nếu != NULL. Trong trường hợp không
+ * có bộ nhớ ngoài hoặc không cần xóa bộ nhớ ngoài (như tình huống đang chia sẻ bộ nhớ
+ * với 1 câu trúc lưu trữ khác) thì để = NULL.
+ * @param free_value Hàm giải phóng bộ nhớ động bên ngoài được gắn với giá trị.
+ * Tương tự free_key.
  * @return Con trỏ tới đối tượng bảng băm được tạo. (Hiện chưa xử lý kịch)
  * bản lỗi cấp phát bộ nhớ.
  *
  * \memberof hash_map_s
+ *
+ * Tham khảo: rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
-          gtype_free_t key_free, gtype_free_t value_free);
+          gtype_free_t free_key, gtype_free_t free_value);
 
 /**
  * Thêm cặp (key, value) vào bảng tab. Nếu key đã tồn tại thì
