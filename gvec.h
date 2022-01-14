@@ -183,7 +183,7 @@ gvec_t gvec_create(int cap, gtype_free_t free_value);
       break; \
     } \
     arr_set_capacity((v)->arr, (cap)); \
-  }
+  } while (0)
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho v và các vùng nhớ ngoài
