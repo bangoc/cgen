@@ -18,6 +18,7 @@ typedef struct rbs {
   struct bn_tree t;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
+  long size;
 } *rbs_t;
 
 #define to_rbs(n) ((rbs_node_t)(n))
@@ -40,7 +41,7 @@ static inline void _rbs_move_next(gtype **cur) {
   *cur = &(rbs_node_value(tmp));
 }
 
-#define rbs_size(s) (bn_size((bn_tree_t)s))
+#define rbs_size(s) ((s)->size)
 
 #define rbs_traverse(cur, s) \
   for (gtype *cur = &(rbs_node_value(bn_left_most((s)->t.root))); \

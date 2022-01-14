@@ -21,6 +21,7 @@ rbm_t rbm_create(gtype_cmp_t cmp,
   m->cmp = cmp;
   m->free_key = free_key;
   m->free_value = free_value;
+  m->size = 0;
   return m;
 }
 
@@ -34,6 +35,7 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
   }
   rbm_node_t n = rbm_create_node(key, value);
   rb_insert((bn_tree_t)t, to_bn(n), loc, parent);
+  ++(t->size);
   return (rbm_ires){&rbm_node_value(n), 1};
 }
 
@@ -63,5 +65,6 @@ int rbm_remove(rbm_t t, gtype key) {
     t->free_value(n->value);
   }
   free(n);
+  --(t->size);
   return 1;
 }

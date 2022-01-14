@@ -18,6 +18,8 @@
 /**
  * \headerfile "cgen.h"
  * Cấu trúc nút của rbm, là mở rộng nút của cây đỏ đen.
+ *
+ * \private Người sử dụng không cần thao tác với kiểu này.
  */
 typedef struct rbm_node {
   struct rb_node_s rb_node;
@@ -41,7 +43,9 @@ typedef struct rbm_node {
 typedef struct rbm_s {
   struct bn_tree t;
   gtype_cmp_t cmp;
-  gtype_free_t free_key, free_value;
+  gtype_free_t free_key;
+  gtype_free_t free_value;
+  long size;
 } *rbm_t;
 
 /**
@@ -109,6 +113,11 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value);
  * Tham khảo: hmap_value(hmap_t tab, gtype key)
  */
 gtype *rbm_value(rbm_t t, gtype key);
+
+/**
+ * Có thể sẽ xóa hàm này.
+ * \private
+ */
 rbm_node_t rbm_search(rbm_t t, gtype key);
 
 /**
@@ -133,7 +142,7 @@ int rbm_remove(rbm_t t, gtype key);
  * @return Trả về số lượng cặp khóa/giá trị đang được lưu trong t.
  *
  */
-#define rbm_size(t) (bn_size((bn_tree_t)s))
+#define rbm_size(t) ((t)->size)
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
   rbm_node_t nd = container_of(*k, struct rbm_node, key);
