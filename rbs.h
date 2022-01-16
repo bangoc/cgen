@@ -56,4 +56,15 @@ static inline void _rbs_move_next(gtype **cur) {
       } \
       bn_free_tree((bn_tree_t)(s)); \
     } while (0)
+
+/**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbs
+ * được lưu trong một cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang chứa con trỏ tới rbs.
+ * Trước tiên value.v được ép kiểu thành rbs_t, sau đó con trỏ rbs_t
+ * được truyền cho rbs_free.
+ * @return Hàm không trả về giá trị.
+ */
+void rbs_gtype_free(gtype value);
 #endif  // RBS_H_

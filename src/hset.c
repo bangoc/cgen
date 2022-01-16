@@ -71,6 +71,11 @@ void hset_free(hset_t hs) {
   free(hs);
 }
 
+void hset_gtype_free(gtype value) {
+  hset_t s = value.v;
+  hset_free(s);
+}
+
 gtype *hset_next_pkey(hset_t hs, gtype* curr) {
   gtype * r;
   hashes_next_pkey_or_pvalue(hs, curr, keys, r);

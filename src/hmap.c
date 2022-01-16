@@ -229,3 +229,8 @@ static inline int hmap_maybe_realloc(hmap_t tab) {
   }
   return 0;
 }
+
+void hmap_gtype_free(gtype value) {
+  hmap_t map = value.v;
+  hmap_free(map);
+}

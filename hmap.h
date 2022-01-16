@@ -171,6 +171,17 @@ int hmap_remove(hmap_t tab, gtype key);
     free(tab); \
   } while (0)
 
+/**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng hmap
+ * được lưu trong một cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang chứa con trỏ tới hmap.
+ * Con trỏ value.v trước tiên được ép kiểu thành hmap_t, sau đó con
+ * trỏ hmap_t được truyền cho hmap_free.
+ * @return Hàm không trả về giá trị.
+ */
+void hmap_gtype_free(gtype value);
+
 gtype *hmap_next_pkey(hmap_t, gtype*);
 gtype *hmap_next_pvalue(hmap_t, gtype*);
 

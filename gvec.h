@@ -206,6 +206,17 @@ gvec_t gvec_create(int cap, gtype_free_t free_value);
   } while (0)
 
 /**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng vec-tơ
+ * được lưu trong một cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang chứa con trỏ tới vec-tơ.
+ * Trước tiên value.v được ép kiểu thành gvec_t, sau đó con trỏ gvec_t
+ * được truyền cho gvec_free.
+ * @return Hàm không trả về giá trị.
+ */
+void gvec_gtype_free(gtype value);
+
+/**
  * Sắp xếp các phần tử của vec-tơ.
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t).

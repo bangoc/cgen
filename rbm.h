@@ -192,4 +192,15 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
     bn_free_tree((bn_tree_t)(map)); \
   } while (0)
 
+/**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbm
+ * đang được lưu trong 1 cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang lưu con trỏ tới đối tượng rbm.
+ * Con trỏ value.v trước tiên được ép kiểu thành hmap_t, sau đó con
+ * trỏ hmap_t được truyền cho hmap_free.
+ * @return Hàm không trả về giá trị.
+ */
+void rbm_gtype_free(gtype value);
+
 #endif  // RBM_H_

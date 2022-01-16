@@ -17,3 +17,8 @@ gvec_t gvec_create(int cap, gtype_free_t free_value) {
   v->free_value = free_value;
   return v;
 }
+
+void gvec_gtype_free(gtype value) {
+  gvec_t vec = value.v;
+  gvec_free(vec);
+}
