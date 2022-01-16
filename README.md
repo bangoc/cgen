@@ -50,4 +50,6 @@ cd b
 cmake .. -G Ninja
 ninja
 ```
+## 3. Tài liệu
 
+Xem tài liệu chi tiết ở địa chỉ [APIs doc](https://bangoc.github.io/cgen/)
