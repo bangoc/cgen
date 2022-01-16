@@ -66,7 +66,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Cấu trúc cơ sở dữ liệu</a> &#124;
 <a href="#define-members">Định nghĩa</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#func-members">Các hàm</a>  </div>
   <div class="headertitle"><div class="title">rbm.h File Tham chiếu</div></div>
 </div><!--header-->
 <div class="contents">
@@ -128,6 +129,11 @@ Typedefs</h2></td></tr>
 <tr class="separator:a46bb68df75df03d496831ec64fd76060"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b6dcca52c60b3d20adf9d2ed22757ce"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structrbm__insert__result.html">rbm_insert_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a></td></tr>
 <tr class="separator:a8b6dcca52c60b3d20adf9d2ed22757ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Các hàm</h2></td></tr>
+<tr class="memitem:aa93a2dda8b5ddd21e114a1c7a750e2eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#aa93a2dda8b5ddd21e114a1c7a750e2eb">rbm_gtype_free</a> (<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
+<tr class="separator:aa93a2dda8b5ddd21e114a1c7a750e2eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
 <div class="textblock"><p >Ánh xạ khóa=&gt;giá trị khái quát dựa trên cây đỏ-đen. </p>
@@ -276,6 +282,33 @@ Typedefs</h2></td></tr>
 <p >Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm <a class="el" href="structrbm__s.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a>.</p>
 <p >Các macro hỗ trợ: <br  />
  <a class="el" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size(t)</a> - Kích thước của t. <a class="el" href="rbm_8h.html#a8d92b3892d198487df705b4502e1af2f">rbm_traverse(k, v, t)</a> - Duyệt tuần tự các cặp trong t. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Thông tin về hàm</h2>
+<a id="aa93a2dda8b5ddd21e114a1c7a750e2eb" name="aa93a2dda8b5ddd21e114a1c7a750e2eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa93a2dda8b5ddd21e114a1c7a750e2eb">&#9670;&nbsp;</a></span>rbm_gtype_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void rbm_gtype_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbm đang được lưu trong 1 cấu trúc lưu trữ khác.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>Giá trị gtype đang lưu con trỏ tới đối tượng rbm. Con trỏ value.v trước tiên được ép kiểu thành hmap_t, sau đó con trỏ hmap_t được truyền cho hmap_free. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Hàm không trả về giá trị. </dd></dl>
 
 </div>
 </div>

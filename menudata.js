@@ -35,5 +35,6 @@ var menudata={children:[
 {text:"Danh mục File",url:"files.html"},
 {text:"Toàn cục",url:"globals.html",children:[
 {text:"Tất cả",url:"globals.html"},
+{text:"Các hàm",url:"globals_func.html"},
 {text:"Typedefs",url:"globals_type.html"},
 {text:"Định nghĩa",url:"globals_defs.html"}]}]}]}
