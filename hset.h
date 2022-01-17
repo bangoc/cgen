@@ -51,8 +51,8 @@ void hset_gtype_free(gtype value);
 #define hset_size(hs) (hs->size)
 
 gtype *hset_next_pkey(hset_t, gtype*);
-#define hset_traverse(key, value, map) \
-  for(gtype *key = hmap_next_pkey(map, NULL); \
-     key; key = hmap_next_pkey(map, key)) \
+#define hset_traverse(key, map) \
+  for(gtype *key = hset_next_pkey(map, NULL); \
+     key; key = hset_next_pkey(map, key)) \
 
 #endif  // HSET_H_
