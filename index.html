@@ -85,6 +85,7 @@ $(function() {
 <div class="line">  ...</div>
 </div><!-- fragment --><p >Tạo tệp CMakeLists.txt với các nội dung sau:</p>
 <div class="fragment"><div class="line">add_subdirectory(cgen)</div>
+<div class="line">include_directories(cgen)</div>
 <div class="line">add_executable(prog main.c)</div>
 <div class="line">target_link_libraries(prog bkc)</div>
 </div><!-- fragment --><p >Nên thực hiện biên dịch dự án trong một thư mục độc lập, ví dụ:</p>
