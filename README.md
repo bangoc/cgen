@@ -38,6 +38,7 @@ Tạo tệp CMakeLists.txt với các nội dung sau:
 
 ```cmake
 add_subdirectory(cgen)
+include_directories(cgen)
 add_executable(prog main.c)
 target_link_libraries(prog bkc)
 ```
