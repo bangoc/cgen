@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "rbm.h"
+#include "cgen.h"
 
 int main() {
   rbm_t m = rbm_create(gtype_cmp_s, NULL, NULL);

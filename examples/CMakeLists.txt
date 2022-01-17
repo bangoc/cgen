@@ -4,7 +4,7 @@ add_executable(s2i_pprint_custom s2i_pprint_custom.c)
 add_executable(songs_list dll_songs.c)
 add_executable(gtype_demo_io gtype_demo_io.c)
 
-foreach (p str_id s2i_pprint s2i_pprint_custom)
+foreach (p str_id s2i_pprint s2i_pprint_custom songs_list)
  target_link_libraries(${p} bkc)
 endforeach()
 

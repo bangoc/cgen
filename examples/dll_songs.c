@@ -1,5 +1,5 @@
 /* Hỗ trợ biên dịch với gcc */
-#include "cgen.ic"
+#include "cgen.h"
 
 #include <stdlib.h>
 #include <stdio.h>

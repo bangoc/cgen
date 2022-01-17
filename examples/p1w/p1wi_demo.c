@@ -1,4 +1,4 @@
-#include "p1w.h"
+#include "cgen.h"
 
 int main() {
   // max heap

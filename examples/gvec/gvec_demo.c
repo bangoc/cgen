@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "gvec.h"
+#include "cgen.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -3,7 +3,7 @@
   Minh họa sử dụng hàm append
 */
 
-#include "base/arr.h"
+#include "cgen.h"
 
 #include <stdio.h>
 

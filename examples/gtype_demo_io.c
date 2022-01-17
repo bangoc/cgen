@@ -2,8 +2,9 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
+#include "cgen.h"
 #include "ext/io.h"
-#include "base/gtype.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 

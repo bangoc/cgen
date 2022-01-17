@@ -1,5 +1,4 @@
-#include "base/arr.h"
-#include "spec/s2i.h"
+#include "cgen.h"
 
 #include <string.h>
 #include <stdlib.h>

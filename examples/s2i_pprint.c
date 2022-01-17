@@ -1,4 +1,4 @@
-#include "spec/s2i.h"
+#include "cgen.h"
 
 int main() {
   s2i_t si = s2i_create();

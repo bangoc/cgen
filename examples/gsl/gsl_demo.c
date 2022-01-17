@@ -3,8 +3,8 @@
   Minh họa sử dụng gsl
 */
 
+#include "cgen.h"
 #include "ext/io.h"
-#include "gsl.h"
 
 #include <stdio.h>
 #include <string.h>
