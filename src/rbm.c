@@ -39,6 +39,20 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
   return (rbm_ires){&rbm_node_value(n), 1};
 }
 
+gtype *rbm_put(rbm_t t, gtype key, gtype value) {
+  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t *loc;
+  gtype_cmp_t cmp = t->cmp;
+  bns_insert_setup(loc, t->t.root, key, tm_cmp_conv, same, parent);
+  if (same) {
+    return &rbm_node_value(same);
+  }
+  rbm_node_t n = rbm_create_node(key, value);
+  rb_insert((bn_tree_t)t, to_bn(n), loc, parent);
+  ++(t->size);
+  return NULL;
+}
+
 rbm_node_t rbm_search(rbm_t t, gtype key) {
   gtype_cmp_t cmp = t->cmp;
   bns_search_inline(n, ((bn_tree_t)t), key, tm_cmp_conv, return to_rbm(n));

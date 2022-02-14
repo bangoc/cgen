@@ -101,6 +101,23 @@ rbm_t rbm_create(gtype_cmp_t cmp,
 rbm_ires rbm_insert(rbm_t t, gtype key, gtype value);
 
 /**
+ * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
+ * bỏ qua và trả về con trỏ tới giá trị đang có trong t.
+ * Nếu ngược lại thì thêm (key, value) và trả về NULL.
+ *
+ * @param t Con trỏ tới bảng cây.
+ * @param key Khóa được thêm vào.
+ * @param value Giá trị được thêm vào.
+ * @return Trả về con trỏ tới giá trị nếu khóa đã tồn tại
+ * hoặc trả về NULL nếu ngược lại, kiểu ::gtype*.
+ *
+ * \memberof rbm_s
+ *
+ * Tham khảo: rbm_insert(rbm_t tab, gtype key, gtype value)
+ */
+gtype *rbm_put(rbm_t t, gtype key, gtype value);
+
+/**
  * Tra cứu giá trị trong t theo key.
  *
  * @param t Con trỏ tới đối tượng bảng cây.
