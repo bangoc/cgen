@@ -1,5 +1,6 @@
 add_executable(rbm_si_demo rbm_si_demo.c)
 add_executable(rbm_rgb_rand_demo rbm_rgb_rand_demo.c)
-foreach (p rbm_si_demo rbm_rgb_rand_demo)
+add_executable(rbm_tf_cf_demo rbm_tf_cf_demo.c)
+foreach (p rbm_si_demo rbm_rgb_rand_demo rbm_tf_cf_demo)
   target_link_libraries(${p} bkc)
 endforeach()
