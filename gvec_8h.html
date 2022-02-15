@@ -117,8 +117,8 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 <tr class="separator:acab1c1da0ec33cc19ead6f0e770742ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4897cd3b7045cb4057ebbcac2a1581c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a>(v,  i)&#160;&#160;&#160;((<a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v))[(i)])</td></tr>
 <tr class="separator:ac4897cd3b7045cb4057ebbcac2a1581c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08f4141392c2074557c08a0c8962f88e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a08f4141392c2074557c08a0c8962f88e">gvec_elem_idx</a>(v,  elem_ptr)&#160;&#160;&#160;((long)((elem_ptr) - <a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v)))</td></tr>
-<tr class="separator:a08f4141392c2074557c08a0c8962f88e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb42b68c0ceca57fafc13ded6140a06"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of</a>(v,  elem_ptr)&#160;&#160;&#160;((long)((elem_ptr) - <a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v)))</td></tr>
+<tr class="separator:a3fb42b68c0ceca57fafc13ded6140a06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a471f5284a298bd1ede14e678d13e1ef8"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a471f5284a298bd1ede14e678d13e1ef8">gvec_append</a>(v,  val)</td></tr>
 <tr class="separator:a471f5284a298bd1ede14e678d13e1ef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f49bd4862c66d903edb32c776c4f6bb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a5f49bd4862c66d903edb32c776c4f6bb">gvec_remove</a>(v,  idx)</td></tr>
@@ -277,44 +277,6 @@ Các hàm</h2></td></tr>
 
 </div>
 </div>
-<a id="a08f4141392c2074557c08a0c8962f88e" name="a08f4141392c2074557c08a0c8962f88e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08f4141392c2074557c08a0c8962f88e">&#9670;&nbsp;</a></span>gvec_elem_idx</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define gvec_elem_idx</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">v, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">elem_ptr&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td>&#160;&#160;&#160;((long)((elem_ptr) - <a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v)))</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Chỉ số của phần tử trong vec-tơ. </p><div class="fragment"><div class="line"><a class="code hl_define" href="gvec_8h.html#a08f4141392c2074557c08a0c8962f88e">gvec_elem_idx</a>(&amp;<a class="code hl_define" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a>(v, i)) == i;</div>
-<div class="ttc" id="agvec_8h_html_a08f4141392c2074557c08a0c8962f88e"><div class="ttname"><a href="gvec_8h.html#a08f4141392c2074557c08a0c8962f88e">gvec_elem_idx</a></div><div class="ttdeci">#define gvec_elem_idx(v, elem_ptr)</div><div class="ttdef"><b>Definition:</b> gvec.h:127</div></div>
-</div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t). </td></tr>
-    <tr><td class="paramname">elem_ptr</td><td>Con trỏ tới 1 phần tử hợp lệ trong vec-tơ. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Chỉ số của phần tử được trỏ tới bởi elem_ptr. </dd></dl>
-
-</div>
-</div>
 <a id="a00376f59d46ad6c109d974a74894b8e1" name="a00376f59d46ad6c109d974a74894b8e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a00376f59d46ad6c109d974a74894b8e1">&#9670;&nbsp;</a></span>gvec_free</h2>
 
@@ -349,6 +311,44 @@ Các hàm</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Giá trị trả về</dt><dd>Không trả về giá trị. </dd></dl>
+
+</div>
+</div>
+<a id="a3fb42b68c0ceca57fafc13ded6140a06" name="a3fb42b68c0ceca57fafc13ded6140a06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fb42b68c0ceca57fafc13ded6140a06">&#9670;&nbsp;</a></span>gvec_idx_of</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gvec_idx_of</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">elem_ptr&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;((long)((elem_ptr) - <a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v)))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Chỉ số của phần tử trong vec-tơ. </p><div class="fragment"><div class="line"><a class="code hl_define" href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of</a>(&amp;<a class="code hl_define" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a>(v, i)) == i;</div>
+<div class="ttc" id="agvec_8h_html_a3fb42b68c0ceca57fafc13ded6140a06"><div class="ttname"><a href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of</a></div><div class="ttdeci">#define gvec_idx_of(v, elem_ptr)</div><div class="ttdef"><b>Definition:</b> gvec.h:127</div></div>
+</div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t). </td></tr>
+    <tr><td class="paramname">elem_ptr</td><td>Con trỏ tới 1 phần tử hợp lệ trong vec-tơ. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Chỉ số của phần tử được trỏ tới bởi elem_ptr. </dd></dl>
 
 </div>
 </div>
@@ -563,7 +563,7 @@ Các hàm</h2></td></tr>
 <p ><a class="el" href="gvec_8h.html#ad212ac716ca79436ae5ba87cdf36fd5a">gvec_capacity(v)</a> - Dung lượng của v.</p>
 <p ><a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr(v)</a> - Mảng các phần tử của v.</p>
 <p ><a class="el" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem(v, i)</a> - Phần tử thứ i của v.</p>
-<p ><a class="el" href="gvec_8h.html#a08f4141392c2074557c08a0c8962f88e">gvec_elem_idx(v, elem_ptr)</a> - Chỉ số của phần tử được trỏ tới bởi elem_ptr trong v.</p>
+<p ><a class="el" href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of(v, elem_ptr)</a> - Chỉ số của phần tử được trỏ tới bởi elem_ptr trong v.</p>
 <p ><a class="el" href="gvec_8h.html#a471f5284a298bd1ede14e678d13e1ef8">gvec_append(v, val)</a> - Thêm val vào sau phần tử cuối cùng trong v.</p>
 <p ><a class="el" href="gvec_8h.html#a5f49bd4862c66d903edb32c776c4f6bb">gvec_remove(v, idx)</a> - Xóa phần tử có chỉ số idx khỏi v.</p>
 <p ><a class="el" href="gvec_8h.html#a435902fa71c91fc2375d652e71a00166">gvec_set_capacity(v, cap)</a> - Chủ động thiết lập dung lượng cho v.</p>
