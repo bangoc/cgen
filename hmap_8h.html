@@ -123,8 +123,8 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:af6b5150f622e38fe0aa63879a2e5567f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhash__map.html">hash_map</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#af6b5150f622e38fe0aa63879a2e5567f">hmap_t</a></td></tr>
-<tr class="separator:af6b5150f622e38fe0aa63879a2e5567f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60bbc23f7cdd178d7b190a7a71744fae"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhash__map.html">hash_map</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#a60bbc23f7cdd178d7b190a7a71744fae">hmap_s</a></td></tr>
+<tr class="separator:a60bbc23f7cdd178d7b190a7a71744fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6ee48932dfc13546a3f665f60b5fa08"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhmap__insert__result.html">hmap_insert_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a></td></tr>
 <tr class="separator:ad6ee48932dfc13546a3f665f60b5fa08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -273,14 +273,14 @@ Các hàm</h2></td></tr>
 
 </div>
 </div>
-<a id="af6b5150f622e38fe0aa63879a2e5567f" name="af6b5150f622e38fe0aa63879a2e5567f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6b5150f622e38fe0aa63879a2e5567f">&#9670;&nbsp;</a></span>hmap_t</h2>
+<a id="a60bbc23f7cdd178d7b190a7a71744fae" name="a60bbc23f7cdd178d7b190a7a71744fae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60bbc23f7cdd178d7b190a7a71744fae">&#9670;&nbsp;</a></span>hmap_s</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="structhash__map.html">hash_map</a> * <a class="el" href="hmap_8h.html#af6b5150f622e38fe0aa63879a2e5567f">hmap_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="structhash__map.html">hash_map</a> <a class="el" href="hmap_8h.html#a60bbc23f7cdd178d7b190a7a71744fae">hmap_s</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -308,7 +308,7 @@ Các hàm</h2></td></tr>
 <p >Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng bảng bắm được lưu trong một cấu trúc lưu trữ khác.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>Giá trị gtype đang chứa con trỏ tới bảng băm. Trước tiên value.v được ép kiểu thành <a class="el" href="hmap_8h.html#af6b5150f622e38fe0aa63879a2e5567f">hmap_t</a>, sau đó con trỏ <a class="el" href="hmap_8h.html#af6b5150f622e38fe0aa63879a2e5567f">hmap_t</a> được truyền cho hmap_free. </td></tr>
+    <tr><td class="paramname">value</td><td>Giá trị gtype đang chứa con trỏ tới bảng băm. Trước tiên value.v được ép kiểu thành ::hmap_t, sau đó con trỏ ::hmap_t được truyền cho hmap_free. </td></tr>
   </table>
   </dd>
 </dl>

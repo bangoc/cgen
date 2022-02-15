@@ -86,7 +86,7 @@ $(function() {
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">typedef</span> <span class="keyword">struct </span>gtype_double_linked {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <a class="code hl_union" href="uniongeneric__type.html">gtype</a> *front, *back;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>  gtype_free_t free_value;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>} *gdl_t;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>} gdl_s, *gdl_t;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="preprocessor">#define gdn_value(n) (*(n))</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#define gdn_next(n) (((gtype*)(n) + GDN_NEXT)-&gt;g)</span></div>
