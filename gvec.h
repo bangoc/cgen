@@ -30,7 +30,7 @@
  *
  *   #gvec_elem(v, i) - Phần tử thứ i của v.
  *
- *   #gvec_elem_idx(v, elem_ptr) - Chỉ số của phần tử được trỏ tới bởi
+ *   #gvec_idx_of(v, elem_ptr) - Chỉ số của phần tử được trỏ tới bởi
  *   elem_ptr trong v.
  *
  *   #gvec_append(v, val) - Thêm val vào sau phần tử cuối cùng trong v.
@@ -117,14 +117,14 @@ gvec_t gvec_create(int cap, gtype_free_t free_value);
 /**
  * Chỉ số của phần tử trong vec-tơ.
  * \code{.c}
- * gvec_elem_idx(&gvec_elem(v, i)) == i;
+ * gvec_idx_of(&gvec_elem(v, i)) == i;
  * \endcode
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t).
  * @param elem_ptr Con trỏ tới 1 phần tử hợp lệ trong vec-tơ.
  * @return Chỉ số của phần tử được trỏ tới bởi elem_ptr.
  */
-#define gvec_elem_idx(v, elem_ptr) ((long)((elem_ptr) - gvec_arr(v)))
+#define gvec_idx_of(v, elem_ptr) ((long)((elem_ptr) - gvec_arr(v)))
 
 /**
  * Thêm giá trị val vào sau phần tử cuối cùng trong v và tăng kích thước lên 1.
