@@ -5,7 +5,7 @@
 #include "gvec.h"
 
 gvec_t gvec_create(int cap, gtype_free_t free_value) {
-  gvec_t v = malloc(sizeof(struct gvec_s));
+  gvec_t v = malloc(sizeof(struct gtype_vector));
   if (!v) {
     return NULL_PTR;
   }

@@ -10,14 +10,14 @@
 
 rbs_node_t rbs_create_node(gtype elem) {
   rb_node_t n = rb_create_node();
-  rbs_node_t nn = realloc(n, sizeof(struct rbs_node));
+  rbs_node_t nn = realloc(n, sizeof(struct red_black_set_node));
   nn->value = elem;
   return nn;
 }
 
 rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_key) {
   bn_tree_t t = bn_create_tree(NULL_PTR);
-  rbs_t s = realloc(t, sizeof(struct rbs));
+  rbs_t s = realloc(t, sizeof(struct red_black_set));
   s->cmp = cmp;
   s->free_key = free_key;
   s->size = 0;

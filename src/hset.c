@@ -15,7 +15,7 @@ static void hset_free_nodes(hset_t hs);
 
 hset_t hset_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key) {
-  hset_t hs = malloc(sizeof(struct hset_s));
+  hset_t hs = malloc(sizeof(struct hash_set));
   hs->size = 0;
   hs->noccupied = 0;
   hs->hash_func = hash_func;

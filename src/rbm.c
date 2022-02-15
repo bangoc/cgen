@@ -8,7 +8,7 @@
 #define tm_cmp_conv(u, x) cmp(u, rbm_node_key(x))
 
 rbm_node_t rbm_create_node(gtype key, gtype value) {
-  rbm_node_t n = calloc(1, sizeof(struct rbm_node));
+  rbm_node_t n = calloc(1, sizeof(struct red_black_map_node));
   n->key = key;
   n->value = value;
   return n;
@@ -17,7 +17,7 @@ rbm_node_t rbm_create_node(gtype key, gtype value) {
 rbm_t rbm_create(gtype_cmp_t cmp,
     gtype_free_t free_key, gtype_free_t free_value) {
   bn_tree_t t = bn_create_tree(NULL_PTR);
-  rbm_t m = realloc(t, sizeof(struct rbm_s));
+  rbm_t m = realloc(t, sizeof(struct red_black_map));
   m->cmp = cmp;
   m->free_key = free_key;
   m->free_value = free_value;

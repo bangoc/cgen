@@ -9,7 +9,7 @@
 #include <stdlib.h>
 
 p1w_t p1w_create(p1w_types typ, gtype_cmp_t cmp) {
-  p1w_t h = malloc(sizeof(struct p1w_s));
+  p1w_t h = malloc(sizeof(struct priority_one_way));
   h->data = arr_create(0, gtype);
   h->typ = typ;
   h->cmp = cmp;

@@ -13,7 +13,7 @@
     ARR(a)[(i)] = (v); \
   } while (0)
 
-int p2w_init(p2wheap_t h) {
+int p2w_init(p2w_t h) {
   h->size = 0;
   h->data = arr_create(0, gtype);
   h->index = arr_create(0, gtype);
@@ -22,13 +22,13 @@ int p2w_init(p2wheap_t h) {
   return 0;
 }
 
-p2wheap_t p2w_create() {
-  p2wheap_t h = malloc(sizeof(struct p2wheap));
+p2w_t p2w_create() {
+  p2w_t h = malloc(sizeof(struct priority_two_ways));
   p2w_init(h);
   return h;
 }
 
-void p2w_free(p2wheap_t *h) {
+void p2w_free(p2w_t *h) {
   arr_free((*h)->data);
   arr_free((*h)->index);
   arr_free((*h)->index2);
@@ -36,11 +36,11 @@ void p2w_free(p2wheap_t *h) {
   *h = NULL;
 }
 
-long p2w_size(const p2wheap_t h) {
+long p2w_size(const p2w_t h) {
   return arr_size(h->data);
 }
 
-void p2w_switch(p2wheap_t h, long e1, long e2) {
+void p2w_switch(p2w_t h, long e1, long e2) {
   if (e1 != e2) {
     long tmp1, tmp2;
     gtype tmp3 = ARR(h->data)[e1];
@@ -58,7 +58,7 @@ void p2w_switch(p2wheap_t h, long e1, long e2) {
   }
 }
 
-void p2w_shift_up(p2wheap_t h, long elem, gtype_cmp_t cmp) {
+void p2w_shift_up(p2w_t h, long elem, gtype_cmp_t cmp) {
   if (elem == 0 || cmp(ARR(h->data)[elem], ARR(h->data)[PARENT(elem)]) < 0) {
     /* at the top */
   } else {
@@ -67,7 +67,7 @@ void p2w_shift_up(p2wheap_t h, long elem, gtype_cmp_t cmp) {
   }
 }
 
-void p2w_sink(p2wheap_t h, long head, gtype_cmp_t cmp) {
+void p2w_sink(p2w_t h, long head, gtype_cmp_t cmp) {
   long size = p2w_size(h);
   if (LEFTCHILD(head) >= size) {
     /* no subtrees */
@@ -87,18 +87,18 @@ void p2w_sink(p2wheap_t h, long head, gtype_cmp_t cmp) {
   }
 }
 
-int p2w_clear(p2wheap_t h) {
+int p2w_clear(p2w_t h) {
   arr_set_size(h->data, 0);
   arr_set_size(h->index, 0);
   arr_set_size(h->index2, 0);
   return 0;
 }
 
-bool p2w_empty(const p2wheap_t h) {
+bool p2w_empty(const p2w_t h) {
   return arr_size(h->data) == 0;
 }
 
-int p2w_push_with_index(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
+int p2w_push_with_index(p2w_t h, long idx, gtype elem, gtype_cmp_t cmp) {
   long size = arr_size(h->data);
   arr_append(h->data, elem);
   arr_append(h->index, gtype_l(idx));
@@ -108,32 +108,32 @@ int p2w_push_with_index(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
   return 0;
 }
 
-long p2w_max_size(const p2wheap_t h) {
+long p2w_max_size(const p2w_t h) {
   return h->size;
 }
 
-gtype p2w_max(const p2wheap_t h) {
+gtype p2w_max(const p2w_t h) {
   return ARR(h->data)[0];
 }
 
-long p2w_max_index(const p2wheap_t h) {
+long p2w_max_index(const p2w_t h) {
   return ARR(h->index)[0].l;
 }
 
-bool p2w_has_elem(const p2wheap_t h, long idx) {
+bool p2w_has_elem(const p2w_t h, long idx) {
   return ARR(h->index2)[idx].l != 0;
 }
 
-bool p2w_has_active(const p2wheap_t h, long idx) {
+bool p2w_has_active(const p2w_t h, long idx) {
   return ARR(h->index2)[idx].l > 1;
 }
 
-gtype p2w_get(const p2wheap_t h, long idx) {
+gtype p2w_get(const p2w_t h, long idx) {
   long i = ARR(h->index2)[idx].l - 2;
   return ARR(h->data)[i];
 }
 
-gtype p2w_delete_max(p2wheap_t h, gtype_cmp_t cmp) {
+gtype p2w_delete_max(p2w_t h, gtype_cmp_t cmp) {
   gtype tmp = ARR(h->data)[0];
   long tmpidx = ARR(h->index)[0].l;
   p2w_switch(h, 0, p2w_size(h) - 1);
@@ -145,7 +145,7 @@ gtype p2w_delete_max(p2wheap_t h, gtype_cmp_t cmp) {
   return tmp;
 }
 
-gtype p2w_deactivate_max(p2wheap_t h, gtype_cmp_t cmp) {
+gtype p2w_deactivate_max(p2w_t h, gtype_cmp_t cmp) {
   gtype tmp = ARR(h->data)[0];
   long tmpidx = ARR(h->index)[0].l;
   p2w_switch(h, 0, p2w_size(h) - 1);
@@ -157,7 +157,7 @@ gtype p2w_deactivate_max(p2wheap_t h, gtype_cmp_t cmp) {
   return tmp;
 }
 
-gtype p2w_delete_max_index(p2wheap_t h, long *idx, gtype_cmp_t cmp) {
+gtype p2w_delete_max_index(p2w_t h, long *idx, gtype_cmp_t cmp) {
   gtype tmp = ARR(h->data)[0];
   long tmpidx = ARR(h->index)[0].l;
   p2w_switch(h, 0, p2w_size(h) - 1);
@@ -172,7 +172,7 @@ gtype p2w_delete_max_index(p2wheap_t h, long *idx, gtype_cmp_t cmp) {
   return tmp;
 }
 
-int p2w_modify(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
+int p2w_modify(p2w_t h, long idx, gtype elem, gtype_cmp_t cmp) {
   long pos = ARR(h->index2)[idx].l - 2;
 
   ARR(h->data)[pos] = elem;
@@ -182,7 +182,7 @@ int p2w_modify(p2wheap_t h, long idx, gtype elem, gtype_cmp_t cmp) {
   return 0;
 }
 
-bool p2w_check(p2wheap_t h, gtype_cmp_t cmp) {
+bool p2w_check(p2w_t h, gtype_cmp_t cmp) {
   long size = p2w_size(h);
   int ecode = 0;
   for (long i = 0; i < size; i++) {

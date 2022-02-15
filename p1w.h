@@ -14,7 +14,7 @@ typedef enum {
   PRIORITY_TYPES_COUNT
 } p1w_types;
 
-typedef struct p1w_s {
+typedef struct priority_one_way {
   arr_t(gtype) data;
   p1w_types typ;
   gtype_cmp_t cmp;

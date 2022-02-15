@@ -7,7 +7,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  p2wheap_t h = p2w_create();
+  p2w_t h = p2w_create();
   d2w_push_with_index(h, 0, 0);
   d2w_push_with_index(h, 1, 100.1);
   d2w_push_with_index(h, 2, 200.2);

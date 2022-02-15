@@ -21,7 +21,7 @@
  *
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
-typedef struct rbm_node {
+typedef struct red_black_map_node {
   struct rb_node_s rb_node;
 
   /** \private
@@ -40,7 +40,7 @@ typedef struct rbm_node {
  *   #rbm_size(t) - Kích thước của t.
  *   #rbm_traverse(k, v, t) - Duyệt tuần tự các cặp trong t.
  */
-typedef struct rbm_s {
+typedef struct red_black_map {
   struct bn_tree t;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
@@ -162,7 +162,7 @@ int rbm_remove(rbm_t t, gtype key);
 #define rbm_size(t) ((t)->size)
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
-  rbm_node_t nd = container_of(*k, struct rbm_node, key);
+  rbm_node_t nd = container_of(*k, struct red_black_map_node, key);
   bn_node_t tmp = bn_next_inorder(to_bn(nd));
   if (!tmp) {
     *k = NULL_PTR;

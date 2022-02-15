@@ -9,12 +9,12 @@
 #include "base/gtype.h"
 #include "base/rb.h"
 
-typedef struct rbs_node {
+typedef struct red_black_set_node {
   struct rb_node_s rb_node;
   gtype value;
 } *rbs_node_t;
 
-typedef struct rbs {
+typedef struct red_black_set {
   struct bn_tree t;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
@@ -32,7 +32,7 @@ rbs_node_t rbs_search(rbs_t s, gtype elem);
 int rbs_remove(rbs_t s, gtype elem);
 
 static inline void _rbs_move_next(gtype **cur) {
-  rbs_node_t nd = container_of(*cur, struct rbs_node, value);
+  rbs_node_t nd = container_of(*cur, struct red_black_set_node, value);
   bn_node_t tmp = bn_next_inorder(to_bn(nd));
   if (!tmp) {
     *cur = NULL_PTR;

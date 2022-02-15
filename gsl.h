@@ -14,7 +14,7 @@ typedef enum {
   GSN_ELEMENTS
 } gsn_elements;
 
-typedef struct gsl_s {
+typedef struct gtype_single_linked {
   gtype *front, *back;
   gtype_free_t free_value;
 } *gsl_t;

@@ -14,7 +14,7 @@ static void hmap_remove_node(hmap_t tab, int i);
 
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key, gtype_free_t free_value) {
-  hmap_t tab = malloc(sizeof(struct hash_map_s));
+  hmap_t tab = malloc(sizeof(struct hash_map));
   tab->size = 0;
   tab->noccupied = 0;
   tab->hash_func = hash_func;

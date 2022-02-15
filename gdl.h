@@ -15,7 +15,7 @@ typedef enum {
   GDN_ELEMENTS
 } gdn_elements;
 
-typedef struct gdl_s {
+typedef struct gtype_double_linked {
   gtype *front, *back;
   gtype_free_t free_value;
 } *gdl_t;

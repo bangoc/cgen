@@ -12,7 +12,7 @@
 
 #include <stdint.h>
 
-typedef struct hset_s {
+typedef struct hash_set {
   int capacity;
   int mod;
   uint mask;

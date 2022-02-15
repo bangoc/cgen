@@ -5,7 +5,7 @@
 #include "gsl.h"
 
 gsl_t gsl_create(gtype_free_t free_value) {
-  gsl_t list = malloc(sizeof(struct gsl_s));
+  gsl_t list = malloc(sizeof(struct gtype_single_linked));
   list->free_value = free_value;
   list->front = list->back = NULL;
   return list;

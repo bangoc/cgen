@@ -45,7 +45,7 @@
  *
  *   #gvec_traverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
  */
-typedef struct gvec_s {
+typedef struct gtype_vector {
   /**
    * Mảng cơ sở lưu các đối tượng ::gtype
    */

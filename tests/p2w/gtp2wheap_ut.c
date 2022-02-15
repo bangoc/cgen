@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  p2wheap_t h = p2w_create();
+  p2w_t h = p2w_create();
   p2w_push_with_index(h, 0, gtype_l(0), gtype_cmp_l);
   p2w_push_with_index(h, 1, gtype_l(100), gtype_cmp_l);
   p2w_push_with_index(h, 2, gtype_l(200), gtype_cmp_l);

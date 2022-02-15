@@ -22,11 +22,11 @@ typedef union generic_type {
   char *s;
   void *v;
   union generic_type *g;
-  struct gvec_s *gvec;
-  struct rbm_s *rbm;
-  struct rbs *rbs;
-  struct hmap_s *hmap;
-  struct hset_s *hset;
+  struct gtype_vector *gvec;
+  struct red_black_map *rbm;
+  struct red_black_set *rbs;
+  struct hash_map *hmap;
+  struct hash_set *hset;
 } gtype;
 
 #define gtype_value(type, val) ((gtype){.type = val})

@@ -5,7 +5,7 @@
 #include "gdl.h"
 
 gdl_t gdl_create(gtype_free_t free_value) {
-  gdl_t list = malloc(sizeof(struct gdl_s));
+  gdl_t list = malloc(sizeof(struct gtype_double_linked));
   list->front = list->back = NULL;
   list->free_value = free_value;
   return list;

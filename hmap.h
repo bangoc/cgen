@@ -29,7 +29,7 @@
  *   #hmap_traverse(k, v, map) - Duyệt tuần tự các cặp trong map.
  *
  */
-typedef struct hash_map_s {
+typedef struct hash_map {
   int capacity;
   int mod;
   uint mask;
