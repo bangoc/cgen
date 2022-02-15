@@ -106,6 +106,23 @@ hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
 hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
 
 /**
+ * Thêm cặp (key, value) vào bảng tab. Nếu key đã tồn tại thì
+ * bỏ qua và trả về con trỏ tới giá trị đang có trong tab.
+ *
+ * @param tab Con trỏ tới bảng băm
+ * @param key Khóa được thêm vào
+ * @param value Giá trị giá trị được thêm vào
+ * @return Trả về con trỏ tới giá trị đang được gắn với key
+ * trong tab nếu đã có, hoặc trả về NULL nếu không.
+ * Giá trị trả về có kiểu ::gtype*
+ *
+ * \memberof hash_map_s
+ *
+ * Tham khảo: rbm_put(rbm_t t, gtype key, gtype value)
+ */
+gtype *hmap_put(hmap_t tab, gtype key, gtype value);
+
+/**
  * Tra cứu giá trị trong bảng tab theo key.
  *
  * @param tab Con trỏ tới bảng băm.

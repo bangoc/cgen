@@ -113,7 +113,7 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value);
  *
  * \memberof rbm_s
  *
- * Tham khảo: rbm_insert(rbm_t tab, gtype key, gtype value)
+ * Tham khảo: hmap_put(hmap_t tab, gtype key, gtype value)
  */
 gtype *rbm_put(rbm_t t, gtype key, gtype value);
 
