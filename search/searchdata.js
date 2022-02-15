@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "acfghirv",
   1: "ghr",
   2: "ghr",
-  3: "ghr",
+  3: "gh",
   4: "afiv",
   5: "ghr",
   6: "ghr",
