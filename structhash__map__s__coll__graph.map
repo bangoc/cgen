@@ -1,4 +1,6 @@
 <map id="hash_map_s" name="hash_map_s">
 <area shape="rect" id="node1" title=" " alt="" coords="5,170,101,197"/>
-<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="6,7,101,34"/>
+<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="190,7,285,34"/>
+<area shape="rect" id="node3" href="$structgvec__s.html" title=" " alt="" coords="153,170,217,197"/>
+<area shape="rect" id="node4" href="$structrbm__s.html" title=" " alt="" coords="316,170,375,197"/>
 </map>

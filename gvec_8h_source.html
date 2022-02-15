@@ -135,7 +135,7 @@ $(function() {
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="preprocessor">    free(v); \</span></div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="preprocessor">  } while (0)</span></div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno"><a class="line" href="gvec_8h.html#a54174614f21e9e45e745c6b6caf48392">  217</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="gvec_8h.html#a54174614f21e9e45e745c6b6caf48392">gvec_gtype_free</a>(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno"><a class="line" href="gvec_8h.html#ac653e5377fde5d4915629556b676a0fc">  217</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="gvec_8h.html#ac653e5377fde5d4915629556b676a0fc">gtype_free_gvec</a>(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno"><a class="line" href="gvec_8h.html#a02cc2f9111065ed3c3a823ce47ee0fe3">  227</a></span><span class="preprocessor">#define gvec_qsort(v, cmp) \</span></div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="preprocessor">  qsort(ARR((v)-&gt;arr), gvec_size(v), sizeof(gtype), cmp)</span></div>
@@ -145,8 +145,8 @@ $(function() {
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span> </div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="preprocessor">#endif  </span><span class="comment">// GVEC_H_</span></div>
 <div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
-<div class="ttc" id="agvec_8h_html_a54174614f21e9e45e745c6b6caf48392"><div class="ttname"><a href="gvec_8h.html#a54174614f21e9e45e745c6b6caf48392">gvec_gtype_free</a></div><div class="ttdeci">void gvec_gtype_free(gtype value)</div></div>
 <div class="ttc" id="agvec_8h_html_a7e5d46c9c870243332c79af24d4fd413"><div class="ttname"><a href="gvec_8h.html#a7e5d46c9c870243332c79af24d4fd413">gvec_t</a></div><div class="ttdeci">struct gvec_s * gvec_t</div></div>
+<div class="ttc" id="agvec_8h_html_ac653e5377fde5d4915629556b676a0fc"><div class="ttname"><a href="gvec_8h.html#ac653e5377fde5d4915629556b676a0fc">gtype_free_gvec</a></div><div class="ttdeci">void gtype_free_gvec(gtype value)</div></div>
 <div class="ttc" id="astructgvec__s_html"><div class="ttname"><a href="structgvec__s.html">gvec_s</a></div><div class="ttdef"><b>Definition:</b> gvec.h:48</div></div>
 <div class="ttc" id="astructgvec__s_html_a2abdf938b7d021bae19204db6b5999bb"><div class="ttname"><a href="structgvec__s.html#a2abdf938b7d021bae19204db6b5999bb">gvec_s::free_value</a></div><div class="ttdeci">gtype_free_t free_value</div><div class="ttdef"><b>Definition:</b> gvec.h:60</div></div>
 <div class="ttc" id="astructgvec__s_html_a3eef9095ee728c2b67902107bdc8b7b5"><div class="ttname"><a href="structgvec__s.html#a3eef9095ee728c2b67902107bdc8b7b5">gvec_s::arr</a></div><div class="ttdeci">gtype ** arr</div><div class="ttdef"><b>Definition:</b> gvec.h:52</div></div>
