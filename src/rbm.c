@@ -83,7 +83,6 @@ int rbm_remove(rbm_t t, gtype key) {
   return 1;
 }
 
-void rbm_gtype_free(gtype value) {
-  rbm_t map = value.v;
-  rbm_free(map);
+void gtype_free_rbm(gtype value) {
+  rbm_free(value.rbm);
 }

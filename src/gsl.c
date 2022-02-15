@@ -20,3 +20,7 @@ long gsl_size(gsl_t list) {
   }
   return sz;
 }
+
+void gtype_free_gsl(gtype value) {
+  gsl_free(value.gsl);
+}

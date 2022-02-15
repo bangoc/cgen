@@ -79,3 +79,7 @@ void p1w_root(p1w_t h, gtype value) {
       break;
   }
 }
+
+void gtype_free_p1w(gtype value) {
+  p1w_free(value.p1w);
+}

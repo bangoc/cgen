@@ -18,3 +18,7 @@ long gdl_size(gdl_t list) {
   }
   return cc;
 }
+
+void gtype_free_gdl(gtype value) {
+  gdl_free(value.gdl);
+}

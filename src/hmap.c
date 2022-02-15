@@ -25,6 +25,10 @@ hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
   return tab;
 }
 
+void gtype_free_hmap(gtype value) {
+  hmap_free(value.hmap);
+}
+
 gtype *hmap_value(hmap_t tab, gtype key) {
   int node_index = hmap_lookup_node(tab, key, NULL);
   return (HASH_IS_REAL(elem(tab->hashes, node_index)))?

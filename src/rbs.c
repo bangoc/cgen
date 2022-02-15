@@ -58,6 +58,5 @@ int rbs_remove(rbs_t s, gtype elem) {
 }
 
 void rbs_gtype_free(gtype value) {
-  rbs_t s = value.v;
-  rbs_free(s);
+  rbs_free(value.rbs);
 }

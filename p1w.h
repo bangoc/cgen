@@ -36,6 +36,16 @@ long p1w_size(p1w_t h);
     free(h); \
   } while (0)
 
+/**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng p1w
+ * được lưu trong một cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang chứa con trỏ tới đối tượng p1w.
+ * Con trỏ value.p1w (kiểu ::p1w_t) được truyền cho p1w_free.
+ * @return Hàm không trả về giá trị.
+ */
+void gtype_free_p1w(gtype value);
+
 #define P1WARR(h) (ARR((h)->data))
 
 #endif  // P1W_H_

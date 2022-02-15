@@ -71,9 +71,8 @@ void hset_free(hset_t hs) {
   free(hs);
 }
 
-void hset_gtype_free(gtype value) {
-  hset_t s = value.v;
-  hset_free(s);
+void gtype_free_hset(gtype value) {
+  hset_free(value.hset);
 }
 
 gtype *hset_next_pkey(hset_t hs, gtype* curr) {

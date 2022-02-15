@@ -211,13 +211,12 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
 
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbm
- * đang được lưu trong 1 cấu trúc lưu trữ khác.
+ * được lưu trong một cấu trúc lưu trữ khác.
  *
- * @param value Giá trị gtype đang lưu con trỏ tới đối tượng rbm.
- * Con trỏ value.v trước tiên được ép kiểu thành hmap_t, sau đó con
- * trỏ hmap_t được truyền cho hmap_free.
+ * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbm.
+ * Con trỏ value.rbm (kiểu ::rbm_t) được truyền cho rbm_free.
  * @return Hàm không trả về giá trị.
  */
-void rbm_gtype_free(gtype value);
+void gtype_free_rbm(gtype value);
 
 #endif  // RBM_H_

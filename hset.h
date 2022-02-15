@@ -37,16 +37,16 @@ int hset_index_of(hset_t hs, gtype key);
 int hset_remove(hset_t hs, gtype key);
 void hset_clear(hset_t hs);
 void hset_free(hset_t hs);
+
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng hset
  * được lưu trong một cấu trúc lưu trữ khác.
  *
- * @param value Giá trị gtype đang chứa con trỏ tới hset.
- * Trước tiên value.v được ép kiểu thành hset_t, sau đó con trỏ hset_t
- * được truyền cho hset_free.
+ * @param value Giá trị gtype đang chứa con trỏ tới đối tượng hset.
+ * Con trỏ value.hset (kiểu ::hset_t) được truyền cho hset_free.
  * @return Hàm không trả về giá trị.
  */
-void hset_gtype_free(gtype value);
+void gtype_free_hset(gtype value);
 
 #define hset_size(hs) (hs->size)
 

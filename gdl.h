@@ -105,6 +105,8 @@ typedef struct gtype_double_linked {
     free(list); \
   } while (0)
 
+void gtype_free_gdl(gtype value);
+
 #define gdl_inserta(list, pos, value) \
   do { \
     if (!(pos)) { \

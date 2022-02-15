@@ -38,4 +38,14 @@ gtype p2w_delete_max_index(p2w_t h, long *idx, gtype_cmp_t cmp);
 int p2w_modify(p2w_t h, long idx, gtype elem, gtype_cmp_t cmp);
 bool p2w_check(p2w_t h, gtype_cmp_t cmp);
 
+/**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng p2w
+ * được lưu trong một cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang chứa con trỏ tới đối tượng p2w.
+ * Con trỏ value.p2w (kiểu ::p2w_t) được truyền cho p2w_free.
+ * @return Hàm không trả về giá trị.
+ */
+void gtype_free_p2w(gtype value);
+
 #endif  // P2W_H_

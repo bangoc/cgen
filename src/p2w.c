@@ -36,6 +36,10 @@ void p2w_free(p2w_t *h) {
   *h = NULL;
 }
 
+void gtype_free_p2w(gtype value) {
+  p2w_free(value.p2w);
+}
+
 long p2w_size(const p2w_t h) {
   return arr_size(h->data);
 }

@@ -69,11 +69,14 @@ typedef struct gtype_single_linked {
       gsl_pop_front(list); \
     } \
   } while (0)
+
 #define gsl_free(list) \
   do {\
       gsl_clear(list); \
       free(list); \
   } while (0)
+
+void gtype_free_gsl(gtype value);
 
 #define gsl_traverse(cur, list) \
   for (gtype *cur = gsl_front(list); cur; cur = gsn_next(cur))
