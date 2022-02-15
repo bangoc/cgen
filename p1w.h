@@ -18,7 +18,7 @@ typedef struct priority_one_way {
   arr_t(gtype) data;
   p1w_types typ;
   gtype_cmp_t cmp;
-} *p1w_t;
+} p1w_s, *p1w_t;
 
 p1w_t p1w_create(p1w_types typ, gtype_cmp_t cmp);
 gtype p1w_peek(p1w_t h);

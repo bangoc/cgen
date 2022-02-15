@@ -23,7 +23,7 @@ typedef struct hash_set {
   gtype_hash_t hash_func;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
-} *hset_t;
+} hset_s, *hset_t;
 
 #define hset_hash_at(set, idx) (elem_ref((set)->hashes, idx))
 #define hset_key_at(set, idx) (elem_ref((set)->keys, idx))

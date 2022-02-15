@@ -19,7 +19,7 @@ typedef struct red_black_set {
   gtype_cmp_t cmp;
   gtype_free_t free_key;
   long size;
-} *rbs_t;
+} rbs_s, *rbs_t;
 
 #define to_rbs(n) ((rbs_node_t)(n))
 #define rbs_node_value(n) (to_rbs(n)->value)

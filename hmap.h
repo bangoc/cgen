@@ -42,7 +42,7 @@ typedef struct hash_map {
   gtype_cmp_t cmp;
   gtype_free_t free_key;
   gtype_free_t free_value;
-} *hmap_t;
+} hmap_s, *hmap_t;
 
 /**
  * \headerfile "cgen.h"

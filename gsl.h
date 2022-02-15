@@ -17,7 +17,7 @@ typedef enum {
 typedef struct gtype_single_linked {
   gtype *front, *back;
   gtype_free_t free_value;
-} *gsl_t;
+} gsl_s, *gsl_t;
 
 #define gsn_value(n) (*(n))
 #define gsn_next(n) (((gtype*)(n) + GSN_NEXT)->g)

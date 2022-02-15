@@ -18,7 +18,7 @@ typedef enum {
 typedef struct gtype_double_linked {
   gtype *front, *back;
   gtype_free_t free_value;
-} *gdl_t;
+} gdl_s, *gdl_t;
 
 #define gdn_value(n) (*(n))
 #define gdn_next(n) (((gtype*)(n) + GDN_NEXT)->g)

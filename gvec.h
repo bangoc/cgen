@@ -58,7 +58,7 @@ typedef struct gtype_vector {
    * bỏ qua.
    */
   gtype_free_t free_value;
-} *gvec_t;
+} gvec_s, *gvec_t;
 
 /**
  * Hàm tạo đối tượng vec-tơ.

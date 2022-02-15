@@ -29,7 +29,7 @@ typedef struct red_black_map_node {
    * các thuộc tính của nút.
    */
   gtype key, value;
-} *rbm_node_t;
+} rbm_s, *rbm_node_t;
 
 /**
  * \headerfile "cgen.h"

@@ -15,7 +15,7 @@ typedef struct priority_two_ways {
     arr_t(gtype) data;
     arr_t(gtype) index;
     arr_t(gtype) index2;
-} *p2w_t;
+} p2w_s, *p2w_t;
 
 #define PARENT(x)   (((x)+1)/2-1)
 #define LEFTCHILD(x)  (((x)+1)*2-1)
