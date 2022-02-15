@@ -214,7 +214,7 @@ gvec_t gvec_create(int cap, gtype_free_t free_value);
  * được truyền cho gvec_free.
  * @return Hàm không trả về giá trị.
  */
-void gvec_gtype_free(gtype value);
+void gtype_free_gvec(gtype value);
 
 /**
  * Sắp xếp các phần tử của vec-tơ.

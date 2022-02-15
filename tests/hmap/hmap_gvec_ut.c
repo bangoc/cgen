@@ -11,7 +11,7 @@
 
 int main() {
   srand(time(NULL));
-  hmap_t map = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, gvec_gtype_free);
+  hmap_t map = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, gtype_free_gvec);
   for (int i = 0; i < 100; ++i) {
     gvec_t vec = gvec_create(0, NULL);
     int n = rand() % 100 + 1;

@@ -22,6 +22,11 @@ typedef union generic_type {
   char *s;
   void *v;
   union generic_type *g;
+  struct gvec_s *gvec;
+  struct rbm_s *rbm;
+  struct rbs *rbs;
+  struct hmap_s *hmap;
+  struct hset_s *hset;
 } gtype;
 
 #define gtype_value(type, val) ((gtype){.type = val})
@@ -29,6 +34,11 @@ typedef union generic_type {
 #define gtype_d(value) gtype_value(d, value)
 #define gtype_s(value) gtype_value(s, value)
 #define gtype_v(value) gtype_value(v, value)
+#define gtype_gvec(value) gtype_value(gvec, value)
+#define gtype_rbm(value) gtype_value(rbm, value)
+#define gtype_rbs(value) gtype_value(rbs, value)
+#define gtype_hmap(value) gtype_value(hmap, value)
+#define gtype_hset(value) gtype_value(hset, value)
 
 #define gtype_swap(v1, v2) \
   do { \
