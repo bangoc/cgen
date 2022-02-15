@@ -1,6 +1,7 @@
 <map id="rbm_insert_result" name="rbm_insert_result">
-<area shape="rect" id="node1" title=" " alt="" coords="5,124,128,151"/>
-<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="177,5,271,32"/>
-<area shape="rect" id="node3" href="$structgvec__s.html" title=" " alt="" coords="160,124,224,151"/>
-<area shape="rect" id="node4" href="$structrbm__s.html" title=" " alt="" coords="303,124,361,151"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,170,128,197"/>
+<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="239,7,334,34"/>
+<area shape="rect" id="node3" href="$structgtype__vector.html" title=" " alt="" coords="164,170,260,197"/>
+<area shape="rect" id="node4" href="$structred__black__map.html" title=" " alt="" coords="303,170,414,197"/>
+<area shape="rect" id="node5" href="$structhash__map.html" title=" " alt="" coords="461,170,544,197"/>
 </map>

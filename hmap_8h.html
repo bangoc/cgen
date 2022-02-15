@@ -107,7 +107,7 @@ Kèm theo graph phụ thuộc cho hmap.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Cấu trúc cơ sở dữ liệu</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map__s.html">hash_map_s</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhash__map.html">hash_map</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structhmap__insert__result.html">hmap_insert_result</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,8 +123,8 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ae152fdbf002357f7bf7a612ffe893f6b"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhash__map__s.html">hash_map_s</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a></td></tr>
-<tr class="separator:ae152fdbf002357f7bf7a612ffe893f6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b5150f622e38fe0aa63879a2e5567f"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhash__map.html">hash_map</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#af6b5150f622e38fe0aa63879a2e5567f">hmap_t</a></td></tr>
+<tr class="separator:af6b5150f622e38fe0aa63879a2e5567f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6ee48932dfc13546a3f665f60b5fa08"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhmap__insert__result.html">hmap_insert_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a></td></tr>
 <tr class="separator:ad6ee48932dfc13546a3f665f60b5fa08"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -267,22 +267,22 @@ Các hàm</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Kiểu trả về của hàm <a class="el" href="structhash__map__s.html#a264f5f75ecf59af9c00794dc8c2fbfa0">hmap_insert(hmap_t tab, gtype key, gtype value)</a> </p>
+<p >Kiểu trả về của hàm hmap_insert(hmap_t tab, gtype key, gtype value) </p>
 
 </div>
 </div>
-<a id="ae152fdbf002357f7bf7a612ffe893f6b" name="ae152fdbf002357f7bf7a612ffe893f6b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae152fdbf002357f7bf7a612ffe893f6b">&#9670;&nbsp;</a></span>hmap_t</h2>
+<a id="af6b5150f622e38fe0aa63879a2e5567f" name="af6b5150f622e38fe0aa63879a2e5567f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6b5150f622e38fe0aa63879a2e5567f">&#9670;&nbsp;</a></span>hmap_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="structhash__map__s.html">hash_map_s</a> * <a class="el" href="hmap_8h.html#ae152fdbf002357f7bf7a612ffe893f6b">hmap_t</a></td>
+          <td class="memname">typedef struct <a class="el" href="structhash__map.html">hash_map</a> * <a class="el" href="hmap_8h.html#af6b5150f622e38fe0aa63879a2e5567f">hmap_t</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm <a class="el" href="structhash__map__s.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a></p>
+<p >Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</p>
 <p >Các macro hỗ trợ: <a class="el" href="hmap_8h.html#a6567f6c8da98e8fcd12480dec2a94241">hmap_size(map)</a> - Kích thước của map <a class="el" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">hmap_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map. </p>
 
 </div>
