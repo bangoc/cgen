@@ -41,6 +41,8 @@
  *
  *   #gvec_free(v) - Giải phóng bộ nhớ được cấp phát cho v.
  *
+ *   #gvec_clear(v) - Làm rỗng v
+ *
  *   #gvec_qsort(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
  *
  *   #gvec_traverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
@@ -203,6 +205,28 @@ gvec_t gvec_create(int cap, gtype_free_t free_value);
     } \
     arr_free((v)->arr); \
     free(v); \
+  } while (0)
+
+/**
+ * Làm rỗng vec-tơ: Giải phóng các vùng nhớ được cấp phát cho mảng
+ * và các phần tử của v. Sau đó thiết lập lại kích thước vec-tơ = 0,
+ * dung lượng vec-tơ không thay đổi.
+ *
+ * @param v Con trỏ tới đối tượng kiểu vec-tơ
+ * @return Không trả về giá trị
+ *
+ * Tham khảo: #gvec_set_capacity(v, cap) - Thay đổi dung lượng
+ */
+#define gvec_clear(v) \
+  do{ \
+    if ((v)->free_value) { \
+      int _sz = arr_size((v)->arr); \
+      gtype *_arr = ARR((v)->arr); \
+      for (int _i = 0; _i < _sz; ++_i) { \
+        (v)->free_value(_arr[_i]); \
+      } \
+    } \
+    arr_set_size((v)->arr, 0); \
   } while (0)
 
 /**
