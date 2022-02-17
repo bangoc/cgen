@@ -57,6 +57,18 @@ static inline void _rbs_move_next(gtype **cur) {
       bn_free_tree((bn_tree_t)(s)); \
     } while (0)
 
+#define rbs_clear(s) \
+    do {  \
+      if ((s)->free_key) { \
+        rbs_traverse(_k, (s)) { \
+          (s)->free_key(*_k); \
+        } \
+      } \
+      bn_tree_t _t = (bn_tree_t)(s); \
+      bn_clear_tree(_t); \
+      (s)->size = 0; \
+    } while (0)
+
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbs
  * được lưu trong một cấu trúc lưu trữ khác.
