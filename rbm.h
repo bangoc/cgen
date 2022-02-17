@@ -189,7 +189,7 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
        k != NULL_PTR && v != NULL_PTR; _rbm_move_next(&k, &v)) \
 
 /**
- * Giải phóng bộ nhớ được cấp phát cho bảng m. Các hàm free_key và
+ * Giải phóng bộ nhớ được cấp phát cho bảng map. Các hàm free_key và
  * free_value được gọi cho từng khóa và giá trị nếu != NULL.
  *
  * @param map Con trỏ tới bảng cây.
@@ -207,6 +207,29 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
       } \
     } \
     bn_free_tree((bn_tree_t)(map)); \
+  } while (0)
+
+/**
+ * Làm rỗng bảng map. Các hàm free_key và free_value sẽ được gọi
+ * cho từng cặp khóa và giá trị nếu != NULL.
+ *
+ * @param map Con trỏ tới bảng cây.
+ */
+#define rbm_clear(map) \
+  do { \
+    if ((map)->free_key || (map)->free_value) { \
+      rbm_traverse(_k, _v, (map)) { \
+        if ((map)->free_key) { \
+          (map)->free_key(*_k); \
+        } \
+        if ((map)->free_value) { \
+          (map)->free_value(*_v); \
+        } \
+      } \
+    } \
+    bn_tree_t _t = (bn_tree_t)(map); \
+    bn_clear_tree(_t); \
+    (map)->size = 0; \
   } while (0)
 
 /**

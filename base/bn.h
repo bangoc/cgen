@@ -72,6 +72,17 @@ bn_node_t bn_prev_inorder(bn_node_t x);
       npp(cur); \
     }
 
+#define bn_clear_tree(t) \
+  do { \
+    bn_node_t _tmp = NULL_PTR; \
+    bn_traverse_lrn(_cur, (t)) { \
+      free(_tmp); \
+      _tmp = _cur; \
+    } \
+    free(_tmp); \
+    (t)->root = NULL_PTR; \
+  } while (0)
+
 #define bn_is_empty(t) ((t)->root == NULL_PTR)
 
 #define bn_change_child(old_node, new_node, parent, t) \
