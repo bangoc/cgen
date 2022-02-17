@@ -36,6 +36,12 @@ long p1w_size(p1w_t h);
     free(h); \
   } while (0)
 
+#define p1w_clear(h) \
+  do { \
+    arr_set_size((h)->data, 0); \
+    arr_set_capacity((h)->data, 0); \
+  } while (0)
+
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng p1w
  * được lưu trong một cấu trúc lưu trữ khác.
