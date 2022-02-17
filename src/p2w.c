@@ -28,14 +28,6 @@ p2w_t p2w_create() {
   return h;
 }
 
-void p2w_free(p2w_t *h) {
-  arr_free((*h)->data);
-  arr_free((*h)->index);
-  arr_free((*h)->index2);
-  free(*h);
-  *h = NULL;
-}
-
 void gtype_free_p2w(gtype value) {
   p2w_free(value.p2w);
 }

@@ -24,7 +24,15 @@ typedef struct priority_two_ways {
 // ========== Khai báo hàm ===============
 
 p2w_t p2w_create();
-void p2w_free(p2w_t *h);
+
+#define p2w_free(h) \
+  do { \
+    arr_free(h->data); \
+    arr_free(h->index); \
+    arr_free(h->index2); \
+    free(h); \
+  } while (0)
+
 long p2w_size(const p2w_t h);
 int p2w_clear(p2w_t h);
 bool p2w_empty(const p2w_t h);

@@ -25,6 +25,6 @@ int main() {
   CHECK_MSG(p2w_delete_max(h, gtype_cmp_l).l == 300, "Delete max 300");
   CHECK_MSG(p2w_delete_max(h, gtype_cmp_l).l == 200, "Delete max 200");
   CHECK_MSG(p2w_delete_max(h, gtype_cmp_l).l == 0, "Delete max 0");
-  p2w_free(&h);
+  p2w_free(h);
   return 0;
 }
