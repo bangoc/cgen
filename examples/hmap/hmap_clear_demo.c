@@ -4,22 +4,11 @@
 */
 
 #include "cgen.h"
+#include "tests/base/rands.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-char *rands(int n) {
-  static char buff[21];
-  if (n > 20) {
-    n = 20;
-  }
-  for (int i = 0; i < n; ++i) {
-    buff[i] = rand() % ('z' - 'a') + 'a';
-  }
-  buff[n] = '\0';
-  return buff;
-}
 
 void print_hmap(hmap_t tab) {
   printf("size: %d  capacity: %d  noccupied: %d\n", tab->size, tab->capacity, tab->noccupied);
