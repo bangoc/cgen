@@ -87,6 +87,10 @@ int p2w_clear(p2w_t h) {
   arr_set_size(h->data, 0);
   arr_set_size(h->index, 0);
   arr_set_size(h->index2, 0);
+  arr_set_capacity(h->data, 0);
+  arr_set_capacity(h->index, 0);
+  arr_set_capacity(h->index2, 0);
+  h->size = 0;
   return 0;
 }
 
