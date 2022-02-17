@@ -130,10 +130,10 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Các hàm</h2></td></tr>
+<tr class="memitem:a6ad0aeae30cec73fdbf3262ed0061183"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#a6ad0aeae30cec73fdbf3262ed0061183">hmap_clear</a> (<a class="el" href="structhash__map.html">hmap_t</a> tab)</td></tr>
+<tr class="separator:a6ad0aeae30cec73fdbf3262ed0061183"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17f8fb3aa19641419c5a383cb68ab481"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#a17f8fb3aa19641419c5a383cb68ab481">gtype_free_hmap</a> (<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
 <tr class="separator:a17f8fb3aa19641419c5a383cb68ab481"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8b020bf60912fe2595bb23ad5e71e22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#aa8b020bf60912fe2595bb23ad5e71e22">hmap_gtype_free</a> (<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
-<tr class="separator:aa8b020bf60912fe2595bb23ad5e71e22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
 <div class="textblock"><p >Bảng băm khái quát với khóa &amp; giá trị kểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. </p>
@@ -316,25 +316,25 @@ Các hàm</h2></td></tr>
 
 </div>
 </div>
-<a id="aa8b020bf60912fe2595bb23ad5e71e22" name="aa8b020bf60912fe2595bb23ad5e71e22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8b020bf60912fe2595bb23ad5e71e22">&#9670;&nbsp;</a></span>hmap_gtype_free()</h2>
+<a id="a6ad0aeae30cec73fdbf3262ed0061183" name="a6ad0aeae30cec73fdbf3262ed0061183"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ad0aeae30cec73fdbf3262ed0061183">&#9670;&nbsp;</a></span>hmap_clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void hmap_gtype_free </td>
+          <td class="memname">void hmap_clear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structhash__map.html">hmap_t</a>&#160;</td>
+          <td class="paramname"><em>tab</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng hmap được lưu trong một cấu trúc lưu trữ khác.</p>
+<p >Làm rỗng bảng băm tab. Các hàm free_key và free_value được gọi cho các cặp khóa và giá trị nếu != NULL.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>Giá trị gtype đang chứa con trỏ tới hmap. Con trỏ value.v trước tiên được ép kiểu thành hmap_t, sau đó con trỏ hmap_t được truyền cho hmap_free. </td></tr>
+    <tr><td class="paramname">tab</td><td>Con trỏ tới bảng băm. </td></tr>
   </table>
   </dd>
 </dl>
