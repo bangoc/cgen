@@ -1,4 +1,5 @@
 add_executable(hmap_demo hmap_demo.c)
-foreach (p hmap_demo)
+add_executable(hmap_clear_demo hmap_clear_demo.c)
+foreach (p hmap_demo hmap_clear_demo)
   target_link_libraries(${p} bkc)
 endforeach()

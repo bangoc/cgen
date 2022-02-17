@@ -189,6 +189,15 @@ int hmap_remove(hmap_t tab, gtype key);
   } while (0)
 
 /**
+ * Làm rỗng bảng băm tab. Các hàm free_key và free_value được gọi
+ * cho các cặp khóa và giá trị nếu != NULL.
+ *
+ * @param tab Con trỏ tới bảng băm.
+ * @return Hàm không trả về giá trị.
+ */
+void hmap_clear(hmap_t tab);
+
+/**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng bảng bắm
  * được lưu trong một cấu trúc lưu trữ khác.
  *
@@ -198,17 +207,6 @@ int hmap_remove(hmap_t tab, gtype key);
  * @return Hàm không trả về giá trị.
  */
 void gtype_free_hmap(gtype value);
-
-/**
- * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng hmap
- * được lưu trong một cấu trúc lưu trữ khác.
- *
- * @param value Giá trị gtype đang chứa con trỏ tới hmap.
- * Con trỏ value.v trước tiên được ép kiểu thành hmap_t, sau đó con
- * trỏ hmap_t được truyền cho hmap_free.
- * @return Hàm không trả về giá trị.
- */
-void hmap_gtype_free(gtype value);
 
 gtype *hmap_next_pkey(hmap_t, gtype*);
 gtype *hmap_next_pvalue(hmap_t, gtype*);

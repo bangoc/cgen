@@ -90,6 +90,30 @@ int hmap_remove(hmap_t tab, gtype key) {
   return 1;
 }
 
+void hmap_clear(hmap_t tab) {
+  int capacity = (tab)->capacity;
+  gtype *keys = ARR((tab)->keys);
+  gtype *values = ARR((tab)->values);
+  uint *hashes = ARR((tab)->hashes);
+  for (int i = 0; i < capacity; ++i) {
+    if (HASH_IS_REAL(hashes[i])) {
+      if ((tab)->free_key) {
+        (tab)->free_key(keys[i]);
+      }
+      if ((tab)->free_value) {
+        (tab)->free_value(values[i]);
+      }
+    }
+  }
+  tab->size = 0;
+  tab->noccupied = 0;
+  arr_set_size((tab)->keys, 0);
+  arr_set_size((tab)->values, 0);
+  arr_set_size((tab)->hashes, 0);
+  memset(ARR((tab)->hashes), 0, (tab)->capacity * sizeof(uint));
+  hmap_maybe_realloc(tab);
+}
+
 gtype *hmap_next_pkey(hmap_t map, gtype* curr) {
   gtype * r;
   hashes_next_pkey_or_pvalue(map, curr, keys, r);
@@ -253,9 +277,4 @@ static inline int hmap_maybe_realloc(hmap_t tab) {
     return 1;
   }
   return 0;
-}
-
-void hmap_gtype_free(gtype value) {
-  hmap_t map = value.v;
-  hmap_free(map);
 }
