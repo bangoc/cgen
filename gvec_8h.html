@@ -127,6 +127,8 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 <tr class="separator:a435902fa71c91fc2375d652e71a00166"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00376f59d46ad6c109d974a74894b8e1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a00376f59d46ad6c109d974a74894b8e1">gvec_free</a>(v)</td></tr>
 <tr class="separator:a00376f59d46ad6c109d974a74894b8e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3b2488fc4b64421434658250bd4116f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#ae3b2488fc4b64421434658250bd4116f">gvec_clear</a>(v)</td></tr>
+<tr class="separator:ae3b2488fc4b64421434658250bd4116f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a02cc2f9111065ed3c3a823ce47ee0fe3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a02cc2f9111065ed3c3a823ce47ee0fe3">gvec_qsort</a>(v,  cmp)&#160;&#160;&#160;  qsort(ARR((v)-&gt;arr), <a class="el" href="gvec_8h.html#aa8ae641caf214f3f9e3da46f1b3e868e">gvec_size</a>(v), sizeof(<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>), cmp)</td></tr>
 <tr class="separator:a02cc2f9111065ed3c3a823ce47ee0fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fb514600bc1e340c50412006acbd0c0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gvec_8h.html#a3fb514600bc1e340c50412006acbd0c0">gvec_traverse</a>(cur,  v)&#160;&#160;&#160;  for (<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> *cur = <a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v), *end = <a class="el" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v) + <a class="el" href="gvec_8h.html#aa8ae641caf214f3f9e3da46f1b3e868e">gvec_size</a>(v); cur &lt; end; ++cur)</td></tr>
@@ -202,7 +204,7 @@ Các hàm</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Giao diện mảng của vec-tơ. </p><div class="fragment"><div class="line"><a class="code hl_define" href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a>(v)[0];  \\ Phần tử đầu tiên của vec-tơ v.</div>
-<div class="ttc" id="agvec_8h_html_acab1c1da0ec33cc19ead6f0e770742ab"><div class="ttname"><a href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a></div><div class="ttdeci">#define gvec_arr(v)</div><div class="ttdef"><b>Definition:</b> gvec.h:103</div></div>
+<div class="ttc" id="agvec_8h_html_acab1c1da0ec33cc19ead6f0e770742ab"><div class="ttname"><a href="gvec_8h.html#acab1c1da0ec33cc19ead6f0e770742ab">gvec_arr</a></div><div class="ttdeci">#define gvec_arr(v)</div><div class="ttdef"><b>Definition:</b> gvec.h:105</div></div>
 </div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t). </td></tr>
@@ -239,6 +241,43 @@ Các hàm</h2></td></tr>
 
 </div>
 </div>
+<a id="ae3b2488fc4b64421434658250bd4116f" name="ae3b2488fc4b64421434658250bd4116f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3b2488fc4b64421434658250bd4116f">&#9670;&nbsp;</a></span>gvec_clear</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define gvec_clear</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">v</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Giá trị:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span>{ \</div>
+<div class="line">    if ((v)-&gt;free_value) { \</div>
+<div class="line">      int _sz = arr_size((v)-&gt;arr); \</div>
+<div class="line">      gtype *_arr = ARR((v)-&gt;arr); \</div>
+<div class="line">      for (<span class="keywordtype">int</span> _i = 0; _i &lt; _sz; ++_i) { \</div>
+<div class="line">        (v)-&gt;free_value(_arr[_i]); \</div>
+<div class="line">      } \</div>
+<div class="line">    } \</div>
+<div class="line">    arr_set_size((v)-&gt;arr, 0); \</div>
+<div class="line">  } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment --><p >Làm rỗng vec-tơ: Giải phóng các vùng nhớ được cấp phát cho mảng và các phần tử của v. Sau đó thiết lập lại kích thước vec-tơ = 0, dung lượng vec-tơ không thay đổi.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng kiểu vec-tơ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Không trả về giá trị</dd></dl>
+<p>Tham khảo: <a class="el" href="gvec_8h.html#a435902fa71c91fc2375d652e71a00166">gvec_set_capacity(v, cap)</a> - Thay đổi dung lượng </p>
+
+</div>
+</div>
 <a id="ac4897cd3b7045cb4057ebbcac2a1581c" name="ac4897cd3b7045cb4057ebbcac2a1581c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac4897cd3b7045cb4057ebbcac2a1581c">&#9670;&nbsp;</a></span>gvec_elem</h2>
 
@@ -265,7 +304,7 @@ Các hàm</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Chỉ định phần tử của vec-tơ bằng chỉ số. </p><div class="fragment"><div class="line"><a class="code hl_define" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a>(v, 0);  \\ Phần tử đầu tiên của vec-tơ v.</div>
-<div class="ttc" id="agvec_8h_html_ac4897cd3b7045cb4057ebbcac2a1581c"><div class="ttname"><a href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a></div><div class="ttdeci">#define gvec_elem(v, i)</div><div class="ttdef"><b>Definition:</b> gvec.h:115</div></div>
+<div class="ttc" id="agvec_8h_html_ac4897cd3b7045cb4057ebbcac2a1581c"><div class="ttname"><a href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a></div><div class="ttdeci">#define gvec_elem(v, i)</div><div class="ttdef"><b>Definition:</b> gvec.h:117</div></div>
 </div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t). </td></tr>
@@ -340,7 +379,7 @@ Các hàm</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Chỉ số của phần tử trong vec-tơ. </p><div class="fragment"><div class="line"><a class="code hl_define" href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of</a>(&amp;<a class="code hl_define" href="gvec_8h.html#ac4897cd3b7045cb4057ebbcac2a1581c">gvec_elem</a>(v, i)) == i;</div>
-<div class="ttc" id="agvec_8h_html_a3fb42b68c0ceca57fafc13ded6140a06"><div class="ttname"><a href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of</a></div><div class="ttdeci">#define gvec_idx_of(v, elem_ptr)</div><div class="ttdef"><b>Definition:</b> gvec.h:127</div></div>
+<div class="ttc" id="agvec_8h_html_a3fb42b68c0ceca57fafc13ded6140a06"><div class="ttname"><a href="gvec_8h.html#a3fb42b68c0ceca57fafc13ded6140a06">gvec_idx_of</a></div><div class="ttdeci">#define gvec_idx_of(v, elem_ptr)</div><div class="ttdef"><b>Definition:</b> gvec.h:129</div></div>
 </div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu gvec_t). </td></tr>
@@ -568,6 +607,7 @@ Các hàm</h2></td></tr>
 <p ><a class="el" href="gvec_8h.html#a5f49bd4862c66d903edb32c776c4f6bb">gvec_remove(v, idx)</a> - Xóa phần tử có chỉ số idx khỏi v.</p>
 <p ><a class="el" href="gvec_8h.html#a435902fa71c91fc2375d652e71a00166">gvec_set_capacity(v, cap)</a> - Chủ động thiết lập dung lượng cho v.</p>
 <p ><a class="el" href="gvec_8h.html#a00376f59d46ad6c109d974a74894b8e1">gvec_free(v)</a> - Giải phóng bộ nhớ được cấp phát cho v.</p>
+<p ><a class="el" href="gvec_8h.html#ae3b2488fc4b64421434658250bd4116f">gvec_clear(v)</a> - Làm rỗng v</p>
 <p ><a class="el" href="gvec_8h.html#a02cc2f9111065ed3c3a823ce47ee0fe3">gvec_qsort(v, cmp)</a> - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.</p>
 <p ><a class="el" href="gvec_8h.html#a3fb514600bc1e340c50412006acbd0c0">gvec_traverse(cur, v)</a> - Duyệt các phần tử của v theo chiều thuận. </p>
 
