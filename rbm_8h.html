@@ -122,6 +122,8 @@ Cấu trúc cơ sở dữ liệu</h2></td></tr>
 <tr class="separator:a8d92b3892d198487df705b4502e1af2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09233e201dbb5c07bb8dc0149b16dbde"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a09233e201dbb5c07bb8dc0149b16dbde">rbm_free</a>(map)</td></tr>
 <tr class="separator:a09233e201dbb5c07bb8dc0149b16dbde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7417ba644ccd20561ef96e919d5a3777"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rbm_8h.html#a7417ba644ccd20561ef96e919d5a3777">rbm_clear</a>(map)</td></tr>
+<tr class="separator:a7417ba644ccd20561ef96e919d5a3777"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -139,6 +141,46 @@ Các hàm</h2></td></tr>
 <div class="textblock"><p >Ánh xạ khóa=&gt;giá trị khái quát dựa trên cây đỏ-đen. </p>
 <p >rbm - Red-black tree map là một triển khai ánh xạ khái quát dựa trên cây đỏ đen (gọi ngắn gọn là bảng cây). Khóa và giá trị được lưu trong cùng nút của cây và có kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. Các khóa được so sánh bằng hàm do người dùng cung cấp. </p>
 </div><h2 class="groupheader">Thông tin về định nghĩa</h2>
+<a id="a7417ba644ccd20561ef96e919d5a3777" name="a7417ba644ccd20561ef96e919d5a3777"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7417ba644ccd20561ef96e919d5a3777">&#9670;&nbsp;</a></span>rbm_clear</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define rbm_clear</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">map</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Giá trị:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span> { \</div>
+<div class="line">    if ((map)-&gt;free_key || (map)-&gt;free_value) { \</div>
+<div class="line">      rbm_traverse(_k, _v, (map)) { \</div>
+<div class="line">        if ((map)-&gt;free_key) { \</div>
+<div class="line">          (map)-&gt;free_key(*_k); \</div>
+<div class="line">        } \</div>
+<div class="line">        if ((map)-&gt;free_value) { \</div>
+<div class="line">          (map)-&gt;free_value(*_v); \</div>
+<div class="line">        } \</div>
+<div class="line">      } \</div>
+<div class="line">    } \</div>
+<div class="line">    bn_tree_t _t = (bn_tree_t)(map); \</div>
+<div class="line">    bn_clear_tree(_t); \</div>
+<div class="line">    (map)-&gt;size = 0; \</div>
+<div class="line">  } <span class="keywordflow">while</span> (0)</div>
+</div><!-- fragment --><p >Làm rỗng bảng map. Các hàm free_key và free_value sẽ được gọi cho từng cặp khóa và giá trị nếu != NULL.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Con trỏ tới bảng cây. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a09233e201dbb5c07bb8dc0149b16dbde" name="a09233e201dbb5c07bb8dc0149b16dbde"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a09233e201dbb5c07bb8dc0149b16dbde">&#9670;&nbsp;</a></span>rbm_free</h2>
 
@@ -167,7 +209,7 @@ Các hàm</h2></td></tr>
 <div class="line">    } \</div>
 <div class="line">    bn_free_tree((bn_tree_t)(map)); \</div>
 <div class="line">  } <span class="keywordflow">while</span> (0)</div>
-</div><!-- fragment --><p >Giải phóng bộ nhớ được cấp phát cho bảng m. Các hàm free_key và free_value được gọi cho từng khóa và giá trị nếu != NULL.</p>
+</div><!-- fragment --><p >Giải phóng bộ nhớ được cấp phát cho bảng map. Các hàm free_key và free_value được gọi cho từng khóa và giá trị nếu != NULL.</p>
 <dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>Con trỏ tới bảng cây. </td></tr>

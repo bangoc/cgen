@@ -146,9 +146,26 @@ $(function() {
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="preprocessor">    bn_free_tree((bn_tree_t)(map)); \</span></div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="preprocessor">  } while (0)</span></div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="rbm_8h.html#a5aa9d2dc195936c8e14489e511e2b703">  220</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="rbm_8h.html#a5aa9d2dc195936c8e14489e511e2b703">gtype_free_rbm</a>(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="preprocessor">#endif  </span><span class="comment">// RBM_H_</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="rbm_8h.html#a7417ba644ccd20561ef96e919d5a3777">  218</a></span><span class="preprocessor">#define rbm_clear(map) \</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="preprocessor">  do { \</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="preprocessor">    if ((map)-&gt;free_key || (map)-&gt;free_value) { \</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="preprocessor">      rbm_traverse(_k, _v, (map)) { \</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="preprocessor">        if ((map)-&gt;free_key) { \</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="preprocessor">          (map)-&gt;free_key(*_k); \</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="preprocessor">        } \</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="preprocessor">        if ((map)-&gt;free_value) { \</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="preprocessor">          (map)-&gt;free_value(*_v); \</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="preprocessor">        } \</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="preprocessor">      } \</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="preprocessor">    } \</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span><span class="preprocessor">    bn_tree_t _t = (bn_tree_t)(map); \</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="preprocessor">    bn_clear_tree(_t); \</span></div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span><span class="preprocessor">    (map)-&gt;size = 0; \</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="rbm_8h.html#a5aa9d2dc195936c8e14489e511e2b703">  243</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="rbm_8h.html#a5aa9d2dc195936c8e14489e511e2b703">gtype_free_rbm</a>(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="preprocessor">#endif  </span><span class="comment">// RBM_H_</span></div>
 <div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
 <div class="ttc" id="arbm_8h_html_a5aa9d2dc195936c8e14489e511e2b703"><div class="ttname"><a href="rbm_8h.html#a5aa9d2dc195936c8e14489e511e2b703">gtype_free_rbm</a></div><div class="ttdeci">void gtype_free_rbm(gtype value)</div></div>
 <div class="ttc" id="arbm_8h_html_a8b6dcca52c60b3d20adf9d2ed22757ce"><div class="ttname"><a href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a></div><div class="ttdeci">struct rbm_insert_result rbm_ires</div></div>
