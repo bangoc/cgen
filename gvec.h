@@ -69,7 +69,7 @@ typedef struct gtype_vector {
  * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
  * với đối tượng ::gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL_PTR nếu thất bại.
- * \memberof gvec_s
+ * \memberof gtype_vector
  */
 gvec_t gvec_create(int cap, gtype_free_t free_value);
 

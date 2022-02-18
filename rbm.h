@@ -37,8 +37,13 @@ typedef struct red_black_map_node {
  * rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
  *
  * Các macro hỗ trợ: <br>
- *   #rbm_size(t) - Kích thước của t.
- *   #rbm_traverse(k, v, t) - Duyệt tuần tự các cặp trong t.
+ *   #rbm_size(map) - Kích thước của map.
+ *
+ *   #rbm_traverse(k, v, map) - Duyệt tuần tự các cặp trong map.
+ *
+ *   #rbm_free(map) - Giải phóng bộ nhớ của map
+ *
+ *   #rbm_clear(map) - Làm rỗng map
  */
 typedef struct red_black_map {
   struct bn_tree t;
@@ -76,7 +81,7 @@ rbm_node_t rbm_create_node(gtype key, gtype value);
  * tự free_key.
  * @return Trả về đối tượng điều khiển bảng cây.
  *
- * \memberof rbm_s
+ * \memberof red_black_map
  *
  * Tham khảo: hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
@@ -94,7 +99,7 @@ rbm_t rbm_create(gtype_cmp_t cmp,
  * @param value Giá trị được thêm vào.
  * @return Trả về đối tượng ::rbm_ires
  *
- * \memberof rbm_s
+ * \memberof red_black_map
  *
  * Tham khảo: hmap_insert(hmap_t tab, gtype key, gtype value)
  */
@@ -111,7 +116,7 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value);
  * @return Trả về con trỏ tới giá trị nếu khóa đã tồn tại
  * hoặc trả về NULL nếu ngược lại, kiểu ::gtype*.
  *
- * \memberof rbm_s
+ * \memberof red_black_map
  *
  * Tham khảo: hmap_put(hmap_t tab, gtype key, gtype value)
  */
@@ -125,7 +130,7 @@ gtype *rbm_put(rbm_t t, gtype key, gtype value);
  * @return Trả về con trỏ tới giá trị đang được gắn với key trong t
  * nếu tồn tại, hoặc NULL nếu ngược lại.
  *
- * \memberof rbm_s
+ * \memberof red_black_map
  *
  * Tham khảo: hmap_value(hmap_t tab, gtype key)
  */
@@ -146,7 +151,7 @@ rbm_node_t rbm_search(rbm_t t, gtype key);
  * @param key Khóa cần xóa.
  * @return 1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.
  *
- * \memberof rbm_s
+ * \memberof red_black_map
  *
  * Tham khảo: hmap_remove(hmap_t tab, gtype key)
  */
@@ -239,6 +244,8 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbm.
  * Con trỏ value.rbm (kiểu ::rbm_t) được truyền cho rbm_free.
  * @return Hàm không trả về giá trị.
+ *
+ * \memberof gtype
  */
 void gtype_free_rbm(gtype value);
 

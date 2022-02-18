@@ -26,7 +26,10 @@
  *
  * Các macro hỗ trợ:
  *   #hmap_size(map) - Kích thước của map
+ *
  *   #hmap_traverse(k, v, map) - Duyệt tuần tự các cặp trong map.
+ *
+ *   #hmap_free(map) - Giải phóng bộ nhớ của map
  *
  */
 typedef struct hash_map {
@@ -194,6 +197,8 @@ int hmap_remove(hmap_t tab, gtype key);
  *
  * @param tab Con trỏ tới bảng băm.
  * @return Hàm không trả về giá trị.
+ *
+ * \memberof hash_map
  */
 void hmap_clear(hmap_t tab);
 
@@ -205,6 +210,8 @@ void hmap_clear(hmap_t tab);
  * Trước tiên value.v được ép kiểu thành ::hmap_t, sau đó con trỏ ::hmap_t
  * được truyền cho hmap_free.
  * @return Hàm không trả về giá trị.
+ *
+ * \memberof gtype
  */
 void gtype_free_hmap(gtype value);
 
