@@ -64,6 +64,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Các hàm thành viên Public</a> &#124;
 <a href="#pub-attribs">các trường đữ liệu</a>  </div>
   <div class="headertitle"><div class="title">gtype_vector Struct Tham chiếu</div></div>
 </div><!--header-->
@@ -82,6 +83,11 @@ Sơ đồ liên kết cho gtype_vector:</div>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">Chú giải</a>]</span></center></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Các hàm thành viên Public</h2></td></tr>
+<tr class="memitem:a71fb4b23fba82d78ab64cc2e5ef534e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgtype__vector.html">gvec_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgtype__vector.html#a71fb4b23fba82d78ab64cc2e5ef534e5">gvec_create</a> (int cap, gtype_free_t <a class="el" href="structgtype__vector.html#a2abdf938b7d021bae19204db6b5999bb">free_value</a>)</td></tr>
+<tr class="separator:a71fb4b23fba82d78ab64cc2e5ef534e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 các trường đữ liệu</h2></td></tr>
 <tr class="memitem:a3eef9095ee728c2b67902107bdc8b7b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgtype__vector.html#a3eef9095ee728c2b67902107bdc8b7b5">arr</a></td></tr>
@@ -104,7 +110,45 @@ các trường đữ liệu</h2></td></tr>
 <p ><a class="el" href="gvec_8h.html#ae3b2488fc4b64421434658250bd4116f">gvec_clear(v)</a> - Làm rỗng v</p>
 <p ><a class="el" href="gvec_8h.html#a02cc2f9111065ed3c3a823ce47ee0fe3">gvec_qsort(v, cmp)</a> - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.</p>
 <p ><a class="el" href="gvec_8h.html#a3fb514600bc1e340c50412006acbd0c0">gvec_traverse(cur, v)</a> - Duyệt các phần tử của v theo chiều thuận. </p>
-</div><h2 class="groupheader">Thông tin về trường</h2>
+</div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
+<a id="a71fb4b23fba82d78ab64cc2e5ef534e5" name="a71fb4b23fba82d78ab64cc2e5ef534e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71fb4b23fba82d78ab64cc2e5ef534e5">&#9670;&nbsp;</a></span>gvec_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgtype__vector.html">gvec_t</a> gvec_create </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cap</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gtype_free_t&#160;</td>
+          <td class="paramname"><em>free_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Hàm tạo đối tượng vec-tơ.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cap</td><td>(capacity) Dung lượng ban đầu của vec-tơ. </td></tr>
+    <tr><td class="paramname">free_value</td><td>con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn với đối tượng <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. Sử dụng NULL nếu không có bộ nhớ bên ngoài. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng tạo được nếu thành công hoặc NULL_PTR nếu thất bại. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Thông tin về trường</h2>
 <a id="a3eef9095ee728c2b67902107bdc8b7b5" name="a3eef9095ee728c2b67902107bdc8b7b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3eef9095ee728c2b67902107bdc8b7b5">&#9670;&nbsp;</a></span>arr</h2>
 

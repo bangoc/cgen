@@ -63,6 +63,8 @@ $(function() {
 
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Các hàm thành viên Public</a>  </div>
   <div class="headertitle"><div class="title">red_black_map Struct Tham chiếu</div></div>
 </div><!--header-->
 <div class="contents">
@@ -79,11 +81,240 @@ Sơ đồ liên kết cho red_black_map:</div>
 <area shape="rect" href="structhash__map.html" title=" " alt="" coords="172,287,255,313"/>
 </map>
 <center><span class="legend">[<a href="graph_legend.html">Chú giải</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Các hàm thành viên Public</h2></td></tr>
+<tr class="memitem:a14819d682b69c1597dd2bbb3705f7c5a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structred__black__map.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create</a> (gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</td></tr>
+<tr class="separator:a14819d682b69c1597dd2bbb3705f7c5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b5419361ac0c227a505d5a5868e6d2a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structred__black__map.html#a9b5419361ac0c227a505d5a5868e6d2a">rbm_insert</a> (<a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a> t, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
+<tr class="separator:a9b5419361ac0c227a505d5a5868e6d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86bd2a7aeba6181e120015ee03e2f1b3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structred__black__map.html#a86bd2a7aeba6181e120015ee03e2f1b3">rbm_put</a> (<a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a> t, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
+<tr class="separator:a86bd2a7aeba6181e120015ee03e2f1b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3975052313956b5607efb0a197438e4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structred__black__map.html#a3975052313956b5607efb0a197438e4a">rbm_value</a> (<a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a> t, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key)</td></tr>
+<tr class="separator:a3975052313956b5607efb0a197438e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47267816d215c1717525669fa88c2e59"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structred__black__map.html#a47267816d215c1717525669fa88c2e59">rbm_remove</a> (<a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a> t, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> key)</td></tr>
+<tr class="separator:a47267816d215c1717525669fa88c2e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
-<div class="textblock"><p >Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).</p>
+<div class="textblock"><p >Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm <a class="el" href="structred__black__map.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a>.</p>
 <p >Các macro hỗ trợ: <br  />
- <a class="el" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size(t)</a> - Kích thước của t. <a class="el" href="rbm_8h.html#a8d92b3892d198487df705b4502e1af2f">rbm_traverse(k, v, t)</a> - Duyệt tuần tự các cặp trong t. </p>
-</div><hr/>Thông tin cho struct được biên soạn từ các file sau đây:<ul>
+ <a class="el" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size(map)</a> - Kích thước của map.</p>
+<p ><a class="el" href="rbm_8h.html#a8d92b3892d198487df705b4502e1af2f">rbm_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map.</p>
+<p ><a class="el" href="rbm_8h.html#a09233e201dbb5c07bb8dc0149b16dbde">rbm_free(map)</a> - Giải phóng bộ nhớ của map</p>
+<p ><a class="el" href="rbm_8h.html#a7417ba644ccd20561ef96e919d5a3777">rbm_clear(map)</a> - Làm rỗng map </p>
+</div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
+<a id="a14819d682b69c1597dd2bbb3705f7c5a" name="a14819d682b69c1597dd2bbb3705f7c5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14819d682b69c1597dd2bbb3705f7c5a">&#9670;&nbsp;</a></span>rbm_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a> rbm_create </td>
+          <td>(</td>
+          <td class="paramtype">gtype_cmp_t&#160;</td>
+          <td class="paramname"><em>cmp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gtype_free_t&#160;</td>
+          <td class="paramname"><em>free_key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">gtype_free_t&#160;</td>
+          <td class="paramname"><em>free_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Hàm tạo đối tượng điều khiển bảng cây.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cmp</td><td>Hàm so sánh các giá trị khóa, phải != NULL. Tham khảo: <a class="el" href="uniongeneric__type.html#a46c338d7295e88dce828ae386da16140">gtype_cmp_s(gtype v1, gtype v2)</a>. </td></tr>
+    <tr><td class="paramname">free_key</td><td>Con trỏ tới hàm giải phóng bộ nhớ ngoài được gắn với khóa, tham khảo. gtype_free_s(gtype v). Được gọi khi xóa dữ liệu nếu != NULL. Trong trường hợp không có bộ nhớ ngoài hoặc không cần xóa bộ nhớ ngoài (như tình huống đang chia sẻ bộ nhớ với 1 câu trúc lưu trữ khác) thì để = NULL. </td></tr>
+    <tr><td class="paramname">free_value</td><td>Con trỏ tới hàm giải phóng bộ nhớ ngoài được gắn với giá trị, tương tự free_key. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng điều khiển bảng cây.</dd></dl>
+<p>Tham khảo: <a class="el" href="structhash__map.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a> </p>
+
+</div>
+</div>
+<a id="a9b5419361ac0c227a505d5a5868e6d2a" name="a9b5419361ac0c227a505d5a5868e6d2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b5419361ac0c227a505d5a5868e6d2a">&#9670;&nbsp;</a></span>rbm_insert()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a> rbm_insert </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì bỏ qua, có thể truy cập giá trị đang được gắn với khóa đã có trong t bằng con trỏ ::rbm_ires::value trong kết quả được trả về.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Con trỏ tới bảng cây. </td></tr>
+    <tr><td class="paramname">key</td><td>Khóa được thêm vào. </td></tr>
+    <tr><td class="paramname">value</td><td>Giá trị được thêm vào. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng <a class="el" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a></dd></dl>
+<p>Tham khảo: <a class="el" href="structhash__map.html#a264f5f75ecf59af9c00794dc8c2fbfa0">hmap_insert(hmap_t tab, gtype key, gtype value)</a> </p>
+
+</div>
+</div>
+<a id="a86bd2a7aeba6181e120015ee03e2f1b3" name="a86bd2a7aeba6181e120015ee03e2f1b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86bd2a7aeba6181e120015ee03e2f1b3">&#9670;&nbsp;</a></span>rbm_put()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> * rbm_put </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì bỏ qua và trả về con trỏ tới giá trị đang có trong t. Nếu ngược lại thì thêm (key, value) và trả về NULL.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Con trỏ tới bảng cây. </td></tr>
+    <tr><td class="paramname">key</td><td>Khóa được thêm vào. </td></tr>
+    <tr><td class="paramname">value</td><td>Giá trị được thêm vào. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ tới giá trị nếu khóa đã tồn tại hoặc trả về NULL nếu ngược lại, kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>*.</dd></dl>
+<p>Tham khảo: <a class="el" href="structhash__map.html#a503bc64fc59c472334ff1536218b7158">hmap_put(hmap_t tab, gtype key, gtype value)</a> </p>
+
+</div>
+</div>
+<a id="a47267816d215c1717525669fa88c2e59" name="a47267816d215c1717525669fa88c2e59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47267816d215c1717525669fa88c2e59">&#9670;&nbsp;</a></span>rbm_remove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rbm_remove </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Nếu key không có trong t thì bỏ qua, nếu ngược lại thì xóa cặp khóa &amp; giá trị tương ứng trong t. Các hàm free_key và free_value được gọi nếu != NULL.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Con trỏ tới bảng cây. </td></tr>
+    <tr><td class="paramname">key</td><td>Khóa cần xóa. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.</dd></dl>
+<p>Tham khảo: <a class="el" href="structhash__map.html#a798e464e01459a6f4b3392cc5969a80e">hmap_remove(hmap_t tab, gtype key)</a> </p>
+
+</div>
+</div>
+<a id="a3975052313956b5607efb0a197438e4a" name="a3975052313956b5607efb0a197438e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3975052313956b5607efb0a197438e4a">&#9670;&nbsp;</a></span>rbm_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> * rbm_value </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="rbm_8h.html#ad6880cbfa057bea9a62714ab401fd379">rbm_t</a>&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Tra cứu giá trị trong t theo key.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>Con trỏ tới đối tượng bảng cây. </td></tr>
+    <tr><td class="paramname">key</td><td>Khóa được sử dụng để tìm kiếm. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ tới giá trị đang được gắn với key trong t nếu tồn tại, hoặc NULL nếu ngược lại.</dd></dl>
+<p>Tham khảo: <a class="el" href="structhash__map.html#a2bbddacd21194741f137c6e8c1422736">hmap_value(hmap_t tab, gtype key)</a> </p>
+
+</div>
+</div>
+<hr/>Thông tin cho struct được biên soạn từ các file sau đây:<ul>
 <li><a class="el" href="rbm_8h_source.html">rbm.h</a></li>
 </ul>
 </div><!-- contents -->

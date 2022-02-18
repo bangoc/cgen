@@ -2,7 +2,7 @@ var searchData=
 [
   ['hash_5fmap_0',['hash_map',['../structhash__map.html',1,'']]],
   ['hmap_2eh_1',['hmap.h',['../hmap_8h.html',1,'']]],
-  ['hmap_5fclear_2',['hmap_clear',['../hmap_8h.html#a6ad0aeae30cec73fdbf3262ed0061183',1,'hmap.h']]],
+  ['hmap_5fclear_2',['hmap_clear',['../structhash__map.html#a6ad0aeae30cec73fdbf3262ed0061183',1,'hash_map']]],
   ['hmap_5fcreate_3',['hmap_create',['../structhash__map.html#a898bd6931c14b9572d74a26ed343b72b',1,'hash_map']]],
   ['hmap_5ffree_4',['hmap_free',['../hmap_8h.html#aafdcb9f6bab54257cb101246b730bf49',1,'hmap.h']]],
   ['hmap_5finsert_5',['hmap_insert',['../structhash__map.html#a264f5f75ecf59af9c00794dc8c2fbfa0',1,'hash_map']]],

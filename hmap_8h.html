@@ -66,8 +66,7 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Cấu trúc cơ sở dữ liệu</a> &#124;
 <a href="#define-members">Định nghĩa</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Các hàm</a>  </div>
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle"><div class="title">hmap.h File Tham chiếu</div></div>
 </div><!--header-->
 <div class="contents">
@@ -127,13 +126,6 @@ Typedefs</h2></td></tr>
 <tr class="separator:a60bbc23f7cdd178d7b190a7a71744fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6ee48932dfc13546a3f665f60b5fa08"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structhmap__insert__result.html">hmap_insert_result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08">hmap_ires</a></td></tr>
 <tr class="separator:ad6ee48932dfc13546a3f665f60b5fa08"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Các hàm</h2></td></tr>
-<tr class="memitem:a6ad0aeae30cec73fdbf3262ed0061183"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#a6ad0aeae30cec73fdbf3262ed0061183">hmap_clear</a> (<a class="el" href="structhash__map.html">hmap_t</a> tab)</td></tr>
-<tr class="separator:a6ad0aeae30cec73fdbf3262ed0061183"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a17f8fb3aa19641419c5a383cb68ab481"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="hmap_8h.html#a17f8fb3aa19641419c5a383cb68ab481">gtype_free_hmap</a> (<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> value)</td></tr>
-<tr class="separator:a17f8fb3aa19641419c5a383cb68ab481"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
 <div class="textblock"><p >Bảng băm khái quát với khóa &amp; giá trị kểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. </p>
@@ -285,60 +277,9 @@ Các hàm</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm <a class="el" href="structhash__map.html#a898bd6931c14b9572d74a26ed343b72b">hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a></p>
-<p >Các macro hỗ trợ: <a class="el" href="hmap_8h.html#a6567f6c8da98e8fcd12480dec2a94241">hmap_size(map)</a> - Kích thước của map <a class="el" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">hmap_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Thông tin về hàm</h2>
-<a id="a17f8fb3aa19641419c5a383cb68ab481" name="a17f8fb3aa19641419c5a383cb68ab481"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17f8fb3aa19641419c5a383cb68ab481">&#9670;&nbsp;</a></span>gtype_free_hmap()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void gtype_free_hmap </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
-          <td class="paramname"><em>value</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng bảng bắm được lưu trong một cấu trúc lưu trữ khác.</p>
-<dl class="params"><dt>Các tham số</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>Giá trị gtype đang chứa con trỏ tới bảng băm. Trước tiên value.v được ép kiểu thành ::hmap_t, sau đó con trỏ ::hmap_t được truyền cho hmap_free. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Hàm không trả về giá trị. </dd></dl>
-
-</div>
-</div>
-<a id="a6ad0aeae30cec73fdbf3262ed0061183" name="a6ad0aeae30cec73fdbf3262ed0061183"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ad0aeae30cec73fdbf3262ed0061183">&#9670;&nbsp;</a></span>hmap_clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void hmap_clear </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structhash__map.html">hmap_t</a>&#160;</td>
-          <td class="paramname"><em>tab</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Làm rỗng bảng băm tab. Các hàm free_key và free_value được gọi cho các cặp khóa và giá trị nếu != NULL.</p>
-<dl class="params"><dt>Các tham số</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">tab</td><td>Con trỏ tới bảng băm. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Giá trị trả về</dt><dd>Hàm không trả về giá trị. </dd></dl>
+<p >Các macro hỗ trợ: <a class="el" href="hmap_8h.html#a6567f6c8da98e8fcd12480dec2a94241">hmap_size(map)</a> - Kích thước của map</p>
+<p ><a class="el" href="hmap_8h.html#ad047126ca123a447c578be5b328f43de">hmap_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map.</p>
+<p ><a class="el" href="hmap_8h.html#aafdcb9f6bab54257cb101246b730bf49">hmap_free(map)</a> - Giải phóng bộ nhớ của map </p>
 
 </div>
 </div>
