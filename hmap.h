@@ -81,7 +81,7 @@ typedef struct hmap_insert_result {
  * @return Con trỏ tới đối tượng bảng băm được tạo. (Hiện chưa xử lý kịch)
  * bản lỗi cấp phát bộ nhớ.
  *
- * \memberof hash_map_s
+ * \memberof hash_map
  *
  * Tham khảo: rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
@@ -99,7 +99,7 @@ hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
  * @param value Giá trị giá trị được thêm vào
  * @return Trả về đối tượng ::hmap_ires
  *
- * \memberof hash_map_s
+ * \memberof hash_map
  *
  * Tham khảo: rbm_insert(rbm_t t, gtype key, gtype value)
  */
@@ -116,7 +116,7 @@ hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
  * trong tab nếu đã có, hoặc trả về NULL nếu không.
  * Giá trị trả về có kiểu ::gtype*
  *
- * \memberof hash_map_s
+ * \memberof hash_map
  *
  * Tham khảo: rbm_put(rbm_t t, gtype key, gtype value)
  */
@@ -130,7 +130,7 @@ gtype *hmap_put(hmap_t tab, gtype key, gtype value);
  * @return Trả về con trỏ tới giá trị đang được gắn với key trong tab
  * nếu tồn tại, hoặc NULL nếu ngược lại.
  *
- * \memberof hash_map_s
+ * \memberof hash_map
  *
  * Tham khảo: rbm_value(rbm_t t, gtype key)
  */
@@ -145,7 +145,7 @@ gtype *hmap_value(hmap_t tab, gtype key);
  * @param key Khóa cần xóa.
  * @return 1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.
  *
- * \memberof hash_map_s
+ * \memberof hash_map
  *
  * Tham khảo: rbm_remove(rbm_t t, gtype key)
  */
