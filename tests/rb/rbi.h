@@ -49,10 +49,10 @@ static rbi_node_t rbi_create_color_node(int value, rb_node_color_t color) {
 }
 
 static bn_node_t rbi_insert(bn_tree_t t, int value) {
-  bn_node_t same = NULL_PTR, par = NULL_PTR;
+  bn_node_t same = NULL, par = NULL;
   bn_node_t *loc;
   bns_insert_setup(loc, t->root, value, rbi_compare_data, same, par);
-  bn_node_t n = to_bn(rbi_create_node(value));
+  bn_node_t n = bn_node(rbi_create_node(value));
   return rb_insert(t, n, loc, par);
 }
 
@@ -63,11 +63,11 @@ static rbi_node_t rbi_search(bn_tree_t t, int value) {
 static rbi_node_t rbi_delete(bn_tree_t t, int value) {
   rbi_node_t n = rbi_search(t, value);
   if (n) {
-    if (rb_delete(t, to_bn(n)) == 1) {
+    if (rb_delete(t, bn_node(n)) == 1) {
       return n;
     }
   }
-  return NULL_PTR;
+  return NULL;
 }
 
 static void rbi_print_node(bn_node_t n) {
@@ -75,11 +75,11 @@ static void rbi_print_node(bn_node_t n) {
 }
 
 static int rbi_similar_node(bn_node_t n1, bn_node_t n2) {
-  if (n1 == NULL_PTR && n2 == NULL_PTR) {
+  if (n1 == NULL && n2 == NULL) {
     return 0;
   }
-  if ((n1 != NULL_PTR && n2 == NULL_PTR) ||
-      (n1 == NULL_PTR && n2 != NULL_PTR)) {
+  if ((n1 != NULL && n2 == NULL) ||
+      (n1 == NULL && n2 != NULL)) {
     return 1;
   }
   return rbi_value(n1) == rbi_value(n2) && rb_color(n1) == rb_color(n2);

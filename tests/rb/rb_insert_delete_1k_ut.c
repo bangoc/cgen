@@ -9,7 +9,7 @@ int main() {
   for (int i = 0; i < N; ++i) {
     a[i] = i;
   }
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
 
   // insert
   for (int i = 0; i < N; ++i) {

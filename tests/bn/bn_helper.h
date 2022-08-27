@@ -6,11 +6,11 @@
 typedef int (*bn_similar_node_t)();
 
 static int bn_similar_tree_internal(bn_node_t n1, bn_node_t n2, bn_similar_node_t cmp) {
-  if (n1 == NULL_PTR && n2 == NULL_PTR) {
+  if (n1 == NULL && n2 == NULL) {
     return 1;
   }
 
-  if ((n1 == NULL_PTR && n2 != NULL_PTR) || (n1 != NULL_PTR && n2 == NULL_PTR)) {
+  if ((n1 == NULL && n2 != NULL) || (n1 != NULL && n2 == NULL)) {
     return 0;
   }
 

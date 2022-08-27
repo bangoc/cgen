@@ -31,7 +31,7 @@ typedef enum {
 extern const char * color_names[];
 
 typedef struct rb_node_s {
-  struct bn_node bn_node;
+  struct _bn_node bn_node;
   rb_node_color_t color;
 } *rb_node_t;
 
@@ -59,20 +59,5 @@ int rb_delete(bn_tree_t t, bn_node_t z);
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
 #define rb_set_red(node) rb_set_color(node, RB_RED)
-
-/* Xoay từ trái sang phải hoặc xoay từ phải sang trái */
-/* x là trục xoay */
-#define bn_rotate(t, x, right, left) \
-  do { \
-    bn_node_t _y = (x)->right; \
-    (x)->right = _y->left; \
-    if (_y->left != NULL_PTR) { \
-      _y->left->top = (x); \
-    } \
-    _y->top = (x)->top; \
-    bn_change_child(x, _y, (x)->top, t); \
-    _y->left = (x); \
-    (x)->top = _y; \
-  } while (0)
 
 #endif  // RB_H_

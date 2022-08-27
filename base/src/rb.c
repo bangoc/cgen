@@ -27,10 +27,10 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
      *    khắc phục trong quá trình n được đẩy lên phía gốc.
      * Ban đầu n là nút mới được thêm vào, sau mỗi vòng lặp n tiến
      * gần hơn về phía gốc của cây. Vòng lặp dừng lại khi p ==
-     * NULL_PTR (n là gốc của cây) hoặc p được tô mầu đen.
+     * NULL (n là gốc của cây) hoặc p được tô mầu đen.
      *
      * Trong vòng lặp chúng ta có
-     *  + n->top != NULL_PTR và p->top != NULL_PTR (bởi vì n và p
+     *  + n->top != NULL và p->top != NULL (bởi vì n và p
      * là các nút đỏ)
      */
 
@@ -48,7 +48,7 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
         rb_set_red(p->top); \
         n = p->top; \
         p = n->top; \
-        if (p == NULL_PTR) { \
+        if (p == NULL) { \
           /* n là gốc của cây */ \
           rb_set_black(n); \
           break; \
@@ -97,7 +97,7 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 bn_node_t rb_insert(bn_tree_t t,
           bn_node_t node, bn_node_t *loc, bn_node_t parent) {
   bn_insert(node, loc, parent);
-  if (parent == NULL_PTR) {
+  if (parent == NULL) {
     // loc là gốc của cây
     rb_set_black(node);
   } else if (rb_is_red(parent)) {
@@ -116,7 +116,7 @@ void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
     /*
     * Các tính chất bất biến trong vòng lặp:
     * - node là nút đen (hoặc NULL trong lần lặp đầu tiên)
-    * - node không phải là nút gốc (top của nó khác NULL_PTR)
+    * - node không phải là nút gốc (top của nó khác NULL)
     * - Tất cả các đường dẫn tới lá đi qua parent va node có số
     *   lượng nút đen ít hơn 1 so với các đường dẫn khác.
     */
@@ -253,9 +253,9 @@ int rb_delete(bn_tree_t t, bn_node_t node) {
     bn_change_child(node, child, parent, t);
     if (child) {
       rb_set_parent_color(child, p, c);
-      rebalance = NULL_PTR;
+      rebalance = NULL;
     } else {
-      rebalance = c == RB_BLACK? parent: NULL_PTR;
+      rebalance = c == RB_BLACK? parent: NULL;
     }
     tmp = parent;
   } else if (!child) {
@@ -265,7 +265,7 @@ int rb_delete(bn_tree_t t, bn_node_t node) {
     rb_set_parent_color(tmp, p, c);
     parent = p;
     bn_change_child(node, tmp, parent, t);
-    rebalance = NULL_PTR;
+    rebalance = NULL;
     tmp = parent;
   } else {
     bn_node_t successor = child, child2;
@@ -314,10 +314,10 @@ int rb_delete(bn_tree_t t, bn_node_t node) {
     bn_change_child(node, successor, tmp, t);
     if (child2) {
       rb_set_parent_color(child2, parent, RB_BLACK);
-      rebalance = NULL_PTR;
+      rebalance = NULL;
     } else {
       rb_node_color_t c2 = rb_color(successor);
-      rebalance = c2 == RB_BLACK? parent: NULL_PTR;
+      rebalance = c2 == RB_BLACK? parent: NULL;
     }
     rb_set_parent_color(successor, p, c);
     tmp = successor;

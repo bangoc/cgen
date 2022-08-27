@@ -15,7 +15,7 @@ typedef struct red_black_set_node {
 } *rbs_node_t;
 
 typedef struct red_black_set {
-  struct bn_tree t;
+  struct _bn_tree t;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
   long size;
@@ -33,9 +33,9 @@ int rbs_remove(rbs_t s, gtype elem);
 
 static inline void _rbs_move_next(gtype **cur) {
   rbs_node_t nd = container_of(*cur, struct red_black_set_node, value);
-  bn_node_t tmp = bn_next_inorder(to_bn(nd));
+  bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
-    *cur = NULL_PTR;
+    *cur = NULL;
     return;
   }
   *cur = &(rbs_node_value(tmp));
@@ -44,8 +44,8 @@ static inline void _rbs_move_next(gtype **cur) {
 #define rbs_size(s) ((s)->size)
 
 #define rbs_traverse(cur, s) \
-  for (gtype *cur = (rbs_size(s))? &(rbs_node_value(bn_left_most((s)->t.root))): NULL_PTR; \
-        cur != NULL_PTR; _rbs_move_next(&cur))
+  for (gtype *cur = (rbs_size(s))? &(rbs_node_value(bn_left_most((s)->t.root))): NULL; \
+        cur != NULL; _rbs_move_next(&cur))
 
 #define rbs_free(s) \
     do {  \

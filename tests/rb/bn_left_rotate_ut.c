@@ -32,9 +32,9 @@ int t1() {
  1     3
   */
   CHECK_MSG(t->root == n5, "root 5");
-  CHECK_MSG(t->root->right == NULL_PTR, "right null");
+  CHECK_MSG(t->root->right == NULL, "right null");
   CHECK_MSG(t->root->left == n4, "left n4");
-  CHECK_MSG(t->root->left->right == NULL_PTR, "left->right null");
+  CHECK_MSG(t->root->left->right == NULL, "left->right null");
   CHECK_MSG(t->root->left->left == n2, "left left n2");
   CHECK_MSG(t->root->left->left->left == n1, " left left left n1");
   CHECK_MSG(t->root->left->left->right == n3, "left left right n3");
@@ -49,7 +49,7 @@ int t1() {
   CHECK_MSG(t->root->left == n2, "root left n2");
   CHECK_MSG(t->root->left->left == n1, "left left n1");
   CHECK_MSG(t->root->left->right == n3, "left right n3");
-  CHECK_MSG(t->root->right->right == NULL_PTR, "right right null");
+  CHECK_MSG(t->root->right->right == NULL, "right right null");
   return 0;
 }
 

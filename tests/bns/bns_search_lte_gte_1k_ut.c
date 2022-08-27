@@ -6,7 +6,7 @@
 #define N 1000
 
 int main() {
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   // 0, 2, ..., 2 * N - 2
   for (int i = 0; i < N; ++i) {
     rbi_insert(t, 2  * i);

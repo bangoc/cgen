@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   const long len = n / POINTS;
   char desc[1024];
   long value = 0;
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   for (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,

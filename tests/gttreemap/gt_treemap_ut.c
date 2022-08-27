@@ -32,12 +32,12 @@ int main() {
   CHECK_MSG(rbm_remove(t, gtype_s(sd)) == 1, "remove sd");
   CHECK_MSG(rbm_remove(t, gtype_s(se)) == 1, "remove se");
   CHECK_MSG(rbm_remove(t, gtype_s(sf)) == 1, "remove sf");
-  gtype *value = NULL_PTR, query = {.s = sd};
-  CHECK_MSG(rbm_value(t, query) == NULL_PTR, "Failed not found D");
+  gtype *value = NULL, query = {.s = sd};
+  CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found D");
   query = gtype_s(se);
-  CHECK_MSG(rbm_value(t, query) == NULL_PTR, "Failed not found E");
+  CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found E");
   query = gtype_s(sf);
-  CHECK_MSG(rbm_value(t, query) == NULL_PTR, "Failed not found F");
+  CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found F");
   bn_free_tree((bn_tree_t)t);
   printf("Treemap ut OK\n");
   return 0;

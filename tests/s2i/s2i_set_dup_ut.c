@@ -4,7 +4,7 @@
 #include <string.h>
 
 int main() {
-  s2i_t si = s2i_create(NULL_PTR);
+  s2i_t si = s2i_create(NULL);
   s2i_node_t x = s2i_set(si, "Một", 1);
   CHECK_MSG(x->value == 1, "Giá trị được trả về khi chèn 1");
   CHECK_MSG(strcmp(x->key, "Một") == 0, "Khóa được trả về khi chèn 1");

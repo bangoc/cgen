@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   rbi_insert(t, 2);
   /*
     2B
@@ -146,7 +146,7 @@ int main() {
   CHECK_MSG(nd7->left == nd6, "left của nd7 bằng nd6");
   CHECK_MSG(nd7->right == nd9, "right của nd7 bằng nd9");
   CHECK_MSG(rbi_value(t->root) == 5, "t->root == 5");
-  CHECK_MSG(nd5->top == NULL_PTR, "top của nd5 bằng NULL_PTR");
+  CHECK_MSG(nd5->top == NULL, "top của nd5 bằng NULL");
   CHECK_MSG(nd5->left == nd2, "left của nd5 bằng nd2");
   CHECK_MSG(nd5->right == nd7, "right của nd5 bằng nd7");
   CHECK_MSG(rb_is_red(nd2), "Nút 2 là nút đỏ");
@@ -156,7 +156,7 @@ int main() {
   CHECK_MSG(rb_is_black(nd4), "Nút 4 là nút đen");
   CHECK_MSG(nd4->top == nd2, "top của nd4 bằng nd2");
   CHECK_MSG(nd4->left == nd3, "left của nd4 bằng nd3");
-  CHECK_MSG(nd4->right == NULL_PTR, "right của nd4 bằng NULL_PTR");
+  CHECK_MSG(nd4->right == NULL, "right của nd4 bằng NULL");
 
   printf("RB Build test OK\n");
   return 0;

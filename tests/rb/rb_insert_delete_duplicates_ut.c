@@ -6,7 +6,7 @@
 int main() {
   int a[] = {1, 2, 2, 3, 3, 3, 5, 5, 5, 5, 5, 6, 6, 6, 6, 8, 9, 10};
   int n = sizeof(a)/sizeof(a[0]);
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   for (int i = 0; i < n; ++i) {
     rbi_insert(t, a[i]);
     CHECK_MSG(lnr_match_value(t, a, i + 1), "Giá trị sau khi thêm vào.");

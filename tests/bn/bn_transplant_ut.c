@@ -1,15 +1,15 @@
 #include "tests/base/utils.h"
-#include "base/bns.h"
+#include "base/bn.h"
 
 bn_tree_t bn_transplant(bn_tree_t t, bn_node_t u, bn_node_t v) {
-  if (u->top == NULL_PTR) {
+  if (u->top == NULL) {
     t->root = v;
   } else if (u == u->top->left) {
     u->top->left = v;
   } else {
     u->top->right = v;
   }
-  if (v != NULL_PTR) {
+  if (v != NULL) {
     v->top = u->top;
   }
   return t;

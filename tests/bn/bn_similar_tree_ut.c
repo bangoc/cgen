@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int bn_similar_null(bn_node_t n1, bn_node_t n2) {
-  return (n1 != NULL_PTR) == (n2 != NULL_PTR);
+  return (n1 != NULL) == (n2 != NULL);
 }
 
 int main() {
@@ -15,8 +15,8 @@ int main() {
   bn_node_t n22 = bn_create_node();
   bn_node_t n23 = bn_create_node();
 
-  bn_tree_t t2 = bn_create_tree(NULL_PTR);
-  bn_tree_t t1 = bn_create_tree(NULL_PTR);
+  bn_tree_t t2 = bn_create_tree(NULL);
+  bn_tree_t t1 = bn_create_tree(NULL);
 
   CHECK_MSG(bn_similar_tree(t1, t2, bn_similar_null) == 1, "Hai cây rỗng gốc");
   t1->root = n11;

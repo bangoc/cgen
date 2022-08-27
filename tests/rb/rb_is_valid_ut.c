@@ -9,7 +9,7 @@ int t1() {
   rbi_node_t n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
-  bn_tree_t t = bn_create_tree(to_bn(n3));
+  bn_tree_t t = bn_create_tree(bn_node(n3));
   CHECK_MSG(rb_is_valid(t), "Cây 1");
   return 0;
 }
@@ -20,7 +20,7 @@ int t2() {
   rbi_node_t n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
-  bn_tree_t t = bn_create_tree(to_bn(n3));
+  bn_tree_t t = bn_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 2");
   return 0;
 }
@@ -31,7 +31,7 @@ int t3() {
   rbi_node_t n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
-  bn_tree_t t = bn_create_tree(to_bn(n3));
+  bn_tree_t t = bn_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 3");
   return 0;
 }
@@ -44,7 +44,7 @@ int t4() {
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
-  bn_tree_t t = bn_create_tree(to_bn(n3));
+  bn_tree_t t = bn_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 4");
   return 0;
 }
@@ -57,7 +57,7 @@ int t5() {
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
-  bn_tree_t t = bn_create_tree(to_bn(n3));
+  bn_tree_t t = bn_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 5");
   return 0;
 }
@@ -70,7 +70,7 @@ int t6() {
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
-  bn_tree_t t = bn_create_tree(to_bn(n3));
+  bn_tree_t t = bn_create_tree(bn_node(n3));
   CHECK_MSG(rb_is_valid(t), "Cây 6");
   return 0;
 }

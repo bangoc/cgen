@@ -16,7 +16,7 @@ rbm_node_t rbm_create_node(gtype key, gtype value) {
 
 rbm_t rbm_create(gtype_cmp_t cmp,
     gtype_free_t free_key, gtype_free_t free_value) {
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   rbm_t m = realloc(t, sizeof(struct red_black_map));
   m->cmp = cmp;
   m->free_key = free_key;
@@ -26,7 +26,7 @@ rbm_t rbm_create(gtype_cmp_t cmp,
 }
 
 rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
-  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t same = NULL, parent = NULL;
   bn_node_t *loc;
   gtype_cmp_t cmp = t->cmp;
   bns_insert_setup(loc, t->t.root, key, tm_cmp_conv, same, parent);
@@ -34,13 +34,13 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
     return (rbm_ires){&rbm_node_value(same), 0};
   }
   rbm_node_t n = rbm_create_node(key, value);
-  rb_insert((bn_tree_t)t, to_bn(n), loc, parent);
+  rb_insert((bn_tree_t)t, bn_node(n), loc, parent);
   ++(t->size);
   return (rbm_ires){&rbm_node_value(n), 1};
 }
 
 gtype *rbm_put(rbm_t t, gtype key, gtype value) {
-  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t same = NULL, parent = NULL;
   bn_node_t *loc;
   gtype_cmp_t cmp = t->cmp;
   bns_insert_setup(loc, t->t.root, key, tm_cmp_conv, same, parent);
@@ -48,7 +48,7 @@ gtype *rbm_put(rbm_t t, gtype key, gtype value) {
     return &rbm_node_value(same);
   }
   rbm_node_t n = rbm_create_node(key, value);
-  rb_insert((bn_tree_t)t, to_bn(n), loc, parent);
+  rb_insert((bn_tree_t)t, bn_node(n), loc, parent);
   ++(t->size);
   return NULL;
 }
@@ -71,7 +71,7 @@ int rbm_remove(rbm_t t, gtype key) {
   if (!n) {
     return 0;
   }
-  rb_delete((bn_tree_t)t, to_bn(n));
+  rb_delete((bn_tree_t)t, bn_node(n));
   if (t->free_key) {
     t->free_key(n->key);
   }

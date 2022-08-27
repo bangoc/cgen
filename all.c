@@ -1,4 +1,5 @@
 #include "base/src/bn.c"
+#include "base/src/bs.c"
 #include "base/src/bns.c"
 #include "base/src/dll.c"
 #include "base/src/hashes.c"

@@ -7,7 +7,7 @@
 #include <string.h>
 
 s2i_t s2i_create() {
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   s2i_t s2i = realloc(t, sizeof(struct s2i_s));
   s2i->invalid_id = -1;
   return s2i;
@@ -27,7 +27,7 @@ s2i_node_t s2i_create_node(const char *key, long value) {
 }
 
 s2i_node_t s2i_insert(s2i_t si, const char *key, long value) {
-  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t same = NULL, parent = NULL;
   bn_node_t *loc;
   bn_tree_t t = (bn_tree_t)si;
   bns_insert_setup(loc, t->root, key, s2i_compare_data, same, parent);
@@ -35,12 +35,12 @@ s2i_node_t s2i_insert(s2i_t si, const char *key, long value) {
     return to_s2i(same);
   }
   s2i_node_t n = s2i_create_node(key, value);
-  rb_insert(t, to_bn(n), loc, parent);
+  rb_insert(t, bn_node(n), loc, parent);
   return n;
 }
 
 s2i_node_t s2i_set(s2i_t si, const char *key, long value) {
-  bn_node_t same = NULL_PTR, parent = NULL_PTR;
+  bn_node_t same = NULL, parent = NULL;
   bn_node_t *loc;
   bn_tree_t t = (bn_tree_t)si;
   bns_insert_setup(loc, t->root, key, s2i_compare_data, same, parent);
@@ -49,7 +49,7 @@ s2i_node_t s2i_set(s2i_t si, const char *key, long value) {
     return to_s2i(same);
   }
   s2i_node_t n = s2i_create_node(key, value);
-  rb_insert(t, to_bn(n), loc, parent);
+  rb_insert(t, bn_node(n), loc, parent);
   return n;
 }
 
@@ -63,7 +63,7 @@ long *s2i_vref(s2i_t si, const char *key) {
   if (n) {
     return &(n->value);
   }
-  return NULL_PTR;
+  return NULL;
 }
 
 long s2i_value(s2i_t si, const char *key) {
@@ -77,7 +77,7 @@ long s2i_value(s2i_t si, const char *key) {
 int s2i_delete(s2i_t si, const char *key) {
   s2i_node_t n = s2i_search(si, key);
   if (n) {
-    rb_delete((bn_tree_t)si, to_bn(n));
+    rb_delete((bn_tree_t)si, bn_node(n));
     s2i_free_node(n);
     return 1;
   }

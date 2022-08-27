@@ -17,7 +17,7 @@ bn_tree_t make_tree1() {
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  bn_tree_t t = bn_create_tree(to_bn(n5));
+  bn_tree_t t = bn_create_tree(bn_node(n5));
   return t;
 }
 
@@ -45,7 +45,7 @@ bn_tree_t make_tree2() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t t = bn_create_tree(to_bn(n5));
+  bn_tree_t t = bn_create_tree(bn_node(n5));
   return t;
 }
 
@@ -75,7 +75,7 @@ bn_tree_t make_tree3() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t t = bn_create_tree(to_bn(n5));
+  bn_tree_t t = bn_create_tree(bn_node(n5));
   return t;
 }
 
@@ -101,7 +101,7 @@ bn_tree_t make_tree4() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
-  bn_tree_t t = bn_create_tree(to_bn(n5));
+  bn_tree_t t = bn_create_tree(bn_node(n5));
   return t;
 }
 
@@ -115,7 +115,7 @@ int delete_node_one_left_child() {
   bn_connect2(n5, left, n2, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
 
   rbi_delete(t, 3);
   /* Sau khi xóa 3
@@ -137,7 +137,7 @@ int delete_node_one_right_child() {
   bn_connect2(n3, left, n2, top);
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n8, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
 
   rbi_delete(t, 6);
   /* Sau khi xóa 6
@@ -169,7 +169,7 @@ int delete_red_node_no_child() {
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 2 trong cây 1");
 
   rbi_delete(t, 8);
@@ -179,8 +179,8 @@ int delete_red_node_no_child() {
            5B
       3B          6B
   */
-  bn_connect1(n6, right, NULL_PTR);
-  bn_connect1(n8, top, NULL_PTR);
+  bn_connect1(n6, right, NULL);
+  bn_connect1(n8, top, NULL);
 
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa thêm nút 8 trong cây 1");
   return 0;
@@ -211,7 +211,7 @@ int delete_black_node_no_child_red_top_black_sibling1() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
   return 0;
 }
@@ -241,7 +241,7 @@ int delete_black_node_no_child_red_top_black_sibling2() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
   return 0;
 }
@@ -272,7 +272,7 @@ int delete_black_node_no_child_red_sibling_black_top() {
   bn_connect2(n9, left, n7, top);
   bn_connect2(n9, right, n10, top);
   bn_connect2(n7, right, n8, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 6 trong cây 2");
   return 0;
 }
@@ -311,7 +311,7 @@ int delete_black_node_no_child_black_sibling_black_top1() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = bn_create_tree(to_bn(n7));
+  bn_tree_t s = bn_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
   return 0;
 }
@@ -350,7 +350,7 @@ int delete_black_node_no_child_black_sibling_black_top2() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = bn_create_tree(to_bn(n7));
+  bn_tree_t s = bn_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 3");
   return 0;
 }
@@ -386,7 +386,7 @@ int delete_black_node_no_child_black_sibling_red_child_black_top() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
   return 0;
 }
@@ -418,7 +418,7 @@ int delete_black_node_no_child_black_sibling_with_black_top_red_left_child() {
   bn_connect2(n5, right, n8, top);
   bn_connect2(n8, left, n7, top);
   bn_connect2(n8, right, n9, top);
-  bn_tree_t s = bn_create_tree(to_bn(n5));
+  bn_tree_t s = bn_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Sau khi xóa 6");
   return 0;
 }

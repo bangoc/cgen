@@ -2,15 +2,15 @@
 #include "rbi_helper.h"
 #include "tests/base/utils.h"
 
-#define bn_connect1(n1, link, n2) to_bn(n1)->link = to_bn(n2)
+#define bn_connect1(n1, link, n2) bn_node(n1)->link = bn_node(n2)
 #define bn_connect2(n1, link1, n2, link2) bn_connect1(n1, link1, n2); \
     bn_connect1(n2, link2, n1)
 
 
 int test_delete_root() {
-  bn_tree_t t = bn_create_tree(NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
   rbi_node_t root = rbi_create_node(5);
-  t->root = to_bn(root);
+  t->root = bn_node(root);
   rb_set_black(root);
   rbi_node_t lc = rbi_create_node(3);
   rb_set_red(lc);
@@ -41,7 +41,7 @@ int test_delete_root_2nodes() {
   rbi_node_t rc = rbi_create_node(8);
   rb_set_red(rc);
   bn_connect2(r, right, rc, top);
-  bn_tree_t t = bn_create_tree(to_bn(r));
+  bn_tree_t t = bn_create_tree(bn_node(r));
   free(rbi_delete(t, 5));
   /*
      Xóa -> 5B     Thu được   8B
@@ -51,16 +51,16 @@ int test_delete_root_2nodes() {
   CHECK_MSG(rbi_value(t->root) == 8, "Gốc bằng 8");
   CHECK_MSG(rb_is_black(t->root), "Nút gốc là nút đen");
 
-  CHECK_MSG(rbi_delete(t, 6) == NULL_PTR, "Hàm xóa nút không có trả về NULL");
+  CHECK_MSG(rbi_delete(t, 6) == NULL, "Hàm xóa nút không có trả về NULL");
 
   free(rbi_delete(t, 8));
-  CHECK_MSG(t->root == NULL_PTR, "Xóa nút 1 gốc cây thành rỗng.");
+  CHECK_MSG(t->root == NULL, "Xóa nút 1 gốc cây thành rỗng.");
   return 0;
 }
 
 int test_delete_single_deep_child() {
   rbi_node_t r = rbi_create_node(20);
-  bn_tree_t t = bn_create_tree(to_bn(r));
+  bn_tree_t t = bn_create_tree(bn_node(r));
   rb_set_black(r);
 
   // Cây con trái
@@ -158,10 +158,10 @@ int test_delete_single_deep_child() {
       (struct attrib[]){{5, 0}, {10, 1}, {15, 0}, {20, 1}, {23, 1},
               {28, 0}, {29, 0}, {38, 1}}, 9),
       "Thuộc tính của các nút sau khi xóa 41.");
-  CHECK_MSG(to_bn(n28) == t->root->right, "n28 là con phải của gốc");
-  CHECK_MSG(to_bn(n28)->right == to_bn(n38),
+  CHECK_MSG(bn_node(n28) == t->root->right, "n28 là con phải của gốc");
+  CHECK_MSG(bn_node(n28)->right == bn_node(n38),
         "n38 là con phải của n2");
-  CHECK_MSG(to_bn(n29) == to_bn(n38)->left,
+  CHECK_MSG(bn_node(n29) == bn_node(n38)->left,
         "n29 là con trái của n38");
   return 0;
 }
@@ -169,7 +169,7 @@ int test_delete_single_deep_child() {
 int test_delete_red_node_red_successor() {
   rbi_node_t r = rbi_create_node(10);
   rb_set_black(r);
-  bn_tree_t t = bn_create_tree(to_bn(r));
+  bn_tree_t t = bn_create_tree(bn_node(r));
 
   //  Nhánh trái
   rbi_node_t n5 = rbi_create_node(5);
@@ -218,7 +218,7 @@ int test_delete_red_node_red_successor() {
 int test_delete_black_node_black_successor_no_child() {
   rbi_node_t root = rbi_create_node(10);
   rb_set_black(root);
-  bn_tree_t t = bn_create_tree(to_bn(root));
+  bn_tree_t t = bn_create_tree(bn_node(root));
   rbi_node_t m10 = rbi_create_node(-10);
   rb_set_black(m10);
 

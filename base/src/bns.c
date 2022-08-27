@@ -8,7 +8,7 @@ bn_node_t bns_create_node_g(gtype key) {
   bn_node_t tmp = bn_create_node();
   bns_node_g_t nn = realloc(tmp, sizeof(struct bns_node_g));
   nn->key = key;
-  return to_bn(nn);
+  return bn_node(nn);
 }
 
 bn_tree_t bns_create_tree_g(bn_node_t root, bn_compare_t cmp) {

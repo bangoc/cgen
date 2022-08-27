@@ -1,63 +1,37 @@
 #include "tests/base/utils.h"
-#include "base/bns.h"
-
-int *make_pointer_i(int value) {
-  int *p = malloc(sizeof(int));
-  *p = value;
-  return p;
-}
-
-struct bns_node {
-  struct bn_node bnt;
-  int value;
-};
-
-#define to_bns(n) ((struct bns_node *)n)
-
-int bns_compare(bn_node_t n1, bn_node_t n2) {
-  int value1 = to_bns(n1)->value;
-  int value2 = to_bns(n2)->value;
-  return value1 - value2;
-}
+#include "base/bs.h"
 
 int main() {
-  struct bns_node n1 = {.value = 1};
-  struct bns_node n2 = {.value = 2};
-  struct bns_node n3 = {.value = 3};
-  struct bns_node n4 = {.value = 4};
-  struct bns_node n5 = {.value = 5};
-  struct bns_node n6 = {.value = 6};
-  struct bns_node n_1 = {.value = -1};
+  bs_node_s n1 = {.key = gtype_l(1)};
+  bs_node_s n2 = {.key = gtype_l(2)};
+  bs_node_s n3 = {.key = gtype_l(3)};
+  bs_node_s n4 = {.key = gtype_l(4)};
+  bs_node_s n5 = {.key = gtype_l(5)};
+  bs_node_s n6 = {.key = gtype_l(6)};
+  bs_node_s n_1 = {.key = gtype_l(-1)};
 
-  n2.bnt.left = &n1.bnt;
-  n1.bnt.top = &n2.bnt;
-  n2.bnt.right = &n3.bnt;
-  n3.bnt.top = &n2.bnt;
-  n3.bnt.right = &n5.bnt;
-  n5.bnt.top = &n3.bnt;
-  n5.bnt.left = &n4.bnt;
-  n4.bnt.top = &n5.bnt;
-  bn_tree_t t = bn_create_tree(&n2.bnt);
+  n2.base.left = &n1;
+  n1.base.top = &n2;
+  n2.base.right = &n3;
+  n3.base.top = &n2;
+  n3.base.right = &n5;
+  n5.base.top = &n3;
+  n5.base.left = &n4;
+  n4.base.top = &n5;
+  bs_tree_t t = bs_create_tree(bn_node(&n2), gtype_cmp_l, NULL);
   /*
           2
         1   3
               5
             4
   */
-  bns_search_inline(n, t, &n1.bnt, bns_compare,
-    CHECK_MSG(n == &n1.bnt, "Failed search 1"));
-  bns_search_inline(n, t, &n2.bnt, bns_compare,
-    CHECK_MSG(n == &n2.bnt, "Failed search 2"));
-  bns_search_inline(n, t, &n3.bnt, bns_compare,
-    CHECK_MSG(n == &n3.bnt, "Failed search 3"));
-  bns_search_inline(n, t, &n4.bnt, bns_compare,
-    CHECK_MSG(n == &n4.bnt, "Failed search 4"));
-  bns_search_inline(n, t, &n5.bnt, bns_compare,
-    CHECK_MSG(n == &n5.bnt, "Failed search 5"));
-  bns_search_inline(n, t, &n6.bnt, bns_compare,
-    CHECK_MSG(n == NULL_PTR, "Failed search 6"));
-  bns_search_inline(n, t, &n_1.bnt, bns_compare,
-    CHECK_MSG(n == NULL_PTR, "Failed search -1"));
+  CHECK_MSG(bs_search(t, n1.key) == &n1, "Failed search 1");
+  CHECK_MSG(bs_search(t, n2.key) == &n2, "Failed search 2");
+  CHECK_MSG(bs_search(t, n3.key) == &n3, "Failed search 3");
+  CHECK_MSG(bs_search(t, n4.key) == &n4, "Failed search 4");
+  CHECK_MSG(bs_search(t, n5.key) == &n5, "Failed search 5");
+  CHECK_MSG(bs_search(t, n6.key) == NULL, "Failed search 6");
+  CHECK_MSG(bs_search(t, n_1.key) == NULL, "Failed search -1");
   free(t);
   TEST_OK();
 }

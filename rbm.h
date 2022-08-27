@@ -29,7 +29,7 @@ typedef struct red_black_map_node {
    * các thuộc tính của nút.
    */
   gtype key, value;
-} rbm_s, *rbm_node_t;
+} rbm_node_s, *rbm_node_t;
 
 /**
  * \headerfile "cgen.h"
@@ -46,12 +46,12 @@ typedef struct red_black_map_node {
  *   #rbm_clear(map) - Làm rỗng map
  */
 typedef struct red_black_map {
-  struct bn_tree t;
+  struct _bn_tree t;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
   gtype_free_t free_value;
   long size;
-} *rbm_t;
+} rbm_s, *rbm_t;
 
 /**
  * Cấu trúc kết quả trả về của hàm rbm_insert(rbm_t t, gtype key, gtype value),
@@ -168,10 +168,10 @@ int rbm_remove(rbm_t t, gtype key);
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
   rbm_node_t nd = container_of(*k, struct red_black_map_node, key);
-  bn_node_t tmp = bn_next_inorder(to_bn(nd));
+  bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
-    *k = NULL_PTR;
-    *v = NULL_PTR;
+    *k = NULL;
+    *v = NULL;
     return;
   }
   *k = &(rbm_node_key(tmp));
@@ -189,9 +189,9 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  * Tham khảo: #hmap_traverse(key, value, map)
  */
 #define rbm_traverse(k, v, map) \
-  for (gtype *k = (rbm_size(map))? &(rbm_node_key(bn_left_most((map)->t.root))): NULL_PTR, \
-             *v = (rbm_size(map))? &(rbm_node_value(bn_left_most((map)->t.root))): NULL_PTR; \
-       k != NULL_PTR && v != NULL_PTR; _rbm_move_next(&k, &v)) \
+  for (gtype *k = (rbm_size(map))? &(rbm_node_key(bn_left_most((map)->t.root))): NULL, \
+             *v = (rbm_size(map))? &(rbm_node_value(bn_left_most((map)->t.root))): NULL; \
+       k != NULL && v != NULL; _rbm_move_next(&k, &v)) \
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho bảng map. Các hàm free_key và
@@ -211,7 +211,7 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
         } \
       } \
     } \
-    bn_free_tree((bn_tree_t)(map)); \
+    bn_free_tree(bn_tree(map)); \
   } while (0)
 
 /**

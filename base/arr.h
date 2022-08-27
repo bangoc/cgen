@@ -34,15 +34,15 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
   return NULL;
 }
 
-#define ARR_BEG(a) (((long*)ARR(a)) - ARR_ATT_MAX)
-#define arr_size(a) (ARR_BEG(a)[ARR_SZ])
-#define arr_capacity(a) (ARR_BEG(a)[ARR_CAP])
-#define arr_elem_sz(a) (ARR_BEG(a)[ARR_ELEM_SZ])
-#define arr_inc(a) (ARR_BEG(a)[ARR_INC])
+#define arr_beg(a) (((long*)ARR(a)) - ARR_ATT_MAX)
+#define arr_size(a) (arr_beg(a)[ARR_SZ])
+#define arr_capacity(a) (arr_beg(a)[ARR_CAP])
+#define arr_elem_sz(a) (arr_beg(a)[ARR_ELEM_SZ])
+#define arr_inc(a) (arr_beg(a)[ARR_INC])
 
 #define arr_free(a) \
   do { \
-    free(ARR_BEG(a)); \
+    free(arr_beg(a)); \
     *(a) = NULL; \
     free(a); \
     (a) = NULL; \
@@ -50,7 +50,7 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 
 #define arr_set_capacity(a, newcap) \
   do { \
-    long *_tmp = ARR_BEG(a); \
+    long *_tmp = arr_beg(a); \
     long _elem_sz = _tmp[ARR_ELEM_SZ]; \
     _tmp = realloc(_tmp, ARR_ATT_MAX * sizeof(long) + (newcap) * _elem_sz); \
     if (_tmp) { \
@@ -81,13 +81,13 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 
 #define arr_append(a, elem) \
    do { \
-     long *_tmp = ARR_BEG(a); \
+     long *_tmp = arr_beg(a); \
      if (_tmp[ARR_SZ] >= _tmp[ARR_CAP]) { \
        long _c = _tmp[ARR_CAP]; \
        long _inc = _tmp[ARR_INC]; \
        long _newcap = _c > 100? _c + _c * _inc / 100: _c + _inc; \
        arr_set_capacity(a, _newcap); \
-       _tmp = ARR_BEG(a); \
+       _tmp = arr_beg(a); \
      } \
      if (_tmp[ARR_SZ] < _tmp[ARR_CAP]) { \
        ARR(a)[_tmp[ARR_SZ]] = (elem); \

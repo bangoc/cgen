@@ -17,7 +17,7 @@ typedef struct s2i_node {
 } *s2i_node_t;
 
 typedef struct s2i_s {
-  struct bn_tree t;
+  struct _bn_tree t;
   int invalid_id;
 } *s2i_t;
 

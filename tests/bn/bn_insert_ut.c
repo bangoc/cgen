@@ -13,8 +13,8 @@ int t1() {
     n1       n5
       n2   n4
   */
-  bn_tree_t t = bn_create_tree(NULL_PTR);
-  bn_insert(n3, (&(t->root)), NULL_PTR);
+  bn_tree_t t = bn_create_tree(NULL);
+  bn_insert(n3, (&(t->root)), NULL);
   bn_insert(n1, (&(n3->left)), n3);
   bn_insert(n2, (&(n1->right)), n1);
   bn_insert(n5, (&(n3->right)), n3);

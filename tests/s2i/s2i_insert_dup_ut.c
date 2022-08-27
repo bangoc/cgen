@@ -21,7 +21,7 @@ int main() {
   s2i_insert(si, "Hai", 20);
   CHECK_MSG(s2i_value(si, "Hai") == 2, "Giá trị khóa Hai sau chèn trùng lặp");
   CHECK_MSG(s2i_delete(si, "Hai") == 1, "Xóa Hai (có tồn tại)");
-  CHECK_MSG(s2i_vref(si, "Hai") == NULL_PTR, "Giá trị khóa Hai sau khi xóa");
+  CHECK_MSG(s2i_vref(si, "Hai") == NULL, "Giá trị khóa Hai sau khi xóa");
   CHECK_MSG(s2i_delete(si, "Hai") == 0, "Xóa Hai (không tồn tại)");
   s2i_free(si);
   return 0;

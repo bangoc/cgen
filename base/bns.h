@@ -29,7 +29,7 @@
   do { \
     int _order; \
     bn_node_t _x = (t)->root; \
-    bn_node_t o = NULL_PTR; \
+    bn_node_t o = NULL; \
     while (_x) { \
       _order = cmp(u, _x); \
       if (!_order) { \
@@ -46,7 +46,7 @@
   do {\
     int _order; \
     bn_node_t _x = (t)->root; \
-    bn_node_t o = NULL_PTR; \
+    bn_node_t o = NULL; \
     while (_x) { \
       _order = cmp(u, _x); \
       if (!_order) { \
@@ -68,7 +68,7 @@
   do { \
     int _order; \
     bn_node_t _x = (t)->root; \
-    bn_node_t o = NULL_PTR; \
+    bn_node_t o = NULL; \
     while (_x) { \
       _order = cmp(u, _x); \
       if (!_order) { \
@@ -91,7 +91,7 @@
 #include "base/gtype.h"
 
 typedef struct bns_node_g {
-  struct bn_node base;
+  struct _bn_node base;
   gtype key;
 } *bns_node_g_t;
 
@@ -99,7 +99,7 @@ typedef struct bns_node_g {
 #define bns_node_g_key(n) (to_bns_node_g(n)->key)
 
 typedef struct bns_tree_g {
-  struct bn_tree base;
+  struct _bn_tree base;
   bn_compare_t cmp;
 } *bns_tree_g_t;
 

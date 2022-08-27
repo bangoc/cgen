@@ -7,12 +7,12 @@
 gvec_t gvec_create(int cap, gtype_free_t free_value) {
   gvec_t v = malloc(sizeof(struct gtype_vector));
   if (!v) {
-    return NULL_PTR;
+    return NULL;
   }
   v->arr = arr_create(cap, gtype);
   if (!v->arr) {
     free(v);
-    return NULL_PTR;
+    return NULL;
   }
   v->free_value = free_value;
   return v;

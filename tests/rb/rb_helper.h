@@ -13,7 +13,7 @@ static int rb_is_valid_internal(bn_node_t n, long blacks) {
   if (rb_is_valid_internal_stop) {
     return 0;
   }
-  if (n == NULL_PTR) {
+  if (n == NULL) {
     if (rb_is_valid_black_height < 0) {
       rb_is_valid_black_height = blacks;
       return 1;  // Ok
@@ -39,7 +39,7 @@ static int rb_is_valid_internal(bn_node_t n, long blacks) {
 }
 
 static int rb_is_valid(bn_tree_t t) {
-  if (t->root == NULL_PTR) {
+  if (t->root == NULL) {
     return 1;
   }
   if (rb_is_red(t->root)) {
