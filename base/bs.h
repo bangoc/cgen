@@ -25,10 +25,16 @@ typedef struct _bs_tree {
 
 #define bs_tree(t) ((bs_tree_t)(t))
 
+typedef struct {
+  bn_node_t *loc;
+  int inserted;
+} bs_ires;
+
 bs_node_t bs_create_node(gtype key);
 bs_tree_t bs_create_tree(bs_node_t root, gtype_cmp_t cmp, gtype_free_t fk);
 
-bs_node_t bs_insert(bs_tree_t t, gtype key);
+bs_ires bs_insert(bs_tree_t t, gtype key);
+bs_ires bs_insert_unique(bs_tree_t t, gtype key);
 bs_node_t bs_search(bs_tree_t t, gtype key);
 bs_node_t bs_search_gte(bs_tree_t t, gtype key);
 bs_node_t bs_search_lte(bs_tree_t t, gtype key);

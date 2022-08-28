@@ -1,10 +1,14 @@
+/* (C) Nguyen Ba Ngoc 2022 */
+
 #include "base/rb.h"
 
 const char * color_names[] = {"Đỏ", "Đen"};
 
-rb_node_t rb_create_node() {
-  // Mặc định giá trị 0 là đỏ
-  return calloc(1, sizeof(struct rb_node_s));
+rb_node_t rb_create_node(gtype key) {
+  bs_node_t tmp = bs_create_node(key);
+  rb_node_t nn = realloc(tmp, sizeof(struct _rb_node));
+  nn->color = RB_RED;
+  return nn;
 }
 
 void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
@@ -93,20 +97,37 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 
 #undef IMPL_INSERT_FIXUP
 
-// Gọi hàm cần đảm bảo node là nút đỏ
-bn_node_t rb_insert(bn_tree_t t,
-          bn_node_t node, bn_node_t *loc, bn_node_t parent) {
-  bn_insert(node, loc, parent);
-  if (parent == NULL) {
-    // loc là gốc của cây
-    rb_set_black(node);
-  } else if (rb_is_red(parent)) {
-    // vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4)
-    // có thể bị vi phạm.
-    rb_insert_fixup(t, node, parent);
-  }
-  return node;
+#define RB_INSERT_TPL(bs_interface, ...) \
+  bs_ires ires = bs_interface(t, key); \
+  __VA_ARGS__ \
+  rb_node_t nn = realloc(*ires.loc, sizeof(struct _rb_node)); \
+  *ires.loc = bn_node(nn); \
+  nn->color = RB_RED; \
+  bn_node_t par = bn_node(nn)->top; \
+  if (par == NULL) { \
+    rb_set_black(nn); \
+  } else if (rb_is_red(par)) { \
+    /* vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4) \
+       có thể bị vi phạm. */ \
+    rb_insert_fixup(bn_tree(t), bn_node(nn), bn_node(par)); \
+    /* Tìm vị trí */ \
+    ires.loc = bn_ntref(nn, t); \
+  } \
+  return ires
+
+bs_ires rb_insert(bs_tree_t t, gtype key) {
+  RB_INSERT_TPL(bs_insert);
 }
+
+bs_ires rb_insert_unique(bs_tree_t t, gtype key) {
+  RB_INSERT_TPL(bs_insert_unique,
+    if (!ires.inserted) {
+      return ires;
+    }
+  );
+}
+
+#undef RB_INSERT_TPL
 
 void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
   bn_node_t node = NULL, sibling,

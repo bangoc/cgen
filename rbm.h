@@ -22,13 +22,13 @@
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
 typedef struct red_black_map_node {
-  struct rb_node_s rb_node;
+  struct _rb_node rb_node;
 
   /** \private
    * Người sử dụng không cần trực tiếp truy cập tới
    * các thuộc tính của nút.
    */
-  gtype key, value;
+  gtype value;
 } rbm_node_s, *rbm_node_t;
 
 /**
@@ -46,10 +46,8 @@ typedef struct red_black_map_node {
  *   #rbm_clear(map) - Làm rỗng map
  */
 typedef struct red_black_map {
-  struct _bn_tree t;
-  gtype_cmp_t cmp;
-  gtype_free_t free_key;
-  gtype_free_t free_value;
+  struct _bs_tree t;
+  gtype_free_t fv;
   long size;
 } rbm_s, *rbm_t;
 
@@ -62,9 +60,9 @@ typedef struct rbm_insert_result {
   int inserted;
 } rbm_ires;
 
-#define to_rbm(n) ((rbm_node_t)(n))
-#define rbm_node_key(n) (to_rbm(n)->key)
-#define rbm_node_value(n) (to_rbm(n)->value)
+#define rbm_node(n) ((rbm_node_t)(n))
+#define rbm_node_key(n) (bs_node(n)->key)
+#define rbm_node_value(n) (rbm_node(n)->value)
 
 rbm_node_t rbm_create_node(gtype key, gtype value);
 
@@ -85,8 +83,7 @@ rbm_node_t rbm_create_node(gtype key, gtype value);
  *
  * Tham khảo: hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
-rbm_t rbm_create(gtype_cmp_t cmp,
-  gtype_free_t free_key, gtype_free_t free_value);
+rbm_t rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
@@ -167,7 +164,7 @@ int rbm_remove(rbm_t t, gtype key);
 #define rbm_size(t) ((t)->size)
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
-  rbm_node_t nd = container_of(*k, struct red_black_map_node, key);
+  rbm_node_t nd = rbm_node(container_of(*k, struct _bs_node, key));
   bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *k = NULL;
@@ -189,8 +186,8 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  * Tham khảo: #hmap_traverse(key, value, map)
  */
 #define rbm_traverse(k, v, map) \
-  for (gtype *k = (rbm_size(map))? &(rbm_node_key(bn_left_most((map)->t.root))): NULL, \
-             *v = (rbm_size(map))? &(rbm_node_value(bn_left_most((map)->t.root))): NULL; \
+  for (gtype *k = (rbm_size(map))? &(rbm_node_key(bn_left_most(bn_tree(map)->root))): NULL, \
+             *v = (rbm_size(map))? &(rbm_node_value(bn_left_most(bn_tree(map)->root))): NULL; \
        k != NULL && v != NULL; _rbm_move_next(&k, &v)) \
 
 /**
@@ -201,13 +198,13 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  */
 #define rbm_free(map) \
   do { \
-    if ((map)->free_key || (map)->free_value) { \
+    if (bs_tree(map)->fk || (map)->fv) { \
       rbm_traverse(_k, _v, (map)) { \
-        if ((map)->free_key) { \
-          (map)->free_key(*_k); \
+        if (bs_tree(map)->fk) { \
+          bs_tree(map)->fk(*_k); \
         } \
-        if ((map)->free_value) { \
-          (map)->free_value(*_v); \
+        if ((map)->fv) { \
+          (map)->fv(*_v); \
         } \
       } \
     } \
@@ -222,13 +219,13 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  */
 #define rbm_clear(map) \
   do { \
-    if ((map)->free_key || (map)->free_value) { \
+    if (bs_tree(map)->fk || (map)->fv) { \
       rbm_traverse(_k, _v, (map)) { \
-        if ((map)->free_key) { \
-          (map)->free_key(*_k); \
+        if (bs_tree(map)->fk) { \
+          bs_tree(map)->fk(*_k); \
         } \
-        if ((map)->free_value) { \
-          (map)->free_value(*_v); \
+        if ((map)->fv) { \
+          (map)->fv(*_v); \
         } \
       } \
     } \

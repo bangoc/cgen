@@ -4,11 +4,10 @@
   tương thích với các hàm cho cây nhị phân và cây nhị phân tìm kiếm
 */
 
-#ifndef RB_H_
-#define RB_H_
+#ifndef BASE_RB_H_
+#define BASE_RB_H_
 
-#include "base/bn.h"
-#include "base/bns.h"
+#include "base/bs.h"
 
 #include <stdbool.h>
 
@@ -30,10 +29,10 @@ typedef enum {
 
 extern const char * color_names[];
 
-typedef struct rb_node_s {
-  struct _bn_node bn_node;
+typedef struct _rb_node {
+  struct _bs_node base;
   rb_node_color_t color;
-} *rb_node_t;
+} rb_node_s, *rb_node_t;
 
 /*
   Trong triển khai này NULL được sử dụng thay vì lính canh để tương
@@ -44,20 +43,20 @@ typedef struct rb_node_s {
 
 // ========== Khai báo hàm ===============
 
-rb_node_t rb_create_node();
-bn_node_t rb_insert(bn_tree_t t,
-          bn_node_t node, bn_node_t *loc, bn_node_t parent);
+rb_node_t rb_create_node(gtype key);
+bs_ires rb_insert(bs_tree_t t, gtype key);
+bs_ires rb_insert_unique(bs_tree_t t, gtype key);
 int rb_delete(bn_tree_t t, bn_node_t z);
 
 
 // ========== Macro viết nhanh ===========
-#define to_rb(n) ((rb_node_t)(n))
-#define rb_color(n) ((n)? to_rb(n)->color: RB_BLACK)
+#define rb_node(n) ((rb_node_t)(n))
+#define rb_color(n) ((n)? rb_node(n)->color: RB_BLACK)
 #define rb_color_str(n) color_names[(int)rb_color(n)]
-#define rb_set_color(n, new_color) to_rb(n)->color = (new_color)
+#define rb_set_color(n, new_color) rb_node(n)->color = (new_color)
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
 #define rb_set_red(node) rb_set_color(node, RB_RED)
 
-#endif  // RB_H_
+#endif  // BASE_RB_H_

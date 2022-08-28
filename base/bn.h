@@ -116,4 +116,9 @@ bn_node_t bn_prev_inorder(bn_node_t x);
     (x)->top = _y; \
   } while (0)
 
+#define bn_ntref(n, t) \
+  bn_node(n)->top? \
+    (bn_node(n)->top->left == n? &(bn_node(n)->top->left): &(bn_node(n)->top->right)): \
+    &bn_tree(t)->root
+
 #endif  // BASE_BN_H_
