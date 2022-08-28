@@ -17,4 +17,5 @@ int main() {
   }
   rbs_free(s);
   TEST_OK();
+  return 0;
 }

@@ -50,6 +50,14 @@ int bs_delete(bs_tree_t t, bs_node_t n);
     bn_free_tree(bn_tree(t)); \
   } while (0)
 
+#define bs_free_node(n, t) \
+  do { \
+    if (bs_tree(t)->fk) { \
+      bs_tree(t)->fk(bs_node(n)->key); \
+    } \
+    free(n); \
+  } while (0)
+
 void bs_pprint(bs_tree_t, gtype_print_t gpp);
 
 #endif  // BASE_BS_H_

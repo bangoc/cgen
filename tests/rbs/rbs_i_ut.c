@@ -20,8 +20,8 @@ int t1() {
   CHECK_MSG(rbs_remove(s, gtype_l(6)) == 0, "remove 0");
   CHECK_MSG(rbs_size(s) == 2, "size == 2");
   CHECK_MSG(rbs_traverse_match(s, (gtype[]){gtype_l(1), gtype_l(3)}, 2), "match 2");
-  CHECK_MSG(rbs_search(s, gtype_l(1))->value.l == 1, "search 1");
-  CHECK_MSG(rbs_search(s, gtype_l(3))->value.l == 3, "search 3");
+  CHECK_MSG(rbs_search(s, gtype_l(1))->key.l == 1, "search 1");
+  CHECK_MSG(rbs_search(s, gtype_l(3))->key.l == 3, "search 3");
   CHECK_MSG(rbs_search(s, gtype_l(2)) == NULL, "search 2");
   CHECK_MSG(rbs_search(s, gtype_l(100)) == NULL, "search 100");
   rbs_free(s);
@@ -31,4 +31,5 @@ int t1() {
 int main() {
   CHECK_MSG(t1() == 0, "t1 == 0");
   TEST_OK();
+  return 0;
 }

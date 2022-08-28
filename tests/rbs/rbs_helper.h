@@ -1,13 +1,12 @@
-#ifndef TESTS_RBS
-#define TESTS_RBS
+#ifndef TESTS_RBS_RBS_HELPER_H_
+#define TESTS_RBS_RBS_HELPER_H_
 
 #include "rbs.h"
 
 static int rbs_traverse_match(rbs_t s, gtype *a, int n) {
-  bn_compare_t cmp = s->cmp;
   int i = 0;
   rbs_traverse(cur, s) {
-    if (i >= n || cmp(a[i], *cur) != 0) {
+    if (i >= n || bs_tree(s)->cmp(a[i], *cur) != 0) {
       return 0;
     }
     ++i;
@@ -15,4 +14,4 @@ static int rbs_traverse_match(rbs_t s, gtype *a, int n) {
   return i == n;
 }
 
-#endif  // TESTS_RBS
+#endif  // TESTS_RBS_RBS_HELPER_H_

@@ -21,6 +21,10 @@ void gen_buff() {
 }
 
 int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    printf("Usage example: ./prog 1000\n");
+    return 1;
+  }
   int n;
   sscanf(argv[1], "%d", &n);
   rbs_t s = rbs_create(gtype_cmp_s, gtype_free_s);
@@ -51,4 +55,5 @@ int main(int argc, char *argv[]) {
   rbs_free(s);
   free(keys);
   TEST_OK();
+  return 0;
 }
