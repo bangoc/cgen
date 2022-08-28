@@ -9,7 +9,7 @@ int main() {
   for (int i = 0; i < N; ++i) {
     a[i] = i;
   }
-  bn_tree_t t = bn_create_tree(NULL);
+  bn_tree_t t = rbi_create_tree(NULL);
 
   // insert
   for (int i = 0; i < N; ++i) {
@@ -20,11 +20,11 @@ int main() {
 
   // delete
   for (int i = N - 1; i >= 0; --i) {
-    rbi_node_t nd = rbi_delete(t, a[i]);
-    CHECK_MSG(nd && nd->value == a[i], "Lỗi giá trị trả về bởi hàm xóa.");
+    CHECK_MSG(rbi_delete(t, a[i]) == 1, "Lỗi giá trị trả về bởi hàm xóa.");
     CHECK_MSG(lnr_match_value(t, a, i), "Lỗi xóa giá trị");
     CHECK_MSG(rb_is_valid(t), "Lỗi cây đỏ-đen");
   }
   printf("rb_insert_delete_1k Ok\n");
+  rbi_free_tree(t);
   return 0;
 }

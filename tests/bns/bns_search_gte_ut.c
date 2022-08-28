@@ -1,22 +1,19 @@
 #include "tests/base/utils.h"
 
-#include "tests/rb/rbi.h"
+#include "base/bs.h"
+#include "base/rb.h"
 
 int main() {
-  bn_tree_t t = bn_create_tree(NULL);
-  rbi_insert(t, 1);
-  rbi_insert(t, 3);
-  rbi_insert(t, 5);
-  rbi_insert(t, 7);
-  rbi_insert(t, 9);
-  rbi_node_t n = to_rbi(rbi_create_node(10));
-  bns_search_gte_inline(out, t, bn_node(n), rbi_compare,
-      CHECK_MSG(out == NULL, "Tìm >= 10"));
-  n->value = 2;
-  bns_search_gte_inline(out, t, bn_node(n), rbi_compare,
-    CHECK_MSG(to_rbi(out)->value == 3, "Tìm >= 2"));
-  n->value = 5;
-  bns_search_gte_inline(out, t, bn_node(n), rbi_compare,
-    CHECK_MSG(to_rbi(out)->value == 5, "Tìm >= 5"));
+  bs_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);
+  rb_insert(t, gtype_l(1));
+  rb_insert(t, gtype_l(3));
+  rb_insert(t, gtype_l(5));
+  rb_insert(t, gtype_l(7));
+  rb_insert(t, gtype_l(9));
+  CHECK_MSG(bs_search_gte(t, gtype_l(10)) == NULL, "Tìm >= 10");
+  CHECK_MSG(bs_search_gte(t, gtype_l(2))->key.l == 3, "Tìm >= 2");
+  CHECK_MSG(bs_search_gte(t, gtype_l(5))->key.l == 5, "Tìm >= 5");
+  bs_free_tree(t);
+  TEST_OK();
   return 0;
 }

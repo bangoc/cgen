@@ -25,4 +25,5 @@ int t1() {
 int main() {
   CHECK_MSG(t1() == 0, "t1()");
   TEST_OK();
+  return 0;
 }

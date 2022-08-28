@@ -34,4 +34,5 @@ int main() {
   CHECK_MSG(bs_search(t, n_1.key) == NULL, "Failed search -1");
   free(t);
   TEST_OK();
+  return 0;
 }

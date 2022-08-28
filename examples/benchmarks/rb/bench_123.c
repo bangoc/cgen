@@ -1,5 +1,5 @@
 #include "base/core.h"
-#include "tests/rb/rbi.h"
+#include "base/rb.h"
 
 #include <stdio.h>
 
@@ -23,18 +23,18 @@ int main(int argc, char *argv[]) {
   const long len = n / POINTS;
   char desc[1024];
   long value = 0;
-  bn_tree_t t = bn_create_tree(NULL);
+  bs_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);
   for (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
-              rbi_insert(t, value++);
+              rb_insert(t, gtype_l(value++));
             }
           );
     sprintf(desc, "%ld x search from %ld (s): ", len, len * point);
     BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
-              rbi_search(t, len * point + i);
+              bs_search(t, gtype_l(len * point + i));
             }
           );
   }
@@ -44,8 +44,12 @@ int main(int argc, char *argv[]) {
   for  (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x delete from %ld (s): ", len, n - len * point);
     BENCH(desc, 1,
+            bs_node_t tmp;
             for (long i = 0; i < len; ++i) {
-              rbi_delete(t, value++);
+              tmp = bs_search(t, gtype_l(value++));
+              if (tmp) {
+                rb_delete(t, tmp);
+              }
             }
           );
   }

@@ -18,6 +18,5 @@
 
 #define TEST_OK() \
     printf("Test Ok!\n"); \
-    return 0 \
 
 #endif  // TESTS_BASE_UTILS_H_

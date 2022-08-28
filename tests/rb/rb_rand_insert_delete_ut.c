@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   sscanf(argv[1], "%ld", &num_ops);
   sscanf(argv[2], "%ld", &max_value);
   srand(time(NULL));
-  bn_tree_t t = bn_create_tree(NULL);
+  bn_tree_t t = rbi_create_tree(NULL);
   for (long i = 0; i < num_ops; ++i) {
     int op = rand() % 2;
     int value = rand() % max_value + 1;
@@ -30,5 +30,6 @@ int main(int argc, char *argv[]) {
     CHECK_MSG(rb_is_valid(t), "Không phải cây đỏ-đen");
   }
   printf("%ld thao tác Ok\n", num_ops);
+  rbi_free_tree(t);
   return 0;
 }

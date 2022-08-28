@@ -38,7 +38,7 @@ bs_ires bs_insert_unique(bs_tree_t t, gtype key);
 bs_node_t bs_search(bs_tree_t t, gtype key);
 bs_node_t bs_search_gte(bs_tree_t t, gtype key);
 bs_node_t bs_search_lte(bs_tree_t t, gtype key);
-void bs_delete(bs_tree_t t, bs_node_t n);
+int bs_delete(bs_tree_t t, bs_node_t n);
 
 #define bs_free_tree(t) \
   do { \

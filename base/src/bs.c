@@ -100,7 +100,7 @@ bs_node_t bs_search_lte(bs_tree_t t, gtype key) {
   return o;
 }
 
-void bs_delete(bs_tree_t t, bs_node_t n) {
+int bs_delete(bs_tree_t t, bs_node_t n) {
   bn_node_t tmp = bn_node(n);
   bn_tree_t bnt = bn_tree(t);
   bn_node_t lc = tmp->left,
@@ -129,10 +129,7 @@ void bs_delete(bs_tree_t t, bs_node_t n) {
       bn_change_child(tmp, successor, top, bnt);
     }
   }
-  if (t->fk) {
-    t->fk(n->key);
-  }
-  free(n);
+  return 1;
 }
 
 void bs_pprint(bs_tree_t t, gtype_print_t gpp) {

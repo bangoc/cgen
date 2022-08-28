@@ -42,4 +42,5 @@ int main() {
   CHECK_ECHO(t1() == 0);
   CHECK_ECHO(t2() == 0);
   TEST_OK();
+  return 0;
 }

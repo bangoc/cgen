@@ -3,19 +3,15 @@
 #include "tests/rb/rbi.h"
 
 int main() {
-  bn_tree_t t = bn_create_tree(NULL);
+  bs_tree_t t = rbi_create_tree(NULL);
   rbi_insert(t, 1);
   rbi_insert(t, 3);
   rbi_insert(t, 5);
   rbi_insert(t, 7);
   rbi_insert(t, 9);
-  rbi_node_t n = to_rbi(rbi_create_node(0));
-  bns_search_lte_inline(out, t, bn_node(n), rbi_compare, CHECK_MSG(out == NULL, "Tìm <= 0"));
-  n->value = 2;
-  bns_search_lte_inline(out, t, bn_node(n), rbi_compare,
-        CHECK_MSG(rbi_value(out) == 1, "Tìm <= 2"));
-  n->value = 7;
-  bns_search_lte_inline(out, t, bn_node(n), rbi_compare,
-        CHECK_MSG(rbi_value(out) == 7, "Tìm <= 7"));
+  CHECK_MSG(bs_search_lte(t, gtype_l(0)) == NULL, "Tìm <= 0");
+  CHECK_MSG(bs_search_lte(t, gtype_l(2))->key.l == 1, "Tìm <= 2");
+  CHECK_MSG(bs_search_lte(t, gtype_l(7))->key.l == 7, "Tìm <= 7");
+  rbi_free_tree(t);
   return 0;
 }

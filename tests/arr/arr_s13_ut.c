@@ -41,4 +41,5 @@ int main() {
   free(tmp);
   arr_free(ss);
   TEST_OK();
+  return 0;
 }
