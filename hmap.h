@@ -86,7 +86,7 @@ typedef struct hmap_insert_result {
  *
  * \memberof hash_map
  *
- * Tham khảo: rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
+ * Tham khảo: rbm_create_map(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
 hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key, gtype_free_t free_value);

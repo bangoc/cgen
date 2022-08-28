@@ -4,7 +4,7 @@
 #include <string.h>
 
 int main() {
-  rbm_t t = rbm_create(gtype_cmp_s, NULL, NULL);
+  rbm_t t = rbm_create_map(gtype_cmp_s, NULL, NULL);
   char *s1 = "1111111111",
        *s2 = "2222222222",
        *s3 = "3333333333",

@@ -6,46 +6,44 @@
 #ifndef SPEC_S2I_H_
 #define SPEC_S2I_H_
 
-#include "base/rb.h"
+#include "rbm.h"
 
 #include <stdio.h>
 
-typedef struct s2i_node {
-  struct rb_node_s rb_node;
-  char *key;
-  long value;
-} *s2i_node_t;
+typedef enum {
+  DUP_NO,
+  DUP_YES,
+  KEY_ACTIONS
+} key_action_t;
 
-typedef struct s2i_s {
-  struct _bn_tree t;
-  int invalid_id;
-} *s2i_t;
+rbm_t s2i_create_map(key_action_t act);
 
-// ========== Khai báo hàm ===============
+/**
+ * Lưu cặp key & value, bỏ qua nếu key đã tồn tại.
+ *
+ * @param si Con trỏ tới bảng cây
+ * @param key Chuỗi khóa
+ * @param value Mã số được gắn với khóa
+ * @return NULL nếu key chưa tồn tại
+ *         Con trỏ tới value nếu ngược lại.
+ */
+long *s2i_put(rbm_t si, const char *key, long value);
 
-s2i_node_t s2i_create_node(const char *key, long value);
-s2i_t s2i_create();
+/**
+ * Đọc giá trị được gắn với key
+ *
+ * @param si Con trỏ tới bảng cây
+ * @param key Chuỗi khóa
+ * @return NULL nếu key chưa tồn tại
+ *         Con trỏ tới value nếu ngược lại.
+ */
+long *s2i_value(rbm_t si, const char *key);
+int s2i_remove(rbm_t si, const char *key);
+void s2i_print_node(bn_node_t n);
 
-// Lưu cặp key & value, bỏ qua nếu key đã tồn tại
-s2i_node_t s2i_insert(s2i_t si, const char *key, long value);
+#define s2i_node_key(n) bs_node(n)->key
+#define s2i_node_value(n) rbm_node(n)->value
 
-// Lưu cặp key & value, cập nhật value nếu key đã tồn tại
-s2i_node_t s2i_set(s2i_t si, const char *key, long value);
-
-s2i_node_t s2i_search(s2i_t si, const char *key);
-long *s2i_vref(s2i_t si, const char *key);
-long s2i_value(s2i_t si, const char *key);
-int s2i_delete(s2i_t si, const char *key);
-int s2i_compare_data(const char *q, bn_node_t n);
-void s2i_free_node(s2i_node_t n);
-void s2i_free(s2i_t si);
-void s2i_postorder_print(s2i_t tree);
-void s2i_print_node(s2i_node_t n);
-
-// ========== Macro viết nhanh ===========
-
-#define to_s2i(n) ((s2i_node_t)(n))
-#define s2i_node_key(n) to_s2i(n)->key
-#define s2i_node_value(n) to_s2i(n)->value
+#define s2i_free(si) rbm_free(si)
 
 #endif  // SPEC_S2I_H_

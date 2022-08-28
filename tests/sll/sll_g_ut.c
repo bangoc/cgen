@@ -27,4 +27,5 @@ int main() {
   CHECK_MSG(pop_value_front(list).l == 3, "Remove 3");
   gsl_free(list);
   TEST_OK();
+  return 0;
 }

@@ -23,7 +23,7 @@ void gen_buff() {
 int main(int argc, char *argv[]) {
   int n;
   sscanf(argv[1], "%d", &n);
-  rbm_t map = rbm_create(gtype_cmp_s, gtype_free_s, gtype_free_s);
+  rbm_t map = rbm_create_map(gtype_cmp_s, gtype_free_s, gtype_free_s);
   srand(time(NULL));
   char **keys = malloc(n * sizeof(char *)),
        **values = malloc(n * sizeof(char *));

@@ -102,6 +102,7 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
   __VA_ARGS__ \
   rb_node_t nn = realloc(*ires.loc, sizeof(struct _rb_node)); \
   *ires.loc = bn_node(nn); \
+  bn_recover_top(nn); \
   nn->color = RB_RED; \
   bn_node_t par = bn_node(nn)->top; \
   if (par == NULL) { \

@@ -123,4 +123,14 @@ bn_node_t bn_prev_inorder(bn_node_t x);
       &(bn_node(n)->top->right)): \
     &bn_tree(t)->root)
 
+#define bn_recover_top(n) \
+   do { \
+     if (bn_node(n)->left) { \
+       bn_node(n)->left->top = bn_node(n); \
+     } \
+     if (bn_node(n)->right) { \
+       bn_node(n)->right->top = bn_node(n); \
+     } \
+   }  while (0)
+
 #endif  // BASE_BN_H_

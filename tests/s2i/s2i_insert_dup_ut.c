@@ -3,26 +3,53 @@
 
 #include <string.h>
 
-int main() {
-  s2i_t si = s2i_create();
-  s2i_node_t x = s2i_insert(si, "Một", 1);
-  CHECK_MSG(s2i_node_value(x) == 1, "Giá trị được trả về khi chèn 1");
-  CHECK_MSG(strcmp(s2i_node_key(x), "Một") == 0, "Khóa được trả về khi chèn 1");
-  s2i_insert(si, "Hai", 2);
-  s2i_insert(si, "Ba", 3);
-  s2i_node_t y = s2i_insert(si, "Một", 10);
-  CHECK_MSG(y == x, "Trùng lặp khóa 1");
-  CHECK_MSG(s2i_value(si, "Một") == 1, "Giá trị khóa Một sau khi chèn trùng lặp");
-  CHECK_MSG(s2i_delete(si, "Một") == 1, "Xóa Một (có tồn tại)");
-  CHECK_MSG(s2i_delete(si, "Một") == 0, "Xóa Một (không tồn tại)");
+int t1() {
+  rbm_t si = s2i_create_map(DUP_YES);
+  CHECK_MSG(s2i_put(si, "Một", 1) == NULL, "Khóa mới");
+  s2i_put(si, "Hai", 2);
+  s2i_put(si, "Ba", 3);
+  long *v = s2i_put(si, "Một", 10);
+  CHECK_MSG(*v == 1, "Khóa đã tồn tại");
+  CHECK_MSG(*s2i_value(si, "Một") == 1, "Giá trị khóa Một sau khi chèn trùng lặp");
+  CHECK_MSG(s2i_remove(si, "Một") == 1, "Xóa Một (có tồn tại)");
+  CHECK_MSG(s2i_remove(si, "Một") == 0, "Xóa Một (không tồn tại)");
 
-  s2i_insert(si, "Một", 1);
-  CHECK_MSG(s2i_value(si, "Một") == 1, "Giá trị khóa Một sau khi chèn lại");
-  s2i_insert(si, "Hai", 20);
-  CHECK_MSG(s2i_value(si, "Hai") == 2, "Giá trị khóa Hai sau chèn trùng lặp");
-  CHECK_MSG(s2i_delete(si, "Hai") == 1, "Xóa Hai (có tồn tại)");
-  CHECK_MSG(s2i_vref(si, "Hai") == NULL, "Giá trị khóa Hai sau khi xóa");
-  CHECK_MSG(s2i_delete(si, "Hai") == 0, "Xóa Hai (không tồn tại)");
+  s2i_put(si, "Một", 1);
+  CHECK_MSG(*s2i_value(si, "Một") == 1, "Giá trị khóa Một sau khi chèn lại");
+  CHECK_MSG(s2i_put(si, "Hai", 20), "Khóa Hai đã tồn tại");
+  CHECK_MSG(*s2i_value(si, "Hai") == 2, "Giá trị khóa Hai sau chèn trùng lặp");
+  CHECK_MSG(s2i_remove(si, "Hai") == 1, "Xóa Hai (có tồn tại)");
+  CHECK_MSG(s2i_value(si, "Hai") == NULL, "Giá trị khóa Hai sau khi xóa");
+  CHECK_MSG(s2i_remove(si, "Hai") == 0, "Xóa Hai (không tồn tại)");
   s2i_free(si);
+  return 0;
+}
+
+int t2() {
+  rbm_t si = s2i_create_map(DUP_NO);
+  CHECK_MSG(s2i_put(si, "Một", 1) == NULL, "Khóa mới");
+  s2i_put(si, "Hai", 2);
+  s2i_put(si, "Ba", 3);
+  long *v = s2i_put(si, "Một", 10);
+  CHECK_MSG(*v == 1, "Khóa đã tồn tại");
+  CHECK_MSG(*s2i_value(si, "Một") == 1, "Giá trị khóa Một sau khi chèn trùng lặp");
+  CHECK_MSG(s2i_remove(si, "Một") == 1, "Xóa Một (có tồn tại)");
+  CHECK_MSG(s2i_remove(si, "Một") == 0, "Xóa Một (không tồn tại)");
+
+  s2i_put(si, "Một", 1);
+  CHECK_MSG(*s2i_value(si, "Một") == 1, "Giá trị khóa Một sau khi chèn lại");
+  CHECK_MSG(s2i_put(si, "Hai", 20), "Khóa Hai đã tồn tại");
+  CHECK_MSG(*s2i_value(si, "Hai") == 2, "Giá trị khóa Hai sau chèn trùng lặp");
+  CHECK_MSG(s2i_remove(si, "Hai") == 1, "Xóa Hai (có tồn tại)");
+  CHECK_MSG(s2i_value(si, "Hai") == NULL, "Giá trị khóa Hai sau khi xóa");
+  CHECK_MSG(s2i_remove(si, "Hai") == 0, "Xóa Hai (không tồn tại)");
+  s2i_free(si);
+  return 0;
+}
+
+int main() {
+  CHECK_MSG(t1() == 0, "t1 dup key");
+  CHECK_MSG(t2() == 0, "t2 no dup key");
+  TEST_OK();
   return 0;
 }

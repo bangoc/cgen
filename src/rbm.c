@@ -14,7 +14,7 @@ rbm_node_t rbm_create_node(gtype key, gtype value) {
   return n;
 }
 
-rbm_t rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv) {
+rbm_t rbm_create_map(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv) {
   bs_tree_t t = bs_create_tree(NULL, cmp, fk);
   rbm_t m = realloc(t, sizeof(struct red_black_map));
   m->fv = fv;
@@ -29,6 +29,7 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
   }
   rbm_node_t nn = realloc(*ires.loc, sizeof(struct red_black_map_node));
   *ires.loc = bn_node(nn);
+  bn_recover_top(nn);
   nn->value = value;
   ++t->size;
   return (rbm_ires){&rbm_node_value(nn), 1};
@@ -41,6 +42,7 @@ gtype *rbm_put(rbm_t t, gtype key, gtype value) {
   }
   rbm_node_t nn = realloc(*ires.loc, sizeof(struct red_black_map_node));
   *ires.loc = bn_node(nn);
+  bn_recover_top(nn);
   nn->value = value;
   ++t->size;
   return NULL;
