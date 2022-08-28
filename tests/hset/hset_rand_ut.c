@@ -39,4 +39,5 @@ int t1(int n) {
 int main() {
   CHECK_MSG(t1(100000) == 0, "t1() 100000");
   TEST_OK();
+  return 0;
 }

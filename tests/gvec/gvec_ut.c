@@ -70,4 +70,5 @@ int main() {
   CHECK_MSG(t2() == 0, "t2()");
   CHECK_MSG(t3() == 0, "t3()");
   TEST_OK();
+  return 0;
 }

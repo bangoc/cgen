@@ -42,4 +42,5 @@ int main() {
   CHECK_MSG(hmap_value(map, gtype_s("aaa"))->l == 130, "value aaa == 130");
   hmap_free(map);
   TEST_OK();
+  return 0;
 }

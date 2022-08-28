@@ -52,4 +52,5 @@ int main(int argc, char *argv[]) {
   free(a);
   free(str);
   TEST_OK();
+  return 0;
 }

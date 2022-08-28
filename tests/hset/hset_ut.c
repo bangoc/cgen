@@ -38,4 +38,5 @@ int main() {
   CHECK_MSG(t1() == 0, "t1()");
   CHECK_MSG(t2() == 0, "t2()");
   TEST_OK();
+  return 0;
 }

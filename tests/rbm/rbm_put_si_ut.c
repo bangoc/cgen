@@ -21,4 +21,5 @@ int main() {
   CHECK_MSG(rbm_value(tab, gtype_s("ccc"))->l == 1, "ccc 2");
   rbm_free(tab);
   TEST_OK();
+  return 0;
 }

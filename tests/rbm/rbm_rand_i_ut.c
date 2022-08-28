@@ -58,4 +58,5 @@ int main(int argc, char *argv[]) {
   free(keys);
   free(values);
   TEST_OK();
+  return 0;
 }

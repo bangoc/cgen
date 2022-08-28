@@ -30,4 +30,5 @@ int main() {
   }
   rbm_free(map);
   TEST_OK();
+  return 0;
 }
