@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 typedef struct str_cache {
-  s2i_t si;
+  rbm_t si;
   arr_t(char*) is;
 } *str_cache_t;
 
@@ -15,25 +15,25 @@ void as_print(arr_t(char*) is) {
 }
 
 void cache_print(str_cache_t cache) {
-  s2i_postorder_print(cache->si);
+  bn_pprint(bn_tree(cache->si), s2i_print_node);
   as_print(cache->is);
 }
 
 str_cache_t create_cache() {
   str_cache_t sc = malloc(sizeof(struct str_cache));
-  sc->si = s2i_create();
+  sc->si = s2i_create_map(DUP_NO);
   sc->is = arr_create(0, char*);
   return sc;
 }
 
 long get_save_str_id(str_cache_t cache, char *s) {
-  long *id = s2i_vref(cache->si, s);
+  long *id = s2i_value(cache->si, s);
   if (id) {
     return *id;
   }
   arr_append(cache->is, strdup(s));
   long id2 = arr_size(cache->is) - 1;
-  s2i_insert(cache->si, s, id2);
+  s2i_put(cache->si, ARR(cache->is)[id2], id2);
   return id2;
 }
 
