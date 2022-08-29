@@ -35,7 +35,7 @@ static rb_node_t rbi_create_color_node(int value, rb_node_color_t color) {
 
 static rb_node_t rbi_insert(bn_tree_t t, int value) {
   bs_ires ires = rb_insert(t, gtype_l(value));
-  return rb_node(*ires.loc);
+  return rb_node(ires.nn);
 }
 
 static rb_node_t rbi_search(bn_tree_t t, int value) {

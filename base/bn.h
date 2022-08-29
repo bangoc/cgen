@@ -123,8 +123,9 @@ bn_node_t bn_prev_inorder(bn_node_t x);
       &(bn_node(n)->top->right)): \
     &bn_tree(t)->root)
 
-#define bn_recover_top(n) \
+#define bn_recover(o, n, t) \
    do { \
+     *bn_ntref(n, t) = bn_node(n); \
      if (bn_node(n)->left) { \
        bn_node(n)->left->top = bn_node(n); \
      } \

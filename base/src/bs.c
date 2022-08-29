@@ -33,7 +33,7 @@ bs_tree_t bs_create_tree(bs_node_t root, gtype_cmp_t cmp, gtype_free_t fk) {
   bs_node_t nn = bs_create_node(key); \
   bn_node_t *loc = top? bs_child_ref(top, rl): &bnt->root; \
   bn_insert(bn_node(nn), loc, top); \
-  return (bs_ires){.loc = loc, 1}
+  return (bs_ires){bn_node(nn), 1}
 
 bs_ires bs_insert(bs_tree_t t, gtype key) {
   BS_INSERT_TPL();
@@ -42,7 +42,7 @@ bs_ires bs_insert(bs_tree_t t, gtype key) {
 bs_ires bs_insert_unique(bs_tree_t t, gtype key) {
   BS_INSERT_TPL(
     if (!rl) {
-      return (bs_ires){.loc = bn_ntref(x, t), 0};
+      return (bs_ires){bn_node(x), 0};
     }
   );
 }

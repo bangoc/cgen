@@ -26,7 +26,7 @@ typedef struct _bs_tree {
 #define bs_tree(t) ((bs_tree_t)(t))
 
 typedef struct {
-  bn_node_t *loc;
+  bn_node_t nn;
   int inserted;
 } bs_ires;
 
