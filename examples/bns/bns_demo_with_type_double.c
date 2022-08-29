@@ -9,7 +9,7 @@
 #include "cgen.ic"
 
 int main() {
-  bn_tree_t t = bns_create_tree_g(NULL, gtype_cmp_d);
+  bs_tree_t t = bs_create_tree(NULL, gtype_cmp_d, NULL);
   double val;
   printf("Nhập vào một dãy số thực không âm (nhập 1 số âm bất kỳ để kết thúc nhập): \n");
   for (;;) {
@@ -17,19 +17,19 @@ int main() {
     if (val < 0) {
       break;
     }
-    bns_insert_g(t, gtype_d(val));
+    bs_insert(t, gtype_d(val));
   }
   long sz = bn_size(t);
   printf("Số lượng số không âm đã nhập: %ld\n", sz);
   if (sz > 0) {
-    bns_pprint(t, gtype_print_d);
+    bs_pprint(t, gtype_print_d);
     printf("Các số theo thứ tự tăng dần: ");
-    bn_traverse_lnr(cur, t) {
-      printf(" %f", bns_node_g_key(cur).d);
+    bn_traverse_lnr(cur, bn_tree(t)) {
+      printf(" %f", bs_node(cur)->key.d);
     }
     printf("\nCác số theo thứ tự giảm dần: ");
-    bn_traverse_rnl(cur, t) {
-      printf(" %f", bns_node_g_key(cur).d);
+    bn_traverse_rnl(cur, bn_tree(t)) {
+      printf(" %f", bs_node(cur)->key.d);
     }
     printf("\n");
   }

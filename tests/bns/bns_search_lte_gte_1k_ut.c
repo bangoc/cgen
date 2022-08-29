@@ -1,5 +1,3 @@
-#include "base/bns.h"
-
 #include "tests/base/utils.h"
 #include "base/rb.h"
 
@@ -17,5 +15,6 @@ int main() {
     CHECK_MSG(bs_search_lte(t, gtype_l(value))->key.l == value - 1, "search lte with odd number");
   }
   bs_free_tree(t);
+  TEST_OK();
   return 0;
 }
