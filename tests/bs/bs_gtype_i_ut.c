@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "tests/bns/bns_gtype_helper.h"
+#include "tests/bs/bs_gtype_helper.h"
 
 #include "base/bs.h"
 

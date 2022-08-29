@@ -1,1 +1,0 @@
-add_executable(ddemo bns_demo_with_type_double.c)

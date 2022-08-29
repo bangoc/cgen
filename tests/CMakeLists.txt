@@ -1,5 +1,5 @@
 add_subdirectory(bn)
-add_subdirectory(bns)
+add_subdirectory(bs)
 add_subdirectory(hmap)
 add_subdirectory(rb)
 add_subdirectory(s2i)

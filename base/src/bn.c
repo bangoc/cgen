@@ -103,7 +103,7 @@ bn_node_t bn_next_inorder(bn_node_t x)  {
     return NULL;
   }
   bn_node_t y;
-#define BNS_NEAREST(x, left, right, out) \
+#define BS_NEAREST(x, left, right, out) \
   do { \
     if ((x)->right != NULL) { \
       (out) = bn_ ##left ##_most((x)->right); \
@@ -115,7 +115,7 @@ bn_node_t bn_next_inorder(bn_node_t x)  {
       } \
     } \
   } while (0)
-  BNS_NEAREST(x, left, right, y);
+  BS_NEAREST(x, left, right, y);
   return y;
 }
 
@@ -124,7 +124,7 @@ bn_node_t bn_prev_inorder(bn_node_t x) {
     return NULL;
   }
   bn_node_t y;
-  BNS_NEAREST(x, right, left, y);
+  BS_NEAREST(x, right, left, y);
   return y;
 }
 

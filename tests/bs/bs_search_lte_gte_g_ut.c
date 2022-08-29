@@ -3,7 +3,7 @@
 #include "base/bs.h"
 
 #include "tests/base/utils.h"
-#include "tests/bns/bns_gtype_helper.h"
+#include "tests/bs/bs_gtype_helper.h"
 
 int t1() {
   bs_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);
@@ -22,7 +22,7 @@ int t1() {
                     80
   */
   CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_l(10), gtype_l(20), gtype_l(23), gtype_l(30),
-            gtype_l(50), gtype_l(60), gtype_l(80)}, 7), "bns 7 nodes");
+            gtype_l(50), gtype_l(60), gtype_l(80)}, 7), "bs 7 nodes");
   CHECK_MSG(bs_search(t, gtype_l(60))->key.l == 60, "Search 60");
   CHECK_MSG(bs_search(t, gtype_l(68)) == NULL, "Search 68");
 
