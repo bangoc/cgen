@@ -44,6 +44,8 @@ typedef struct _rb_node {
 // ========== Khai báo hàm ===============
 
 rb_node_t rb_create_node(gtype key);
+#define rb_free_node(n, t) bs_free_node(n, bs_tree(t)->fk)
+
 bs_ires rb_insert(bs_tree_t t, gtype key);
 bs_ires rb_insert_unique(bs_tree_t t, gtype key);
 int rb_delete(bn_tree_t t, bn_node_t z);

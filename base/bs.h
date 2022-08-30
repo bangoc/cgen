@@ -40,10 +40,10 @@ bs_node_t bs_search_gte(bs_tree_t t, gtype key);
 bs_node_t bs_search_lte(bs_tree_t t, gtype key);
 int bs_delete(bs_tree_t t, bs_node_t n);
 
-#define bs_free_node(n, t) \
+#define bs_free_node(n, fk) \
   do { \
-    if (bs_tree(t)->fk) { \
-      bs_tree(t)->fk(bs_node(n)->key); \
+    if (fk) { \
+      (fk)(bs_node(n)->key); \
     } \
     bn_free_node(n); \
   } while (0)

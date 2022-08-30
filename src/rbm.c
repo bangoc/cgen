@@ -63,14 +63,10 @@ int rbm_remove(rbm_t t, gtype key) {
   if (!n) {
     return 0;
   }
-  rb_delete((bn_tree_t)t, bn_node(n));
-  if (bs_tree(t)->fk) {
-    bs_tree(t)->fk(rbm_node_key(n));
-  }
   if (t->fv) {
     t->fv(rbm_node_value(n));
   }
-  free(n);
+  rb_delete((bn_tree_t)t, bn_node(n));
   --(t->size);
   return 1;
 }

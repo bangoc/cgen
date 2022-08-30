@@ -34,7 +34,8 @@ typedef int (*bn_compare_t)();
 typedef void (*bn_node_print_t)();
 
 bn_node_t bn_create_node();
-void bn_free_node(bn_node_t node);
+#define bn_free_node(n) free(n)
+
 bn_tree_t bn_create_tree(bn_node_t root);
 void bn_free_tree(bn_tree_t t);
 void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u);

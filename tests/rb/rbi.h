@@ -52,7 +52,6 @@ static int rbi_delete(bn_tree_t t, int value) {
   rb_node_t n = rbi_search(t, value);
   if (n) {
     rb_delete(t, bn_node(n));
-    free(n);
     return 1;
   }
   return 0;

@@ -49,7 +49,6 @@ int main(int argc, char *argv[]) {
               tmp = bs_search(t, gtype_l(value++));
               if (tmp) {
                 rb_delete(t, tmp);
-                free(tmp);
               }
             }
           );

@@ -8,10 +8,6 @@ bn_node_t bn_create_node() {
   return calloc(1, sizeof(struct _bn_node));
 }
 
-void bn_free_node(bn_node_t node) {
-  free(node);
-}
-
 bn_tree_t bn_create_tree(bn_node_t root) {
   bn_tree_t tree = malloc(sizeof(struct _bn_tree));
   tree->root = root;
@@ -21,10 +17,10 @@ bn_tree_t bn_create_tree(bn_node_t root) {
 void bn_free_tree(bn_tree_t t) {
   bn_node_t tmp = NULL;
   bn_traverse_lrn(cur, t) {
-    free(tmp);
+    bn_free_node(tmp);
     tmp = cur;
   }
-  free(tmp);
+  bn_free_node(tmp);
   free(t);
 }
 

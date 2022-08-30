@@ -129,6 +129,7 @@ int bs_delete(bs_tree_t t, bs_node_t n) {
       bn_change_child(tmp, successor, top, bnt);
     }
   }
+  bs_free_node(n, bs_tree(t)->fk);
   return 1;
 }
 

@@ -32,7 +32,6 @@ int rbs_remove(rbs_t s, gtype elem) {
   }
   rb_delete(bs_tree(s), n);
   --s->size;
-  bs_free_node(n, s);
   return 1;
 }
 

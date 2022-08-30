@@ -346,6 +346,7 @@ int rb_delete(bn_tree_t t, bn_node_t node) {
   if (rebalance) {
     rb_delete_fix_color(t, rebalance);
   }
+  rb_free_node(node, t);
   return 1;
 }
 
