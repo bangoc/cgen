@@ -24,10 +24,12 @@ int t1() {
   bs_node_t tmp = bs_search(t, gtype_l(10));
   CHECK_MSG(tmp && tmp->key.l == 10, "key 10");
   bs_delete(t, tmp);
+  free(tmp);
 
   tmp = bs_search(t, gtype_l(50));
   CHECK_MSG(tmp && tmp->key.l == 50, "key 50");
   bs_delete(t, tmp);
+  free(tmp);
 
   CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_l(8), gtype_l(20),
       gtype_l(30)}, 3), "Match sequence 3");

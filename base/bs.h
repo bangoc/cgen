@@ -40,22 +40,22 @@ bs_node_t bs_search_gte(bs_tree_t t, gtype key);
 bs_node_t bs_search_lte(bs_tree_t t, gtype key);
 int bs_delete(bs_tree_t t, bs_node_t n);
 
-#define bs_free_tree(t) \
-  do { \
-    if (t->fk) { \
-      bn_traverse_lnr(_cur, bn_tree(t)) { \
-        t->fk(bs_node(_cur)->key); \
-      }  \
-    } \
-    bn_free_tree(bn_tree(t)); \
-  } while (0)
-
 #define bs_free_node(n, t) \
   do { \
     if (bs_tree(t)->fk) { \
       bs_tree(t)->fk(bs_node(n)->key); \
     } \
-    free(n); \
+    bn_free_node(n); \
+  } while (0)
+
+#define bs_free_tree(t) \
+  do { \
+    if (bs_tree(t)->fk) { \
+      bn_traverse_lnr(_cur, bn_tree(t)) { \
+        bs_tree(t)->fk(bs_node(_cur)->key); \
+      }  \
+    } \
+    bn_free_tree(bn_tree(t)); \
   } while (0)
 
 void bs_pprint(bs_tree_t, gtype_print_t gpp);

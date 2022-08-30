@@ -15,9 +15,9 @@ int main(int argc, char *argv[]) {
   if (argc != 2) {
     return usage();
   }
-  long n;
+  long n = MIN;
   sscanf(argv[1], "%ld", &n);
-  if (n <= MIN || n % 10 != 0) {
+  if (n < MIN || n % 10 != 0) {
     return usage();
   }
   const long len = n / POINTS;
@@ -49,9 +49,11 @@ int main(int argc, char *argv[]) {
               tmp = bs_search(t, gtype_l(value++));
               if (tmp) {
                 rb_delete(t, tmp);
+                free(tmp);
               }
             }
           );
   }
+  bs_free_tree(t);
   return 0;
 }
