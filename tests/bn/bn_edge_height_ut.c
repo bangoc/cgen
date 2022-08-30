@@ -19,6 +19,7 @@ int t1() {
   bn_connect2(n3, left, n5, top);
   bn_tree_t t = bn_create_tree(n2);
   CHECK_MSG(bn_edge_height(t) == 2, "Edge height = 2");
+  bn_free_tree(t);
   return 0;
 }
 

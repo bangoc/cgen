@@ -159,5 +159,7 @@ int main() {
   CHECK_MSG(nd4->right == NULL, "right của nd4 bằng NULL");
 
   printf("RB Build test OK\n");
+
+  rbi_free_tree(t);
   return 0;
 }

@@ -15,15 +15,12 @@ int t1() {
     2          5
   1   3
   */
-  n2->left = n1;
-  n1->top = n2;
-  n2->right = n3;
-  n3->top = n1;
-  n2->top = n4;
-  n4->left = n2;
-  n4->right = n5;
-  n5->top = n4;
+  bn_connect2(n2, left, n1, top);
+  bn_connect2(n2, right, n3, top);
+  bn_connect2(n4, left, n2, top);
+  bn_connect2(n4, right, n5, top);
   t->root = n4;
+
   bn_rotate(t, n4, right, left);
   /*
             5
@@ -38,6 +35,7 @@ int t1() {
   CHECK_MSG(t->root->left->left == n2, "left left n2");
   CHECK_MSG(t->root->left->left->left == n1, " left left left n1");
   CHECK_MSG(t->root->left->left->right == n3, "left left right n3");
+
   bn_rotate(t, n5, left, right);
   /*
            4
@@ -50,11 +48,13 @@ int t1() {
   CHECK_MSG(t->root->left->left == n1, "left left n1");
   CHECK_MSG(t->root->left->right == n3, "left right n3");
   CHECK_MSG(t->root->right->right == NULL, "right right null");
+
+  bn_free_tree(t);
   return 0;
 }
 
 int main() {
   CHECK_MSG(t1() == 0, "t1");
-  printf("Test Ok!\n");
+  TEST_OK();
   return 0;
 }

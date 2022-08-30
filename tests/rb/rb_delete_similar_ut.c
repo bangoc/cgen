@@ -120,6 +120,8 @@ int delete_node_one_left_child() {
                      8R
   */
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 3 trong cây 1");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -142,6 +144,8 @@ int delete_node_one_right_child() {
      2R
   */
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 6 trong cây 1");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -177,8 +181,11 @@ int delete_red_node_no_child() {
   */
   bn_connect1(n6, right, NULL);
   bn_connect1(n8, top, NULL);
+  free(n8);
 
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa thêm nút 8 trong cây 1");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -209,6 +216,8 @@ int delete_black_node_no_child_red_top_black_sibling1() {
   bn_connect2(n9, right, n10, top);
   bn_tree_t s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -241,6 +250,8 @@ int delete_black_node_no_child_red_top_black_sibling2() {
   bn_connect2(n9, left, n8, top);
   bn_tree_t s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -274,6 +285,8 @@ int delete_black_node_no_child_red_sibling_black_top() {
   bn_connect2(n7, right, n8, top);
   bn_tree_t s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 6 trong cây 2");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -315,6 +328,8 @@ int delete_black_node_no_child_black_sibling_black_top1() {
   bn_connect2(n9, right, n10, top);
   bn_tree_t s = rbi_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -354,6 +369,8 @@ int delete_black_node_no_child_black_sibling_black_top2() {
   bn_connect2(n9, right, n10, top);
   bn_tree_t s = rbi_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 3");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -390,6 +407,8 @@ int delete_black_node_no_child_black_sibling_red_child_black_top() {
   bn_connect2(n9, right, n10, top);
   bn_tree_t s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -422,6 +441,8 @@ int delete_black_node_no_child_black_sibling_with_black_top_red_left_child() {
   bn_connect2(n8, right, n9, top);
   bn_tree_t s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Sau khi xóa 6");
+  rbi_free_tree(t);
+  rbi_free_tree(s);
   return 0;
 }
 
@@ -434,6 +455,10 @@ int builder() {
   CHECK_MSG(rb_is_valid(t2), "Cây 2");
   CHECK_MSG(rb_is_valid(t3), "Cây 3");
   CHECK_MSG(rb_is_valid(t4), "Cây 4");
+  rbi_free_tree(t1);
+  rbi_free_tree(t2);
+  rbi_free_tree(t3);
+  rbi_free_tree(t4);
   return 0;
 }
 
@@ -456,5 +481,6 @@ int main() {
         "delete_black_node_no_child_black_sibling_red_child_black_top()");
   CHECK_MSG(delete_black_node_no_child_black_sibling_with_black_top_red_left_child() == 0,
         "delete_black_node_no_child_black_sibling_with_black_top_red_left_child()");
+  TEST_OK();
   return 0;
 }
