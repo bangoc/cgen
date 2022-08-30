@@ -80,12 +80,12 @@ Kèm theo graph phụ thuộc cho rbm.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="rbm_8h__incl.png" border="0" usemap="#arbm_8h" alt=""/></div>
 <map name="arbm_8h" id="arbm_8h">
-<area shape="rect" title="Ánh xạ khóa=&gt;giá trị khái quát dựa trên cây đỏ&#45;đen." alt="" coords="257,5,312,32"/>
-<area shape="rect" href="rb_8h_source.html" title=" " alt="" coords="210,80,285,107"/>
+<area shape="rect" title="Ánh xạ khóa=&gt;giá trị khái quát dựa trên cây đỏ&#45;đen." alt="" coords="221,5,276,32"/>
+<area shape="rect" href="rb_8h_source.html" title=" " alt="" coords="173,80,247,107"/>
 <area shape="rect" href="gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="240,229,335,256"/>
-<area shape="rect" href="bn_8h_source.html" title=" " alt="" coords="116,229,195,256"/>
-<area shape="rect" href="bns_8h_source.html" title=" " alt="" coords="153,155,238,181"/>
-<area shape="rect" title=" " alt="" coords="262,155,337,181"/>
+<area shape="rect" href="bs_8h_source.html" title=" " alt="" coords="171,155,249,181"/>
+<area shape="rect" title=" " alt="" coords="71,155,146,181"/>
+<area shape="rect" href="bn_8h_source.html" title=" " alt="" coords="137,229,216,256"/>
 <area shape="rect" href="core_8h_source.html" title=" " alt="" coords="5,304,95,331"/>
 <area shape="rect" title=" " alt="" coords="99,379,167,405"/>
 <area shape="rect" title=" " alt="" coords="257,304,317,331"/>
@@ -151,13 +151,13 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Giá trị:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span> { \</div>
-<div class="line">    if ((map)-&gt;free_key || (map)-&gt;free_value) { \</div>
+<div class="line">    if (bs_tree(map)-&gt;fk || (map)-&gt;fv) { \</div>
 <div class="line">      rbm_traverse(_k, _v, (map)) { \</div>
-<div class="line">        if ((map)-&gt;free_key) { \</div>
-<div class="line">          (map)-&gt;free_key(*_k); \</div>
+<div class="line">        if (bs_tree(map)-&gt;fk) { \</div>
+<div class="line">          bs_tree(map)-&gt;fk(*_k); \</div>
 <div class="line">        } \</div>
-<div class="line">        if ((map)-&gt;free_value) { \</div>
-<div class="line">          (map)-&gt;free_value(*_v); \</div>
+<div class="line">        if ((map)-&gt;fv) { \</div>
+<div class="line">          (map)-&gt;fv(*_v); \</div>
 <div class="line">        } \</div>
 <div class="line">      } \</div>
 <div class="line">    } \</div>
@@ -191,13 +191,13 @@ Typedefs</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Giá trị:</b><div class="fragment"><div class="line">  <span class="keywordflow">do</span> { \</div>
-<div class="line">    if ((map)-&gt;free_key || (map)-&gt;free_value) { \</div>
+<div class="line">    if (bs_tree(map)-&gt;fk || (map)-&gt;fv) { \</div>
 <div class="line">      rbm_traverse(_k, _v, (map)) { \</div>
-<div class="line">        if ((map)-&gt;free_key) { \</div>
-<div class="line">          (map)-&gt;free_key(*_k); \</div>
+<div class="line">        if (bs_tree(map)-&gt;fk) { \</div>
+<div class="line">          bs_tree(map)-&gt;fk(*_k); \</div>
 <div class="line">        } \</div>
-<div class="line">        if ((map)-&gt;free_value) { \</div>
-<div class="line">          (map)-&gt;free_value(*_v); \</div>
+<div class="line">        if ((map)-&gt;fv) { \</div>
+<div class="line">          (map)-&gt;fv(*_v); \</div>
 <div class="line">        } \</div>
 <div class="line">      } \</div>
 <div class="line">    } \</div>
@@ -270,10 +270,10 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Giá trị:</b><div class="fragment"><div class="line">  <span class="keywordflow">for</span> (<a class="code hl_union" href="uniongeneric__type.html">gtype</a> *k = (<a class="code hl_define" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a>(map))? &amp;(rbm_node_key(bn_left_most((map)-&gt;t.root))): NULL, \</div>
-<div class="line">             *v = (<a class="code hl_define" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a>(map))? &amp;(rbm_node_value(bn_left_most((map)-&gt;t.root))): NULL; \</div>
+<b>Giá trị:</b><div class="fragment"><div class="line">  <span class="keywordflow">for</span> (<a class="code hl_union" href="uniongeneric__type.html">gtype</a> *k = (<a class="code hl_define" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a>(map))? &amp;(rbm_node_key(bn_left_most(bn_tree(map)-&gt;root))): NULL, \</div>
+<div class="line">             *v = (<a class="code hl_define" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a>(map))? &amp;(rbm_node_value(bn_left_most(bn_tree(map)-&gt;root))): NULL; \</div>
 <div class="line">       k != NULL &amp;&amp; v != NULL; _rbm_move_next(&amp;k, &amp;v)) \</div>
-<div class="ttc" id="arbm_8h_html_a95ec9a7a1a897392f9a1b66e4dee8eed"><div class="ttname"><a href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a></div><div class="ttdeci">#define rbm_size(t)</div><div class="ttdef"><b>Definition:</b> rbm.h:167</div></div>
+<div class="ttc" id="arbm_8h_html_a95ec9a7a1a897392f9a1b66e4dee8eed"><div class="ttname"><a href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size</a></div><div class="ttdeci">#define rbm_size(t)</div><div class="ttdef"><b>Definition:</b> rbm.h:164</div></div>
 <div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
 </div><!-- fragment --><p >Duyệt tuần tự các cặp khóa &amp; giá trị trong bảng map. Các tham số k và v là các định danh do người sử dụng tự đặt và sẽ có kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> *</p>
 <dl class="params"><dt>Các tham số</dt><dd>
@@ -315,7 +315,7 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm <a class="el" href="structred__black__map.html#a14819d682b69c1597dd2bbb3705f7c5a">rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a>.</p>
+<p >Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm <a class="el" href="structred__black__map.html#a90d586fd372152acdf5e407f51920897">rbm_create_map(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)</a>.</p>
 <p >Các macro hỗ trợ: <br  />
  <a class="el" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">rbm_size(map)</a> - Kích thước của map.</p>
 <p ><a class="el" href="rbm_8h.html#a8d92b3892d198487df705b4502e1af2f">rbm_traverse(k, v, map)</a> - Duyệt tuần tự các cặp trong map.</p>

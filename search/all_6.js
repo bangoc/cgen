@@ -2,7 +2,7 @@ var searchData=
 [
   ['rbm_2eh_0',['rbm.h',['../rbm_8h.html',1,'']]],
   ['rbm_5fclear_1',['rbm_clear',['../rbm_8h.html#a7417ba644ccd20561ef96e919d5a3777',1,'rbm.h']]],
-  ['rbm_5fcreate_2',['rbm_create',['../structred__black__map.html#a14819d682b69c1597dd2bbb3705f7c5a',1,'red_black_map']]],
+  ['rbm_5fcreate_5fmap_2',['rbm_create_map',['../structred__black__map.html#a90d586fd372152acdf5e407f51920897',1,'red_black_map']]],
   ['rbm_5ffree_3',['rbm_free',['../rbm_8h.html#a09233e201dbb5c07bb8dc0149b16dbde',1,'rbm.h']]],
   ['rbm_5finsert_4',['rbm_insert',['../structred__black__map.html#a9b5419361ac0c227a505d5a5868e6d2a',1,'red_black_map']]],
   ['rbm_5finsert_5fresult_5',['rbm_insert_result',['../structrbm__insert__result.html',1,'']]],
