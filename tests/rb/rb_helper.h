@@ -1,7 +1,7 @@
 #ifndef TESTS_RB_RB_HELPER_H_
 #define TESTS_RB_RB_HELPER_H_
 
-#include "base/rb.h"
+#include "tree/rb.h"
 
 static long rb_is_valid_black_height = -1;
 static int rb_is_valid_internal_stop = 0;

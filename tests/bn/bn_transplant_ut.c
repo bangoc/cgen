@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "base/bn.h"
+#include "tree/bn.h"
 
 bn_tree_t bn_transplant(bn_tree_t t, bn_node_t u, bn_node_t v) {
   if (u->top == NULL) {

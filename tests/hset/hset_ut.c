@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "hset.h"
+#include "dab/hset.h"
 #include "tests/base/utils.h"
 
 int t1() {

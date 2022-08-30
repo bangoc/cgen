@@ -1,7 +1,7 @@
 #ifndef TESTS_BN_BN_HELPER_H_
 #define TESTS_BN_BN_HELPER_H_
 
-#include "base/bn.h"
+#include "tree/bn.h"
 
 typedef int (*bn_similar_node_t)();
 

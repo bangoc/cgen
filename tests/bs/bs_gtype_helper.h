@@ -1,7 +1,7 @@
 #ifndef TESTS_BS_BS_GTYPE_HELPER_H_
 #define TESTS_BS_BS_GTYPE_HELPER_H_
 
-#include "base/bs.h"
+#include "tree/bs.h"
 
 static int lnr_match_g(bs_tree_t t, gtype *a, int n) {
   int i = 0;

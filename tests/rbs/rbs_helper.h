@@ -1,7 +1,7 @@
 #ifndef TESTS_RBS_RBS_HELPER_H_
 #define TESTS_RBS_RBS_HELPER_H_
 
-#include "rbs.h"
+#include "tree/rbs.h"
 
 static int rbs_traverse_match(rbs_t s, gtype *a, int n) {
   int i = 0;

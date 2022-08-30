@@ -3,7 +3,6 @@
 */
 
 #include "cgen.h"
-#include "ext/io.h"
 
 #include <stdio.h>
 #include <stdlib.h>

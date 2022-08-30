@@ -5,7 +5,7 @@
 #ifndef TESTS_RB_RBI_H_
 #define TESTS_RB_RBI_H_
 
-#include "base/rb.h"
+#include "tree/rb.h"
 
 // ========== Khai báo hàm ===============
 static rb_node_t rbi_create_node(int value);

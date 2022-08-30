@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "base/bs.h"
+#include "tree/bs.h"
 
 #include "tests/base/utils.h"
 #include "tests/bs/bs_gtype_helper.h"

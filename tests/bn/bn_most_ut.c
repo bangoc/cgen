@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "base/bn.h"
+#include "tree/bn.h"
 
 int t1() {
   bn_node_t n1 = bn_create_node();

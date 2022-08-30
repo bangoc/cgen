@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc, 2021
 */
 
-#include "spec/idl.h"
+#include "list/spec/idl.h"
 
 #include "tests/base/utils.h"
 #include "tests/dll/helper.h"

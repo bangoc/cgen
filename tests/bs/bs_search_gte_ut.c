@@ -1,7 +1,7 @@
 #include "tests/base/utils.h"
 
-#include "base/bs.h"
-#include "base/rb.h"
+#include "tree/bs.h"
+#include "tree/rb.h"
 
 int main() {
   bs_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);

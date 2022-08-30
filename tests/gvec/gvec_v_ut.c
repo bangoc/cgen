@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "gvec.h"
+#include "dab/gvec.h"
 #include "tests/base/utils.h"
 
 int t1() {

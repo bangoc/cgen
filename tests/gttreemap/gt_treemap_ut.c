@@ -1,4 +1,4 @@
-#include "rbm.h"
+#include "tree/rbm.h"
 #include "tests/base/utils.h"
 
 #include <string.h>

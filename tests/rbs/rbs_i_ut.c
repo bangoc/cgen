@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "rbs.h"
+#include "tree/rbs.h"
 
 #include "tests/base/utils.h"
 #include "tests/rbs/rbs_helper.h"

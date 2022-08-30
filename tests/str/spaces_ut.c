@@ -1,6 +1,5 @@
-#include "str.h"
-
 #include "tests/base/utils.h"
+#include "utils/str.h"
 
 #include <ctype.h>
 

@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "base/bs.h"
+#include "tree/bs.h"
 
 int main() {
   bs_node_s n1 = {.key = gtype_l(1)};
