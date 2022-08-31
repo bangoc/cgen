@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 
 #define N 1000
 
@@ -7,7 +7,7 @@ int main() {
   gbs_tree_t t = gbs_create_tree(NULL, gtype_cmp_l, NULL);
   // 0, 2, ..., 2 * N - 2
   for (int i = 0; i < N; ++i) {
-    rb_insert(t, gtype_l(2  * i));
+    grb_insert(t, gtype_l(2  * i));
   }
   for (int i = 0; i < N - 1; ++i) {
     int value = 2 * i + 1;

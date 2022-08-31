@@ -1,4 +1,4 @@
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 #include "tests/base/utils.h"
 
 #include <stdio.h>

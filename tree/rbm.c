@@ -23,7 +23,7 @@ rbm_t rbm_create_map(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv) {
 }
 
 rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
-  bs_ires ires = rb_insert_unique(gbs_tree(t), key);
+  bs_ires ires = grb_insert_unique(gbs_tree(t), key);
   if (!ires.inserted) {
     return (rbm_ires){&rbm_node_value(ires.nn), 0};
   }
@@ -35,7 +35,7 @@ rbm_ires rbm_insert(rbm_t t, gtype key, gtype value) {
 }
 
 gtype *rbm_put(rbm_t t, gtype key, gtype value) {
-  bs_ires ires = rb_insert_unique(gbs_tree(t), key);
+  bs_ires ires = grb_insert_unique(gbs_tree(t), key);
   if (!ires.inserted) {
     return &rbm_node_value(ires.nn);
   }
@@ -66,7 +66,7 @@ int rbm_remove(rbm_t t, gtype key) {
   if (t->fv) {
     t->fv(rbm_node_value(n));
   }
-  rb_delete((bn_tree_t)t, bn_node(n));
+  grb_delete((bn_tree_t)t, bn_node(n));
   --(t->size);
   return 1;
 }

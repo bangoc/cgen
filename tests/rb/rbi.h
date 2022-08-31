@@ -5,13 +5,13 @@
 #ifndef TESTS_RB_RBI_H_
 #define TESTS_RB_RBI_H_
 
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 
 // ========== Khai báo hàm ===============
-static rb_node_t rbi_create_node(int value);
-static rb_node_t rbi_create_color_node(int value, rb_node_color_t color);
-static rb_node_t rbi_insert(bn_tree_t t, int value);
-static rb_node_t rbi_search(bn_tree_t t, int value);
+static grb_node_t rbi_create_node(int value);
+static grb_node_t rbi_create_color_node(int value, grb_node_color_t color);
+static grb_node_t rbi_insert(bn_tree_t t, int value);
+static grb_node_t rbi_search(bn_tree_t t, int value);
 static gbs_tree_t rbi_create_tree(bn_node_t root);
 static int rbi_delete(bn_tree_t t, int value);
 static void rbi_print_node(bn_node_t n);
@@ -23,23 +23,23 @@ static int rbi_similar_node(bn_node_t n1, bn_node_t n2);
 
 // ========== Định nghĩa hàm =============
 
-static rb_node_t rbi_create_node(int value) {
-  return rb_create_node(gtype_l(value));
+static grb_node_t rbi_create_node(int value) {
+  return grb_create_node(gtype_l(value));
 }
 
-static rb_node_t rbi_create_color_node(int value, rb_node_color_t color) {
-  rb_node_t n = rbi_create_node(value);
+static grb_node_t rbi_create_color_node(int value, grb_node_color_t color) {
+  grb_node_t n = rbi_create_node(value);
   rb_set_color(n, color);
   return n;
 }
 
-static rb_node_t rbi_insert(bn_tree_t t, int value) {
-  bs_ires ires = rb_insert(t, gtype_l(value));
-  return rb_node(ires.nn);
+static grb_node_t rbi_insert(bn_tree_t t, int value) {
+  bs_ires ires = grb_insert(t, gtype_l(value));
+  return grb_node(ires.nn);
 }
 
-static rb_node_t rbi_search(bn_tree_t t, int value) {
-  return rb_node(gbs_search(t, gtype_l(value)));
+static grb_node_t rbi_search(bn_tree_t t, int value) {
+  return grb_node(gbs_search(t, gtype_l(value)));
 }
 
 static gbs_tree_t rbi_create_tree(bn_node_t root) {
@@ -49,9 +49,9 @@ static gbs_tree_t rbi_create_tree(bn_node_t root) {
 #define rbi_free_tree(t) gbs_free_tree(gbs_tree(t))
 
 static int rbi_delete(bn_tree_t t, int value) {
-  rb_node_t n = rbi_search(t, value);
+  grb_node_t n = rbi_search(t, value);
   if (n) {
-    rb_delete(t, bn_node(n));
+    grb_delete(t, bn_node(n));
     return 1;
   }
   return 0;

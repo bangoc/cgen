@@ -4,9 +4,9 @@
 #include "tests/base/utils.h"
 
 int t1() {
-  rb_node_t n1 = rbi_create_color_node(1, RB_BLACK);
-  rb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  rb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
+  grb_node_t n1 = rbi_create_color_node(1, RB_BLACK);
+  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
+  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_tree_t t = rbi_create_tree(bn_node(n3));
@@ -16,9 +16,9 @@ int t1() {
 }
 
 int t2() {
-  rb_node_t n1 = rbi_create_color_node(1, RB_BLACK);
-  rb_node_t n3 = rbi_create_color_node(3, RB_RED);
-  rb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
+  grb_node_t n1 = rbi_create_color_node(1, RB_BLACK);
+  grb_node_t n3 = rbi_create_color_node(3, RB_RED);
+  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_tree_t t = rbi_create_tree(bn_node(n3));
@@ -28,9 +28,9 @@ int t2() {
 }
 
 int t3() {
-  rb_node_t n1 = rbi_create_color_node(1, 3);
-  rb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  rb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
+  grb_node_t n1 = rbi_create_color_node(1, 3);
+  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
+  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_tree_t t = rbi_create_tree(bn_node(n3));
@@ -40,10 +40,10 @@ int t3() {
 }
 
 int t4() {
-  rb_node_t n1 = rbi_create_color_node(1, RB_RED);
-  rb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  rb_node_t n5 = rbi_create_color_node(5, RB_RED);
-  rb_node_t n6 = rbi_create_color_node(6, RB_RED);
+  grb_node_t n1 = rbi_create_color_node(1, RB_RED);
+  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
+  grb_node_t n5 = rbi_create_color_node(5, RB_RED);
+  grb_node_t n6 = rbi_create_color_node(6, RB_RED);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
@@ -54,10 +54,10 @@ int t4() {
 }
 
 int t5() {
-  rb_node_t n1 = rbi_create_color_node(1, RB_RED);
-  rb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  rb_node_t n5 = rbi_create_color_node(5, RB_RED);
-  rb_node_t n6 = rbi_create_color_node(6, RB_BLACK);
+  grb_node_t n1 = rbi_create_color_node(1, RB_RED);
+  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
+  grb_node_t n5 = rbi_create_color_node(5, RB_RED);
+  grb_node_t n6 = rbi_create_color_node(6, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
@@ -68,10 +68,10 @@ int t5() {
 }
 
 int t6() {
-  rb_node_t n1 = rbi_create_color_node(1, RB_BLACK);
-  rb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  rb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
-  rb_node_t n6 = rbi_create_color_node(6, RB_RED);
+  grb_node_t n1 = rbi_create_color_node(1, RB_BLACK);
+  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
+  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
+  grb_node_t n6 = rbi_create_color_node(6, RB_RED);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);

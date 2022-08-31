@@ -4,12 +4,12 @@
 
 int test_delete_root() {
   bn_tree_t t = rbi_create_tree(NULL);
-  rb_node_t root = rbi_create_node(5);
+  grb_node_t root = rbi_create_node(5);
   t->root = bn_node(root);
   rb_set_black(root);
-  rb_node_t lc = rbi_create_node(3);
+  grb_node_t lc = rbi_create_node(3);
   rb_set_red(lc);
-  rb_node_t rc = rbi_create_node(8);
+  grb_node_t rc = rbi_create_node(8);
   rb_set_red(lc);
   bn_connect2(root, left, lc, top);
   bn_connect2(root, right, rc, top);
@@ -32,9 +32,9 @@ int test_delete_root() {
 }
 
 int test_delete_root_2nodes() {
-  rb_node_t r = rbi_create_node(5);
+  grb_node_t r = rbi_create_node(5);
   rb_set_black(r);
-  rb_node_t rc = rbi_create_node(8);
+  grb_node_t rc = rbi_create_node(8);
   rb_set_red(rc);
   bn_connect2(r, right, rc, top);
   bn_tree_t t = rbi_create_tree(bn_node(r));
@@ -56,42 +56,42 @@ int test_delete_root_2nodes() {
 }
 
 int test_delete_single_deep_child() {
-  rb_node_t r = rbi_create_node(20);
+  grb_node_t r = rbi_create_node(20);
   bn_tree_t t = rbi_create_tree(bn_node(r));
   rb_set_black(r);
 
   // Cây con trái
-  rb_node_t n10 = rbi_create_node(10);
+  grb_node_t n10 = rbi_create_node(10);
   rb_set_black(n10);
-  rb_node_t n5 = rbi_create_node(5);
+  grb_node_t n5 = rbi_create_node(5);
   rb_set_red(n5);
-  rb_node_t n15 = rbi_create_node(15);
+  grb_node_t n15 = rbi_create_node(15);
   rb_set_red(n15);
   bn_connect2(n5, top, n10, left);
   bn_connect2(n15, top, n10, right);
 
   // Cây con phải
-  rb_node_t n38 = rbi_create_node(38);
+  grb_node_t n38 = rbi_create_node(38);
   rb_set_red(n38);
-  rb_node_t n28 = rbi_create_node(28);
+  grb_node_t n28 = rbi_create_node(28);
   rb_set_black(n28);
-  rb_node_t n48 = rbi_create_node(48);
+  grb_node_t n48 = rbi_create_node(48);
   rb_set_black(n48);
   bn_connect2(n28, top, n38, left);
   bn_connect2(n48, top, n38, right);
 
   // Cây con của n28
-  rb_node_t n23 = rbi_create_node(23);
+  grb_node_t n23 = rbi_create_node(23);
   rb_set_red(n23);
-  rb_node_t n29 = rbi_create_node(29);
+  grb_node_t n29 = rbi_create_node(29);
   rb_set_red(n29);
   bn_connect2(n23, top, n28, left);
   bn_connect2(n29, top, n28, right);
 
   // Cây con của n48
-  rb_node_t n41 = rbi_create_node(41);
+  grb_node_t n41 = rbi_create_node(41);
   rb_set_red(n41);
-  rb_node_t n49 = rbi_create_node(49);
+  grb_node_t n49 = rbi_create_node(49);
   rb_set_red(n49);
   bn_connect2(n41, top, n48, left);
   bn_connect2(n49, top, n48, right);
@@ -165,31 +165,31 @@ int test_delete_single_deep_child() {
 }
 
 int test_delete_red_node_red_successor() {
-  rb_node_t r = rbi_create_node(10);
+  grb_node_t r = rbi_create_node(10);
   rb_set_black(r);
   bn_tree_t t = rbi_create_tree(bn_node(r));
 
   //  Nhánh trái
-  rb_node_t n5 = rbi_create_node(5);
+  grb_node_t n5 = rbi_create_node(5);
   rb_set_red(n5);
-  rb_node_t m5 = rbi_create_node(-5);
+  grb_node_t m5 = rbi_create_node(-5);
   rb_set_black(m5);
   bn_connect2(m5, top, n5, left);
-  rb_node_t n7 = rbi_create_node(7);
+  grb_node_t n7 = rbi_create_node(7);
   rb_set_black(n7);
   bn_connect2(n7, top, n5, right);
 
   // Nhánh phải
-  rb_node_t n35 = rbi_create_node(35);
+  grb_node_t n35 = rbi_create_node(35);
   rb_set_red(n35);
-  rb_node_t n20 = rbi_create_node(20);
+  grb_node_t n20 = rbi_create_node(20);
   rb_set_black(n20);
   bn_connect2(n20, top, n35, left);
-  rb_node_t n38 = rbi_create_node(38);
+  grb_node_t n38 = rbi_create_node(38);
   rb_set_black(n38);
   bn_connect2(n38, top, n35, right);
 
-  rb_node_t n36 = rbi_create_node(36);
+  grb_node_t n36 = rbi_create_node(36);
   rb_set_red(n36);
   bn_connect2(n36, top, n38, left);
 
@@ -215,23 +215,23 @@ int test_delete_red_node_red_successor() {
 }
 
 int test_delete_black_node_black_successor_no_child() {
-  rb_node_t root = rbi_create_node(10);
+  grb_node_t root = rbi_create_node(10);
   rb_set_black(root);
   bn_tree_t t = rbi_create_tree(bn_node(root));
-  rb_node_t m10 = rbi_create_node(-10);
+  grb_node_t m10 = rbi_create_node(-10);
   rb_set_black(m10);
 
   // Cây con trái
   bn_connect2(m10, top, root, left);
 
   // Cây con phải
-  rb_node_t n30 = rbi_create_node(30);
+  grb_node_t n30 = rbi_create_node(30);
   rb_set_red(n30);
   bn_connect2(n30, top, root, right);
-  rb_node_t n20 = rbi_create_node(20);
+  grb_node_t n20 = rbi_create_node(20);
   rb_set_black(n20);
   bn_connect2(n20, top, n30, left);
-  rb_node_t n38 = rbi_create_node(38);
+  grb_node_t n38 = rbi_create_node(38);
   rb_set_black(n38);
   bn_connect2(n38, top, n30, right);
 

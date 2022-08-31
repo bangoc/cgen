@@ -14,7 +14,7 @@ rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t fk) {
 }
 
 int rbs_insert(rbs_t s, gtype elem) {
-  bs_ires ires = rb_insert_unique(gbs_tree(s), elem);
+  bs_ires ires = grb_insert_unique(gbs_tree(s), elem);
   if (ires.inserted) {
     ++(s->size);
   }
@@ -30,7 +30,7 @@ int rbs_remove(rbs_t s, gtype elem) {
   if (!n) {
     return 0;
   }
-  rb_delete(gbs_tree(s), n);
+  grb_delete(gbs_tree(s), n);
   --s->size;
   return 1;
 }

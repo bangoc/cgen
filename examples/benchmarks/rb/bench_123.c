@@ -1,5 +1,5 @@
 #include "base/core.h"
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 
 #include <stdio.h>
 
@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
-              rb_insert(t, gtype_l(value++));
+              grb_insert(t, gtype_l(value++));
             }
           );
     sprintf(desc, "%ld x search from %ld (s): ", len, len * point);
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
             for (long i = 0; i < len; ++i) {
               tmp = gbs_search(t, gtype_l(value++));
               if (tmp) {
-                rb_delete(t, tmp);
+                grb_delete(t, tmp);
               }
             }
           );

@@ -4,8 +4,8 @@
   tương thích với các hàm cho cây nhị phân và cây nhị phân tìm kiếm
 */
 
-#ifndef TREE_RB_H_
-#define TREE_RB_H_
+#ifndef TREE_SPEC_GRB_H_
+#define TREE_SPEC_GRB_H_
 
 #include "tree/spec/gbs.h"
 
@@ -25,14 +25,14 @@
 typedef enum {
   RB_RED = 0,
   RB_BLACK = 1
-} rb_node_color_t;
+} grb_node_color_t;
 
 extern const char * color_names[];
 
-typedef struct _rb_node {
+typedef struct _grb_node {
   struct _gbs_node base;
-  rb_node_color_t color;
-} rb_node_s, *rb_node_t;
+  grb_node_color_t color;
+} grb_node_s, *grb_node_t;
 
 /*
   Trong triển khai này NULL được sử dụng thay vì lính canh để tương
@@ -43,22 +43,22 @@ typedef struct _rb_node {
 
 // ========== Khai báo hàm ===============
 
-rb_node_t rb_create_node(gtype key);
-#define rb_free_node(n, t) gbs_free_node(n, gbs_tree(t)->fk)
+grb_node_t grb_create_node(gtype key);
+#define grb_free_node(n, t) gbs_free_node(n, gbs_tree(t)->fk)
 
-bs_ires rb_insert(gbs_tree_t t, gtype key);
-bs_ires rb_insert_unique(gbs_tree_t t, gtype key);
-int rb_delete(bn_tree_t t, bn_node_t z);
+bs_ires grb_insert(gbs_tree_t t, gtype key);
+bs_ires grb_insert_unique(gbs_tree_t t, gtype key);
+int grb_delete(bn_tree_t t, bn_node_t z);
 
 
 // ========== Macro viết nhanh ===========
-#define rb_node(n) ((rb_node_t)(n))
-#define rb_color(n) ((n)? rb_node(n)->color: RB_BLACK)
+#define grb_node(n) ((grb_node_t)(n))
+#define rb_color(n) ((n)? grb_node(n)->color: RB_BLACK)
 #define rb_color_str(n) color_names[(int)rb_color(n)]
-#define rb_set_color(n, new_color) rb_node(n)->color = (new_color)
+#define rb_set_color(n, new_color) grb_node(n)->color = (new_color)
 #define rb_is_red(node) (rb_color(node) == RB_RED)
 #define rb_is_black(node) (rb_color(node) == RB_BLACK)
 #define rb_set_black(node) rb_set_color(node, RB_BLACK)
 #define rb_set_red(node) rb_set_color(node, RB_RED)
 
-#endif  // TREE_RB_H_
+#endif  // TREE_SPEC_GRB_H_

@@ -12,7 +12,7 @@
  * khóa được so sánh bằng hàm do người dùng cung cấp.
  */
 
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 
 /**
  * \headerfile "cgen.h"
@@ -21,7 +21,7 @@
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
 typedef struct red_black_map_node {
-  struct _rb_node rb_node;
+  struct _grb_node grb_node;
 
   /** \private
    * Người sử dụng không cần trực tiếp truy cập tới

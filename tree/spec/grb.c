@@ -1,12 +1,12 @@
 /* (C) Nguyen Ba Ngoc 2022 */
 
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 
 const char * color_names[] = {"Đỏ", "Đen"};
 
-rb_node_t rb_create_node(gtype key) {
+grb_node_t grb_create_node(gtype key) {
   gbs_node_t tmp = gbs_create_node(key);
-  rb_node_t nn = realloc(tmp, sizeof(struct _rb_node));
+  grb_node_t nn = realloc(tmp, sizeof(struct _grb_node));
   nn->color = RB_RED;
   return nn;
 }
@@ -100,7 +100,7 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 #define RB_INSERT_TPL(bs_interface, ...) \
   bs_ires ires = bs_interface(t, key); \
   __VA_ARGS__ \
-  rb_node_t nn = realloc(ires.nn, sizeof(struct _rb_node)); \
+  grb_node_t nn = realloc(ires.nn, sizeof(struct _grb_node)); \
   bn_recover(ires.nn, nn, t); \
   ires.nn = bn_node(nn); \
   nn->color = RB_RED; \
@@ -115,11 +115,11 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
   } \
   return ires
 
-bs_ires rb_insert(gbs_tree_t t, gtype key) {
+bs_ires grb_insert(gbs_tree_t t, gtype key) {
   RB_INSERT_TPL(gbs_insert);
 }
 
-bs_ires rb_insert_unique(gbs_tree_t t, gtype key) {
+bs_ires grb_insert_unique(gbs_tree_t t, gtype key) {
   RB_INSERT_TPL(gbs_insert_unique,
     if (!ires.inserted) {
       return ires;
@@ -255,12 +255,12 @@ void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
   n->top = parent; \
   rb_set_color(n, color)
 
-int rb_delete(bn_tree_t t, bn_node_t node) {
+int grb_delete(bn_tree_t t, bn_node_t node) {
   bn_node_t child = node->right,
             tmp = node->left,
             parent, rebalance;
   bn_node_t p;
-  rb_node_color_t c;
+  grb_node_color_t c;
   if (!tmp) {
     /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
      *
@@ -337,7 +337,7 @@ int rb_delete(bn_tree_t t, bn_node_t node) {
       rb_set_parent_color(child2, parent, RB_BLACK);
       rebalance = NULL;
     } else {
-      rb_node_color_t c2 = rb_color(successor);
+      grb_node_color_t c2 = rb_color(successor);
       rebalance = c2 == RB_BLACK? parent: NULL;
     }
     rb_set_parent_color(successor, p, c);
@@ -346,7 +346,7 @@ int rb_delete(bn_tree_t t, bn_node_t node) {
   if (rebalance) {
     rb_delete_fix_color(t, rebalance);
   }
-  rb_free_node(node, t);
+  grb_free_node(node, t);
   return 1;
 }
 

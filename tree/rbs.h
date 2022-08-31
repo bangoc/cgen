@@ -5,7 +5,7 @@
   (C) Nguyen Ba Ngoc 2021
 */
 
-#include "tree/rb.h"
+#include "tree/spec/grb.h"
 
 typedef struct red_black_set {
   struct _gbs_tree t;
