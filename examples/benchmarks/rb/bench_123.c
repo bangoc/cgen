@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   const long len = n / POINTS;
   char desc[1024];
   long value = 0;
-  bs_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);
+  bsg_tree_t t = bsg_create_tree(NULL, gtype_cmp_l, NULL);
   for (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     sprintf(desc, "%ld x search from %ld (s): ", len, len * point);
     BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
-              bs_search(t, gtype_l(len * point + i));
+              bsg_search(t, gtype_l(len * point + i));
             }
           );
   }
@@ -44,15 +44,15 @@ int main(int argc, char *argv[]) {
   for  (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x delete from %ld (s): ", len, n - len * point);
     BENCH(desc, 1,
-            bs_node_t tmp;
+            bsg_node_t tmp;
             for (long i = 0; i < len; ++i) {
-              tmp = bs_search(t, gtype_l(value++));
+              tmp = bsg_search(t, gtype_l(value++));
               if (tmp) {
                 rb_delete(t, tmp);
               }
             }
           );
   }
-  bs_free_tree(t);
+  bsg_free_tree(t);
   return 0;
 }

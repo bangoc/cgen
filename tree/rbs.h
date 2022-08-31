@@ -8,20 +8,20 @@
 #include "tree/rb.h"
 
 typedef struct red_black_set {
-  struct _bs_tree t;
+  struct _bsg_tree t;
   long size;
 } rbs_s, *rbs_t;
 
-#define rbs_node_key(n) (bs_node(n)->key)
+#define rbs_node_key(n) (bsg_node(n)->key)
 #define rbs_contains(s, v) (rbs_search(s, v) != NULL)
 
 rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_key);
 int rbs_insert(rbs_t s, gtype elem);
-bs_node_t rbs_search(rbs_t s, gtype elem);
+bsg_node_t rbs_search(rbs_t s, gtype elem);
 int rbs_remove(rbs_t s, gtype elem);
 
 static inline void _rbs_move_next(gtype **cur) {
-  bs_node_t nd = container_of(*cur, struct _bs_node, key);
+  bsg_node_t nd = container_of(*cur, struct _bsg_node, key);
   bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *cur = NULL;
@@ -38,9 +38,9 @@ static inline void _rbs_move_next(gtype **cur) {
 
 #define rbs_free(s) \
     do {  \
-      if (bs_tree(s)->fk) { \
+      if (bsg_tree(s)->fk) { \
         rbs_traverse(_k, (s)) { \
-          bs_tree(s)->fk(*_k); \
+          bsg_tree(s)->fk(*_k); \
         } \
       } \
       bn_free_tree(bn_tree(s)); \
@@ -48,9 +48,9 @@ static inline void _rbs_move_next(gtype **cur) {
 
 #define rbs_clear(s) \
     do {  \
-      if (bs_tree(s)->fk) { \
+      if (bsg_tree(s)->fk) { \
         rbs_traverse(_k, (s)) { \
-          bs_tree(s)->fk(*_k); \
+          bsg_tree(s)->fk(*_k); \
         } \
       } \
       bn_tree_t _t = (bn_tree_t)(s); \

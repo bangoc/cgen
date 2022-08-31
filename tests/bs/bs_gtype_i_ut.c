@@ -1,15 +1,15 @@
 #include "tests/base/utils.h"
 #include "tests/bs/bs_gtype_helper.h"
 
-#include "tree/bs.h"
+#include "tree/spec/bsg.h"
 
 int t1() {
-  bs_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);
-  bs_insert(t, gtype_l(20));
-  bs_insert(t, gtype_l(10));
-  bs_insert(t, gtype_l(30));
-  bs_insert(t, gtype_l(50));
-  bs_insert(t, gtype_l(8));
+  bsg_tree_t t = bsg_create_tree(NULL, gtype_cmp_l, NULL);
+  bsg_insert(t, gtype_l(20));
+  bsg_insert(t, gtype_l(10));
+  bsg_insert(t, gtype_l(30));
+  bsg_insert(t, gtype_l(50));
+  bsg_insert(t, gtype_l(8));
   /*
         20
       10  30
@@ -17,21 +17,21 @@ int t1() {
   */
   CHECK_MSG(bn_size(bn_tree(t)) == 5, "size 5");
 
-  bs_pprint(t, gtype_print_l);
+  bsg_pprint(t, gtype_print_l);
   CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_l(8), gtype_l(10),
     gtype_l(20), gtype_l(30), gtype_l(50)}, 5), "Match sequence 5");
 
-  bs_node_t tmp = bs_search(t, gtype_l(10));
+  bsg_node_t tmp = bsg_search(t, gtype_l(10));
   CHECK_MSG(tmp && tmp->key.l == 10, "key 10");
-  bs_delete(t, tmp);
+  bsg_delete(t, tmp);
 
-  tmp = bs_search(t, gtype_l(50));
+  tmp = bsg_search(t, gtype_l(50));
   CHECK_MSG(tmp && tmp->key.l == 50, "key 50");
-  bs_delete(t, tmp);
+  bsg_delete(t, tmp);
 
   CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_l(8), gtype_l(20),
       gtype_l(30)}, 3), "Match sequence 3");
-  bs_free_tree(t);
+  bsg_free_tree(t);
   return 0;
 }
 

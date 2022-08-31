@@ -12,14 +12,14 @@ static rb_node_t rbi_create_node(int value);
 static rb_node_t rbi_create_color_node(int value, rb_node_color_t color);
 static rb_node_t rbi_insert(bn_tree_t t, int value);
 static rb_node_t rbi_search(bn_tree_t t, int value);
-static bs_tree_t rbi_create_tree(bn_node_t root);
+static bsg_tree_t rbi_create_tree(bn_node_t root);
 static int rbi_delete(bn_tree_t t, int value);
 static void rbi_print_node(bn_node_t n);
 static int rbi_similar_node(bn_node_t n1, bn_node_t n2);
 
 // ========== Macro viết nhanh ===========
 
-#define rbi_value(x) bs_node(x)->key.l
+#define rbi_value(x) bsg_node(x)->key.l
 
 // ========== Định nghĩa hàm =============
 
@@ -39,14 +39,14 @@ static rb_node_t rbi_insert(bn_tree_t t, int value) {
 }
 
 static rb_node_t rbi_search(bn_tree_t t, int value) {
-  return rb_node(bs_search(t, gtype_l(value)));
+  return rb_node(bsg_search(t, gtype_l(value)));
 }
 
-static bs_tree_t rbi_create_tree(bn_node_t root) {
-  bs_tree_t t = bs_create_tree(root, gtype_cmp_l, NULL);
+static bsg_tree_t rbi_create_tree(bn_node_t root) {
+  bsg_tree_t t = bsg_create_tree(root, gtype_cmp_l, NULL);
 }
 
-#define rbi_free_tree(t) bs_free_tree(bs_tree(t))
+#define rbi_free_tree(t) bsg_free_tree(bsg_tree(t))
 
 static int rbi_delete(bn_tree_t t, int value) {
   rb_node_t n = rbi_search(t, value);
@@ -58,7 +58,7 @@ static int rbi_delete(bn_tree_t t, int value) {
 }
 
 static void rbi_print_node(bn_node_t n) {
-  printf("(%ld, %s)\n", bs_node(n)->key.l, rb_color_str(n));
+  printf("(%ld, %s)\n", bsg_node(n)->key.l, rb_color_str(n));
 }
 
 static int rbi_similar_node(bn_node_t n1, bn_node_t n2) {
@@ -69,7 +69,7 @@ static int rbi_similar_node(bn_node_t n1, bn_node_t n2) {
       (n1 == NULL && n2 != NULL)) {
     return 1;
   }
-  return bs_node(n1)->key.l == bs_node(n2)->key.l &&
+  return bsg_node(n1)->key.l == bsg_node(n2)->key.l &&
          rb_color(n1) == rb_color(n2);
 }
 

@@ -8,7 +8,7 @@ int node_values(bn_node_t nd,
     bn_node_t right,
     bn_node_t top) {
   CHECK_MSG(nd, "Node not NULL");
-  CHECK_MSG(bs_node(nd)->key.l == key, "Different key");
+  CHECK_MSG(bsg_node(nd)->key.l == key, "Different key");
   CHECK_MSG(rb_node(nd)->color == color, "Different color");
   CHECK_MSG(nd->left == left, "Different left child");
   CHECK_MSG(nd->right == right, "Different right child");
@@ -17,7 +17,7 @@ int node_values(bn_node_t nd,
 }
 
 int node_key(bn_node_t nd) {
-  return bs_node(nd)->key.l;
+  return bsg_node(nd)->key.l;
 }
 
 int compare(bn_node_t x, bn_node_t y) {
@@ -25,7 +25,7 @@ int compare(bn_node_t x, bn_node_t y) {
 }
 
 int t1() {
-  bn_tree_t t = bs_create_tree(NULL, gtype_cmp_l, NULL);
+  bn_tree_t t = bsg_create_tree(NULL, gtype_cmp_l, NULL);
   rb_insert(t, gtype_l(1));
   CHECK_MSG(node_values(t->root, 1, RB_BLACK, NULL, NULL, NULL), "root values");
 
@@ -38,7 +38,7 @@ int t1() {
   CHECK_MSG(node_values(t->root->left, 1, RB_RED, NULL, NULL, t->root), "root left child");
   CHECK_MSG(node_values(t->root->right, 3, RB_RED, NULL, NULL, t->root), "root right child");
 
-  bs_free_tree(bs_tree(t));
+  bsg_free_tree(bsg_tree(t));
   return 0;
 }
 

@@ -30,7 +30,7 @@ typedef struct _bn_tree {
 #define bn_tree(t) ((bn_tree_t)(t))
 
 typedef int (*bn_callback_t)();
-typedef int (*bn_compare_t)();
+typedef int (*bn_compare_t)(bn_node_t, bn_node_t, bn_tree_t);
 typedef void (*bn_node_print_t)();
 
 bn_node_t bn_create_node();

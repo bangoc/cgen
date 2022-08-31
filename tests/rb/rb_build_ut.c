@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  bs_tree_t t = rbi_create_tree(NULL);
+  bsg_tree_t t = rbi_create_tree(NULL);
   rbi_insert(t, 2);
   /*
     2B

@@ -7,7 +7,7 @@
 #ifndef TREE_RB_H_
 #define TREE_RB_H_
 
-#include "tree/bs.h"
+#include "tree/spec/bsg.h"
 
 #include <stdbool.h>
 
@@ -30,7 +30,7 @@ typedef enum {
 extern const char * color_names[];
 
 typedef struct _rb_node {
-  struct _bs_node base;
+  struct _bsg_node base;
   rb_node_color_t color;
 } rb_node_s, *rb_node_t;
 
@@ -44,10 +44,10 @@ typedef struct _rb_node {
 // ========== Khai báo hàm ===============
 
 rb_node_t rb_create_node(gtype key);
-#define rb_free_node(n, t) bs_free_node(n, bs_tree(t)->fk)
+#define rb_free_node(n, t) bsg_free_node(n, bsg_tree(t)->fk)
 
-bs_ires rb_insert(bs_tree_t t, gtype key);
-bs_ires rb_insert_unique(bs_tree_t t, gtype key);
+bs_ires rb_insert(bsg_tree_t t, gtype key);
+bs_ires rb_insert_unique(bsg_tree_t t, gtype key);
 int rb_delete(bn_tree_t t, bn_node_t z);
 
 
