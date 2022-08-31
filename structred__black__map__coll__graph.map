@@ -1,6 +1,0 @@
-<map id="red_black_map" name="red_black_map">
-<area shape="rect" id="node1" title=" " alt="" coords="92,5,202,32"/>
-<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="100,95,194,121"/>
-<area shape="rect" id="node3" href="$structgtype__vector.html" title=" " alt="" coords="32,257,128,284"/>
-<area shape="rect" id="node4" href="$structhash__map.html" title=" " alt="" coords="172,257,255,284"/>
-</map>

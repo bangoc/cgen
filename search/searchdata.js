@@ -1,13 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "acfghirv",
-  1: "ghr",
-  2: "ghr",
-  3: "ghr",
-  4: "afiv",
-  5: "ghr",
-  6: "ghr",
-  7: "c"
+  0: "cg",
+  1: "g",
+  2: "g",
+  3: "g",
+  4: "g",
+  5: "c"
 };
 
 var indexSectionNames =
@@ -16,10 +14,8 @@ var indexSectionNames =
   1: "classes",
   2: "files",
   3: "functions",
-  4: "variables",
-  5: "typedefs",
-  6: "defines",
-  7: "pages"
+  4: "typedefs",
+  5: "pages"
 };
 
 var indexSectionLabels =
@@ -28,9 +24,7 @@ var indexSectionLabels =
   1: "Cấu trúc dữ liệu",
   2: "Files",
   3: "Các hàm",
-  4: "Các biến",
-  5: "Typedefs",
-  6: "Định nghĩa",
-  7: "Trang"
+  4: "Typedefs",
+  5: "Trang"
 };
 
