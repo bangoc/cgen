@@ -12,7 +12,8 @@
  * khóa được so sánh bằng hàm do người dùng cung cấp.
  */
 
-#include "tree/spec/grb.h"
+#include "base/gtype.h"
+#include "tree/rb.h"
 
 /**
  * \headerfile "cgen.h"
@@ -21,14 +22,19 @@
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
 typedef struct red_black_map_node {
-  struct _grb_node grb_node;
+  struct _rb_node base;
 
   /** \private
    * Người sử dụng không cần trực tiếp truy cập tới
    * các thuộc tính của nút.
    */
+  gtype key;
   gtype value;
 } rbm_node_s, *rbm_node_t;
+
+#define rbm_node(n) ((rbm_node_t)(n))
+#define rbm_node_key(n) (rbm_node(n)->key)
+#define rbm_node_value(n) (rbm_node(n)->value)
 
 /**
  * \headerfile "cgen.h"
@@ -45,8 +51,9 @@ typedef struct red_black_map_node {
  *   #rbm_clear(map) - Làm rỗng map
  */
 typedef struct red_black_map {
-  struct _gbs_tree t;
-  gtype_free_t fv;
+  struct _bn_tree t;
+  gtype_cmp_t cmp;
+  gtype_free_t fk, fv;
   long size;
 } rbm_s, *rbm_t;
 
@@ -59,11 +66,10 @@ typedef struct rbm_insert_result {
   int inserted;
 } rbm_ires;
 
-#define rbm_node(n) ((rbm_node_t)(n))
-#define rbm_node_key(n) (gbs_node(n)->key)
-#define rbm_node_value(n) (rbm_node(n)->value)
+#define rbm_tree(t) ((rbm_t)(t))
 
 rbm_node_t rbm_create_node(gtype key, gtype value);
+int rbm_cmp_node(bn_node_t n1, bn_node_t n2, bn_tree_t t);
 
 /**
  * Hàm tạo đối tượng điều khiển bảng cây.
@@ -163,7 +169,7 @@ int rbm_remove(rbm_t t, gtype key);
 #define rbm_size(t) ((t)->size)
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
-  rbm_node_t nd = rbm_node(container_of(*k, struct _gbs_node, key));
+  rbm_node_t nd = rbm_node(container_of(*k, struct red_black_map_node, key));
   bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *k = NULL;
@@ -197,13 +203,13 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  */
 #define rbm_free(map) \
   do { \
-    if (gbs_tree(map)->fk || (map)->fv) { \
+    if (rbm_tree(map)->fk || rbm_tree(map)->fv) { \
       rbm_traverse(_k, _v, (map)) { \
-        if (gbs_tree(map)->fk) { \
-          gbs_tree(map)->fk(*_k); \
+        if (rbm_tree(map)->fk) { \
+          rbm_tree(map)->fk(*_k); \
         } \
-        if ((map)->fv) { \
-          (map)->fv(*_v); \
+        if (rbm_tree(map)->fv) { \
+          rbm_tree(map)->fv(*_v); \
         } \
       } \
     } \
@@ -218,19 +224,19 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  */
 #define rbm_clear(map) \
   do { \
-    if (gbs_tree(map)->fk || (map)->fv) { \
+    if (rbm_tree(map)->fk || rbm_tree(map)->fv) { \
       rbm_traverse(_k, _v, (map)) { \
-        if (gbs_tree(map)->fk) { \
-          gbs_tree(map)->fk(*_k); \
+        if (rbm_tree(map)->fk) { \
+          rbm_tree(map)->fk(*_k); \
         } \
-        if ((map)->fv) { \
-          (map)->fv(*_v); \
+        if (rbm_tree(map)->fv) { \
+          rbm_tree(map)->fv(*_v); \
         } \
       } \
     } \
     bn_tree_t _t = (bn_tree_t)(map); \
     bn_clear_tree(_t); \
-    (map)->size = 0; \
+    rbm_tree(map)->size = 0; \
   } while (0)
 
 /**

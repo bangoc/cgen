@@ -8,20 +8,22 @@
 #include "tree/spec/grb.h"
 
 typedef struct red_black_set {
-  struct _gbs_tree t;
+  struct _grb_tree base;
   long size;
 } rbs_s, *rbs_t;
 
-#define rbs_node_key(n) (gbs_node(n)->key)
+#define rbs_tree(t) ((rbs_t)(t))
+
+#define rbs_node_key(n) (grb_node(n)->key)
 #define rbs_contains(s, v) (rbs_search(s, v) != NULL)
 
-rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t free_key);
+rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t fk);
 int rbs_insert(rbs_t s, gtype elem);
-gbs_node_t rbs_search(rbs_t s, gtype elem);
+grb_node_t rbs_search(rbs_t s, gtype elem);
 int rbs_remove(rbs_t s, gtype elem);
 
 static inline void _rbs_move_next(gtype **cur) {
-  gbs_node_t nd = container_of(*cur, struct _gbs_node, key);
+  grb_node_t nd = container_of(*cur, struct _grb_node, key);
   bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *cur = NULL;
@@ -38,9 +40,9 @@ static inline void _rbs_move_next(gtype **cur) {
 
 #define rbs_free(s) \
     do {  \
-      if (gbs_tree(s)->fk) { \
+      if (grb_tree(s)->fk) { \
         rbs_traverse(_k, (s)) { \
-          gbs_tree(s)->fk(*_k); \
+          grb_tree(s)->fk(*_k); \
         } \
       } \
       bn_free_tree(bn_tree(s)); \
@@ -48,14 +50,13 @@ static inline void _rbs_move_next(gtype **cur) {
 
 #define rbs_clear(s) \
     do {  \
-      if (gbs_tree(s)->fk) { \
+      if (grb_tree(s)->fk) { \
         rbs_traverse(_k, (s)) { \
-          gbs_tree(s)->fk(*_k); \
+          grb_tree(s)->fk(*_k); \
         } \
       } \
-      bn_tree_t _t = (bn_tree_t)(s); \
-      bn_clear_tree(_t); \
-      (s)->size = 0; \
+      bn_clear_tree(bn_tree(s)); \
+      rbs_tree(s)->size = 0; \
     } while (0)
 
 /**

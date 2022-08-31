@@ -24,7 +24,7 @@ typedef struct _gbs_tree {
 #define gbs_tree(t) ((gbs_tree_t)(t))
 
 gbs_node_t gbs_create_node(gtype key);
-int gbs_node_cmp(bn_node_t n1, bn_node_t n2, bn_tree_t t);
+int gbs_cmp_node(bn_node_t n1, bn_node_t n2, bn_tree_t t);
 gbs_tree_t gbs_create_tree(gbs_node_t root, gtype_cmp_t cmp, gtype_free_t fk);
 
 bs_ires gbs_insert(gbs_tree_t t, gtype key);

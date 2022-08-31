@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   const long len = n / POINTS;
   char desc[1024];
   long value = 0;
-  gbs_tree_t t = gbs_create_tree(NULL, gtype_cmp_l, NULL);
+  grb_tree_t t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   for (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,
@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     sprintf(desc, "%ld x search from %ld (s): ", len, len * point);
     BENCH(desc, 1,
             for (long i = 0; i < len; ++i) {
-              gbs_search(t, gtype_l(len * point + i));
+              grb_search(t, gtype_l(len * point + i));
             }
           );
   }
@@ -44,15 +44,15 @@ int main(int argc, char *argv[]) {
   for  (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x delete from %ld (s): ", len, n - len * point);
     BENCH(desc, 1,
-            gbs_node_t tmp;
+            grb_node_t tmp;
             for (long i = 0; i < len; ++i) {
-              tmp = gbs_search(t, gtype_l(value++));
+              tmp = grb_search(t, gtype_l(value++));
               if (tmp) {
                 grb_delete(t, tmp);
               }
             }
           );
   }
-  gbs_free_tree(t);
+  grb_free_tree(t);
   return 0;
 }

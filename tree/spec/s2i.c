@@ -16,14 +16,14 @@ rbm_t s2i_create_map(key_action_t act) {
 
 long *s2i_put(rbm_t si, const char *key, long value) {
   gtype gkey;
-  if (gbs_tree(si)->fk) {
+  if (rbm_tree(si)->fk) {
     gkey = gtype_s(strdup(key));
   } else {
     gkey = gtype_s(key);
   }
   gtype *res = rbm_put(si, gkey, gtype_l(value));
-  if (res && gbs_tree(si)->fk) {
-    gbs_tree(si)->fk(gkey);
+  if (res && rbm_tree(si)->fk) {
+    rbm_tree(si)->fk(gkey);
   }
   return (long*)res;
 }

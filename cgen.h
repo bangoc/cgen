@@ -20,6 +20,7 @@
 #include "list/spec/isl.h"
 #include "tree/bn.h"
 #include "tree/bs.h"
+#include "tree/rb.h"
 #include "tree/rbm.h"
 #include "tree/rbs.h"
 #include "tree/spec/gbs.h"

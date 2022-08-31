@@ -7,7 +7,8 @@
 #ifndef TREE_SPEC_GRB_H_
 #define TREE_SPEC_GRB_H_
 
-#include "tree/spec/gbs.h"
+#include "base/gtype.h"
+#include "tree/rb.h"
 
 #include <stdbool.h>
 
@@ -21,18 +22,14 @@
  *    cùng số lượng nút đen.
  */
 
-// đỏ = 0, đen = 1 như vậy chúng ta có tổng giá trị mầu = số lượng nút đen
-typedef enum {
-  RB_RED = 0,
-  RB_BLACK = 1
-} grb_node_color_t;
-
 extern const char * color_names[];
 
 typedef struct _grb_node {
-  struct _gbs_node base;
-  grb_node_color_t color;
+  struct _rb_node base;
+  gtype key;
 } grb_node_s, *grb_node_t;
+
+#define grb_node(n) ((grb_node_t)(n))
 
 /*
   Trong triển khai này NULL được sử dụng thay vì lính canh để tương
@@ -41,24 +38,35 @@ typedef struct _grb_node {
   Nút NULL được quy ước là nút đen
 */
 
-// ========== Khai báo hàm ===============
+typedef struct _grb_tree {
+  struct _bn_tree base;
+  gtype_cmp_t cmp;
+  gtype_free_t fk;
+} grb_tree_s, *grb_tree_t;
 
 grb_node_t grb_create_node(gtype key);
 #define grb_free_node(n, t) gbs_free_node(n, gbs_tree(t)->fk)
+int grb_cmp_node(bn_node_t, bn_node_t, bn_tree_t);
 
-bs_ires grb_insert(gbs_tree_t t, gtype key);
-bs_ires grb_insert_unique(gbs_tree_t t, gtype key);
-int grb_delete(bn_tree_t t, bn_node_t z);
+grb_tree_t grb_create_tree(grb_node_t root, gtype_cmp_t cmp, gtype_free_t fk);
+#define grb_tree(t) ((grb_tree_t)(t))
 
+#define grb_free_tree(t) \
+  do { \
+    if (grb_tree(t)->fk) { \
+      bn_traverse_lnr(_cur, bn_tree(t)) { \
+        grb_tree(t)->fk(grb_node(_cur)->key); \
+      }  \
+    } \
+    bn_free_tree(bn_tree(t)); \
+  } while (0)
 
-// ========== Macro viết nhanh ===========
-#define grb_node(n) ((grb_node_t)(n))
-#define rb_color(n) ((n)? grb_node(n)->color: RB_BLACK)
-#define rb_color_str(n) color_names[(int)rb_color(n)]
-#define rb_set_color(n, new_color) grb_node(n)->color = (new_color)
-#define rb_is_red(node) (rb_color(node) == RB_RED)
-#define rb_is_black(node) (rb_color(node) == RB_BLACK)
-#define rb_set_black(node) rb_set_color(node, RB_BLACK)
-#define rb_set_red(node) rb_set_color(node, RB_RED)
+bs_ires grb_insert(grb_tree_t t, gtype key);
+bs_ires grb_insert_unique(grb_tree_t t, gtype key);
+grb_node_t grb_search(grb_tree_t t, gtype key);
+grb_node_t grb_search_gte(grb_tree_t t, gtype key);
+grb_node_t grb_search_lte(grb_tree_t t, gtype key);
+int grb_delete(grb_tree_t t, grb_node_t dn);
+
 
 #endif  // TREE_SPEC_GRB_H_

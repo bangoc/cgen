@@ -9,17 +9,17 @@
 
 // ========== Khai báo hàm ===============
 static grb_node_t rbi_create_node(int value);
-static grb_node_t rbi_create_color_node(int value, grb_node_color_t color);
+static grb_node_t rbi_create_color_node(int value, rb_node_color_t color);
 static grb_node_t rbi_insert(bn_tree_t t, int value);
 static grb_node_t rbi_search(bn_tree_t t, int value);
-static gbs_tree_t rbi_create_tree(bn_node_t root);
+static grb_tree_t rbi_create_tree(bn_node_t root);
 static int rbi_delete(bn_tree_t t, int value);
 static void rbi_print_node(bn_node_t n);
 static int rbi_similar_node(bn_node_t n1, bn_node_t n2);
 
 // ========== Macro viết nhanh ===========
 
-#define rbi_value(x) gbs_node(x)->key.l
+#define rbi_value(x) grb_node(x)->key.l
 
 // ========== Định nghĩa hàm =============
 
@@ -27,7 +27,7 @@ static grb_node_t rbi_create_node(int value) {
   return grb_create_node(gtype_l(value));
 }
 
-static grb_node_t rbi_create_color_node(int value, grb_node_color_t color) {
+static grb_node_t rbi_create_color_node(int value, rb_node_color_t color) {
   grb_node_t n = rbi_create_node(value);
   rb_set_color(n, color);
   return n;
@@ -39,14 +39,15 @@ static grb_node_t rbi_insert(bn_tree_t t, int value) {
 }
 
 static grb_node_t rbi_search(bn_tree_t t, int value) {
-  return grb_node(gbs_search(t, gtype_l(value)));
+  return grb_node(grb_search(t, gtype_l(value)));
 }
 
-static gbs_tree_t rbi_create_tree(bn_node_t root) {
-  gbs_tree_t t = gbs_create_tree(root, gtype_cmp_l, NULL);
+static grb_tree_t rbi_create_tree(bn_node_t root) {
+  grb_tree_t t = grb_create_tree(root, gtype_cmp_l, NULL);
+  return t;
 }
 
-#define rbi_free_tree(t) gbs_free_tree(gbs_tree(t))
+#define rbi_free_tree(t) grb_free_tree(grb_tree(t))
 
 static int rbi_delete(bn_tree_t t, int value) {
   grb_node_t n = rbi_search(t, value);
@@ -58,7 +59,7 @@ static int rbi_delete(bn_tree_t t, int value) {
 }
 
 static void rbi_print_node(bn_node_t n) {
-  printf("(%ld, %s)\n", gbs_node(n)->key.l, rb_color_str(n));
+  printf("(%ld, %s)\n", grb_node(n)->key.l, rb_color_str(n));
 }
 
 static int rbi_similar_node(bn_node_t n1, bn_node_t n2) {
@@ -69,7 +70,7 @@ static int rbi_similar_node(bn_node_t n1, bn_node_t n2) {
       (n1 == NULL && n2 != NULL)) {
     return 1;
   }
-  return gbs_node(n1)->key.l == gbs_node(n2)->key.l &&
+  return grb_node(n1)->key.l == grb_node(n2)->key.l &&
          rb_color(n1) == rb_color(n2);
 }
 

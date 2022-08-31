@@ -6,7 +6,7 @@
 static int rbs_traverse_match(rbs_t s, gtype *a, int n) {
   int i = 0;
   rbs_traverse(cur, s) {
-    if (i >= n || gbs_tree(s)->cmp(a[i], *cur) != 0) {
+    if (i >= n || grb_tree(s)->cmp(a[i], *cur) != 0) {
       return 0;
     }
     ++i;

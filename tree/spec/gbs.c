@@ -19,18 +19,18 @@ gbs_tree_t gbs_create_tree(gbs_node_t root, gtype_cmp_t cmp, gtype_free_t fk) {
   return t;
 }
 
-int gbs_node_cmp(bn_node_t n1, bn_node_t n2, bn_tree_t t) {
+int gbs_cmp_node(bn_node_t n1, bn_node_t n2, bn_tree_t t) {
   return gbs_tree(t)->cmp(gbs_node(n1)->key, gbs_node(n2)->key);
 }
 
 bs_ires gbs_insert(gbs_tree_t t, gtype key) {
   gbs_node_t nn = gbs_create_node(key);
-  return bs_insert(t, bn_node(nn), gbs_node_cmp);
+  return bs_insert(t, bn_node(nn), gbs_cmp_node);
 }
 
 bs_ires gbs_insert_unique(gbs_tree_t t, gtype key) {
   gbs_node_t nn = gbs_create_node(key);
-  bs_ires r = bs_insert_unique(t, bn_node(nn), gbs_node_cmp);
+  bs_ires r = bs_insert_unique(t, bn_node(nn), gbs_cmp_node);
   if (!r.inserted) {
     free(nn);
   }
@@ -39,17 +39,17 @@ bs_ires gbs_insert_unique(gbs_tree_t t, gtype key) {
 
 gbs_node_t gbs_search(gbs_tree_t t, gtype key) {
   gbs_node_s sn = {.key = key};
-  return gbs_node(bs_search(bn_tree(t), bn_node(&sn), gbs_node_cmp));
+  return gbs_node(bs_search(bn_tree(t), bn_node(&sn), gbs_cmp_node));
 }
 
 gbs_node_t gbs_search_gte(gbs_tree_t t, gtype key) {
   gbs_node_s sn = {.key = key};
-  return gbs_node(bs_search_gte(bn_tree(t), bn_node(&sn), gbs_node_cmp));
+  return gbs_node(bs_search_gte(bn_tree(t), bn_node(&sn), gbs_cmp_node));
 }
 
 gbs_node_t gbs_search_lte(gbs_tree_t t, gtype key) {
   gbs_node_s sn = {.key = key};
-  return gbs_node(bs_search_lte(bn_tree(t), bn_node(&sn), gbs_node_cmp));
+  return gbs_node(bs_search_lte(bn_tree(t), bn_node(&sn), gbs_cmp_node));
 }
 
 int gbs_delete(gbs_tree_t t, gbs_node_t dn) {

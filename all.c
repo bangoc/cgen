@@ -14,6 +14,7 @@
 #include "list/spec/isl.c"
 #include "tree/bn.c"
 #include "tree/bs.c"
+#include "tree/rb.c"
 #include "tree/rbm.c"
 #include "tree/rbs.c"
 #include "tree/spec/gbs.c"
