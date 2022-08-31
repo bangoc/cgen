@@ -23,7 +23,7 @@
 #include "tree/rb.h"
 #include "tree/rbm.h"
 #include "tree/rbs.h"
-#include "tree/spec/bsg.h"
+#include "tree/spec/gbs.h"
 #include "tree/spec/s2i.h"
 #include "utils/io.h"
 #include "utils/io.h"

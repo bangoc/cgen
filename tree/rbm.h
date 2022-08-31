@@ -45,7 +45,7 @@ typedef struct red_black_map_node {
  *   #rbm_clear(map) - Làm rỗng map
  */
 typedef struct red_black_map {
-  struct _bsg_tree t;
+  struct _gbs_tree t;
   gtype_free_t fv;
   long size;
 } rbm_s, *rbm_t;
@@ -60,7 +60,7 @@ typedef struct rbm_insert_result {
 } rbm_ires;
 
 #define rbm_node(n) ((rbm_node_t)(n))
-#define rbm_node_key(n) (bsg_node(n)->key)
+#define rbm_node_key(n) (gbs_node(n)->key)
 #define rbm_node_value(n) (rbm_node(n)->value)
 
 rbm_node_t rbm_create_node(gtype key, gtype value);
@@ -163,7 +163,7 @@ int rbm_remove(rbm_t t, gtype key);
 #define rbm_size(t) ((t)->size)
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
-  rbm_node_t nd = rbm_node(container_of(*k, struct _bsg_node, key));
+  rbm_node_t nd = rbm_node(container_of(*k, struct _gbs_node, key));
   bn_node_t tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *k = NULL;
@@ -197,10 +197,10 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  */
 #define rbm_free(map) \
   do { \
-    if (bsg_tree(map)->fk || (map)->fv) { \
+    if (gbs_tree(map)->fk || (map)->fv) { \
       rbm_traverse(_k, _v, (map)) { \
-        if (bsg_tree(map)->fk) { \
-          bsg_tree(map)->fk(*_k); \
+        if (gbs_tree(map)->fk) { \
+          gbs_tree(map)->fk(*_k); \
         } \
         if ((map)->fv) { \
           (map)->fv(*_v); \
@@ -218,10 +218,10 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
  */
 #define rbm_clear(map) \
   do { \
-    if (bsg_tree(map)->fk || (map)->fv) { \
+    if (gbs_tree(map)->fk || (map)->fv) { \
       rbm_traverse(_k, _v, (map)) { \
-        if (bsg_tree(map)->fk) { \
-          bsg_tree(map)->fk(*_k); \
+        if (gbs_tree(map)->fk) { \
+          gbs_tree(map)->fk(*_k); \
         } \
         if ((map)->fv) { \
           (map)->fv(*_v); \

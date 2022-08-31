@@ -41,7 +41,7 @@ long *s2i_value(rbm_t si, const char *key);
 int s2i_remove(rbm_t si, const char *key);
 void s2i_print_node(bn_node_t n);
 
-#define s2i_node_key(n) bsg_node(n)->key
+#define s2i_node_key(n) gbs_node(n)->key
 #define s2i_node_value(n) rbm_node(n)->value
 
 #define s2i_free(si) rbm_free(si)

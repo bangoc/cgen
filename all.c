@@ -17,6 +17,6 @@
 #include "tree/rb.c"
 #include "tree/rbm.c"
 #include "tree/rbs.c"
-#include "tree/spec/bsg.c"
+#include "tree/spec/gbs.c"
 #include "tree/spec/s2i.c"
 #include "utils/str.c"

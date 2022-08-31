@@ -5,7 +5,7 @@
 const char * color_names[] = {"Đỏ", "Đen"};
 
 rb_node_t rb_create_node(gtype key) {
-  bsg_node_t tmp = bsg_create_node(key);
+  gbs_node_t tmp = gbs_create_node(key);
   rb_node_t nn = realloc(tmp, sizeof(struct _rb_node));
   nn->color = RB_RED;
   return nn;
@@ -115,12 +115,12 @@ void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
   } \
   return ires
 
-bs_ires rb_insert(bsg_tree_t t, gtype key) {
-  RB_INSERT_TPL(bsg_insert);
+bs_ires rb_insert(gbs_tree_t t, gtype key) {
+  RB_INSERT_TPL(gbs_insert);
 }
 
-bs_ires rb_insert_unique(bsg_tree_t t, gtype key) {
-  RB_INSERT_TPL(bsg_insert_unique,
+bs_ires rb_insert_unique(gbs_tree_t t, gtype key) {
+  RB_INSERT_TPL(gbs_insert_unique,
     if (!ires.inserted) {
       return ires;
     }
