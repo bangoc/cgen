@@ -26,6 +26,7 @@
 #include "tree/spec/gbs.h"
 #include "tree/spec/grb.h"
 #include "tree/spec/s2i.h"
+#include "utils/builder.h"
 #include "utils/io.h"
 #include "utils/io.h"
 #include "utils/str.h"

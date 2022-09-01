@@ -9,9 +9,9 @@
 
 rbm_t s2i_create_map(key_action_t act) {
   if (act == DUP_YES) {
-    return rbm_create_map(gtype_cmp_s, gtype_free_s, NULL);
+    return rbm_create(gtype_cmp_s, gtype_free_s, NULL);
   }
-  return rbm_create_map(gtype_cmp_s, NULL, NULL);
+  return rbm_create(gtype_cmp_s, NULL, NULL);
 }
 
 long *s2i_put(rbm_t si, const char *key, long value) {

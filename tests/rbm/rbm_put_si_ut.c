@@ -9,7 +9,7 @@
 int main() {
   const char *words[] = {"aaa", "bbb", "ccc", "aaa"};
   int n = sizeof(words)/sizeof(words[0]);
-  rbm_t tab = rbm_create_map(gtype_cmp_s, NULL, NULL);
+  rbm_t tab = rbm_create(gtype_cmp_s, NULL, NULL);
   for (int i = 0; i < n; ++i) {
     gtype *value = rbm_put(tab, gtype_s(words[i]), gtype_l(1));
     if (value) {

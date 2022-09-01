@@ -33,6 +33,25 @@ typedef union generic_type {
   struct priority_two_ways *p2w;
 } gtype;
 
+typedef enum type_name {
+  GTYPE_LONG,
+  GTYPE_DOUBLE,
+  GTYPE_CSTR,
+  GTYPE_STR,
+  GTYPE_PVOID,
+  GTYPE_PGTYPE,
+  GTYPE_GDL,
+  GTYPE_GSL,
+  GTYPE_GVEC,
+  GTYPE_RBM,
+  GTYPE_RBS,
+  GTYPE_HMAP,
+  GTYPE_HSET,
+  GTYPE_P1W,
+  GTYPE_P2W,
+  GTYPE_TYPES_COUNT
+} type_name_t;
+
 #define gtype_value(type, val) ((gtype){.type = (val)})
 #define gtype_l(value) gtype_value(l, value)
 #define gtype_d(value) gtype_value(d, value)

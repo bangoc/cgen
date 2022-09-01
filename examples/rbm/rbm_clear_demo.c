@@ -19,7 +19,7 @@ void print_rbm(rbm_t tab) {
 
 int main() {
   srand(time(NULL));
-  rbm_t tab = rbm_create_map(gtype_cmp_s, gtype_free_s, NULL);
+  rbm_t tab = rbm_create(gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {
     rbm_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
   }

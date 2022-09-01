@@ -11,7 +11,7 @@
 
 int main() {
   srand(time(NULL));
-  rbm_t map = rbm_create_map(gtype_cmp_l, NULL, gtype_free_gvec);
+  rbm_t map = rbm_create(gtype_cmp_l, NULL, gtype_free_gvec);
   for (int i = 0; i < 100; ++i) {
     gvec_t vec = gvec_create(0, NULL);
     int n = rand() % 100 + 1;

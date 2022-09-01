@@ -19,7 +19,7 @@ int rbm_cmp_node(bn_node_t n1, bn_node_t n2, bn_tree_t t) {
   return rbm_tree(t)->cmp(rbm_node(n1)->key, rbm_node(n2)->key);
 }
 
-rbm_t rbm_create_map(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv) {
+rbm_t rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv) {
   bn_tree_t tmp = bn_create_tree(NULL);
   rbm_t m = realloc(tmp, sizeof(struct red_black_map));
   m->cmp = cmp;

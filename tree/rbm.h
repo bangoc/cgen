@@ -39,7 +39,7 @@ typedef struct red_black_map_node {
 /**
  * \headerfile "cgen.h"
  * Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm
- * rbm_create_map(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
+ * rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
  *
  * Các macro hỗ trợ: <br>
  *   #rbm_size(map) - Kích thước của map.
@@ -88,7 +88,7 @@ int rbm_cmp_node(bn_node_t n1, bn_node_t n2, bn_tree_t t);
  *
  * Tham khảo: hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
-rbm_t rbm_create_map(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
+rbm_t rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì

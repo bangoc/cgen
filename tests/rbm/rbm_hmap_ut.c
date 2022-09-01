@@ -10,7 +10,7 @@
 #include <time.h>
 
 int main() {
-  rbm_t map = rbm_create_map(gtype_cmp_l, NULL, gtype_free_hmap);
+  rbm_t map = rbm_create(gtype_cmp_l, NULL, gtype_free_hmap);
   for (int i = 0; i < 100; ++i) {
     hmap_t tmp = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, NULL);
     int n = rand() % 1000 + 1;

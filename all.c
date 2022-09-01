@@ -1,4 +1,4 @@
-#include "base/src/hashes.c"
+#include "base/hashes.c"
 #include "dab/gvec.c"
 #include "dab/heap.c"
 #include "dab/hmap.c"
@@ -20,4 +20,5 @@
 #include "tree/spec/gbs.c"
 #include "tree/spec/grb.c"
 #include "tree/spec/s2i.c"
+#include "utils/builder.c"
 #include "utils/str.c"
