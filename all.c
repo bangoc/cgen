@@ -20,5 +20,4 @@
 #include "tree/spec/gbs.c"
 #include "tree/spec/grb.c"
 #include "tree/spec/s2i.c"
-#include "utils/builder.c"
 #include "utils/str.c"
