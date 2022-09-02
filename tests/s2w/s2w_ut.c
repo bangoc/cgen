@@ -13,6 +13,8 @@ int main() {
   CHECK_MSG(s2w_id(col, "bbbb") == 1, "id 1");
   CHECK_MSG(s2w_id(col, "cccc") == 2, "id 2");
   CHECK_MSG(s2w_id(col, "aaaa") == 0, "id 0");
+  CHECK_MSG(s2w_insert(col, "dddd").inserted, "insert dddd");
+  CHECK_MSG(s2w_id(col, "dddd") == 3, "id 3");
   s2w_free(col);
   TEST_OK();
   return 0;

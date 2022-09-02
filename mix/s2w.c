@@ -11,6 +11,17 @@ s2w_t s2w_create() {
   return col;
 }
 
+rbm_ires s2w_insert(s2w_t col, const char *s) {
+  long id = gvec_size(col->is);
+  rbm_ires r = s2i_insert(col->si, s, id);
+  if (r.inserted) {
+    char *key = rbm_node(
+      container_of(r.value, struct red_black_map_node, value))->key.s;
+        gvec_append(col->is, gtype_s(key));
+  }
+  return r;
+}
+
 long *s2w_put(s2w_t col, const char *s) {
   long id = gvec_size(col->is);
   rbm_ires r = s2i_insert(col->si, s, id);

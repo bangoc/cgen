@@ -17,6 +17,7 @@ typedef struct string_index_2way{
 } s2w_s, *s2w_t;
 
 s2w_t s2w_create();
+rbm_ires s2w_insert(s2w_t col, const char *s);
 long *s2w_put(s2w_t col, const char *s);
 int s2w_remove(s2w_t col, const char *s);
 long s2w_id(s2w_t col, const char *s);
