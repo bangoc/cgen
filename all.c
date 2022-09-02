@@ -12,6 +12,7 @@
 #include "list/sll.c"
 #include "list/spec/idl.c"
 #include "list/spec/isl.c"
+#include "mix/s2w.c"
 #include "tree/bn.c"
 #include "tree/bs.c"
 #include "tree/rb.c"

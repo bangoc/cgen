@@ -10,16 +10,14 @@
 
 #include <stdio.h>
 
-typedef enum {
-  DUP_NO,
-  DUP_YES,
-  KEY_ACTIONS
-} key_action_t;
+rbm_t s2i_create();
 
-rbm_t s2i_create_map(key_action_t act);
+
+rbm_ires s2i_insert(rbm_t si, const char *key, long value);
 
 /**
  * Lưu cặp key & value, bỏ qua nếu key đã tồn tại.
+ * Mặc định tạo bản sao của khóa
  *
  * @param si Con trỏ tới bảng cây
  * @param key Chuỗi khóa

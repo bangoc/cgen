@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 int t1() {
-  rbm_t si = s2i_create_map(DUP_NO);
+  rbm_t si = s2i_create();
   CHECK_MSG(s2i_value(si, "Mot") == NULL, "Failed search empty");
   s2i_put(si, "Mot", 1);
   s2i_put(si, "Hai", 2);

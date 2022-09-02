@@ -10,7 +10,7 @@ int g_id = 0;
 
 
 int main(){
-  si = s2i_create_map(DUP_NO);
+  si = s2i_create();
 
   s2i_put(si, "aa",1);
   s2i_put(si, "bb",2);

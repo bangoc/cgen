@@ -18,6 +18,7 @@
 #include "list/sll.h"
 #include "list/spec/idl.h"
 #include "list/spec/isl.h"
+#include "mix/s2w.h"
 #include "tree/bn.h"
 #include "tree/bs.h"
 #include "tree/rb.h"

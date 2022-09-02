@@ -21,7 +21,7 @@ void cache_print(str_cache_t cache) {
 
 str_cache_t create_cache() {
   str_cache_t sc = malloc(sizeof(struct str_cache));
-  sc->si = s2i_create_map(DUP_NO);
+  sc->si = s2i_create();
   sc->is = arr_create(0, char*);
   return sc;
 }

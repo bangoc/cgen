@@ -7,23 +7,24 @@
 
 #include <string.h>
 
-rbm_t s2i_create_map(key_action_t act) {
-  if (act == DUP_YES) {
-    return rbm_create(gtype_cmp_s, gtype_free_s, NULL);
+rbm_t s2i_create() {
+  return rbm_create(gtype_cmp_s, gtype_free_s, NULL);
+}
+
+rbm_ires s2i_insert(rbm_t si, const char *key, long value) {
+  char *tmp = strdup(key);
+  rbm_ires r = rbm_insert(si, gtype_s(tmp), gtype_l(value));
+  if (!r.inserted) {
+    free(tmp);
   }
-  return rbm_create(gtype_cmp_s, NULL, NULL);
+  return r;
 }
 
 long *s2i_put(rbm_t si, const char *key, long value) {
-  gtype gkey;
-  if (rbm_tree(si)->fk) {
-    gkey = gtype_s(strdup(key));
-  } else {
-    gkey = gtype_s(key);
-  }
-  gtype *res = rbm_put(si, gkey, gtype_l(value));
-  if (res && rbm_tree(si)->fk) {
-    rbm_tree(si)->fk(gkey);
+  char *tmp = strdup(key);
+  gtype *res = rbm_put(si, gtype_s(tmp), gtype_l(value));
+  if (res) {
+    free(tmp);
   }
   return (long*)res;
 }
