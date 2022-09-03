@@ -1,10 +1,11 @@
 #ifndef LIST_DLL_H_
 #define LIST_DLL_H_
 
-/*
-  (c) Nguyen Ba Ngoc, 2021
-  Generic double Linked List (DLL/dll)
-*/
+/* (C) Nguyen Ba Ngoc, 2021 */
+
+/**
+ * Generic double Linked List (DLL/dll)
+ */
 
 typedef struct dln_s {
   struct dln_s *next;

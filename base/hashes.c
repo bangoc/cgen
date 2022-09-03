@@ -1,6 +1,4 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
 
 #include "base/hashes.h"
 

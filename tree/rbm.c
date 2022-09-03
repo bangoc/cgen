@@ -1,6 +1,7 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Cấu trúc map dựa trên cây đỏ đen (rb)
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Cấu trúc map dựa trên cây đỏ đen (rb)
 */
 
 #include "tree/rbm.h"

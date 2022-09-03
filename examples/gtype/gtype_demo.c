@@ -1,10 +1,11 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  gtype là 1 union - nhóm kiểu,
-  chúng ta có thể sử dụng đối tượng kiểu gtype để lưu
-  các giá trị thuộc các kiểu khác nhau: Số nguyên,
-  số thực và nhiều kiểu con trỏ khác nhau.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * gtype là 1 union - nhóm kiểu,
+ * chúng ta có thể sử dụng đối tượng kiểu gtype để lưu
+ * các giá trị thuộc các kiểu khác nhau: Số nguyên,
+ * số thực và nhiều kiểu con trỏ khác nhau.
+ */
 
 #include "all.h"
 

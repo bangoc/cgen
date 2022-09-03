@@ -1,6 +1,4 @@
-/*
-  (C) Nguyen Ba Ngoc 2o21
-*/
+/* (C) Nguyen Ba Ngoc 2o21 */
 
 #include "dab/hset.h"
 

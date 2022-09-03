@@ -1,10 +1,11 @@
 #ifndef LIST_GSL_H_
 #define LIST_GSL_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-  gtype single linked list
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * gtype single linked list
+ */
 
 #include "base/gtype.h"
 

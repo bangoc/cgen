@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Triển khai min heap và max heap
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Triển khai min heap và max heap
+ */
 
 #include "dab/heap.h"
 

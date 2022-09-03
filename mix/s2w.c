@@ -1,6 +1,4 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
 
 #include "mix/s2w.h"
 

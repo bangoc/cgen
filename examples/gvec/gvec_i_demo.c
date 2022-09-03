@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa sắp xếp mảng số nguyên với gvec
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa sắp xếp mảng số nguyên với gvec
+ */
 
 #include "all.h"
 

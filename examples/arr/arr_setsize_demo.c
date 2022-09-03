@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Minh họa sử dụng setsize
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Minh họa sử dụng setsize
+ */
 
 #include "all.h"
 #include <stdio.h>

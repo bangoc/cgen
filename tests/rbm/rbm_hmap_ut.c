@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Thử nghiệm lưu hmap trong rbm
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Thử nghiệm lưu hmap trong rbm
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"

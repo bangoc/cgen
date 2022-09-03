@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa tạo tập hợp với rbs
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa tạo tập hợp với rbs
+ */
 
 #include "all.h"
 

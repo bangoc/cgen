@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Kiểm tra bố cục bộ nhớ:
-    3 * 8 + n * 13
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Kiểm tra bố cục bộ nhớ:
+ * 3 * 8 + n * 13
 */
 
 #include "dab/arr.h"

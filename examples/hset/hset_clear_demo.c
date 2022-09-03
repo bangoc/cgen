@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa hàm làm rỗng tập (hợp dựa trên hàm) băm.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa hàm làm rỗng tập (hợp dựa trên hàm) băm.
+ */
 
 #include "all.h"
 #include "tests/base/rands.h"

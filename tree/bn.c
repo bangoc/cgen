@@ -1,6 +1,4 @@
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-*/
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
 #include "tree/bn.h"
 

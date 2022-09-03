@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Kiểm tra kịch bản ánh xạ chuỗi -> chuỗi
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Kiểm tra kịch bản ánh xạ chuỗi -> chuỗi
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"

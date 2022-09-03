@@ -1,6 +1,7 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Đếm số lần gặp chuỗi với rbm
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Đếm số lần gặp chuỗi với rbm
 */
 
 #include "all.h"

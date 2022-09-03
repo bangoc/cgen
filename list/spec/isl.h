@@ -1,10 +1,11 @@
 #ifndef LIST_SPEC_ISL_H_
 #define LIST_SPEC_ISL_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-  LIFO và FIFO với kiểu long (đóng gói sll)
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * LIFO và FIFO với kiểu long (đóng gói sll)
+ */
 
 #include "list/sll.h"
 

@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa sử dụng hàm làm rỗng bảng cây.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa sử dụng hàm làm rỗng bảng cây.
+ */
 
 #include "all.h"
 #include "tests/base/rands.h"

@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Hàng đợi ưu tiên truy cập 2 chiều dựa trên Heap
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Hàng đợi ưu tiên truy cập 2 chiều dựa trên Heap
+ */
 
 #include "dab/p2w.h"
 

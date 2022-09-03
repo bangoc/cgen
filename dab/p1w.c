@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Triển khai hàng đợi ưu tiên
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Triển khai hàng đợi ưu tiên
+ */
 
 #include "dab/heap.h"
 #include "dab/p1w.h"

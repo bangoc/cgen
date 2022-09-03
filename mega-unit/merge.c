@@ -21,6 +21,7 @@ gvec_t read_lines(const char *fname) {
     gvec_append(lines, gtype_s(strdup(tmp)));
   }
   fclose(fp);
+  free(tmp);
   return lines;
 }
 
@@ -36,7 +37,7 @@ char *parse_include(const char *line) {
 }
 
 int is_copyright(const char *line) {
-  return strstr(line, "(C) Nguyen Ba Ngoc");
+  return strstr(line, "/* (C)") == line;
 }
 
 int is_header(const char *fname) {
@@ -53,10 +54,6 @@ char *header_guard(const char *fname) {
     o[i] = toupper(fname[i]);
   }
   return o;
-}
-
-int is_header_guard(const char *s) {
-  return strstr(s, "#") == s && strcmp(s + strlen(s) - 3, "_H_") == 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -90,17 +87,26 @@ int main(int argc, char *argv[]) {
     strcat(tmp, "/");
     strcat(tmp, unit_name);
     gvec_t loc = read_lines(tmp);
+    char origin[1024];
+    sprintf(origin, "\n/***********************************\n"
+                    " * %s\n"
+                    " ***********************************/\n\n", unit_name);
+    gvec_append(contents, gtype_s(strdup(origin)));
     gvec_traverse(cur, loc) {
       if (is_include(cur->s)) {
-        rbs_insert(headers, gtype_s(strdup(cur->s)));
+        char *line = strdup(cur->s);
+        if (!rbs_insert(headers, gtype_s(line))) {
+          free(line);
+        }
         continue;
       }
-      if (is_copyright(cur->s) || is_header_guard(cur->s)) {
+      if (is_copyright(cur->s)) {
         continue;
       }
       gvec_append(contents, gtype_s(strdup(cur->s)));
     }
     gvec_free(loc);
+    free(unit_name);
   }
   char *hg = NULL;
   FILE *out = fopen(out_name, "w");
@@ -125,6 +131,8 @@ int main(int argc, char *argv[]) {
     free(hg);
   }
   gvec_free(contents);
+  rbs_free(headers);
+  gvec_free(v);
   fclose(out);
   return 0;
 }

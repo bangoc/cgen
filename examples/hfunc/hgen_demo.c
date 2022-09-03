@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Minh họa hàm băm khái quát
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Minh họa hàm băm khái quát
+ */
 
 #include "all.h"
 

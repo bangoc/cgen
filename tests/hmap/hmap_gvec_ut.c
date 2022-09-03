@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Thử nghiệm lưu gvec trong hmap
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Thử nghiệm lưu gvec trong hmap
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"

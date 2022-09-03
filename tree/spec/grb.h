@@ -1,7 +1,9 @@
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-  Cài đặt khái quát của cây đỏ-đen,
-  tương thích với các hàm cho cây nhị phân và cây nhị phân tìm kiếm
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
+
+
+/**
+ * Cài đặt khái quát của cây đỏ-đen,
+ * tương thích với các hàm cho cây nhị phân và cây nhị phân tìm kiếm
 */
 
 #ifndef TREE_SPEC_GRB_H_

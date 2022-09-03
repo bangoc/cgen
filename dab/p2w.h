@@ -1,6 +1,4 @@
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-*/
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
 #ifndef DAB_P2W_H_
 #define DAB_P2W_H_

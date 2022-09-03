@@ -1,9 +1,10 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa tiến trình ngẫu nhiên lấy các viên bi mầu red, green, blue
-  sau đó thống kê xác suất.
-  Tiến trình ngẫu nhiên được mô phỏng bằng hàm rand, kết quả mong đợi là
-  xác suất cho các mầu là tương đương.
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa tiến trình ngẫu nhiên lấy các viên bi mầu red, green, blue
+ * sau đó thống kê xác suất.
+ * Tiến trình ngẫu nhiên được mô phỏng bằng hàm rand, kết quả mong đợi là
+ * xác suất cho các mầu là tương đương.
 */
 
 #include "all.h"

@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa hàm làm rỗng tập cây (rbs_clear)
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa hàm làm rỗng tập cây (rbs_clear)
+ */
 
 
 #include "all.h"

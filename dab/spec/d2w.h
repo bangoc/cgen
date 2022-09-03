@@ -1,10 +1,11 @@
 #ifndef DAB_SPEC_D2W_H_
 #define DAB_SPEC_D2W_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Hàng đợi ưu tiên truy cập 2 chiều với kiểu double
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Hàng đợi ưu tiên truy cập 2 chiều với kiểu double
+ */
 
 #include "dab/p2w.h"
 

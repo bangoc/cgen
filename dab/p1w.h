@@ -1,9 +1,7 @@
 #ifndef DAB_P1W_H_
 #define DAB_P1W_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
 
 #include "base/gtype.h"
 #include "dab/arr.h"

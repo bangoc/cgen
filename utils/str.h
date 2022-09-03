@@ -1,9 +1,7 @@
 #ifndef UTILS_STR_H_
 #define UTILS_STR_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2022
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
 
 #include "dab/gvec.h"
 

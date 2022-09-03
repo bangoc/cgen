@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc
-  Minh họa sử dụng cgetline
-*/
+/* (C) Nguyen Ba Ngoc */
+
+/**
+ * Minh họa sử dụng cgetline
+ */
 
 #include "utils/io.h"
 

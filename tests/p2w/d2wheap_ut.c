@@ -1,6 +1,4 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
 
 #include "dab/spec/d2w.h"
 

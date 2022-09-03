@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Kiểm thử tập chuỗi ký tự.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Kiểm thử tập chuỗi ký tự.
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"

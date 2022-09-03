@@ -1,9 +1,7 @@
 #ifndef TREE_BN_H_
 #define TREE_BN_H_
 
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-*/
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
 #include "base/core.h"
 

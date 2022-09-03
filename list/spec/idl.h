@@ -1,10 +1,11 @@
 #ifndef LIST_SPEC_IDL_H_
 #define LIST_SPEC_IDL_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Int Double Linked List
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Int Double Linked List
+ */
 
 #include "list/dll.h"
 

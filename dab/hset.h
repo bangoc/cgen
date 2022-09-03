@@ -1,10 +1,11 @@
 #ifndef DAB_HSET_H_
 #define DAB_HSET_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Tập hợp dựa trên hàm băm (hash hs)
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Tập hợp dựa trên hàm băm (hash hs)
+ */
 
 #include "base/gtype.h"
 #include "base/hashes.h"

@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa sử dụng hset
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa sử dụng hset
+ */
 
 #include "all.h"
 

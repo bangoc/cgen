@@ -1,7 +1,8 @@
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-  Ánh xạ chuỗi => số (đóng gói cây đỏ-đen)
-*/
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
+
+/**
+ * Ánh xạ chuỗi => số (đóng gói cây đỏ-đen)
+ */
 
 #ifndef TREE_SPEC_S2I_H_
 #define TREE_SPEC_S2I_H_

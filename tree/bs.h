@@ -1,9 +1,7 @@
 #ifndef TREE_BS_H_
 #define TREE_BS_H_
 
-/*
-  (C) 2022 Nguyen Ba Ngoc (bangoc)
-*/
+/* (C) 2022 Nguyen Ba Ngoc (bangoc) */
 
 #include "tree/bn.h"
 

@@ -1,6 +1,4 @@
-/*
-  (C) 2021 Nguyen Ba Ngoc (bangoc)
-*/
+/* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
 #ifndef TESTS_RB_RBI_H_
 #define TESTS_RB_RBI_H_

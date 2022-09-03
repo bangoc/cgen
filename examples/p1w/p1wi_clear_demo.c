@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa hàm làm rỗng p1w (p1w_clear)
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa hàm làm rỗng p1w (p1w_clear)
+ */
 
 #include "all.h"
 

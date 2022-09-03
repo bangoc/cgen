@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Minh họa sử dụng hàm cập nhật
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Minh họa sử dụng hàm cập nhật
+ */
 #include "all.h"
 #include <stdio.h>
 

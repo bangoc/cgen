@@ -1,9 +1,7 @@
 #ifndef TESTS_DLL_HELPER_H_
 #define TESTS_DLL_HELPER_H_
 
-/*
-  (C) Nguyen Ba Ngoc, 2021
-*/
+/* (C) Nguyen Ba Ngoc, 2021 */
 
 #include "all.h"
 

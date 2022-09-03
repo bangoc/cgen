@@ -1,6 +1,7 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Hỗ trợ sinh dữ liệu ngẫu nhiên.
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Hỗ trợ sinh dữ liệu ngẫu nhiên.
 */
 
 #ifndef TESTS_BASE_RANDS_H_

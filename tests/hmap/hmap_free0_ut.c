@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Giải phóng bộ nhớ hmap rỗng, kiểm tra với valgrind
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Giải phóng bộ nhớ hmap rỗng, kiểm tra với valgrind
+ */
 
 #include "dab/hmap.h"
 

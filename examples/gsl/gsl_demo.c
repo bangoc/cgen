@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Minh họa sử dụng gsl
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Minh họa sử dụng gsl
+ */
 
 #include "all.h"
 

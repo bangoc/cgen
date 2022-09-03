@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa sắp xếp vec-tơ chuỗi ký tự với gvec
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa sắp xếp vec-tơ chuỗi ký tự với gvec
+ */
 
 #include "all.h"
 

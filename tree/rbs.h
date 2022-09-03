@@ -1,9 +1,7 @@
 #ifndef TREE_RBS_H_
 #define TREE_RBS_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
 
 #include "tree/spec/grb.h"
 

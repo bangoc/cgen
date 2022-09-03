@@ -1,10 +1,11 @@
 #ifndef LIST_GDL_H_
 #define LIST_GDL_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-  gtype double linked list
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * gtype double linked list
+ */
 
 #include "base/gtype.h"
 

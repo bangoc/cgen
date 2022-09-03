@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc
-  Thử nghiệm lưu hmap trong hmap
-*/
+/* (C) Nguyen Ba Ngoc */
+
+/**
+ * Thử nghiệm lưu hmap trong hmap
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"

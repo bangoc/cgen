@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa hàm làm rỗng vec-tơ.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa hàm làm rỗng vec-tơ.
+ */
 
 #include "all.h"
 

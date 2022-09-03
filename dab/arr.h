@@ -1,9 +1,7 @@
 #ifndef DAB_ARR_H_
 #define DAB_ARR_H_
 
-/*
-  (C) Nguyen Ba Ngoc 2021
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
 
 #include <stdlib.h>
 

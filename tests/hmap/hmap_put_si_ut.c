@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Kiểm tra hmap_put với khóa là chuỗi và trị là số nguyên.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Kiểm tra hmap_put với khóa là chuỗi và trị là số nguyên.
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"

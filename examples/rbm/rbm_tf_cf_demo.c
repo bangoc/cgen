@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2020
-  Tính cf dựa trên danh sách các giá trị tf(t, d)
-*/
+/* (C) Nguyen Ba Ngoc 2020 */
+
+/**
+ * Tính cf dựa trên danh sách các giá trị tf(t, d)
+ */
 
 #include "all.h"
 

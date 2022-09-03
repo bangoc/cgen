@@ -1,9 +1,7 @@
 #ifndef SPEC_TREE_GBS_H_
 #define SPEC_TREE_GBS_H_
 
-/*
-  (C) 2022 Nguyen Ba Ngoc (bangoc)
-*/
+/* (C) 2022 Nguyen Ba Ngoc (bangoc) */
 
 #include "base/gtype.h"
 #include "tree/bs.h"

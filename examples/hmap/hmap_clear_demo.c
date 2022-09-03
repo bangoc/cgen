@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa hàm làm rỗng bảng băm.
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa hàm làm rỗng bảng băm.
+ */
 
 #include "all.h"
 #include "tests/base/rands.h"

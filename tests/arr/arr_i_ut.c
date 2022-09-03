@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2021
-  Minh họa mảng giá trị int cấp phát động.
-*/
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/**
+ * Minh họa mảng giá trị int cấp phát động.
+ */
 
 #include "dab/arr.h"
 

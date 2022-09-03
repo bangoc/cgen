@@ -1,7 +1,8 @@
-/*
-  (C) Nguyen Ba Ngoc 2022
-  Minh họa lưu gvec trong rbm
-*/
+/* (C) Nguyen Ba Ngoc 2022 */
+
+/**
+ * Minh họa lưu gvec trong rbm
+ */
 
 #include "all.h"
 #include "tests/base/utils.h"
