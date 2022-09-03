@@ -4,7 +4,7 @@
 */
 
 
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/rands.h"
 
 #include <stdio.h>

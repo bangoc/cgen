@@ -3,7 +3,7 @@
   Thử nghiệm lưu hmap trong rbm
 */
 
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/utils.h"
 
 #include <stdlib.h>

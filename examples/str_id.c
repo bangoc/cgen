@@ -1,4 +1,4 @@
-#include "cgen.h"
+#include "all.h"
 
 #include <string.h>
 #include <stdlib.h>

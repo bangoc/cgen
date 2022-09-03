@@ -6,7 +6,7 @@ Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản
 Tệp mã nguồn, ví dụ main.c:
 
 ```C
-#include "cgen.h"
+#include "all.h"
 /*...*/
 ```
 

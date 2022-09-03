@@ -3,7 +3,7 @@
   Minh họa sắp xếp mảng số nguyên với gvec
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 

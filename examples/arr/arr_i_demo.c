@@ -3,7 +3,7 @@
   Minh họa sử dụng hàm append
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 

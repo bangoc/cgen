@@ -3,7 +3,7 @@
   Minh họa hàm băm khái quát
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 #include <string.h>

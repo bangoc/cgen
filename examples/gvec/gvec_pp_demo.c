@@ -3,7 +3,7 @@
   Minh họa sắp xếp mảng cấu trúc point với gvec
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 

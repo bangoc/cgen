@@ -6,7 +6,7 @@
   số thực và nhiều kiểu con trỏ khác nhau.
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 

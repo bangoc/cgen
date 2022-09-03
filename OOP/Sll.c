@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc, 2021
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include "OOP/Sll.h"
 

@@ -3,7 +3,7 @@
   Thử nghiệm lưu gvec trong hmap
 */
 
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/utils.h"
 
 #include <stdlib.h>

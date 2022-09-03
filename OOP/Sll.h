@@ -7,7 +7,7 @@
 
 #include "base/core.h"
 
-#include "cgen.h"
+#include "all.h"
 
 typedef struct {
   struct sln_s sll_node;

@@ -2,7 +2,7 @@
   (C) Nguyen Ba Ngoc 2021
   Minh họa sử dụng hàm cập nhật
 */
-#include "cgen.h"
+#include "all.h"
 #include <stdio.h>
 
 void print_p1wi(p1w_t q) {

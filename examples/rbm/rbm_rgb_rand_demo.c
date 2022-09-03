@@ -6,7 +6,7 @@
   xác suất cho các mầu là tương đương.
 */
 
-#include "cgen.h"
+#include "all.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

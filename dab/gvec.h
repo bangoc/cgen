@@ -17,7 +17,7 @@
 #include "dab/arr.h"
 
 /**
- * \headerfile "cgen.h"
+ * \headerfile "all.h"
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
  *
  * Các macros điều khiển:
@@ -260,5 +260,13 @@ void gtype_free_gvec(gtype value);
  */
 #define gvec_traverse(cur, v) \
   for (gtype *cur = gvec_arr(v), *end = gvec_arr(v) + gvec_size(v); cur < end; ++cur)
+
+/**
+ * Xuất các phần tử của vec-tơ
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ
+ * @param pp Hàm xuất giá trị gtype
+ */
+void gvec_pprint(gvec_t v, gtype_print_t pp);
 
 #endif  // DAB_GVEC_H_

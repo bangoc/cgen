@@ -3,7 +3,7 @@
   Minh họa sắp xếp vec-tơ chuỗi ký tự với gvec
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 #include <string.h>

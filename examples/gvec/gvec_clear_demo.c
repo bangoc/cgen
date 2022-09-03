@@ -3,7 +3,7 @@
   Minh họa hàm làm rỗng vec-tơ.
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 

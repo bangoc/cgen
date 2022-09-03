@@ -3,7 +3,7 @@
   Minh họa sử dụng gsl
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 #include <string.h>

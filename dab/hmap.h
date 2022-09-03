@@ -20,7 +20,7 @@
 #include <stdint.h>
 
 /**
- * \headerfile "cgen.h"
+ * \headerfile "all.h"
  * Cấu trúc điều khiển đối tượng bảng băm. Được tạo bằng hàm
  * hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  *
@@ -48,7 +48,7 @@ typedef struct hash_map {
 } hmap_s, *hmap_t;
 
 /**
- * \headerfile "cgen.h"
+ * \headerfile "all.h"
  * Kiểu trả về của hàm hmap_insert(hmap_t tab, gtype key, gtype value)
  */
 typedef struct hmap_insert_result {

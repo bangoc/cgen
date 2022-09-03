@@ -1,4 +1,4 @@
-#include "cgen.h"
+#include "all.h"
 
 int main() {
   rbm_t si = s2i_create();

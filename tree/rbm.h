@@ -16,7 +16,7 @@
 #include "tree/rb.h"
 
 /**
- * \headerfile "cgen.h"
+ * \headerfile "all.h"
  * Cấu trúc nút của rbm, là mở rộng nút của cây đỏ đen.
  *
  * \private Người sử dụng không cần thao tác với kiểu này.
@@ -37,7 +37,7 @@ typedef struct red_black_map_node {
 #define rbm_node_value(n) (rbm_node(n)->value)
 
 /**
- * \headerfile "cgen.h"
+ * \headerfile "all.h"
  * Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm
  * rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
  *

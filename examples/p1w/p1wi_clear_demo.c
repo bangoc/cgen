@@ -3,7 +3,7 @@
   Minh họa hàm làm rỗng p1w (p1w_clear)
 */
 
-#include "cgen.h"
+#include "all.h"
 
 int main() {
   // max heap

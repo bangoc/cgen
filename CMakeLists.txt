@@ -18,6 +18,7 @@ endif()
 
 add_subdirectory(tests)
 add_subdirectory(examples)
+add_subdirectory(mega-unit)
 
 add_library(bkc STATIC all.c)
 

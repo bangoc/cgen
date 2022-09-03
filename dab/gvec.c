@@ -21,3 +21,9 @@ gvec_t gvec_create(int cap, gtype_free_t free_value) {
 void gtype_free_gvec(gtype value) {
   gvec_free(value.gvec);
 }
+
+void gvec_pprint(gvec_t v, gtype_print_t pp) {
+  gvec_traverse(cur, v) {
+    pp(*cur);
+  }
+}

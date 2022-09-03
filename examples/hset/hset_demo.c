@@ -3,7 +3,7 @@
   Minh họa sử dụng hset
 */
 
-#include "cgen.h"
+#include "all.h"
 
 int main() {
   hset_t s = hset_create(gtype_hash_s, gtype_cmp_s, NULL);

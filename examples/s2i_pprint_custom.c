@@ -1,4 +1,4 @@
-#include "cgen.h"
+#include "all.h"
 
 void s2i_custom_node_print(bn_node_t n) {
   printf("%s:%ld:%s\n", rbm_node_key(n).s,

@@ -3,7 +3,7 @@
   Kiểm tra hmap_put với khóa là chuỗi và trị là số nguyên.
 */
 
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/utils.h"
 
 #include <stdio.h>

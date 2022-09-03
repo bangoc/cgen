@@ -3,7 +3,7 @@
   Kiểm tra kịch bản ánh xạ chuỗi -> chuỗi
 */
 
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/utils.h"
 
 #include <stdio.h>

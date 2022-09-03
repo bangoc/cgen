@@ -1,4 +1,4 @@
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/utils.h"
 
 int main() {

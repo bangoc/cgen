@@ -3,7 +3,7 @@
   Minh họa hàm làm rỗng tập (hợp dựa trên hàm) băm.
 */
 
-#include "cgen.h"
+#include "all.h"
 #include "tests/base/rands.h"
 
 #include <stdio.h>

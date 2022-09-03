@@ -3,7 +3,7 @@
   Minh họa sử dụng setsize
 */
 
-#include "cgen.h"
+#include "all.h"
 #include <stdio.h>
 
 int main() {

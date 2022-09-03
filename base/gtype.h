@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 /**
- * \headerfile "cgen.h"
+ * \headerfile "all.h"
  * Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu được triển khai.
  * ::gtype có thể thay thế cho 1 nhóm kiểu dữ liệu.
  */

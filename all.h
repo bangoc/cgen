@@ -1,5 +1,5 @@
-#ifndef CGEN_H_
-#define CGEN_H_
+#ifndef ALL_H_
+#define ALL_H_
 
 #include "base/core.h"
 #include "base/gtype.h"
@@ -31,4 +31,4 @@
 #include "utils/io.h"
 #include "utils/str.h"
 
-#endif  // CGEN_H_
+#endif  // ALL_H_

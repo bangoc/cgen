@@ -3,7 +3,7 @@
   Minh họa tạo tập hợp với rbs
 */
 
-#include "cgen.h"
+#include "all.h"
 
 int main() {
   rbs_t s = rbs_create(gtype_cmp_s, NULL);

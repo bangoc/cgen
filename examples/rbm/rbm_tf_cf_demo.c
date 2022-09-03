@@ -3,7 +3,7 @@
   Tính cf dựa trên danh sách các giá trị tf(t, d)
 */
 
-#include "cgen.h"
+#include "all.h"
 
 #include <stdio.h>
 
