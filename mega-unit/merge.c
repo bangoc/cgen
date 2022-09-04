@@ -44,6 +44,10 @@ int is_header(const char *fname) {
   return !strcmp(fname + strlen(fname) - 2, ".h");
 }
 
+int is_source(const char *fname) {
+  return !strcmp(fname + strlen(fname) - 2, ".c");
+}
+
 char *header_guard(const char *fname) {
   char *o = calloc(strlen(fname) + 2, 1);
   for (int i = 0; i < strlen(fname); ++i) {
@@ -66,20 +70,8 @@ char *get_version(const char *root) {
   return vstr;
 }
 
-int main(int argc, char *argv[]) {
-  if (argc != 4) {
-    printf("Usage: merge root-dir listing out-name\n"
-           "Example: merge ~/git/cgen all.h cgen.h\n");
-    return 1;
-  }
-  const char *root = argv[1],
-             *list = argv[2],
-             *out_name = argv[3];
-  char tmp[1024] = {0};
-  strcat(tmp, root);
-  strcat(tmp, "/");
-  strcat(tmp, list);
-  gvec_t v = read_lines(tmp);
+void process(const char *root, const char *list_name, const char *out_name) {
+  gvec_t v = read_lines(list_name);
   if (!v) {
     printf("Can not read the list\n");
     return 1;
@@ -87,23 +79,25 @@ int main(int argc, char *argv[]) {
 
   rbs_t headers = rbs_create(gtype_cmp_s, gtype_free_s);
   gvec_t contents = gvec_create(1000, gtype_free_s);
+  char tmp[1024];
   gvec_traverse(cur, v) {
     if (!is_include(cur->s)) {
       continue;
     }
     char *unit_name = parse_include(cur->s);
-    tmp[0] = 0;
-    strcat(tmp, root);
-    strcat(tmp, "/");
-    strcat(tmp, unit_name);
+    sprintf(tmp, "%s/%s", root, unit_name);
     gvec_t loc = read_lines(tmp);
     char origin[1024];
     sprintf(origin, "\n/***********************************\n"
                     " * %s\n"
-                    " ***********************************/\n\n", unit_name);
+                    " ***********************************/", unit_name);
     gvec_append(contents, gtype_s(strdup(origin)));
+    gvec_append(contents, gtype_s(strdup("")));
     gvec_traverse(cur, loc) {
       if (is_include(cur->s)) {
+        if (strchr(cur->s, '"')) {
+          continue;
+        }
         char *line = strdup(cur->s);
         if (!rbs_insert(headers, gtype_s(line))) {
           free(line);
@@ -133,10 +127,24 @@ int main(int argc, char *argv[]) {
   fprintf(out, "/* (C) Nguyen Ba Ngoc 2022 */\n");
   fprintf(out, "/* Version: %s */\n\n", ver);
   free(ver);
+  if (is_source(out_name)) {
+    char *hn = strdup(out_name);
+    hn[strlen(hn) - 1] = 'h';
+    fprintf(out, "#include \"%s\"\n\n", hn);
+    free(hn);
+  }
   rbs_traverse(cur, headers) {
     fprintf(out, "%s\n", cur->s);
   }
+  int blanks = 0;
   gvec_traverse(cur, contents) {
+    if (strcmp(cur->s, "") == 0) {
+      if (++blanks > 1) {
+        continue;
+      }
+    } else {
+      blanks = 0;
+    }
     fprintf(out, "%s\n", cur->s);
   }
   if (is_header(out_name)) {
@@ -147,5 +155,26 @@ int main(int argc, char *argv[]) {
   rbs_free(headers);
   gvec_free(v);
   fclose(out);
+}
+
+int main(int argc, char *argv[]) {
+  if (argc != 5) {
+    printf("Usage: merge root-dir header-list source-list out-name\n"
+           "Example: merge ~/git/cgen all.h all.c cgen\n");
+    return 1;
+  }
+  const char *root = argv[1],
+             *hlist = argv[2],
+             *clist = argv[3],
+             *oname = argv[4];
+  char list_name[1024] = {0};
+  sprintf(list_name, "%s/%s", root, hlist);
+  char out_name[1024] = {0};
+  sprintf(out_name, "%s.h", oname);
+  process(root, list_name, out_name);
+
+  sprintf(list_name, "%s/%s", root, clist);
+  sprintf(out_name, "%s.c", oname);
+  process(root, list_name, out_name);
   return 0;
 }
