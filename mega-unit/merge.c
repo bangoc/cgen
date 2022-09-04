@@ -56,6 +56,16 @@ char *header_guard(const char *fname) {
   return o;
 }
 
+char *get_version(const char *root) {
+  char fname[1024];
+  sprintf(fname, "%s/%s", root, "VERSION");
+  FILE *fp = fopen(fname, "r");
+  char *vstr = NULL;
+  remove_tail_lf(cgetline(&vstr, NULL, fp));
+  fclose(fp);
+  return vstr;
+}
+
 int main(int argc, char *argv[]) {
   if (argc != 4) {
     printf("Usage: merge root-dir listing out-name\n"
@@ -114,12 +124,15 @@ int main(int argc, char *argv[]) {
     printf("Không thể mở tệp đầu ra.\n");
     return 1;
   }
+  char *ver = get_version(root);
   if (is_header(out_name)) {
     hg = header_guard(out_name);
     fprintf(out, "#ifndef %s\n", hg);
     fprintf(out, "#define %s\n\n", hg);
   }
-  fprintf(out, "/* (C) Nguyen Ba Ngoc 2022 */\n\n");
+  fprintf(out, "/* (C) Nguyen Ba Ngoc 2022 */\n");
+  fprintf(out, "/* Version: %s */\n\n", ver);
+  free(ver);
   rbs_traverse(cur, headers) {
     fprintf(out, "%s\n", cur->s);
   }
