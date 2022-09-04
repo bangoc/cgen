@@ -6,11 +6,11 @@ Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản
 Tệp mã nguồn, ví dụ main.c:
 
 ```C
-#include "all.h"
+#include "cgen.h"
 /*...*/
 ```
 
-Trong đó cgen.h là tệp tổng hợp các tệp tiêu đề của cgen.
+Trong đó all.h là tệp tổng hợp các tệp tiêu đề của cgen.
 
 ## 1. Biên dịch với gcc trong môi trường dòng lệnh
 
@@ -51,6 +51,15 @@ cd b
 cmake .. -G Ninja
 ninja
 ```
-## 3. Tài liệu
+## 3. Sử dụng định dạng 1 tệp
+```C
+#include "cgen.h"
+/*...*/
+```
+gcc -o prog main.c cgen.c
+
+Các tệp tổng hợp cgen.h và cgen.c có thể được tải về từ trang [Xuất bản (release)](https://github.com/bangoc/cgen/releases), hoặc tự tạo với công cụ merge trong mega-unit.
+
+## 4. Tài liệu
 
 Xem tài liệu chi tiết ở địa chỉ [APIs doc](https://bangoc.github.io/cgen/)
