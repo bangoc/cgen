@@ -37,6 +37,7 @@ sln_t sll_create_node();
 sll_t sll_create_list();
 void sll_push_back(sll_t list, sln_t node);
 void sll_push_front(sll_t list, sln_t node);
+void sll_inserta(sll_t list, sln_t pos, sln_t nn);
 void sll_pop_front(sll_t list);
 void sll_node_print_address(sln_t node);
 void sll_pprint(sll_t list, sll_node_print_t npp);

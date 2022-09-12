@@ -66,10 +66,10 @@ void dll_pop_front(dll_t list) {
 }
 
 /* insert nn after pos in list. push_back if pos == NULL */
-dln_t dll_inserta(dll_t list, dln_t pos, dln_t nn) {
+void dll_inserta(dll_t list, dln_t pos, dln_t nn) {
   if (!pos) {
     dll_push_back(list, nn);
-    return nn;
+    return;
   }
 
   dln_t tmp = pos->next;
@@ -82,14 +82,13 @@ dln_t dll_inserta(dll_t list, dln_t pos, dln_t nn) {
     list->back = nn;
   }
   ++list->length;
-  return nn;
 }
 
 /* insert nn before pos in list. push_front is pos == NULL */
-dln_t dll_insertb(dll_t list, dln_t pos, dln_t nn) {
+void dll_insertb(dll_t list, dln_t pos, dln_t nn) {
   if (!pos) {
     dll_push_front(list, nn);
-    return nn;
+    return;
   }
 
   dln_t tmp = pos->prev;
@@ -102,7 +101,6 @@ dln_t dll_insertb(dll_t list, dln_t pos, dln_t nn) {
     list->front = nn;
   }
   ++list->length;
-  return nn;
 }
 
 void dll_erase(dll_t list, dln_t pos) {

@@ -52,6 +52,12 @@ typedef struct gtype_single_linked_list {
     sll_pop_front(list); \
   } while (0)
 
+#define gsl_inserta(list, pos, value) \
+  do { \
+    gsn_t _nn = gsl_create_node(value); \
+    sll_inserta(sll_list(list), sll_node(pos), sll_node(_nn)); \
+  } while (0)
+
 #define gsl_is_empty(list) (sll_is_empty(sll_list(list)))
 #define gsl_clear(list) \
   do {\

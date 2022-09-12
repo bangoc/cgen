@@ -27,8 +27,8 @@ void idl_push_back(dll_t list, int value);
 void idl_push_front(dll_t list, int value);
 int idl_pop_back(dll_t list);
 int idl_pop_front(dll_t list);
-idn_t idl_insert_a(dll_t list, idn_t pos, int value);
-idn_t idl_insertb(dll_t list, idn_t pos, int value);
+void idl_insert_a(dll_t list, idn_t pos, int value);
+void idl_insertb(dll_t list, idn_t pos, int value);
 
 void idn_pprint(idn_t);
 void idl_pprint(dll_t);

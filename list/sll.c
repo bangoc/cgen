@@ -35,6 +35,21 @@ void sll_push_front(sll_t list, sln_t node) {
   ++list->length;
 }
 
+void sll_inserta(sll_t list, sln_t pos, sln_t nn) {
+  if (!pos) {
+    sll_push_back(list, nn);
+    return;
+  }
+
+  dln_t tmp = pos->next;
+  pos->next = nn;
+  nn->next = tmp;
+  if (!tmp) {
+    list->back = nn;
+  }
+  ++list->length;
+}
+
 void sll_pop_front(sll_t list) {
   if (sll_is_empty(list)) {
     return;
