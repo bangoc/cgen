@@ -7,21 +7,21 @@
  * Generic double Linked List (DLL/dll)
  */
 
-typedef struct dln_s {
-  struct dln_s *next;
-  struct dln_s *prev;
-} *dln_t;
+typedef struct double_linked_node {
+  struct double_linked_node *next;
+  struct double_linked_node *prev;
+} dln_s, *dln_t;
 
-typedef struct dll_s {
+typedef struct double_linked_list {
   dln_t front;
   dln_t back;
 } *dll_t;
 
-#define to_dln(n) ((dln_t)(n))
-#define to_dll(list) ((dll_t)(list))
+#define dl_node(n) ((dln_t)(n))
+#define dl_list(list) ((dll_t)(list))
 
-#define dll_front(list) (to_dll(list)->front)
-#define dll_back(list) (to_dll(list)->back)
+#define dll_front(list) (dl_list(list)->front)
+#define dll_back(list) (dl_list(list)->back)
 
 #define dll_traverse(cur, list) \
   for (dln_t cur = (list)->front; cur != NULL; cur = cur->next)
@@ -31,8 +31,8 @@ typedef struct dll_s {
 
 /* Giao diện khái quát */
 
-dln_t dln_create();
-dll_t dll_create();
+dln_t dll_create_node();
+dll_t dll_create_list();
 void dll_free(dll_t list);
 
 void dll_push_back(dll_t list, dln_t nn);

@@ -10,12 +10,12 @@ int test_idn_create() {
   CHECK_MSG(n->base.prev == NULL, "base->prev");
   CHECK_MSG(n->base.next == NULL, "base->next");
   CHECK_MSG(n->value == 90, "value 90");
-  dln_free(to_dln(n));
+  dln_free(dl_node(n));
   return 0;
 }
 
 int test_idl_push_back() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   idl_push_back(list, 1);
   idl_push_back(list, 2);
   idl_push_back(list, 3);
@@ -25,7 +25,7 @@ int test_idl_push_back() {
 }
 
 int test_idl_push_front() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   idl_push_front(list, 1);
   idl_push_front(list, 2);
   idl_push_front(list, 3);
@@ -35,7 +35,7 @@ int test_idl_push_front() {
 }
 
 int test_dll_pop_front_back_i() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   idl_push_front(list, 1);
   idl_push_front(list, 2);
   idl_push_back(list, 3);
@@ -50,7 +50,7 @@ int test_dll_pop_front_back_i() {
 }
 
 int test_dll_insert_abi() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   idl_insert_a(list, NULL, 1);
   idl_insertb(list, idl_front(list), 2);
   idl_insertb(list, idl_front(list), 3);

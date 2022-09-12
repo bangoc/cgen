@@ -6,19 +6,19 @@
 #include "tests/dll/helper.h"
 
 gtype pop_value_front(gdl_t list) {
-  gtype tmp = gdn_value(gdl_front(list));
+  gtype tmp = gdl_node_value(gdl_front(list));
   gdl_pop_front(list);
   return tmp;
 }
 
 gtype pop_value_back(gdl_t list) {
-  gtype tmp = gdn_value(gdl_back(list));
+  gtype tmp = gdl_node_value(gdl_back(list));
   gdl_pop_back(list);
   return tmp;
 }
 
 int test_push_back_front_g() {
-  gdl_t list = gdl_create(NULL);
+  gdl_t list = gdl_create_list(NULL);
   CHECK_MSG(gdl_front(list) == NULL, "front NULL");
   CHECK_MSG(gdl_back(list) == NULL, "back NULL");
 
@@ -39,8 +39,8 @@ int test_push_back_front_g() {
 
   CHECK_MSG(pop_value_front(list).l == 6, "pop front 6");
   CHECK_MSG(pop_value_back(list).l == 9, "pop back 9");
-  CHECK_MSG(gdl_front(list)->l == 2, "front 2");
-  CHECK_MSG(gdl_back(list)->l == 5, "back 5");
+  CHECK_MSG(gdl_node_value(gdl_front(list)).l == 2, "front 2");
+  CHECK_MSG(gdl_node_value(gdl_back(list)).l == 5, "back 5");
 
   CHECK_MSG(pop_value_front(list).l == 2, "pop front 2");
   CHECK_MSG(pop_value_back(list).l == 5, "pop back 5");
@@ -62,7 +62,7 @@ int test_push_back_front_g() {
 }
 
 int test_insert_ab() {
-  gdl_t list = gdl_create(NULL);
+  gdl_t list = gdl_create_list(NULL);
   CHECK_MSG(gdl_front(list) == NULL, "front NULL");
   CHECK_MSG(gdl_back(list) == NULL, "back NULL");
 
@@ -72,12 +72,12 @@ int test_insert_ab() {
         v6 = {.l = 6},
         v9 = {.l = 9};
   gdl_inserta(list, NULL, v1);
-  CHECK_MSG(gdl_front(list)->l == 1, "insert 1 front");
-  CHECK_MSG(gdl_back(list)->l == 1, "insert 1 back");
+  CHECK_MSG(gdl_node_value(gdl_front(list)).l == 1, "insert 1 front");
+  CHECK_MSG(gdl_node_value(gdl_back(list)).l == 1, "insert 1 back");
 
   gdl_insertb(list, NULL, v2);
-  CHECK_MSG(gdl_front(list)->l == 2, "front 2");
-  CHECK_MSG(gdl_back(list)->l == 1, "back 1");
+  CHECK_MSG(gdl_node_value(gdl_front(list)).l == 2, "front 2");
+  CHECK_MSG(gdl_node_value(gdl_back(list)).l == 1, "back 1");
 
   gdl_inserta(list, gdl_front(list), v3);
   gdl_insertb(list, gdl_back(list), v6);
@@ -91,8 +91,8 @@ int test_insert_ab() {
   gdl_inserta(list, NULL, v1);
   gdl_inserta(list, NULL, v2);
   gdl_insertb(list, gdl_back(list), v3);
-  gdl_inserta(list, gdn_prev(gdl_back(list)), v6);
-  gdl_insertb(list, gdn_prev(gdl_back(list)), v9);
+  gdl_inserta(list, gdl_node_prev(gdl_back(list)), v6);
+  gdl_insertb(list, gdl_node_prev(gdl_back(list)), v9);
   CHECK_MSG(gdl_sequence_g(list, (gtype[]){v1, v3, v9, v6, v2}, 5, gtype_cmp_l),
          "insertba 5 values (another sequence)");
 

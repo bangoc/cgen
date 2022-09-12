@@ -5,14 +5,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-dln_t dln_create() {
-  dln_t n = malloc(sizeof(struct dln_s));
+dln_t dll_create_node() {
+  dln_t n = malloc(sizeof(struct double_linked_node));
   n->next = n->prev = NULL;
   return n;
 }
 
-dll_t dll_create() {
-  dll_t list = malloc(sizeof(struct dll_s));
+dll_t dll_create_list() {
+  dll_t list = malloc(sizeof(struct double_linked_list));
   list->front = list->back = NULL;
   return list;
 }

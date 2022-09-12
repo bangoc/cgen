@@ -22,7 +22,7 @@ void free_song_g(gtype g) {
 }
 
 int main() {
-  gdl_t list = gdl_create(free_song_g);
+  gdl_t list = gdl_create_list(free_song_g);
 
   // Add songs to list
   gdl_push_back(list, create_song_g("Seasons in the sun"));
@@ -34,7 +34,7 @@ int main() {
   // Print songs list
   int stt = 1;
   gdl_traverse(cur, list) {
-    song_t s = (song_t)(gdn_value(cur).v);
+    song_t s = (song_t)(gdl_node_value(cur).v);
     printf("%3d %s\n", stt++, s->name);
   }
 

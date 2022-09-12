@@ -5,8 +5,8 @@
 #include "tests/base/utils.h"
 #include "tests/dll/helper.h"
 
-int test_dln_create() {
-  dln_t nn = dln_create();
+int test_dll_create_node() {
+  dln_t nn = dll_create_node();
   if (!nn) {
     DEBUG_MSG("Null node");
     return 1;
@@ -18,8 +18,8 @@ int test_dln_create() {
   return 0;
 }
 
-int test_dll_create() {
-  dll_t list = dll_create();
+int test_dll_create_list() {
+  dll_t list = dll_create_list();
   if (!list) {
     DEBUG_MSG("Null list");
     return 1;
@@ -31,22 +31,22 @@ int test_dll_create() {
   return 0;
 }
 int test_dll_push_t1() {
-  dll_t list = dll_create();
-  dln_t n1 = dln_create();
+  dll_t list = dll_create_list();
+  dln_t n1 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n1}, 1), "push_back empty list");
 
-  dln_t n2 = dln_create();
+  dln_t n2 = dll_create_node();
   dll_push_front(list, n2);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n2, n1}, 2), "push_front 2 node");
 
   dll_free(list);
-  list = dll_create();
-  n1 = dln_create();
+  list = dll_create_list();
+  n1 = dll_create_node();
   dll_push_front(list, n1);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n1}, 1), "push_front empty list");
 
-  n2 = dln_create();
+  n2 = dll_create_node();
   dll_push_back(list, n2);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n1, n2}, 2), "push back 2 nodes");
 
@@ -56,10 +56,10 @@ int test_dll_push_t1() {
 }
 
 int test_dll_pop_t1() {
-  dll_t list = dll_create();
-  dln_t n1 = dln_create();
-  dln_t n2 = dln_create();
-  dln_t n3 = dln_create();
+  dll_t list = dll_create_list();
+  dln_t n1 = dll_create_node();
+  dln_t n2 = dll_create_node();
+  dln_t n3 = dll_create_node();
   dll_push_back(list, n1);
   dll_push_back(list, n2);
   dll_push_back(list, n3);
@@ -74,7 +74,7 @@ int test_dll_pop_t1() {
   dll_pop_front(list);
   CHECK_MSG(dll_is_empty(list), "pop_front => empty");
 
-  n1 = dln_create();
+  n1 = dll_create_node();
   dll_push_back(list, n1);
   dll_pop_back(list);
   CHECK_MSG(dll_is_empty(list), "pop_back => empty");
@@ -88,16 +88,16 @@ int test_dll_pop_t1() {
 }
 
 int test_dll_front_back() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   CHECK_MSG(dll_front(list) == NULL, "front empty");
   CHECK_MSG(dll_back(list) == NULL, "back empty");
 
-  dln_t n1 = dln_create();
+  dln_t n1 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(dll_front(list) == n1, "front one node");
   CHECK_MSG(dll_back(list) == n1, "back one node");
 
-  dln_t n2 = dln_create();
+  dln_t n2 = dll_create_node();
   dll_push_front(list, n2);
   CHECK_MSG(dll_front(list) == n2, "front two node");
   CHECK_MSG(dll_back(list) == n1, "back two node");
@@ -108,35 +108,35 @@ int test_dll_front_back() {
 }
 
 int test_dll_insert_ab() {
-  dll_t list = dll_create();
-  dln_t n1 = dln_create();
-  dln_t n2 = dln_create();
+  dll_t list = dll_create_list();
+  dln_t n1 = dll_create_node();
+  dln_t n2 = dll_create_node();
   dll_inserta(list, NULL, n1);
   dll_inserta(list, n1, n2);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n1, n2}, 2), "2 nodes");
 
 
-  dln_t n3 = dln_create();
+  dln_t n3 = dll_create_node();
   dll_inserta(list, n1, n3);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n1, n3, n2}, 3), "after n1");
 
-  dln_t n5 = dln_create();
+  dln_t n5 = dll_create_node();
   dll_insertb(list, n1, n5);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n5, n1, n3, n2}, 4), "before n1");
 
   dll_free(list);
-  list = dll_create();
-  n1 = dln_create();
+  list = dll_create_list();
+  n1 = dll_create_node();
   dll_insertb(list, NULL, n1);
-  n2 = dln_create();
+  n2 = dll_create_node();
   dll_insertb(list, n1, n2);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n2, n1}, 2), "insertb 2 nodes");
 
-  n3 = dln_create();
+  n3 = dll_create_node();
   dll_insertb(list, n1, n3);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n2, n3, n1}, 3), "insertb 3 nodes");
 
-  n5 = dln_create();
+  n5 = dll_create_node();
   dll_inserta(list, n1, n5);
   CHECK_MSG(dll_sequence(list, (dln_t[]){n2, n3, n1, n5}, 4), "inserta 4 nodes");
 
@@ -145,10 +145,10 @@ int test_dll_insert_ab() {
 }
 
 int test_dll_is_empty() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   CHECK_MSG(dll_is_empty(list), "Empty after create");
 
-  dln_t n1 = dln_create();
+  dln_t n1 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(!dll_is_empty(list), "Not empty after push_back");
 
@@ -165,12 +165,12 @@ int test_dll_is_empty() {
 }
 
 int test_dll_length() {
-  dll_t list = dll_create();
+  dll_t list = dll_create_list();
   CHECK_MSG(dll_length(list) == 0, "Length == 0 after create");
 
-  dln_t n1 = dln_create();
-  dln_t n2 = dln_create();
-  dln_t n3 = dln_create();
+  dln_t n1 = dll_create_node();
+  dln_t n2 = dll_create_node();
+  dln_t n3 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(dll_length(list) == 1, "Length == 1 push_back");
 
@@ -194,12 +194,12 @@ int test_dll_length() {
 }
 
 int test_dll_erase() {
-  dll_t list = dll_create();
-  dln_t n1 = dln_create(),
-      n2 = dln_create(),
-      n3 = dln_create(),
-      n4 = dln_create(),
-      n5 = dln_create();
+  dll_t list = dll_create_list();
+  dln_t n1 = dll_create_node(),
+      n2 = dll_create_node(),
+      n3 = dll_create_node(),
+      n4 = dll_create_node(),
+      n5 = dll_create_node();
   dll_push_back(list, n1);
   dll_push_back(list, n2);
   dll_push_back(list, n3);
@@ -228,10 +228,10 @@ int test_dll_erase() {
 }
 
 int test_dll_clear() {
-  dll_t list = dll_create();
-  dln_t n1 = dln_create(),
-      n2 = dln_create(),
-      n3 = dln_create();
+  dll_t list = dll_create_list();
+  dln_t n1 = dll_create_node(),
+      n2 = dll_create_node(),
+      n3 = dll_create_node();
   dll_push_back(list, n1);
   dll_push_back(list, n2);
   dll_push_back(list, n3);
@@ -245,8 +245,8 @@ int test_dll_clear() {
 }
 
 int main() {
-  CHECK_MSG(test_dln_create() == 0, "dln_create");
-  CHECK_MSG(test_dll_create() == 0, "dll_create");
+  CHECK_MSG(test_dll_create_node() == 0, "dll_create_node");
+  CHECK_MSG(test_dll_create_list() == 0, "dll_create");
   CHECK_MSG(test_dll_push_t1() == 0, "dll_push_t1");
   CHECK_MSG(test_dll_pop_t1() == 0, "dll_pop_t1");
   CHECK_MSG(test_dll_front_back() == 0, "dll front & back");

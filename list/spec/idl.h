@@ -10,7 +10,7 @@
 #include "list/dll.h"
 
 typedef struct idn_s {
-  struct dln_s base;
+  struct double_linked_node base;
   int value;
 } *idn_t;
 

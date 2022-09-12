@@ -66,22 +66,23 @@ static int gdl_sequence_g(gdl_t list, gtype *a, int n, gtype_cmp_t cmp) {
   if (gdl_size(list) != n) {
     return 0;
   }
-  gtype *p = list->front;
+  gdn_t p = gdl_front(list);
   for (int i = 0; i < n; ++i) {
-    if (cmp(gdn_value(p), a[i]) != 0) {
+    if (cmp(gdl_node_value(p), a[i]) != 0) {
+      printf("%ld %ld\n", gdl_node_value(p).l, a[i].l);
       return 0;
     }
-    p = gdn_next(p);
+    p = gdl_node_next(p);
   }
   if (p != NULL) {
     return 0;
   }
   p = gdl_back(list);
   for (int i = n - 1; i >= 0; --i) {
-    if (cmp(gdn_value(p), a[i]) != 0) {
+    if (cmp(gdl_node_value(p), a[i]) != 0) {
       return 0;
     }
-    p = gdn_prev(p);
+    p = gdl_node_prev(p);
   }
   if (p != NULL) {
     return 0;
