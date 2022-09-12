@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['dln_5fs_0',['dln_s',['../structdln__s.html',1,'']]]
+  ['double_5flinked_5fnode_0',['double_linked_node',['../structdouble__linked__node.html',1,'']]]
 ];

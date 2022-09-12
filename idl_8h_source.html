@@ -78,7 +78,7 @@ $(function() {
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;list/dll.h&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="structidn__s.html">   12</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structidn__s.html">idn_s</a> {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structdln__s.html">dln_s</a> base;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structdouble__linked__node.html">double_linked_node</a> base;</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keywordtype">int</span> value;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>} *<a class="code hl_struct" href="structidn__s.html">idn_t</a>;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
@@ -95,14 +95,14 @@ $(function() {
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keywordtype">void</span> idl_push_front(dll_t list, <span class="keywordtype">int</span> value);</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keywordtype">int</span> idl_pop_back(dll_t list);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keywordtype">int</span> idl_pop_front(dll_t list);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><a class="code hl_struct" href="structidn__s.html">idn_t</a> idl_insert_a(dll_t list, <a class="code hl_struct" href="structidn__s.html">idn_t</a> pos, <span class="keywordtype">int</span> value);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><a class="code hl_struct" href="structidn__s.html">idn_t</a> idl_insertb(dll_t list, <a class="code hl_struct" href="structidn__s.html">idn_t</a> pos, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keywordtype">void</span> idl_insert_a(dll_t list, <a class="code hl_struct" href="structidn__s.html">idn_t</a> pos, <span class="keywordtype">int</span> value);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keywordtype">void</span> idl_insertb(dll_t list, <a class="code hl_struct" href="structidn__s.html">idn_t</a> pos, <span class="keywordtype">int</span> value);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keywordtype">void</span> idn_pprint(<a class="code hl_struct" href="structidn__s.html">idn_t</a>);</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordtype">void</span> idl_pprint(dll_t);</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif </span><span class="comment">// LIST_SPEC_IDL_H_</span></div>
-<div class="ttc" id="astructdln__s_html"><div class="ttname"><a href="structdln__s.html">dln_s</a></div><div class="ttdef"><b>Definition:</b> dll.h:10</div></div>
+<div class="ttc" id="astructdouble__linked__node_html"><div class="ttname"><a href="structdouble__linked__node.html">double_linked_node</a></div><div class="ttdef"><b>Definition:</b> dll.h:10</div></div>
 <div class="ttc" id="astructidn__s_html"><div class="ttname"><a href="structidn__s.html">idn_s</a></div><div class="ttdef"><b>Definition:</b> idl.h:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
