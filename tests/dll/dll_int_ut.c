@@ -10,7 +10,7 @@ int test_idn_create() {
   CHECK_MSG(n->base.prev == NULL, "base->prev");
   CHECK_MSG(n->base.next == NULL, "base->next");
   CHECK_MSG(n->value == 90, "value 90");
-  dln_free(dl_node(n));
+  free(dll_node(n));
   return 0;
 }
 

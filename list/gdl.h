@@ -25,8 +25,8 @@ typedef struct gtype_double_linked {
 #define gdl_list(lst) ((gdl_t)(lst))
 
 #define gdl_node_value(n) (gdl_node(n)->value)
-#define gdl_node_next(n) (gdl_node(dl_node(n)->next))
-#define gdl_node_prev(n) (gdl_node(dl_node(n)->prev))
+#define gdl_node_next(n) (gdl_node(dll_node(n)->next))
+#define gdl_node_prev(n) (gdl_node(dll_node(n)->prev))
 
 #define gdl_front(list) (gdl_node(dll_front(list)))
 #define gdl_back(list) (gdl_node(dll_back(list)))
@@ -34,13 +34,13 @@ typedef struct gtype_double_linked {
 #define gdl_push_front(list, value) \
   do { \
     gdn_t _nn = gdl_create_node(value); \
-    dll_push_front(dl_list(list), dl_node(_nn)); \
+    dll_push_front(dll_list(list), dll_node(_nn)); \
   } while (0)
 
 #define gdl_push_back(list, value) \
   do { \
     gdn_t _nn = gdl_create_node(value); \
-    dll_push_back(dl_list(list), dl_node(_nn)); \
+    dll_push_back(dll_list(list), dll_node(_nn)); \
   } while (0)
 
 #define gdl_pop_front(list) \
@@ -83,13 +83,13 @@ typedef struct gtype_double_linked {
 #define gdl_inserta(list, pos, value) \
   do { \
     gdn_t _nn = gdl_create_node(value); \
-    dll_inserta(dl_list(list), dl_node(pos), dl_node(_nn)); \
+    dll_inserta(dll_list(list), dll_node(pos), dll_node(_nn)); \
   } while (0)
 
 #define gdl_insertb(list, pos, value) \
   do { \
     gdn_t _nn = gdl_create_node(value); \
-    dll_insertb(dl_list(list), dl_node(pos), dl_node(_nn)); \
+    dll_insertb(dll_list(list), dll_node(pos), dll_node(_nn)); \
   } while (0)
 
 static inline gtype* gdl_first_value(gdl_t lst) {

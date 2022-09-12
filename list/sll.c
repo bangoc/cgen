@@ -48,7 +48,7 @@ void sll_pop_front(sll_t list) {
   --list->length;
 }
 
-void sll_print_node_address(sln_t node) {
+void sll_node_print_address(sln_t node) {
   printf("[%p]", node);
 }
 

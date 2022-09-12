@@ -11,13 +11,13 @@ typedef struct single_linked_list {
   long length;
 } *sll_t;
 
+typedef void (*sll_node_print_t)(sln_t);
+
 #define sll_node(n) ((sln_t)(n))
 #define sll_list(list) ((sll_t)(list))
 #define sll_front(list) (sll_list(list)->front)
 #define sll_back(list) (sll_list(list)->back)
 #define sll_length(list) (sll_list(list)->length)
-
-typedef void (*sll_node_print_t)(sln_t);
 
 #define sll_traverse(cur, list) \
   for (sln_t cur = list->front; cur != NULL; cur = cur->next)
@@ -38,7 +38,7 @@ sll_t sll_create_list();
 void sll_push_back(sll_t list, sln_t node);
 void sll_push_front(sll_t list, sln_t node);
 void sll_pop_front(sll_t list);
-void sll_print_node_address(sln_t node);
+void sll_node_print_address(sln_t node);
 void sll_pprint(sll_t list, sll_node_print_t npp);
 
 #endif  // LIST_SLL_H_

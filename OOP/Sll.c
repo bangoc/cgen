@@ -33,11 +33,11 @@ long SllLength(Sll list) {
 }
 
 void SllPPrintNode(SllNode node) {
-  sll_print_node_address((sln_t)node);
+  sll_node_print_address((sln_t)node);
 }
 
 void SllPPrint(Sll list) {
-  sll_pprint((sll_t)list, sll_print_node_address);
+  sll_pprint((sll_t)list, sll_node_print_address);
 }
 
 

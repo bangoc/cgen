@@ -14,7 +14,7 @@ int test_dll_create_node() {
   if (nn->prev || nn->next) {
     return 1;
   }
-  dln_free(nn);
+  free(nn);
   return 0;
 }
 

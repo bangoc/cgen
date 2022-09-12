@@ -6,22 +6,11 @@
 #include <stdlib.h>
 
 dln_t dll_create_node() {
-  dln_t n = malloc(sizeof(struct double_linked_node));
-  n->next = n->prev = NULL;
-  return n;
+  return calloc(sizeof(struct double_linked_node), 1);;
 }
 
 dll_t dll_create_list() {
-  dll_t list = malloc(sizeof(struct double_linked_list));
-  list->front = list->back = NULL;
-  return list;
-}
-
-void dll_free(dll_t list) {
-  while (!dll_is_empty(list)) {
-    dll_pop_front(list);
-  }
-  free(list);
+  return calloc(sizeof(struct double_linked_list), 1);;
 }
 
 void dll_push_back(dll_t list, dln_t nn) {
@@ -32,6 +21,7 @@ void dll_push_back(dll_t list, dln_t nn) {
     nn->prev = list->back;
     list->back = nn;
   }
+  ++list->length;
 }
 
 void dll_push_front(dll_t list, dln_t nn) {
@@ -42,6 +32,7 @@ void dll_push_front(dll_t list, dln_t nn) {
     nn->next = list->front;
     list->front = nn;
   }
+  ++list->length;
 }
 
 void dll_pop_back(dll_t list) {
@@ -55,7 +46,8 @@ void dll_pop_back(dll_t list) {
   } else {
     list->front = NULL;
   }
-  dln_free(tmp);
+  free(tmp);
+  --list->length;
 }
 
 void dll_pop_front(dll_t list) {
@@ -69,7 +61,8 @@ void dll_pop_front(dll_t list) {
   } else {
     list->back = NULL;
   }
-  dln_free(tmp);
+  free(tmp);
+  --list->length;
 }
 
 /* insert nn after pos in list. push_back if pos == NULL */
@@ -88,6 +81,7 @@ dln_t dll_inserta(dll_t list, dln_t pos, dln_t nn) {
   } else {
     list->back = nn;
   }
+  ++list->length;
   return nn;
 }
 
@@ -107,21 +101,8 @@ dln_t dll_insertb(dll_t list, dln_t pos, dln_t nn) {
   } else {
     list->front = nn;
   }
+  ++list->length;
   return nn;
-}
-
-int dll_is_empty(dll_t list) {
-  return list->front == NULL && list->back == NULL;
-}
-
-long dll_length(dll_t list) {
-  long len = 0;
-  dln_t n = dll_front(list);
-  while (n) {
-    ++len;
-    n = n->next;
-  }
-  return len;
 }
 
 void dll_erase(dll_t list, dln_t pos) {
@@ -138,29 +119,18 @@ void dll_erase(dll_t list, dln_t pos) {
              p2 = pos->next;
   p1->next = p2;
   p2->prev = p1;
-  dln_free(pos);
+  free(pos);
+  --list->length;
 }
 
-void dll_clear(dll_t list) {
-  while (!dll_is_empty(list)) {
-    dll_pop_front(list);
-  }
-}
-
-void dln_pprint(dln_t node) {
+void dll_node_print_address(dln_t node) {
   printf("[%p]", node);
 }
 
-void dll_pprint(dll_t list, void (*ppn)()) {
-  printf("NULL <= ");
-  int first = 1;
-  for (dln_t cur = list->front; cur != NULL; cur = cur->next) {
-    if (first) {
-      first = 0;
-    } else {
-      printf(" <==> ");
-    }
-    ppn(cur);
+void dll_pprint(dll_t list, dll_node_print_t npp) {
+  dll_traverse(cur, list) {
+    npp(cur);
+    printf(" ");
   }
-  printf(" => NULL\n");
+  printf("\n");
 }

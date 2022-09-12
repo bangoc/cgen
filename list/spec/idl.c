@@ -11,12 +11,12 @@ idn_t idn_create(int value) {
 
 void idl_push_back(dll_t list, int value) {
   idn_t nn = idn_create(value);
-  dll_push_back(list, dl_node(nn));
+  dll_push_back(list, dll_node(nn));
 }
 
 void idl_push_front(dll_t list, int value) {
   idn_t nn = idn_create(value);
-  dll_push_front(list, dl_node(nn));
+  dll_push_front(list, dll_node(nn));
 }
 
 int idl_pop_back(dll_t list) {
@@ -32,13 +32,13 @@ int idl_pop_front(dll_t list) {
 }
 
 idn_t idl_insert_a(dll_t list, idn_t pos, int value) {
-  return to_idn(dll_inserta(list, dl_node(pos),
-      dl_node(idn_create(value))));
+  return to_idn(dll_inserta(list, dll_node(pos),
+      dll_node(idn_create(value))));
 }
 
 idn_t idl_insertb(dll_t list, idn_t pos, int value) {
-  return to_idn(dll_insertb(list, dl_node(pos),
-      dl_node(idn_create(value))));
+  return to_idn(dll_insertb(list, dll_node(pos),
+      dll_node(idn_create(value))));
 }
 
 void idn_pprint(idn_t node) {
