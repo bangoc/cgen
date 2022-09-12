@@ -34,7 +34,7 @@ int main() {
   // Print songs list
   int stt = 1;
   gdl_traverse(cur, list) {
-    song_t s = (song_t)(gdl_node_value(cur).v);
+    song_t s = (song_t)(cur->v);
     printf("%3d %s\n", stt++, s->name);
   }
 

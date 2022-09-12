@@ -66,9 +66,7 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
     if ((newsize) > _c) {  \
       arr_set_capacity(a, newsize); \
     } \
-    if ((newsize) <= arr_capacity(a)) { \
-      arr_size(a) = (newsize); \
-    } \
+    arr_size(a) = (newsize); \
   } while (0)
 
 #define arr_create(cap, etyp) \

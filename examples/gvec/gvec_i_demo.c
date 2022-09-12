@@ -8,7 +8,10 @@
 
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc == 2) {
+    freopen(argv[1], "r", stdin);
+  }
   printf("Nhập các số không âm, hoặc nhập -1 để kết thúc: \n");
   gvec_t vec = gvec_create(0, NULL);
   int x;

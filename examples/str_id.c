@@ -54,7 +54,10 @@ void free_cache(str_cache_t *cache) {
   *cache = NULL;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc == 2) {
+    freopen(argv[1], "r", stdin);
+  }
   char s[100];
   str_cache_t cache = create_cache();
   for (;;) {

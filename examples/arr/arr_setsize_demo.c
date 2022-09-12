@@ -17,9 +17,13 @@ int main() {
 
   //  Thay đổi kích thước mảng
   arr_set_size(a, 20);
+  for (int i = 10; i < arr_size(a); ++i) {
+    ARR(a)[i] = i;
+  }
   for (int i = 0; i < arr_size(a); ++i) {
     printf("a[%d] = %d\n", i, ARR(a)[i]);
   }
   printf("size = %zu\n", arr_size(a));
+  arr_free(a);
   return 0;
 }

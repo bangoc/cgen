@@ -16,7 +16,10 @@ long sum(arr_t(int) a) {
   return s;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc == 2) {
+    freopen(argv[1], "r", stdin);
+  }
   arr_decl(a, 0, int);
   printf("Nhập vào 1 dãy số bất kỳ, nhập 0 để kết thúc nhập\n:");
   for(;;) {

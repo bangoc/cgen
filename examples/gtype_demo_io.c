@@ -16,7 +16,10 @@ void print_contact(gtype v) {
   printf("Họ và tên: %s\n", ((contact_t)(v.v))->fullname);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc == 2) {
+    freopen(argv[1], "r", stdin);
+  }
   gtype v;
   printf("Nhập 1 số nguyên: ");
   scanf("%ld", &v.l);

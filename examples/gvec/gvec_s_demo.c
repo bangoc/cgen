@@ -9,7 +9,10 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  if (argc == 2) {
+    freopen(argv[1], "r", stdin);
+  }
   printf("Nhập vào các chuỗi ký tự hoặc STOP để kết thúc: \n");
   gvec_t vec = gvec_create(0, gtype_free_s);
   char *line = NULL;
@@ -18,7 +21,7 @@ int main() {
       printf("Kết thúc tệp hoặc lỗi nhập.\n");
       break;
     }
-    if (strcmp(line, "STOP\n") == 0) {
+    if (strcmp(line, "STOP\n") == 0 || strcmp(line, "STOP") == 0) {
       break;
     }
     gvec_append(vec, gtype_s(strdup(line)));
