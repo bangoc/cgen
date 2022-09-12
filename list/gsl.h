@@ -42,12 +42,12 @@ typedef struct gtype_single_linked_list {
 
 #define gsl_pop_front(list) \
   do { \
-    gsn_t n = gsl_front(list); \
-    if (!n) { \
+    gsn_t _nn = gsl_front(list); \
+    if (!_nn) { \
       break; \
     } \
-    if (list->free_value) { \
-      list->free_value(n->value); \
+    if ((list)->free_value) { \
+      (list)->free_value(_nn->value); \
     } \
     sll_pop_front(list); \
   } while (0)

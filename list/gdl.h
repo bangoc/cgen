@@ -49,8 +49,8 @@ typedef struct gtype_double_linked {
     if (!_tmp) { \
       break; \
     } \
-    if (list->free_value) { \
-      list->free_value(gdl_node_value(_tmp)); \
+    if ((list)->free_value) { \
+      (list)->free_value(gdl_node_value(_tmp)); \
     } \
     dll_pop_front(list); \
   } while (0)
@@ -61,8 +61,8 @@ typedef struct gtype_double_linked {
     if (!_tmp) { \
       break; \
     } \
-    if (list->free_value) { \
-      list->free_value(gdl_node_value(_tmp)); \
+    if ((list)->free_value) { \
+      (list)->free_value(gdl_node_value(_tmp)); \
     } \
     dll_pop_back(list); \
   } while (0)
