@@ -1,24 +1,23 @@
 #ifndef LIST_SLL_H_
 #define LIST_SLL_H_
 
-typedef struct sln_s {
-  struct sln_s *next;
-} *sln_t;
+typedef struct single_linked_node {
+  struct single_linked_node *next;
+} sln_s, *sln_t;
 
-typedef struct sll_s {
+typedef struct single_linked_list {
   sln_t front;
   sln_t back;
 } *sll_t;
 
-#define to_sln(n) ((sln_t)(n))
-#define sln_free(n) free(n)
+#define sll_node(n) ((sln_t)(n))
 
-#define to_sll(list) ((sll_t)(list))
-#define sll_front(list) (to_sll(list)->front)
-#define sll_back(list) (to_sll(list)->back)
+#define sll_list(list) ((sll_t)(list))
+#define sll_front(list) (sll_list(list)->front)
+#define sll_back(list) (sll_list(list)->back)
 
-sln_t sln_create();
-sll_t sll_create();
+sln_t sll_create_node();
+sll_t sll_create_list();
 void sll_free(sll_t list);
 
 void sll_push_back(sll_t list, sln_t node);

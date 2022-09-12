@@ -7,63 +7,51 @@
  * gtype single linked list
  */
 
+#include "base/core.h"
 #include "base/gtype.h"
+#include "list/sll.h"
 
-typedef enum {
-  GSN_VALUE,
-  GSN_NEXT,
-  GSN_ELEMENTS
-} gsn_elements;
+typedef struct gtype_single_linked_node {
+  struct single_linked_node base;
+  gtype value;
+} gsn_s, *gsn_t;
 
-typedef struct gtype_single_linked {
-  gtype *front, *back;
+typedef struct gtype_single_linked_list {
+  struct single_linked_list base;
   gtype_free_t free_value;
 } gsl_s, *gsl_t;
 
-#define gsn_value(n) (*(n))
-#define gsn_next(n) (((gtype*)(n) + GSN_NEXT)->g)
-#define gsl_front(list) (list->front)
-#define gsl_back(list) (list->back)
+#define gsl_node(n) ((gsn_t)(n))
+
+#define gsl_node_value(n) (gsl_node(n)->value)
+#define gsl_node_next(n) (gsl_node(sll_node(n)->next))
+#define gsl_front(list) (gsl_node(sll_front(list)))
+#define gsl_back(list) (gsl_node(sll_back(list)))
 #define gsl_push_back(list, value) \
   do { \
-    gtype *_node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
-    gsn_value(_node) = (value); \
-    gsn_next(_node) = NULL; \
-    if (gsl_back(list)) { \
-      gsn_next(gsl_back(list)) = _node; \
-      gsl_back(list) = _node; \
-    } else { \
-      gsl_back(list) = gsl_front(list) = _node; \
-    } \
+    gsn_t _nn = gsl_create_node(value); \
+    sll_push_back(sll_list(list), sll_node(_nn)); \
   } while (0)
 
 #define gsl_push_front(list, value) \
   do { \
-    gtype *_node = malloc(GSN_ELEMENTS * sizeof(gtype)); \
-    gsn_value(_node) = (value); \
-    gsn_next(_node) = gsl_front(list); \
-    if (gsl_front(list)) { \
-      gsl_front(list) = _node; \
-    } else { \
-      gsl_front(list) = gsl_back(list) = _node; \
-    } \
+    gsn_t _nn = gsl_create_node(value); \
+    sll_push_front(sll_list(list), sll_node(_nn)); \
   } while (0)
 
 #define gsl_pop_front(list) \
   do { \
-    gtype *_front = gsl_front(list); \
-    gtype *_tmp = gsn_next(_front); \
+    gsn_t n = gsl_front(list); \
+    if (!n) { \
+      break; \
+    } \
     if (list->free_value) { \
-      list->free_value(_front[GSN_VALUE]); \
+      list->free_value(n->value); \
     } \
-    free(_front); \
-    gsl_front(list) = _tmp; \
-    if (!_tmp) { \
-      gsl_back(list) = NULL; \
-    } \
+    sll_pop_front(list); \
   } while (0)
 
-#define gsl_is_empty(list) (gsl_front(list) == NULL && gsl_back(list) == NULL)
+#define gsl_is_empty(list) (sll_is_empty(sll_list(list)))
 #define gsl_clear(list) \
   do {\
     while (!gsl_is_empty(list)) { \
@@ -77,12 +65,23 @@ typedef struct gtype_single_linked {
       free(list); \
   } while (0)
 
-void gtype_free_gsl(gtype value);
+static inline gtype *gsl_front_value(gsl_t l) {
+  gsn_t tmp = gsl_front(l);
+  return tmp? &tmp->value: NULL;
+}
+
+static inline gtype *gsl_next_value(gtype *cur) {
+  gsn_t nn = gsl_node_next(container_of(cur, struct gtype_single_linked_node, value));
+  return nn? &nn->value: NULL;
+}
 
 #define gsl_traverse(cur, list) \
-  for (gtype *cur = gsl_front(list); cur; cur = gsn_next(cur))
+  for (gtype *cur = gsl_front_value(list); cur; cur = gsl_next_value(cur))
 
-gsl_t gsl_create(gtype_free_t free_value);
+gsn_t gsl_create_node(gtype value);
+gsl_t gsl_create_list(gtype_free_t free_value);
 long gsl_size(gsl_t);
+void gtype_free_gsl(gtype value);
+void gsl_pprint(gsl_t l, gtype_print_t pp);
 
 #endif  // LIST_GSL_H_

@@ -23,7 +23,7 @@ typedef union generic_type {
   void *v;
   union generic_type *g;
   struct gtype_double_linked *gdl;
-  struct gtype_single_linked *gsl;
+  struct gtype_single_linked_list *gsl;
   struct gtype_vector *gvec;
   struct red_black_map *rbm;
   struct red_black_set *rbs;

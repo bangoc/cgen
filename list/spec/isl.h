@@ -10,7 +10,7 @@
 #include "list/sll.h"
 
 typedef struct isn_s {
-  struct sln_s base;
+  struct single_linked_node base;
   long value;
 } *isn_t;
 

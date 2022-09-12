@@ -5,14 +5,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-sln_t sln_create() {
-  sln_t n = malloc(sizeof(struct sln_s));
+sln_t sll_create_node() {
+  sln_t n = malloc(sizeof(struct single_linked_node));
   n->next = NULL;
   return n;
 }
 
-sll_t sll_create() {
-  sll_t list = malloc(sizeof(struct sll_s));
+sll_t sll_create_list() {
+  sll_t list = malloc(sizeof(struct single_linked_list));
   list->front = NULL;
   list->back = NULL;
   return list;
@@ -54,7 +54,7 @@ void sll_pop_front(sll_t list) {
   if (list->front == NULL) {
     list->back = NULL;
   }
-  sln_free(tmp);
+  free(tmp);
 }
 
 int sll_is_empty(sll_t list) {

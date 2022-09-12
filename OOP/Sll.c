@@ -42,7 +42,7 @@ void SllPPrint(Sll list) {
 
 
 Sll Sll_create() {
-  sll_t sll = sll_create();
+  sll_t sll = sll_create_list();
   Sll list = realloc(sll, sizeof(SllS));
   MEMBER(list, Sll, PushBack);
   MEMBER(list, Sll, PushFront);
@@ -56,16 +56,16 @@ Sll Sll_create() {
 }
 
 SllNode SllNode_create() {
-  return (SllNode)sln_create();
+  return (SllNode)sll_create_node();
 }
 
 void Sll_free(Sll list) {
-  sll_t sll = realloc(list, sizeof(struct sll_s));
+  sll_t sll = realloc(list, sizeof(struct single_linked_list));
   sll_free(sll);
 }
 
 void SllNode_free(SllNode node) {
-  sln_free((sln_t)node);
+  free((sln_t)node);
 }
 
 /* Giao diện gtype */

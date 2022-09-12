@@ -8,11 +8,11 @@
 #include "all.h"
 
 typedef struct {
-  struct sln_s sll_node;
+  struct single_linked_node sll_node;
 } SllNodeS, *SllNode;
 
 typedef struct {
-  struct sll_s sll;
+  struct single_linked_list sll;
   void (*PushBack)();
   void (*PushFront)();
   void (*PopFront)();

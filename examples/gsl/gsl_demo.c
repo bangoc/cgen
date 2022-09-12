@@ -10,7 +10,7 @@
 #include <string.h>
 
 int main() {
-  gsl_t list = gsl_create(gtype_free_s);
+  gsl_t list = gsl_create_list(gtype_free_s);
   char *line = NULL;
   while (cgetline(&line, 0, stdin)) {
     if (strcmp(line, "STOP\n") == 0) {
