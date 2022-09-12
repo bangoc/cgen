@@ -31,7 +31,7 @@ void isn_pprint(sln_t node) {
 
 
 void isl_pprint(sll_t list) {
-  _sll_pprint(list, isn_pprint);
+  sll_pprint(list, isn_pprint);
 }
 
 /* Triển khai giao diện queue số nguyên */

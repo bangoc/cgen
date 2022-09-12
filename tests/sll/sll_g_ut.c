@@ -11,13 +11,13 @@ gtype pop_value_front(gsl_t list) {
 int main() {
   gsl_t list = gsl_create_list(NULL);
   gsl_push_back(list, (gtype){.l = 1});
-  CHECK_MSG(gsl_size(list) == 1, "Append n1 size");
+  CHECK_MSG(gsl_length(list) == 1, "Append n1 size");
 
   gsl_push_front(list, (gtype){.l = 2});
-  CHECK_MSG(gsl_size(list) == 2, "Prepend n2 size");
+  CHECK_MSG(gsl_length(list) == 2, "Prepend n2 size");
 
   gsl_push_back(list, (gtype){.l = 3});
-  CHECK_MSG(gsl_size(list) == 3, "Append n3 size");
+  CHECK_MSG(gsl_length(list) == 3, "Append n3 size");
 
   CHECK_MSG(gsl_node_value(gsl_front(list)).l == 2, "Value 2");
   CHECK_MSG(gsl_node_value(gsl_node_next(gsl_front(list))).l == 1, "Value 1");

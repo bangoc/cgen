@@ -6,23 +6,11 @@
 #include <stdio.h>
 
 sln_t sll_create_node() {
-  sln_t n = malloc(sizeof(struct single_linked_node));
-  n->next = NULL;
-  return n;
+  return calloc(sizeof(struct single_linked_node), 1);
 }
 
 sll_t sll_create_list() {
-  sll_t list = malloc(sizeof(struct single_linked_list));
-  list->front = NULL;
-  list->back = NULL;
-  return list;
-}
-
-void sll_free(sll_t list) {
-  while (!sll_is_empty(list)) {
-    sll_pop_front(list);
-  }
-  free(list);
+  return calloc(sizeof(struct single_linked_list), 1);
 }
 
 void sll_push_back(sll_t list, sln_t node) {
@@ -33,6 +21,7 @@ void sll_push_back(sll_t list, sln_t node) {
     list->back->next = node;
     list->back = node;
   }
+  ++list->length;
 }
 
 void sll_push_front(sll_t list, sln_t node) {
@@ -43,6 +32,7 @@ void sll_push_front(sll_t list, sln_t node) {
     node->next = list->front;
     list->front = node;
   }
+  ++list->length;
 }
 
 void sll_pop_front(sll_t list) {
@@ -55,35 +45,17 @@ void sll_pop_front(sll_t list) {
     list->back = NULL;
   }
   free(tmp);
+  --list->length;
 }
 
-int sll_is_empty(sll_t list) {
-  return list->front == NULL && list->back == NULL;
-}
-
-long sll_length(sll_t list) {
-  long len = 0;
-  sln_t n = sll_front(list);
-  while (n) {
-    ++len;
-    n = n->next;
-  }
-  return len;
-}
-
-void sln_pprint(sln_t node) {
+void sll_print_node_address(sln_t node) {
   printf("[%p]", node);
 }
 
-
-void _sll_pprint(sll_t list, void (*pn)()) {
-  for (sln_t cur = list->front; cur != NULL; cur = cur->next) {
-    pn(cur);
-    printf(" => ");
+void sll_pprint(sll_t list, sll_node_print_t npp) {
+  sll_traverse(cur, list) {
+    npp(cur);
+    printf(" ");
   }
-  printf("NULL\n");
-}
-
-void sll_pprint(sll_t list) {
-  _sll_pprint(list, sln_pprint);
+  printf("\n");
 }

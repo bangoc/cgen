@@ -27,6 +27,7 @@ typedef struct gtype_single_linked_list {
 #define gsl_node_next(n) (gsl_node(sll_node(n)->next))
 #define gsl_front(list) (gsl_node(sll_front(list)))
 #define gsl_back(list) (gsl_node(sll_back(list)))
+#define gsl_length(list) (sll_length(list))
 #define gsl_push_back(list, value) \
   do { \
     gsn_t _nn = gsl_create_node(value); \
@@ -80,7 +81,6 @@ static inline gtype *gsl_next_value(gtype *cur) {
 
 gsn_t gsl_create_node(gtype value);
 gsl_t gsl_create_list(gtype_free_t free_value);
-long gsl_size(gsl_t);
 void gtype_free_gsl(gtype value);
 void gsl_pprint(gsl_t l, gtype_print_t pp);
 

@@ -16,16 +16,6 @@ gsl_t gsl_create_list(gtype_free_t free_value) {
   return l;
 }
 
-long gsl_size(gsl_t list) {
-  gtype *tmp = gsl_front(list);
-  long sz = 0;
-  while (tmp) {
-    ++sz;
-    tmp = gsl_node_next(tmp);
-  }
-  return sz;
-}
-
 void gtype_free_gsl(gtype value) {
   gsl_free(value.gsl);
 }
