@@ -10,6 +10,7 @@
 #include "list/gdl.c"
 #include "list/sll.c"
 #include "list/gsl.c"
+#include "list/que.c"
 #include "list/stk.c"
 #include "list/spec/idl.c"
 #include "list/spec/isl.c"

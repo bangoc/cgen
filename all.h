@@ -16,6 +16,7 @@
 #include "list/gdl.h"
 #include "list/sll.h"
 #include "list/gsl.h"
+#include "list/que.h"
 #include "list/stk.h"
 #include "list/spec/idl.h"
 #include "list/spec/isl.h"
