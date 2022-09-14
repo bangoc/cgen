@@ -7,7 +7,7 @@ int t1() {
   void *p1 = malloc(100);
   void *p2 = malloc(101);
   void *p3 = malloc(105);
-  gvec_t v = gvec_create(10, gtype_free_v);
+  gvec_t v = gvec_create(0, gtype_free_v);
   gvec_append(v, gtype_v(p1));
   gvec_append(v, gtype_v(p2));
   gvec_append(v, gtype_v(p3));

@@ -14,7 +14,7 @@ int gtype_inc_cmp_s(const void *v1, const void *v2) {
 }
 
 int t1() {
-  gvec_t v = gvec_create(3, NULL);
+  gvec_t v = gvec_create(0, NULL);
   int a[] = {3, 1, 5, 6, 8, 9, 10, 2};
   int n = sizeof(a)/ sizeof(a[0]);
   for (int i = 0; i < n; ++i) {
@@ -29,7 +29,7 @@ int t1() {
 }
 
 int t2() {
-  gvec_t v = gvec_create(3, gtype_free_s);
+  gvec_t v = gvec_create(0, gtype_free_s);
   gvec_append(v, gtype_s(strdup("AAA")));
   gvec_append(v, gtype_s(strdup("CCC")));
   gvec_append(v, gtype_s(strdup("BBB")));
@@ -43,7 +43,7 @@ int t2() {
 }
 
 int t3() {
-  gvec_t v = gvec_create(3, NULL);
+  gvec_t v = gvec_create(0, NULL);
   for (int i = 0; i < 10; ++i) {
     gvec_append(v, gtype_l(i));
   }
