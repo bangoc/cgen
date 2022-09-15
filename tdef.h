@@ -1,8 +1,8 @@
 #ifndef TDEF_H_
 #define TDEF_H_
 
-/**
- * Quy tắc sử dụng kiểu con trỏ ở dạng đủ thông tin, không tạo
+/** @file
+ * @brief Quy tắc sử dụng kiểu con trỏ ở dạng đủ thông tin, không tạo
  * tên tương đương cho kiểu con trỏ (typedef) được áp dụng trong
  * phạm vi thư viện này.
  *
