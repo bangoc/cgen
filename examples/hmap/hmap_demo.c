@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main() {
-  hmap_t map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
+  struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   hmap_insert(map, gtype_s("aaa"), gtype_l(100));
   hmap_insert(map, gtype_s("bbb"), gtype_l(200));
   hmap_insert(map, gtype_s("ccc"), gtype_l(300));

@@ -1,8 +1,8 @@
 #include "vec/hmap.h"
 #include "tests/base/utils.h"
 
-hmap_ires hmap_insert_free_key(hmap_t map, gtype key, gtype value) {
-  hmap_ires res = hmap_insert(map, key, value);
+struct hmap_ires hmap_insert_free_key(struct hmap *map, gtype key, gtype value) {
+  struct hmap_ires res = hmap_insert(map, key, value);
   if (!res.inserted) {
     if (map->free_key) {
       map->free_key(key);
@@ -12,7 +12,7 @@ hmap_ires hmap_insert_free_key(hmap_t map, gtype key, gtype value) {
 }
 
 int main() {
-  hmap_t map = hmap_create(gtype_hash_s, gtype_cmp_s,
+  struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s,
         gtype_free_s, NULL);
   hmap_insert(map, gtype_s(strdup("aaa")), gtype_l(100));
   hmap_insert(map, gtype_s(strdup("bbb")), gtype_l(200));

@@ -10,7 +10,7 @@ typedef struct str_cache {
 
 void as_print(arr_t(char*) is) {
   for (int i = 0; i < arr_size(is); ++i) {
-    printf("%-5d: %s\n", i, ARR(is)[i]);
+    printf("%-5d: %s\n", i, arr(is)[i]);
   }
 }
 
@@ -33,13 +33,13 @@ long get_save_str_id(str_cache_t cache, char *s) {
   }
   arr_append(cache->is, strdup(s));
   long id2 = arr_size(cache->is) - 1;
-  s2i_put(cache->si, ARR(cache->is)[id2], id2);
+  s2i_put(cache->si, arr(cache->is)[id2], id2);
   return id2;
 }
 
 char *get_by_id(str_cache_t cache, long id) {
   if (id >= 0 && id < arr_size(cache->is)) {
-    return ARR(cache->is)[id];
+    return arr(cache->is)[id];
   }
   return NULL;
 }
@@ -47,7 +47,7 @@ char *get_by_id(str_cache_t cache, long id) {
 void free_cache(str_cache_t *cache) {
   s2i_free((*cache)->si);
   for (int i = 0; i < arr_size((*cache)->is); ++i) {
-    free(ARR((*cache)->is)[i]);
+    free(arr((*cache)->is)[i]);
   }
   arr_free((*cache)->is);
   free(*cache);

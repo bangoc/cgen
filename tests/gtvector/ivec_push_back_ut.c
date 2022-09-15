@@ -9,9 +9,9 @@ int main() {
   arr_append(v, 3);
   CHECK_MSG(arr_size(v) == 3, "Vector size");
   CHECK_MSG(arr_capacity(v) >= 3, "Vector capacity");
-  CHECK_MSG(ARR(v)[0] == 1, "V0 value");
-  CHECK_MSG(ARR(v)[1] == 2, "V1 value");
-  CHECK_MSG(ARR(v)[2] == 3, "V2 value");
+  CHECK_MSG(arr(v)[0] == 1, "V0 value");
+  CHECK_MSG(arr(v)[1] == 2, "V1 value");
+  CHECK_MSG(arr(v)[2] == 3, "V2 value");
   arr_free(v);
   printf("Test Ok!\n");
   return 0;

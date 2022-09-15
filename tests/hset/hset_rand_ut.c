@@ -12,7 +12,7 @@ void rands9(char *s) {
 
 int t1(int n) {
   char **keys = malloc(n * sizeof(char *));
-  hset_t hs = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
+  struct hset *hs = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < n; ++i) {
     keys[i] = malloc(10);
     for (;;) {

@@ -39,5 +39,9 @@ typedef struct grbt *grb_tree_t;
 typedef struct rbmn *rbm_node_t;
 typedef struct rbmt *rbm_t;
 typedef struct rbst *rbs_t;
+typedef struct hmap *hmap_t;
+typedef struct hset *hset_t;
+typedef struct p1way *p1w_t;
+typedef struct p2ways *p2w_t;
 
 #endif  // TDEF_H_

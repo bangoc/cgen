@@ -32,7 +32,7 @@
  *   #hmap_free(map) - Giải phóng bộ nhớ của map
  *
  */
-typedef struct hash_map {
+struct hmap {
   int capacity;
   int mod;
   uint mask;
@@ -45,13 +45,13 @@ typedef struct hash_map {
   gtype_cmp_t cmp;
   gtype_free_t free_key;
   gtype_free_t free_value;
-} hmap_s, *hmap_t;
+};
 
 /**
  * \headerfile "all.h"
- * Kiểu trả về của hàm hmap_insert(hmap_t tab, gtype key, gtype value)
+ * Kiểu trả về của hàm hmap_insert(struct hmap *tab, gtype key, gtype value)
  */
-typedef struct hmap_insert_result {
+struct hmap_ires {
   /**
    * Con trỏ tới giá trị đang được lưu trong bảng băm.
    */
@@ -63,7 +63,7 @@ typedef struct hmap_insert_result {
    *    = 0 Nếu khóa đã tồn tại nên chưa được thêm vào.
    */
   int inserted;
-} hmap_ires;
+};
 
 #define hmap_hash_at(map, idx) (elem_ref((map)->hashes, idx))
 #define hmap_key_at(map, idx) (elem_ref((map)->keys, idx))
@@ -84,29 +84,29 @@ typedef struct hmap_insert_result {
  * @return Con trỏ tới đối tượng bảng băm được tạo. (Hiện chưa xử lý kịch)
  * bản lỗi cấp phát bộ nhớ.
  *
- * \memberof hash_map
+ * \memberof hmap
  *
  * Tham khảo: rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
-hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
+struct hmap *hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key, gtype_free_t free_value);
 
 /**
  * Thêm cặp (key, value) vào bảng tab. Nếu key đã tồn tại thì
  * bỏ qua, có thể truy cập giá trị đang được gắn với khóa đã có
- * trong bảng băm bằng con trỏ ::hmap_ires::value trong kết quả
+ * trong bảng băm bằng con trỏ ::struct hmap_ires::value trong kết quả
  * được trả về.
  *
  * @param tab Con trỏ tới bảng băm
  * @param key Khóa được thêm vào
  * @param value Giá trị giá trị được thêm vào
- * @return Trả về đối tượng ::hmap_ires
+ * @return Trả về đối tượng ::struct hmap_ires
  *
- * \memberof hash_map
+ * \memberof hmap
  *
  * Tham khảo: rbm_insert(struct rbm *t, gtype key, gtype value)
  */
-hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
+struct hmap_ires hmap_insert(struct hmap *tab, gtype key, gtype value);
 
 /**
  * Thêm cặp (key, value) vào bảng tab. Nếu key đã tồn tại thì
@@ -119,11 +119,11 @@ hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
  * trong tab nếu đã có, hoặc trả về NULL nếu không.
  * Giá trị trả về có kiểu ::gtype*
  *
- * \memberof hash_map
+ * \memberof hmap
  *
  * Tham khảo: rbm_put(struct rbm *t, gtype key, gtype value)
  */
-gtype *hmap_put(hmap_t tab, gtype key, gtype value);
+gtype *hmap_put(struct hmap *tab, gtype key, gtype value);
 
 /**
  * Tra cứu giá trị trong bảng tab theo key.
@@ -133,11 +133,11 @@ gtype *hmap_put(hmap_t tab, gtype key, gtype value);
  * @return Trả về con trỏ tới giá trị đang được gắn với key trong tab
  * nếu tồn tại, hoặc NULL nếu ngược lại.
  *
- * \memberof hash_map
+ * \memberof hmap
  *
  * Tham khảo: rbm_value(struct rbm *t, gtype key)
  */
-gtype *hmap_value(hmap_t tab, gtype key);
+gtype *hmap_value(struct hmap *tab, gtype key);
 
 /**
  * Nếu key không có trong tab thì bỏ qua, nếu ngược lại thì xóa cặp
@@ -148,11 +148,11 @@ gtype *hmap_value(hmap_t tab, gtype key);
  * @param key Khóa cần xóa.
  * @return 1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.
  *
- * \memberof hash_map
+ * \memberof hmap
  *
  * Tham khảo: rbm_remove(struct rbm *t, gtype key)
  */
-int hmap_remove(hmap_t tab, gtype key);
+int hmap_remove(struct hmap *tab, gtype key);
 
 /**
  * Số lượng cặp khóa & giá trị đang được lưu trong hmap.
@@ -172,9 +172,9 @@ int hmap_remove(hmap_t tab, gtype key);
 #define hmap_free(tab) \
   do { \
     int _capacity = (tab)->capacity; \
-    gtype *_keys = ARR((tab)->keys); \
-    gtype *_values = ARR((tab)->values); \
-    uint *_hashes = ARR((tab)->hashes); \
+    gtype *_keys = arr((tab)->keys); \
+    gtype *_values = arr((tab)->values); \
+    uint *_hashes = arr((tab)->hashes); \
     for (int _i = 0; _i < _capacity; ++_i) { \
       if (HASH_IS_REAL(_hashes[_i])) { \
         if ((tab)->free_key) { \
@@ -198,16 +198,16 @@ int hmap_remove(hmap_t tab, gtype key);
  * @param tab Con trỏ tới bảng băm.
  * @return Hàm không trả về giá trị.
  *
- * \memberof hash_map
+ * \memberof hmap
  */
-void hmap_clear(hmap_t tab);
+void hmap_clear(struct hmap *tab);
 
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng bảng bắm
  * được lưu trong một cấu trúc lưu trữ khác.
  *
  * @param value Giá trị gtype đang chứa con trỏ tới bảng băm.
- * Trước tiên value.v được ép kiểu thành ::hmap_t, sau đó con trỏ ::hmap_t
+ * Trước tiên value.v được ép kiểu thành ::struct hmap *, sau đó con trỏ ::struct hmap *
  * được truyền cho hmap_free.
  * @return Hàm không trả về giá trị.
  *
@@ -215,8 +215,8 @@ void hmap_clear(hmap_t tab);
  */
 void gtype_free_hmap(gtype value);
 
-gtype *hmap_next_pkey(hmap_t, gtype*);
-gtype *hmap_next_pvalue(hmap_t, gtype*);
+gtype *hmap_next_pkey(struct hmap *, gtype*);
+gtype *hmap_next_pvalue(struct hmap *, gtype*);
 
 /**
  * Duyệt tuần tự các cặp khóa và giá trị trong map. Các tham số key và value

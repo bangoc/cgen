@@ -27,10 +27,10 @@ typedef union generic_type {
   struct gvector *gvec;
   struct rbm *rbm;
   struct rbs *rbs;
-  struct hash_map *hmap;
-  struct hash_set *hset;
-  struct priority_one_way *p1w;
-  struct priority_two_ways *p2w;
+  struct hmap *hmap;
+  struct hset *hset;
+  struct p1way *p1w;
+  struct p2ways *p2w;
 } gtype;
 
 #define gtype_value(type, val) ((gtype){.type = (val)})

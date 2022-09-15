@@ -28,10 +28,10 @@ int main() {
   struct gdl *gdl;
   struct gsl *gsl;
   struct gvector *gvec;
-  hmap_t hmap;
-  hset_t hset;
-  p1w_t p1w;
-  p2w_t p2w;
+  struct hmap *hmap;
+  struct hset *hset;
+  struct p1way *p1w;
+  struct p2ways *p2w;
   struct rbm *rbm;
   struct rbs *rbs;
   value = gtype_gdl(gdl);

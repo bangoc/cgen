@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void print_hset(hset_t tab) {
+void print_hset(struct hset *tab) {
   printf("size: %d  capacity: %d  noccupied: %d\n", tab->size, tab->capacity, tab->noccupied);
   hset_traverse(cur, tab) {
     printf("%s ", cur->s);
@@ -21,7 +21,7 @@ void print_hset(hset_t tab) {
 
 int main() {
   srand(time(NULL));
-  hset_t tab = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
+  struct hset *tab = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < 10; ++i) {
     hset_insert(tab, gtype_s(strdup(rands(10))));
   }

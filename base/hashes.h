@@ -30,8 +30,8 @@ typedef uint (*gtype_hash_t) (gtype);
 #define hashes_next_pkey_or_pvalue(m, c, kv, o) \
   do { \
     (o) = NULL; \
-    uint *_hashes = ARR((m)->hashes); \
-    gtype *_arr = ARR((m)->kv); \
+    uint *_hashes = arr((m)->hashes); \
+    gtype *_arr = arr((m)->kv); \
     int _idx = (c)? (c) - _arr + 1: 0; \
     for (int _i = _idx; _i < (m)->capacity; ++_i) { \
       if (HASH_IS_REAL(_hashes[_i])) { \

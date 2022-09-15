@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
   sscanf(argv[1], "%d", &n);
   char **str = malloc(n * sizeof(char*));
   int *a = malloc(n * sizeof(int));
-  hmap_t tab = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
+  struct hmap *tab = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   for (int i = 0; i < n; ++i) {
     str[i] = strdup(rands10());
     a[i] = rand() % 10 + 1;

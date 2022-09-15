@@ -4,7 +4,7 @@
 #include "tests/base/utils.h"
 
 int t1() {
-  hset_t hs = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
+  struct hset *hs = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
   CHECK_MSG(hset_insert(hs, gtype_s(strdup("ABC"))) == 1, "Insert ABC");
   CHECK_MSG(hset_insert(hs, gtype_s(strdup("DEF"))) == 1, "Insert DEF");
   CHECK_MSG(hset_insert(hs, gtype_s("ABC")) == 0, "Duplicate ABC");
@@ -17,7 +17,7 @@ int t1() {
 }
 
 int t2() {
-  hset_t hs = hset_create(gtype_hash_l, gtype_cmp_l, NULL);
+  struct hset *hs = hset_create(gtype_hash_l, gtype_cmp_l, NULL);
   int a[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   int n = sizeof(a)/sizeof(a[0]);
   for (int i = 0; i < n; ++i) {

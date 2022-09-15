@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void print_hmap(hmap_t tab) {
+void print_hmap(struct hmap *tab) {
   printf("size: %d  capacity: %d  noccupied: %d\n", tab->size, tab->capacity, tab->noccupied);
   hmap_traverse(k, v, tab) {
     printf("%s:\t %ld\n", k->s, v->l);
@@ -20,7 +20,7 @@ void print_hmap(hmap_t tab) {
 
 int main() {
   srand(time(NULL));
-  hmap_t tab = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, NULL);
+  struct hmap *tab = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {
     hmap_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
   }

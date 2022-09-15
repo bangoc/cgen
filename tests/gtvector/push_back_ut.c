@@ -11,9 +11,9 @@ int t1() {
   arr_append(v, v2);
   arr_append(v, v3);
   CHECK_MSG(arr_size(v) == 3, "Vector size");
-  CHECK_MSG(ARR(v)[0].l == 1, "Element 1");
-  CHECK_MSG(ARR(v)[1].l == 2, "Element 2");
-  CHECK_MSG(ARR(v)[2].l == 3, "Element 3");
+  CHECK_MSG(arr(v)[0].l == 1, "Element 1");
+  CHECK_MSG(arr(v)[1].l == 2, "Element 2");
+  CHECK_MSG(arr(v)[2].l == 3, "Element 3");
   arr_free(v);
   return 0;
 }

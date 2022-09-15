@@ -12,7 +12,7 @@
 
 int main() {
   srand(time(NULL));
-  hmap_t map = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, gtype_free_gvec);
+  struct hmap *map = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, gtype_free_gvec);
   for (int i = 0; i < 100; ++i) {
     struct gvector *vec = gvec_create(0, NULL);
     int n = rand() % 100 + 1;

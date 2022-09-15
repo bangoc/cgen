@@ -7,7 +7,7 @@
 #include "all.h"
 
 int main() {
-  hset_t s = hset_create(gtype_hash_s, gtype_cmp_s, NULL);
+  struct hset *s = hset_create(gtype_hash_s, gtype_cmp_s, NULL);
   hset_insert(s, gtype_s("aaaaa"));
   hset_insert(s, gtype_s("bbbbb"));
   hset_insert(s, gtype_s("ccccc"));

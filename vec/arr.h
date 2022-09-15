@@ -5,10 +5,10 @@
 
 #include <stdlib.h>
 
-#define ARR(pa) (*(pa))
+#define arr(pa) (*(pa))
 #define arr_t(etyp) etyp **
-#define elem(a, i) (ARR(a)[(i)])
-#define elem_ref(a, i) (ARR(a) + (i))
+#define elem(a, i) (arr(a)[(i)])
+#define elem_ref(a, i) (arr(a) + (i))
 
 enum arr_attrib {
   ARR_SZ = 0,
@@ -32,7 +32,7 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
   return NULL;
 }
 
-#define arr_beg(a) (((long*)ARR(a)) - ARR_ATT_MAX)
+#define arr_beg(a) (((long*)arr(a)) - ARR_ATT_MAX)
 #define arr_size(a) (arr_beg(a)[ARR_SZ])
 #define arr_capacity(a) (arr_beg(a)[ARR_CAP])
 #define arr_elem_sz(a) (arr_beg(a)[ARR_ELEM_SZ])
@@ -86,7 +86,7 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
        _tmp = arr_beg(a); \
      } \
      if (_tmp[ARR_SZ] < _tmp[ARR_CAP]) { \
-       ARR(a)[_tmp[ARR_SZ]] = (elem); \
+       arr(a)[_tmp[ARR_SZ]] = (elem); \
        ++(_tmp[ARR_SZ]); \
      } \
    } while (0)

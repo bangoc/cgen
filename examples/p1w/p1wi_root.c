@@ -6,7 +6,7 @@
 #include "all.h"
 #include <stdio.h>
 
-void print_p1wi(p1w_t q) {
+void print_p1wi(struct p1way *q) {
   long sz = p1w_size(q);
   gtype *a = P1WARR(q);
   for (long i = 0; i < sz; ++i) {
@@ -16,7 +16,7 @@ void print_p1wi(p1w_t q) {
 }
 
 int main() {
-  p1w_t q = p1w_create(PRIORITY_MAX, gtype_cmp_l);
+  struct p1way *q = p1w_create(PRIORITY_MAX, gtype_cmp_l);
   p1w_enqueue(q, gtype_l(3));
   p1w_enqueue(q, gtype_l(5));
   p1w_enqueue(q, gtype_l(9));

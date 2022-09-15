@@ -9,19 +9,19 @@
 
 #include <stdlib.h>
 
-p1w_t p1w_create(p1w_types typ, gtype_cmp_t cmp) {
-  p1w_t h = malloc(sizeof(struct priority_one_way));
+struct p1way *p1w_create(enum p1w_types typ, gtype_cmp_t cmp) {
+  struct p1way *h = malloc(sizeof(struct p1way));
   h->data = arr_create(0, gtype);
   h->typ = typ;
   h->cmp = cmp;
   return h;
 }
 
-gtype p1w_peek(p1w_t h) {
-  return ARR(h->data)[0];
+gtype p1w_peek(struct p1way *h) {
+  return arr(h->data)[0];
 }
 
-gtype p1w_dequeue(p1w_t h) {
+gtype p1w_dequeue(struct p1way *h) {
   long sz = arr_size(h->data);
   gtype *a = P1WARR(h);
   gtype tmp = a[0];
@@ -40,7 +40,7 @@ gtype p1w_dequeue(p1w_t h) {
   return tmp;
 }
 
-int p1w_enqueue(p1w_t h, gtype value) {
+int p1w_enqueue(struct p1way *h, gtype value) {
   arr_append(h->data, value);
   long j = p1w_size(h) - 1;
   gtype *a = P1WARR(h);
@@ -57,11 +57,11 @@ int p1w_enqueue(p1w_t h, gtype value) {
   return 0;
 }
 
-long p1w_size(p1w_t h) {
+long p1w_size(struct p1way *h) {
   return arr_size(h->data);
 }
 
-void p1w_root(p1w_t h, gtype value) {
+void p1w_root(struct p1way *h, gtype value) {
   long sz = p1w_size(h);
   gtype *a = P1WARR(h);
   int order = h->cmp(a[0], value);

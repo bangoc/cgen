@@ -8,12 +8,12 @@
 
 #include <stdbool.h>
 
-typedef struct priority_two_ways {
-    long size;
-    arr_t(gtype) data;
-    arr_t(gtype) index;
-    arr_t(gtype) index2;
-} p2w_s, *p2w_t;
+struct p2ways {
+  long size;
+  arr_t(gtype) data;
+  arr_t(gtype) index;
+  arr_t(gtype) index2;
+};
 
 #define PARENT(x)   (((x)+1)/2-1)
 #define LEFTCHILD(x)  (((x)+1)*2-1)
@@ -21,7 +21,7 @@ typedef struct priority_two_ways {
 
 // ========== Khai báo hàm ===============
 
-p2w_t p2w_create();
+struct p2ways *p2w_create();
 
 #define p2w_free(h) \
   do { \
@@ -31,25 +31,25 @@ p2w_t p2w_create();
     free(h); \
   } while (0)
 
-long p2w_size(const p2w_t h);
-int p2w_clear(p2w_t h);
-bool p2w_empty(const p2w_t h);
-int p2w_push_with_index(p2w_t h, long idx, gtype elem, gtype_cmp_t cmp);
-gtype p2w_max(const p2w_t h);
-long p2w_max_index(const p2w_t h);
-gtype p2w_get(const p2w_t h, long idx);
-gtype p2w_delete_max(p2w_t h, gtype_cmp_t cmp);
-gtype p2w_deactivate_max(p2w_t h, gtype_cmp_t cmp);
-gtype p2w_delete_max_index(p2w_t h, long *idx, gtype_cmp_t cmp);
-int p2w_modify(p2w_t h, long idx, gtype elem, gtype_cmp_t cmp);
-bool p2w_check(p2w_t h, gtype_cmp_t cmp);
+long p2w_size(const struct p2ways *h);
+int p2w_clear(struct p2ways *h);
+bool p2w_empty(const struct p2ways *h);
+int p2w_push_with_index(struct p2ways *h, long idx, gtype elem, gtype_cmp_t cmp);
+gtype p2w_max(const struct p2ways *h);
+long p2w_max_index(const struct p2ways *h);
+gtype p2w_get(const struct p2ways *h, long idx);
+gtype p2w_delete_max(struct p2ways *h, gtype_cmp_t cmp);
+gtype p2w_deactivate_max(struct p2ways *h, gtype_cmp_t cmp);
+gtype p2w_delete_max_index(struct p2ways *h, long *idx, gtype_cmp_t cmp);
+int p2w_modify(struct p2ways *h, long idx, gtype elem, gtype_cmp_t cmp);
+bool p2w_check(struct p2ways *h, gtype_cmp_t cmp);
 
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng p2w
  * được lưu trong một cấu trúc lưu trữ khác.
  *
  * @param value Giá trị gtype đang chứa con trỏ tới đối tượng p2w.
- * Con trỏ value.p2w (kiểu ::p2w_t) được truyền cho p2w_free.
+ * Con trỏ value.p2w (kiểu ::struct p2ways *) được truyền cho p2w_free.
  * @return Hàm không trả về giá trị.
  */
 void gtype_free_p2w(gtype value);

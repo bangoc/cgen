@@ -12,16 +12,16 @@ int main() {
   arr_set_size(a, 10);
   printf("size = %zu\n", arr_size(a));
   for (int i = 0; i < arr_size(a); ++i) {
-    ARR(a)[i] = i;
+    arr(a)[i] = i;
   }
 
   //  Thay đổi kích thước mảng
   arr_set_size(a, 20);
   for (int i = 10; i < arr_size(a); ++i) {
-    ARR(a)[i] = i;
+    arr(a)[i] = i;
   }
   for (int i = 0; i < arr_size(a); ++i) {
-    printf("a[%d] = %d\n", i, ARR(a)[i]);
+    printf("a[%d] = %d\n", i, arr(a)[i]);
   }
   printf("size = %zu\n", arr_size(a));
   arr_free(a);

@@ -11,7 +11,7 @@
 long sum(arr_t(int) a) {
   long s = 0;
   for (int i = 0; i < arr_size(a); ++i) {
-    s += ARR(a)[i];
+    s += arr(a)[i];
   }
   return s;
 }
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   printf("Tổng các số đã nhập: %ld\n", sum(a));
   printf("Danh sách các số theo chiều ngược lại: ");
   for (long i = arr_size(a) - 1; i >= 0; --i) {
-    printf(" %d", ARR(a)[i]);
+    printf(" %d", arr(a)[i]);
   }
   printf("\n");
   arr_free(a);

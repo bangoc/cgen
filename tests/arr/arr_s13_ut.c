@@ -30,7 +30,7 @@ int main() {
   arr_append(ss, (struct s13){"Saigon"});
   arr_append(ss, (struct s13){"Hanoi"});
   for (int i = 0; i < arr_size(ss); ++i) {
-    printf("%s\n", ARR(ss)[i].s);
+    printf("%s\n", arr(ss)[i].s);
   }
   struct s13 *tmp = malloc(7 * sizeof(struct s13));
   if ((intptr_t)tmp % 13 == 0) {
@@ -38,7 +38,7 @@ int main() {
   } else {
     printf("Not divided (malloc)\n");
   }
-  CHECK_MSG(strcmp(ARR(ss)[1].s, "Danang") == 0, "Arr[1] - Danang");
+  CHECK_MSG(strcmp(arr(ss)[1].s, "Danang") == 0, "Arr[1] - Danang");
   free(tmp);
   arr_free(ss);
   TEST_OK();

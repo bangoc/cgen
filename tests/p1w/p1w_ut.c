@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int t1() {
-  p1w_t q = p1w_create(PRIORITY_MAX, gtype_cmp_l);
+  struct p1way *q = p1w_create(PRIORITY_MAX, gtype_cmp_l);
   p1w_enqueue(q, gtype_l(10));
   p1w_enqueue(q, gtype_l(30));
   p1w_enqueue(q, gtype_l(20));
@@ -21,7 +21,7 @@ int t1() {
 }
 
 int t2() {
-  p1w_t q = p1w_create(PRIORITY_MIN, gtype_cmp_l);
+  struct p1way *q = p1w_create(PRIORITY_MIN, gtype_cmp_l);
   p1w_enqueue(q, gtype_l(10));
   p1w_enqueue(q, gtype_l(30));
   p1w_enqueue(q, gtype_l(20));

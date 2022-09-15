@@ -103,7 +103,7 @@ struct rbm *rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
  *
  * \memberof rbm
  *
- * Tham khảo: hmap_insert(hmap_t tab, gtype key, gtype value)
+ * Tham khảo: hmap_insert(struct hmap *tab, gtype key, gtype value)
  */
 struct rbm_ires rbm_insert(struct rbm *t, gtype key, gtype value);
 
@@ -120,7 +120,7 @@ struct rbm_ires rbm_insert(struct rbm *t, gtype key, gtype value);
  *
  * \memberof rbm
  *
- * Tham khảo: hmap_put(hmap_t tab, gtype key, gtype value)
+ * Tham khảo: hmap_put(struct hmap *tab, gtype key, gtype value)
  */
 gtype *rbm_put(struct rbm *t, gtype key, gtype value);
 
@@ -134,7 +134,7 @@ gtype *rbm_put(struct rbm *t, gtype key, gtype value);
  *
  * \memberof rbm
  *
- * Tham khảo: hmap_value(hmap_t tab, gtype key)
+ * Tham khảo: hmap_value(struct hmap *tab, gtype key)
  */
 gtype *rbm_value(struct rbm *t, gtype key);
 
@@ -155,7 +155,7 @@ struct rbmn *rbm_search(struct rbm *t, gtype key);
  *
  * \memberof rbm
  *
- * Tham khảo: hmap_remove(hmap_t tab, gtype key)
+ * Tham khảo: hmap_remove(struct hmap *tab, gtype key)
  */
 int rbm_remove(struct rbm *t, gtype key);
 

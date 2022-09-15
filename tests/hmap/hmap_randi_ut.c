@@ -8,7 +8,7 @@ int t1(int n) {
   int *keys = malloc(sizeof(int) * n),
       *values = malloc(sizeof(int) * n);
 
-  hmap_t map = hmap_create(gtype_hash_l, gtype_cmp_l,
+  struct hmap *map = hmap_create(gtype_hash_l, gtype_cmp_l,
       NULL, NULL);
   for (int i = 0; i < n; ++i) {
     for (;;) {
@@ -18,13 +18,13 @@ int t1(int n) {
       }
     }
     values[i] = rand();
-    hmap_ires res = hmap_insert(map, gtype_l(keys[i]), gtype_l(values[i]));
+    struct hmap_ires res = hmap_insert(map, gtype_l(keys[i]), gtype_l(values[i]));
     CHECK_MSG(res.inserted == 1, "inserted");
     CHECK_MSG(res.value->l == values[i], "Value at i");
   }
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(hmap_value(map, gtype_l(keys[i]))->l == values[i], "value i");
-    hmap_ires res = hmap_insert(map, gtype_l(keys[i]), gtype_l(values[i]));
+    struct hmap_ires res = hmap_insert(map, gtype_l(keys[i]), gtype_l(values[i]));
     CHECK_MSG(res.inserted == 0, "Insert existed");
     CHECK_MSG(res.value->l == values[i], "Value at i");
   }
@@ -45,7 +45,7 @@ void rands9(char *s) {
 int t2(int n) {
   char **keys = malloc(sizeof(char*) * n),
        **values = malloc(sizeof(char*) * n);
-  hmap_t map = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, gtype_free_s);
+  struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, gtype_free_s);
   for (int i = 0; i < n; ++i) {
     keys[i] = malloc(10);
     values[i] = malloc(10);
@@ -56,13 +56,13 @@ int t2(int n) {
       }
     }
     rands9(values[i]);
-    hmap_ires res = hmap_insert(map, gtype_s(keys[i]), gtype_s(values[i]));
+    struct hmap_ires res = hmap_insert(map, gtype_s(keys[i]), gtype_s(values[i]));
     CHECK_MSG(res.inserted == 1, "insert new");
     CHECK_MSG(strcmp(res.value->s, values[i]) == 0, "Value i");
   }
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(strcmp(hmap_value(map, gtype_s(keys[i]))->s, values[i]) == 0, "value i");
-    hmap_ires res = hmap_insert(map, gtype_s(keys[i]), gtype_s(values[i]));
+    struct hmap_ires res = hmap_insert(map, gtype_s(keys[i]), gtype_s(values[i]));
     CHECK_MSG(res.inserted == 0, "Insert again");
     CHECK_MSG(strcmp(res.value->s, values[i]) == 0, "Value i");
   }
