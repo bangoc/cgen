@@ -78,16 +78,17 @@ $(function() {
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">/* Triển khai khái quát ngăn xếp dựa trên danh sách móc nối đơn</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">   với gtype */</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;list/gsl.h&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="gsl_8h.html">list/gsl.h</a>&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>gsl_t stk_push(gsl_t stk, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>gsl_t stk_pop(gsl_t stk);</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> stk_top(gsl_t stk);</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">struct </span>gsl *stk_push(<span class="keyword">struct</span> gsl *stk, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">struct </span>gsl *stk_pop(<span class="keyword">struct</span> gsl *stk);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> stk_top(<span class="keyword">struct</span> gsl *stk);</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#define stk_is_empty(stk) (gsl_is_empty(stk))</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define stk_size(stk) (gsl_length(stk))</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#endif  </span><span class="comment">// LIST_STK_H_</span></div>
+<div class="ttc" id="agsl_8h_html"><div class="ttname"><a href="gsl_8h.html">gsl.h</a></div><div class="ttdoc">Triển khai danh sách móc nối đơn cho gtype Kế thừa ::struct sll.</div></div>
 <div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -1,0 +1,11 @@
+<map id="list/gsl.h" name="list/gsl.h">
+<area shape="rect" id="node1" title="Triển khai danh sách móc nối đơn cho gtype Kế thừa ::struct sll." alt="" coords="233,5,304,32"/>
+<area shape="rect" id="node2" href="$core_8h_source.html" title=" " alt="" coords="81,80,171,107"/>
+<area shape="rect" id="node5" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="221,80,316,107"/>
+<area shape="rect" id="node9" href="$sll_8h.html" title="Triển khai khái quát danh sách móc nối đơn chỉ bao gồm cấu trúc liên kết. Có thể kế thừa để lưu dữ li..." alt="" coords="341,80,407,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,73,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="97,155,155,181"/>
+<area shape="rect" id="node6" title=" " alt="" coords="179,155,239,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="263,155,327,181"/>
+<area shape="rect" id="node8" title=" " alt="" coords="352,155,415,181"/>
+</map>
