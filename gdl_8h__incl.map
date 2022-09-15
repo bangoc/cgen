@@ -1,5 +1,5 @@
 <map id="list/gdl.h" name="list/gdl.h">
-<area shape="rect" id="node1" title="Triển khai danh sách móc nối kép cho kiểu gtype Kế thừa ::struct dll." alt="" coords="233,5,304,32"/>
+<area shape="rect" id="node1" title="Triển khai danh sách móc nối kép cho kiểu gtype Kế thừa ::struct dllist." alt="" coords="233,5,304,32"/>
 <area shape="rect" id="node2" href="$core_8h_source.html" title=" " alt="" coords="81,80,171,107"/>
 <area shape="rect" id="node5" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="221,80,316,107"/>
 <area shape="rect" id="node9" href="$dll_8h.html" title="Triển khai danh sách móc nối kép chỉ bao gồm cấu trúc liên kết. Có thể kế thừa triển khai này để tạo ..." alt="" coords="341,80,407,107"/>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['dll_0',['dll',['../structdll.html',1,'']]],
-  ['dln_1',['dln',['../structdln.html',1,'']]]
+  ['dllist_0',['dllist',['../structdllist.html',1,'']]],
+  ['dlnode_1',['dlnode',['../structdlnode.html',1,'']]]
 ];

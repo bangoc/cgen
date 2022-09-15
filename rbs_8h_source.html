@@ -77,62 +77,65 @@ $(function() {
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;tree/spec/grb.h&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">struct </span>rbs {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>  <span class="keyword">struct </span>grbt base;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>  <span class="keywordtype">long</span> size;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>};</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define rbs_tree(t) ((struct rbs *)(t))</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#define rbs_node_key(n) (grb_node(n)-&gt;key)</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define rbs_contains(s, v) (rbs_search(s, v) != NULL)</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structrbstree.html">   13</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structrbstree.html">rbstree</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structgrbtree.html">grbtree</a> base;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>  <span class="keywordtype">long</span> size;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>};</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">struct </span>rbs *rbs_create(gtype_cmp_t cmp, gtype_free_t fk);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keywordtype">int</span> rbs_insert(<span class="keyword">struct</span> rbs *s, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> elem);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">struct </span>grbn *rbs_search(<span class="keyword">struct</span> rbs *s, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> elem);</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keywordtype">int</span> rbs_remove(<span class="keyword">struct</span> rbs *s, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> elem);</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#define rbs_tree(t) ((struct rbstree *)(t))</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#define rbs_node_key(n) (grb_node(n)-&gt;key)</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#define rbs_contains(s, v) (rbs_search(s, v) != NULL)</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> _rbs_move_next(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> **cur) {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  <span class="keyword">struct </span>grbn *nd = container_of(*cur, <span class="keyword">struct</span> grbn, key);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structbnn.html">bnn</a> *tmp = bn_next_inorder(bn_node(nd));</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keywordflow">if</span> (!tmp) {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    *cur = NULL;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  }</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  *cur = &amp;(rbs_node_key(tmp));</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#define rbs_size(s) ((s)-&gt;size)</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#define rbs_traverse(cur, s) \</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">  for (gtype *cur = (rbs_size(s))? &amp;(rbs_node_key(bn_left_most(bn_tree(s)-&gt;root))): NULL; \</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">        cur != NULL; _rbs_move_next(&amp;cur))</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#define rbs_free(s) \</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">    do {  \</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">      if (grb_tree(s)-&gt;fk) { \</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">        rbs_traverse(_k, (s)) { \</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">          grb_tree(s)-&gt;fk(*_k); \</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">        } \</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">      } \</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">      bn_free_tree(bn_tree(s)); \</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">    } while (0)</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">#define rbs_clear(s) \</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">    do {  \</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">      if (grb_tree(s)-&gt;fk) { \</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">        rbs_traverse(_k, (s)) { \</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">          grb_tree(s)-&gt;fk(*_k); \</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">        } \</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">      } \</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">      bn_clear_tree(bn_tree(s)); \</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">      rbs_tree(s)-&gt;size = 0; \</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">    } while (0)</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="keywordtype">void</span> gtype_free_rbs(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif  </span><span class="comment">// TREE_RBS_H_</span></div>
-<div class="ttc" id="astructbnn_html"><div class="ttname"><a href="structbnn.html">bnn</a></div><div class="ttdef"><b>Definition:</b> bn.h:21</div></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">struct </span><a class="code hl_struct" href="structrbstree.html">rbstree</a> *rbs_create(gtype_cmp_t cmp, gtype_free_t fk);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keywordtype">int</span> rbs_insert(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbstree.html">rbstree</a> *s, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> elem);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">struct </span><a class="code hl_struct" href="structgrbnode.html">grbnode</a> *rbs_search(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbstree.html">rbstree</a> *s, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> elem);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keywordtype">int</span> rbs_remove(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbstree.html">rbstree</a> *s, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> elem);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> _rbs_move_next(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> **cur) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structgrbnode.html">grbnode</a> *nd = container_of(*cur, <span class="keyword">struct</span> <a class="code hl_struct" href="structgrbnode.html">grbnode</a>, key);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structbnnode.html">bnnode</a> *tmp = bn_next_inorder(bn_node(nd));</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keywordflow">if</span> (!tmp) {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    *cur = NULL;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  *cur = &amp;(rbs_node_key(tmp));</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="preprocessor">#define rbs_size(s) ((s)-&gt;size)</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#define rbs_traverse(cur, s) \</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">  for (gtype *cur = (rbs_size(s))? &amp;(rbs_node_key(bn_left_most(bn_tree(s)-&gt;root))): NULL; \</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">        cur != NULL; _rbs_move_next(&amp;cur))</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#define rbs_free(s) \</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">    do {  \</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">      if (grb_tree(s)-&gt;fk) { \</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">        rbs_traverse(_k, (s)) { \</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">          grb_tree(s)-&gt;fk(*_k); \</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">        } \</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">      } \</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">      bn_free_tree(bn_tree(s)); \</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">    } while (0)</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#define rbs_clear(s) \</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">    do {  \</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">      if (grb_tree(s)-&gt;fk) { \</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">        rbs_traverse(_k, (s)) { \</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">          grb_tree(s)-&gt;fk(*_k); \</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">        } \</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">      } \</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">      bn_clear_tree(bn_tree(s)); \</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">      rbs_tree(s)-&gt;size = 0; \</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">    } while (0)</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keywordtype">void</span> gtype_free_rbs(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif  </span><span class="comment">// TREE_RBS_H_</span></div>
+<div class="ttc" id="astructbnnode_html"><div class="ttname"><a href="structbnnode.html">bnnode</a></div><div class="ttdef"><b>Definition:</b> bn.h:21</div></div>
+<div class="ttc" id="astructgrbnode_html"><div class="ttname"><a href="structgrbnode.html">grbnode</a></div><div class="ttdef"><b>Definition:</b> grb.h:21</div></div>
+<div class="ttc" id="astructgrbtree_html"><div class="ttname"><a href="structgrbtree.html">grbtree</a></div><div class="ttdef"><b>Definition:</b> grb.h:30</div></div>
+<div class="ttc" id="astructrbstree_html"><div class="ttname"><a href="structrbstree.html">rbstree</a></div><div class="ttdef"><b>Definition:</b> rbs.h:13</div></div>
 <div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

@@ -1,4 +1,14 @@
 <map id="generic_type" name="generic_type">
-<area shape="rect" id="node1" title=" " alt="" coords="5,5,100,32"/>
-<area shape="rect" id="node2" href="$structrbm.html" title=" " alt="" coords="31,124,75,151"/>
+<area shape="rect" id="node1" title=" " alt="" coords="288,127,382,153"/>
+<area shape="rect" id="node2" href="$structgdllist.html" title=" " alt="" coords="355,245,411,272"/>
+<area shape="rect" id="node5" href="$structgsllist.html" title=" " alt="" coords="459,245,515,272"/>
+<area shape="rect" id="node8" href="$structrbmtree.html" title=" " alt="" coords="154,245,220,272"/>
+<area shape="rect" id="node12" href="$structgrbtree.html" title=" " alt="" coords="66,245,129,272"/>
+<area shape="rect" id="node3" href="$structdllist.html" title=" " alt="" coords="552,127,601,153"/>
+<area shape="rect" id="node4" href="$structdlnode.html" title=" " alt="" coords="524,14,584,41"/>
+<area shape="rect" id="node6" href="$structsllist.html" title=" " alt="" coords="664,127,713,153"/>
+<area shape="rect" id="node7" href="$structslnode.html" title=" " alt="" coords="660,14,720,41"/>
+<area shape="rect" id="node9" href="$structbntree.html" title=" " alt="" coords="14,127,72,153"/>
+<area shape="rect" id="node10" href="$structbnnode.html" title=" " alt="" coords="11,14,75,41"/>
+<area shape="rect" id="node11" href="$structrbstree.html" title=" " alt="" coords="341,335,404,361"/>
 </map>

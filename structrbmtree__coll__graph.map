@@ -1,0 +1,14 @@
+<map id="rbmtree" name="rbmtree">
+<area shape="rect" id="node1" title=" " alt="" coords="298,203,365,229"/>
+<area shape="rect" id="node4" href="$uniongeneric__type.html" title=" " alt="" coords="229,323,324,349"/>
+<area shape="rect" id="node2" href="$structbntree.html" title=" " alt="" coords="406,112,465,139"/>
+<area shape="rect" id="node12" href="$structgrbtree.html" title=" " alt="" coords="409,427,472,453"/>
+<area shape="rect" id="node3" href="$structbnnode.html" title=" " alt="" coords="403,14,467,41"/>
+<area shape="rect" id="node5" href="$structgdllist.html" title=" " alt="" coords="329,427,385,453"/>
+<area shape="rect" id="node8" href="$structgsllist.html" title=" " alt="" coords="70,427,126,453"/>
+<area shape="rect" id="node6" href="$structdllist.html" title=" " alt="" coords="424,323,473,349"/>
+<area shape="rect" id="node7" href="$structdlnode.html" title=" " alt="" coords="389,203,449,229"/>
+<area shape="rect" id="node9" href="$structsllist.html" title=" " alt="" coords="11,323,60,349"/>
+<area shape="rect" id="node10" href="$structslnode.html" title=" " alt="" coords="5,203,65,229"/>
+<area shape="rect" id="node11" href="$structrbstree.html" title=" " alt="" coords="224,516,287,543"/>
+</map>

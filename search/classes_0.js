@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bnn_0',['bnn',['../structbnn.html',1,'']]]
+  ['bnnode_0',['bnnode',['../structbnnode.html',1,'']]],
+  ['bntree_1',['bntree',['../structbntree.html',1,'']]]
 ];
