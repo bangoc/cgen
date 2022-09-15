@@ -78,51 +78,51 @@ $(function() {
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="gtype_8h.html">base/gtype.h</a>&quot;</span></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;tree/rb.h&quot;</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">typedef</span> <span class="keyword">struct </span>red_black_map_node {</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">struct </span>_rb_node base;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">struct </span>rbmn {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">struct </span>rbn base;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>  <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>} rbm_node_s, *rbm_node_t;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>};</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#define rbm_node(n) ((rbm_node_t)(n))</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#define rbm_node(n) ((struct rbmn *)(n))</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#define rbm_node_key(n) (rbm_node(n)-&gt;key)</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#define rbm_node_value(n) (rbm_node(n)-&gt;value)</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structred__black__map.html">   53</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structred__black__map.html">red_black_map</a> {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keyword">struct </span>_bn_tree t;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structrbm.html">   53</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structrbm.html">rbm</a> {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  <span class="keyword">struct </span>bnt t;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  gtype_cmp_t cmp;</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>  gtype_free_t fk, fv;</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keywordtype">long</span> size;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="rbm_8h.html#ae0c1989062578fa37b44f00b566c7707">   58</a></span>} <a class="code hl_typedef" href="rbm_8h.html#ae0c1989062578fa37b44f00b566c7707">rbm_s</a>, *<a class="code hl_struct" href="structred__black__map.html">rbm_t</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>};</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="structrbm__insert__result.html">   64</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structrbm__insert__result.html">rbm_insert_result</a> {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="structrbm__ires.html">   64</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structrbm__ires.html">rbm_ires</a> {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>  <a class="code hl_union" href="uniongeneric__type.html">gtype</a> *value;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>  <span class="keywordtype">int</span> inserted;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">   67</a></span>} <a class="code hl_typedef" href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>};</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#define rbm_tree(t) ((rbm_t)(t))</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#define rbm_tree(t) ((struct rbm *)(t))</span></div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>rbm_node_t rbm_create_node(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keywordtype">int</span> rbm_cmp_node(bn_node_t n1, bn_node_t n2, bn_tree_t t);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="keyword">struct </span>rbmn *rbm_create_node(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keywordtype">int</span> rbm_cmp_node(<span class="keyword">struct</span> <a class="code hl_struct" href="structbnn.html">bnn</a> *n1, <span class="keyword">struct</span> <a class="code hl_struct" href="structbnn.html">bnn</a> *n2, <span class="keyword">struct</span> bnt *t);</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><a class="code hl_struct" href="structred__black__map.html">rbm_t</a> <a class="code hl_function" href="structred__black__map.html#a18043dab1d195a0c42b5ccc1aac9099d">rbm_create</a>(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keyword">struct </span><a class="code hl_struct" href="structrbm.html">rbm</a> *<a class="code hl_function" href="structrbm.html#a7213c07da70386eb8a8e3e40465e053a">rbm_create</a>(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><a class="code hl_struct" href="structrbm__insert__result.html">rbm_ires</a> <a class="code hl_function" href="structred__black__map.html#a9b5419361ac0c227a505d5a5868e6d2a">rbm_insert</a>(<a class="code hl_struct" href="structred__black__map.html">rbm_t</a> t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">struct </span><a class="code hl_struct" href="structrbm__ires.html">rbm_ires</a> <a class="code hl_function" href="structrbm.html#a138e26056bac3dbe59a313ce5be9d50e">rbm_insert</a>(struct <a class="code hl_struct" href="structrbm.html">rbm</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_function" href="structred__black__map.html#a86bd2a7aeba6181e120015ee03e2f1b3">rbm_put</a>(<a class="code hl_struct" href="structred__black__map.html">rbm_t</a> t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_function" href="structrbm.html#afc75bcb2a3aa00738461de7f22bc14c2">rbm_put</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbm.html">rbm</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> value);</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_function" href="structred__black__map.html#a3975052313956b5607efb0a197438e4a">rbm_value</a>(<a class="code hl_struct" href="structred__black__map.html">rbm_t</a> t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><a class="code hl_union" href="uniongeneric__type.html">gtype</a> *<a class="code hl_function" href="structrbm.html#aaf16af547793dea9c38d74a5e7147fd3">rbm_value</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbm.html">rbm</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>rbm_node_t rbm_search(<a class="code hl_struct" href="structred__black__map.html">rbm_t</a> t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="keyword">struct </span>rbmn *rbm_search(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbm.html">rbm</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keywordtype">int</span> <a class="code hl_function" href="structred__black__map.html#a47267816d215c1717525669fa88c2e59">rbm_remove</a>(<a class="code hl_struct" href="structred__black__map.html">rbm_t</a> t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keywordtype">int</span> <a class="code hl_function" href="structrbm.html#a3566af9144b1990efc724b0a7f968adb">rbm_remove</a>(<span class="keyword">struct</span> <a class="code hl_struct" href="structrbm.html">rbm</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="rbm_8h.html#a95ec9a7a1a897392f9a1b66e4dee8eed">  169</a></span><span class="preprocessor">#define rbm_size(t) ((t)-&gt;size)</span></div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> _rbm_move_next(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> **k, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> **v) {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  rbm_node_t nd = rbm_node(container_of(*k, <span class="keyword">struct</span> red_black_map_node, key));</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  bn_node_t tmp = bn_next_inorder(bn_node(nd));</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>  <span class="keyword">struct </span>rbmn *nd = rbm_node(container_of(*k, <span class="keyword">struct</span> rbmn, key));</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  <span class="keyword">struct </span><a class="code hl_struct" href="structbnn.html">bnn</a> *tmp = bn_next_inorder(bn_node(nd));</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  <span class="keywordflow">if</span> (!tmp) {</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    *k = NULL;</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    *v = NULL;</div>
@@ -164,7 +164,7 @@ $(function() {
 <div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span><span class="preprocessor">        } \</span></div>
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="preprocessor">      } \</span></div>
 <div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="preprocessor">    } \</span></div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="preprocessor">    bn_tree_t _t = (bn_tree_t)(map); \</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="preprocessor">    struct bnt *_t = (struct bnt *)(map); \</span></div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="preprocessor">    bn_clear_tree(_t); \</span></div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="preprocessor">    rbm_tree(map)-&gt;size = 0; \</span></div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span><span class="preprocessor">  } while (0)</span></div>
@@ -173,15 +173,14 @@ $(function() {
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="preprocessor">#endif  </span><span class="comment">// TREE_RBM_H_</span></div>
 <div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
-<div class="ttc" id="arbm_8h_html_a8b6dcca52c60b3d20adf9d2ed22757ce"><div class="ttname"><a href="rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce">rbm_ires</a></div><div class="ttdeci">struct rbm_insert_result rbm_ires</div></div>
-<div class="ttc" id="arbm_8h_html_ae0c1989062578fa37b44f00b566c7707"><div class="ttname"><a href="rbm_8h.html#ae0c1989062578fa37b44f00b566c7707">rbm_s</a></div><div class="ttdeci">struct red_black_map rbm_s</div></div>
-<div class="ttc" id="astructrbm__insert__result_html"><div class="ttname"><a href="structrbm__insert__result.html">rbm_insert_result</a></div><div class="ttdef"><b>Definition:</b> rbm.h:64</div></div>
-<div class="ttc" id="astructred__black__map_html"><div class="ttname"><a href="structred__black__map.html">red_black_map</a></div><div class="ttdef"><b>Definition:</b> rbm.h:53</div></div>
-<div class="ttc" id="astructred__black__map_html_a18043dab1d195a0c42b5ccc1aac9099d"><div class="ttname"><a href="structred__black__map.html#a18043dab1d195a0c42b5ccc1aac9099d">red_black_map::rbm_create</a></div><div class="ttdeci">rbm_t rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv)</div><div class="ttdef"><b>Definition:</b> rbm.c:23</div></div>
-<div class="ttc" id="astructred__black__map_html_a3975052313956b5607efb0a197438e4a"><div class="ttname"><a href="structred__black__map.html#a3975052313956b5607efb0a197438e4a">red_black_map::rbm_value</a></div><div class="ttdeci">gtype * rbm_value(rbm_t t, gtype key)</div><div class="ttdef"><b>Definition:</b> rbm.c:60</div></div>
-<div class="ttc" id="astructred__black__map_html_a47267816d215c1717525669fa88c2e59"><div class="ttname"><a href="structred__black__map.html#a47267816d215c1717525669fa88c2e59">red_black_map::rbm_remove</a></div><div class="ttdeci">int rbm_remove(rbm_t t, gtype key)</div><div class="ttdef"><b>Definition:</b> rbm.c:68</div></div>
-<div class="ttc" id="astructred__black__map_html_a86bd2a7aeba6181e120015ee03e2f1b3"><div class="ttname"><a href="structred__black__map.html#a86bd2a7aeba6181e120015ee03e2f1b3">red_black_map::rbm_put</a></div><div class="ttdeci">gtype * rbm_put(rbm_t t, gtype key, gtype value)</div><div class="ttdef"><b>Definition:</b> rbm.c:44</div></div>
-<div class="ttc" id="astructred__black__map_html_a9b5419361ac0c227a505d5a5868e6d2a"><div class="ttname"><a href="structred__black__map.html#a9b5419361ac0c227a505d5a5868e6d2a">red_black_map::rbm_insert</a></div><div class="ttdeci">rbm_ires rbm_insert(rbm_t t, gtype key, gtype value)</div><div class="ttdef"><b>Definition:</b> rbm.c:33</div></div>
+<div class="ttc" id="astructbnn_html"><div class="ttname"><a href="structbnn.html">bnn</a></div><div class="ttdef"><b>Definition:</b> bn.h:21</div></div>
+<div class="ttc" id="astructrbm__ires_html"><div class="ttname"><a href="structrbm__ires.html">rbm_ires</a></div><div class="ttdef"><b>Definition:</b> rbm.h:64</div></div>
+<div class="ttc" id="astructrbm_html"><div class="ttname"><a href="structrbm.html">rbm</a></div><div class="ttdef"><b>Definition:</b> rbm.h:53</div></div>
+<div class="ttc" id="astructrbm_html_a138e26056bac3dbe59a313ce5be9d50e"><div class="ttname"><a href="structrbm.html#a138e26056bac3dbe59a313ce5be9d50e">rbm::rbm_insert</a></div><div class="ttdeci">struct rbm_ires rbm_insert(struct rbm *t, gtype key, gtype value)</div><div class="ttdef"><b>Definition:</b> rbm.c:33</div></div>
+<div class="ttc" id="astructrbm_html_a3566af9144b1990efc724b0a7f968adb"><div class="ttname"><a href="structrbm.html#a3566af9144b1990efc724b0a7f968adb">rbm::rbm_remove</a></div><div class="ttdeci">int rbm_remove(struct rbm *t, gtype key)</div><div class="ttdef"><b>Definition:</b> rbm.c:68</div></div>
+<div class="ttc" id="astructrbm_html_a7213c07da70386eb8a8e3e40465e053a"><div class="ttname"><a href="structrbm.html#a7213c07da70386eb8a8e3e40465e053a">rbm::rbm_create</a></div><div class="ttdeci">struct rbm * rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv)</div><div class="ttdef"><b>Definition:</b> rbm.c:23</div></div>
+<div class="ttc" id="astructrbm_html_aaf16af547793dea9c38d74a5e7147fd3"><div class="ttname"><a href="structrbm.html#aaf16af547793dea9c38d74a5e7147fd3">rbm::rbm_value</a></div><div class="ttdeci">gtype * rbm_value(struct rbm *t, gtype key)</div><div class="ttdef"><b>Definition:</b> rbm.c:60</div></div>
+<div class="ttc" id="astructrbm_html_afc75bcb2a3aa00738461de7f22bc14c2"><div class="ttname"><a href="structrbm.html#afc75bcb2a3aa00738461de7f22bc14c2">rbm::rbm_put</a></div><div class="ttdeci">gtype * rbm_put(struct rbm *t, gtype key, gtype value)</div><div class="ttdef"><b>Definition:</b> rbm.c:44</div></div>
 <div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
