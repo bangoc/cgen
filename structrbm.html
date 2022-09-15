@@ -185,7 +185,7 @@ Các hàm thành viên Public</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về đối tượng <a class="el" href="structrbm__ires.html">rbm_ires</a></dd></dl>
-<p>Tham khảo: hmap_insert(hmap_t tab, gtype key, gtype value) </p>
+<p>Tham khảo: hmap_insert(struct hmap *tab, gtype key, gtype value) </p>
 
 </div>
 </div>
@@ -230,7 +230,7 @@ Các hàm thành viên Public</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ tới giá trị nếu khóa đã tồn tại hoặc trả về NULL nếu ngược lại, kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>*.</dd></dl>
-<p>Tham khảo: hmap_put(hmap_t tab, gtype key, gtype value) </p>
+<p>Tham khảo: hmap_put(struct hmap *tab, gtype key, gtype value) </p>
 
 </div>
 </div>
@@ -268,7 +268,7 @@ Các hàm thành viên Public</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Giá trị trả về</dt><dd>1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.</dd></dl>
-<p>Tham khảo: hmap_remove(hmap_t tab, gtype key) </p>
+<p>Tham khảo: hmap_remove(struct hmap *tab, gtype key) </p>
 
 </div>
 </div>
@@ -306,7 +306,7 @@ Các hàm thành viên Public</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ tới giá trị đang được gắn với key trong t nếu tồn tại, hoặc NULL nếu ngược lại.</dd></dl>
-<p>Tham khảo: hmap_value(hmap_t tab, gtype key) </p>
+<p>Tham khảo: hmap_value(struct hmap *tab, gtype key) </p>
 
 </div>
 </div>

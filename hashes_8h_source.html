@@ -102,8 +102,8 @@ $(function() {
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#define hashes_next_pkey_or_pvalue(m, c, kv, o) \</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">  do { \</span></div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">    (o) = NULL; \</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">    uint *_hashes = ARR((m)-&gt;hashes); \</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">    gtype *_arr = ARR((m)-&gt;kv); \</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">    uint *_hashes = arr((m)-&gt;hashes); \</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">    gtype *_arr = arr((m)-&gt;kv); \</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">    int _idx = (c)? (c) - _arr + 1: 0; \</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">    for (int _i = _idx; _i &lt; (m)-&gt;capacity; ++_i) { \</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">      if (HASH_IS_REAL(_hashes[_i])) { \</span></div>
