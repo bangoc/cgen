@@ -22,8 +22,8 @@ typedef union generic_type {
   char *s;
   void *v;
   union generic_type *g;
-  struct gtype_double_linked *gdl;
-  struct gtype_single_linked_list *gsl;
+  struct gdl *gdl;
+  struct gsl *gsl;
   struct gvector *gvec;
   struct red_black_map *rbm;
   struct red_black_set *rbs;

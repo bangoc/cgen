@@ -22,7 +22,7 @@ void free_song_g(gtype g) {
 }
 
 int main() {
-  gdl_t list = gdl_create_list(free_song_g);
+  struct gdl *list = gdl_create_list(free_song_g);
 
   // Add songs to list
   gdl_push_back(list, create_song_g("Seasons in the sun"));

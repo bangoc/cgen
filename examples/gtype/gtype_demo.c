@@ -25,8 +25,8 @@ int main() {
   value = gtype_v(v);
   value = gtype_g(&tmp);
 
-  gdl_t gdl;
-  gsl_t gsl;
+  struct gdl *gdl;
+  struct gsl *gsl;
   struct gvector *gvec;
   hmap_t hmap;
   hset_t hset;

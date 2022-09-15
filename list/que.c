@@ -2,15 +2,15 @@
 
 #include "que.h"
 
-gsl_t que_enq(gsl_t q, gtype value) {
+struct gsl *que_enq(struct gsl *q, gtype value) {
   gsl_push_back(q, value);
   return q;
 }
 
-gsl_t que_deq(gsl_t q) {
+struct gsl *que_deq(struct gsl *q) {
   gsl_pop_front(q);
 }
 
-gtype que_peek(gsl_t q) {
+gtype que_peek(struct gsl *q) {
   return gsl_node_value(gsl_front(q));
 }

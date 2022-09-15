@@ -5,15 +5,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-sln_t sll_create_node() {
-  return calloc(sizeof(struct single_linked_node), 1);
+struct sln *sll_create_node() {
+  return calloc(sizeof(struct sln), 1);
 }
 
-sll_t sll_create_list() {
-  return calloc(sizeof(struct single_linked_list), 1);
+struct sll *sll_create_list() {
+  return calloc(sizeof(struct sll), 1);
 }
 
-void sll_push_back(sll_t list, sln_t node) {
+void sll_push_back(struct sll *list, struct sln *node) {
   node->next = NULL;
   if (list->front == NULL) {
     list->front = list->back = node;
@@ -24,7 +24,7 @@ void sll_push_back(sll_t list, sln_t node) {
   ++list->length;
 }
 
-void sll_push_front(sll_t list, sln_t node) {
+void sll_push_front(struct sll *list, struct sln *node) {
   if (list->front == NULL) {
     list->front = list->back = node;
     node->next = NULL;
@@ -35,13 +35,13 @@ void sll_push_front(sll_t list, sln_t node) {
   ++list->length;
 }
 
-void sll_inserta(sll_t list, sln_t pos, sln_t nn) {
+void sll_inserta(struct sll *list, struct sln *pos, struct sln *nn) {
   if (!pos) {
     sll_push_back(list, nn);
     return;
   }
 
-  dln_t tmp = pos->next;
+  struct dln *tmp = pos->next;
   pos->next = nn;
   nn->next = tmp;
   if (!tmp) {
@@ -50,11 +50,11 @@ void sll_inserta(sll_t list, sln_t pos, sln_t nn) {
   ++list->length;
 }
 
-void sll_pop_front(sll_t list) {
+void sll_pop_front(struct sll *list) {
   if (sll_is_empty(list)) {
     return;
   }
-  sln_t tmp = list->front;
+  struct sln *tmp = list->front;
   list->front = list->front->next;
   if (list->front == NULL) {
     list->back = NULL;
@@ -63,11 +63,11 @@ void sll_pop_front(sll_t list) {
   --list->length;
 }
 
-void sll_node_print_address(sln_t node) {
+void sll_node_print_address(struct sln *node) {
   printf("[%p]", node);
 }
 
-void sll_pprint(sll_t list, sll_node_print_t npp) {
+void sll_pprint(struct sll *list, sll_node_print_t npp) {
   sll_traverse(cur, list) {
     npp(cur);
     printf(" ");

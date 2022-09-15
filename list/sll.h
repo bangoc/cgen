@@ -1,26 +1,43 @@
 #ifndef LIST_SLL_H_
 #define LIST_SLL_H_
 
-typedef struct single_linked_node {
-  struct single_linked_node *next;
-} sln_s, *sln_t;
+/* (C) Nguyen Ba Ngoc 2021 */
 
-typedef struct single_linked_list {
-  sln_t front;
-  sln_t back;
+/** @file
+ * @brief Triển khai khái quát danh sách móc nối đơn chỉ bao gồm
+ * cấu trúc liên kết.
+ * Có thể kế thừa để lưu dữ liệu trong các nút.
+ *
+ */
+
+/**
+ * Cấu trúc mô tả nút của danh sách móc nối đơn
+ * sln = single linked node
+ */
+struct sln {
+  struct sln *next;
+};
+
+/**
+ * Cấu trúc mô tả danh sách móc nối đơn
+ * sll = single linked list
+ */
+struct sll {
+  struct sln *front;
+  struct sln *back;
   long length;
-} *sll_t;
+};
 
-typedef void (*sll_node_print_t)(sln_t);
+typedef void (*sll_node_print_t)(struct sln *);
 
-#define sll_node(n) ((sln_t)(n))
-#define sll_list(list) ((sll_t)(list))
+#define sll_node(n) ((struct sln *)(n))
+#define sll_list(list) ((struct sll *)(list))
 #define sll_front(list) (sll_list(list)->front)
 #define sll_back(list) (sll_list(list)->back)
 #define sll_length(list) (sll_list(list)->length)
 
 #define sll_traverse(cur, list) \
-  for (sln_t cur = list->front; cur != NULL; cur = cur->next)
+  for (struct sln *cur = list->front; cur != NULL; cur = cur->next)
 
 #define sll_free(list) \
   do { \
@@ -33,13 +50,13 @@ typedef void (*sll_node_print_t)(sln_t);
 #define sll_is_empty(list) \
   (sll_front(list) == NULL && sll_back(list) == NULL)
 
-sln_t sll_create_node();
-sll_t sll_create_list();
-void sll_push_back(sll_t list, sln_t node);
-void sll_push_front(sll_t list, sln_t node);
-void sll_inserta(sll_t list, sln_t pos, sln_t nn);
-void sll_pop_front(sll_t list);
-void sll_node_print_address(sln_t node);
-void sll_pprint(sll_t list, sll_node_print_t npp);
+struct sln *sll_create_node();
+struct sll *sll_create_list();
+void sll_push_back(struct sll *list, struct sln *node);
+void sll_push_front(struct sll *list, struct sln *node);
+void sll_inserta(struct sll *list, struct sln *pos, struct sln *nn);
+void sll_pop_front(struct sll *list);
+void sll_node_print_address(struct sln *node);
+void sll_pprint(struct sll *list, sll_node_print_t npp);
 
 #endif  // LIST_SLL_H_

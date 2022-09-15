@@ -7,12 +7,12 @@
 
 #include <stdio.h>
 
-static int dll_sequence(dll_t list, dln_t *a, int n) {
+static int dll_sequence(struct dll *list, struct dln **a, int n) {
   if (dll_length(list) != n) {
     return 0;
   }
 
-  dln_t p = list->front;
+  struct dln *p = list->front;
   for (int i = 0; i < n; ++i) {
     if (p != a[i]) {
       return 0;
@@ -35,13 +35,13 @@ static int dll_sequence(dll_t list, dln_t *a, int n) {
   return 1;
 }
 
-static int dll_sequence_i(dll_t list, int *a, int n) {
+static int dll_sequence_i(struct dll *list, int *a, int n) {
   if (dll_length(list) != n) {
     return 0;
   }
-  dln_t p = list->front;
+  struct dln *p = list->front;
   for (int i = 0; i < n; ++i) {
-    if (idn_value(p) != a[i]) {
+    if (idl_node_value(p) != a[i]) {
       return 0;
     }
     p = p->next;
@@ -51,7 +51,7 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   }
   p = list->back;
   for (int i = n - 1; i >= 0; --i) {
-    if (idn_value(p) != a[i]) {
+    if (idl_node_value(p) != a[i]) {
       return 0;
     }
     p = p->prev;
@@ -62,11 +62,11 @@ static int dll_sequence_i(dll_t list, int *a, int n) {
   return 1;
 }
 
-static int gdl_sequence_g(gdl_t list, gtype *a, int n, gtype_cmp_t cmp) {
+static int gdl_sequence_g(struct gdl *list, gtype *a, int n, gtype_cmp_t cmp) {
   if (gdl_size(list) != n) {
     return 0;
   }
-  gdn_t p = gdl_front(list);
+  struct gdn *p = gdl_front(list);
   for (int i = 0; i < n; ++i) {
     if (cmp(gdl_node_value(p), a[i]) != 0) {
       printf("%ld %ld\n", gdl_node_value(p).l, a[i].l);

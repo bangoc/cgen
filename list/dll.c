@@ -5,15 +5,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-dln_t dll_create_node() {
-  return calloc(sizeof(struct double_linked_node), 1);;
+struct dln *dll_create_node() {
+  return calloc(sizeof(struct dln), 1);;
 }
 
-dll_t dll_create_list() {
-  return calloc(sizeof(struct double_linked_list), 1);;
+struct dll *dll_create_list() {
+  return calloc(sizeof(struct dll), 1);;
 }
 
-void dll_push_back(dll_t list, dln_t nn) {
+void dll_push_back(struct dll *list, struct dln *nn) {
   if (list->back == NULL) {
     list->front = list->back = nn;
   } else {
@@ -24,7 +24,7 @@ void dll_push_back(dll_t list, dln_t nn) {
   ++list->length;
 }
 
-void dll_push_front(dll_t list, dln_t nn) {
+void dll_push_front(struct dll *list, struct dln *nn) {
   if (list->front == NULL) {
     list->front = list->back = nn;
   } else {
@@ -35,11 +35,11 @@ void dll_push_front(dll_t list, dln_t nn) {
   ++list->length;
 }
 
-void dll_pop_back(dll_t list) {
+void dll_pop_back(struct dll *list) {
   if (dll_is_empty(list)) {
     return;
   }
-  dln_t tmp = list->back;
+  struct dln *tmp = list->back;
   list->back = tmp->prev;
   if (list->back) {
     list->back->next = NULL;
@@ -50,11 +50,11 @@ void dll_pop_back(dll_t list) {
   --list->length;
 }
 
-void dll_pop_front(dll_t list) {
+void dll_pop_front(struct dll *list) {
   if (dll_is_empty(list)) {
     return;
   }
-  dln_t tmp = list->front;
+  struct dln *tmp = list->front;
   list->front = tmp->next;
   if (list->front) {
     list->front->prev = NULL;
@@ -66,13 +66,13 @@ void dll_pop_front(dll_t list) {
 }
 
 /* insert nn after pos in list. push_back if pos == NULL */
-void dll_inserta(dll_t list, dln_t pos, dln_t nn) {
+void dll_inserta(struct dll *list, struct dln *pos, struct dln *nn) {
   if (!pos) {
     dll_push_back(list, nn);
     return;
   }
 
-  dln_t tmp = pos->next;
+  struct dln *tmp = pos->next;
   pos->next = nn;
   nn->prev = pos;
   nn->next = tmp;
@@ -85,13 +85,13 @@ void dll_inserta(dll_t list, dln_t pos, dln_t nn) {
 }
 
 /* insert nn before pos in list. push_front is pos == NULL */
-void dll_insertb(dll_t list, dln_t pos, dln_t nn) {
+void dll_insertb(struct dll *list, struct dln *pos, struct dln *nn) {
   if (!pos) {
     dll_push_front(list, nn);
     return;
   }
 
-  dln_t tmp = pos->prev;
+  struct dln *tmp = pos->prev;
   pos->prev = nn;
   nn->next = pos;
   nn->prev = tmp;
@@ -103,7 +103,7 @@ void dll_insertb(dll_t list, dln_t pos, dln_t nn) {
   ++list->length;
 }
 
-void dll_erase(dll_t list, dln_t pos) {
+void dll_erase(struct dll *list, struct dln *pos) {
   if (pos == list->front) {
     dll_pop_front(list);
     return;
@@ -113,19 +113,19 @@ void dll_erase(dll_t list, dln_t pos) {
     return;
   }
 
-  dln_t p1 = pos->prev,
-             p2 = pos->next;
+  struct dln *p1 = pos->prev,
+             *p2 = pos->next;
   p1->next = p2;
   p2->prev = p1;
   free(pos);
   --list->length;
 }
 
-void dll_node_print_address(dln_t node) {
+void dll_node_print_address(struct dln *node) {
   printf("[%p]", node);
 }
 
-void dll_pprint(dll_t list, dll_node_print_t npp) {
+void dll_pprint(struct dll *list, dll_node_print_t npp) {
   dll_traverse(cur, list) {
     npp(cur);
     printf(" ");

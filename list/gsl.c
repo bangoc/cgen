@@ -2,16 +2,16 @@
 
 #include "list/gsl.h"
 
-gsn_t gsl_create_node(gtype value) {
-  sln_t tmp = sll_create_node();
-  gsn_t nn = realloc(tmp, sizeof(struct gtype_single_linked_node));
+struct gsn *gsl_create_node(gtype value) {
+  struct sln *tmp = sll_create_node();
+  struct gsn *nn = realloc(tmp, sizeof(struct gsn));
   nn->value = value;
   return nn;
 }
 
-gsl_t gsl_create_list(gtype_free_t free_value) {
-  sll_t tmp = sll_create_list();
-  gsl_t l = realloc(tmp, sizeof(struct gtype_single_linked_list));
+struct gsl *gsl_create_list(gtype_free_t free_value) {
+  struct sll *tmp = sll_create_list();
+  struct gsl *l = realloc(tmp, sizeof(struct gsl));
   l->free_value = free_value;
   return l;
 }
@@ -20,7 +20,7 @@ void gtype_free_gsl(gtype value) {
   gsl_free(value.gsl);
 }
 
-void gsl_pprint(gsl_t l, gtype_print_t pp) {
+void gsl_pprint(struct gsl *l, gtype_print_t pp) {
   gsl_traverse(cur, l) {
     pp(*cur);
     printf(" ");

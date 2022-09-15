@@ -18,5 +18,15 @@
  */
 
 typedef struct gvector *gvec_t;
+typedef struct dln *dln_t;
+typedef struct dll *dll_t;
+typedef struct idn *idn_t;
+typedef struct sln *sln_t;
+typedef struct sll *sll_t;
+typedef struct isn *isn_t;
+typedef struct gdn *gdn_t;
+typedef struct gdl *gdl_t;
+typedef struct gsn *gsn_t;
+typedef struct gsl *gsl_t;
 
 #endif  // TDEF_H_

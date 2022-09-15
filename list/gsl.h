@@ -11,17 +11,25 @@
 #include "base/gtype.h"
 #include "list/sll.h"
 
-typedef struct gtype_single_linked_node {
-  struct single_linked_node base;
+/* (C) Nguyen Ba Ngoc 2021 */
+
+/** @file
+ * @brief Triển khai danh sách móc nối đơn cho gtype
+ * Kế thừa ::struct sll
+ */
+
+struct gsn {
+  struct sln base;
   gtype value;
-} gsn_s, *gsn_t;
+};
 
-typedef struct gtype_single_linked_list {
-  struct single_linked_list base;
+struct gsl {
+  struct sll base;
   gtype_free_t free_value;
-} gsl_s, *gsl_t;
+};
 
-#define gsl_node(n) ((gsn_t)(n))
+#define gsl_node(n) ((struct gsn *)(n))
+#define gsl_list(l) ((struct gsl *)(l))
 
 #define gsl_node_value(n) (gsl_node(n)->value)
 #define gsl_node_next(n) (gsl_node(sll_node(n)->next))
@@ -30,19 +38,19 @@ typedef struct gtype_single_linked_list {
 #define gsl_length(list) (sll_length(list))
 #define gsl_push_back(list, value) \
   do { \
-    gsn_t _nn = gsl_create_node(value); \
+    struct gsn *_nn = gsl_create_node(value); \
     sll_push_back(sll_list(list), sll_node(_nn)); \
   } while (0)
 
 #define gsl_push_front(list, value) \
   do { \
-    gsn_t _nn = gsl_create_node(value); \
+    struct gsn *_nn = gsl_create_node(value); \
     sll_push_front(sll_list(list), sll_node(_nn)); \
   } while (0)
 
 #define gsl_pop_front(list) \
   do { \
-    gsn_t _nn = gsl_front(list); \
+    struct gsn *_nn = gsl_front(list); \
     if (!_nn) { \
       break; \
     } \
@@ -54,7 +62,7 @@ typedef struct gtype_single_linked_list {
 
 #define gsl_inserta(list, pos, value) \
   do { \
-    gsn_t _nn = gsl_create_node(value); \
+    struct gsn *_nn = gsl_create_node(value); \
     sll_inserta(sll_list(list), sll_node(pos), sll_node(_nn)); \
   } while (0)
 
@@ -72,22 +80,22 @@ typedef struct gtype_single_linked_list {
       free(list); \
   } while (0)
 
-static inline gtype *gsl_front_value(gsl_t l) {
-  gsn_t tmp = gsl_front(l);
+static inline gtype *gsl_front_value(struct gsl *l) {
+  struct gsn *tmp = gsl_front(l);
   return tmp? &tmp->value: NULL;
 }
 
 static inline gtype *gsl_next_value(gtype *cur) {
-  gsn_t nn = gsl_node_next(container_of(cur, struct gtype_single_linked_node, value));
+  struct gsn *nn = gsl_node_next(container_of(cur, struct gsn, value));
   return nn? &nn->value: NULL;
 }
 
 #define gsl_traverse(cur, list) \
   for (gtype *cur = gsl_front_value(list); cur; cur = gsl_next_value(cur))
 
-gsn_t gsl_create_node(gtype value);
-gsl_t gsl_create_list(gtype_free_t free_value);
+struct gsn *gsl_create_node(gtype value);
+struct gsl *gsl_create_list(gtype_free_t free_value);
 void gtype_free_gsl(gtype value);
-void gsl_pprint(gsl_t l, gtype_print_t pp);
+void gsl_pprint(struct gsl *l, gtype_print_t pp);
 
 #endif  // LIST_GSL_H_

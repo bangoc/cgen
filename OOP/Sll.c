@@ -9,41 +9,41 @@
 #define MEMBER(obj, Class, Method) obj->Method = Class ## Method
 
 void SllPushBack(Sll list, SllNode nn) {
-  sll_push_back((sll_t)list, (sln_t)nn);
+  sll_push_back((struct sll *)list, (struct sln *)nn);
 }
 
 void SllPushFront(Sll list, SllNode nn) {
-  sll_push_front((sll_t)list, (sln_t)nn);
+  sll_push_front((struct sll *)list, (struct sln *)nn);
 }
 
 void SllPopFront(Sll list) {
-  sll_pop_front((sll_t)list);
+  sll_pop_front((struct sll *)list);
 }
 
 SllNode SllFront(Sll list) {
-  return (SllNode)sll_front((sll_t)list);
+  return (SllNode)sll_front((struct sll *)list);
 }
 
 int SllIsEmpty(Sll list) {
-  return sll_is_empty((sll_t)list);
+  return sll_is_empty((struct sll *)list);
 }
 
 long SllLength(Sll list) {
-  return sll_length((sll_t)list);
+  return sll_length((struct sll *)list);
 }
 
 void SllPPrintNode(SllNode node) {
-  sll_node_print_address((sln_t)node);
+  sll_node_print_address((struct sln *)node);
 }
 
 void SllPPrint(Sll list) {
-  sll_pprint((sll_t)list, sll_node_print_address);
+  sll_pprint((struct sll *)list, sll_node_print_address);
 }
 
 
 Sll Sll_create() {
-  sll_t sll = sll_create_list();
-  Sll list = realloc(sll, sizeof(SllS));
+  struct sll *base = sll_create_list();
+  Sll list = realloc(base, sizeof(SllS));
   MEMBER(list, Sll, PushBack);
   MEMBER(list, Sll, PushFront);
   MEMBER(list, Sll, PopFront);
@@ -60,12 +60,12 @@ SllNode SllNode_create() {
 }
 
 void Sll_free(Sll list) {
-  sll_t sll = realloc(list, sizeof(struct single_linked_list));
-  sll_free(sll);
+  struct sll *base = realloc(list, sizeof(struct sll));
+  sll_free(base);
 }
 
 void SllNode_free(SllNode node) {
-  free((sln_t)node);
+  free((struct sln *)node);
 }
 
 /* Giao diện gtype */
@@ -109,8 +109,8 @@ SllNodeGt SllNodeGt_create(gtype value) {
 }
 
 void SllGtForeach(SllGt list, int (*op)()) {
-  sll_t sll = (sll_t)list;
-  sll_traverse(cur, sll) {
+  struct sll *base = (struct sll *)list;
+  sll_traverse(cur, base) {
     SllNodeGt gn = (SllNodeGt)cur;
     if (op(gn->value)) {
       break;

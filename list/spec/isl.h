@@ -9,25 +9,25 @@
 
 #include "list/sll.h"
 
-typedef struct isn_s {
-  struct single_linked_node base;
+struct isn {
+  struct sln base;
   long value;
-} *isn_t;
+};
 
-void isn_pprint(sln_t node);
-void isl_pprint(sll_t list);
+void isn_pprint(struct sln *node);
+void isl_pprint(struct sll *list);
 
-#define to_isn(n) ((isn_t)(n))
-#define isn_value(n) (to_isn(n)->value)
+#define isl_node(n) ((struct isn *)(n))
+#define isl_node_value(n) (isl_node(n)->value)
 
-sln_t isn_create(long value);
-void isl_stack_push(sll_t list, long value);
-long isl_stack_pop(sll_t list);
-long isl_stack_top(sll_t list);
+struct sln *isl_create_node(long value);
+void isl_stack_push(struct sll *list, long value);
+long isl_stack_pop(struct sll *list);
+long isl_stack_top(struct sll *list);
 
 /* Giao diện queue kiểu long dựa trên giao diện sll */
-void isl_fifo_enq(sll_t list, long value);
-long isl_fifo_deq(sll_t list);
-long isl_fifo_peek(sll_t list);
+void isl_fifo_enq(struct sll *list, long value);
+long isl_fifo_deq(struct sll *list);
+long isl_fifo_peek(struct sll *list);
 
 #endif  // LIST_SPEC_ISL_H_

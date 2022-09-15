@@ -2,7 +2,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  sll_t stk = sll_create_list();
+  struct sll *stk = sll_create_list();
   isl_stack_push(stk, 1);
   isl_stack_push(stk, 2);
   isl_stack_push(stk, 3);

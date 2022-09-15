@@ -8,9 +8,9 @@
 
 #include "list/gsl.h"
 
-gsl_t que_enq(gsl_t q, gtype value);
-gsl_t que_deq(gsl_t q);
-gtype que_peek(gsl_t q);
+struct gsl *que_enq(struct gsl *q, gtype value);
+struct gsl *que_deq(struct gsl *q);
+gtype que_peek(struct gsl *q);
 
 #define que_size(q) (gsl_length(q))
 #define que_is_empty(q) (gsl_is_empty(q))

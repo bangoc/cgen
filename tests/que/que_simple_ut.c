@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int t1() {
-  gsl_t q = gsl_create_list(NULL);
+  struct gsl *q = gsl_create_list(NULL);
   for (int i = 1; i <= 1000; ++i) {
     que_enq(q, gtype_l(i));
   }

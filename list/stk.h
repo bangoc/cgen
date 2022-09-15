@@ -8,9 +8,9 @@
 
 #include "list/gsl.h"
 
-gsl_t stk_push(gsl_t stk, gtype value);
-gsl_t stk_pop(gsl_t stk);
-gtype stk_top(gsl_t stk);
+struct gsl *stk_push(struct gsl *stk, gtype value);
+struct gsl *stk_pop(struct gsl *stk);
+gtype stk_top(struct gsl *stk);
 
 #define stk_is_empty(stk) (gsl_is_empty(stk))
 #define stk_size(stk) (gsl_length(stk))

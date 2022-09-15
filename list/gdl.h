@@ -3,6 +3,11 @@
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
+/** @file
+ * @brief Triển khai danh sách móc nối kép cho kiểu gtype
+ * Kế thừa ::struct dll
+ */
+
 /**
  * gtype double linked list
  */
@@ -11,18 +16,18 @@
 #include "base/gtype.h"
 #include "list/dll.h"
 
-typedef struct gtype_double_linked_node {
-  struct double_linked_node base;
+struct gdn {
+  struct dln base;
   gtype value;
-} gdn_s, *gdn_t;
+};
 
-typedef struct gtype_double_linked {
-  struct double_linked_list base;
+struct gdl {
+  struct dll base;
   gtype_free_t free_value;
-} gdl_s, *gdl_t;
+};
 
-#define gdl_node(n) ((gdn_t)(n))
-#define gdl_list(lst) ((gdl_t)(lst))
+#define gdl_node(n) ((struct gdn *)(n))
+#define gdl_list(lst) ((struct gdl *)(lst))
 
 #define gdl_node_value(n) (gdl_node(n)->value)
 #define gdl_node_next(n) (gdl_node(dll_node(n)->next))
@@ -33,19 +38,19 @@ typedef struct gtype_double_linked {
 #define gdl_is_empty(list) (gdl_front(list) == NULL && gdl_back(list) == NULL)
 #define gdl_push_front(list, value) \
   do { \
-    gdn_t _nn = gdl_create_node(value); \
+    struct gdn *_nn = gdl_create_node(value); \
     dll_push_front(dll_list(list), dll_node(_nn)); \
   } while (0)
 
 #define gdl_push_back(list, value) \
   do { \
-    gdn_t _nn = gdl_create_node(value); \
+    struct gdn *_nn = gdl_create_node(value); \
     dll_push_back(dll_list(list), dll_node(_nn)); \
   } while (0)
 
 #define gdl_pop_front(list) \
   do { \
-    gdn_t _tmp = gdl_front(list); \
+    struct gdn *_tmp = gdl_front(list); \
     if (!_tmp) { \
       break; \
     } \
@@ -57,7 +62,7 @@ typedef struct gtype_double_linked {
 
 #define gdl_pop_back(list) \
   do { \
-    gdn_t _tmp = gdl_back(list); \
+    struct gdn *_tmp = gdl_back(list); \
     if (!_tmp) { \
       break; \
     } \
@@ -82,33 +87,33 @@ typedef struct gtype_double_linked {
 
 #define gdl_inserta(list, pos, value) \
   do { \
-    gdn_t _nn = gdl_create_node(value); \
+    struct gdn *_nn = gdl_create_node(value); \
     dll_inserta(dll_list(list), dll_node(pos), dll_node(_nn)); \
   } while (0)
 
 #define gdl_insertb(list, pos, value) \
   do { \
-    gdn_t _nn = gdl_create_node(value); \
+    struct gdn *_nn = gdl_create_node(value); \
     dll_insertb(dll_list(list), dll_node(pos), dll_node(_nn)); \
   } while (0)
 
-static inline gtype* gdl_first_value(gdl_t lst) {
-  gdn_t n = gdl_front(lst);
+static inline gtype* gdl_first_value(struct gdl *lst) {
+  struct gdn *n = gdl_front(lst);
   return n? &n->value: NULL;
 }
 
 static inline gtype* gdl_next_value(gtype *cur) {
-  gdn_t nn = gdl_node_next(container_of(cur, struct gtype_double_linked_node, value));
+  struct gdn *nn = gdl_node_next(container_of(cur, struct gdn, value));
   return nn? &nn->value: NULL;
 }
 
 #define gdl_traverse(cur, list) \
   for (gtype *cur = gdl_first_value(list); cur; cur = gdl_next_value(cur))
 
-gdn_t gdl_create_node(gtype value);
-gdl_t gdl_create_list(gtype_free_t free_value);
-long gdl_size(gdl_t list);
+struct gdn *gdl_create_node(gtype value);
+struct gdl *gdl_create_list(gtype_free_t free_value);
+long gdl_size(struct gdl *list);
 void gtype_free_gdl(gtype value);
-void gdl_pprint(gdl_t list, gtype_print_t pp);
+void gdl_pprint(struct gdl *list, gtype_print_t pp);
 
 #endif  // LIST_GDL_H_

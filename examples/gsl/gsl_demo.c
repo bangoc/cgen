@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
-  gsl_t list = gsl_create_list(gtype_free_s);
+  struct gsl *list = gsl_create_list(gtype_free_s);
   char *line = NULL;
   while (cgetline(&line, 0, stdin)) {
     if (strcmp(line, "STOP\n") == 0) {
