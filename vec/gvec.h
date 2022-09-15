@@ -1,5 +1,5 @@
-#ifndef DAB_GVEC_H_
-#define DAB_GVEC_H_
+#ifndef VEC_GVEC_H_
+#define VEC_GVEC_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -19,7 +19,7 @@
  * \headerfile "all.h"
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
  *
- * Các macros điều khiển:
+ * Các macros điều khiển (v phải có kiểu con trỏ ::struct gvector *):
  *
  *   #gvec_size(v) - Kích thước của v.
  *
@@ -304,4 +304,4 @@ void gtype_free_gvec(gtype value);
  */
 void gvec_pprint(struct gvector *v, gtype_print_t pp);
 
-#endif  // DAB_GVEC_H_
+#endif  // VEC_GVEC_H_

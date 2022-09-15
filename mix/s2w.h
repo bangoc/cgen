@@ -3,7 +3,7 @@
 
 /* (C) Nguyen Ba Ngoc 2022 */
 
-#include "dab/gvec.h"
+#include "vec/gvec.h"
 #include "tree/spec/s2i.h"
 
 /**

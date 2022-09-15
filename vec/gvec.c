@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "dab/gvec.h"
+#include "vec/gvec.h"
 
 struct gvector *gvec_create(long n, gtype_free_t free_value) {
   struct gvector *v = malloc(sizeof(struct gvector));

@@ -1,5 +1,5 @@
-#ifndef DAB_HSET_H_
-#define DAB_HSET_H_
+#ifndef VEC_HSET_H_
+#define VEC_HSET_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -9,7 +9,7 @@
 
 #include "base/gtype.h"
 #include "base/hashes.h"
-#include "dab/arr.h"
+#include "vec/arr.h"
 
 #include <stdint.h>
 
@@ -56,4 +56,4 @@ gtype *hset_next_pkey(hset_t, gtype*);
   for(gtype *key = hset_next_pkey(map, NULL); \
      key; key = hset_next_pkey(map, key)) \
 
-#endif  // DAB_HSET_H_
+#endif  // VEC_HSET_H_

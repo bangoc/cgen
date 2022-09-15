@@ -1,10 +1,10 @@
-#ifndef DAB_P1W_H_
-#define DAB_P1W_H_
+#ifndef VEC_P1W_H_
+#define VEC_P1W_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
 #include "base/gtype.h"
-#include "dab/arr.h"
+#include "vec/arr.h"
 
 typedef enum {
   PRIORITY_MIN = 0,
@@ -52,4 +52,4 @@ void gtype_free_p1w(gtype value);
 
 #define P1WARR(h) (ARR((h)->data))
 
-#endif  // DAB_P1W_H_
+#endif  // VEC_P1W_H_

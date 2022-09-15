@@ -4,8 +4,8 @@
  * Triển khai hàng đợi ưu tiên
  */
 
-#include "dab/heap.h"
-#include "dab/p1w.h"
+#include "vec/heap.h"
+#include "vec/p1w.h"
 
 #include <stdlib.h>
 

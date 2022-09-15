@@ -1,5 +1,5 @@
-#ifndef DAB_HEAP_H_
-#define DAB_HEAP_H_
+#ifndef VEC_HEAP_H_
+#define VEC_HEAP_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -17,4 +17,4 @@ void max_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp);
 void max_shift_up_g(gtype *a, long idx, gtype_cmp_t cmp);
 void max_heap_g(gtype *a, const long sz, gtype_cmp_t cmp);
 
-#endif  // DAB_HEAP_H_
+#endif  // VEC_HEAP_H_

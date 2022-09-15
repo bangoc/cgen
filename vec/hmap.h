@@ -1,5 +1,5 @@
-#ifndef DAB_HMAP_H_
-#define DAB_HMAP_H_
+#ifndef VEC_HMAP_H_
+#define VEC_HMAP_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -15,7 +15,7 @@
 
 #include "base/gtype.h"
 #include "base/hashes.h"
-#include "dab/arr.h"
+#include "vec/arr.h"
 
 #include <stdint.h>
 
@@ -232,4 +232,4 @@ gtype *hmap_next_pvalue(hmap_t, gtype*);
   for(gtype *key = hmap_next_pkey(map, NULL), *value = hmap_next_pvalue(map, NULL); \
      key && value; key = hmap_next_pkey(map, key), value = hmap_next_pvalue(map, value)) \
 
-#endif  // DAB_HMAP_H_
+#endif  // VEC_HMAP_H_

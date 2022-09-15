@@ -1,10 +1,10 @@
 /* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
-#ifndef DAB_P2W_H_
-#define DAB_P2W_H_
+#ifndef VEC_P2W_H_
+#define VEC_P2W_H_
 
 #include "base/gtype.h"
-#include "dab/arr.h"
+#include "vec/arr.h"
 
 #include <stdbool.h>
 
@@ -54,4 +54,4 @@ bool p2w_check(p2w_t h, gtype_cmp_t cmp);
  */
 void gtype_free_p2w(gtype value);
 
-#endif  // DAB_P2W_H_
+#endif  // VEC_P2W_H_

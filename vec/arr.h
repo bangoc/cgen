@@ -1,5 +1,5 @@
-#ifndef DAB_ARR_H_
-#define DAB_ARR_H_
+#ifndef VEC_ARR_H_
+#define VEC_ARR_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -91,4 +91,4 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
      } \
    } while (0)
 
-#endif  // DAB_ARR_H_
+#endif  // VEC_ARR_H_

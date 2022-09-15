@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "dab/spec/d2w.h"
+#include "vec/spec/d2w.h"
 
 #include "tests/base/utils.h"
 

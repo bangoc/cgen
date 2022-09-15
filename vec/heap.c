@@ -4,7 +4,7 @@
  * Triển khai min heap và max heap
  */
 
-#include "dab/heap.h"
+#include "vec/heap.h"
 
 // Định nghĩa chỉ sử dụng bên trong.
 // nprop - nghịch đảo của tính chất heap.

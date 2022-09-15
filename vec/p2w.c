@@ -4,7 +4,7 @@
  * Hàng đợi ưu tiên truy cập 2 chiều dựa trên Heap
  */
 
-#include "dab/p2w.h"
+#include "vec/p2w.h"
 
 #define arr_set_value_with_index(a, v, i) \
   do {\

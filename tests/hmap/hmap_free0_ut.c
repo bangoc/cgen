@@ -4,7 +4,7 @@
  * Giải phóng bộ nhớ hmap rỗng, kiểm tra với valgrind
  */
 
-#include "dab/hmap.h"
+#include "vec/hmap.h"
 
 int main() {
   hmap_t map = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, gtype_free_s);

@@ -1,4 +1,4 @@
-#include "dab/spec/d2w.h"
+#include "vec/spec/d2w.h"
 
 int d2w_push_with_index(p2w_t h, long idx, double elem) {
   return p2w_push_with_index(h, idx, gtype_value(d, elem), gtype_cmp_d);
