@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['hmap_5fires_0',['hmap_ires',['../hmap_8h.html#ad6ee48932dfc13546a3f665f60b5fa08',1,'hmap.h']]],
-  ['hmap_5fs_1',['hmap_s',['../hmap_8h.html#a60bbc23f7cdd178d7b190a7a71744fae',1,'hmap.h']]]
+  ['rbm_5fires_0',['rbm_ires',['../rbm_8h.html#a8b6dcca52c60b3d20adf9d2ed22757ce',1,'rbm.h']]],
+  ['rbm_5fs_1',['rbm_s',['../rbm_8h.html#ae0c1989062578fa37b44f00b566c7707',1,'rbm.h']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cgen_0',['cgen',['../index.html',1,'']]]
+  ['double_5flinked_5fnode_0',['double_linked_node',['../structdouble__linked__node.html',1,'']]]
 ];

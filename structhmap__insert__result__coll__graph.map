@@ -1,8 +1,0 @@
-<map id="hmap_insert_result" name="hmap_insert_result">
-<area shape="rect" id="node1" title=" " alt="" coords="5,170,137,197"/>
-<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="304,7,399,34"/>
-<area shape="rect" id="node3" href="$structgtype__vector.html" title=" " alt="" coords="169,170,265,197"/>
-<area shape="rect" id="node4" href="$structred__black__map.html" title=" " alt="" coords="291,170,401,197"/>
-<area shape="rect" id="node5" href="$structhash__map.html" title=" " alt="" coords="427,170,510,197"/>
-<area shape="rect" id="node6" href="$structhash__set.html" title=" " alt="" coords="534,170,609,197"/>
-</map>

@@ -1,7 +1,4 @@
 <map id="generic_type" name="generic_type">
-<area shape="rect" id="node1" title=" " alt="" coords="223,7,318,34"/>
-<area shape="rect" id="node2" href="$structgtype__vector.html" title=" " alt="" coords="5,170,101,197"/>
-<area shape="rect" id="node3" href="$structred__black__map.html" title=" " alt="" coords="139,170,250,197"/>
-<area shape="rect" id="node4" href="$structhash__map.html" title=" " alt="" coords="319,170,401,197"/>
-<area shape="rect" id="node5" href="$structhash__set.html" title=" " alt="" coords="451,170,525,197"/>
+<area shape="rect" id="node1" title=" " alt="" coords="13,5,108,32"/>
+<area shape="rect" id="node2" href="$structred__black__map.html" title=" " alt="" coords="5,124,116,151"/>
 </map>

@@ -29,12 +29,10 @@ var menudata={children:[
 {text:"Index cấu trúc cơ sở dữ liệu",url:"classes.html"},
 {text:"Các trường dữ liệu",url:"functions.html",children:[
 {text:"Tất cả",url:"functions.html"},
-{text:"Các hàm",url:"functions_func.html"},
-{text:"Các biến",url:"functions_vars.html"}]}]},
+{text:"Các hàm",url:"functions_func.html"}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"Danh mục File",url:"files.html"},
 {text:"Toàn cục",url:"globals.html",children:[
 {text:"Tất cả",url:"globals.html"},
-{text:"Các hàm",url:"globals_func.html"},
 {text:"Typedefs",url:"globals_type.html"},
 {text:"Định nghĩa",url:"globals_defs.html"}]}]}]}
