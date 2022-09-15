@@ -1,13 +1,13 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "dab/gvec.h"
+#include "all.h"
 #include "tests/base/utils.h"
 
 int t1() {
   void *p1 = malloc(100);
   void *p2 = malloc(101);
   void *p3 = malloc(105);
-  gvec_t v = gvec_create(0, gtype_free_v);
+  struct gvector *v = gvec_create(0, gtype_free_v);
   gvec_append(v, gtype_v(p1));
   gvec_append(v, gtype_v(p2));
   gvec_append(v, gtype_v(p3));

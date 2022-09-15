@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-void print_gvec(gvec_t v) {
+void print_gvec(struct gvector *v) {
   printf("size = %ld   capacity = %ld\n", gvec_size(v), gvec_capacity(v));
   gvec_traverse(cur, v) {
     printf(" %ld", cur->l);
@@ -17,7 +17,7 @@ void print_gvec(gvec_t v) {
 }
 
 int main() {
-  gvec_t v = gvec_create(0, NULL);
+  struct gvector *v = gvec_create(0, NULL);
   for (int i = 0; i < 10; ++i) {
     if (i % 2 == 1) {
       gvec_append(v, gtype_l(i));

@@ -12,7 +12,7 @@
  */
 
 typedef struct string_index_2way{
-  gvec_t is;
+  struct gvector *is;
   rbm_t si;
 } s2w_s, *s2w_t;
 

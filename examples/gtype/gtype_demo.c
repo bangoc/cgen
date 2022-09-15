@@ -27,7 +27,7 @@ int main() {
 
   gdl_t gdl;
   gsl_t gsl;
-  gvec_t gvec;
+  struct gvector *gvec;
   hmap_t hmap;
   hset_t hset;
   p1w_t p1w;

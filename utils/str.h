@@ -7,7 +7,7 @@
 
 extern const char* ascii_spaces;
 
-gvec_t str_tokens(char *line, const char *delims);
+struct gvector *str_tokens(char *line, const char *delims);
 
 #define str_split(line) str_tokens(line, ascii_spaces)
 #define tok_traverse(cur, line, delims) \

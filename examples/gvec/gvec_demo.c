@@ -7,7 +7,7 @@
 #include <time.h>
 
 int main() {
-  gvec_t v = gvec_create(10, NULL);
+  struct gvector *v = gvec_create(10, NULL);
   srand(time(NULL));
   for (int i = 0; i < 10; ++i) {
     gvec_append(v, gtype_l(rand() % 100));

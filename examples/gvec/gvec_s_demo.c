@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     freopen(argv[1], "r", stdin);
   }
   printf("Nhập vào các chuỗi ký tự hoặc STOP để kết thúc: \n");
-  gvec_t vec = gvec_create(0, gtype_free_s);
+  struct gvector *vec = gvec_create(0, gtype_free_s);
   char *line = NULL;
   for (;;) {
     if (!cgetline(&line, NULL, stdin)) {

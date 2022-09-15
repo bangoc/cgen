@@ -4,7 +4,7 @@
 
 int t1() {
   char line[] = "Hello\tworld\nC\vProgramming\fBasic\r2022 C Is Fast";
-  gvec_t tokens = str_split(line);
+  struct gvector *tokens = str_split(line);
   CHECK_MSG(gvec_size(tokens) == 9, "9 tokens");
   gtype *arr = gvec_arr(tokens);
   CHECK_MSG(strcmp(arr[0].s, "Hello") == 0, "Hello");

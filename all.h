@@ -1,6 +1,7 @@
 #ifndef ALL_H_
 #define ALL_H_
 
+#include "tdef.h"
 #include "base/core.h"
 #include "base/gtype.h"
 #include "base/hashes.h"

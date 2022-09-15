@@ -9,12 +9,12 @@ int is_include(const char *line) {
   return strstr(line, "#include ") == line;
 }
 
-gvec_t read_lines(const char *fname) {
+struct gvector *read_lines(const char *fname) {
   FILE *fp = fopen(fname, "r");
   if (!fp) {
     return NULL;
   }
-  gvec_t lines = gvec_create(100, gtype_free_s);
+  struct gvector *lines = gvec_create(100, gtype_free_s);
   char *tmp = NULL;
   while (cgetline(&tmp, NULL, fp)) {
     remove_tail_lf(tmp);
@@ -71,14 +71,14 @@ char *get_version(const char *root) {
 }
 
 void process(const char *root, const char *list_name, const char *out_name) {
-  gvec_t v = read_lines(list_name);
+  struct gvector *v = read_lines(list_name);
   if (!v) {
     printf("Can not read the list\n");
     return 1;
   }
 
   rbs_t headers = rbs_create(gtype_cmp_s, gtype_free_s);
-  gvec_t contents = gvec_create(1000, gtype_free_s);
+  struct gvector *contents = gvec_create(1000, gtype_free_s);
   char tmp[1024];
   gvec_traverse(cur, v) {
     if (!is_include(cur->s)) {
@@ -86,7 +86,7 @@ void process(const char *root, const char *list_name, const char *out_name) {
     }
     char *unit_name = parse_include(cur->s);
     sprintf(tmp, "%s/%s", root, unit_name);
-    gvec_t loc = read_lines(tmp);
+    struct gvector *loc = read_lines(tmp);
     char origin[1024];
     sprintf(origin, "\n/***********************************\n"
                     " * %s\n"

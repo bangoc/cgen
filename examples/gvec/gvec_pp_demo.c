@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     freopen(argv[1], "r", stdin);
   }
   printf("Nhập các các điểm trên mặt phẳng hoặc điểm có tọa độ (0, 0) để kết thúc: \n");
-  gvec_t vec = gvec_create(0, gtype_free_v);
+  struct gvector *vec = gvec_create(0, gtype_free_v);
   struct point *p;
   for (;;) {
     p = malloc(sizeof(struct point));

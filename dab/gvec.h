@@ -46,7 +46,7 @@
  *
  *   #gvec_traverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
  */
-typedef struct gtype_vector {
+struct gvector {
   /**
    * Mảng cơ sở lưu các đối tượng ::gtype
    */
@@ -69,7 +69,7 @@ typedef struct gtype_vector {
    * bỏ qua.
    */
   gtype_free_t free_value;
-} gvec_s, *gvec_t;
+};
 
 /**
  * Hàm tạo đối tượng vec-tơ.
@@ -78,9 +78,9 @@ typedef struct gtype_vector {
  * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
  * với đối tượng ::gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gtype_vector
+ * \memberof gvector
  */
-gvec_t gvec_create(long n, gtype_free_t free_value);
+struct gvector *gvec_create(long n, gtype_free_t free_value);
 
 /**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
@@ -302,6 +302,6 @@ void gtype_free_gvec(gtype value);
  * @param v Con trỏ tới đối tượng vec-tơ
  * @param pp Hàm xuất giá trị gtype
  */
-void gvec_pprint(gvec_t v, gtype_print_t pp);
+void gvec_pprint(struct gvector *v, gtype_print_t pp);
 
 #endif  // DAB_GVEC_H_

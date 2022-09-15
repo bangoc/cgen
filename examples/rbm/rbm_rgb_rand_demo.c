@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     if (tmp) {
       gvec_append(tmp->gvec, gtype_l(i));
     } else {
-      gvec_t vec = gvec_create(10, NULL);
+      struct gvector *vec = gvec_create(10, NULL);
       gvec_append(vec, gtype_l(i));
       rbm_insert(tab, gtype_s(colors[j]), gtype_gvec(vec));
     }

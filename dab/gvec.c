@@ -2,8 +2,8 @@
 
 #include "dab/gvec.h"
 
-gvec_t gvec_create(long n, gtype_free_t free_value) {
-  gvec_t v = malloc(sizeof(struct gtype_vector));
+struct gvector *gvec_create(long n, gtype_free_t free_value) {
+  struct gvector *v = malloc(sizeof(struct gvector));
   if (!v) {
     return NULL;
   }
@@ -26,7 +26,7 @@ void gtype_free_gvec(gtype value) {
   gvec_free(value.gvec);
 }
 
-void gvec_pprint(gvec_t v, gtype_print_t pp) {
+void gvec_pprint(struct gvector *v, gtype_print_t pp) {
   gvec_traverse(cur, v) {
     pp(*cur);
   }

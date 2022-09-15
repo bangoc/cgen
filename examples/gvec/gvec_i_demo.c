@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     freopen(argv[1], "r", stdin);
   }
   printf("Nhập các số không âm, hoặc nhập -1 để kết thúc: \n");
-  gvec_t vec = gvec_create(0, NULL);
+  struct gvector *vec = gvec_create(0, NULL);
   int x;
   for (;;) {
     scanf("%d", &x);

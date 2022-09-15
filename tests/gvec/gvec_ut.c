@@ -1,4 +1,6 @@
-#include "dab/gvec.h"
+/* (C) Nguyen Ba Ngoc 2022 */
+
+#include "all.h"
 #include "tests/base/utils.h"
 #include "tests/base/helpers.h"
 
@@ -14,7 +16,7 @@ int gtype_inc_cmp_s(const void *v1, const void *v2) {
 }
 
 int t1() {
-  gvec_t v = gvec_create(0, NULL);
+  struct gvector *v = gvec_create(0, NULL);
   int a[] = {3, 1, 5, 6, 8, 9, 10, 2};
   int n = sizeof(a)/ sizeof(a[0]);
   for (int i = 0; i < n; ++i) {
@@ -29,7 +31,7 @@ int t1() {
 }
 
 int t2() {
-  gvec_t v = gvec_create(0, gtype_free_s);
+  struct gvector *v = gvec_create(0, gtype_free_s);
   gvec_append(v, gtype_s(strdup("AAA")));
   gvec_append(v, gtype_s(strdup("CCC")));
   gvec_append(v, gtype_s(strdup("BBB")));
@@ -43,7 +45,7 @@ int t2() {
 }
 
 int t3() {
-  gvec_t v = gvec_create(0, NULL);
+  struct gvector *v = gvec_create(0, NULL);
   for (int i = 0; i < 10; ++i) {
     gvec_append(v, gtype_l(i));
   }
