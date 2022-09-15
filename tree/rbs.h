@@ -5,24 +5,24 @@
 
 #include "tree/spec/grb.h"
 
-typedef struct red_black_set {
-  struct _grb_tree base;
+struct rbs {
+  struct grbt base;
   long size;
-} rbs_s, *rbs_t;
+};
 
-#define rbs_tree(t) ((rbs_t)(t))
+#define rbs_tree(t) ((struct rbs *)(t))
 
 #define rbs_node_key(n) (grb_node(n)->key)
 #define rbs_contains(s, v) (rbs_search(s, v) != NULL)
 
-rbs_t rbs_create(gtype_cmp_t cmp, gtype_free_t fk);
-int rbs_insert(rbs_t s, gtype elem);
-grb_node_t rbs_search(rbs_t s, gtype elem);
-int rbs_remove(rbs_t s, gtype elem);
+struct rbs *rbs_create(gtype_cmp_t cmp, gtype_free_t fk);
+int rbs_insert(struct rbs *s, gtype elem);
+struct grbn *rbs_search(struct rbs *s, gtype elem);
+int rbs_remove(struct rbs *s, gtype elem);
 
 static inline void _rbs_move_next(gtype **cur) {
-  grb_node_t nd = container_of(*cur, struct _grb_node, key);
-  bn_node_t tmp = bn_next_inorder(bn_node(nd));
+  struct grbn *nd = container_of(*cur, struct grbn, key);
+  struct bnn *tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *cur = NULL;
     return;
@@ -62,7 +62,7 @@ static inline void _rbs_move_next(gtype **cur) {
  * được lưu trong một cấu trúc lưu trữ khác.
  *
  * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbs.
- * Con trỏ value.rbs (kiểu ::rbs_t) được truyền cho rbs_free.
+ * Con trỏ value.rbs (kiểu ::struct rbs * được truyền cho rbs_free.
  * @return Hàm không trả về giá trị.
  */
 void gtype_free_rbs(gtype value);

@@ -25,8 +25,8 @@ typedef union generic_type {
   struct gdl *gdl;
   struct gsl *gsl;
   struct gvector *gvec;
-  struct red_black_map *rbm;
-  struct red_black_set *rbs;
+  struct rbm *rbm;
+  struct rbs *rbs;
   struct hash_map *hmap;
   struct hash_set *hset;
   struct priority_one_way *p1w;

@@ -28,5 +28,16 @@ typedef struct gdn *gdn_t;
 typedef struct gdl *gdl_t;
 typedef struct gsn *gsn_t;
 typedef struct gsl *gsl_t;
+typedef struct s2w *s2w_t;
+typedef struct bnn *bn_node_t;
+typedef struct bnt *bn_tree_t;
+typedef struct rbn *rb_node_t;
+typedef struct gbsn *gbs_node_t;
+typedef struct gbst *gbs_tree_t;
+typedef struct grbn *grb_node_t;
+typedef struct grbt *grb_tree_t;
+typedef struct rbmn *rbm_node_t;
+typedef struct rbmt *rbm_t;
+typedef struct rbst *rbs_t;
 
 #endif  // TDEF_H_

@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void print_rbm(rbm_t tab) {
+void print_rbm(struct rbm *tab) {
   printf("size: %ld \n", tab->size);
   rbm_traverse(k, v, tab) {
     printf("%s:\t %ld\n", k->s, v->l);
@@ -20,7 +20,7 @@ void print_rbm(rbm_t tab) {
 
 int main() {
   srand(time(NULL));
-  rbm_t tab = rbm_create(gtype_cmp_s, gtype_free_s, NULL);
+  struct rbm *tab = rbm_create(gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {
     rbm_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
   }

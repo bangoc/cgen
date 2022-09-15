@@ -26,12 +26,10 @@
 
 extern const char * color_names[];
 
-typedef struct _grb_node {
-  struct _rb_node base;
+struct grbn {
+  struct rbn base;
   gtype key;
-} grb_node_s, *grb_node_t;
-
-#define grb_node(n) ((grb_node_t)(n))
+};
 
 /*
   Trong triển khai này NULL được sử dụng thay vì lính canh để tương
@@ -40,18 +38,20 @@ typedef struct _grb_node {
   Nút NULL được quy ước là nút đen
 */
 
-typedef struct _grb_tree {
-  struct _bn_tree base;
+struct grbt {
+  struct bnt base;
   gtype_cmp_t cmp;
   gtype_free_t fk;
-} grb_tree_s, *grb_tree_t;
+};
 
-grb_node_t grb_create_node(gtype key);
+#define grb_node(n) ((struct grbn *)(n))
+#define grb_tree(t) ((struct grbt *)(t))
+
+struct grbn *grb_create_node(gtype key);
 #define grb_free_node(n, t) gbs_free_node(n, gbs_tree(t)->fk)
-int grb_cmp_node(bn_node_t, bn_node_t, bn_tree_t);
+int grb_cmp_node(struct bnn *, struct bnn *, struct bnt *);
 
-grb_tree_t grb_create_tree(grb_node_t root, gtype_cmp_t cmp, gtype_free_t fk);
-#define grb_tree(t) ((grb_tree_t)(t))
+struct grbt *grb_create_tree(struct grbn *root, gtype_cmp_t cmp, gtype_free_t fk);
 
 #define grb_free_tree(t) \
   do { \
@@ -63,12 +63,12 @@ grb_tree_t grb_create_tree(grb_node_t root, gtype_cmp_t cmp, gtype_free_t fk);
     bn_free_tree(bn_tree(t)); \
   } while (0)
 
-bs_ires grb_insert(grb_tree_t t, gtype key);
-bs_ires grb_insert_unique(grb_tree_t t, gtype key);
-grb_node_t grb_search(grb_tree_t t, gtype key);
-grb_node_t grb_search_gte(grb_tree_t t, gtype key);
-grb_node_t grb_search_lte(grb_tree_t t, gtype key);
-int grb_delete(grb_tree_t t, grb_node_t dn);
+struct bs_ires grb_insert(struct grbt *t, gtype key);
+struct bs_ires grb_insert_unique(struct grbt *t, gtype key);
+struct grbn *grb_search(struct grbt *t, gtype key);
+struct grbn *grb_search_gte(struct grbt *t, gtype key);
+struct grbn *grb_search_lte(struct grbt *t, gtype key);
+int grb_delete(struct grbt *t, struct grbn *dn);
 
 
 #endif  // TREE_SPEC_GRB_H_

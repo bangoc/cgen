@@ -2,18 +2,18 @@
 
 #include "tree/bn.h"
 
-bn_node_t bn_create_node() {
-  return calloc(1, sizeof(struct _bn_node));
+struct bnn *bn_create_node() {
+  return calloc(1, sizeof(struct bnn));
 }
 
-bn_tree_t bn_create_tree(bn_node_t root) {
-  bn_tree_t tree = malloc(sizeof(struct _bn_tree));
+struct bnt *bn_create_tree(struct bnn *root) {
+  struct bnt *tree = malloc(sizeof(struct bnt));
   tree->root = root;
   return tree;
 }
 
-void bn_free_tree(bn_tree_t t) {
-  bn_node_t tmp = NULL;
+void bn_free_tree(struct bnt *t) {
+  struct bnn *tmp = NULL;
   bn_traverse_lrn(cur, t) {
     bn_free_node(tmp);
     tmp = cur;
@@ -22,7 +22,7 @@ void bn_free_tree(bn_tree_t t) {
   free(t);
 }
 
-bn_node_t bn_left_deepest_node(bn_node_t node) {
+struct bnn *bn_left_deepest_node(struct bnn *node) {
   if (!node) {
     return NULL;
   }
@@ -37,11 +37,11 @@ bn_node_t bn_left_deepest_node(bn_node_t node) {
   }
 }
 
-bn_node_t bn_next_postorder(bn_node_t node) {
+struct bnn *bn_next_postorder(struct bnn *node) {
   if (!node) {
     return NULL;
   }
-  bn_node_t top = node->top;
+  struct bnn *top = node->top;
 
   /* If we're sitting on node, we've already seen our children */
   if (top && node == top->left && top->right) {
@@ -54,12 +54,12 @@ bn_node_t bn_next_postorder(bn_node_t node) {
     return top;
 }
 
-bn_node_t bn_first_postorder(bn_node_t n) {
+struct bnn *bn_first_postorder(struct bnn *n) {
   return bn_left_deepest_node(n);
 }
 
-void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u) {
-  bn_node_t n = bn_first_postorder(t->root);
+void bn_foreach_lrn(struct bnt *t, bn_callback_t op, void *u) {
+  struct bnn *n = bn_first_postorder(t->root);
   for (; n != NULL; n = bn_next_postorder(n)) {
     if (op(n, u)) {
       break;
@@ -67,11 +67,11 @@ void bn_foreach_lrn(bn_tree_t t, bn_callback_t op, void *u) {
   }
 }
 
-bn_node_t bn_left_most(bn_node_t x) {
+struct bnn *bn_left_most(struct bnn *x) {
   if (!x) {
     return NULL;
   }
-  bn_node_t y;
+  struct bnn *y;
   #define bn_MOST(x, child, out) \
   (out) = (x); \
   do { \
@@ -83,20 +83,20 @@ bn_node_t bn_left_most(bn_node_t x) {
   return y;
 }
 
-bn_node_t bn_right_most(bn_node_t x) {
+struct bnn *bn_right_most(struct bnn *x) {
   if (!x) {
     return NULL;
   }
-  bn_node_t y;
+  struct bnn *y;
   bn_MOST(x, right, y);
   return y;
 }
 
-bn_node_t bn_next_inorder(bn_node_t x)  {
+struct bnn *bn_next_inorder(struct bnn *x)  {
   if (!x) {
     return NULL;
   }
-  bn_node_t y;
+  struct bnn *y;
 #define BS_NEAREST(x, left, right, out) \
   do { \
     if ((x)->right != NULL) { \
@@ -113,20 +113,20 @@ bn_node_t bn_next_inorder(bn_node_t x)  {
   return y;
 }
 
-bn_node_t bn_prev_inorder(bn_node_t x) {
+struct bnn *bn_prev_inorder(struct bnn *x) {
   if (!x) {
     return NULL;
   }
-  bn_node_t y;
+  struct bnn *y;
   BS_NEAREST(x, right, left, y);
   return y;
 }
 
-void bn_foreach_lnr(bn_tree_t t, bn_callback_t op, void *u) {
+void bn_foreach_lnr(struct bnt *t, bn_callback_t op, void *u) {
   if (!t->root) {
     return;
   }
-  bn_node_t n = bn_left_most(t->root);
+  struct bnn *n = bn_left_most(t->root);
   for (; n != NULL; n = bn_next_inorder(n)) {
     if (op(n, u)) {
       break;
@@ -134,11 +134,11 @@ void bn_foreach_lnr(bn_tree_t t, bn_callback_t op, void *u) {
   }
 }
 
-void bn_foreach_rnl(bn_tree_t t, bn_callback_t op, void *u) {
+void bn_foreach_rnl(struct bnt *t, bn_callback_t op, void *u) {
   if (!t->root) {
     return;
   }
-  bn_node_t nd = bn_right_most(t->root);
+  struct bnn *nd = bn_right_most(t->root);
   for (; nd != NULL; nd = bn_prev_inorder(nd)) {
     if (op(nd, u)) {
       break;
@@ -146,7 +146,7 @@ void bn_foreach_rnl(bn_tree_t t, bn_callback_t op, void *u) {
   }
 }
 
-void bn_pprint_internal(bn_node_t root, bn_node_print_t nprt,
+void bn_pprint_internal(struct bnn *root, bn_node_print_t nprt,
       int spaces, int step) {
   if (!root) {
     return;
@@ -166,12 +166,12 @@ void bn_pprint_internal(bn_node_t root, bn_node_print_t nprt,
 int g_bn_pprint_spaces_at_begin = 0;
 int g_bn_pprint_step = 3;
 
-void bn_pprint(bn_tree_t t, bn_node_print_t p) {
+void bn_pprint(struct bnt *t, bn_node_print_t p) {
   bn_pprint_internal(t->root, p,
     g_bn_pprint_spaces_at_begin, g_bn_pprint_step);
 }
 
-long bn_size(bn_tree_t t) {
+long bn_size(struct bnt *t) {
   long cc = 0;
   bn_traverse_lrn(cur, t)  {
     ++cc;
@@ -179,7 +179,7 @@ long bn_size(bn_tree_t t) {
   return cc;
 }
 
-long bn_distance(bn_node_t n) {
+long bn_distance(struct bnn *n) {
   long cc = -1;
   while (n != NULL) {
     n = n->top;
@@ -188,7 +188,7 @@ long bn_distance(bn_node_t n) {
   return cc;
 }
 
-long bn_edge_height(bn_tree_t t) {
+long bn_edge_height(struct bnt *t) {
   long max = 0;
   bn_traverse_lnr(n, t) {
     if (n && !n->left && !n->right) {

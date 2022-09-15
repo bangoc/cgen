@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-rbm_t si = NULL; //cay chua string -> int
+struct rbm *si = NULL; //cay chua string -> int
 int g_id = 0;
 
 

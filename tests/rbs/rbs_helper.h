@@ -3,7 +3,7 @@
 
 #include "tree/rbs.h"
 
-static int rbs_traverse_match(rbs_t s, gtype *a, int n) {
+static int rbs_traverse_match(struct rbs *s, gtype *a, int n) {
   int i = 0;
   rbs_traverse(cur, s) {
     if (i >= n || grb_tree(s)->cmp(a[i], *cur) != 0) {

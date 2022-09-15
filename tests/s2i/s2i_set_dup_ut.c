@@ -4,7 +4,7 @@
 #include <string.h>
 
 int main() {
-  rbm_t si = s2i_create();
+  struct rbm *si = s2i_create();
   s2i_put(si, "Một", 1);
   s2i_put(si, "Hai", 2);
   s2i_put(si, "Ba", 3);

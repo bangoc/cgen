@@ -4,7 +4,7 @@
 #include <string.h>
 
 int main() {
-  rbm_t t = rbm_create(gtype_cmp_s, NULL, NULL);
+  struct rbm *t = rbm_create(gtype_cmp_s, NULL, NULL);
   char *s1 = "1111111111",
        *s2 = "2222222222",
        *s3 = "3333333333",
@@ -38,7 +38,7 @@ int main() {
   CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found E");
   query = gtype_s(sf);
   CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found F");
-  bn_free_tree((bn_tree_t)t);
+  bn_free_tree((struct bnt *)t);
   printf("Treemap ut OK\n");
   return 0;
 }

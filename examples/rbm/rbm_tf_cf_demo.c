@@ -26,7 +26,7 @@ int main() {
     {"fff", 3, 2}
   };
   int n = sizeof(a)/sizeof(struct term_freq);
-  rbm_t cf = rbm_create(gtype_cmp_s, NULL, NULL);
+  struct rbm *cf = rbm_create(gtype_cmp_s, NULL, NULL);
   for (int i = 0; i < n; ++i) {
     gtype *tmp = rbm_put(cf, gtype_s(a[i].term), gtype_l(a[i].freq));
     if (tmp) {

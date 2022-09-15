@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   srand(time(NULL));
   int n = 0;
   sscanf(argv[1], "%d", &n);
-  rbm_t tab = rbm_create(gtype_cmp_s, NULL, gtype_free_gvec);
+  struct rbm *tab = rbm_create(gtype_cmp_s, NULL, gtype_free_gvec);
   for (int i = 0; i < n; ++i) {
     int j = rand() % NUM_COLORS;
     gtype* tmp = rbm_value(tab, gtype_s(colors[j]));

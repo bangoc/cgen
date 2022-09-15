@@ -5,7 +5,7 @@
 
 typedef int (*bn_similar_node_t)();
 
-static int bn_similar_tree_internal(bn_node_t n1, bn_node_t n2, bn_similar_node_t cmp) {
+static int bn_similar_tree_internal(struct bnn *n1, struct bnn *n2, bn_similar_node_t cmp) {
   if (n1 == NULL && n2 == NULL) {
     return 1;
   }
@@ -19,8 +19,8 @@ static int bn_similar_tree_internal(bn_node_t n1, bn_node_t n2, bn_similar_node_
          bn_similar_tree_internal(n1->right, n2->right, cmp);
 }
 
-static int bn_similar_tree(bn_tree_t t1,
-    bn_tree_t t2, bn_similar_node_t cmp) {
+static int bn_similar_tree(struct bnt *t1,
+    struct bnt *t2, bn_similar_node_t cmp) {
   return bn_similar_tree_internal(t1->root, t2->root, cmp);
 }
 

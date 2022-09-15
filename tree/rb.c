@@ -4,14 +4,14 @@
 
 const char * color_names[] = {"Đỏ", "Đen"};
 
-rb_node_t rb_create_node() {
-  bn_node_t tmp = bn_create_node();
-  rb_node_t nn = realloc(tmp, sizeof(struct _rb_node));
+struct rbn *rb_create_node() {
+  struct bnn *tmp = bn_create_node();
+  struct rbn *nn = realloc(tmp, sizeof(struct rbn));
   nn->color = RB_RED;
   return nn;
 }
 
-static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
+static void rb_insert_fixup(struct bnt *t, struct bnn *n, struct bnn *p) {
   /*
    * Các biến:
    * t - con trỏ tới cây (tree)
@@ -40,7 +40,7 @@ static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 
     if (p == p->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
-      bn_node_t _u = p->top->right; \
+      struct bnn *_u = p->top->right; \
       if (rb_is_red(_u)) { \
         /*     GP                gp  <- n mới                      \
              p   u  thành>>>   P    U                              \
@@ -98,9 +98,9 @@ static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
 #undef IMPL_INSERT_FIXUP
 
 #define RB_INSERT_TPL(bs_interface, ...) \
-  bs_ires ires = bs_interface(t, nn, cmp); \
+  struct bs_ires ires = bs_interface(t, nn, cmp); \
   __VA_ARGS__ \
-  bn_node_t par = bn_node(nn)->top; \
+  struct bnn *par = bn_node(nn)->top; \
   if (par == NULL) { \
     rb_set_black(nn); \
   } else if (rb_is_red(par)) { \
@@ -111,11 +111,11 @@ static void rb_insert_fixup(bn_tree_t t, bn_node_t n, bn_node_t p) {
   } \
   return ires
 
-bs_ires rb_insert(bn_tree_t t, rb_node_t nn, bn_compare_t cmp) {
+struct bs_ires rb_insert(struct bnt *t, struct rbn *nn, bn_compare_t cmp) {
   RB_INSERT_TPL(bs_insert);
 }
 
-bs_ires rb_insert_unique(bn_tree_t t, rb_node_t nn, bn_compare_t cmp) {
+struct bs_ires rb_insert_unique(struct bnt *t, struct rbn *nn, bn_compare_t cmp) {
   RB_INSERT_TPL(bs_insert_unique,
     if (!ires.inserted) {
       return ires;
@@ -125,10 +125,10 @@ bs_ires rb_insert_unique(bn_tree_t t, rb_node_t nn, bn_compare_t cmp) {
 
 #undef RB_INSERT_TPL
 
-static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
-  bn_node_t node = NULL, sibling,
-          cn,  // Con của sibling ở phía gần node (close nephew)
-          dn;  // Con của sibling ở phía xa node (distant nephew)
+static void rb_delete_fix_color(struct bnt *t, struct bnn *parent) {
+  struct bnn *node = NULL, *sibling,
+          *cn,  // Con của sibling ở phía gần node (close nephew)
+          *dn;  // Con của sibling ở phía xa node (distant nephew)
   while (true) {
     /*
     * Các tính chất bất biến trong vòng lặp:
@@ -251,13 +251,13 @@ static void rb_delete_fix_color(bn_tree_t t, bn_node_t parent) {
   n->top = parent; \
   rb_set_color(n, color)
 
-int rb_delete(bn_tree_t t, rb_node_t dn) {
-  bn_node_t node = bn_node(dn);
-  bn_node_t child = node->right,
-            tmp = node->left,
-            parent, rebalance;
-  bn_node_t p;
-  rb_node_color_t c;
+int rb_delete(struct bnt *t, struct rbn *dn) {
+  struct bnn *node = bn_node(dn);
+  struct bnn *child = node->right,
+            *tmp = node->left,
+            *parent, *rebalance;
+  struct bnn *p;
+  enum rb_node_color c;
   if (!tmp) {
     /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
      *
@@ -286,7 +286,7 @@ int rb_delete(bn_tree_t t, rb_node_t dn) {
     rebalance = NULL;
     tmp = parent;
   } else {
-    bn_node_t successor = child, child2;
+    struct bnn *successor = child, *child2;
     tmp = child->left;
     if (!tmp) {
       /* Trường hợp 2: Nút liền sau node là con phải của node.
@@ -334,7 +334,7 @@ int rb_delete(bn_tree_t t, rb_node_t dn) {
       rb_set_parent_color(child2, parent, RB_BLACK);
       rebalance = NULL;
     } else {
-      rb_node_color_t c2 = rb_color(successor);
+      enum rb_node_color c2 = rb_color(successor);
       rebalance = c2 == RB_BLACK? parent: NULL;
     }
     rb_set_parent_color(successor, p, c);

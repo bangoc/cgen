@@ -4,12 +4,12 @@
 #include <stdio.h>
 
 int t1() {
-  bn_node_t n1 = bn_create_node();
-  bn_node_t n2 = bn_create_node();
-  bn_node_t n3 = bn_create_node();
-  bn_node_t n4 = bn_create_node();
-  bn_node_t n5 = bn_create_node();
-  bn_tree_t t = bn_create_tree(n4);
+  struct bnn *n1 = bn_create_node();
+  struct bnn *n2 = bn_create_node();
+  struct bnn *n3 = bn_create_node();
+  struct bnn *n4 = bn_create_node();
+  struct bnn *n5 = bn_create_node();
+  struct bnt *t = bn_create_tree(n4);
   /*
          4
     2          5

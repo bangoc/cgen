@@ -2,11 +2,11 @@
 #include "tree/bn.h"
 
 int main() {
-  bn_node_t n1 = bn_create_node();
-  bn_node_t n2 = bn_create_node();
-  bn_node_t n3 = bn_create_node();
-  bn_node_t n4 = bn_create_node();
-  bn_node_t n5 = bn_create_node();
+  struct bnn *n1 = bn_create_node();
+  struct bnn *n2 = bn_create_node();
+  struct bnn *n3 = bn_create_node();
+  struct bnn *n4 = bn_create_node();
+  struct bnn *n5 = bn_create_node();
   n3->left = n2;
   n2->top = n3;
   n3->right = n4;

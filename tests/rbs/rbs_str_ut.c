@@ -8,7 +8,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  rbs_t s = rbs_create(gtype_cmp_s, gtype_free_s);
+  struct rbs *s = rbs_create(gtype_cmp_s, gtype_free_s);
   const char *cases[] = {"aaa", "bbb", "ccc"};
   int n = sizeof(cases)/sizeof(cases[0]);
   for (int i = 0; i < n; ++i) {

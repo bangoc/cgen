@@ -32,8 +32,8 @@ int main() {
   hset_t hset;
   p1w_t p1w;
   p2w_t p2w;
-  rbm_t rbm;
-  rbs_t rbs;
+  struct rbm *rbm;
+  struct rbs *rbs;
   value = gtype_gdl(gdl);
   value = gtype_gsl(gsl);
   value = gtype_gvec(gvec);

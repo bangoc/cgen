@@ -4,7 +4,7 @@
 #include <string.h>
 
 int t1() {
-  rbm_t si = s2i_create();
+  struct rbm *si = s2i_create();
   CHECK_MSG(s2i_put(si, "Một", 1) == NULL, "Khóa mới");
   s2i_put(si, "Hai", 2);
   s2i_put(si, "Ba", 3);
@@ -26,7 +26,7 @@ int t1() {
 }
 
 int t2() {
-  rbm_t si = s2i_create();
+  struct rbm *si = s2i_create();
   CHECK_MSG(s2i_put(si, "Một", 1) == NULL, "Khóa mới");
   s2i_put(si, "Hai", 2);
   s2i_put(si, "Ba", 3);

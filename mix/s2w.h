@@ -7,21 +7,21 @@
 #include "tree/spec/s2i.h"
 
 /**
+ * Cấu trúc điều khiển của ánh xạ 2 chiều chuỗi <=> chỉ số nguyên.
  * Các chỉ số được tăng dần tự động 0, 1, ...
  * quy ước -1 là chỉ số không hợp lệ.
  */
-
-typedef struct string_index_2way{
+struct s2w {
   struct gvector *is;
-  rbm_t si;
-} s2w_s, *s2w_t;
+  struct rbm *si;
+};
 
-s2w_t s2w_create();
-rbm_ires s2w_insert(s2w_t col, const char *s);
-long *s2w_put(s2w_t col, const char *s);
-int s2w_remove(s2w_t col, const char *s);
-long s2w_id(s2w_t col, const char *s);
-char *s2w_str(s2w_t col, const long id);
-void s2w_free(s2w_t col);
+struct s2w *s2w_create();
+struct rbm_ires s2w_insert(struct s2w *col, const char *s);
+long *s2w_put(struct s2w *col, const char *s);
+int s2w_remove(struct s2w *col, const char *s);
+long s2w_id(struct s2w *col, const char *s);
+char *s2w_str(struct s2w *col, const long id);
+void s2w_free(struct s2w *col);
 
 #endif  // MIX_S2W_H_

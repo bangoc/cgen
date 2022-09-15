@@ -77,7 +77,7 @@ void process(const char *root, const char *list_name, const char *out_name) {
     return 1;
   }
 
-  rbs_t headers = rbs_create(gtype_cmp_s, gtype_free_s);
+  struct rbs *headers = rbs_create(gtype_cmp_s, gtype_free_s);
   struct gvector *contents = gvec_create(1000, gtype_free_s);
   char tmp[1024];
   gvec_traverse(cur, v) {

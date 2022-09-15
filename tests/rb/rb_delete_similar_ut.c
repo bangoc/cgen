@@ -2,12 +2,12 @@
 #include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
-bn_tree_t make_tree1() {
-  grb_node_t n2 = rbi_create_color_node(2, RB_RED);
-  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
-  grb_node_t n6 = rbi_create_color_node(6, RB_BLACK);
-  grb_node_t n8 = rbi_create_color_node(8, RB_RED);
+struct bnt *make_tree1() {
+  struct grbn *n2 = rbi_create_color_node(2, RB_RED);
+  struct grbn *n3 = rbi_create_color_node(3, RB_BLACK);
+  struct grbn *n5 = rbi_create_color_node(5, RB_BLACK);
+  struct grbn *n6 = rbi_create_color_node(6, RB_BLACK);
+  struct grbn *n8 = rbi_create_color_node(8, RB_RED);
   /*
            5B
       3B          6B
@@ -20,22 +20,22 @@ bn_tree_t make_tree1() {
   return bn_tree(rbi_create_tree(bn_node(n5)));
 }
 
-bn_tree_t make_tree2() {
+struct bnt *make_tree2() {
   /*
                5B
          2B           7B
       1B     3B   6B      9R
                         8B   10B
   */
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_RED);
-  grb_node_t n10 = rbi_create_color_node(10, RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_RED);
+  struct grbn *n10 = rbi_create_color_node(10, RB_BLACK);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n2, top, n5, left);
@@ -47,23 +47,23 @@ bn_tree_t make_tree2() {
   return bn_tree(rbi_create_tree(bn_node(n5)));
 }
 
-bn_tree_t make_tree3() {
+struct bnt *make_tree3() {
   /*
                   5B
          2B               7B
       1B     3B       6B      9R
                 4R          8B   10B
   */
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n4  = rbi_create_color_node(4,  RB_RED);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_RED);
-  grb_node_t n10 = rbi_create_color_node(10, RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n4  = rbi_create_color_node(4,  RB_RED);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_RED);
+  struct grbn *n10 = rbi_create_color_node(10, RB_BLACK);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n3, right, n4, top);
@@ -76,21 +76,21 @@ bn_tree_t make_tree3() {
   return rbi_create_tree(bn_node(n5));
 }
 
-bn_tree_t make_tree4() {
+struct bnt *make_tree4() {
   /*
                   5B
          2B               7B
       1B     3B       6B      9B
                             8R
   */
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_RED);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_RED);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n2, top, n5, left);
@@ -102,16 +102,16 @@ bn_tree_t make_tree4() {
 }
 
 int delete_node_one_left_child() {
-  bn_tree_t t = make_tree1();
+  struct bnt *t = make_tree1();
 
-  grb_node_t n2 = rbi_create_color_node(2, RB_BLACK);
-  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
-  grb_node_t n6 = rbi_create_color_node(6, RB_BLACK);
-  grb_node_t n8 = rbi_create_color_node(8, RB_RED);
+  struct grbn *n2 = rbi_create_color_node(2, RB_BLACK);
+  struct grbn *n5 = rbi_create_color_node(5, RB_BLACK);
+  struct grbn *n6 = rbi_create_color_node(6, RB_BLACK);
+  struct grbn *n8 = rbi_create_color_node(8, RB_RED);
   bn_connect2(n5, left, n2, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
 
   rbi_delete(t, 3);
   /* Sau khi xóa 3
@@ -126,16 +126,16 @@ int delete_node_one_left_child() {
 }
 
 int delete_node_one_right_child() {
-  bn_tree_t t = make_tree1();
+  struct bnt *t = make_tree1();
 
-  grb_node_t n2 = rbi_create_color_node(2, RB_RED);
-  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
-  grb_node_t n8 = rbi_create_color_node(8, RB_BLACK);
+  struct grbn *n2 = rbi_create_color_node(2, RB_RED);
+  struct grbn *n3 = rbi_create_color_node(3, RB_BLACK);
+  struct grbn *n5 = rbi_create_color_node(5, RB_BLACK);
+  struct grbn *n8 = rbi_create_color_node(8, RB_BLACK);
   bn_connect2(n3, left, n2, top);
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n8, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
 
   rbi_delete(t, 6);
   /* Sau khi xóa 6
@@ -153,7 +153,7 @@ int delete_red_node_no_child() {
   /*
   Trường hợp đơn giản, các nút còn lại không thay đổi
   */
-  bn_tree_t t = make_tree1();
+  struct bnt *t = make_tree1();
   rbi_delete(t, 2);
 
   /*
@@ -162,14 +162,14 @@ int delete_red_node_no_child() {
       3B          6B
                      8R
   */
-  grb_node_t n3 = rbi_create_color_node(3, RB_BLACK);
-  grb_node_t n5 = rbi_create_color_node(5, RB_BLACK);
-  grb_node_t n6 = rbi_create_color_node(6, RB_BLACK);
-  grb_node_t n8 = rbi_create_color_node(8, RB_RED);
+  struct grbn *n3 = rbi_create_color_node(3, RB_BLACK);
+  struct grbn *n5 = rbi_create_color_node(5, RB_BLACK);
+  struct grbn *n6 = rbi_create_color_node(6, RB_BLACK);
+  struct grbn *n8 = rbi_create_color_node(8, RB_RED);
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 2 trong cây 1");
 
   rbi_delete(t, 8);
@@ -190,7 +190,7 @@ int delete_red_node_no_child() {
 }
 
 int delete_black_node_no_child_red_top_black_sibling1() {
-  bn_tree_t t = make_tree2();
+  struct bnt *t = make_tree2();
   rbi_delete(t, 8);
   /* Cây sau khi xóa 8:
                5B
@@ -199,14 +199,14 @@ int delete_black_node_no_child_red_top_black_sibling1() {
                              10R  <-- sibling (đối xứng)
                       Đảo mầu nút đỉnh và nút đối xứng
   */
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
-  grb_node_t n10 = rbi_create_color_node(10, RB_RED);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n10 = rbi_create_color_node(10, RB_RED);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n2, top, n5, left);
@@ -214,7 +214,7 @@ int delete_black_node_no_child_red_top_black_sibling1() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -222,7 +222,7 @@ int delete_black_node_no_child_red_top_black_sibling1() {
 }
 
 int delete_black_node_no_child_red_top_black_sibling2() {
-  bn_tree_t t = make_tree2();
+  struct bnt *t = make_tree2();
   rbi_delete(t, 10);
 
   /*
@@ -233,14 +233,14 @@ int delete_black_node_no_child_red_top_black_sibling2() {
                         Đảo mầu nút đỉnh và nút đối xứng
   */
 
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_RED);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_RED);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n2, top, n5, left);
@@ -248,7 +248,7 @@ int delete_black_node_no_child_red_top_black_sibling2() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -256,7 +256,7 @@ int delete_black_node_no_child_red_top_black_sibling2() {
 }
 
 int delete_black_node_no_child_red_sibling_black_top() {
-  bn_tree_t t = make_tree2();
+  struct bnt *t = make_tree2();
   rbi_delete(t, 6);
 
   /*
@@ -268,14 +268,14 @@ int delete_black_node_no_child_red_sibling_black_top() {
 
   */
 
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_RED);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
-  grb_node_t n10 = rbi_create_color_node(10, RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_RED);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n10 = rbi_create_color_node(10, RB_BLACK);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n2, top, n5, left);
@@ -283,7 +283,7 @@ int delete_black_node_no_child_red_sibling_black_top() {
   bn_connect2(n9, left, n7, top);
   bn_connect2(n9, right, n10, top);
   bn_connect2(n7, right, n8, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 6 trong cây 2");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -291,7 +291,7 @@ int delete_black_node_no_child_red_sibling_black_top() {
 }
 
 int delete_black_node_no_child_black_sibling_black_top1() {
-  bn_tree_t t = make_tree2();
+  struct bnt *t = make_tree2();
   rbi_delete(t, 1);
 
   /*
@@ -311,14 +311,14 @@ int delete_black_node_no_child_black_sibling_black_top1() {
           3R
   */
 
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_RED);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
-  grb_node_t n10 = rbi_create_color_node(10, RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_RED);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n10 = rbi_create_color_node(10, RB_BLACK);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n5, left, n2, top);
   bn_connect2(n5, right, n6, top);
@@ -326,7 +326,7 @@ int delete_black_node_no_child_black_sibling_black_top1() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n7));
+  struct bnt *s = rbi_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -334,7 +334,7 @@ int delete_black_node_no_child_black_sibling_black_top1() {
 }
 
 int delete_black_node_no_child_black_sibling_black_top2() {
-  bn_tree_t t = make_tree2();
+  struct bnt *t = make_tree2();
   rbi_delete(t, 3);
   /*
                5B
@@ -352,14 +352,14 @@ int delete_black_node_no_child_black_sibling_black_top2() {
         2B     6B  8B  10B
       1R
   */
-  grb_node_t n1  = rbi_create_color_node(1,  RB_RED);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
-  grb_node_t n10 = rbi_create_color_node(10, RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_RED);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n10 = rbi_create_color_node(10, RB_BLACK);
   bn_connect2(n2, left, n1, top);
   bn_connect2(n5, left, n2, top);
   bn_connect2(n5, right, n6, top);
@@ -367,7 +367,7 @@ int delete_black_node_no_child_black_sibling_black_top2() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n7));
+  struct bnt *s = rbi_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 3");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -375,7 +375,7 @@ int delete_black_node_no_child_black_sibling_black_top2() {
 }
 
 int delete_black_node_no_child_black_sibling_red_child_black_top() {
-  bn_tree_t t = make_tree3();
+  struct bnt *t = make_tree3();
   rbi_delete(t, 1);
   /* Cây sau khi xóa 1
                 5B
@@ -388,15 +388,15 @@ int delete_black_node_no_child_black_sibling_red_child_black_top() {
      2B     4B       6B      9R
                           8B   10B
   */
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n4  = rbi_create_color_node(4,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n6  = rbi_create_color_node(6,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_RED);
-  grb_node_t n10 = rbi_create_color_node(10, RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n4  = rbi_create_color_node(4,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n6  = rbi_create_color_node(6,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_RED);
+  struct grbn *n10 = rbi_create_color_node(10, RB_BLACK);
   bn_connect2(n3, left, n2, top);
   bn_connect2(n3, right, n4, top);
   bn_connect2(n5, left, n3, top);
@@ -405,7 +405,7 @@ int delete_black_node_no_child_black_sibling_red_child_black_top() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -413,7 +413,7 @@ int delete_black_node_no_child_black_sibling_red_child_black_top() {
 }
 
 int delete_black_node_no_child_black_sibling_with_black_top_red_left_child() {
-  bn_tree_t t = make_tree4();
+  struct bnt *t = make_tree4();
   rbi_delete(t, 6);
 
   /* Sau khi xóa 6:
@@ -426,20 +426,20 @@ int delete_black_node_no_child_black_sibling_with_black_top_red_left_child() {
          2B               8B
       1B     3B       7B      9B
   */
-  grb_node_t n1  = rbi_create_color_node(1,  RB_BLACK);
-  grb_node_t n2  = rbi_create_color_node(2,  RB_BLACK);
-  grb_node_t n3  = rbi_create_color_node(3,  RB_BLACK);
-  grb_node_t n5  = rbi_create_color_node(5,  RB_BLACK);
-  grb_node_t n7  = rbi_create_color_node(7,  RB_BLACK);
-  grb_node_t n8  = rbi_create_color_node(8,  RB_BLACK);
-  grb_node_t n9  = rbi_create_color_node(9,  RB_BLACK);
+  struct grbn *n1  = rbi_create_color_node(1,  RB_BLACK);
+  struct grbn *n2  = rbi_create_color_node(2,  RB_BLACK);
+  struct grbn *n3  = rbi_create_color_node(3,  RB_BLACK);
+  struct grbn *n5  = rbi_create_color_node(5,  RB_BLACK);
+  struct grbn *n7  = rbi_create_color_node(7,  RB_BLACK);
+  struct grbn *n8  = rbi_create_color_node(8,  RB_BLACK);
+  struct grbn *n9  = rbi_create_color_node(9,  RB_BLACK);
   bn_connect2(n1, top, n2, left);
   bn_connect2(n2, right, n3, top);
   bn_connect2(n2, top, n5, left);
   bn_connect2(n5, right, n8, top);
   bn_connect2(n8, left, n7, top);
   bn_connect2(n8, right, n9, top);
-  bn_tree_t s = rbi_create_tree(bn_node(n5));
+  struct bnt *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Sau khi xóa 6");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -447,10 +447,10 @@ int delete_black_node_no_child_black_sibling_with_black_top_red_left_child() {
 }
 
 int builder() {
-  bn_tree_t t1 = make_tree1();
-  bn_tree_t t2 = make_tree2();
-  bn_tree_t t3 = make_tree3();
-  bn_tree_t t4 = make_tree4();
+  struct bnt *t1 = make_tree1();
+  struct bnt *t2 = make_tree2();
+  struct bnt *t3 = make_tree3();
+  struct bnt *t4 = make_tree4();
   CHECK_MSG(rb_is_valid(t1), "Cây 1");
   CHECK_MSG(rb_is_valid(t2), "Cây 2");
   CHECK_MSG(rb_is_valid(t3), "Cây 3");

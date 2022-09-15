@@ -7,7 +7,7 @@
 #include "all.h"
 
 int main() {
-  rbs_t s = rbs_create(gtype_cmp_s, NULL);
+  struct rbs *s = rbs_create(gtype_cmp_s, NULL);
   rbs_insert(s, gtype_s("aaaaa"));
   rbs_insert(s, gtype_s("bbbbb"));
   rbs_insert(s, gtype_s("ccccc"));

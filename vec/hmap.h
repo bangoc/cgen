@@ -104,7 +104,7 @@ hmap_t hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
  *
  * \memberof hash_map
  *
- * Tham khảo: rbm_insert(rbm_t t, gtype key, gtype value)
+ * Tham khảo: rbm_insert(struct rbm *t, gtype key, gtype value)
  */
 hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
 
@@ -121,7 +121,7 @@ hmap_ires hmap_insert(hmap_t tab, gtype key, gtype value);
  *
  * \memberof hash_map
  *
- * Tham khảo: rbm_put(rbm_t t, gtype key, gtype value)
+ * Tham khảo: rbm_put(struct rbm *t, gtype key, gtype value)
  */
 gtype *hmap_put(hmap_t tab, gtype key, gtype value);
 
@@ -135,7 +135,7 @@ gtype *hmap_put(hmap_t tab, gtype key, gtype value);
  *
  * \memberof hash_map
  *
- * Tham khảo: rbm_value(rbm_t t, gtype key)
+ * Tham khảo: rbm_value(struct rbm *t, gtype key)
  */
 gtype *hmap_value(hmap_t tab, gtype key);
 
@@ -150,7 +150,7 @@ gtype *hmap_value(hmap_t tab, gtype key);
  *
  * \memberof hash_map
  *
- * Tham khảo: rbm_remove(rbm_t t, gtype key)
+ * Tham khảo: rbm_remove(struct rbm *t, gtype key)
  */
 int hmap_remove(hmap_t tab, gtype key);
 

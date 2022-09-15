@@ -1,7 +1,7 @@
 #include "tests/base/utils.h"
 #include "tree/bn.h"
 
-bn_tree_t bn_transplant(bn_tree_t t, bn_node_t u, bn_node_t v) {
+struct bnt *bn_transplant(struct bnt *t, struct bnn *u, struct bnn *v) {
   if (u->top == NULL) {
     t->root = v;
   } else if (u == u->top->left) {
@@ -16,16 +16,16 @@ bn_tree_t bn_transplant(bn_tree_t t, bn_node_t u, bn_node_t v) {
 }
 
 int t1() {
-  bn_node_t n1 = bn_create_node();
-  bn_node_t n2 = bn_create_node();
-  bn_node_t n3 = bn_create_node();
-  bn_node_t n4 = bn_create_node();
-  bn_node_t n5 = bn_create_node();
+  struct bnn *n1 = bn_create_node();
+  struct bnn *n2 = bn_create_node();
+  struct bnn *n3 = bn_create_node();
+  struct bnn *n4 = bn_create_node();
+  struct bnn *n5 = bn_create_node();
   bn_connect2(n3, left, n2, top);
   bn_connect2(n3, right, n4, top);
   bn_connect2(n2, left, n1, top);
   bn_connect2(n4, right, n5, top);
-  bn_tree_t t= bn_create_tree(n3);
+  struct bnt *t= bn_create_tree(n3);
   /*
         n3
       n2  n4

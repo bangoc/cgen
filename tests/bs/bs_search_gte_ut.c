@@ -4,7 +4,7 @@
 #include "tree/spec/grb.h"
 
 int main() {
-  grb_tree_t t = grb_create_tree(NULL, gtype_cmp_l, NULL);
+  struct grbt *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   grb_insert(t, gtype_l(1));
   grb_insert(t, gtype_l(3));
   grb_insert(t, gtype_l(5));

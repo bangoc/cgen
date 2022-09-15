@@ -4,7 +4,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  s2w_t col = s2w_create();
+  struct s2w *col = s2w_create();
   CHECK_MSG(s2w_put(col, "aaaa") == NULL, "put new aaaa");
   CHECK_MSG(s2w_put(col, "bbbb") == NULL, "put new bbbb");
   CHECK_MSG(s2w_put(col, "cccc") == NULL, "put new cccc");

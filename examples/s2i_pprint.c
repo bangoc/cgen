@@ -1,7 +1,7 @@
 #include "all.h"
 
 int main() {
-  rbm_t si = s2i_create();
+  struct rbm *si = s2i_create();
   s2i_put(si, "Một", 1);
   s2i_put(si, "Hai", 2);
   s2i_put(si, "Ba", 3);
@@ -14,7 +14,7 @@ int main() {
   s2i_put(si, "Tám", 28);
   s2i_put(si, "Chín", 9);
   s2i_put(si, "Mười", 10);
-  bn_pprint((bn_tree_t)si, s2i_print_node);
+  bn_pprint((struct bnt *)si, s2i_print_node);
    // Trùng lặp khóa:
    // *             (Tám, 28) - Đỏ
    // *          (Tám, 18) - Đen

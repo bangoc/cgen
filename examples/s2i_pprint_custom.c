@@ -1,12 +1,12 @@
 #include "all.h"
 
-void s2i_custom_node_print(bn_node_t n) {
+void s2i_custom_node_print(struct bnn *n) {
   printf("%s:%ld:%s\n", rbm_node_key(n).s,
          rbm_node_value(n).l, rb_color_str(n));
 }
 
 int main() {
-  rbm_t si = s2i_create();
+  struct rbm *si = s2i_create();
   s2i_put(si, "Một", 1);
   s2i_put(si, "Hai", 2);
   s2i_put(si, "Ba", 3);
@@ -17,7 +17,7 @@ int main() {
   s2i_put(si, "Tám", 8);
   s2i_put(si, "Chín", 9);
   s2i_put(si, "Mười", 10);
-  bn_pprint((bn_tree_t)si, s2i_custom_node_print);
+  bn_pprint((struct bnt *)si, s2i_custom_node_print);
   s2i_free(si);
   return 0;
 }

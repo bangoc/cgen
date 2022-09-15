@@ -5,20 +5,20 @@
 
 #include <string.h>
 
-rbm_t s2i_create() {
+struct rbm *s2i_create() {
   return rbm_create(gtype_cmp_s, gtype_free_s, NULL);
 }
 
-rbm_ires s2i_insert(rbm_t si, const char *key, long value) {
+struct rbm_ires s2i_insert(struct rbm *si, const char *key, long value) {
   char *tmp = strdup(key);
-  rbm_ires r = rbm_insert(si, gtype_s(tmp), gtype_l(value));
+  struct rbm_ires r = rbm_insert(si, gtype_s(tmp), gtype_l(value));
   if (!r.inserted) {
     free(tmp);
   }
   return r;
 }
 
-long *s2i_put(rbm_t si, const char *key, long value) {
+long *s2i_put(struct rbm *si, const char *key, long value) {
   char *tmp = strdup(key);
   gtype *res = rbm_put(si, gtype_s(tmp), gtype_l(value));
   if (res) {
@@ -27,14 +27,14 @@ long *s2i_put(rbm_t si, const char *key, long value) {
   return (long*)res;
 }
 
-long *s2i_value(rbm_t si, const char *key) {
+long *s2i_value(struct rbm *si, const char *key) {
   return (long*)rbm_value(si, gtype_s(key));
 }
 
-int s2i_remove(rbm_t si, const char *key) {
+int s2i_remove(struct rbm *si, const char *key) {
   return rbm_remove(si, gtype_s(key));
 }
 
-void s2i_print_node(bn_node_t n) {
+void s2i_print_node(struct bnn *n) {
   printf("(%s, %ld)\n", rbm_node_key(n).s, rbm_node_value(n).l);
 }

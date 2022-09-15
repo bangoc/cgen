@@ -2,21 +2,21 @@
 #include "tests/base/helpers.h"
 #include "tests/base/utils.h"
 
-int bn_similar_null(bn_node_t n1, bn_node_t n2) {
+int bn_similar_null(struct bnn *n1, struct bnn *n2) {
   return (n1 != NULL) == (n2 != NULL);
 }
 
 int main() {
-  bn_node_t n11 = bn_create_node();
-  bn_node_t n12 = bn_create_node();
-  bn_node_t n13 = bn_create_node();
+  struct bnn *n11 = bn_create_node();
+  struct bnn *n12 = bn_create_node();
+  struct bnn *n13 = bn_create_node();
 
-  bn_node_t n21 = bn_create_node();
-  bn_node_t n22 = bn_create_node();
-  bn_node_t n23 = bn_create_node();
+  struct bnn *n21 = bn_create_node();
+  struct bnn *n22 = bn_create_node();
+  struct bnn *n23 = bn_create_node();
 
-  bn_tree_t t2 = bn_create_tree(NULL);
-  bn_tree_t t1 = bn_create_tree(NULL);
+  struct bnt *t2 = bn_create_tree(NULL);
+  struct bnt *t1 = bn_create_tree(NULL);
 
   CHECK_MSG(bn_similar_tree(t1, t2, bn_similar_null) == 1, "Hai cây rỗng gốc");
   t1->root = n11;

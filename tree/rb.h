@@ -23,19 +23,19 @@
  */
 
 // đỏ = 0, đen = 1 như vậy chúng ta có tổng giá trị mầu = số lượng nút đen
-typedef enum {
+enum rb_node_color {
   RB_RED = 0,
   RB_BLACK = 1
-} rb_node_color_t;
+};
 
 extern const char * color_names[];
 
-typedef struct _rb_node {
-  struct _bn_node base;
-  rb_node_color_t color;
-} rb_node_s, *rb_node_t;
+typedef struct rbn {
+  struct bnn base;
+  enum rb_node_color color;
+};
 
-#define rb_node(n) ((rb_node_t)(n))
+#define rb_node(n) ((struct rbn *)(n))
 #define rb_color(n) ((n)? rb_node(n)->color: RB_BLACK)
 #define rb_color_str(n) color_names[(int)rb_color(n)]
 #define rb_set_color(n, new_color) rb_node(n)->color = (new_color)
@@ -51,11 +51,11 @@ typedef struct _rb_node {
   Nút NULL được quy ước là nút đen
 */
 
-rb_node_t rb_create_node();
+struct rbn *rb_create_node();
 #define rb_free_node(n) free(n)
 
-bs_ires rb_insert(bn_tree_t t, rb_node_t nn, bn_compare_t cmp);
-bs_ires rb_insert_unique(bn_tree_t t, rb_node_t nn, bn_compare_t cmp);
-int rb_delete(bn_tree_t t, rb_node_t dn);
+struct bs_ires rb_insert(struct bnt *t, struct rbn *nn, bn_compare_t cmp);
+struct bs_ires rb_insert_unique(struct bnt *t, struct rbn *nn, bn_compare_t cmp);
+int rb_delete(struct bnt *t, struct rbn *dn);
 
 #endif  // TREE_RB_H_

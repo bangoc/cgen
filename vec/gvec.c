@@ -7,18 +7,18 @@ struct gvector *gvec_create(long n, gtype_free_t free_value) {
   if (!v) {
     return NULL;
   }
-  if (n == 0) {
-    v->elems = NULL;
-  } else {
-    v->elems = malloc(n * sizeof(gtype));
-    if (!v->elems) {
-      free(v);
-      return NULL;
-    }
-  }
   v->free_value = free_value;
   v->sz = n;
   v->cap = n;
+  if (n == 0) {
+    v->elems = NULL;
+    return v;
+  }
+  v->elems = malloc(n * sizeof(gtype));
+  if (!v->elems) {
+    free(v);
+    return NULL;
+  }
   return v;
 }
 
