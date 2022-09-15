@@ -9,40 +9,40 @@
 #define MEMBER(obj, Class, Method) obj->Method = Class ## Method
 
 void SllPushBack(Sll list, SllNode nn) {
-  sll_push_back((struct sll *)list, (struct sln *)nn);
+  sll_push_back((struct sllist *)list, (struct slnode *)nn);
 }
 
 void SllPushFront(Sll list, SllNode nn) {
-  sll_push_front((struct sll *)list, (struct sln *)nn);
+  sll_push_front((struct sllist *)list, (struct slnode *)nn);
 }
 
 void SllPopFront(Sll list) {
-  sll_pop_front((struct sll *)list);
+  sll_pop_front((struct sllist *)list);
 }
 
 SllNode SllFront(Sll list) {
-  return (SllNode)sll_front((struct sll *)list);
+  return (SllNode)sll_front((struct sllist *)list);
 }
 
 int SllIsEmpty(Sll list) {
-  return sll_is_empty((struct sll *)list);
+  return sll_is_empty((struct sllist *)list);
 }
 
 long SllLength(Sll list) {
-  return sll_length((struct sll *)list);
+  return sll_length((struct sllist *)list);
 }
 
 void SllPPrintNode(SllNode node) {
-  sll_node_print_address((struct sln *)node);
+  sll_node_print_address((struct slnode *)node);
 }
 
 void SllPPrint(Sll list) {
-  sll_pprint((struct sll *)list, sll_node_print_address);
+  sll_pprint((struct sllist *)list, sll_node_print_address);
 }
 
 
 Sll Sll_create() {
-  struct sll *base = sll_create_list();
+  struct sllist *base = sll_create_list();
   Sll list = realloc(base, sizeof(SllS));
   MEMBER(list, Sll, PushBack);
   MEMBER(list, Sll, PushFront);
@@ -60,12 +60,12 @@ SllNode SllNode_create() {
 }
 
 void Sll_free(Sll list) {
-  struct sll *base = realloc(list, sizeof(struct sll));
+  struct sllist *base = realloc(list, sizeof(struct sllist));
   sll_free(base);
 }
 
 void SllNode_free(SllNode node) {
-  free((struct sln *)node);
+  free((struct slnode *)node);
 }
 
 /* Giao diện gtype */
@@ -109,7 +109,7 @@ SllNodeGt SllNodeGt_create(gtype value) {
 }
 
 void SllGtForeach(SllGt list, int (*op)()) {
-  struct sll *base = (struct sll *)list;
+  struct sllist *base = (struct sllist *)list;
   sll_traverse(cur, base) {
     SllNodeGt gn = (SllNodeGt)cur;
     if (op(gn->value)) {

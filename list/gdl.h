@@ -5,7 +5,7 @@
 
 /** @file
  * @brief Triển khai danh sách móc nối kép cho kiểu gtype
- * Kế thừa ::struct dll
+ * Kế thừa ::struct dllist
  */
 
 /**
@@ -16,18 +16,26 @@
 #include "base/gtype.h"
 #include "list/dll.h"
 
-struct gdn {
-  struct dln base;
+/**
+ * Cấu trúc nút của danh sách móc nối kép với kiểu gtype.
+ * gdlnode = gtype double linked (list) node
+ */
+struct gdlnode {
+  struct dlnode base;
   gtype value;
 };
 
-struct gdl {
-  struct dll base;
+/**
+ * Cấu trúc điều khiển của danh sách móc nối kép với kiểu gtype
+ * gdllist = gtype double linked list
+ */
+struct gdllist {
+  struct dllist base;
   gtype_free_t free_value;
 };
 
-#define gdl_node(n) ((struct gdn *)(n))
-#define gdl_list(lst) ((struct gdl *)(lst))
+#define gdl_node(n) ((struct gdlnode *)(n))
+#define gdl_list(lst) ((struct gdllist *)(lst))
 
 #define gdl_node_value(n) (gdl_node(n)->value)
 #define gdl_node_next(n) (gdl_node(dll_node(n)->next))
@@ -38,19 +46,19 @@ struct gdl {
 #define gdl_is_empty(list) (gdl_front(list) == NULL && gdl_back(list) == NULL)
 #define gdl_push_front(list, value) \
   do { \
-    struct gdn *_nn = gdl_create_node(value); \
+    struct gdlnode *_nn = gdl_create_node(value); \
     dll_push_front(dll_list(list), dll_node(_nn)); \
   } while (0)
 
 #define gdl_push_back(list, value) \
   do { \
-    struct gdn *_nn = gdl_create_node(value); \
+    struct gdlnode *_nn = gdl_create_node(value); \
     dll_push_back(dll_list(list), dll_node(_nn)); \
   } while (0)
 
 #define gdl_pop_front(list) \
   do { \
-    struct gdn *_tmp = gdl_front(list); \
+    struct gdlnode *_tmp = gdl_front(list); \
     if (!_tmp) { \
       break; \
     } \
@@ -62,7 +70,7 @@ struct gdl {
 
 #define gdl_pop_back(list) \
   do { \
-    struct gdn *_tmp = gdl_back(list); \
+    struct gdlnode *_tmp = gdl_back(list); \
     if (!_tmp) { \
       break; \
     } \
@@ -87,33 +95,33 @@ struct gdl {
 
 #define gdl_inserta(list, pos, value) \
   do { \
-    struct gdn *_nn = gdl_create_node(value); \
+    struct gdlnode *_nn = gdl_create_node(value); \
     dll_inserta(dll_list(list), dll_node(pos), dll_node(_nn)); \
   } while (0)
 
 #define gdl_insertb(list, pos, value) \
   do { \
-    struct gdn *_nn = gdl_create_node(value); \
+    struct gdlnode *_nn = gdl_create_node(value); \
     dll_insertb(dll_list(list), dll_node(pos), dll_node(_nn)); \
   } while (0)
 
-static inline gtype* gdl_first_value(struct gdl *lst) {
-  struct gdn *n = gdl_front(lst);
+static inline gtype* gdl_first_value(struct gdllist *lst) {
+  struct gdlnode *n = gdl_front(lst);
   return n? &n->value: NULL;
 }
 
 static inline gtype* gdl_next_value(gtype *cur) {
-  struct gdn *nn = gdl_node_next(container_of(cur, struct gdn, value));
+  struct gdlnode *nn = gdl_node_next(container_of(cur, struct gdlnode, value));
   return nn? &nn->value: NULL;
 }
 
 #define gdl_traverse(cur, list) \
   for (gtype *cur = gdl_first_value(list); cur; cur = gdl_next_value(cur))
 
-struct gdn *gdl_create_node(gtype value);
-struct gdl *gdl_create_list(gtype_free_t free_value);
-long gdl_size(struct gdl *list);
+struct gdlnode *gdl_create_node(gtype value);
+struct gdllist *gdl_create_list(gtype_free_t free_value);
+long gdl_size(struct gdllist *list);
 void gtype_free_gdl(gtype value);
-void gdl_pprint(struct gdl *list, gtype_print_t pp);
+void gdl_pprint(struct gdllist *list, gtype_print_t pp);
 
 #endif  // LIST_GDL_H_

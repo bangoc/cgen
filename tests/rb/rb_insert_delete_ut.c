@@ -1,12 +1,12 @@
 #include "tree/spec/grb.h"
 #include "tests/base/utils.h"
 
-int node_values(struct bnn *nd,
+int node_values(struct bnnode *nd,
     int key,
-    enum rb_node_color color,
-    struct bnn *left,
-    struct bnn *right,
-    struct bnn *top) {
+    enum rbnode_color color,
+    struct bnnode *left,
+    struct bnnode *right,
+    struct bnnode *top) {
   CHECK_MSG(nd, "Node not NULL");
   CHECK_MSG(grb_node(nd)->key.l == key, "Different key");
   CHECK_MSG(rb_node(nd)->color == color, "Different color");
@@ -16,16 +16,16 @@ int node_values(struct bnn *nd,
   return 1;
 }
 
-int node_key(struct bnn *nd) {
+int node_key(struct bnnode *nd) {
   return grb_node(nd)->key.l;
 }
 
-int compare(struct bnn *x, struct bnn *y) {
+int compare(struct bnnode *x, struct bnnode *y) {
   return node_key(x) - node_key(y);
 }
 
 int t1() {
-  struct bnt *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
+  struct bntree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   grb_insert(t, gtype_l(1));
   CHECK_MSG(node_values(t->root, 1, RB_BLACK, NULL, NULL, NULL), "root values");
 

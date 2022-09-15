@@ -5,15 +5,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-struct sln *sll_create_node() {
-  return calloc(sizeof(struct sln), 1);
+struct slnode *sll_create_node() {
+  return calloc(sizeof(struct slnode), 1);
 }
 
-struct sll *sll_create_list() {
-  return calloc(sizeof(struct sll), 1);
+struct sllist *sll_create_list() {
+  return calloc(sizeof(struct sllist), 1);
 }
 
-void sll_push_back(struct sll *list, struct sln *node) {
+void sll_push_back(struct sllist *list, struct slnode *node) {
   node->next = NULL;
   if (list->front == NULL) {
     list->front = list->back = node;
@@ -24,7 +24,7 @@ void sll_push_back(struct sll *list, struct sln *node) {
   ++list->length;
 }
 
-void sll_push_front(struct sll *list, struct sln *node) {
+void sll_push_front(struct sllist *list, struct slnode *node) {
   if (list->front == NULL) {
     list->front = list->back = node;
     node->next = NULL;
@@ -35,13 +35,13 @@ void sll_push_front(struct sll *list, struct sln *node) {
   ++list->length;
 }
 
-void sll_inserta(struct sll *list, struct sln *pos, struct sln *nn) {
+void sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn) {
   if (!pos) {
     sll_push_back(list, nn);
     return;
   }
 
-  struct dln *tmp = pos->next;
+  struct dlnode *tmp = pos->next;
   pos->next = nn;
   nn->next = tmp;
   if (!tmp) {
@@ -50,11 +50,11 @@ void sll_inserta(struct sll *list, struct sln *pos, struct sln *nn) {
   ++list->length;
 }
 
-void sll_pop_front(struct sll *list) {
+void sll_pop_front(struct sllist *list) {
   if (sll_is_empty(list)) {
     return;
   }
-  struct sln *tmp = list->front;
+  struct slnode *tmp = list->front;
   list->front = list->front->next;
   if (list->front == NULL) {
     list->back = NULL;
@@ -63,11 +63,11 @@ void sll_pop_front(struct sll *list) {
   --list->length;
 }
 
-void sll_node_print_address(struct sln *node) {
+void sll_node_print_address(struct slnode *node) {
   printf("[%p]", node);
 }
 
-void sll_pprint(struct sll *list, sll_node_print_t npp) {
+void sll_pprint(struct sllist *list, sll_node_print_t npp) {
   sll_traverse(cur, list) {
     npp(cur);
     printf(" ");

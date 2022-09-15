@@ -25,15 +25,15 @@ int main() {
   value = gtype_v(v);
   value = gtype_g(&tmp);
 
-  struct gdl *gdl;
-  struct gsl *gsl;
+  struct gdllist *gdl;
+  struct gsllist *gsl;
   struct gvector *gvec;
   struct hmap *hmap;
   struct hset *hset;
   struct p1way *p1w;
   struct p2ways *p2w;
-  struct rbm *rbm;
-  struct rbs *rbs;
+  struct rbmtree *rbm;
+  struct rbstree *rbs;
   value = gtype_gdl(gdl);
   value = gtype_gsl(gsl);
   value = gtype_gvec(gvec);

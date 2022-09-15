@@ -10,18 +10,19 @@
  * Cấu trúc điều khiển của ánh xạ 2 chiều chuỗi <=> chỉ số nguyên.
  * Các chỉ số được tăng dần tự động 0, 1, ...
  * quy ước -1 là chỉ số không hợp lệ.
+ * si2ways = string id 2 ways (mapping)
  */
-struct s2w {
+struct si2ways {
   struct gvector *is;
-  struct rbm *si;
+  struct rbmtree *si;
 };
 
-struct s2w *s2w_create();
-struct rbm_ires s2w_insert(struct s2w *col, const char *s);
-long *s2w_put(struct s2w *col, const char *s);
-int s2w_remove(struct s2w *col, const char *s);
-long s2w_id(struct s2w *col, const char *s);
-char *s2w_str(struct s2w *col, const long id);
-void s2w_free(struct s2w *col);
+struct si2ways *s2w_create();
+struct rbm_ires s2w_insert(struct si2ways *col, const char *s);
+long *s2w_put(struct si2ways *col, const char *s);
+int s2w_remove(struct si2ways *col, const char *s);
+long s2w_id(struct si2ways *col, const char *s);
+char *s2w_str(struct si2ways *col, const long id);
+void s2w_free(struct si2ways *col);
 
 #endif  // MIX_S2W_H_

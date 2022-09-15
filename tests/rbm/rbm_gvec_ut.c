@@ -1,7 +1,7 @@
 /* (C) Nguyen Ba Ngoc 2022 */
 
 /**
- * Minh họa lưu gvec trong rbm
+ * Minh họa lưu gvec trong rbmtree
  */
 
 #include "all.h"
@@ -12,7 +12,7 @@
 
 int main() {
   srand(time(NULL));
-  struct rbm *map = rbm_create(gtype_cmp_l, NULL, gtype_free_gvec);
+  struct rbmtree *map = rbm_create(gtype_cmp_l, NULL, gtype_free_gvec);
   for (int i = 0; i < 100; ++i) {
     struct gvector *vec = gvec_create(0, NULL);
     int n = rand() % 100 + 1;

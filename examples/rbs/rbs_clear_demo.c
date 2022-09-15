@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-void print_rbs(struct rbs *tab) {
+void print_rbs(struct rbstree *tab) {
   printf("size: %ld \n", tab->size);
   rbs_traverse(cur, tab) {
     printf("%s ", cur->s);
@@ -22,7 +22,7 @@ void print_rbs(struct rbs *tab) {
 
 int main() {
   srand(time(NULL));
-  struct rbs *tab = rbs_create(gtype_cmp_s, gtype_free_s);
+  struct rbstree *tab = rbs_create(gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < 10; ++i) {
     rbs_insert(tab, gtype_s(strdup(rands(10))));
   }

@@ -2,7 +2,7 @@
 #include "tests/base/utils.h"
 
 int main() {
-  struct sll *q = sll_create_list();
+  struct sllist *q = sll_create_list();
   isl_fifo_enq(q, 1);
   isl_fifo_enq(q, 2);
   isl_fifo_enq(q, 3);

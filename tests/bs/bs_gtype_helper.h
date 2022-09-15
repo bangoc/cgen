@@ -3,7 +3,7 @@
 
 #include "tree/spec/gbs.h"
 
-static int lnr_match_g(struct gbst *t, gtype *a, int n) {
+static int lnr_match_g(struct gbstree *t, gtype *a, int n) {
   int i = 0;
   bn_traverse_lnr(cur, bn_tree(t)) {
     if (i >= n || t->cmp(a[i], gbs_node(cur)->key) != 0) {

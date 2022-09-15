@@ -1,13 +1,13 @@
 /* (C) Nguyen Ba Ngoc 2022 */
 
 /**
- * Minh họa tạo tập hợp với rbs
+ * Minh họa tạo tập hợp với rbstree
  */
 
 #include "all.h"
 
 int main() {
-  struct rbs *s = rbs_create(gtype_cmp_s, NULL);
+  struct rbstree *s = rbs_create(gtype_cmp_s, NULL);
   rbs_insert(s, gtype_s("aaaaa"));
   rbs_insert(s, gtype_s("bbbbb"));
   rbs_insert(s, gtype_s("ccccc"));

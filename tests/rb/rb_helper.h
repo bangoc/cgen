@@ -9,7 +9,7 @@ static int rb_is_valid_internal_stop = 0;
 #define END_INTERNAL() rb_is_valid_internal_stop = 1; \
   return 0
 
-static int rb_is_valid_internal(struct bnn *n, long blacks) {
+static int rb_is_valid_internal(struct bnnode *n, long blacks) {
   if (rb_is_valid_internal_stop) {
     return 0;
   }
@@ -38,7 +38,7 @@ static int rb_is_valid_internal(struct bnn *n, long blacks) {
   END_INTERNAL();
 }
 
-static int rb_is_valid(struct bnt *t) {
+static int rb_is_valid(struct bntree *t) {
   if (t->root == NULL) {
     return 1;
   }

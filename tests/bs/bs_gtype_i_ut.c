@@ -4,7 +4,7 @@
 #include "tree/spec/gbs.h"
 
 int t1() {
-  struct gbst *t = gbs_create_tree(NULL, gtype_cmp_l, NULL);
+  struct gbstree *t = gbs_create_tree(NULL, gtype_cmp_l, NULL);
   gbs_insert(t, gtype_l(20));
   gbs_insert(t, gtype_l(10));
   gbs_insert(t, gtype_l(30));
@@ -21,7 +21,7 @@ int t1() {
   CHECK_MSG(lnr_match_g(t, (gtype[]){gtype_l(8), gtype_l(10),
     gtype_l(20), gtype_l(30), gtype_l(50)}, 5), "Match sequence 5");
 
-  struct gbsn *tmp = gbs_search(t, gtype_l(10));
+  struct gbsnode *tmp = gbs_search(t, gtype_l(10));
   CHECK_MSG(tmp && tmp->key.l == 10, "key 10");
   gbs_delete(t, tmp);
 

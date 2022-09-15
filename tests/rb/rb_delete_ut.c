@@ -3,13 +3,13 @@
 #include "tests/base/utils.h"
 
 int test_delete_root() {
-  struct bnt *t = rbi_create_tree(NULL);
-  struct grbn *root = rbi_create_node(5);
+  struct bntree *t = rbi_create_tree(NULL);
+  struct grbnode *root = rbi_create_node(5);
   t->root = bn_node(root);
   rb_set_black(root);
-  struct grbn *lc = rbi_create_node(3);
+  struct grbnode *lc = rbi_create_node(3);
   rb_set_red(lc);
-  struct grbn *rc = rbi_create_node(8);
+  struct grbnode *rc = rbi_create_node(8);
   rb_set_red(lc);
   bn_connect2(root, left, lc, top);
   bn_connect2(root, right, rc, top);
@@ -19,11 +19,11 @@ int test_delete_root() {
   */
   rbi_delete(t, 5);
   CHECK_MSG(lnr_match_value(t, (int []){3, 8}, 2), "Giá trị tăng dần 3 8");
-  struct bnn *n8 = t->root;
+  struct bnnode *n8 = t->root;
   CHECK_MSG(rbi_value(n8) == 8, "n8 == 8");
   CHECK_MSG(rb_is_black(n8), "n8 là nút đen");
 
-  struct bnn *n3 = t->root->left;
+  struct bnnode *n3 = t->root->left;
   CHECK_MSG(rbi_value(n3) == 3, "n3 == 3");
   CHECK_MSG(rb_is_red(n3), "n3 là nút đỏ");
   CHECK_MSG(n3->top == n8, "top của n3 == n8");
@@ -32,12 +32,12 @@ int test_delete_root() {
 }
 
 int test_delete_root_2nodes() {
-  struct grbn *r = rbi_create_node(5);
+  struct grbnode *r = rbi_create_node(5);
   rb_set_black(r);
-  struct grbn *rc = rbi_create_node(8);
+  struct grbnode *rc = rbi_create_node(8);
   rb_set_red(rc);
   bn_connect2(r, right, rc, top);
-  struct bnt *t = rbi_create_tree(bn_node(r));
+  struct bntree *t = rbi_create_tree(bn_node(r));
   rbi_delete(t, 5);
   /*
      Xóa -> 5B     Thu được   8B
@@ -56,42 +56,42 @@ int test_delete_root_2nodes() {
 }
 
 int test_delete_single_deep_child() {
-  struct grbn *r = rbi_create_node(20);
-  struct bnt *t = rbi_create_tree(bn_node(r));
+  struct grbnode *r = rbi_create_node(20);
+  struct bntree *t = rbi_create_tree(bn_node(r));
   rb_set_black(r);
 
   // Cây con trái
-  struct grbn *n10 = rbi_create_node(10);
+  struct grbnode *n10 = rbi_create_node(10);
   rb_set_black(n10);
-  struct grbn *n5 = rbi_create_node(5);
+  struct grbnode *n5 = rbi_create_node(5);
   rb_set_red(n5);
-  struct grbn *n15 = rbi_create_node(15);
+  struct grbnode *n15 = rbi_create_node(15);
   rb_set_red(n15);
   bn_connect2(n5, top, n10, left);
   bn_connect2(n15, top, n10, right);
 
   // Cây con phải
-  struct grbn *n38 = rbi_create_node(38);
+  struct grbnode *n38 = rbi_create_node(38);
   rb_set_red(n38);
-  struct grbn *n28 = rbi_create_node(28);
+  struct grbnode *n28 = rbi_create_node(28);
   rb_set_black(n28);
-  struct grbn *n48 = rbi_create_node(48);
+  struct grbnode *n48 = rbi_create_node(48);
   rb_set_black(n48);
   bn_connect2(n28, top, n38, left);
   bn_connect2(n48, top, n38, right);
 
   // Cây con của n28
-  struct grbn *n23 = rbi_create_node(23);
+  struct grbnode *n23 = rbi_create_node(23);
   rb_set_red(n23);
-  struct grbn *n29 = rbi_create_node(29);
+  struct grbnode *n29 = rbi_create_node(29);
   rb_set_red(n29);
   bn_connect2(n23, top, n28, left);
   bn_connect2(n29, top, n28, right);
 
   // Cây con của n48
-  struct grbn *n41 = rbi_create_node(41);
+  struct grbnode *n41 = rbi_create_node(41);
   rb_set_red(n41);
-  struct grbn *n49 = rbi_create_node(49);
+  struct grbnode *n49 = rbi_create_node(49);
   rb_set_red(n49);
   bn_connect2(n41, top, n48, left);
   bn_connect2(n49, top, n48, right);
@@ -165,31 +165,31 @@ int test_delete_single_deep_child() {
 }
 
 int test_delete_red_node_red_successor() {
-  struct grbn *r = rbi_create_node(10);
+  struct grbnode *r = rbi_create_node(10);
   rb_set_black(r);
-  struct bnt *t = rbi_create_tree(bn_node(r));
+  struct bntree *t = rbi_create_tree(bn_node(r));
 
   //  Nhánh trái
-  struct grbn *n5 = rbi_create_node(5);
+  struct grbnode *n5 = rbi_create_node(5);
   rb_set_red(n5);
-  struct grbn *m5 = rbi_create_node(-5);
+  struct grbnode *m5 = rbi_create_node(-5);
   rb_set_black(m5);
   bn_connect2(m5, top, n5, left);
-  struct grbn *n7 = rbi_create_node(7);
+  struct grbnode *n7 = rbi_create_node(7);
   rb_set_black(n7);
   bn_connect2(n7, top, n5, right);
 
   // Nhánh phải
-  struct grbn *n35 = rbi_create_node(35);
+  struct grbnode *n35 = rbi_create_node(35);
   rb_set_red(n35);
-  struct grbn *n20 = rbi_create_node(20);
+  struct grbnode *n20 = rbi_create_node(20);
   rb_set_black(n20);
   bn_connect2(n20, top, n35, left);
-  struct grbn *n38 = rbi_create_node(38);
+  struct grbnode *n38 = rbi_create_node(38);
   rb_set_black(n38);
   bn_connect2(n38, top, n35, right);
 
-  struct grbn *n36 = rbi_create_node(36);
+  struct grbnode *n36 = rbi_create_node(36);
   rb_set_red(n36);
   bn_connect2(n36, top, n38, left);
 
@@ -215,23 +215,23 @@ int test_delete_red_node_red_successor() {
 }
 
 int test_delete_black_node_black_successor_no_child() {
-  struct grbn *root = rbi_create_node(10);
+  struct grbnode *root = rbi_create_node(10);
   rb_set_black(root);
-  struct bnt *t = rbi_create_tree(bn_node(root));
-  struct grbn *m10 = rbi_create_node(-10);
+  struct bntree *t = rbi_create_tree(bn_node(root));
+  struct grbnode *m10 = rbi_create_node(-10);
   rb_set_black(m10);
 
   // Cây con trái
   bn_connect2(m10, top, root, left);
 
   // Cây con phải
-  struct grbn *n30 = rbi_create_node(30);
+  struct grbnode *n30 = rbi_create_node(30);
   rb_set_red(n30);
   bn_connect2(n30, top, root, right);
-  struct grbn *n20 = rbi_create_node(20);
+  struct grbnode *n20 = rbi_create_node(20);
   rb_set_black(n20);
   bn_connect2(n20, top, n30, left);
-  struct grbn *n38 = rbi_create_node(38);
+  struct grbnode *n38 = rbi_create_node(38);
   rb_set_black(n38);
   bn_connect2(n38, top, n30, right);
 

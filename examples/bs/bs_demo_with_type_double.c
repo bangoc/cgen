@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
-  struct gbst *t = gbs_create_tree(NULL, gtype_cmp_d, NULL);
+  struct gbstree *t = gbs_create_tree(NULL, gtype_cmp_d, NULL);
   double val;
   printf("Nhập vào một dãy số thực không âm (nhập 1 số âm bất kỳ để kết thúc nhập): \n");
   for (;;) {

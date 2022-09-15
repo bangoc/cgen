@@ -6,30 +6,38 @@
 #include "base/gtype.h"
 #include "tree/bs.h"
 
-struct gbsn {
-  struct bnn base;
+/**
+ * Cấu trúc nút của cây nhị phân tìm kiếm với kiểu gtype
+ * gbsnode = gtype binary search node
+ */
+struct gbsnode {
+  struct bnnode base;
   gtype key;
 };
 
-struct gbst {
-  struct bnt base;
+/**
+ * Cấu trúc điều khiển của cây nhị phân tìm kiếm với kiểu gtype
+ * gbstree = gtype binary search tree
+ */
+struct gbstree {
+  struct bntree base;
   gtype_cmp_t cmp;
   gtype_free_t fk;
 };
 
-#define gbs_node(n) ((struct gbsn *)(n))
-#define gbs_tree(t) ((struct gbst *)(t))
+#define gbs_node(n) ((struct gbsnode *)(n))
+#define gbs_tree(t) ((struct gbstree *)(t))
 
-struct gbsn *gbs_create_node(gtype key);
-int gbs_cmp_node(struct bnn *n1, struct bnn *n2, struct bnt *t);
-struct gbst *gbs_create_tree(struct gbsn *root, gtype_cmp_t cmp, gtype_free_t fk);
+struct gbsnode *gbs_create_node(gtype key);
+int gbs_cmp_node(struct bnnode *n1, struct bnnode *n2, struct bntree *t);
+struct gbstree *gbs_create_tree(struct gbsnode *root, gtype_cmp_t cmp, gtype_free_t fk);
 
-struct bs_ires gbs_insert(struct gbst *t, gtype key);
-struct bs_ires gbs_insert_unique(struct gbst *t, gtype key);
-struct gbsn *gbs_search(struct gbst *t, gtype key);
-struct gbsn *gbs_search_gte(struct gbst *t, gtype key);
-struct gbsn *gbs_search_lte(struct gbst *t, gtype key);
-int gbs_delete(struct gbst *t, struct gbsn *n);
+struct bs_ires gbs_insert(struct gbstree *t, gtype key);
+struct bs_ires gbs_insert_unique(struct gbstree *t, gtype key);
+struct gbsnode *gbs_search(struct gbstree *t, gtype key);
+struct gbsnode *gbs_search_gte(struct gbstree *t, gtype key);
+struct gbsnode *gbs_search_lte(struct gbstree *t, gtype key);
+int gbs_delete(struct gbstree *t, struct gbsnode *n);
 
 #define gbs_free_node(n, fk) \
   do { \
@@ -49,6 +57,6 @@ int gbs_delete(struct gbst *t, struct gbsn *n);
     bn_free_tree(bn_tree(t)); \
   } while (0)
 
-void gbs_pprint(struct gbst *, gtype_print_t gpp);
+void gbs_pprint(struct gbstree *, gtype_print_t gpp);
 
 #endif  // SPEC_TREE_GBS_H_

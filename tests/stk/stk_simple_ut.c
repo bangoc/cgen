@@ -3,7 +3,7 @@
 #include "tests/base/utils.h"
 
 int t1() {
-  struct gsl *stk = gsl_create_list(NULL);
+  struct gsllist *stk = gsl_create_list(NULL);
   stk_push(stk, gtype_l(1));
   stk_push(stk, gtype_l(2));
   stk_push(stk, gtype_l(3));

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 typedef struct str_cache {
-  struct rbm *si;
+  struct rbmtree *si;
   arr_t(char*) is;
 } *str_cache_t;
 

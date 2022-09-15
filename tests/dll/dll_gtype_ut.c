@@ -5,20 +5,20 @@
 #include "tests/base/utils.h"
 #include "tests/dll/helper.h"
 
-gtype pop_value_front(struct gdl *list) {
+gtype pop_value_front(struct gdllist *list) {
   gtype tmp = gdl_node_value(gdl_front(list));
   gdl_pop_front(list);
   return tmp;
 }
 
-gtype pop_value_back(struct gdl *list) {
+gtype pop_value_back(struct gdllist *list) {
   gtype tmp = gdl_node_value(gdl_back(list));
   gdl_pop_back(list);
   return tmp;
 }
 
 int test_push_back_front_g() {
-  struct gdl *list = gdl_create_list(NULL);
+  struct gdllist *list = gdl_create_list(NULL);
   CHECK_MSG(gdl_front(list) == NULL, "front NULL");
   CHECK_MSG(gdl_back(list) == NULL, "back NULL");
 
@@ -62,7 +62,7 @@ int test_push_back_front_g() {
 }
 
 int test_insert_ab() {
-  struct gdl *list = gdl_create_list(NULL);
+  struct gdllist *list = gdl_create_list(NULL);
   CHECK_MSG(gdl_front(list) == NULL, "front NULL");
   CHECK_MSG(gdl_back(list) == NULL, "back NULL");
 

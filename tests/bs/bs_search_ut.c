@@ -2,13 +2,13 @@
 #include "tree/spec/gbs.h"
 
 int main() {
-  struct gbsn n1 = {.key = gtype_l(1)};
-  struct gbsn n2 = {.key = gtype_l(2)};
-  struct gbsn n3 = {.key = gtype_l(3)};
-  struct gbsn n4 = {.key = gtype_l(4)};
-  struct gbsn n5 = {.key = gtype_l(5)};
-  struct gbsn n6 = {.key = gtype_l(6)};
-  struct gbsn n_1 = {.key = gtype_l(-1)};
+  struct gbsnode n1 = {.key = gtype_l(1)};
+  struct gbsnode n2 = {.key = gtype_l(2)};
+  struct gbsnode n3 = {.key = gtype_l(3)};
+  struct gbsnode n4 = {.key = gtype_l(4)};
+  struct gbsnode n5 = {.key = gtype_l(5)};
+  struct gbsnode n6 = {.key = gtype_l(6)};
+  struct gbsnode n_1 = {.key = gtype_l(-1)};
 
   n2.base.left = &n1;
   n1.base.top = &n2;
@@ -18,7 +18,7 @@ int main() {
   n5.base.top = &n3;
   n5.base.left = &n4;
   n4.base.top = &n5;
-  struct gbst *t = gbs_create_tree(bn_node(&n2), gtype_cmp_l, NULL);
+  struct gbstree *t = gbs_create_tree(bn_node(&n2), gtype_cmp_l, NULL);
   /*
           2
         1   3

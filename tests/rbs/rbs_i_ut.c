@@ -6,7 +6,7 @@
 #include "tests/rbs/rbs_helper.h"
 
 int t1() {
-  struct rbs *s = rbs_create(gtype_cmp_l, NULL);
+  struct rbstree *s = rbs_create(gtype_cmp_l, NULL);
   rbs_insert(s, gtype_l(1));
   rbs_insert(s, gtype_l(2));
   rbs_insert(s, gtype_l(3));

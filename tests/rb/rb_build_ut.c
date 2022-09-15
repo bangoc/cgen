@@ -3,12 +3,12 @@
 #include "tests/base/utils.h"
 
 int main() {
-  struct grbt *t = rbi_create_tree(NULL);
+  struct grbtree *t = rbi_create_tree(NULL);
   rbi_insert(t, 2);
   /*
     2B
   */
-  struct bnn *nd2 = bn_tree(t)->root;
+  struct bnnode *nd2 = bn_tree(t)->root;
   CHECK_MSG(rbi_value(bn_tree(t)->root) == 2, "Nút gốc == 2");
   CHECK_MSG(rb_is_black(bn_tree(t)->root), "Nút gốc là nút đen.");
   CHECK_MSG(lnr_match_value(t, (int []){2}, 1), "Giá trị tăng dần 2");
@@ -17,7 +17,7 @@ int main() {
         2B
       1R
   */
-  struct bnn *nd1 = bn_tree(t)->root->left;
+  struct bnnode *nd1 = bn_tree(t)->root->left;
   CHECK_MSG(rbi_value(nd1) == 1, "Nút trái == 1");
   CHECK_MSG(rb_is_red(nd1), "Nút trái là nút đỏ");
   CHECK_MSG(lnr_match_value(t, (int []){1, 2}, 2), "Giá trị tăng dần 1 2");
@@ -27,7 +27,7 @@ int main() {
         2B
       1R  4R
   */
-  struct bnn *nd4 = bn_tree(t)->root->right;
+  struct bnnode *nd4 = bn_tree(t)->root->right;
   CHECK_MSG(rbi_value(nd4) == 4, "Nút phải == 4");
   CHECK_MSG(rb_is_red(nd4), "Nút phải là nút đỏ");
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 4}, 3),
@@ -41,7 +41,7 @@ int main() {
   */
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 4, 5}, 4),
             "Giá trị tăng dần 1 2 4 5");
-  struct bnn *nd5 = nd4->right;
+  struct bnnode *nd5 = nd4->right;
   CHECK_MSG(rbi_value(nd5) == 5, "nd5 == 5");
   CHECK_MSG(rb_is_black(nd1), "Nút 1 đen");
   CHECK_MSG(rb_is_black(nd4), "Nút 4 đen");
@@ -56,7 +56,7 @@ int main() {
   */
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 4, 5, 9}, 5),
             "Giá trị tăng dần 1 2 4 5 9");
-  struct bnn *nd9 = nd5->right;
+  struct bnnode *nd9 = nd5->right;
   CHECK_MSG(rbi_value(nd9) == 9, "nd9 == 9");
   CHECK_MSG(rb_is_red(nd9), "Nút 9 đỏ");
   CHECK_MSG(rb_is_red(nd4), "Nút 4 đỏ");
@@ -73,7 +73,7 @@ int main() {
   */
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 3, 4, 5, 9}, 6),
             "Giá trị tăng dần 1 2 3 4 5 9");
-  struct bnn *nd3 = nd4->left;
+  struct bnnode *nd3 = nd4->left;
   CHECK_MSG(rbi_value(nd3) == 3, "nd3 == 3");
   CHECK_MSG(rb_is_red(nd3), "Nút 3 đỏ");
   CHECK_MSG(nd3->top == nd4, "top của nd3 bằng nd4");
@@ -91,7 +91,7 @@ int main() {
   */
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 3, 4, 5, 6, 9}, 7),
             "Giá trị tăng dần 1 2 3 4 5 6 9");
-  struct bnn *nd6 = nd9->left;
+  struct bnnode *nd6 = nd9->left;
   CHECK_MSG(rbi_value(nd6) == 6, "nd6 == 6");
   CHECK_MSG(rb_is_red(nd6), "Nút 6 đỏ");
   CHECK_MSG(nd6->top == nd9, "top của nd6 bằng nd9");
@@ -106,7 +106,7 @@ int main() {
   */
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 3, 4, 5, 6, 7, 9}, 8),
             "Giá trị tăng dần 1 2 3 4 5 6 7 9");
-  struct bnn *nd7 = nd5->right;
+  struct bnnode *nd7 = nd5->right;
   CHECK_MSG(rbi_value(nd7) == 7, "nd7 == 7");
   CHECK_MSG(rb_is_black(nd7), "Nút 7 đen");
   CHECK_MSG(nd7->left == nd6, "left của nd7 bằng nd6");
@@ -134,7 +134,7 @@ int main() {
   */
   CHECK_MSG(lnr_match_value(t, (int []){1, 2, 3, 4, 5, 6, 7, 9, 15}, 9),
             "Giá trị tăng dần 1 2 3 4 5 6 7 9 15");
-  struct bnn *nd15 = nd9->right;
+  struct bnnode *nd15 = nd9->right;
   CHECK_MSG(rbi_value(nd15) == 15, "nd15 == 15");
   CHECK_MSG(rb_is_red(nd15), "Nút 15 là nút đỏ");
   CHECK_MSG(nd15->top == nd9, "top của nd15 bằng nd9");

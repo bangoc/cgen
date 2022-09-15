@@ -11,10 +11,10 @@
 
 #include <stdio.h>
 
-struct rbm *s2i_create();
+struct rbmtree *s2i_create();
 
 
-struct rbm_ires s2i_insert(struct rbm *si, const char *key, long value);
+struct rbm_ires s2i_insert(struct rbmtree *si, const char *key, long value);
 
 /**
  * Lưu cặp key & value, bỏ qua nếu key đã tồn tại.
@@ -26,7 +26,7 @@ struct rbm_ires s2i_insert(struct rbm *si, const char *key, long value);
  * @return NULL nếu key chưa tồn tại
  *         Con trỏ tới value nếu ngược lại.
  */
-long *s2i_put(struct rbm *si, const char *key, long value);
+long *s2i_put(struct rbmtree *si, const char *key, long value);
 
 /**
  * Đọc giá trị được gắn với key
@@ -36,9 +36,9 @@ long *s2i_put(struct rbm *si, const char *key, long value);
  * @return NULL nếu key chưa tồn tại
  *         Con trỏ tới value nếu ngược lại.
  */
-long *s2i_value(struct rbm *si, const char *key);
-int s2i_remove(struct rbm *si, const char *key);
-void s2i_print_node(struct bnn *n);
+long *s2i_value(struct rbmtree *si, const char *key);
+int s2i_remove(struct rbmtree *si, const char *key);
+void s2i_print_node(struct bnnode *n);
 
 #define s2i_node_key(n) (rbm_node(n)->key)
 #define s2i_node_value(n) (rbm_node(n)->value)

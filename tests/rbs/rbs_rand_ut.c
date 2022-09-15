@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
   }
   int n;
   sscanf(argv[1], "%d", &n);
-  struct rbs *s = rbs_create(gtype_cmp_s, gtype_free_s);
+  struct rbstree *s = rbs_create(gtype_cmp_s, gtype_free_s);
   srand(time(NULL));
   char **keys = malloc(n * sizeof(char *));
   long cc = 0;
@@ -36,21 +36,21 @@ int main(int argc, char *argv[]) {
     gen_buff();
     char *tmp = strdup(buff);
     if (!rbs_insert(s, gtype_s(tmp))) {
-      CHECK_MSG(rbs_size(s) == bn_size((struct bnt *)s), "Size equal bn_size");
+      CHECK_MSG(rbs_size(s) == bn_size((struct bntree *)s), "Size equal bn_size");
       CHECK_MSG(rbs_size(s) == cc, "size == cc");
       free(tmp);
       continue;
     }
     keys[cc] = tmp;
     ++cc;
-    CHECK_MSG(rbs_size(s) == bn_size((struct bnt *)s), "Size equal bn_size");
+    CHECK_MSG(rbs_size(s) == bn_size((struct bntree *)s), "Size equal bn_size");
     CHECK_MSG(rbs_size(s) == cc, "size == cc");
   }
   int sz = cc;
   for (int i = 0; i < sz; ++i) {
     CHECK_MSG(rbs_remove(s, gtype_s(keys[i])) == 1, "Remove key i");
     --cc;
-    CHECK_MSG(rbs_size(s) == bn_size((struct bnt *)s), "Size equal bn_size");
+    CHECK_MSG(rbs_size(s) == bn_size((struct bntree *)s), "Size equal bn_size");
     CHECK_MSG(rbs_size(s) == cc, "size == cc");
   }
   rbs_free(s);

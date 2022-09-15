@@ -22,11 +22,11 @@ typedef union generic_type {
   char *s;
   void *v;
   union generic_type *g;
-  struct gdl *gdl;
-  struct gsl *gsl;
+  struct gdllist *gdl;
+  struct gsllist *gsl;
   struct gvector *gvec;
-  struct rbm *rbm;
-  struct rbs *rbs;
+  struct rbmtree *rbm;
+  struct rbstree *rbs;
   struct hmap *hmap;
   struct hset *hset;
   struct p1way *p1w;

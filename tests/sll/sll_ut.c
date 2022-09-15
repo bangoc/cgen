@@ -5,10 +5,10 @@
 #include <stdlib.h>
 
 int sll_t1() {
-  struct sln *n1 = sll_create_node(),
+  struct slnode *n1 = sll_create_node(),
              *n2 = sll_create_node(),
              *n3 = sll_create_node();
-  struct sll *list = sll_create_list();
+  struct sllist *list = sll_create_list();
   CHECK_MSG(sll_length(list) == 0, "Init size");
   CHECK_MSG(list->front == NULL, "Init first");
   CHECK_MSG(list->back == NULL, "Init last");
@@ -52,7 +52,7 @@ int test_create_list() {
     a[i] = i;
   }
   free(a);
-  struct sll *lists[N];
+  struct sllist *lists[N];
   for (int i = 0; i < N; ++i) {
     lists[i] = sll_create_list();
     CHECK_MSG(sll_is_empty(lists[i]), "Empty on create");

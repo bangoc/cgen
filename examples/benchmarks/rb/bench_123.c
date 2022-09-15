@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   const long len = n / POINTS;
   char desc[1024];
   long value = 0;
-  struct grbt *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
+  struct grbtree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   for (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x insert from %ld (s): ", len, len * point);
     BENCH(desc, 1,
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
   for  (long point = 0; point < POINTS; ++point) {
     sprintf(desc, "%ld x delete from %ld (s): ", len, n - len * point);
     BENCH(desc, 1,
-            struct grbn *tmp;
+            struct grbnode *tmp;
             for (long i = 0; i < len; ++i) {
               tmp = grb_search(t, gtype_l(value++));
               if (tmp) {

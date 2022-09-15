@@ -5,24 +5,29 @@
 
 #include "tree/spec/grb.h"
 
-struct rbs {
-  struct grbt base;
+/**
+ * Cấu trúc điều khiển của tập hợp với kiểu gtype dựa trên
+ * cây đỏ đen
+ * rbstree = red black set tree
+ */
+struct rbstree {
+  struct grbtree base;
   long size;
 };
 
-#define rbs_tree(t) ((struct rbs *)(t))
+#define rbs_tree(t) ((struct rbstree *)(t))
 
 #define rbs_node_key(n) (grb_node(n)->key)
 #define rbs_contains(s, v) (rbs_search(s, v) != NULL)
 
-struct rbs *rbs_create(gtype_cmp_t cmp, gtype_free_t fk);
-int rbs_insert(struct rbs *s, gtype elem);
-struct grbn *rbs_search(struct rbs *s, gtype elem);
-int rbs_remove(struct rbs *s, gtype elem);
+struct rbstree *rbs_create(gtype_cmp_t cmp, gtype_free_t fk);
+int rbs_insert(struct rbstree *s, gtype elem);
+struct grbnode *rbs_search(struct rbstree *s, gtype elem);
+int rbs_remove(struct rbstree *s, gtype elem);
 
 static inline void _rbs_move_next(gtype **cur) {
-  struct grbn *nd = container_of(*cur, struct grbn, key);
-  struct bnn *tmp = bn_next_inorder(bn_node(nd));
+  struct grbnode *nd = container_of(*cur, struct grbnode, key);
+  struct bnnode *tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *cur = NULL;
     return;
@@ -58,11 +63,11 @@ static inline void _rbs_move_next(gtype **cur) {
     } while (0)
 
 /**
- * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbs
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbstree
  * được lưu trong một cấu trúc lưu trữ khác.
  *
- * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbs.
- * Con trỏ value.rbs (kiểu ::struct rbs * được truyền cho rbs_free.
+ * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbstree.
+ * Con trỏ value.rbs (kiểu ::struct rbstree * được truyền cho rbs_free.
  * @return Hàm không trả về giá trị.
  */
 void gtype_free_rbs(gtype value);

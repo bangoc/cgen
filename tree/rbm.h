@@ -17,12 +17,13 @@
 
 /**
  * \headerfile "all.h"
- * Cấu trúc nút của rbm, là mở rộng nút của cây đỏ đen.
+ * Cấu trúc nút của rbmtree, là mở rộng nút của cây đỏ đen.
+ * rbmnode = red black map node
  *
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
-struct rbmn {
-  struct rbn base;
+struct rbmnode {
+  struct rbnode base;
 
   /** \private
    * Người sử dụng không cần trực tiếp truy cập tới
@@ -32,13 +33,15 @@ struct rbmn {
   gtype value;
 };
 
-#define rbm_node(n) ((struct rbmn *)(n))
+#define rbm_node(n) ((struct rbmnode *)(n))
 #define rbm_node_key(n) (rbm_node(n)->key)
 #define rbm_node_value(n) (rbm_node(n)->value)
 
 /**
  * \headerfile "all.h"
- * Cấu trúc điều khiển của bảng cây rbm, được tạo bằng hàm
+ * Cấu trúc điều khiển của bảng cây rbmtree, được tạo bằng hàm
+ * rbmtree = red black map tree
+ *
  * rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
  *
  * Các macro hỗ trợ: <br>
@@ -50,26 +53,26 @@ struct rbmn {
  *
  *   #rbm_clear(map) - Làm rỗng map
  */
-struct rbm {
-  struct bnt t;
+struct rbmtree {
+  struct bntree t;
   gtype_cmp_t cmp;
   gtype_free_t fk, fv;
   long size;
 };
 
 /**
- * Cấu trúc kết quả trả về của hàm rbm_insert(struct rbm *t, gtype key, gtype value),
- * cho biết trạng thái kết thúc thao tác thêm dữ liệu vào rbm.
+ * Cấu trúc kết quả trả về của hàm rbm_insert(struct rbmtree *t, gtype key, gtype value),
+ * cho biết trạng thái kết thúc thao tác thêm dữ liệu vào rbmtree.
  */
 struct rbm_ires {
   gtype *value;
   int inserted;
 };
 
-#define rbm_tree(t) ((struct rbm *)(t))
+#define rbm_tree(t) ((struct rbmtree *)(t))
 
-struct rbmn *rbm_create_node(gtype key, gtype value);
-int rbm_cmp_node(struct bnn *n1, struct bnn *n2, struct bnt *t);
+struct rbmnode *rbm_create_node(gtype key, gtype value);
+int rbm_cmp_node(struct bnnode *n1, struct bnnode *n2, struct bntree *t);
 
 /**
  * Hàm tạo đối tượng điều khiển bảng cây.
@@ -84,11 +87,11 @@ int rbm_cmp_node(struct bnn *n1, struct bnn *n2, struct bnt *t);
  * tự free_key.
  * @return Trả về đối tượng điều khiển bảng cây.
  *
- * \memberof rbm
+ * \memberof rbmtree
  *
  * Tham khảo: hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value)
  */
-struct rbm *rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
+struct rbmtree *rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
@@ -101,11 +104,11 @@ struct rbm *rbm_create(gtype_cmp_t cmp, gtype_free_t fk, gtype_free_t fv);
  * @param value Giá trị được thêm vào.
  * @return Trả về đối tượng ::rbm_ires
  *
- * \memberof rbm
+ * \memberof rbmtree
  *
  * Tham khảo: hmap_insert(struct hmap *tab, gtype key, gtype value)
  */
-struct rbm_ires rbm_insert(struct rbm *t, gtype key, gtype value);
+struct rbm_ires rbm_insert(struct rbmtree *t, gtype key, gtype value);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
@@ -118,11 +121,11 @@ struct rbm_ires rbm_insert(struct rbm *t, gtype key, gtype value);
  * @return Trả về con trỏ tới giá trị nếu khóa đã tồn tại
  * hoặc trả về NULL nếu ngược lại, kiểu ::gtype*.
  *
- * \memberof rbm
+ * \memberof rbmtree
  *
  * Tham khảo: hmap_put(struct hmap *tab, gtype key, gtype value)
  */
-gtype *rbm_put(struct rbm *t, gtype key, gtype value);
+gtype *rbm_put(struct rbmtree *t, gtype key, gtype value);
 
 /**
  * Tra cứu giá trị trong t theo key.
@@ -132,17 +135,17 @@ gtype *rbm_put(struct rbm *t, gtype key, gtype value);
  * @return Trả về con trỏ tới giá trị đang được gắn với key trong t
  * nếu tồn tại, hoặc NULL nếu ngược lại.
  *
- * \memberof rbm
+ * \memberof rbmtree
  *
  * Tham khảo: hmap_value(struct hmap *tab, gtype key)
  */
-gtype *rbm_value(struct rbm *t, gtype key);
+gtype *rbm_value(struct rbmtree *t, gtype key);
 
 /**
  * Có thể sẽ xóa hàm này.
  * \private
  */
-struct rbmn *rbm_search(struct rbm *t, gtype key);
+struct rbmnode *rbm_search(struct rbmtree *t, gtype key);
 
 /**
  * Nếu key không có trong t thì bỏ qua, nếu ngược lại thì xóa cặp
@@ -153,11 +156,11 @@ struct rbmn *rbm_search(struct rbm *t, gtype key);
  * @param key Khóa cần xóa.
  * @return 1 Nếu tồn tại khóa sau khi xóa dữ liệu, 0 nếu ngược lại.
  *
- * \memberof rbm
+ * \memberof rbmtree
  *
  * Tham khảo: hmap_remove(struct hmap *tab, gtype key)
  */
-int rbm_remove(struct rbm *t, gtype key);
+int rbm_remove(struct rbmtree *t, gtype key);
 
 /**
  * Số lượng cặp khóa & giá trị đang được lưu trong bảng.
@@ -169,8 +172,8 @@ int rbm_remove(struct rbm *t, gtype key);
 #define rbm_size(t) ((t)->size)
 
 static inline void _rbm_move_next(gtype **k, gtype **v) {
-  struct rbmn *nd = rbm_node(container_of(*k, struct rbmn, key));
-  struct bnn *tmp = bn_next_inorder(bn_node(nd));
+  struct rbmnode *nd = rbm_node(container_of(*k, struct rbmnode, key));
+  struct bnnode *tmp = bn_next_inorder(bn_node(nd));
   if (!tmp) {
     *k = NULL;
     *v = NULL;
@@ -234,17 +237,17 @@ static inline void _rbm_move_next(gtype **k, gtype **v) {
         } \
       } \
     } \
-    struct bnt *_t = (struct bnt *)(map); \
+    struct bntree *_t = (struct bntree *)(map); \
     bn_clear_tree(_t); \
     rbm_tree(map)->size = 0; \
   } while (0)
 
 /**
- * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbm
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng rbmtree
  * được lưu trong một cấu trúc lưu trữ khác.
  *
- * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbm.
- * Con trỏ value.rbm (kiểu ::struct rbm *) được truyền cho rbm_free.
+ * @param value Giá trị gtype đang chứa con trỏ tới đối tượng rbmtree.
+ * Con trỏ value.rbm (kiểu ::struct rbmtree *) được truyền cho rbm_free.
  * @return Hàm không trả về giá trị.
  *
  * \memberof gtype

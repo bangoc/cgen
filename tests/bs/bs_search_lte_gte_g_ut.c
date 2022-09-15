@@ -6,7 +6,7 @@
 #include "tests/bs/bs_gtype_helper.h"
 
 int t1() {
-  struct gbst *t = gbs_create_tree(NULL, gtype_cmp_l, NULL);
+  struct gbstree *t = gbs_create_tree(NULL, gtype_cmp_l, NULL);
   gbs_insert(t, gtype_l(30));
   gbs_insert(t, gtype_l(20));
   gbs_insert(t, gtype_l(10));

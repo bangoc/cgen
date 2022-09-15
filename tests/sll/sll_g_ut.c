@@ -2,14 +2,14 @@
 
 #include "tests/base/utils.h"
 
-gtype pop_value_front(struct gsl *list) {
+gtype pop_value_front(struct gsllist *list) {
   gtype value = gsl_front(list)->value;
   gsl_pop_front(list);
   return value;
 }
 
 int main() {
-  struct gsl *list = gsl_create_list(NULL);
+  struct gsllist *list = gsl_create_list(NULL);
   gsl_push_back(list, (gtype){.l = 1});
   CHECK_MSG(gsl_length(list) == 1, "Append n1 size");
 

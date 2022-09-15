@@ -15,7 +15,7 @@ struct attrib {
   int color;
 };
 
-static int match_value_callback(struct bnn *nd, struct match_args *u) {
+static int match_value_callback(struct bnnode *nd, struct match_args *u) {
   int value = rbi_value(nd);
   int tmp = ((int*)u->arr)[u->i];
   if (u->i < u->n && tmp == value) {
@@ -26,7 +26,7 @@ static int match_value_callback(struct bnn *nd, struct match_args *u) {
   return 1;
 }
 
-static int match_color_callback(struct bnn *nd, struct match_args *u) {
+static int match_color_callback(struct bnnode *nd, struct match_args *u) {
   int color = (int)rb_color(nd);
   int tmp = ((int*)u->arr)[u->i];
   if (u->i < u->n && tmp == color) {
@@ -37,7 +37,7 @@ static int match_color_callback(struct bnn *nd, struct match_args *u) {
   return 1;
 }
 
-static int match_callback(struct bnn *nd, struct match_args *u) {
+static int match_callback(struct bnnode *nd, struct match_args *u) {
   int value = rbi_value(nd);
   int color = (int)rb_color(nd);
   struct attrib *p = ((struct attrib*)u->arr) + u->i;
@@ -49,19 +49,19 @@ static int match_callback(struct bnn *nd, struct match_args *u) {
   return 1;
 }
 
-static int lnr_match_value(struct bnt *t, int *arr, int n) {
+static int lnr_match_value(struct bntree *t, int *arr, int n) {
   struct match_args args = {arr, n, 0, 1};
   bn_foreach_lnr(t, match_value_callback, &args);
   return args.ok;
 }
 
-static int lnr_match_color(struct bnt *t, int *arr, int n) {
+static int lnr_match_color(struct bntree *t, int *arr, int n) {
   struct match_args args = {arr, n, 0, 1};
   bn_foreach_lnr(t, match_color_callback, &args);
   return args.ok;
 }
 
-static int lnr_match_attrib(struct bnt *t, struct attrib *arr, int n) {
+static int lnr_match_attrib(struct bntree *t, struct attrib *arr, int n) {
   struct match_args args = {arr, n, 0, 1};
   bn_foreach_lnr(t, match_callback, &args);
   return args.ok;

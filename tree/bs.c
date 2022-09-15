@@ -1,8 +1,8 @@
 #include "tree/bs.h"
 
 #define BS_INSERT_TPL(...) \
-  struct bnn *top = NULL; \
-  struct bnn *x = t->root; \
+  struct bnnode *top = NULL; \
+  struct bnnode *x = t->root; \
   int rl = 0; \
   while (x) { \
     rl = cmp(nn, x, t); \
@@ -10,15 +10,15 @@
     top = x; \
     x = bs_child(top, rl); \
   } \
-  struct bnn * *loc = top? bs_child_ref(top, rl): &t->root; \
+  struct bnnode * *loc = top? bs_child_ref(top, rl): &t->root; \
   bn_insert(nn, loc, top); \
   return (struct bs_ires){nn, 1}
 
-struct bs_ires bs_insert(struct bnt *t, struct bnn *nn, bn_compare_t cmp) {
+struct bs_ires bs_insert(struct bntree *t, struct bnnode *nn, bn_compare_t cmp) {
   BS_INSERT_TPL();
 }
 
-struct bs_ires bs_insert_unique(struct bnt *t, struct bnn *nn, bn_compare_t cmp) {
+struct bs_ires bs_insert_unique(struct bntree *t, struct bnnode *nn, bn_compare_t cmp) {
   BS_INSERT_TPL(
     if (!rl) {
       return (struct bs_ires){x, 0};
@@ -28,9 +28,9 @@ struct bs_ires bs_insert_unique(struct bnt *t, struct bnn *nn, bn_compare_t cmp)
 
 #undef BS_INSERT_TPL
 
-struct bnn *bs_search(struct bnt *t, struct bnn *sn, bn_compare_t cmp) {
+struct bnnode *bs_search(struct bntree *t, struct bnnode *sn, bn_compare_t cmp) {
   int rl;
-  struct bnn *x = t->root;
+  struct bnnode *x = t->root;
   while (x) {
     rl = cmp(sn, x, t);
     if (!rl) {
@@ -41,10 +41,10 @@ struct bnn *bs_search(struct bnt *t, struct bnn *sn, bn_compare_t cmp) {
   return NULL;
 }
 
-struct bnn *bs_search_gte(struct bnt *t, struct bnn *sn, bn_compare_t cmp) {
+struct bnnode *bs_search_gte(struct bntree *t, struct bnnode *sn, bn_compare_t cmp) {
   int rl;
-  struct bnn *x = t->root;
-  struct bnn *o = NULL;
+  struct bnnode *x = t->root;
+  struct bnnode *o = NULL;
   while (x) {
     rl = cmp(sn, x, t);
     if (!rl) {
@@ -60,10 +60,10 @@ struct bnn *bs_search_gte(struct bnt *t, struct bnn *sn, bn_compare_t cmp) {
   return o;
 }
 
-struct bnn *bs_search_lte(struct bnt *t, struct bnn *sn, bn_compare_t cmp) {
+struct bnnode *bs_search_lte(struct bntree *t, struct bnnode *sn, bn_compare_t cmp) {
   int rl;
-  struct bnn *x = t->root;
-  struct bnn *o = NULL;
+  struct bnnode *x = t->root;
+  struct bnnode *o = NULL;
   while (x) {
     rl = cmp(sn, x, t);
     if (!rl) {
@@ -79,8 +79,8 @@ struct bnn *bs_search_lte(struct bnt *t, struct bnn *sn, bn_compare_t cmp) {
   return o;
 }
 
-int bs_delete(struct bnt *t, struct bnn *dn) {
-  struct bnn *lc = dn->left,
+int bs_delete(struct bntree *t, struct bnnode *dn) {
+  struct bnnode *lc = dn->left,
             *rc = dn->right,
             *top = dn->top;
   if (!lc) {
@@ -93,8 +93,8 @@ int bs_delete(struct bnt *t, struct bnn *dn) {
       bn_change_child(dn, lc, top, t);
       bn_connect1(lc, top, top);
     } else {
-      struct bnn *successor = bn_left_most(rc);
-      struct bnn *rc2 = successor->right,
+      struct bnnode *successor = bn_left_most(rc);
+      struct bnnode *rc2 = successor->right,
                 *top2 = successor->top;
       bn_change_child(successor, rc2, top2, t);
       if (rc2) {

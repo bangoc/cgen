@@ -6,7 +6,7 @@
 #include "tests/gsl/helper.h"
 
 int t1() {
-  struct gsl *list = gsl_create_list(NULL);
+  struct gsllist *list = gsl_create_list(NULL);
   gsl_inserta(list, NULL, gtype_l(1));
   gsl_inserta(list, NULL, gtype_l(2));
   CHECK_MSG(gsl_length(list) == 2, "Length 2");

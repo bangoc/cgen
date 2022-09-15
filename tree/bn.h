@@ -16,60 +16,64 @@
 
 /**
  * Cấu trúc nút của cây nhị phân
- * bnn = binary tree node
+ * bnnode = binary (tree) node
  */
-struct bnn {
-  struct bnn *left;
-  struct bnn *right;
-  struct bnn *top;
+struct bnnode {
+  struct bnnode *left;
+  struct bnnode *right;
+  struct bnnode *top;
 };
 
-#define bn_node(n) ((struct bnn *)(n))
+#define bn_node(n) ((struct bnnode *)(n))
 #define bn_connect1(n1, link, n2) bn_node(n1)->link = bn_node(n2)
 #define bn_connect2(n1, link1, n2, link2) bn_connect1(n1, link1, n2); \
     bn_connect1(n2, link2, n1)
 
-struct bnt {
-  struct bnn *root;
+/**
+ * Cấu trúc điều khiển của cây nhị phân
+ * bntree = binary tree
+ */
+struct bntree {
+  struct bnnode *root;
 };
 
-#define bn_tree(t) ((struct bnt *)(t))
+#define bn_tree(t) ((struct bntree *)(t))
 
 typedef int (*bn_callback_t)();
-typedef int (*bn_compare_t)(struct bnn *, struct bnn *, struct bnt *);
+typedef int (*bn_compare_t)(struct bnnode *, struct bnnode *, struct bntree *);
 typedef void (*bn_node_print_t)();
 
-struct bnn *bn_create_node();
+struct bnnode *bn_create_node();
 #define bn_free_node(n) free(n)
 
-struct bnt *bn_create_tree(struct bnn *root);
-void bn_free_tree(struct bnt *t);
-void bn_foreach_lrn(struct bnt *t, bn_callback_t op, void *u);
-void bn_foreach_lnr(struct bnt *t, bn_callback_t op, void *u);
-void bn_foreach_rnl(struct bnt *t, bn_callback_t op, void *u);
-void bn_pprint(struct bnt *t, bn_node_print_t p);
-long bn_size(struct bnt *t);
-long bn_distance(struct bnn *n);  // số lượng cạnh tới gốc
-long bn_edge_height(struct bnt *t);
+struct bntree *bn_create_tree(struct bnnode *root);
+void bn_free_tree(struct bntree *t);
+void bn_foreach_lrn(struct bntree *t, bn_callback_t op, void *u);
+void bn_foreach_lnr(struct bntree *t, bn_callback_t op, void *u);
+void bn_foreach_rnl(struct bntree *t, bn_callback_t op, void *u);
+void bn_pprint(struct bntree *t, bn_node_print_t p);
+long bn_size(struct bntree *t);
+long bn_distance(struct bnnode *n);  // số lượng cạnh tới gốc
+long bn_edge_height(struct bntree *t);
 
-struct bnn *bn_left_deepest_node(struct bnn *node);
-struct bnn *bn_next_postorder(struct bnn *node);
-struct bnn *bn_first_postorder(struct bnn *n);
-struct bnn *bn_left_most(struct bnn *x);
-struct bnn *bn_right_most(struct bnn *x);
-struct bnn *bn_next_inorder(struct bnn *x);
-struct bnn *bn_prev_inorder(struct bnn *x);
+struct bnnode *bn_left_deepest_node(struct bnnode *node);
+struct bnnode *bn_next_postorder(struct bnnode *node);
+struct bnnode *bn_first_postorder(struct bnnode *n);
+struct bnnode *bn_left_most(struct bnnode *x);
+struct bnnode *bn_right_most(struct bnnode *x);
+struct bnnode *bn_next_inorder(struct bnnode *x);
+struct bnnode *bn_prev_inorder(struct bnnode *x);
 
 #define bn_traverse_lrn(cur, tree) \
-  for (struct bnn *cur = bn_first_postorder(tree->root); \
+  for (struct bnnode *cur = bn_first_postorder(tree->root); \
        cur != NULL; cur = bn_next_postorder(cur))
 
 #define bn_traverse_lnr(cur, tree) \
-  for (struct bnn *cur = bn_left_most(tree->root); \
+  for (struct bnnode *cur = bn_left_most(tree->root); \
        cur != NULL; cur = bn_next_inorder(cur))
 
 #define bn_traverse_rnl(cur, tree) \
-  for (struct bnn *cur = bn_right_most(tree->root); \
+  for (struct bnnode *cur = bn_right_most(tree->root); \
        cur != NULL; cur = bn_prev_inorder(cur))
 
 #define bn_pprint_inline(t, pad, step, npp) \
@@ -80,7 +84,7 @@ struct bnn *bn_prev_inorder(struct bnn *x);
 
 #define bn_clear_tree(t) \
   do { \
-    struct bnn *_tmp = NULL; \
+    struct bnnode *_tmp = NULL; \
     bn_traverse_lrn(_cur, (t)) { \
       free(_tmp); \
       _tmp = _cur; \
@@ -112,7 +116,7 @@ struct bnn *bn_prev_inorder(struct bnn *x);
 /* x là trục xoay */
 #define bn_rotate(t, x, right, left) \
   do { \
-    struct bnn *_y = (x)->right; \
+    struct bnnode *_y = (x)->right; \
     (x)->right = _y->left; \
     if (_y->left != NULL) { \
       _y->left->top = (x); \

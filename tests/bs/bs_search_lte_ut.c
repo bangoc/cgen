@@ -3,7 +3,7 @@
 #include "tests/rb/rbi.h"
 
 int main() {
-  struct grbt *t = rbi_create_tree(NULL);
+  struct grbtree *t = rbi_create_tree(NULL);
   rbi_insert(t, 1);
   rbi_insert(t, 3);
   rbi_insert(t, 5);

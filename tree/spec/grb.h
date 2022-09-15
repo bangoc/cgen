@@ -14,44 +14,33 @@
 
 #include <stdbool.h>
 
-/*
- * Các tính chất của cây đỏ đen:
- * 1) Mỗi nút chỉ có thể là đỏ hoặc đen
- * 2) Nút gốc là nút đen
- * 3) Tất cả các nút lá (NULL) là các nút đen
- * 4) Cả hai con của nút đỏ là các nút đen
- * 5) Tất cả các đường đi đơn giản từ nút gốc tới các nút lá đều có
- *    cùng số lượng nút đen.
+/**
+ * Cấu trúc nút đỏ đen với kiểu gtype, kế thừa ::struct rbnode
+ * grbnode = gtype red black node
  */
-
-extern const char * color_names[];
-
-struct grbn {
-  struct rbn base;
+struct grbnode {
+  struct rbnode base;
   gtype key;
 };
 
-/*
-  Trong triển khai này NULL được sử dụng thay vì lính canh để tương
-  thích tốt hơn với các hàm ngoại.*
-
-  Nút NULL được quy ước là nút đen
-*/
-
-struct grbt {
-  struct bnt base;
+/**
+ * Cấu trúc điều khiển của cây đỏ đen với kiểu gtype
+ * grbtree = gtype red black tree
+ */
+struct grbtree {
+  struct bntree base;
   gtype_cmp_t cmp;
   gtype_free_t fk;
 };
 
-#define grb_node(n) ((struct grbn *)(n))
-#define grb_tree(t) ((struct grbt *)(t))
+#define grb_node(n) ((struct grbnode *)(n))
+#define grb_tree(t) ((struct grbtree *)(t))
 
-struct grbn *grb_create_node(gtype key);
+struct grbnode *grb_create_node(gtype key);
 #define grb_free_node(n, t) gbs_free_node(n, gbs_tree(t)->fk)
-int grb_cmp_node(struct bnn *, struct bnn *, struct bnt *);
+int grb_cmp_node(struct bnnode *, struct bnnode *, struct bntree *);
 
-struct grbt *grb_create_tree(struct grbn *root, gtype_cmp_t cmp, gtype_free_t fk);
+struct grbtree *grb_create_tree(struct grbnode *root, gtype_cmp_t cmp, gtype_free_t fk);
 
 #define grb_free_tree(t) \
   do { \
@@ -63,12 +52,12 @@ struct grbt *grb_create_tree(struct grbn *root, gtype_cmp_t cmp, gtype_free_t fk
     bn_free_tree(bn_tree(t)); \
   } while (0)
 
-struct bs_ires grb_insert(struct grbt *t, gtype key);
-struct bs_ires grb_insert_unique(struct grbt *t, gtype key);
-struct grbn *grb_search(struct grbt *t, gtype key);
-struct grbn *grb_search_gte(struct grbt *t, gtype key);
-struct grbn *grb_search_lte(struct grbt *t, gtype key);
-int grb_delete(struct grbt *t, struct grbn *dn);
+struct bs_ires grb_insert(struct grbtree *t, gtype key);
+struct bs_ires grb_insert_unique(struct grbtree *t, gtype key);
+struct grbnode *grb_search(struct grbtree *t, gtype key);
+struct grbnode *grb_search_gte(struct grbtree *t, gtype key);
+struct grbnode *grb_search_lte(struct grbtree *t, gtype key);
+int grb_delete(struct grbtree *t, struct grbnode *dn);
 
 
 #endif  // TREE_SPEC_GRB_H_

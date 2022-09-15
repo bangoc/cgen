@@ -6,7 +6,7 @@
 #include "tests/dll/helper.h"
 
 int test_dll_create_node() {
-  struct dln *nn = dll_create_node();
+  struct dlnode *nn = dll_create_node();
   if (!nn) {
     DEBUG_MSG("Null node");
     return 1;
@@ -19,7 +19,7 @@ int test_dll_create_node() {
 }
 
 int test_dll_create_list() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   if (!list) {
     DEBUG_MSG("Null list");
     return 1;
@@ -31,24 +31,24 @@ int test_dll_create_list() {
   return 0;
 }
 int test_dll_push_t1() {
-  struct dll *list = dll_create_list();
-  struct dln *n1 = dll_create_node();
+  struct dllist *list = dll_create_list();
+  struct dlnode *n1 = dll_create_node();
   dll_push_back(list, n1);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1}, 1), "push_back empty list");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1}, 1), "push_back empty list");
 
-  struct dln *n2 = dll_create_node();
+  struct dlnode *n2 = dll_create_node();
   dll_push_front(list, n2);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n1}, 2), "push_front 2 node");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n1}, 2), "push_front 2 node");
 
   dll_free(list);
   list = dll_create_list();
   n1 = dll_create_node();
   dll_push_front(list, n1);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1}, 1), "push_front empty list");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1}, 1), "push_front empty list");
 
   n2 = dll_create_node();
   dll_push_back(list, n2);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n2}, 2), "push back 2 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n2}, 2), "push back 2 nodes");
 
   dll_free(list);
 
@@ -56,20 +56,20 @@ int test_dll_push_t1() {
 }
 
 int test_dll_pop_t1() {
-  struct dll *list = dll_create_list();
-  struct dln *n1 = dll_create_node();
-  struct dln *n2 = dll_create_node();
-  struct dln *n3 = dll_create_node();
+  struct dllist *list = dll_create_list();
+  struct dlnode *n1 = dll_create_node();
+  struct dlnode *n2 = dll_create_node();
+  struct dlnode *n3 = dll_create_node();
   dll_push_back(list, n1);
   dll_push_back(list, n2);
   dll_push_back(list, n3);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n2, n3}, 3), "push_back 3 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n2, n3}, 3), "push_back 3 nodes");
 
   dll_pop_back(list);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n2}, 2), "pop_back 3 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n2}, 2), "pop_back 3 nodes");
 
   dll_pop_front(list);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2}, 1), "pop_front 2 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2}, 1), "pop_front 2 nodes");
 
   dll_pop_front(list);
   CHECK_MSG(dll_is_empty(list), "pop_front => empty");
@@ -88,16 +88,16 @@ int test_dll_pop_t1() {
 }
 
 int test_dll_front_back() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   CHECK_MSG(dll_front(list) == NULL, "front empty");
   CHECK_MSG(dll_back(list) == NULL, "back empty");
 
-  struct dln *n1 = dll_create_node();
+  struct dlnode *n1 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(dll_front(list) == n1, "front one node");
   CHECK_MSG(dll_back(list) == n1, "back one node");
 
-  struct dln *n2 = dll_create_node();
+  struct dlnode *n2 = dll_create_node();
   dll_push_front(list, n2);
   CHECK_MSG(dll_front(list) == n2, "front two node");
   CHECK_MSG(dll_back(list) == n1, "back two node");
@@ -108,21 +108,21 @@ int test_dll_front_back() {
 }
 
 int test_dll_insert_ab() {
-  struct dll *list = dll_create_list();
-  struct dln *n1 = dll_create_node();
-  struct dln *n2 = dll_create_node();
+  struct dllist *list = dll_create_list();
+  struct dlnode *n1 = dll_create_node();
+  struct dlnode *n2 = dll_create_node();
   dll_inserta(list, NULL, n1);
   dll_inserta(list, n1, n2);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n2}, 2), "2 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n2}, 2), "2 nodes");
 
 
-  struct dln *n3 = dll_create_node();
+  struct dlnode *n3 = dll_create_node();
   dll_inserta(list, n1, n3);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n3, n2}, 3), "after n1");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n3, n2}, 3), "after n1");
 
-  struct dln *n5 = dll_create_node();
+  struct dlnode *n5 = dll_create_node();
   dll_insertb(list, n1, n5);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n5, n1, n3, n2}, 4), "before n1");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n5, n1, n3, n2}, 4), "before n1");
 
   dll_free(list);
   list = dll_create_list();
@@ -130,25 +130,25 @@ int test_dll_insert_ab() {
   dll_insertb(list, NULL, n1);
   n2 = dll_create_node();
   dll_insertb(list, n1, n2);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n1}, 2), "insertb 2 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n1}, 2), "insertb 2 nodes");
 
   n3 = dll_create_node();
   dll_insertb(list, n1, n3);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n3, n1}, 3), "insertb 3 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n3, n1}, 3), "insertb 3 nodes");
 
   n5 = dll_create_node();
   dll_inserta(list, n1, n5);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n3, n1, n5}, 4), "inserta 4 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n3, n1, n5}, 4), "inserta 4 nodes");
 
   dll_free(list);
   return 0;
 }
 
 int test_dll_is_empty() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   CHECK_MSG(dll_is_empty(list), "Empty after create");
 
-  struct dln *n1 = dll_create_node();
+  struct dlnode *n1 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(!dll_is_empty(list), "Not empty after push_back");
 
@@ -165,12 +165,12 @@ int test_dll_is_empty() {
 }
 
 int test_dll_length() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   CHECK_MSG(dll_length(list) == 0, "Length == 0 after create");
 
-  struct dln *n1 = dll_create_node();
-  struct dln *n2 = dll_create_node();
-  struct dln *n3 = dll_create_node();
+  struct dlnode *n1 = dll_create_node();
+  struct dlnode *n2 = dll_create_node();
+  struct dlnode *n3 = dll_create_node();
   dll_push_back(list, n1);
   CHECK_MSG(dll_length(list) == 1, "Length == 1 push_back");
 
@@ -194,8 +194,8 @@ int test_dll_length() {
 }
 
 int test_dll_erase() {
-  struct dll *list = dll_create_list();
-  struct dln *n1 = dll_create_node(),
+  struct dllist *list = dll_create_list();
+  struct dlnode *n1 = dll_create_node(),
       *n2 = dll_create_node(),
       *n3 = dll_create_node(),
       *n4 = dll_create_node(),
@@ -205,20 +205,20 @@ int test_dll_erase() {
   dll_push_back(list, n3);
   dll_push_back(list, n4);
   dll_push_back(list, n5);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n2, n3, n4, n5}, 5), "Init 5 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n2, n3, n4, n5}, 5), "Init 5 nodes");
 
   dll_erase(list, n1);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n3, n4, n5}, 4), "Delete n1");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n3, n4, n5}, 4), "Delete n1");
 
 
   dll_erase(list, n4);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n3, n5}, 3), "Delete n4");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n3, n5}, 3), "Delete n4");
 
   dll_erase(list, n5);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n2, n3}, 2), "Delete n5");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n2, n3}, 2), "Delete n5");
 
   dll_erase(list, n2);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n3}, 1), "Delete n2");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n3}, 1), "Delete n2");
 
   dll_erase(list, n3);
   CHECK_MSG(dll_is_empty(list), "Delete n3");
@@ -228,14 +228,14 @@ int test_dll_erase() {
 }
 
 int test_dll_clear() {
-  struct dll *list = dll_create_list();
-  struct dln *n1 = dll_create_node(),
+  struct dllist *list = dll_create_list();
+  struct dlnode *n1 = dll_create_node(),
       *n2 = dll_create_node(),
       *n3 = dll_create_node();
   dll_push_back(list, n1);
   dll_push_back(list, n2);
   dll_push_back(list, n3);
-  CHECK_MSG(dll_sequence(list, (struct dln *[]){n1, n2, n3}, 3), "Init 3 nodes");
+  CHECK_MSG(dll_sequence(list, (struct dlnode *[]){n1, n2, n3}, 3), "Init 3 nodes");
 
   dll_clear(list);
   CHECK_MSG(dll_is_empty(list), "should be empty after clear");

@@ -6,7 +6,7 @@
 #include "tests/dll/helper.h"
 
 int test_idn_create() {
-  struct idn *n = idl_node(idl_create_node(90));
+  struct idlnode *n = idl_node(idl_create_node(90));
   CHECK_MSG(n->base.prev == NULL, "base->prev");
   CHECK_MSG(n->base.next == NULL, "base->next");
   CHECK_MSG(n->value == 90, "value 90");
@@ -15,7 +15,7 @@ int test_idn_create() {
 }
 
 int test_idl_push_back() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   idl_push_back(list, 1);
   idl_push_back(list, 2);
   idl_push_back(list, 3);
@@ -25,7 +25,7 @@ int test_idl_push_back() {
 }
 
 int test_idl_push_front() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   idl_push_front(list, 1);
   idl_push_front(list, 2);
   idl_push_front(list, 3);
@@ -35,7 +35,7 @@ int test_idl_push_front() {
 }
 
 int test_dll_pop_front_back_i() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   idl_push_front(list, 1);
   idl_push_front(list, 2);
   idl_push_back(list, 3);
@@ -50,7 +50,7 @@ int test_dll_pop_front_back_i() {
 }
 
 int test_dll_insert_abi() {
-  struct dll *list = dll_create_list();
+  struct dllist *list = dll_create_list();
   idl_insert_a(list, NULL, 1);
   idl_insertb(list, idl_front(list), 2);
   idl_insertb(list, idl_front(list), 3);

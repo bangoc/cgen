@@ -1,7 +1,7 @@
 /* (C) Nguyen Ba Ngoc 2022 */
 
 /**
- * Thử nghiệm lưu hmap trong rbm
+ * Thử nghiệm lưu hmap trong rbmtree
  */
 
 #include "all.h"
@@ -11,7 +11,7 @@
 #include <time.h>
 
 int main() {
-  struct rbm *map = rbm_create(gtype_cmp_l, NULL, gtype_free_hmap);
+  struct rbmtree *map = rbm_create(gtype_cmp_l, NULL, gtype_free_hmap);
   for (int i = 0; i < 100; ++i) {
     struct hmap *tmp = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, NULL);
     int n = rand() % 1000 + 1;

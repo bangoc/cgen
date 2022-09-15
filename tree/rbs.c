@@ -4,14 +4,14 @@
 
 #include <stdlib.h>
 
-struct rbs *rbs_create(gtype_cmp_t cmp, gtype_free_t fk) {
-  struct grbt *tmp = grb_create_tree(NULL, cmp, fk);
-  struct rbs *s = realloc(tmp, sizeof(struct rbs));
+struct rbstree *rbs_create(gtype_cmp_t cmp, gtype_free_t fk) {
+  struct grbtree *tmp = grb_create_tree(NULL, cmp, fk);
+  struct rbstree *s = realloc(tmp, sizeof(struct rbstree));
   s->size = 0;
   return s;
 }
 
-int rbs_insert(struct rbs *s, gtype elem) {
+int rbs_insert(struct rbstree *s, gtype elem) {
   struct bs_ires ires = grb_insert_unique(grb_tree(s), elem);
   if (ires.inserted) {
     ++(s->size);
@@ -19,12 +19,12 @@ int rbs_insert(struct rbs *s, gtype elem) {
   return ires.inserted;
 }
 
-struct grbn *rbs_search(struct rbs *s, gtype elem) {
+struct grbnode *rbs_search(struct rbstree *s, gtype elem) {
   return grb_search(grb_tree(s), elem);
 }
 
-int rbs_remove(struct rbs *s, gtype elem) {
-  struct grbn *n = rbs_search(s, elem);
+int rbs_remove(struct rbstree *s, gtype elem) {
+  struct grbnode *n = rbs_search(s, elem);
   if (!n) {
     return 0;
   }

@@ -1,7 +1,7 @@
 /* (C) Nguyen Ba Ngoc 2022 */
 
 /**
- * Đếm số lần gặp chuỗi với rbm
+ * Đếm số lần gặp chuỗi với rbmtree
 */
 
 #include "all.h"
@@ -10,7 +10,7 @@
 int main() {
   const char *words[] = {"aaa", "bbb", "ccc", "aaa"};
   int n = sizeof(words)/sizeof(words[0]);
-  struct rbm *tab = rbm_create(gtype_cmp_s, NULL, NULL);
+  struct rbmtree *tab = rbm_create(gtype_cmp_s, NULL, NULL);
   for (int i = 0; i < n; ++i) {
     gtype *value = rbm_put(tab, gtype_s(words[i]), gtype_l(1));
     if (value) {

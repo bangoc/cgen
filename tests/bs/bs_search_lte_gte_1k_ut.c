@@ -4,7 +4,7 @@
 #define N 1000
 
 int main() {
-  struct grbt *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
+  struct grbtree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   // 0, 2, ..., 2 * N - 2
   for (int i = 0; i < N; ++i) {
     grb_insert(t, gtype_l(2  * i));

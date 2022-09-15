@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-struct rbm *si = NULL; //cay chua string -> int
+struct rbmtree *si = NULL; //cay chua string -> int
 int g_id = 0;
 
 
