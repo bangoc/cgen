@@ -31,7 +31,7 @@ void insort(long n, gtype *a, gtype_cmp_t cmp) {
 }
 
 void bubsort(long n, gtype *a, gtype_cmp_t cmp) {
-  for (int i = 0; i < n; ++i) {
+  for (int i = 0; i < n - 1; ++i) {
     for (int j = n - 1; j > i; --j) {
       if (cmp(a[j - 1], a[j]) > 0) {
         swap(a[j - 1], a[j]);
