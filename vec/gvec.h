@@ -283,8 +283,38 @@ void gtype_free_gvec(gtype value);
 #define gvec_qsort(v, cmp) \
   qsort(gvec_arr(v), gvec_size(v), sizeof(gtype), cmp)
 
+/**
+ * Sắp xếp các phần tử của vec-tơ bằng giải thuật sắp xếp chọn.
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
+ * @param cmp Con trỏ tới hàm so sách các đối tượng ::gtype được lưu trong vec-tơ.
+ * Đối số cmp có kiểu gtype_cmp_t.
+ * @return Không trả về giá trị.
+ */
 #define gvec_selsort(v, cmp) \
   selsort(gvec_size(v), gvec_arr(v), cmp)
+
+/**
+ * Sắp xếp các phần tử của vec-tơ bằng giải thuật sắp xếp chèn.
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
+ * @param cmp Con trỏ tới hàm so sách các đối tượng ::gtype được lưu trong vec-tơ.
+ * Đối số cmp có kiểu gtype_cmp_t.
+ * @return Không trả về giá trị.
+ */
+#define gvec_insort(v, cmp) \
+  insort(gvec_size(v), gvec_arr(v), cmp)
+
+/**
+ * Sắp xếp các phần tử của vec-tơ bằng giải thuật sắp xếp nổi bọt.
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
+ * @param cmp Con trỏ tới hàm so sách các đối tượng ::gtype được lưu trong vec-tơ.
+ * Đối số cmp có kiểu gtype_cmp_t.
+ * @return Không trả về giá trị.
+ */
+#define gvec_bubsort(v, cmp) \
+  bubsort(gvec_size(v), gvec_arr(v), cmp);
 
 /**
  * Xuất các phần tử của vec-tơ

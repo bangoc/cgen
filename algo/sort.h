@@ -13,5 +13,6 @@
   } while (0)
 
 void selsort(long n, gtype *a, gtype_cmp_t cmp);
-
+void insort(long n, gtype *a, gtype_cmp_t cmp);
+void bubsort(long n, gtype *a, gtype_cmp_t cmp);
 #endif  // ALGO_SORT_H_

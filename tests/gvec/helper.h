@@ -3,8 +3,8 @@
 
 #include "all.h"
 
-static inline int gvec_sequence(struct gvector *v, long n,
-          gtype *a, gtype_cmp_t cmp) {
+static inline int gvec_sequence(struct gvector *v,
+    long n, gtype *a, gtype_cmp_t cmp) {
   if (!v) {
     return 0;
   }
