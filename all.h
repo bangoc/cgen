@@ -5,6 +5,7 @@
 #include "base/core.h"
 #include "base/gtype.h"
 #include "base/hashes.h"
+#include "algo/sort.h"
 #include "vec/arr.h"
 #include "vec/gvec.h"
 #include "vec/heap.h"

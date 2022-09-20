@@ -283,6 +283,9 @@ void gtype_free_gvec(gtype value);
 #define gvec_qsort(v, cmp) \
   qsort(gvec_arr(v), gvec_size(v), sizeof(gtype), cmp)
 
+#define gvec_selsort(v, cmp) \
+  selsort(gvec_size(v), gvec_arr(v), cmp)
+
 /**
  * Xuất các phần tử của vec-tơ
  *

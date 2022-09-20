@@ -135,3 +135,4 @@ add_test(NAME EXGtypeDemoIO COMMAND gtype_demo_io ${CMAKE_SOURCE_DIR}/examples/g
 add_test(NAME EXS2IPPrint COMMAND s2i_pprint)
 add_test(NAME EXS2IPPrintCustom COMMAND s2i_pprint_custom)
 add_test(NAME EXStrId COMMAND str_id ${CMAKE_SOURCE_DIR}/examples/str_id.txt)
+add_test(NAME GvecSelSort COMMAND gvec_selsort_ut)
