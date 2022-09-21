@@ -64,7 +64,7 @@ void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
           --right_ptr;
           break;
         }
-      } while (left_ptr   <= right_ptr);
+      } while (left_ptr <= right_ptr);
 
       if (right_ptr - lo <= QUICKSORT_THRESH) {
         if (hi - left_ptr <= QUICKSORT_THRESH) {

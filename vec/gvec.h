@@ -290,15 +290,27 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
 void gtype_free_gvec(gtype value);
 
 /**
- * Sắp xếp các phần tử của vec-tơ.
+ * Sắp xếp các phần tử của vec-tơ sử dụng stdlib.h qsort.
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
  * @param cmp Con trỏ tới hàm so sách các đối tượng ::gtype được lưu trong vec-tơ.
  * Đối số cmp có kiểu như hàm so sánh cho qsort (stdlib.h).
+ * Có nguyên mẫu là int (*)(const void *, const void *);
  * @return Không trả về giá trị.
  */
 #define gvec_qsort(v, cmp) \
   qsort(gvec_arr(v), gvec_size(v), sizeof(gtype), cmp)
+
+/**
+ * Sắp xếp các phần tử của vec-tơ sử dụng quicksort (tự phát triển).
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
+ * @param cmp Con trỏ tới hàm so sách các đối tượng ::gtype được lưu trong vec-tơ.
+ * Có nguyên mẫu là int (*)(gtype, gtype), có kiểu là ::gtype_cmp_t.
+ * @return Không trả về giá trị.
+ */
+#define gvec_quicksort(v, cmp) \
+  quicksort(gvec_size(v), gvec_arr(v), cmp)
 
 /**
  * Sắp xếp các phần tử của vec-tơ bằng giải thuật sắp xếp chọn.

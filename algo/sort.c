@@ -1,4 +1,4 @@
-/* (C) Nguyen Ba Ngoc */
+/* (C) Nguyen Ba Ngoc 2022 */
 
 #include "algo/sort.h"
 
@@ -68,6 +68,44 @@ void q2sort(long n, gtype *a, gtype_cmp_t cmp) {
   left = left - 1;
   q2sort(left - a + 1, a, cmp);
   q2sort(a + n - right, right, cmp);
+}
+
+void q2m3sort(long n, gtype *a, gtype_cmp_t cmp) {
+  if (n <= 1) {
+    return;
+  }
+  gtype *left = a, *right = a + n - 1,
+        *mid = left + ((right - left) >> 1);
+  if (cmp(*left, *mid) > 0) {
+    swap(*left, *mid);
+  }
+  if (cmp(*mid, *right) > 0) {
+    swap(*mid, *right);
+    if (cmp(*left, *mid) > 0) {
+      swap(*left, *mid);
+    }
+  }
+  ++left;
+  --right;
+  gtype v = *mid;
+  do {
+    while (cmp(v, *left) > 0) {
+      ++left;
+    }
+    while (cmp(*right, v) > 0) {
+      --right;
+    }
+    if (left < right) {
+      swap(*left, *right);
+      ++left;
+      --right;
+    } else if (left == right) {
+      ++left;
+      --right;
+    }
+  } while (left <= right);
+  q2m3sort(right - a + 1, a, cmp);
+  q2m3sort(a + n - left, left, cmp);
 }
 
 void q3sort(long n, gtype *a, gtype_cmp_t cmp) {
