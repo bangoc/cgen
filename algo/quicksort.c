@@ -37,12 +37,12 @@ void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
       gtype *mid = lo + ((hi - lo) >> 1);
 
       if (cmp(*mid, *lo) < 0) {
-        swap(*mid, *lo);
+        gtype_swap(*mid, *lo);
       }
       if (cmp(*hi, *mid) < 0) {
-        swap(*hi, *mid);
+        gtype_swap(*hi, *mid);
         if (cmp(*mid, *lo) < 0) {
-          swap(*mid, *lo);
+          gtype_swap(*mid, *lo);
         }
       }
       left_ptr = lo + 1;
@@ -52,7 +52,7 @@ void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
         while (cmp(v, *left_ptr) > 0) ++left_ptr;
         while (cmp(*right_ptr, v) > 0) --right_ptr;
         if (left_ptr < right_ptr) {
-          swap(*left_ptr, *right_ptr);
+          gtype_swap(*left_ptr, *right_ptr);
           ++left_ptr;
           --right_ptr;
         } else if (left_ptr == right_ptr) {
@@ -86,32 +86,30 @@ void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
     gtype *tmp_ptr = a;
     gtype *thresh = QS_MIN(end_ptr, a + QUICKSORT_THRESH);
     gtype *run_ptr;
-    for (run_ptr = tmp_ptr + 1; run_ptr <= thresh; ++run_ptr) {
+    for (run_ptr = a + 1; run_ptr <= thresh; ++run_ptr) {
       if (cmp(*run_ptr, *tmp_ptr) < 0) {
         tmp_ptr = run_ptr;
       }
     }
     if (tmp_ptr != a) {
-      swap(*tmp_ptr, *a);
+      gtype_swap(*tmp_ptr, *a);
     }
 
     /* Sắp xếp chèn */
     run_ptr = a + 1;
-    while (++run_ptr <= end_ptr) {
+    for (run_ptr = a + 2; run_ptr <= end_ptr; ++run_ptr) {
       tmp_ptr = run_ptr - 1;
-      while (cmp(*run_ptr, *tmp_ptr) < 0) {
+      while (cmp(*tmp_ptr, *run_ptr) > 0) {
         --tmp_ptr;
       }
       ++tmp_ptr;
       if (tmp_ptr != run_ptr) {
-        gtype *trav = run_ptr + 1;
-        while (--trav >= run_ptr) {
-          gtype c = *trav;
-          gtype *hi, *lo;
-          for (hi = lo = trav; --lo >= tmp_ptr; hi = lo)
-            *hi = *lo;
-          *hi = c;
+        gtype c = *run_ptr;
+        gtype *trav = run_ptr;
+        for (; trav != tmp_ptr; --trav) {
+          *trav = *(trav - 1);
         }
+        *trav = c;
       }
     }
   }

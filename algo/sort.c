@@ -6,7 +6,7 @@ void selsort(long n, gtype *a, gtype_cmp_t cmp) {
   for (int i = 0; i < n - 1; ++i) {
     for (int j = i + 1; j < n; ++j) {
       if (cmp(a[i], a[j]) > 0) {
-        swap(a[i], a[j]);
+        gtype_swap(a[i], a[j]);
       }
     }
   }
@@ -16,7 +16,7 @@ void insort(long n, gtype *a, gtype_cmp_t cmp) {
   // a[0] == min
   for (int i = n - 1; i > 0; --i) {
     if (cmp(a[i - 1], a[i]) > 0) {
-      swap(a[i - 1], a[i]);
+      gtype_swap(a[i - 1], a[i]);
     }
   }
   for (int i = 2; i < n; ++i) {
@@ -34,7 +34,7 @@ void bubsort(long n, gtype *a, gtype_cmp_t cmp) {
   for (int i = 0; i < n - 1; ++i) {
     for (int j = n - 1; j > i; --j) {
       if (cmp(a[j - 1], a[j]) > 0) {
-        swap(a[j - 1], a[j]);
+        gtype_swap(a[j - 1], a[j]);
       }
     }
   }
@@ -59,11 +59,11 @@ void q2sort(long n, gtype *a, gtype_cmp_t cmp) {
     if (left >= right) {
       break;
     }
-    swap(*left, *right);
+    gtype_swap(*left, *right);
     ++left;
     --right;
   }
-  swap(*left, a[n - 1]);
+  gtype_swap(*left, a[n - 1]);
   right = left + 1;
   left = left - 1;
   q2sort(left - a + 1, a, cmp);
@@ -77,12 +77,12 @@ void q2m3sort(long n, gtype *a, gtype_cmp_t cmp) {
   gtype *left = a, *right = a + n - 1,
         *mid = left + ((right - left) >> 1);
   if (cmp(*left, *mid) > 0) {
-    swap(*left, *mid);
+    gtype_swap(*left, *mid);
   }
   if (cmp(*mid, *right) > 0) {
-    swap(*mid, *right);
+    gtype_swap(*mid, *right);
     if (cmp(*left, *mid) > 0) {
-      swap(*left, *mid);
+      gtype_swap(*left, *mid);
     }
   }
   ++left;
@@ -96,7 +96,7 @@ void q2m3sort(long n, gtype *a, gtype_cmp_t cmp) {
       --right;
     }
     if (left < right) {
-      swap(*left, *right);
+      gtype_swap(*left, *right);
       ++left;
       --right;
     } else if (left == right) {
@@ -128,26 +128,26 @@ void q3sort(long n, gtype *a, gtype_cmp_t cmp) {
     if (left >= right) {
       break;
     }
-    swap(*left, *right);
+    gtype_swap(*left, *right);
     if (cmp(*left, v) == 0) {
-      swap(*p, *left);
+      gtype_swap(*p, *left);
       ++p;
     }
     if (cmp(*right, v) == 0) {
-      swap(*q, *right);
+      gtype_swap(*q, *right);
       --q;
     }
     ++left;
     --right;
   }
-  swap(*left, a[n - 1]);
+  gtype_swap(*left, a[n - 1]);
   right = left + 1;
   left = left - 1;
   for (gtype *k = a; k < p; ++k, --left) {
-    swap(*k, *left);
+    gtype_swap(*k, *left);
   }
   for (gtype *k = a + n - 2; k > q; --k, ++right) {
-    swap(*k, *right);
+    gtype_swap(*k, *right);
   }
   q3sort(left - a + 1, a, cmp);
   q3sort(a + n - right, right, cmp);
