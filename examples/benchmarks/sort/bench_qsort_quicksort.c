@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int qsort_cmp_l(const void *v1, const void *v2) {
+  return gtype_cmp_l(*((const gtype*)v1), *((const gtype*)v2));
+}
+
 void t1(int n) {
   printf("Kịch bản sinh số ngẫu nhiên.\n");
   struct gvector *v = gvec_create(n, NULL);
@@ -12,11 +16,14 @@ void t1(int n) {
   struct gvector *v1 = gvec_clone(v);
   struct gvector *v2 = gvec_clone(v);
   BENCH("qsort (stdlib.h)", 1,
-    gvec_qsort(v1, gtype_cmp_l);
+    gvec_qsort(v1, qsort_cmp_l);
   );
-  BENCH("quicksort (tự cài theo SedgeWick...)", 1,
+  BENCH("quicksort (tự cài theo glibc...)", 1,
     gvec_quicksort(v2, gtype_cmp_l);
   );
+  if (!gvec_identical(v1, v2)) {
+    printf("Kết quả khác nhau!!\n");
+  }
   gvec_free(v);
   gvec_free(v1);
   gvec_free(v2);
@@ -32,11 +39,14 @@ void t2(int n) {
   struct gvector *v1 = gvec_clone(v);
   struct gvector *v2 = gvec_clone(v);
   BENCH("qsort (stdlib.h)", 1,
-    gvec_qsort(v1, gtype_cmp_l);
+    gvec_qsort(v1, qsort_cmp_l);
   );
-  BENCH("quicksort (tự cài theo SedgeWick...)", 1,
+  BENCH("quicksort (tự cài theo glibc...)", 1,
     gvec_quicksort(v2, gtype_cmp_l);
   );
+  if (!gvec_identical(v1, v2)) {
+    printf("Kết quả khác nhau!!\n");
+  }
   gvec_free(v);
   gvec_free(v1);
   gvec_free(v2);
