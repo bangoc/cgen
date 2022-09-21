@@ -83,6 +83,23 @@ struct gvector {
 struct gvector *gvec_create(long n, gtype_free_t free_value);
 
 /**
+ * Hàm tạo bản sao đầy đủ của vec-tơ
+ *
+ * @param v Con trỏ vec-tơ
+ * @return Con trỏ tới bản sao đầy đủ của vec-tơ, kiểu ::struct gvector *
+ */
+struct gvector *gvec_clone(struct gvector *v);
+
+/**
+ * Hàm kiểm tra 2 vec-tơ giống hệt nhau
+ *
+ * @param v1 Con trỏ vec-tơ thứ nhất
+ * @param v2 Con trỏ vec-tơ thứ 2
+ * @return 1 nếu giống nhau, 0 nếu ngược lại
+ */
+int gvec_identical(struct gvector *v1, struct gvector *v2);
+
+/**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
  * còn capacity là số lượng phần tử đã được cấp phát cho
  * mảng cơ sở (elems), size luôn luôn <= cap.
