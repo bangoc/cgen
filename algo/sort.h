@@ -15,7 +15,7 @@
 void selsort(long n, gtype *a, gtype_cmp_t cmp);
 void insort(long n, gtype *a, gtype_cmp_t cmp);
 void bubsort(long n, gtype *a, gtype_cmp_t cmp);
-void q2sort(long l, long r, gtype *a, gtype_cmp_t cmp);
-void q3sort(long l, long r, gtype *a, gtype_cmp_t cmp);
+void q2sort(long n, gtype *a, gtype_cmp_t cmp);
+void q3sort(long n, gtype *a, gtype_cmp_t cmp);
 void quicksort(long n, gtype *a, gtype_cmp_t cmp);
 #endif  // ALGO_SORT_H_

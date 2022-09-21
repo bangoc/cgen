@@ -9,7 +9,7 @@ int t1(int n) {
   for (int i = 0; i < n; ++i) {
     a[i].l = rand();
   }
-  q3sort(0, n - 1, a, gtype_cmp_l);
+  q3sort(n, a, gtype_cmp_l);
   for (int i = 0; i < n - 1; ++i) {
     CHECK_MSG(gtype_cmp_l(a[i], a[i + 1]) <= 0, "Increment sort");
   }
@@ -22,7 +22,7 @@ int t2(int n) {
   for (int i = 0; i < n; ++i) {
     a[i].l = i;
   }
-  q3sort(0, n - 1, a, gtype_cmp_l);
+  q3sort(n, a, gtype_cmp_l);
   for (int i = 0; i < n - 1; ++i) {
     CHECK_MSG(gtype_cmp_l(a[i], a[i + 1]) <= 0, "Increment sort");
   }
