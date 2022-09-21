@@ -1,0 +1,2 @@
+add_executable(bench_qsort_quicksort bench_qsort_quicksort.c)
+target_link_libraries(bench_qsort_quicksort bkc)

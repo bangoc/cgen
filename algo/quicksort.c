@@ -47,16 +47,12 @@ void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
       }
       left_ptr = lo + 1;
       right_ptr = hi - 1;
+      gtype v = *mid;
       do {
-        while (cmp(*mid, *left_ptr) > 0) ++left_ptr;
-        while (cmp(*right_ptr, *mid) > 0) --right_ptr;
+        while (cmp(v, *left_ptr) > 0) ++left_ptr;
+        while (cmp(*right_ptr, v) > 0) --right_ptr;
         if (left_ptr < right_ptr) {
           swap(*left_ptr, *right_ptr);
-          if (mid == left_ptr) {
-            mid = right_ptr;
-          } else if (mid == right_ptr) {
-            mid = left_ptr;
-          }
           ++left_ptr;
           --right_ptr;
         } else if (left_ptr == right_ptr) {
