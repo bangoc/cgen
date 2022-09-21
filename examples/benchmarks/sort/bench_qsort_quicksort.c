@@ -15,18 +15,26 @@ void t1(int n) {
   }
   struct gvector *v1 = gvec_clone(v);
   struct gvector *v2 = gvec_clone(v);
+  struct gvector *v3 = gvec_clone(v);
   BENCH("qsort (stdlib.h)", 1,
     gvec_qsort(v1, qsort_cmp_l);
   );
+  BENCH("q2m3sort(tự cài dựa trên giải thuật của Sedgwick...)", 1,
+    q2m3sort(gvec_size(v2), gvec_arr(v2), gtype_cmp_l);
+  );
   BENCH("quicksort (tự cài theo glibc...)", 1,
-    gvec_quicksort(v2, gtype_cmp_l);
+    gvec_quicksort(v3, gtype_cmp_l);
   );
   if (!gvec_identical(v1, v2)) {
+    printf("Kết quả khác nhau!!\n");
+  }
+  if (!gvec_identical(v1, v3)) {
     printf("Kết quả khác nhau!!\n");
   }
   gvec_free(v);
   gvec_free(v1);
   gvec_free(v2);
+  gvec_free(v3);
 }
 
 void t2(int n) {
@@ -38,18 +46,26 @@ void t2(int n) {
   }
   struct gvector *v1 = gvec_clone(v);
   struct gvector *v2 = gvec_clone(v);
+  struct gvector *v3 = gvec_clone(v);
   BENCH("qsort (stdlib.h)", 1,
     gvec_qsort(v1, qsort_cmp_l);
   );
+  BENCH("q2m3sort(tự cài dựa trên giải thuật của Sedgwick...)", 1,
+    q2m3sort(gvec_size(v2), gvec_arr(v2), gtype_cmp_l);
+  );
   BENCH("quicksort (tự cài theo glibc...)", 1,
-    gvec_quicksort(v2, gtype_cmp_l);
+    gvec_quicksort(v3, gtype_cmp_l);
   );
   if (!gvec_identical(v1, v2)) {
+    printf("Kết quả khác nhau!!\n");
+  }
+  if (!gvec_identical(v1, v3)) {
     printf("Kết quả khác nhau!!\n");
   }
   gvec_free(v);
   gvec_free(v1);
   gvec_free(v2);
+  gvec_free(v3);
 }
 
 int main(int argc, char *argv[]) {
