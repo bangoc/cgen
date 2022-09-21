@@ -1,5 +1,6 @@
 #include "base/hashes.c"
 #include "algo/sort.c"
+#include "algo/quicksort.c"
 #include "vec/gvec.c"
 #include "vec/heap.c"
 #include "vec/hmap.c"
