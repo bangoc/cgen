@@ -3,10 +3,15 @@ project(cgen)
 
 # ON by default, use -DNOWARN=ON/OFF in Cmake command to turn ON/OFF
 option(NOWARN "ON-No warnings, OFF-Tend to show all warnings" ON)
+option(DEBUG "Debug build" ON)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+if (DEBUG)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
+else (DEBUG)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+endif()
 
 if (NOWARN)
   MESSAGE(STATUS "cgen no warnings")

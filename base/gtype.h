@@ -60,11 +60,11 @@ typedef int (*gtype_cmp_t)(gtype, gtype);
 typedef void (*gtype_free_t)(gtype);
 typedef int (*gtype_print_t)(gtype);
 
-static int gtype_cmp_l(gtype v1, gtype v2) {
+static inline int gtype_cmp_l(gtype v1, gtype v2) {
   return v1.l - v2.l;
 }
 
-static int gtype_cmp_d(gtype v1, gtype v2) {
+static inline int gtype_cmp_d(gtype v1, gtype v2) {
   if (v1.d < v2.d) {
     return -1;
   } else if (v1.d > v2.d) {
@@ -85,15 +85,15 @@ static int gtype_cmp_d(gtype v1, gtype v2) {
  *
  * \memberof generic_type
  */
-static int gtype_cmp_s(gtype v1, gtype v2) {
+static inline int gtype_cmp_s(gtype v1, gtype v2) {
   return strcmp(v1.s, v2.s);
 }
 
-static int gtype_qsort_l(const void *v1, const void *v2) {
+static inline int gtype_qsort_l(const void *v1, const void *v2) {
   return ((const gtype*)v1)->l - ((const gtype*)v2)->l;
 }
 
-static int gtype_qsort_d(const void *v1, const void *v2) {
+static inline int gtype_qsort_d(const void *v1, const void *v2) {
   if (((const gtype*)v1)->l > ((const gtype*)v2)->l) {
     return 1;
   } else if (((const gtype*)v1)->l < ((const gtype*)v2)->l) {
@@ -102,7 +102,7 @@ static int gtype_qsort_d(const void *v1, const void *v2) {
   return 0;
 }
 
-static int gtype_qsort_s(const void *v1, const void *v2) {
+static inline int gtype_qsort_s(const void *v1, const void *v2) {
   return strcmp(((const gtype*)v1)->s, ((const gtype*)v2)->s);
 }
 
