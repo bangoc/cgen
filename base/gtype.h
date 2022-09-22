@@ -77,6 +77,15 @@ static inline int gtype_cmp_d(gtype v1, gtype v2) {
   return 0;
 }
 
+static inline int gtype_rcmp_d(gtype v1, gtype v2) {
+  if (v2.d < v1.d) {
+    return -1;
+  } else if (v2.d > v1.d) {
+    return 1;
+  }
+  return 0;
+}
+
 /**
  * Hàm so sánh các giá trị gtype chứa con trỏ chuỗi ký tự.
  *
@@ -91,6 +100,10 @@ static inline int gtype_cmp_d(gtype v1, gtype v2) {
  */
 static inline int gtype_cmp_s(gtype v1, gtype v2) {
   return strcmp(v1.s, v2.s);
+}
+
+static inline int gtype_rcmp_s(gtype v1, gtype v2) {
+  return strcmp(v2.s, v1.s);
 }
 
 static inline int gtype_qsort_l(const void *v1, const void *v2) {
