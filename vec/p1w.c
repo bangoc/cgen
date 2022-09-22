@@ -28,13 +28,13 @@ gtype p1w_dequeue(struct p1way *h) {
   gtype_swap(a[0], a[sz - 1]);
   arr_set_size(h->data, sz - 1);
   switch (h->typ) {
-    case PRIORITY_MIN: min_shift_down_g(a, 0, sz - 1, h->cmp);
+    case PRIORITY_MIN: heap_shift_down_min(a, 0, sz - 1, h->cmp);
       break;
-    case PRIORITY_MAX: max_shift_down_g(a, 0, sz - 1, h->cmp);
+    case PRIORITY_MAX: heap_shift_down_max(a, 0, sz - 1, h->cmp);
       break;
     default:
       fprintf(stderr, "Không xác định được kiểu heap (mặc định là max)");
-      max_shift_down_g(a, 0, sz - 1, h->cmp);
+      heap_shift_down_max(a, 0, sz - 1, h->cmp);
       break;
   }
   return tmp;
@@ -45,13 +45,13 @@ int p1w_enqueue(struct p1way *h, gtype value) {
   long j = p1w_size(h) - 1;
   gtype *a = P1WARR(h);
   switch (h->typ) {
-    case PRIORITY_MIN: min_shift_up_g(a, j, h->cmp);
+    case PRIORITY_MIN: heap_shift_up_min(a, j, h->cmp);
       break;
-    case PRIORITY_MAX: max_shift_up_g(a, j, h->cmp);
+    case PRIORITY_MAX: heap_shift_up_max(a, j, h->cmp);
       break;
     default:
       fprintf(stderr, "Không xác định được kiểu heap (mặc định là max)");
-      max_shift_up_g(a, j, h->cmp);
+      heap_shift_up_max(a, j, h->cmp);
       break;
   }
   return 0;
@@ -70,13 +70,13 @@ void p1w_root(struct p1way *h, gtype value) {
     return;
   }
   switch (h->typ) {
-    case PRIORITY_MIN: min_shift_down_g(a, 0, sz, h->cmp);
+    case PRIORITY_MIN: heap_shift_down_min(a, 0, sz, h->cmp);
       break;
-    case PRIORITY_MAX: max_shift_down_g(a, 0, sz, h->cmp);
+    case PRIORITY_MAX: heap_shift_down_max(a, 0, sz, h->cmp);
       break;
     default:
       fprintf(stderr, "Không xác định được kiểu heap (mặc định là max)");
-      max_shift_down_g(a, 0, sz, h->cmp);
+      heap_shift_down_max(a, 0, sz, h->cmp);
       break;
   }
 }

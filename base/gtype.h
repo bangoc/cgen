@@ -64,6 +64,10 @@ static inline int gtype_cmp_l(gtype v1, gtype v2) {
   return v1.l - v2.l;
 }
 
+static inline int gtype_rcmp_l(gtype v1, gtype v2) {
+  return v1.l - v2.l;
+}
+
 static inline int gtype_cmp_d(gtype v1, gtype v2) {
   if (v1.d < v2.d) {
     return -1;

@@ -2,6 +2,7 @@
 #include "algo/sort.c"
 #include "algo/qinsort.c"
 #include "algo/quicksort.c"
+#include "algo/heapsort.c"
 #include "vec/gvec.c"
 #include "vec/heap.c"
 #include "vec/hmap.c"

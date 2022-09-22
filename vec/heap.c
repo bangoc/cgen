@@ -10,7 +10,7 @@
 // nprop - nghịch đảo của tính chất heap.
 //   <   - max heap
 //   >   - min heap
-#define heap_shift_down(a, i, sz, nprop, cmp) \
+#define mheap_shift_down(a, i, sz, nprop, cmp) \
   for (;;) { \
     long _lc = HLEFT(i), _rc = HRIGHT(i), _root = (i); \
     if (_lc < (sz) && cmp((a)[_root], (a)[_lc]) nprop 0) { \
@@ -37,35 +37,58 @@
     }\
   }
 
-#define heap_make(a, sz, nprop, cmp) \
+#define mheap_make(a, sz, nprop, cmp) \
   for (long _i = (sz) / 2; _i >= 0; --_i) { \
-    heap_shift_down(a, _i, sz, nprop, cmp); \
+    mheap_shift_down(a, _i, sz, nprop, cmp); \
   } \
 
-void min_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
-  heap_shift_down(a, i, sz, >, cmp);
+void heap_shift_down_min(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
+  mheap_shift_down(a, i, sz, >, cmp);
 }
 
-void min_shift_up_g(gtype *a, long i, gtype_cmp_t cmp) {
+void heap_shift_up_min(gtype *a, long i, gtype_cmp_t cmp) {
   heap_shift_up(a, i, >, cmp, gtype_swap);
 }
 
-void min_heap_g(gtype *a, const long sz, gtype_cmp_t cmp) {
-  heap_make(a, sz, >, cmp);
+void heap_make_min(const long sz, gtype *a, gtype_cmp_t cmp) {
+  mheap_make(a, sz, >, cmp);
 }
 
-void max_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
-  heap_shift_down(a, i, sz, <, cmp);
+void heap_shift_down_max(gtype *a, long i, const long sz, gtype_cmp_t cmp) {
+  mheap_shift_down(a, i, sz, <, cmp);
 }
 
-void max_shift_up_g(gtype *a, long i, gtype_cmp_t cmp) {
+void heap_shift_up_max(gtype *a, long i, gtype_cmp_t cmp) {
   heap_shift_up(a, i, <, cmp, gtype_swap);
 }
 
-void max_heap_g(gtype *a, const long sz, gtype_cmp_t cmp) {
-  heap_make(a, sz, <, cmp);
+void heap_make_max(const long sz, gtype *a, gtype_cmp_t cmp) {
+  mheap_make(a, sz, <, cmp);
 }
 
-#undef heap_shift_down
+void heap_shift_down(long i, long n, gtype *a, gtype_cmp_t cmp) {
+  for (;;) {
+    long lc = HLEFT(i), rc = HRIGHT(i), root = i;
+    if (lc < n && cmp(a[root], a[lc]) < 0) {
+      root = lc;
+    }
+    if (rc < n && cmp(a[root], a[rc]) < 0) {
+      root = rc;
+    }
+    if (root == i) {
+      break;
+    }
+    gtype_swap(a[i], a[root]);
+    i = root;
+  }
+}
+
+void heap_make(long n, gtype *a, gtype_cmp_t cmp) {
+  for (long i = n / 2; i >= 0; --i) {
+    heap_shift_down(i, n, a, cmp);
+  }
+}
+
+#undef mheap_shift_down
 #undef heap_shift_up
-#undef heap_make
+#undef mheap_make

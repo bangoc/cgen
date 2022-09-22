@@ -20,17 +20,17 @@
 
 #define BENCH(NAME, ITER, ...)    do { \
         double _sum = 0, _start, _stop; \
-        for (int _i = 0; _i < ITER; ++_i) { \
+        for (int _i = 0; _i < (ITER); ++_i) { \
           _start = clock(); \
           { __VA_ARGS__; } \
           _stop = clock(); \
           _sum += _stop - _start; \
         } \
-        if (ITER > 1) { \
+        if ((ITER) > 1) { \
           printf("%s (trung bình %d lượt) = %.5g s\n", \
-                NAME, ITER,  (_sum/CLOCKS_PER_SEC) / ITER); \
+                (NAME), (ITER),  (_sum/CLOCKS_PER_SEC) / (ITER)); \
         } else { \
-          printf("%s: %5g s\n", NAME, _sum/CLOCKS_PER_SEC); \
+          printf("%s: %5g s\n", (NAME), _sum/CLOCKS_PER_SEC); \
         }\
     } while (0)
 

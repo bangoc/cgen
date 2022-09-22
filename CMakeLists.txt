@@ -4,6 +4,7 @@ project(cgen)
 # ON by default, use -DNOWARN=ON/OFF in Cmake command to turn ON/OFF
 option(NOWARN "ON-No warnings, OFF-Tend to show all warnings" ON)
 option(DEBUG "Debug build" ON)
+option(BENCH_OP "Optimization (O1, O2, O3) benchmark" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
@@ -148,3 +149,4 @@ add_test(NAME Q3Sort COMMAND q3sort_ut 10000)
 add_test(NAME QuickSort COMMAND quicksort_ut 100000)
 add_test(NAME SortAllIdentical COMMAND sort_all_identical_ut 2000)
 add_test(NAME Q2M3Sort COMMAND q2m3sort_ut 10000)
+add_test(NAME HeapSort COMMAND heapsort_ut 10000)

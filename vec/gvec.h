@@ -353,4 +353,12 @@ void gtype_free_gvec(gtype value);
  */
 void gvec_pprint(struct gvector *v, gtype_print_t pp);
 
+/**
+ * Sinh ngẫu nhiên 1 vec-tơ chứa giá trị kiểu long
+ *
+ * @param n Số lượng phần tử
+ * @return Con trỏ tới vec-tơ được tạo, có kiểu ::struct gvector *
+ */
+struct gvector *gvec_rand_l(long n);
+
 #endif  // VEC_GVEC_H_

@@ -22,6 +22,7 @@ int t1(int n) {
   struct gvector *vquick = gvec_clone(v);
   struct gvector *vqsort = gvec_clone(v);
   struct gvector *vqins = gvec_clone (v);
+  struct gvector *vheap = gvec_clone (v);
   selsort(gvec_size(vsel), gvec_arr(vsel), gtype_cmp_l);
   insort(gvec_size(vins), gvec_arr(vins), gtype_cmp_l);
   bubsort(gvec_size(vbub), gvec_arr(vbub), gtype_cmp_l);
@@ -30,6 +31,7 @@ int t1(int n) {
   q3sort(gvec_size(vq3), gvec_arr(vq3), gtype_cmp_l);
   quicksort(gvec_size(vquick), gvec_arr(vquick), gtype_cmp_l);
   qinsort(gvec_size(vqins), gvec_arr(vqins), gtype_cmp_l);
+  heapsort(gvec_size(vheap), gvec_arr(vheap), gtype_cmp_l);
   qsort(gvec_arr(vqsort), gvec_size(vqsort), sizeof(gtype), qsort_cmp_l);
   CHECK_MSG(gvec_identical(vsel, vins), "Selection & Insertion");
   CHECK_MSG(gvec_identical(vsel, vbub), "Selection & Bubble");
@@ -39,6 +41,7 @@ int t1(int n) {
   CHECK_MSG(gvec_identical(vsel, vquick), "Selection & Quick sort");
   CHECK_MSG(gvec_identical(vsel, vqsort), "Selection & stdlib.h qsort");
   CHECK_MSG(gvec_identical(vsel, vqins), "Selection & Mix of q2me and ins");
+  CHECK_MSG(gvec_identical(vsel, vheap), "Selection & Mix of q2me and ins");
   gvec_free(v);
   gvec_free(vsel);
   gvec_free(vins);
@@ -49,6 +52,7 @@ int t1(int n) {
   gvec_free(vquick);
   gvec_free(vqsort);
   gvec_free(vqins);
+  gvec_free(vheap);
   return 0;
 }
 

@@ -9,12 +9,15 @@
 #define HLEFT(i) (((i) << 1) + 1)
 #define HRIGHT(i) (((i) << 1) + 2)
 
-void min_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp);
-void min_shift_up_g(gtype *a, long idx, gtype_cmp_t cmp);
-void min_heap_g(gtype *a, const long sz, gtype_cmp_t cmp);
+void heap_shift_down_min(gtype *a, long i, const long sz, gtype_cmp_t cmp);
+void heap_shift_up_min(gtype *a, long idx, gtype_cmp_t cmp);
+void heap_make_min(const long sz, gtype *a, gtype_cmp_t cmp);
 
-void max_shift_down_g(gtype *a, long i, const long sz, gtype_cmp_t cmp);
-void max_shift_up_g(gtype *a, long idx, gtype_cmp_t cmp);
-void max_heap_g(gtype *a, const long sz, gtype_cmp_t cmp);
+void heap_shift_down_max(gtype *a, long i, const long sz, gtype_cmp_t cmp);
+void heap_shift_up_max(gtype *a, long idx, gtype_cmp_t cmp);
+void heap_make_max(const long sz, gtype *a, gtype_cmp_t cmp);
+
+void heap_shift_down(long i, long n, gtype *a, gtype_cmp_t cmp);
+void heap_make(long n, gtype *a, gtype_cmp_t cmp);
 
 #endif  // VEC_HEAP_H_

@@ -51,3 +51,11 @@ void gvec_pprint(struct gvector *v, gtype_print_t pp) {
     pp(*cur);
   }
 }
+
+struct gvector *gvec_rand_l(long n) {
+  struct gvector *v = gvec_create(n, NULL);
+  gvec_traverse(cur, v) {
+    cur->l = rand();
+  }
+  return v;
+}

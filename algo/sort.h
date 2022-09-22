@@ -27,4 +27,10 @@ void q3sort(long n, gtype *a, gtype_cmp_t cmp);
  *   bỏ qua khối nhỏ, xếp chèn dãy gần hoàn thiện và khử đệ quy.
  */
 void quicksort(long n, gtype *a, gtype_cmp_t cmp);
+
+/**
+ * Sắp xếp vun đống.
+ */
+void heapsort(long n, gtype *a, gtype_cmp_t cmp);
+
 #endif  // ALGO_SORT_H_
