@@ -208,6 +208,22 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
   } while (0)
 
 /**
+ * Thêm giá trị vào vị trí theo chỉ số, có thể mở rộng vec-tơ nếu cần
+ *
+ * @param i Chỉ số
+ * @param v Con trỏ tới vec-tơ, có kiểu ::struct gvector*
+ * @param e Phần tử được đưa vào
+ * @return Không trả về giá trị
+ */
+#define gvec_set(v, i, e) \
+  do { \
+    if ((i) >= gvec_size(v)) { \
+      gvec_resize((v), (i) + 1); \
+    } \
+    gvec_elem(v, i) = e; \
+  } while (0)
+
+/**
  * Xóa phần tử có chỉ số idx khỏi vec-tơ v. Nếu v->free_value != NULL
  * thì gọi hàm v->free_value(gvec_elem(v, i)) - Giải phóng bộ nhớ
  * được gắn với đối tượng được xóa.

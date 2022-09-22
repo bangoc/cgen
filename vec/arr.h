@@ -38,14 +38,6 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 #define arr_elem_sz(a) (arr_beg(a)[ARR_ELEM_SZ])
 #define arr_inc(a) (arr_beg(a)[ARR_INC])
 
-#define arr_free(a) \
-  do { \
-    free(arr_beg(a)); \
-    *(a) = NULL; \
-    free(a); \
-    (a) = NULL; \
-  } while (0)
-
 #define arr_set_capacity(a, newcap) \
   do { \
     long *_tmp = arr_beg(a); \
@@ -71,6 +63,20 @@ static inline void **arr_create_internal(long cap, long elem_sz) {
 
 #define arr_create(cap, etyp) \
    (arr_t(etyp))arr_create_internal(cap, sizeof(etyp))
+
+#define arr_free(a) \
+  do { \
+    free(arr_beg(a)); \
+    *(a) = NULL; \
+    free(a); \
+    (a) = NULL; \
+  } while (0)
+
+#define arr_clear(a) \
+  do { \
+    arr_set_size(a, 0); \
+    arr_set_capacity(a, 0); \
+  } while (0)
 
 #define arr_decl(name, cap, etyp) \
    arr_t(etyp) name = arr_create(cap, etyp)
