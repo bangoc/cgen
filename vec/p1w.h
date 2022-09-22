@@ -3,42 +3,48 @@
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "base/gtype.h"
-#include "vec/arr.h"
+/**
+ * @file
+ * @brief Triển khai hàng đợi ưu tiên 1 chiều dựa trên cấu trúc đống.
+ */
 
-enum p1w_types {
-  PRIORITY_MIN = 0,
-  PRIORITY_MAX,
-  PRIORITY_TYPES_COUNT
-};
+#include "base/gtype.h"
+#include "vec/gvec.h"
 
 struct p1way {
-  arr_t(gtype) data;
-  enum p1w_types typ;
+  struct gvector *vec;
   gtype_cmp_t cmp;
 };
 
-struct p1way *p1w_create(enum p1w_types typ, gtype_cmp_t cmp);
+/**
+ * Hàm tạo hàng đợi ưu tiên, sử dụng hàm so sánh thuận cho kết quả
+ * là hàng đợi ưu tiên giá trị cực đại (đống cực đại),
+ * sử dụng hàm so sánh nghịch cho kết quả là hàng đợi ưu tiên
+ * giá trị cực tiểu
+ *
+ * @param cmp Hàm so sánh
+ * @return Con trỏ hàng đợi ưu tiên, có kiểu struct p1way*
+ */
+struct p1way *p1w_create(gtype_cmp_t cmp);
 gtype p1w_peek(struct p1way *h);
 gtype p1w_dequeue(struct p1way *h);
-int p1w_enqueue(struct p1way *h, gtype value);
+void p1w_enqueue(struct p1way *h, gtype value);
 void p1w_root(struct p1way *h, gtype value);
-long p1w_size(struct p1way *h);
+
+#define p1w_size(h) \
+  (gvec_size((h)->vec))
 
 #define p1w_is_empty(h) \
   (p1w_size(h) == 0)
 
 #define p1w_free(h) \
   do { \
-    arr_free((h)->data); \
+    gvec_free((h)->vec); \
     free(h); \
   } while (0)
 
 #define p1w_clear(h) \
-  do { \
-    arr_set_size((h)->data, 0); \
-    arr_set_capacity((h)->data, 0); \
-  } while (0)
+  gvec_clear((h)->vec)
 
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng p1w
@@ -50,6 +56,6 @@ long p1w_size(struct p1way *h);
  */
 void gtype_free_p1w(gtype value);
 
-#define P1WARR(h) (arr((h)->data))
+#define p1w_arr(h) (gvec_arr((h)->vec))
 
 #endif  // VEC_P1W_H_

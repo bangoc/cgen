@@ -8,7 +8,7 @@
 
 void print_p1wi(struct p1way *q) {
   long sz = p1w_size(q);
-  gtype *a = P1WARR(q);
+  gtype *a = p1w_arr(q);
   for (long i = 0; i < sz; ++i) {
     printf(" %ld", a[i].l);
   }
@@ -16,7 +16,7 @@ void print_p1wi(struct p1way *q) {
 }
 
 int main() {
-  struct p1way *q = p1w_create(PRIORITY_MAX, gtype_cmp_l);
+  struct p1way *q = p1w_create(gtype_cmp_l);
   p1w_enqueue(q, gtype_l(3));
   p1w_enqueue(q, gtype_l(5));
   p1w_enqueue(q, gtype_l(9));
