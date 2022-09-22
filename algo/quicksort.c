@@ -19,7 +19,7 @@ struct stack_node {
 #define QS_STACK_NOT_EMPTY  (stack < top)
 
 void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
-  if (n == 0) {
+  if (n <= 0) {
     return;
   }
   if (n > QUICKSORT_THRESH) {
@@ -80,40 +80,31 @@ void quicksort(long n, gtype *a, gtype_cmp_t cmp) {
     }
   }
 
-  #define QS_MIN(x, y) ((x) < (y)? (x): (y))
+  // Sắp xếp chèn
   {
-    gtype *const end_ptr = a + n - 1;
-    gtype *tmp_ptr = a;
-    gtype *thresh = QS_MIN(end_ptr, a + QUICKSORT_THRESH);
-    gtype *run_ptr;
-    for (run_ptr = a + 1; run_ptr <= thresh; ++run_ptr) {
-      if (cmp(*run_ptr, *tmp_ptr) < 0) {
-        tmp_ptr = run_ptr;
+    long thresh = n - 1;
+    if (thresh > QUICKSORT_THRESH) {
+      thresh = QUICKSORT_THRESH;
+    }
+    long i, j = 0;
+    for (i = 1; i <= thresh; ++i) {
+      if (cmp(a[i], a[j]) < 0) {
+        j = i;
       }
     }
-    if (tmp_ptr != a) {
-      gtype_swap(*tmp_ptr, *a);
+    if (j != 0) {
+      gtype_swap(a[0], a[j]);
     }
-
-    /* Sắp xếp chèn */
-    run_ptr = a + 1;
-    for (run_ptr = a + 2; run_ptr <= end_ptr; ++run_ptr) {
-      tmp_ptr = run_ptr - 1;
-      while (cmp(*tmp_ptr, *run_ptr) > 0) {
-        --tmp_ptr;
+    for (i = 2; i < n; ++i) {
+      gtype c = a[i];
+      j = i;
+      while (cmp(a[j - 1], c) > 0) {
+        a[j] = a[j - 1];
+        --j;
       }
-      ++tmp_ptr;
-      if (tmp_ptr != run_ptr) {
-        gtype c = *run_ptr;
-        gtype *trav = run_ptr;
-        for (; trav != tmp_ptr; --trav) {
-          *trav = *(trav - 1);
-        }
-        *trav = c;
-      }
+      a[j] = c;
     }
   }
-  #undef QS_MIN
 }
 
 #undef QUICKSORT_THRESH
