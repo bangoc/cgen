@@ -72,7 +72,7 @@ struct gvector {
 };
 
 /**
- * Hàm tạo đối tượng vec-tơ, không khởi tạo các phần tử.
+ * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.
  *
  * @param n Kích thước & dung lượng ban đầu của vec-tơ.
  * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
@@ -81,6 +81,20 @@ struct gvector {
  * \memberof gvector
  */
 struct gvector *gvec_create(long n, gtype_free_t free_value);
+
+/**
+ * Hàm tạo đối tượng vec-tơ ở dạng đầy đủ, khởi tạo các phần tử với tham số value.
+ *
+ * @param size Kích thước ban đầu của vec-tơ.
+ * @param cap Dung lượng ban đầu của vec-tơ, phía gọi cần đảm bảo size <= cap.
+ * @param value Giá trị ban đầu để khởi tạo các phần tử.
+ * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
+ * với đối tượng ::gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài.
+ * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+struct gvector *gvec_create_full(long size, long cap, gtype value,
+        gtype_free_t free_value);
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ

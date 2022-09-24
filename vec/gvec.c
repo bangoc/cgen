@@ -15,6 +15,24 @@ struct gvector *gvec_create(long n, gtype_free_t free_value) {
   return v;
 }
 
+struct gvector *gvec_create_full(long size, long cap, gtype value,
+      gtype_free_t free_value) {
+  if (size > cap) {
+    return NULL;
+  }
+  struct gvector *v = malloc(sizeof(struct gvector));
+  v->free_value = free_value;
+  v->sz = size;
+  v->cap = cap;
+  if (cap == 0) {
+    v->elems = NULL;
+    return v;
+  }
+  v->elems = malloc(cap * sizeof(gtype));
+  gvec_fill(v, value);
+  return v;
+}
+
 struct gvector *gvec_clone(struct gvector *v) {
   struct gvector *v2 = malloc(sizeof(struct gvector));
   memcpy(v2, v, sizeof(struct gvector));
