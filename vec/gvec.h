@@ -185,7 +185,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if (newsz > gvec_capacity(v)) { \
       gvec_reserve(v, newsz); \
     } \
-    v->sz = newsz; \
+    (v)->sz = (newsz); \
   } while (0)
 
 /**

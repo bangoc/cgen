@@ -5,96 +5,75 @@
 
 #include <stdlib.h>
 
-#define arr(pa) (*(pa))
-#define arr_t(etyp) etyp **
-#define elem(a, i) (arr(a)[(i)])
-#define elem_ref(a, i) (arr(a) + (i))
+#define arr_ptr(elemtype) elemtype *
 
-enum arr_attrib {
-  ARR_SZ = 0,
-  ARR_CAP,
-  ARR_ELEM_SZ,
-  ARR_INC,
-  ARR_ATT_MAX
+struct arr_info {
+  long size;
+  long cap;
+  long esz;
+  double scale;
 };
 
-static inline void **arr_create_internal(long cap, long elem_sz) {
-  long* a = malloc(ARR_ATT_MAX * sizeof(long) + cap * elem_sz);
-  if (a) {
-    a[ARR_SZ] = 0;
-    a[ARR_CAP] = cap;
-    a[ARR_ELEM_SZ] = elem_sz;
-    a[ARR_INC] = 30;  // %
-    void **tmp = malloc(sizeof(void*));
-    *tmp = a + ARR_ATT_MAX;
-    return tmp;
-  }
-  return NULL;
+static inline void *arr_create_internal(long n, long elem_size, double scale) {
+  struct arr_info *info = malloc(sizeof(struct arr_info) + n * elem_size);
+  info->size = n;
+  info->cap = n;
+  info->esz = elem_size;
+  info->scale = scale;
+  return (void*)(info + 1);
 }
 
-#define arr_beg(a) (((long*)arr(a)) - ARR_ATT_MAX)
-#define arr_size(a) (arr_beg(a)[ARR_SZ])
-#define arr_capacity(a) (arr_beg(a)[ARR_CAP])
-#define arr_elem_sz(a) (arr_beg(a)[ARR_ELEM_SZ])
-#define arr_inc(a) (arr_beg(a)[ARR_INC])
+#define arr_info(a) ((struct arr_info *)((void*)(a) - sizeof(struct arr_info)))
+#define arr_size(a) (arr_info(a)->size)
+#define arr_capacity(a) (arr_info(a)->cap)
+#define arr_elemsize(a) (arr_info(a)->esz)
+#define arr_scale(a) (arr_info(a)->scale)
 
-#define arr_set_capacity(a, newcap) \
+/* Mặc định scale = 2 */
+#define arr_create(count, elemtype) \
+   (arr_ptr(elemtype))arr_create_internal(count, sizeof(elemtype), 2.0)
+
+#define arr_make(name, count, elemtype) \
+   arr_ptr(elemtype) name = arr_create(count, elemtype)
+
+#define arr_reserve(a, newcap) \
   do { \
-    long *_tmp = arr_beg(a); \
-    long _elem_sz = _tmp[ARR_ELEM_SZ]; \
-    _tmp = realloc(_tmp, ARR_ATT_MAX * sizeof(long) + (newcap) * _elem_sz); \
-    if (_tmp) { \
-      if (_tmp[ARR_SZ] > (newcap)) { \
-        _tmp[ARR_SZ] = (newcap); \
-      } \
-      _tmp[ARR_CAP] = (newcap); \
-      (*((void**)(a))) = (void*)(_tmp + ARR_ATT_MAX); \
+    if ((newcap) < arr_size(a)) { \
+      break; \
     } \
+    struct arr_info *_info = \
+      realloc(arr_info(a), sizeof(struct arr_info) + (newcap) * arr_elemsize(a)); \
+    _info->cap = (newcap); \
+    (a) = (void*)(_info + 1); \
   } while (0)
 
-#define arr_set_size(a, newsize) \
+#define arr_resize(a, newsize) \
   do { \
-    long _c = arr_capacity(a); \
-    if ((newsize) > _c) {  \
-      arr_set_capacity(a, newsize); \
+    if (newsize > arr_capacity(a)) {  \
+      arr_reserve((a), newsize); \
     } \
     arr_size(a) = (newsize); \
   } while (0)
 
-#define arr_create(cap, etyp) \
-   (arr_t(etyp))arr_create_internal(cap, sizeof(etyp))
-
 #define arr_free(a) \
-  do { \
-    free(arr_beg(a)); \
-    *(a) = NULL; \
-    free(a); \
-    (a) = NULL; \
-  } while (0)
+    free(arr_info(a)); \
 
 #define arr_clear(a) \
   do { \
-    arr_set_size(a, 0); \
-    arr_set_capacity(a, 0); \
+    arr_resize(a, 0); \
+    arr_reserve(a, 0); \
   } while (0)
-
-#define arr_decl(name, cap, etyp) \
-   arr_t(etyp) name = arr_create(cap, etyp)
 
 #define arr_append(a, elem) \
    do { \
-     long *_tmp = arr_beg(a); \
-     if (_tmp[ARR_SZ] >= _tmp[ARR_CAP]) { \
-       long _c = _tmp[ARR_CAP]; \
-       long _inc = _tmp[ARR_INC]; \
-       long _newcap = _c > 100? _c + _c * _inc / 100: _c + _inc; \
-       arr_set_capacity(a, _newcap); \
-       _tmp = arr_beg(a); \
+     struct arr_info *_info = arr_info(a); \
+     if (_info->size >= _info->cap) { \
+       long _newcap = _info->cap < 10? 10: _info->cap * _info->scale; \
+       arr_reserve((a), _newcap); \
+       _info = arr_info(a); \
      } \
-     if (_tmp[ARR_SZ] < _tmp[ARR_CAP]) { \
-       arr(a)[_tmp[ARR_SZ]] = (elem); \
-       ++(_tmp[ARR_SZ]); \
-     } \
+     (a)[_info->size] = (elem); \
+     ++(_info->size); \
    } while (0)
 
 #endif  // VEC_ARR_H_

@@ -38,9 +38,9 @@ struct hmap {
   uint mask;
   int size;
   int noccupied;
-  arr_t(gtype) keys;
-  arr_t(gtype) values;
-  arr_t(uint) hashes;
+  arr_ptr(gtype) keys;
+  arr_ptr(gtype) values;
+  arr_ptr(uint) hashes;
   gtype_hash_t hash_func;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
@@ -65,9 +65,9 @@ struct hmap_ires {
   int inserted;
 };
 
-#define hmap_hash_at(map, idx) (elem_ref((map)->hashes, idx))
-#define hmap_key_at(map, idx) (elem_ref((map)->keys, idx))
-#define hmap_value_at(map, idx) (elem_ref((map)->values, idx))
+#define hmap_hash_at(map, idx) ((map)->hashes[(idx)])
+#define hmap_key_at(map, idx) ((map)->keys[(idx)])
+#define hmap_value_at(map, idx) ((map)->values[(idx)])
 
 /**
  * Hàm tạo đối tượng bảng băm.
@@ -172,16 +172,13 @@ int hmap_remove(struct hmap *tab, gtype key);
 #define hmap_free(tab) \
   do { \
     int _capacity = (tab)->capacity; \
-    gtype *_keys = arr((tab)->keys); \
-    gtype *_values = arr((tab)->values); \
-    uint *_hashes = arr((tab)->hashes); \
     for (int _i = 0; _i < _capacity; ++_i) { \
-      if (HASH_IS_REAL(_hashes[_i])) { \
+      if (HASH_IS_REAL(tab->hashes[_i])) { \
         if ((tab)->free_key) { \
-          (tab)->free_key(_keys[_i]); \
+          (tab)->free_key(hmap_key_at(tab, _i)); \
         } \
         if ((tab)->free_value) { \
-          (tab)->free_value(_values[_i]); \
+          (tab)->free_value(hmap_value_at(tab, _i)); \
         } \
       } \
     } \

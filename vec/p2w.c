@@ -9,9 +9,9 @@
 #define arr_set_value_with_index(a, v, i) \
   do {\
     if ((i) >= arr_capacity(a)) { \
-      arr_set_capacity(a, 2 * (i) + 1); \
+      arr_reserve(a, (i) + 1); \
     } \
-    arr(a)[(i)] = (v); \
+    (a)[(i)] = (v); \
   } while (0)
 
 struct p2ways *p2w_create(gtype_cmp_t cmp) {
@@ -32,8 +32,8 @@ void p2w_switch(struct p2ways *h, long e1, long e2) {
     long tmp1, tmp2;
     gtype_swap(gvec_elem(h->data, e1), gvec_elem(h->data, e2));
 
-    tmp1 = arr(h->index)[e1];
-    tmp2 = arr(h->index)[e2];
+    tmp1 = h->index[e1];
+    tmp2 = h->index[e2];
 
     arr_set_value_with_index(h->index2, e2 + 2, tmp1);
     arr_set_value_with_index(h->index2, e1 + 2, tmp2);
@@ -88,28 +88,28 @@ gtype p2w_max(const struct p2ways *h) {
 }
 
 long p2w_max_index(const struct p2ways *h) {
-  return arr(h->index)[0];
+  return h->index[0];
 }
 
 int p2w_has_elem(const struct p2ways *h, long idx) {
-  return arr(h->index2)[idx] != 0;
+  return h->index2[idx] != 0;
 }
 
 int p2w_has_active(const struct p2ways *h, long idx) {
-  return arr(h->index2)[idx] > 1;
+  return h->index2[idx] > 1;
 }
 
 gtype p2w_get(const struct p2ways *h, long idx) {
-  long i = arr(h->index2)[idx] - 2;
+  long i = h->index2[idx] - 2;
   return gvec_elem(h->data, i);
 }
 
 gtype p2w_delete_max(struct p2ways *h) {
   gtype tmp = gvec_elem(h->data, 0);
-  long tmpidx = arr(h->index)[0];
+  long tmpidx = h->index[0];
   p2w_switch(h, 0, p2w_size(h) - 1);
   gvec_resize(h->data, gvec_size(h->data) - 1);
-  arr_set_size(h->index, arr_size(h->index) - 1);
+  arr_resize(h->index, arr_size(h->index) - 1);
   arr_set_value_with_index(h->index2, 0, tmpidx);
   p2w_sink(h, 0);
 
@@ -118,10 +118,10 @@ gtype p2w_delete_max(struct p2ways *h) {
 
 gtype p2w_deactivate_max(struct p2ways *h) {
   gtype tmp = gvec_elem(h->data, 0);
-  long tmpidx = arr(h->index)[0];
+  long tmpidx = h->index[0];
   p2w_switch(h, 0, p2w_size(h) - 1);
   gvec_resize(h->data, gvec_size(h->data) - 1);
-  arr_set_size(h->index, arr_size(h->index) - 1);
+  arr_resize(h->index, arr_size(h->index) - 1);
   arr_set_value_with_index(h->index2, 1, tmpidx);
   p2w_sink(h, 0);
 
@@ -130,10 +130,10 @@ gtype p2w_deactivate_max(struct p2ways *h) {
 
 gtype p2w_delete_max_index(struct p2ways *h, long *idx) {
   gtype tmp = gvec_elem(h->data, 0);
-  long tmpidx = arr(h->index)[0];
+  long tmpidx = h->index[0];
   p2w_switch(h, 0, p2w_size(h) - 1);
   gvec_resize(h->data, gvec_size(h->data) - 1);
-  arr_set_size(h->index, arr_size(h->index) - 1);
+  arr_resize(h->index, arr_size(h->index) - 1);
   arr_set_value_with_index(h->index2, 0, tmpidx);
   p2w_sink(h, 0);
 
@@ -144,7 +144,7 @@ gtype p2w_delete_max_index(struct p2ways *h, long *idx) {
 }
 
 int p2w_modify(struct p2ways *h, long idx, gtype elem) {
-  long pos = arr(h->index2)[idx] - 2;
+  long pos = h->index2[idx] - 2;
 
   gvec_elem(h->data, pos) = elem;
   p2w_sink(h, pos);

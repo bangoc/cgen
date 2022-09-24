@@ -8,10 +8,10 @@
 
 #include <stdio.h>
 
-long sum(arr_t(int) a) {
+long sum(arr_ptr(int) a) {
   long s = 0;
   for (int i = 0; i < arr_size(a); ++i) {
-    s += arr(a)[i];
+    s += a[i];
   }
   return s;
 }
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
-  arr_decl(a, 0, int);
+  arr_make(a, 0, int);
   printf("Nhập vào 1 dãy số bất kỳ, nhập 0 để kết thúc nhập\n:");
   for(;;) {
     int v;
@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   printf("Tổng các số đã nhập: %ld\n", sum(a));
   printf("Danh sách các số theo chiều ngược lại: ");
   for (long i = arr_size(a) - 1; i >= 0; --i) {
-    printf(" %d", arr(a)[i]);
+    printf(" %d", a[i]);
   }
   printf("\n");
   arr_free(a);

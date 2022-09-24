@@ -19,15 +19,15 @@ struct hset {
   uint mask;
   int size;
   int noccupied;
-  arr_t(gtype) keys;
-  arr_t(uint) hashes;
+  arr_ptr(gtype) keys;
+  arr_ptr(uint) hashes;
   gtype_hash_t hash_func;
   gtype_cmp_t cmp;
   gtype_free_t free_key;
 };
 
-#define hset_hash_at(set, idx) (elem_ref((set)->hashes, idx))
-#define hset_key_at(set, idx) (elem_ref((set)->keys, idx))
+#define hset_hash_at(set, idx) ((set)->hashes[idx])
+#define hset_key_at(set, idx) ((set)->keys[idx])
 #define INDEX_NOT_FOUND -1
 #define hset_contains(hs, value) (hset_index_of(hs, value) != INDEX_NOT_FOUND)
 

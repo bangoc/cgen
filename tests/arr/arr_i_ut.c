@@ -11,10 +11,10 @@
 #include <stdio.h>
 
 int t1() {
-  int **a = (int**)arr_create(10, int);
+  arr_make(a, 0, int);
   CHECK_MSG(arr_size(a) == 0, "init size = 0");
-  CHECK_MSG(arr_capacity(a) == 10, "init cap = 0");
-  CHECK_MSG(arr_elem_sz(a) == sizeof(int), "elem sz");
+  CHECK_MSG(arr_capacity(a) == 0, "init cap = 0");
+  CHECK_MSG(arr_elemsize(a) == sizeof(int), "elem sz");
   const int n = 100;
   for (int i = 0; i < n; ++i) {
     arr_append(a, i);
@@ -22,7 +22,7 @@ int t1() {
   CHECK_MSG(arr_size(a) == n, "append n elements");
   CHECK_MSG(arr_capacity(a) >= n, "capacity changed");
   for (long i = 0; i < arr_size(a); ++i) {
-    CHECK_MSG((*a)[i] == i, "Value");
+    CHECK_MSG(a[i] == i, "Value");
   }
   arr_free(a);
   return 0;

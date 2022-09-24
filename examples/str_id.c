@@ -3,55 +3,54 @@
 #include <string.h>
 #include <stdlib.h>
 
-typedef struct str_cache {
+struct str_cache {
   struct rbmtree *si;
-  arr_t(char*) is;
-} *str_cache_t;
+  arr_ptr(char*) is;
+};
 
-void as_print(arr_t(char*) is) {
+void as_print(arr_ptr(char*) is) {
   for (int i = 0; i < arr_size(is); ++i) {
-    printf("%-5d: %s\n", i, arr(is)[i]);
+    printf("%-5d: %s\n", i, is[i]);
   }
 }
 
-void cache_print(str_cache_t cache) {
+void cache_print(struct str_cache *cache) {
   bn_pprint(bn_tree(cache->si), s2i_print_node);
   as_print(cache->is);
 }
 
-str_cache_t create_cache() {
-  str_cache_t sc = malloc(sizeof(struct str_cache));
+struct str_cache *create_cache() {
+  struct str_cache *sc = malloc(sizeof(struct str_cache));
   sc->si = s2i_create();
   sc->is = arr_create(0, char*);
   return sc;
 }
 
-long get_save_str_id(str_cache_t cache, char *s) {
+long get_save_str_id(struct str_cache *cache, char *s) {
   long *id = s2i_value(cache->si, s);
   if (id) {
     return *id;
   }
   arr_append(cache->is, strdup(s));
   long id2 = arr_size(cache->is) - 1;
-  s2i_put(cache->si, arr(cache->is)[id2], id2);
+  s2i_put(cache->si, cache->is[id2], id2);
   return id2;
 }
 
-char *get_by_id(str_cache_t cache, long id) {
+char *get_by_id(struct str_cache *cache, long id) {
   if (id >= 0 && id < arr_size(cache->is)) {
-    return arr(cache->is)[id];
+    return cache->is[id];
   }
   return NULL;
 }
 
-void free_cache(str_cache_t *cache) {
-  s2i_free((*cache)->si);
-  for (int i = 0; i < arr_size((*cache)->is); ++i) {
-    free(arr((*cache)->is)[i]);
+void free_cache(struct str_cache *cache) {
+  s2i_free(cache->si);
+  for (int i = 0; i < arr_size(cache->is); ++i) {
+    free(cache->is[i]);
   }
-  arr_free((*cache)->is);
-  free(*cache);
-  *cache = NULL;
+  arr_free(cache->is);
+  free(cache);
 }
 
 int main(int argc, char *argv[]) {
@@ -59,7 +58,7 @@ int main(int argc, char *argv[]) {
     freopen(argv[1], "r", stdin);
   }
   char s[100];
-  str_cache_t cache = create_cache();
+  struct str_cache *cache = create_cache();
   for (;;) {
     printf("Input s: ");
     scanf("%s", s);
@@ -84,6 +83,6 @@ int main(int argc, char *argv[]) {
       printf("Not found\n");
     }
   }
-  free_cache(&cache);
+  free_cache(cache);
   return 0;
 }

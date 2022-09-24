@@ -16,7 +16,7 @@ struct s13 {
 };
 
 int main() {
-  arr_t(struct s13) ss = arr_create(8, struct s13);
+  arr_make(ss, 0, struct s13);
   intptr_t pi = (intptr_t)ss;
   printf("%zu %p\n", sizeof(struct s13), ss);
   if (pi % sizeof(struct s13) == 0) {
@@ -30,7 +30,7 @@ int main() {
   arr_append(ss, (struct s13){"Saigon"});
   arr_append(ss, (struct s13){"Hanoi"});
   for (int i = 0; i < arr_size(ss); ++i) {
-    printf("%s\n", arr(ss)[i].s);
+    printf("%s\n", ss[i].s);
   }
   struct s13 *tmp = malloc(7 * sizeof(struct s13));
   if ((intptr_t)tmp % 13 == 0) {
@@ -38,7 +38,7 @@ int main() {
   } else {
     printf("Not divided (malloc)\n");
   }
-  CHECK_MSG(strcmp(arr(ss)[1].s, "Danang") == 0, "Arr[1] - Danang");
+  CHECK_MSG(strcmp(ss[1].s, "Danang") == 0, "Arr[1] - Danang");
   free(tmp);
   arr_free(ss);
   TEST_OK();
