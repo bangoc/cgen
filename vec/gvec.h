@@ -72,7 +72,7 @@ struct gvector {
 };
 
 /**
- * Hàm tạo đối tượng vec-tơ.
+ * Hàm tạo đối tượng vec-tơ, không khởi tạo các phần tử.
  *
  * @param n Kích thước & dung lượng ban đầu của vec-tơ.
  * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
@@ -184,7 +184,11 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
   do {\
     if (newsz > gvec_capacity(v)) { \
       gvec_reserve(v, newsz); \
-    } \
+    } else if (newsz < gvec_size(v) && (v)->free_value) { \
+      for (long _j = newsz; _j < gvec_size(v); ++_j) { \
+        (v)->free_value(gvec_elem(v, _j)); \
+      }\
+    }\
     (v)->sz = (newsz); \
   } while (0)
 
@@ -215,7 +219,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @param e Phần tử được đưa vào
  * @return Không trả về giá trị
  */
-#define gvec_set(v, i, e) \
+#define gvec_force_set(v, i, e) \
   do { \
     if ((i) >= gvec_size(v)) { \
       gvec_resize((v), (i) + 1); \
@@ -241,12 +245,11 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if ((idx) >= _sz || (idx) < 0) { \
       break; \
     } \
-    if ((v)->free_value) { \
-      (v)->free_value(_arr[(idx)]); \
-    } \
+    gtype _tmp = _arr[(idx)]; \
     for (long _i = (idx); _i < _sz - 1; ++_i) { \
       _arr[_i] = _arr[_i + 1]; \
     } \
+    _arr[_sz - 1] = _tmp; \
     gvec_resize(v, _sz - 1); \
   } while (0)
 
@@ -271,14 +274,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * Tham khảo: #gvec_reserve(v, cap) - Thay đổi dung lượng
  */
 #define gvec_clear(v) \
-  do{ \
-    if ((v)->free_value) { \
-      gvec_traverse(cur, v) { \
-        (v)->free_value(*cur); \
-      } \
-    } \
-    gvec_resize(v, 0); \
-  } while (0)
+  gvec_resize(v, 0); \
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho v và các vùng nhớ ngoài
@@ -376,5 +372,12 @@ void gvec_pprint(struct gvector *v, gtype_print_t pp);
  * @return Con trỏ tới vec-tơ được tạo, có kiểu ::struct gvector *
  */
 struct gvector *gvec_rand_l(long n);
+
+#define gvec_fill(v, value) \
+  do { \
+    gvec_traverse(_cur, v) { \
+      *_cur = (value); \
+    } \
+  } while (0)
 
 #endif  // VEC_GVEC_H_

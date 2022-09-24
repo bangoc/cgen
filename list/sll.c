@@ -6,11 +6,11 @@
 #include <stdio.h>
 
 struct slnode *sll_create_node() {
-  return calloc(sizeof(struct slnode), 1);
+  return calloc(1, sizeof(struct slnode));
 }
 
 struct sllist *sll_create_list() {
-  return calloc(sizeof(struct sllist), 1);
+  return calloc(1, sizeof(struct sllist));
 }
 
 void sll_push_back(struct sllist *list, struct slnode *node) {

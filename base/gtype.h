@@ -33,6 +33,8 @@ typedef union generic_type {
   struct p2ways *p2w;
 } gtype;
 
+#define gtype_zero (gtype_l(0l))
+
 #define gtype_value(type, val) ((gtype){.type = (val)})
 #define gtype_l(value) gtype_value(l, value)
 #define gtype_d(value) gtype_value(d, value)

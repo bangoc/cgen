@@ -11,7 +11,7 @@ struct gvector *gvec_create(long n, gtype_free_t free_value) {
     v->elems = NULL;
     return v;
   }
-  v->elems = malloc(n * sizeof(gtype));
+  v->elems = calloc(n, sizeof(gtype));
   return v;
 }
 

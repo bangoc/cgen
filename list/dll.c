@@ -6,11 +6,11 @@
 #include <stdlib.h>
 
 struct dlnode *dll_create_node() {
-  return calloc(sizeof(struct dlnode), 1);;
+  return calloc(1, sizeof(struct dlnode));
 }
 
 struct dllist *dll_create_list() {
-  return calloc(sizeof(struct dllist), 1);;
+  return calloc(1, sizeof(struct dllist));
 }
 
 void dll_push_back(struct dllist *list, struct dlnode *nn) {

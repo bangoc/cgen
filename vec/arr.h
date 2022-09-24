@@ -15,7 +15,7 @@ struct arr_info {
 };
 
 static inline void *arr_create_internal(long n, long elem_size, double scale) {
-  struct arr_info *info = malloc(sizeof(struct arr_info) + n * elem_size);
+  struct arr_info *info = calloc(1, sizeof(struct arr_info) + n * elem_size);
   info->size = n;
   info->cap = n;
   info->esz = elem_size;
