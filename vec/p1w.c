@@ -11,9 +11,7 @@
 
 struct p1way *p1w_create(gtype_cmp_t cmp) {
   struct p1way *h = malloc(sizeof(struct p1way));
-
-  // Không quản lý bộ nhớ động của phần tử trong p1way
-  h->vec = gvec_create(0, NULL);
+  h->elems = arr_create(0, gtype);
   h->cmp = cmp;
   return h;
 }
@@ -23,17 +21,17 @@ gtype p1w_peek(struct p1way *h) {
 }
 
 gtype p1w_dequeue(struct p1way *h) {
-  long sz = gvec_size(h->vec);
+  long sz = p1w_size(h);
   gtype *a = p1w_arr(h);
   gtype tmp = a[0];
   gtype_swap(a[0], a[sz - 1]);
-  gvec_resize(h->vec, sz - 1);
+  arr_resize(h->elems, sz - 1);
   heap_shift_down(0, sz - 1, a, h->cmp);
   return tmp;
 }
 
 void p1w_enqueue(struct p1way *h, gtype value) {
-  gvec_append(h->vec, value);
+  arr_append(h->elems, value);
   long j = p1w_size(h) - 1;
   gtype *a = p1w_arr(h);
   heap_shift_up(j, a, h->cmp);

@@ -9,10 +9,10 @@
  */
 
 #include "base/gtype.h"
-#include "vec/gvec.h"
+#include "vec/arr.h"
 
 struct p1way {
-  struct gvector *vec;
+  arr_ptr(gtype) elems;
   gtype_cmp_t cmp;
 };
 
@@ -32,19 +32,19 @@ void p1w_enqueue(struct p1way *h, gtype value);
 void p1w_root(struct p1way *h, gtype value);
 
 #define p1w_size(h) \
-  (gvec_size((h)->vec))
+  (arr_size((h)->elems))
 
 #define p1w_is_empty(h) \
   (p1w_size(h) == 0)
 
 #define p1w_free(h) \
   do { \
-    gvec_free((h)->vec); \
+    arr_free((h)->elems); \
     free(h); \
   } while (0)
 
 #define p1w_clear(h) \
-  gvec_clear((h)->vec)
+  arr_clear((h)->elems)
 
 /**
  * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng p1w
@@ -56,6 +56,6 @@ void p1w_root(struct p1way *h, gtype value);
  */
 void gtype_free_p1w(gtype value);
 
-#define p1w_arr(h) (gvec_arr((h)->vec))
+#define p1w_arr(h) ((h)->elems)
 
 #endif  // VEC_P1W_H_

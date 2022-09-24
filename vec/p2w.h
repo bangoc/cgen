@@ -5,10 +5,9 @@
 
 #include "base/gtype.h"
 #include "vec/arr.h"
-#include "vec/gvec.h"
 
 struct p2ways {
-  struct gvector *data;
+  arr_ptr(gtype) data;
   arr_ptr(long) index;
   arr_ptr(long) index2;
   gtype_cmp_t cmp;
@@ -18,17 +17,17 @@ struct p2ways *p2w_create(gtype_cmp_t cmp);
 
 #define p2w_free(h) \
   do { \
-    gvec_free((h)->data); \
+    arr_free((h)->data); \
     arr_free((h)->index); \
     arr_free((h)->index2); \
     free(h); \
   } while (0)
 
-#define p2w_size(h) gvec_size((h)->data)
+#define p2w_size(h) arr_size((h)->data)
 
 #define p2w_clear(h) \
   do { \
-    gvec_clear((h)->data); \
+    arr_clear((h)->data); \
     arr_clear((h)->index); \
     arr_clear((h)->index2); \
   } while (0)
