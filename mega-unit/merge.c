@@ -14,7 +14,7 @@ struct gvector *read_lines(const char *fname) {
   if (!fp) {
     return NULL;
   }
-  struct gvector *lines = gvec_create(100, gtype_free_s);
+  struct gvector *lines = gvec_create_full(0, 100, gtype_zero, gtype_free_s);
   char *tmp = NULL;
   while (cgetline(&tmp, NULL, fp)) {
     remove_tail_lf(tmp);
@@ -78,7 +78,7 @@ void process(const char *root, const char *list_name, const char *out_name) {
   }
 
   struct rbstree *headers = rbs_create(gtype_cmp_s, gtype_free_s);
-  struct gvector *contents = gvec_create(1000, gtype_free_s);
+  struct gvector *contents = gvec_create_full(0, 1000, gtype_zero, gtype_free_s);
   char tmp[1024];
   gvec_traverse(cur, v) {
     if (!is_include(cur->s)) {
@@ -160,7 +160,12 @@ void process(const char *root, const char *list_name, const char *out_name) {
 int main(int argc, char *argv[]) {
   if (argc != 5) {
     printf("Usage: merge root-dir header-list source-list out-name\n"
-           "Example: merge ~/git/cgen all.h all.c cgen\n");
+           "Example: merge ~/git/cgen all.h all.c cgen\n"
+           "Trong đó:\n"
+           "\t~/git/cgen: Thư mục gốc\n"
+           "\tall.h: Tên tệp chưa danh sách tệp tiêu đề, đường dẫn tương đối\n"
+           "\tall.c: Tên tệp chứa danh sách tệp mã nguồn, đường dẫn tương đối\n"
+           "\tcgen: Tiền tố của các tệp đầu ra (.c và .h)\n");
     return 1;
   }
   const char *root = argv[1],
