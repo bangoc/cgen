@@ -1,5 +1,5 @@
 add_executable(hset_ut hset_ut.c)
 add_executable(hset_rand_ut hset_rand_ut.c)
 foreach(p hset_ut hset_rand_ut)
-  target_link_libraries(${p} bkc)
+  target_link_libraries(${p} bkcgen)
 endforeach()

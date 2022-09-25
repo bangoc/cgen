@@ -1,5 +1,5 @@
 add_executable(bench_sort bench_sort.c)
-target_link_libraries(bench_sort bkc)
+target_link_libraries(bench_sort bkcgen)
 
 if (BENCH_OP)
   add_executable(generator generator.c)

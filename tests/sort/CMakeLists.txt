@@ -7,5 +7,5 @@ add_executable(heapsort_ut heapsort_ut.c)
 
 foreach (p q2sort_ut q2m3sort_ut q3sort_ut quicksort_ut
            sort_all_identical_ut heapsort_ut)
-  target_link_libraries(${p} bkc)
+  target_link_libraries(${p} bkcgen)
 endforeach()

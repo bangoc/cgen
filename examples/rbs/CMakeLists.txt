@@ -1,5 +1,5 @@
 add_executable(rbs_demo rbs_demo.c)
 add_executable(rbs_clear_demo rbs_clear_demo.c)
 foreach (p rbs_demo rbs_clear_demo)
-  target_link_libraries(${p} bkc)
+  target_link_libraries(${p} bkcgen)
 endforeach()

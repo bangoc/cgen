@@ -3,16 +3,29 @@ project(cgen)
 
 # ON by default, use -DNOWARN=ON/OFF in Cmake command to turn ON/OFF
 option(NOWARN "ON-No warnings, OFF-Tend to show all warnings" ON)
-option(DEBUG "Debug build" ON)
 option(BENCH_OP "Optimization (O1, O2, O3) benchmark" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
-if (DEBUG)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
-else (DEBUG)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+set(CMAKE_C_STANDARD 11)
+
+if (NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Debug")
+endif (NOT CMAKE_BUILD_TYPE)
+
+if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall")
 endif()
+
+if (${CMAKE_BUILD_TYPE} STREQUAL Release)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -w")
+endif()
+
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-function")
+
+if (WARN_ERROR)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
+endif ()
 
 if (NOWARN)
   MESSAGE(STATUS "cgen no warnings")
@@ -26,7 +39,7 @@ add_subdirectory(tests)
 add_subdirectory(examples)
 add_subdirectory(mega-unit)
 
-add_library(bkc STATIC all.c)
+add_library(bkcgen STATIC all.c)
 
 include(CTest)
 add_test(NAME BNLeftRotate COMMAND bn_left_rotate_ut)
@@ -153,3 +166,37 @@ add_test(NAME HeapSort COMMAND heapsort_ut 10000)
 add_test(NAME GvecMemResize COMMAND gvec_mem_resize_ut)
 add_test(NAME GvecFill COMMAND gvec_fill_ut)
 add_test(NAME GvecCreateFull COMMAND gvec_create_full_ut)
+
+if (${CMAKE_BUILD_TYPE} STREQUAL Release)
+  set(cgraph_include_dest "include")
+  set(cgraph_lib_dest "lib")
+  set(MERGE_CMD ${CMAKE_CURRENT_BINARY_DIR}/mega-unit/merge)
+  execute_process(COMMAND ${MERGE_CMD}
+                    ${CMAKE_CURRENT_SOURCE_DIR} all.h all.c bkcgen
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/bkcgen.h DESTINATION "${cgraph_include_dest}")
+  install(TARGETS bkcgen DESTINATION "${cgraph_lib_dest}")
+
+  set(CPACK_PACKAGE_INSTALL_DIRECTORY "/usr")
+  set(CPACK_GENERATOR "DEB")
+  set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Nguyễn Bá Ngọc")
+  set(CPACK_DEBIAN_PACKAGE_DESCRIPTION
+                "Thư viện cấu trúc dữ liệu và giải thuật khái quát.")
+  set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/bangoc/cgen")
+  set(CPACK_DEBIAN_PACKAGE_PRIORITY "standard")
+  set(CPACK_DEBIAN_PACKAGE_SECTION "devel")
+
+  file (READ ${CMAKE_CURRENT_SOURCE_DIR}/VERSION CGEN_VERSION)
+
+  # Set a Package Version
+  set(CPACK_PACKAGE_VERSION "${CGEN_VERSION}")
+  include(CPack)
+
+  # To build a debian package
+  # cmake .. -DCMAKE_BUILD_TYPE=Release
+  # make -j 2
+  # make package
+  #
+  # To install the debian package
+  # sudo dpkg -i package.deb
+endif()

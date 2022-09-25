@@ -7,5 +7,5 @@ add_executable(hmap_hmap_ut hmap_hmap_ut.c)
 add_executable(hmap_put_si_ut hmap_put_si_ut.c)
 foreach (p hmap_small_ut hmap_nnode_ut hmap_randi_ut hmap_free0_ut
     hmap_gvec_ut hmap_hmap_ut hmap_put_si_ut)
-  target_link_libraries(${p} bkc)
+  target_link_libraries(${p} bkcgen)
 endforeach()

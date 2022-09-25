@@ -5,7 +5,7 @@ add_executable(dll_songs dll_songs.c)
 add_executable(gtype_demo_io gtype_demo_io.c)
 
 foreach (p str_id s2i_pprint s2i_pprint_custom dll_songs)
- target_link_libraries(${p} bkc)
+ target_link_libraries(${p} bkcgen)
 endforeach()
 
 add_subdirectory(benchmarks)

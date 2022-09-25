@@ -40,7 +40,7 @@ Tạo tệp CMakeLists.txt với các nội dung sau:
 add_subdirectory(cgen)
 include_directories(cgen)
 add_executable(prog main.c)
-target_link_libraries(prog bkc)
+target_link_libraries(prog bkcgen)
 ```
 
 Nên thực hiện biên dịch dự án trong một thư mục độc lập, ví dụ:
