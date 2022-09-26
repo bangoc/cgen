@@ -7,6 +7,9 @@ struct gvector *gvec_create(long n, gtype_free_t free_value) {
   v->free_value = free_value;
   v->sz = n;
   v->cap = n;
+
+  /* Mặc định x 2 dung lượng */
+  v->scale = 2.0;
   if (n == 0) {
     v->elems = NULL;
     return v;
@@ -20,15 +23,10 @@ struct gvector *gvec_create_full(long size, long cap, gtype value,
   if (size > cap) {
     return NULL;
   }
-  struct gvector *v = malloc(sizeof(struct gvector));
-  v->free_value = free_value;
-  v->sz = size;
-  v->cap = cap;
-  if (cap == 0) {
-    v->elems = NULL;
-    return v;
+  struct gvector *v = gvec_create(size, free_value);
+  if (cap > size) {
+    gvec_reserve(v, cap);
   }
-  v->elems = malloc(cap * sizeof(gtype));
   gvec_fill(v, value);
   return v;
 }

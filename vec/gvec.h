@@ -68,6 +68,16 @@ struct gvector {
    * bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được
    * bỏ qua.
    */
+
+  /**
+   * Tốc độ tăng dung lượng khi append (> 1, mặc định = 2):
+   *   dung lượng mới = dung lượng cũ * scale
+   */
+  double scale;
+
+  /**
+   * Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
+   */
   gtype_free_t free_value;
 };
 
@@ -132,6 +142,14 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @return Trả về dung lượng (capacity) của vec-tơ, giá trị có kiểu long.
  */
 #define gvec_capacity(v) ((v)->cap)
+
+/**
+ * Tỉ lệ tăng dung lượng của vec-tơ khi append
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *)
+ * @return Trả về tỉ lệ tăng dung lượng (scale), có kiểu double.
+ */
+#define gvec_scale(v) ((v)->scale)
 
 /**
  * Giao diện mảng của vec-tơ.
@@ -203,7 +221,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
         (v)->free_value(gvec_elem(v, _j)); \
       }\
     }\
-    (v)->sz = (newsz); \
+    gvec_size(v) = (newsz); \
   } while (0)
 
 /**
@@ -219,7 +237,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if (gvec_size(v) == 0) { \
       gvec_reserve(v, 10); \
     } else if (gvec_size(v) == gvec_capacity(v)) {\
-      gvec_reserve(v, 2 * gvec_size(v)); \
+      gvec_reserve(v, gvec_scale(v) * gvec_size(v)); \
     } \
     gvec_elem(v, gvec_size(v)) = val; \
     gvec_resize(v, gvec_size(v) + 1); \
