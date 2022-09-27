@@ -79,4 +79,12 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
 #define arr_qsort(a, cmp) \
    qsort(a, arr_size(a), arr_elemsize(a), cmp)
 
+/**
+ * Duyệt tuần tự từng phần tử của mảng a,
+ * typeof ban đầu là 1 từ khóa trong mở rộng của GNU,
+ * và đến nay đã chính thức trở thành 1 từ khóa của ISO C kể từ C23
+ */
+#define arr_traverse(cur, a) \
+  for (typeof(a) cur = a; cur < a + arr_size(a); ++cur)
+
 #endif  // VEC_ARR_H_
