@@ -87,4 +87,14 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
 #define arr_traverse(cur, a) \
   for (typeof(a) cur = a; cur < a + arr_size(a); ++cur)
 
+/**
+ * Gán tất cả các giá trị của a = value.
+ */
+#define arr_fill(a, value) \
+  do { \
+    arr_traverse(_cur, a) { \
+      *_cur = value; \
+    } \
+  } while (0)
+
 #endif  // VEC_ARR_H_

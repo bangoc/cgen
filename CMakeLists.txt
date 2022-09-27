@@ -168,6 +168,7 @@ add_test(NAME GvecFill COMMAND gvec_fill_ut)
 add_test(NAME GvecCreateFull COMMAND gvec_create_full_ut)
 add_test(NAME ArrLongQsort COMMAND arr_qsort_long_ut)
 add_test(NAME ArrTraverse COMMAND arr_traverse_ut)
+add_test(NAME ArrFill COMMAND arr_fill_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release)
   set(cgraph_include_dest "include")
