@@ -97,4 +97,30 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
     } \
   } while (0)
 
+/**
+ * Gán max trong mảng a cho biến m, m phải được khai báo bên ngoài macro
+ */
+#define arr_assign_max(m, a) \
+  do { \
+    (m) = (a)[0]; \
+    for (long _j = 1; _j < arr_size(a); ++_j) { \
+      if ((a)[_j] > (m)) { \
+        (m) = (a)[_j]; \
+      } \
+    } \
+  } while (0)
+
+/**
+ * Gán min trong mảng a cho biến m, m phải được khai báo bên ngoài macro
+ */
+#define arr_assign_min(m, a) \
+  do { \
+    (m) = (a)[0]; \
+    for (long _j = 1; _j < arr_size(a); ++_j) { \
+      if ((a)[_j] < (m)) { \
+        (m) = (a)[_j]; \
+      } \
+    } \
+  } while (0)
+
 #endif  // VEC_ARR_H_
