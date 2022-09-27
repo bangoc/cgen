@@ -76,4 +76,7 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
      ++(_info->size); \
    } while (0)
 
+#define arr_qsort(a, cmp) \
+   qsort(a, arr_size(a), arr_elemsize(a), cmp)
+
 #endif  // VEC_ARR_H_

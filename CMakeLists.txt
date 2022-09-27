@@ -166,6 +166,7 @@ add_test(NAME HeapSort COMMAND heapsort_ut 10000)
 add_test(NAME GvecMemResize COMMAND gvec_mem_resize_ut)
 add_test(NAME GvecFill COMMAND gvec_fill_ut)
 add_test(NAME GvecCreateFull COMMAND gvec_create_full_ut)
+add_test(NAME ArrLongQsort COMMAND arr_qsort_long_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release)
   set(cgraph_include_dest "include")
