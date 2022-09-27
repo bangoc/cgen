@@ -12,7 +12,7 @@
 #include "vec/arr.h"
 
 struct p1way {
-  arr_ptr(gtype) elems;
+  atype(gtype) *elems;
   gtype_cmp_t cmp;
 };
 

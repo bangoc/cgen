@@ -5,7 +5,15 @@
 
 #include <stdlib.h>
 
-#define arr_ptr(elemtype) elemtype *
+/**
+ * Macro đánh dấu kiểu phần tử của arr.
+ * atype tuy không khác elemtype về mặt ý nghĩa nhưng
+ * có thể giúp đánh dấu con trỏ được tạo bởi arr, hỗ trợ đọc
+ * mã nguồn.
+ * Nên sử dụng atype(elemtype) * thay cho elemtype * đối với
+ * các con trỏ được sử dụng cho arr.
+ */
+#define atype(elemtype) elemtype
 
 struct arr_info {
   long size;
@@ -31,10 +39,10 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
 
 /* Mặc định scale = 2 */
 #define arr_create(count, elemtype) \
-   (arr_ptr(elemtype))arr_create_internal(count, sizeof(elemtype), 2.0)
+   (atype(elemtype) *)arr_create_internal(count, sizeof(elemtype), 2.0)
 
 #define arr_make(name, count, elemtype) \
-   arr_ptr(elemtype) name = arr_create(count, elemtype)
+   atype(elemtype) *name = arr_create(count, elemtype)
 
 #define arr_reserve(a, newcap) \
   do { \

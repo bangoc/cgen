@@ -7,9 +7,9 @@
 #include "vec/arr.h"
 
 struct p2ways {
-  arr_ptr(gtype) data;
-  arr_ptr(long) index;
-  arr_ptr(long) index2;
+  atype(gtype) *data;
+  atype(long) *index;
+  atype(long) *index2;
   gtype_cmp_t cmp;
 };
 

@@ -38,9 +38,9 @@ struct hmap {
   uint mask;
   int size;
   int noccupied;
-  arr_ptr(gtype) keys;
-  arr_ptr(gtype) values;
-  arr_ptr(uint) hashes;
+  atype(gtype) *keys;
+  atype(gtype) *values;
+  atype(uint) *hashes;
   gtype_hash_t hash_func;
   gtype_cmp_t cmp;
   gtype_free_t free_key;

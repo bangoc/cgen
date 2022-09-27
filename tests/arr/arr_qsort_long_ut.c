@@ -10,7 +10,7 @@ int qsort_cmp_l(const void *v1, const void *v2) {
 }
 
 int t1() {
-  arr_ptr(long) a = arr_create(5, long);
+  atype(long) *a = arr_create(5, long);
   a[0] = 1;
   a[1] = -1;
   a[2] = 3;

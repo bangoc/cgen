@@ -5,10 +5,10 @@
 
 struct str_cache {
   struct rbmtree *si;
-  arr_ptr(char*) is;
+  atype(char*) *is;
 };
 
-void as_print(arr_ptr(char*) is) {
+void as_print(atype(char*) *is) {
   for (int i = 0; i < arr_size(is); ++i) {
     printf("%-5d: %s\n", i, is[i]);
   }

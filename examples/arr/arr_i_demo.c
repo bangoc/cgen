@@ -8,7 +8,7 @@
 
 #include <stdio.h>
 
-long sum(arr_ptr(int) a) {
+long sum(atype(int) *a) {
   long s = 0;
   for (int i = 0; i < arr_size(a); ++i) {
     s += a[i];
