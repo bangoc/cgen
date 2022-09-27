@@ -7,7 +7,7 @@
 
 /**
  * Macro đánh dấu kiểu phần tử của arr.
- * atype tuy không khác elemtype về mặt ý nghĩa nhưng
+ * atype tuy không làm thay đổi ý nghĩa của elemtype nhưng
  * có thể giúp đánh dấu con trỏ được tạo bởi arr, hỗ trợ đọc
  * mã nguồn.
  * Nên sử dụng atype(elemtype) * thay cho elemtype * đối với
