@@ -172,7 +172,8 @@ add_test(NAME ArrFill COMMAND arr_fill_ut)
 add_test(NAME ArrAssignMax COMMAND arr_assign_max_ut)
 add_test(NAME ArrAssignMin COMMAND arr_assign_min_ut)
 
-if (${CMAKE_BUILD_TYPE} STREQUAL Release)
+if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
+    ${CMAKE_PROJECT_NAME} STREQUAL cgen)
   set(cgen_include_dest "include")
   set(cgen_lib_dest "lib")
   set(MERGE_CMD ${CMAKE_CURRENT_BINARY_DIR}/mega-unit/merge)
