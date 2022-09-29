@@ -176,8 +176,12 @@ if (${CMAKE_BUILD_TYPE} STREQUAL Release)
   set(cgraph_include_dest "include")
   set(cgraph_lib_dest "lib")
   set(MERGE_CMD ${CMAKE_CURRENT_BINARY_DIR}/mega-unit/merge)
+  MESSAGE(STATUS "MERGE CMD: " ${MERGE_CMD})
   execute_process(COMMAND ${MERGE_CMD}
-                    ${CMAKE_CURRENT_SOURCE_DIR} all.h all.c bkcgen
+                    ${CMAKE_CURRENT_SOURCE_DIR} all.h bkcgen.h
+                  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+  execute_process(COMMAND ${MERGE_CMD}
+                    ${CMAKE_CURRENT_SOURCE_DIR} all.c bkcgen.c
                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/bkcgen.h DESTINATION "${cgraph_include_dest}")
   install(TARGETS bkcgen DESTINATION "${cgraph_lib_dest}")

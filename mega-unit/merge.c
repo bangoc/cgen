@@ -158,28 +158,20 @@ void process(const char *root, const char *list_name, const char *out_name) {
 }
 
 int main(int argc, char *argv[]) {
-  if (argc != 5) {
-    printf("Usage: merge root-dir header-list source-list out-name\n"
+  if (argc != 4) {
+    printf("Usage: merge root-dir file-list output-name\n"
            "Example: merge ~/git/cgen all.h all.c cgen\n"
            "Trong đó:\n"
            "\t~/git/cgen: Thư mục gốc\n"
-           "\tall.h: Tên tệp chưa danh sách tệp tiêu đề, đường dẫn tương đối\n"
-           "\tall.c: Tên tệp chứa danh sách tệp mã nguồn, đường dẫn tương đối\n"
-           "\tcgen: Tiền tố của các tệp đầu ra (.c và .h)\n");
+           "\tall.h: Tên tệp chưa danh sách tệp cần được hợp nhất, đường dẫn tương đối\n"
+           "\toutput-name: Tên tệp đầu ra\n");
     return 1;
   }
   const char *root = argv[1],
-             *hlist = argv[2],
-             *clist = argv[3],
-             *oname = argv[4];
+             *list = argv[2],
+             *oname = argv[3];
   char list_name[1024] = {0};
-  sprintf(list_name, "%s/%s", root, hlist);
-  char out_name[1024] = {0};
-  sprintf(out_name, "%s.h", oname);
-  process(root, list_name, out_name);
-
-  sprintf(list_name, "%s/%s", root, clist);
-  sprintf(out_name, "%s.c", oname);
-  process(root, list_name, out_name);
+  sprintf(list_name, "%s/%s", root, list);
+  process(root, list_name, oname);
   return 0;
 }
