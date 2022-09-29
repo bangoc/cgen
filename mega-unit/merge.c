@@ -57,6 +57,7 @@ char *header_guard(const char *fname) {
     }
     o[i] = toupper(fname[i]);
   }
+  o[strlen(fname)] = '_';
   return o;
 }
 
