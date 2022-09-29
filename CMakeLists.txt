@@ -173,8 +173,8 @@ add_test(NAME ArrAssignMax COMMAND arr_assign_max_ut)
 add_test(NAME ArrAssignMin COMMAND arr_assign_min_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release)
-  set(cgraph_include_dest "include")
-  set(cgraph_lib_dest "lib")
+  set(cgen_include_dest "include")
+  set(cgen_lib_dest "lib")
   set(MERGE_CMD ${CMAKE_CURRENT_BINARY_DIR}/mega-unit/merge)
   MESSAGE(STATUS "MERGE CMD: " ${MERGE_CMD})
   execute_process(COMMAND ${MERGE_CMD}
@@ -183,8 +183,8 @@ if (${CMAKE_BUILD_TYPE} STREQUAL Release)
   execute_process(COMMAND ${MERGE_CMD}
                     ${CMAKE_CURRENT_SOURCE_DIR} all.c bkcgen.c
                   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/bkcgen.h DESTINATION "${cgraph_include_dest}")
-  install(TARGETS bkcgen DESTINATION "${cgraph_lib_dest}")
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/bkcgen.h DESTINATION "${cgen_include_dest}")
+  install(TARGETS bkcgen DESTINATION "${cgen_lib_dest}")
 
   set(CPACK_PACKAGE_INSTALL_DIRECTORY "/usr")
   set(CPACK_GENERATOR "DEB")
