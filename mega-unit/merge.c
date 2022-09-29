@@ -12,6 +12,7 @@ int is_include(const char *line) {
 struct gvector *read_lines(const char *fname) {
   FILE *fp = fopen(fname, "r");
   if (!fp) {
+    printf("Lỗi mở tệp %s\n", fname);
     return NULL;
   }
   struct gvector *lines = gvec_create_full(0, 100, gtype_zero, gtype_free_s);
@@ -65,6 +66,9 @@ char *get_version(const char *root) {
   char fname[1024];
   sprintf(fname, "%s/%s", root, "VERSION");
   FILE *fp = fopen(fname, "r");
+  if (!fp) {
+    return NULL;
+  }
   char *vstr = NULL;
   remove_tail_lf(cgetline(&vstr, NULL, fp));
   fclose(fp);
@@ -126,8 +130,10 @@ void process(const char *root, const char *list_name, const char *out_name) {
     fprintf(out, "#define %s\n\n", hg);
   }
   fprintf(out, "/* (C) Nguyen Ba Ngoc 2022 */\n");
-  fprintf(out, "/* Version: %s */\n\n", ver);
-  free(ver);
+  if (ver) {
+    fprintf(out, "/* Version: %s */\n\n", ver);
+    free(ver);
+  }
   if (is_source(out_name)) {
     char *hn = strdup(out_name);
     hn[strlen(hn) - 1] = 'h';
