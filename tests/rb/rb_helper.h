@@ -38,7 +38,7 @@ static int rb_is_valid_internal(struct bnnode *n, long blacks) {
   END_INTERNAL();
 }
 
-static int rb_is_valid(struct bntree *t) {
+static int __rb_is_valid(struct bntree *t) {
   if (t->root == NULL) {
     return 1;
   }
@@ -50,5 +50,7 @@ static int rb_is_valid(struct bntree *t) {
   rb_is_valid_internal_stop = 0;
   return rb_is_valid_internal(t->root, 0);
 }
+
+#define rb_is_valid(t) __rb_is_valid(bn_tree(t))
 
 #endif  // TESTS_RB_RB_HELPER_H_

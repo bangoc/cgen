@@ -24,7 +24,7 @@ long *s2w_put(struct si2ways *col, const char *s) {
   long id = gvec_size(col->is);
   struct rbm_ires r = s2i_insert(col->si, s, id);
   if (!r.inserted) {
-    return r.value;
+    return (long *)r.value;
   }
   char *key = rbm_node(
     container_of(r.value, struct rbmnode, value))->key.s;

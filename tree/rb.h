@@ -58,8 +58,11 @@ struct rbnode {
 struct rbnode *rb_create_node();
 #define rb_free_node(n) free(n)
 
-struct bs_ires rb_insert(struct bntree *t, struct rbnode *nn, bn_compare_t cmp);
-struct bs_ires rb_insert_unique(struct bntree *t, struct rbnode *nn, bn_compare_t cmp);
-int rb_delete(struct bntree *t, struct rbnode *dn);
+struct bs_ires __rb_insert(struct bntree *t, struct rbnode *nn, bn_compare_t cmp);
+#define rb_insert(t, nn, cmp) __rb_insert(bn_tree(t), rb_node(nn), cmp)
+struct bs_ires __rb_insert_unique(struct bntree *t, struct rbnode *nn, bn_compare_t cmp);
+#define rb_insert_unique(t, nn, cmp) __rb_insert_unique(bn_tree(t), rb_node(nn), cmp)
+int __rb_delete(struct bntree *t, struct rbnode *dn);
+#define rb_delete(t, dn) __rb_delete(bn_tree(t), rb_node(dn))
 
 #endif  // TREE_RB_H_

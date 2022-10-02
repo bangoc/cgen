@@ -9,6 +9,7 @@ struct gsllist *que_enq(struct gsllist *q, gtype value) {
 
 struct gsllist *que_deq(struct gsllist *q) {
   gsl_pop_front(q);
+  return q;
 }
 
 gtype que_peek(struct gsllist *q) {

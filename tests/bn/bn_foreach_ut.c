@@ -41,7 +41,6 @@ int main() {
   bn_foreach_lrn(t, my_callback, NULL);
   CHECK_MSG(idx == 5, "Wrong index");
   idx = 0;
-  struct bnnode *cur;
   bn_traverse_lrn(cur, t) {
     CHECK_MSG(cur == nodes[idx], "Failed inline");
     ++idx;

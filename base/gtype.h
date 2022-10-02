@@ -38,7 +38,7 @@ typedef union generic_type {
 #define gtype_value(type, val) ((gtype){.type = (val)})
 #define gtype_l(value) gtype_value(l, value)
 #define gtype_d(value) gtype_value(d, value)
-#define gtype_s(value) gtype_value(s, value)
+#define gtype_s(value) gtype_value(s, (char *)value)
 #define gtype_v(value) gtype_value(v, value)
 #define gtype_g(value) gtype_value(g, value)
 #define gtype_gdl(value) gtype_value(gdl, value)

@@ -39,7 +39,7 @@ void idl_insertb(struct dllist *list, struct idlnode *pos, int value) {
   dll_insertb(list, dll_node(pos), dll_node(idl_create_node(value)));
 }
 
-void idn_pprint(struct idlnode *node) {
+void idn_pprint(struct dlnode *node) {
   printf("[%d]", idl_node_value(node));
 }
 

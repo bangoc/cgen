@@ -111,11 +111,11 @@ static void rb_insert_fixup(struct bntree *t, struct bnnode *n, struct bnnode *p
   } \
   return ires
 
-struct bs_ires rb_insert(struct bntree *t, struct rbnode *nn, bn_compare_t cmp) {
+struct bs_ires __rb_insert(struct bntree *t, struct rbnode *nn, bn_compare_t cmp) {
   RB_INSERT_TPL(bs_insert);
 }
 
-struct bs_ires rb_insert_unique(struct bntree *t, struct rbnode *nn, bn_compare_t cmp) {
+struct bs_ires __rb_insert_unique(struct bntree *t, struct rbnode *nn, bn_compare_t cmp) {
   RB_INSERT_TPL(bs_insert_unique,
     if (!ires.inserted) {
       return ires;
@@ -251,7 +251,7 @@ static void rb_delete_fix_color(struct bntree *t, struct bnnode *parent) {
   n->top = parent; \
   rb_set_color(n, color)
 
-int rb_delete(struct bntree *t, struct rbnode *dn) {
+int __rb_delete(struct bntree *t, struct rbnode *dn) {
   struct bnnode *node = bn_node(dn);
   struct bnnode *child = node->right,
             *tmp = node->left,

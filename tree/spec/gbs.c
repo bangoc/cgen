@@ -11,7 +11,7 @@ struct gbsnode *gbs_create_node(gtype key) {
   return nn;
 }
 
-struct gbstree *gbs_create_tree(struct gbsnode *root, gtype_cmp_t cmp, gtype_free_t fk) {
+struct gbstree *__gbs_create_tree(struct gbsnode *root, gtype_cmp_t cmp, gtype_free_t fk) {
   struct bntree *tmp = bn_create_tree(bn_node(root));
   struct gbstree *t = realloc(tmp, sizeof(struct gbstree));
   t->cmp = cmp;
@@ -56,7 +56,7 @@ int gbs_delete(struct gbstree *t, struct gbsnode *dn) {
   if (t->fk) {
     t->fk(dn->key);
   }
-  return bs_delete(bn_node(t), bn_node(dn));
+  return bs_delete(t, dn);
 }
 
 void gbs_pprint(struct gbstree *t, gtype_print_t gpp) {

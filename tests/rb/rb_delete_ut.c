@@ -3,9 +3,9 @@
 #include "tests/base/utils.h"
 
 int test_delete_root() {
-  struct bntree *t = rbi_create_tree(NULL);
+  struct grbtree *t = rbi_create_tree(NULL);
   struct grbnode *root = rbi_create_node(5);
-  t->root = bn_node(root);
+  bn_tree(t)->root = bn_node(root);
   rb_set_black(root);
   struct grbnode *lc = rbi_create_node(3);
   rb_set_red(lc);
@@ -19,11 +19,11 @@ int test_delete_root() {
   */
   rbi_delete(t, 5);
   CHECK_MSG(lnr_match_value(t, (int []){3, 8}, 2), "Giá trị tăng dần 3 8");
-  struct bnnode *n8 = t->root;
+  struct bnnode *n8 = bn_tree(t)->root;
   CHECK_MSG(rbi_value(n8) == 8, "n8 == 8");
   CHECK_MSG(rb_is_black(n8), "n8 là nút đen");
 
-  struct bnnode *n3 = t->root->left;
+  struct bnnode *n3 = bn_tree(t)->root->left;
   CHECK_MSG(rbi_value(n3) == 3, "n3 == 3");
   CHECK_MSG(rb_is_red(n3), "n3 là nút đỏ");
   CHECK_MSG(n3->top == n8, "top của n3 == n8");
@@ -37,27 +37,27 @@ int test_delete_root_2nodes() {
   struct grbnode *rc = rbi_create_node(8);
   rb_set_red(rc);
   bn_connect2(r, right, rc, top);
-  struct bntree *t = rbi_create_tree(bn_node(r));
+  struct grbtree *t = rbi_create_tree(bn_node(r));
   rbi_delete(t, 5);
   /*
      Xóa -> 5B     Thu được   8B
               8R
   */
   CHECK_MSG(lnr_match_value(t, (int[]){8}, 1), "Giá trị tăng dần 8");
-  CHECK_MSG(rbi_value(t->root) == 8, "Gốc bằng 8");
-  CHECK_MSG(rb_is_black(t->root), "Nút gốc là nút đen");
+  CHECK_MSG(rbi_value(bn_tree(t)->root) == 8, "Gốc bằng 8");
+  CHECK_MSG(rb_is_black(bn_tree(t)->root), "Nút gốc là nút đen");
 
   CHECK_MSG(rbi_delete(t, 6) == 0, "Hàm xóa nút không có trả về NULL");
 
   rbi_delete(t, 8);
-  CHECK_MSG(t->root == NULL, "Xóa nút 1 gốc cây thành rỗng.");
+  CHECK_MSG(bn_tree(t)->root == NULL, "Xóa nút 1 gốc cây thành rỗng.");
   rbi_free_tree(t);
   return 0;
 }
 
 int test_delete_single_deep_child() {
   struct grbnode *r = rbi_create_node(20);
-  struct bntree *t = rbi_create_tree(bn_node(r));
+  struct grbtree *t = rbi_create_tree(bn_node(r));
   rb_set_black(r);
 
   // Cây con trái
@@ -155,7 +155,7 @@ int test_delete_single_deep_child() {
       (struct attrib[]){{5, 0}, {10, 1}, {15, 0}, {20, 1}, {23, 1},
               {28, 0}, {29, 0}, {38, 1}}, 9),
       "Thuộc tính của các nút sau khi xóa 41.");
-  CHECK_MSG(bn_node(n28) == t->root->right, "n28 là con phải của gốc");
+  CHECK_MSG(bn_node(n28) == bn_tree(t)->root->right, "n28 là con phải của gốc");
   CHECK_MSG(bn_node(n28)->right == bn_node(n38),
         "n38 là con phải của n2");
   CHECK_MSG(bn_node(n29) == bn_node(n38)->left,
@@ -167,7 +167,7 @@ int test_delete_single_deep_child() {
 int test_delete_red_node_red_successor() {
   struct grbnode *r = rbi_create_node(10);
   rb_set_black(r);
-  struct bntree *t = rbi_create_tree(bn_node(r));
+  struct grbtree *t = rbi_create_tree(bn_node(r));
 
   //  Nhánh trái
   struct grbnode *n5 = rbi_create_node(5);
@@ -217,7 +217,7 @@ int test_delete_red_node_red_successor() {
 int test_delete_black_node_black_successor_no_child() {
   struct grbnode *root = rbi_create_node(10);
   rb_set_black(root);
-  struct bntree *t = rbi_create_tree(bn_node(root));
+  struct grbtree *t = rbi_create_tree(bn_node(root));
   struct grbnode *m10 = rbi_create_node(-10);
   rb_set_black(m10);
 

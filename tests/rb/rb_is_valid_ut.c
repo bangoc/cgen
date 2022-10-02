@@ -9,7 +9,7 @@ int t1() {
   struct grbnode *n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
-  struct bntree *t = rbi_create_tree(bn_node(n3));
+  struct grbtree *t = rbi_create_tree(bn_node(n3));
   CHECK_MSG(rb_is_valid(t), "Cây 1");
   rbi_free_tree(t);
   return 0;
@@ -21,7 +21,7 @@ int t2() {
   struct grbnode *n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
-  struct bntree *t = rbi_create_tree(bn_node(n3));
+  struct grbtree *t = rbi_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 2");
   rbi_free_tree(t);
   return 0;
@@ -33,7 +33,7 @@ int t3() {
   struct grbnode *n5 = rbi_create_color_node(5, RB_BLACK);
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
-  struct bntree *t = rbi_create_tree(bn_node(n3));
+  struct grbtree *t = rbi_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 3");
   rbi_free_tree(t);
   return 0;
@@ -47,7 +47,7 @@ int t4() {
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
-  struct bntree *t = rbi_create_tree(bn_node(n3));
+  struct grbtree *t = rbi_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 4");
   rbi_free_tree(t);
   return 0;
@@ -61,7 +61,7 @@ int t5() {
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
-  struct bntree *t = rbi_create_tree(bn_node(n3));
+  struct grbtree *t = rbi_create_tree(bn_node(n3));
   CHECK_MSG(!rb_is_valid(t), "Cây 5");
   rbi_free_tree(t);
   return 0;
@@ -75,7 +75,7 @@ int t6() {
   bn_connect2(n3, left, n1, top);
   bn_connect2(n3, right, n5, top);
   bn_connect2(n5, right, n6, top);
-  struct bntree *t = rbi_create_tree(bn_node(n3));
+  struct grbtree *t = rbi_create_tree(bn_node(n3));
   CHECK_MSG(rb_is_valid(t), "Cây 6");
   rbi_free_tree(t);
   return 0;

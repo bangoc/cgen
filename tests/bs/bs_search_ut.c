@@ -10,15 +10,15 @@ int main() {
   struct gbsnode n6 = {.key = gtype_l(6)};
   struct gbsnode n_1 = {.key = gtype_l(-1)};
 
-  n2.base.left = &n1;
-  n1.base.top = &n2;
-  n2.base.right = &n3;
-  n3.base.top = &n2;
-  n3.base.right = &n5;
-  n5.base.top = &n3;
-  n5.base.left = &n4;
-  n4.base.top = &n5;
-  struct gbstree *t = gbs_create_tree(bn_node(&n2), gtype_cmp_l, NULL);
+  n2.base.left = bn_node(&n1);
+  n1.base.top = bn_node(&n2);
+  n2.base.right = bn_node(&n3);
+  n3.base.top = bn_node(&n2);
+  n3.base.right = bn_node(&n5);
+  n5.base.top = bn_node(&n3);
+  n5.base.left = bn_node(&n4);
+  n4.base.top = bn_node(&n5);
+  struct gbstree *t = gbs_create_tree(&n2, gtype_cmp_l, NULL);
   /*
           2
         1   3

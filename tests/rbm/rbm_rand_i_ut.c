@@ -17,7 +17,6 @@ char buff[BUFF_SIZE] = {0};
 void gen_buff() {
   for (int i = 0; i < BUFF_SIZE - 1; ++i) {
     buff[i] = 'a' + rand() % ('z' - 'a' + 1);
-    buff[BUFF_SIZE - 1];
   }
 }
 

@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     }
     gsl_push_back(list, gtype_s(strdup(line)));
   }
-  printf("Đã nhập %d dòng:\n", gsl_length(list));
+  printf("Đã nhập %ld dòng:\n", gsl_length(list));
   gsl_traverse(cur, list) {
     printf("%s", cur->s);
   }

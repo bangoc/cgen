@@ -30,7 +30,8 @@ struct gbstree {
 
 struct gbsnode *gbs_create_node(gtype key);
 int gbs_cmp_node(struct bnnode *n1, struct bnnode *n2, struct bntree *t);
-struct gbstree *gbs_create_tree(struct gbsnode *root, gtype_cmp_t cmp, gtype_free_t fk);
+struct gbstree *__gbs_create_tree(struct gbsnode *root, gtype_cmp_t cmp, gtype_free_t fk);
+#define gbs_create_tree(root, cmp, fk) __gbs_create_tree(gbs_node(root), cmp, fk)
 
 struct bs_ires gbs_insert(struct gbstree *t, gtype key);
 struct bs_ires gbs_insert_unique(struct gbstree *t, gtype key);

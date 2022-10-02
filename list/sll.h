@@ -37,7 +37,7 @@ typedef void (*sll_node_print_t)(struct slnode *);
 #define sll_length(list) (sll_list(list)->length)
 
 #define sll_traverse(cur, list) \
-  for (struct slnode *cur = list->front; cur != NULL; cur = cur->next)
+  for (struct slnode *cur = sll_front(list); cur != NULL; cur = cur->next)
 
 #define sll_free(list) \
   do { \
@@ -52,10 +52,19 @@ typedef void (*sll_node_print_t)(struct slnode *);
 
 struct slnode *sll_create_node();
 struct sllist *sll_create_list();
-void sll_push_back(struct sllist *list, struct slnode *node);
-void sll_push_front(struct sllist *list, struct slnode *node);
-void sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn);
-void sll_pop_front(struct sllist *list);
+
+void __sll_push_back(struct sllist *list, struct slnode *node);
+#define sll_push_back(list, nn) __sll_push_back(sll_list(list), nn)
+
+void __sll_push_front(struct sllist *list, struct slnode *node);
+#define sll_push_front(list, nn) __sll_push_front(sll_list(list), nn)
+
+void __sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn);
+#define sll_inserta(list, pos, nn) __sll_inserta(sll_list(list), pos, nn)
+
+void __sll_pop_front(struct sllist *list);
+#define sll_pop_front(list) __sll_pop_front(sll_list(list))
+
 void sll_node_print_address(struct slnode *node);
 void sll_pprint(struct sllist *list, sll_node_print_t npp);
 

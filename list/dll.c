@@ -13,7 +13,7 @@ struct dllist *dll_create_list() {
   return calloc(1, sizeof(struct dllist));
 }
 
-void dll_push_back(struct dllist *list, struct dlnode *nn) {
+void __dll_push_back(struct dllist *list, struct dlnode *nn) {
   if (list->back == NULL) {
     list->front = list->back = nn;
   } else {
@@ -24,7 +24,7 @@ void dll_push_back(struct dllist *list, struct dlnode *nn) {
   ++list->length;
 }
 
-void dll_push_front(struct dllist *list, struct dlnode *nn) {
+void __dll_push_front(struct dllist *list, struct dlnode *nn) {
   if (list->front == NULL) {
     list->front = list->back = nn;
   } else {
@@ -35,7 +35,7 @@ void dll_push_front(struct dllist *list, struct dlnode *nn) {
   ++list->length;
 }
 
-void dll_pop_back(struct dllist *list) {
+void __dll_pop_back(struct dllist *list) {
   if (dll_is_empty(list)) {
     return;
   }
@@ -50,7 +50,7 @@ void dll_pop_back(struct dllist *list) {
   --list->length;
 }
 
-void dll_pop_front(struct dllist *list) {
+void __dll_pop_front(struct dllist *list) {
   if (dll_is_empty(list)) {
     return;
   }
@@ -66,9 +66,9 @@ void dll_pop_front(struct dllist *list) {
 }
 
 /* insert nn after pos in list. push_back if pos == NULL */
-void dll_inserta(struct dllist *list, struct dlnode *pos, struct dlnode *nn) {
+void __dll_inserta(struct dllist *list, struct dlnode *pos, struct dlnode *nn) {
   if (!pos) {
-    dll_push_back(list, nn);
+    __dll_push_back(list, nn);
     return;
   }
 
@@ -85,9 +85,9 @@ void dll_inserta(struct dllist *list, struct dlnode *pos, struct dlnode *nn) {
 }
 
 /* insert nn before pos in list. push_front is pos == NULL */
-void dll_insertb(struct dllist *list, struct dlnode *pos, struct dlnode *nn) {
+void __dll_insertb(struct dllist *list, struct dlnode *pos, struct dlnode *nn) {
   if (!pos) {
-    dll_push_front(list, nn);
+    __dll_push_front(list, nn);
     return;
   }
 
@@ -103,13 +103,13 @@ void dll_insertb(struct dllist *list, struct dlnode *pos, struct dlnode *nn) {
   ++list->length;
 }
 
-void dll_erase(struct dllist *list, struct dlnode *pos) {
+void __dll_erase(struct dllist *list, struct dlnode *pos) {
   if (pos == list->front) {
-    dll_pop_front(list);
+    __dll_pop_front(list);
     return;
   }
   if (pos == list->back) {
-    dll_pop_back(list);
+    __dll_pop_back(list);
     return;
   }
 

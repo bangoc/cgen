@@ -9,8 +9,8 @@ int main() {
   hmap_insert(map, gtype_s("ddd"), gtype_l(400));
   hmap_insert(map, gtype_s("eee"), gtype_l(500));
   hmap_insert(map, gtype_s("fff"), gtype_l(600));
-  gtype *value;
-  if (value = hmap_value(map, gtype_s("ccc"))) {
+  gtype *value = hmap_value(map, gtype_s("ccc"));
+  if (value) {
     printf("Value of ccc = %ld\n", value->l);
   } else {
     printf("Surprised\n");

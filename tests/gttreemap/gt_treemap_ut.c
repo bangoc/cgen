@@ -32,7 +32,7 @@ int main() {
   CHECK_MSG(rbm_remove(t, gtype_s(sd)) == 1, "remove sd");
   CHECK_MSG(rbm_remove(t, gtype_s(se)) == 1, "remove se");
   CHECK_MSG(rbm_remove(t, gtype_s(sf)) == 1, "remove sf");
-  gtype *value = NULL, query = {.s = sd};
+  gtype query = {.s = sd};
   CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found D");
   query = gtype_s(se);
   CHECK_MSG(rbm_value(t, query) == NULL, "Failed not found E");

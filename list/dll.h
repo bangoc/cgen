@@ -62,13 +62,28 @@ typedef void (*dll_node_print_t)(struct dlnode *);
 
 struct dlnode *dll_create_node();
 struct dllist *dll_create_list();
-void dll_push_back(struct dllist *list, struct dlnode *nn);
-void dll_push_front(struct dllist *list, struct dlnode *nn);
-void dll_pop_front(struct dllist *list);
-void dll_pop_back(struct dllist *list);
-void dll_inserta(struct dllist *list, struct dlnode *pos, struct dlnode *nn);
-void dll_insertb(struct dllist *list, struct dlnode *pos, struct dlnode *nn);
-void dll_erase(struct dllist *list, struct dlnode *pos);
+
+void __dll_push_back(struct dllist *list, struct dlnode *nn);
+#define dll_push_back(list, nn) __dll_push_back(dll_list(list), dll_node(nn))
+
+void __dll_push_front(struct dllist *list, struct dlnode *nn);
+#define dll_push_front(list, nn) __dll_push_front(dll_list(list), dll_node(nn))
+
+void __dll_pop_front(struct dllist *list);
+#define dll_pop_front(list) __dll_pop_front(dll_list(list))
+
+void __dll_pop_back(struct dllist *list);
+#define dll_pop_back(list) __dll_pop_back(dll_list(list))
+
+void __dll_inserta(struct dllist *list, struct dlnode *pos, struct dlnode *nn);
+#define dll_inserta(list, pos, nn) __dll_inserta(dll_list(list), dll_node(pos), dll_node(nn))
+
+void __dll_insertb(struct dllist *list, struct dlnode *pos, struct dlnode *nn);
+#define dll_insertb(list, pos, nn) __dll_insertb(dll_list(list), dll_node(pos), dll_node(nn))
+
+void __dll_erase(struct dllist *list, struct dlnode *pos);
+#define dll_erase(list, pos) __dll_erase(dll_list(list), dll_node(pos))
+
 void dll_node_print_address(struct dlnode *);
 void dll_pprint(struct dllist *, dll_node_print_t);
 

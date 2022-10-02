@@ -36,7 +36,7 @@ int idl_pop_front(struct dllist *list);
 void idl_insert_a(struct dllist *list, struct idlnode *pos, int value);
 void idl_insertb(struct dllist *list, struct idlnode *pos, int value);
 
-void idn_pprint(struct idlnode *);
+void idn_pprint(struct dlnode *);
 void idl_pprint(struct dllist *);
 
 #endif // LIST_SPEC_IDL_H_

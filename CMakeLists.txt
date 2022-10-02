@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 project(cgen)
 
 # ON by default, use -DNOWARN=ON/OFF in Cmake command to turn ON/OFF
-option(NOWARN "ON-No warnings, OFF-Tend to show all warnings" ON)
 option(BENCH_OP "Optimization (O1, O2, O3) benchmark" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -22,18 +21,6 @@ if (${CMAKE_BUILD_TYPE} STREQUAL Release)
 endif()
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-function")
-
-if (WARN_ERROR)
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Werror")
-endif ()
-
-if (NOWARN)
-  MESSAGE(STATUS "cgen no warnings")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -w")
-else(NOWARN)
-  MESSAGE(STATUS "cgen all warnings")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-endif()
 
 add_subdirectory(tests)
 add_subdirectory(examples)

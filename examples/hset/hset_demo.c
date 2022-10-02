@@ -14,7 +14,7 @@ int main() {
   hset_insert(s, gtype_s("aaaaa"));
   hset_insert(s, gtype_s("ccccc"));
   hset_insert(s, gtype_s("bbbbb"));
-  printf("Số lượng giá trị duy nhất = %ld\n", hset_size(s));
+  printf("Số lượng giá trị duy nhất = %d\n", hset_size(s));
   hset_traverse(key, s) {
     printf("%s\n", key->s);
   }

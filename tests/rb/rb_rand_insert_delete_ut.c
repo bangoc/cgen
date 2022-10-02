@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
   sscanf(argv[1], "%ld", &num_ops);
   sscanf(argv[2], "%ld", &max_value);
   srand(time(NULL));
-  struct bntree *t = rbi_create_tree(NULL);
+  struct grbtree *t = rbi_create_tree(NULL);
   for (long i = 0; i < num_ops; ++i) {
     int op = rand() % 2;
     int value = rand() % max_value + 1;

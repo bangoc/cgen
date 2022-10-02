@@ -38,6 +38,7 @@ struct bntree {
 };
 
 #define bn_tree(t) ((struct bntree *)(t))
+#define bn_root(t) (bn_tree(t)->root)
 
 typedef int (*bn_callback_t)();
 typedef int (*bn_compare_t)(struct bnnode *, struct bnnode *, struct bntree *);
@@ -47,12 +48,18 @@ struct bnnode *bn_create_node();
 #define bn_free_node(n) free(n)
 
 struct bntree *bn_create_tree(struct bnnode *root);
-void bn_free_tree(struct bntree *t);
+
+void __bn_free_tree(struct bntree *t);
+#define bn_free_tree(t) __bn_free_tree(bn_tree(t))
+
 void bn_foreach_lrn(struct bntree *t, bn_callback_t op, void *u);
 void bn_foreach_lnr(struct bntree *t, bn_callback_t op, void *u);
 void bn_foreach_rnl(struct bntree *t, bn_callback_t op, void *u);
 void bn_pprint(struct bntree *t, bn_node_print_t p);
-long bn_size(struct bntree *t);
+
+long __bn_size(struct bntree *t);
+#define bn_size(t) __bn_size(bn_tree(t))
+
 long bn_distance(struct bnnode *n);  // số lượng cạnh tới gốc
 long bn_edge_height(struct bntree *t);
 

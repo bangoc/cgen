@@ -13,7 +13,7 @@ struct sllist *sll_create_list() {
   return calloc(1, sizeof(struct sllist));
 }
 
-void sll_push_back(struct sllist *list, struct slnode *node) {
+void __sll_push_back(struct sllist *list, struct slnode *node) {
   node->next = NULL;
   if (list->front == NULL) {
     list->front = list->back = node;
@@ -24,7 +24,7 @@ void sll_push_back(struct sllist *list, struct slnode *node) {
   ++list->length;
 }
 
-void sll_push_front(struct sllist *list, struct slnode *node) {
+void __sll_push_front(struct sllist *list, struct slnode *node) {
   if (list->front == NULL) {
     list->front = list->back = node;
     node->next = NULL;
@@ -35,13 +35,13 @@ void sll_push_front(struct sllist *list, struct slnode *node) {
   ++list->length;
 }
 
-void sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn) {
+void __sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn) {
   if (!pos) {
-    sll_push_back(list, nn);
+    __sll_push_back(list, nn);
     return;
   }
 
-  struct dlnode *tmp = pos->next;
+  struct slnode *tmp = pos->next;
   pos->next = nn;
   nn->next = tmp;
   if (!tmp) {
@@ -50,7 +50,7 @@ void sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn) {
   ++list->length;
 }
 
-void sll_pop_front(struct sllist *list) {
+void __sll_pop_front(struct sllist *list) {
   if (sll_is_empty(list)) {
     return;
   }

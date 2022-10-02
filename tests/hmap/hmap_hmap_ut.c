@@ -22,7 +22,7 @@ int main() {
   }
   hmap_traverse(k, v, map) {
     struct hmap *tmp = v->v;
-    printf("%ld: %ld: ", k->l, hmap_size(tmp));
+    printf("%ld: %d: ", k->l, hmap_size(tmp));
     hmap_traverse(k, v, tmp) {
       printf(" (%ld, %ld)", k->l, v->l);
     }

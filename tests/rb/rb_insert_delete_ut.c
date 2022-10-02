@@ -25,7 +25,7 @@ int compare(struct bnnode *x, struct bnnode *y) {
 }
 
 int t1() {
-  struct bntree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
+  struct bntree *t = bn_tree(grb_create_tree(NULL, gtype_cmp_l, NULL));
   grb_insert(t, gtype_l(1));
   CHECK_MSG(node_values(t->root, 1, RB_BLACK, NULL, NULL, NULL), "root values");
 

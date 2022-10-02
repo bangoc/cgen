@@ -49,7 +49,8 @@ int gvec_identical(struct gvector *v1, struct gvector *v2) {
     return 0;
   }
   size_t elems_size = v1->cap * sizeof(gtype);
-  char *p = v1->elems, *q = v2->elems;
+  char *p = (char *)(v1->elems),
+       *q = (char *)(v2->elems);
   for (size_t i = 0; i < elems_size; ++i) {
     if (p[i] != q[i]) {
       return 0;

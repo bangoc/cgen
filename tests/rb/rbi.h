@@ -8,10 +8,19 @@
 // ========== Khai báo hàm ===============
 static struct grbnode *rbi_create_node(int value);
 static struct grbnode *rbi_create_color_node(int value, enum rbnode_color color);
-static struct grbnode *rbi_insert(struct bntree *t, int value);
-static struct grbnode *rbi_search(struct bntree *t, int value);
-static struct grbtree *rbi_create_tree(struct bnnode *root);
-static int rbi_delete(struct bntree *t, int value);
+
+static struct grbnode *__rbi_insert(struct bntree *t, int value);
+#define rbi_insert(t, value) __rbi_insert(bn_tree(t), value)
+
+static struct grbnode *__rbi_search(struct bntree *t, int value);
+#define rbi_search(t, value) __rbi_search(bn_tree(t), value)
+
+static struct grbtree *__rbi_create_tree(struct bnnode *root);
+#define rbi_create_tree(root) __rbi_create_tree(bn_node(root))
+
+static int __rbi_delete(struct bntree *t, int value);
+#define rbi_delete(t, value) __rbi_delete(bn_tree(t), value)
+
 static void rbi_print_node(struct bnnode *n);
 static int rbi_similar_node(struct bnnode *n1, struct bnnode *n2);
 
@@ -31,23 +40,23 @@ static struct grbnode *rbi_create_color_node(int value, enum rbnode_color color)
   return n;
 }
 
-static struct grbnode *rbi_insert(struct bntree *t, int value) {
+static struct grbnode *__rbi_insert(struct bntree *t, int value) {
   struct bs_ires ires = grb_insert(t, gtype_l(value));
   return grb_node(ires.nn);
 }
 
-static struct grbnode *rbi_search(struct bntree *t, int value) {
+static struct grbnode *__rbi_search(struct bntree *t, int value) {
   return grb_node(grb_search(t, gtype_l(value)));
 }
 
-static struct grbtree *rbi_create_tree(struct bnnode *root) {
+static struct grbtree *__rbi_create_tree(struct bnnode *root) {
   struct grbtree *t = grb_create_tree(root, gtype_cmp_l, NULL);
   return t;
 }
 
 #define rbi_free_tree(t) grb_free_tree(grb_tree(t))
 
-static int rbi_delete(struct bntree *t, int value) {
+static int __rbi_delete(struct bntree *t, int value) {
   struct grbnode *n = rbi_search(t, value);
   if (n) {
     grb_delete(t, bn_node(n));

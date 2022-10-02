@@ -73,7 +73,7 @@ struct bntree *make_tree3() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  return rbi_create_tree(bn_node(n5));
+  return bn_tree(rbi_create_tree(bn_node(n5)));
 }
 
 struct bntree *make_tree4() {
@@ -98,7 +98,7 @@ struct bntree *make_tree4() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
-  return rbi_create_tree(bn_node(n5));
+  return bn_tree(rbi_create_tree(bn_node(n5)));
 }
 
 int delete_node_one_left_child() {
@@ -111,7 +111,7 @@ int delete_node_one_left_child() {
   bn_connect2(n5, left, n2, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
 
   rbi_delete(t, 3);
   /* Sau khi xóa 3
@@ -135,7 +135,7 @@ int delete_node_one_right_child() {
   bn_connect2(n3, left, n2, top);
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n8, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
 
   rbi_delete(t, 6);
   /* Sau khi xóa 6
@@ -169,7 +169,7 @@ int delete_red_node_no_child() {
   bn_connect2(n5, left, n3, top);
   bn_connect2(n5, right, n6, top);
   bn_connect2(n6, right, n8, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 2 trong cây 1");
 
   rbi_delete(t, 8);
@@ -214,7 +214,7 @@ int delete_black_node_no_child_red_top_black_sibling1() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, right, n10, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -248,7 +248,7 @@ int delete_black_node_no_child_red_top_black_sibling2() {
   bn_connect2(n6, top, n7, left);
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 8 trong cây 2");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -283,7 +283,7 @@ int delete_black_node_no_child_red_sibling_black_top() {
   bn_connect2(n9, left, n7, top);
   bn_connect2(n9, right, n10, top);
   bn_connect2(n7, right, n8, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa nút 6 trong cây 2");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -326,7 +326,7 @@ int delete_black_node_no_child_black_sibling_black_top1() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  struct bntree *s = rbi_create_tree(bn_node(n7));
+  struct grbtree *s = rbi_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -367,7 +367,7 @@ int delete_black_node_no_child_black_sibling_black_top2() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  struct bntree *s = rbi_create_tree(bn_node(n7));
+  struct grbtree *s = rbi_create_tree(bn_node(n7));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 3");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -405,7 +405,7 @@ int delete_black_node_no_child_black_sibling_red_child_black_top() {
   bn_connect2(n7, right, n9, top);
   bn_connect2(n9, left, n8, top);
   bn_connect2(n9, right, n10, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Cây sau khi xóa 1");
   rbi_free_tree(t);
   rbi_free_tree(s);
@@ -439,7 +439,7 @@ int delete_black_node_no_child_black_sibling_with_black_top_red_left_child() {
   bn_connect2(n5, right, n8, top);
   bn_connect2(n8, left, n7, top);
   bn_connect2(n8, right, n9, top);
-  struct bntree *s = rbi_create_tree(bn_node(n5));
+  struct grbtree *s = rbi_create_tree(bn_node(n5));
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node), "Sau khi xóa 6");
   rbi_free_tree(t);
   rbi_free_tree(s);

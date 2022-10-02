@@ -12,7 +12,7 @@ struct bntree *bn_create_tree(struct bnnode *root) {
   return tree;
 }
 
-void bn_free_tree(struct bntree *t) {
+void __bn_free_tree(struct bntree *t) {
   struct bnnode *tmp = NULL;
   bn_traverse_lrn(cur, t) {
     bn_free_node(tmp);
@@ -171,7 +171,7 @@ void bn_pprint(struct bntree *t, bn_node_print_t p) {
     g_bn_pprint_spaces_at_begin, g_bn_pprint_step);
 }
 
-long bn_size(struct bntree *t) {
+long __bn_size(struct bntree *t) {
   long cc = 0;
   bn_traverse_lrn(cur, t)  {
     ++cc;

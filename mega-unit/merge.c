@@ -2,6 +2,7 @@
 
 #include "all.h"
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -79,7 +80,7 @@ void process(const char *root, const char *list_name, const char *out_name) {
   struct gvector *v = read_lines(list_name);
   if (!v) {
     printf("Can not read the list\n");
-    return 1;
+    return;
   }
 
   struct rbstree *headers = rbs_create(gtype_cmp_s, gtype_free_s);
@@ -121,7 +122,7 @@ void process(const char *root, const char *list_name, const char *out_name) {
   FILE *out = fopen(out_name, "w");
   if (!out) {
     printf("Không thể mở tệp đầu ra.\n");
-    return 1;
+    return;
   }
   char *ver = get_version(root);
   if (is_header(out_name)) {

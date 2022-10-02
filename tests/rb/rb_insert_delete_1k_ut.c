@@ -9,7 +9,7 @@ int main() {
   for (int i = 0; i < N; ++i) {
     a[i] = i;
   }
-  struct bntree *t = rbi_create_tree(NULL);
+  struct grbtree *t = rbi_create_tree(NULL);
 
   // insert
   for (int i = 0; i < N; ++i) {
