@@ -94,36 +94,37 @@ $(function() {
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_create_node(<a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordtype">int</span> gbs_cmp_node(<span class="keyword">struct</span> <a class="code hl_struct" href="structbnnode.html">bnnode</a> *n1, <span class="keyword">struct</span> <a class="code hl_struct" href="structbnnode.html">bnnode</a> *n2, <span class="keyword">struct</span> <a class="code hl_struct" href="structbntree.html">bntree</a> *t);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbstree.html">gbstree</a> *gbs_create_tree(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *root, gtype_cmp_t cmp, gtype_free_t fk);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">struct </span>bs_ires gbs_insert(struct <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">struct </span>bs_ires gbs_insert_unique(struct <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_search(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_search_gte(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_search_lte(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">int</span> gbs_delete(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <span class="keyword">struct</span> <a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *n);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="preprocessor">#define gbs_free_node(n, fk) \</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">  do { \</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">    if (fk) { \</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">      (fk)(gbs_node(n)-&gt;key); \</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">    } \</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">    bn_free_node(n); \</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#define gbs_free_tree(t) \</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">  do { \</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">    if (gbs_tree(t)-&gt;fk) { \</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">      bn_traverse_lnr(_cur, bn_tree(t)) { \</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">        gbs_tree(t)-&gt;fk(gbs_node(_cur)-&gt;key); \</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">      }  \</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">    } \</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">    bn_free_tree(bn_tree(t)); \</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">  } while (0)</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keywordtype">void</span> gbs_pprint(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *, gtype_print_t gpp);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif  </span><span class="comment">// SPEC_TREE_GBS_H_</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbstree.html">gbstree</a> *__gbs_create_tree(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *root, gtype_cmp_t cmp, gtype_free_t fk);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#define gbs_create_tree(root, cmp, fk) __gbs_create_tree(gbs_node(root), cmp, fk)</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">struct </span>bs_ires gbs_insert(struct <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">struct </span>bs_ires gbs_insert_unique(struct <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_search(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_search_gte(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">struct </span><a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *gbs_search_lte(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <a class="code hl_union" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">int</span> gbs_delete(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *t, <span class="keyword">struct</span> <a class="code hl_struct" href="structgbsnode.html">gbsnode</a> *n);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#define gbs_free_node(n, fk) \</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">  do { \</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="preprocessor">    if (fk) { \</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">      (fk)(gbs_node(n)-&gt;key); \</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">    } \</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">    bn_free_node(n); \</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#define gbs_free_tree(t) \</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">  do { \</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">    if (gbs_tree(t)-&gt;fk) { \</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">      bn_traverse_lnr(_cur, bn_tree(t)) { \</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">        gbs_tree(t)-&gt;fk(gbs_node(_cur)-&gt;key); \</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">      }  \</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">    } \</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">    bn_free_tree(bn_tree(t)); \</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keywordtype">void</span> gbs_pprint(<span class="keyword">struct</span> <a class="code hl_struct" href="structgbstree.html">gbstree</a> *, gtype_print_t gpp);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif  </span><span class="comment">// SPEC_TREE_GBS_H_</span></div>
 <div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
 <div class="ttc" id="astructbnnode_html"><div class="ttname"><a href="structbnnode.html">bnnode</a></div><div class="ttdef"><b>Definition:</b> bn.h:21</div></div>
 <div class="ttc" id="astructbntree_html"><div class="ttname"><a href="structbntree.html">bntree</a></div><div class="ttdef"><b>Definition:</b> bn.h:36</div></div>
