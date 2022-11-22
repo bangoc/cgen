@@ -3,10 +3,16 @@ project(cgen)
 
 # ON by default, use -DNOWARN=ON/OFF in Cmake command to turn ON/OFF
 option(BENCH_OP "Optimization (O1, O2, O3) benchmark" OFF)
+option(USE_GC "Use external GC" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 set(CMAKE_C_STANDARD 11)
+
+if (USE_GC)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DCGEN_USE_GC")
+  message(STATUS "Using GC")
+endif (USE_GC)
 
 if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Debug")
