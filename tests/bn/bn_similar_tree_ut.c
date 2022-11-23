@@ -7,7 +7,9 @@ int bn_similar_null(struct bnnode *n1, struct bnnode *n2) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct bnnode *n11 = bn_create_node();
   struct bnnode *n12 = bn_create_node();
   struct bnnode *n13 = bn_create_node();

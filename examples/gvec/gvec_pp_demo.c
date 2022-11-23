@@ -28,7 +28,9 @@ int gtype_qsort_point(const void *v1, const void *v2) {
 #undef pp
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }

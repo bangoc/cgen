@@ -245,7 +245,9 @@ int test_dll_clear() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(test_dll_create_node() == 0, "dll_create_node");
   CHECK_MSG(test_dll_create_list() == 0, "dll_create");
   CHECK_MSG(test_dll_push_t1() == 0, "dll_push_t1");

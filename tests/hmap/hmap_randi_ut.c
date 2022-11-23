@@ -79,7 +79,9 @@ int t2(int n) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   CHECK_MSG(t1(100000) == 0, "t1 100000");
   CHECK_MSG(t2(100000) == 0, "t2 100000");

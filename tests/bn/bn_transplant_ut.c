@@ -45,7 +45,9 @@ int t1() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK(t1() == 0);
   return 0;
 }

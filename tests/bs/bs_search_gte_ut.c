@@ -4,7 +4,9 @@
 #include "tree/spec/grb.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct grbtree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   grb_insert(t, gtype_l(1));
   grb_insert(t, gtype_l(3));

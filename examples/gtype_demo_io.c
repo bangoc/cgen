@@ -17,7 +17,9 @@ void print_contact(gtype v) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }

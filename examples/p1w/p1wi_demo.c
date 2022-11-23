@@ -1,7 +1,9 @@
 #include "all.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   // max heap
   struct p1way *h = p1w_create(gtype_cmp_l);
   p1w_enqueue(h, gtype_l(10));

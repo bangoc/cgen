@@ -6,7 +6,9 @@
 #include <time.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   if (argc != 3) {
     printf("usage: ./p #Ops max_value\nExample: ./p 10000 1000\n");
     return 1;

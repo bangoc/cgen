@@ -4,7 +4,9 @@
 #include "rbi.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   int a[] = {1, 2, 2, 3, 3, 3, 5, 5, 5, 5, 5, 6, 6, 6, 6, 8, 9, 10};
   int n = sizeof(a)/sizeof(a[0]);
   struct grbtree *t = rbi_create_tree(NULL);

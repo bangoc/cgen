@@ -77,7 +77,9 @@ void t2(int n) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   if (argc != 2) {
     printf("Usage: ./prog 10000\n");
     return 1;

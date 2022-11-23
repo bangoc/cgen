@@ -9,7 +9,9 @@ gtype pop_value_front(struct gsllist *list) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct gsllist *list = gsl_create_list(NULL);
   gsl_push_back(list, (gtype){.l = 1});
   CHECK_MSG(gsl_length(list) == 1, "Append n1 size");

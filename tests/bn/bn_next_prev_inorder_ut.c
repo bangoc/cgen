@@ -2,7 +2,9 @@
 #include "tree/bn.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct bnnode *n1 = bn_create_node();
   struct bnnode *n2 = bn_create_node();
   struct bnnode *n3 = bn_create_node();

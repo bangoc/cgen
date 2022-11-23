@@ -8,7 +8,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct rbstree *s = rbs_create(gtype_cmp_s, gtype_free_s);
   const char *cases[] = {"aaa", "bbb", "ccc"};
   int n = sizeof(cases)/sizeof(cases[0]);

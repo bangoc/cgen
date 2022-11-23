@@ -5,7 +5,9 @@
 #define N 1000
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   int a[N];
   for (int i = 0; i < N; ++i) {
     a[i] = i;

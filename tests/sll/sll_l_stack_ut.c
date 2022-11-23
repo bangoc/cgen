@@ -2,7 +2,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct sllist *stk = sll_create_list();
   isl_stack_push(stk, 1);
   isl_stack_push(stk, 2);

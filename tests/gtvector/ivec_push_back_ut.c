@@ -3,7 +3,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   arr_make(v, 0, int);
   arr_append(v, 1);
   arr_append(v, 2);

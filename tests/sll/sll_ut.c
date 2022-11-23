@@ -65,7 +65,9 @@ int test_create_list() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(sll_t1() == 0, "t1 (old tests)");
   CHECK_MSG(test_create_list() == 0, "create_list");
   TEST_OK();

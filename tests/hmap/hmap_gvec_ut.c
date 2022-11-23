@@ -11,7 +11,9 @@
 #include <time.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   struct hmap *map = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, gtype_free_gvec);
   for (int i = 0; i < 100; ++i) {

@@ -11,7 +11,9 @@ int g_id = 0;
 
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   si = s2i_create();
 
   s2i_put(si, "aa",1);

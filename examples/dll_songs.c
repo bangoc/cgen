@@ -22,7 +22,9 @@ void free_song_g(gtype g) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct gdllist *list = gdl_create_list(free_song_g);
 
   // Add songs to list

@@ -2,7 +2,9 @@
 #include "tree/spec/gbs.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct gbsnode n1 = {.key = gtype_l(1)};
   struct gbsnode n2 = {.key = gtype_l(2)};
   struct gbsnode n3 = {.key = gtype_l(3)};

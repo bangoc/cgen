@@ -19,7 +19,9 @@ void print_rbm(struct rbmtree *tab) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   struct rbmtree *tab = rbm_create(gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {

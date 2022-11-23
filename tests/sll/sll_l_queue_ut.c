@@ -2,7 +2,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct sllist *q = sll_create_list();
   isl_fifo_enq(q, 1);
   isl_fifo_enq(q, 2);

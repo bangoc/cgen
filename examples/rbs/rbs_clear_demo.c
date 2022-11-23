@@ -21,7 +21,9 @@ void print_rbs(struct rbstree *tab) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   struct rbstree *tab = rbs_create(gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < 10; ++i) {

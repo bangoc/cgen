@@ -62,7 +62,9 @@ int test_dll_insert_abi() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(test_idn_create() == 0, "create_node_i");
   CHECK_MSG(test_idl_push_back() == 0, "push_back_i");
   CHECK_MSG(test_idl_push_front() == 0, "push_front_i");

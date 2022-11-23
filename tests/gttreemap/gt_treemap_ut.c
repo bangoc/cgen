@@ -4,7 +4,9 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct rbmtree *t = rbm_create(gtype_cmp_s, NULL, NULL);
   char *s1 = "1111111111",
        *s2 = "2222222222",

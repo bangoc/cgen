@@ -463,7 +463,9 @@ int builder() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(builder() == 0, "builder()");
   CHECK_MSG(delete_node_one_left_child() == 0, "Sai ở delete_node_one_left_child()");
   CHECK_MSG(delete_node_one_right_child() == 0, "Sai ở delete_node_one_right_child()");

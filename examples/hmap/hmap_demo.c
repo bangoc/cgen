@@ -2,7 +2,9 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   hmap_insert(map, gtype_s("aaa"), gtype_l(100));
   hmap_insert(map, gtype_s("bbb"), gtype_l(200));

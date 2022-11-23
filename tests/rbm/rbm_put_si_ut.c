@@ -8,7 +8,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   const char *words[] = {"aaa", "bbb", "ccc", "aaa"};
   int n = sizeof(words)/sizeof(words[0]);
   struct rbmtree *tab = rbm_create(gtype_cmp_s, NULL, NULL);

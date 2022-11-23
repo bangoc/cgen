@@ -20,7 +20,9 @@ void print_hset(struct hset *tab) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   struct hset *tab = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < 10; ++i) {

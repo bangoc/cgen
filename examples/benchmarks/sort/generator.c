@@ -4,7 +4,9 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   if (argc != 3) {
     printf("Usage: ./prog out.txt 100000\n");
     return 1;

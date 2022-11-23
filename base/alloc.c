@@ -11,7 +11,7 @@ const int cgen_use_gc = 0;
 malloc_fnt *ext_malloc = malloc;
 calloc_fnt *ext_calloc = calloc;
 realloc_fnt *ext_realloc = realloc;
-strdup_fnt *ext_strdup = ext_strdup;
+strdup_fnt *ext_strdup = strdup;
 free_fnt *ext_free = free;
 
 #else  // CGEN_USE_GC

@@ -4,7 +4,9 @@
 #define N 1000
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct grbtree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   // 0, 2, ..., 2 * N - 2
   for (int i = 0; i < N; ++i) {

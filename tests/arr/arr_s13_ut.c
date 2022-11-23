@@ -16,7 +16,9 @@ struct s13 {
 };
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   arr_make(ss, 0, struct s13);
   intptr_t pi = (intptr_t)ss;
   printf("%zu %p\n", sizeof(struct s13), ss);

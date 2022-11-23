@@ -19,7 +19,9 @@ void print_hmap(struct hmap *tab) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   struct hmap *tab = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {

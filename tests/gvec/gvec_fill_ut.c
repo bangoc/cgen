@@ -5,7 +5,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
 #ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(10, NULL);
 #else  // CGEN_USE_GC

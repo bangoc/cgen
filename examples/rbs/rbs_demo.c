@@ -7,7 +7,9 @@
 #include "all.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct rbstree *s = rbs_create(gtype_cmp_s, NULL);
   rbs_insert(s, gtype_s("aaaaa"));
   rbs_insert(s, gtype_s("bbbbb"));

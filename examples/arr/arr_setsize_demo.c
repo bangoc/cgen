@@ -8,7 +8,9 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   arr_make(a, 0, int);
   arr_resize(a, 10);
   printf("size = %zu\n", arr_size(a));

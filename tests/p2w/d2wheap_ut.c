@@ -5,7 +5,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct p2ways *h = p2w_create(gtype_cmp_d);
   d2w_push_with_index(h, 0, 0);
   d2w_push_with_index(h, 1, 100.1);

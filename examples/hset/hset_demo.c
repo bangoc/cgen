@@ -7,7 +7,9 @@
 #include "all.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct hset *s = hset_create(gtype_hash_s, gtype_cmp_s, NULL);
   hset_insert(s, gtype_s("aaaaa"));
   hset_insert(s, gtype_s("bbbbb"));

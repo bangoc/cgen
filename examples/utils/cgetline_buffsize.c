@@ -10,7 +10,9 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   char *line = NULL;
   long n = 0;
   printf("Nhập vào 1 dòng (nhập STOP để kết thúc chương trình): ");

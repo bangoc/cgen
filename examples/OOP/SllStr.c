@@ -15,7 +15,9 @@ int free_s(gtype value) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   SllGt list = New(SllGt);
   list->PushBack(list, gtype_str("Trời ươm nắng cho mầy hồng"));
   list->PushBack(list, gtype_str("Mây qua mau em nghiêng sầu"));

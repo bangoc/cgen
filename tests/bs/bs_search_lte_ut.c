@@ -3,7 +3,9 @@
 #include "tests/rb/rbi.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct grbtree *t = rbi_create_tree(NULL);
   rbi_insert(t, 1);
   rbi_insert(t, 3);

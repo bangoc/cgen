@@ -21,7 +21,9 @@ void gen_buff() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   int n;
   sscanf(argv[1], "%d", &n);
   struct rbmtree *map = rbm_create(gtype_cmp_s, gtype_free_s, gtype_free_s);

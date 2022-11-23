@@ -39,7 +39,9 @@ int t2() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_ECHO(t1() == 0);
   CHECK_ECHO(t2() == 0);
   TEST_OK();

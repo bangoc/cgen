@@ -28,7 +28,9 @@
   } while (0)
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   DEMO_S("Hello world!");
   DEMO_S("Hello");
   DEMO_S("world!");

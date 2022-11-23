@@ -86,7 +86,9 @@ int t3() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(t1() == 0, "t1()");
   CHECK_MSG(t2() == 0, "t2()");
   CHECK_MSG(t3() == 0, "t3()");

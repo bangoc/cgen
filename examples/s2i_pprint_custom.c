@@ -6,7 +6,9 @@ void s2i_custom_node_print(struct bnnode *n) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct rbmtree *si = s2i_create();
   s2i_put(si, "Một", 1);
   s2i_put(si, "Hai", 2);

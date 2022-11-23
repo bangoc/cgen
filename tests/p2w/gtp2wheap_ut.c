@@ -3,7 +3,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct p2ways *h = p2w_create(gtype_cmp_l);
   p2w_push_with_index(h, 0, gtype_l(0));
   p2w_push_with_index(h, 1, gtype_l(100));

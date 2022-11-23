@@ -4,7 +4,9 @@
 #include "tests/base/utils.h"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   struct si2ways *col = s2w_create();
   CHECK_MSG(s2w_put(col, "aaaa") == NULL, "put new aaaa");
   CHECK_MSG(s2w_put(col, "bbbb") == NULL, "put new bbbb");

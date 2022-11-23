@@ -35,7 +35,9 @@ int t1(int n) {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(t1(100000) == 0, "t1() 100000");
   TEST_OK();
   return 0;

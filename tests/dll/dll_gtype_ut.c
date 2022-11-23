@@ -101,7 +101,9 @@ int test_insert_ab() {
 }
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   CHECK_MSG(test_push_back_front_g() == 0, "push_back_front_g");
   CHECK_MSG(test_insert_ab() == 0, "insert a&b");
   TEST_OK();

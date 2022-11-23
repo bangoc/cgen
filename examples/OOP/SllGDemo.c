@@ -1,7 +1,9 @@
 #include "OOP/Sll.c"
 
 int main(int argc, char *argv[]) {
+#ifdef CGEN_USE_GC
   GC_INIT();
+#endif  // CGEN_USE_GC
   SllGt list = New(SllGt);
   list->PushBack(list, gtype_l(100));
   list->PushBack(list, gtype_l(1));
