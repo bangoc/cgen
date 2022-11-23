@@ -1,7 +1,8 @@
 #include "tests/base/utils.h"
 #include "tree/spec/gbs.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct gbsnode n1 = {.key = gtype_l(1)};
   struct gbsnode n2 = {.key = gtype_l(2)};
   struct gbsnode n3 = {.key = gtype_l(3)};
@@ -32,7 +33,7 @@ int main() {
   CHECK_MSG(gbs_search(t, n5.key) == &n5, "Failed search 5");
   CHECK_MSG(gbs_search(t, n6.key) == NULL, "Failed search 6");
   CHECK_MSG(gbs_search(t, n_1.key) == NULL, "Failed search -1");
-  free(t);
+  ext_free(t);
   TEST_OK();
   return 0;
 }

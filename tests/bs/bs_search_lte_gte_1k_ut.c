@@ -3,7 +3,8 @@
 
 #define N 1000
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct grbtree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   // 0, 2, ..., 2 * N - 2
   for (int i = 0; i < N; ++i) {

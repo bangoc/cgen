@@ -23,6 +23,7 @@ char *rands10() {
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 2) {
     printf("Usage: ./prog 1000\n");
     return 1;
@@ -30,11 +31,11 @@ int main(int argc, char *argv[]) {
   srand(time(NULL));
   int n;
   sscanf(argv[1], "%d", &n);
-  char **str = malloc(n * sizeof(char*));
-  int *a = malloc(n * sizeof(int));
+  char **str = ext_malloc(n * sizeof(char*));
+  int *a = ext_malloc(n * sizeof(int));
   struct hmap *tab = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   for (int i = 0; i < n; ++i) {
-    str[i] = strdup(rands10());
+    str[i] = ext_strdup(rands10());
     a[i] = rand() % 10 + 1;
     for (int j = 0; j < a[i]; ++j) {
       gtype *res = hmap_put(tab, gtype_s(str[i]), gtype_l(1));
@@ -47,11 +48,11 @@ int main(int argc, char *argv[]) {
     CHECK_MSG(hmap_value(tab, gtype_s(str[i]))->l == a[i], "Wrong value");
   }
   for (int i = 0; i < n; ++i) {
-    free(str[i]);
+    ext_free(str[i]);
   }
   hmap_free(tab);
-  free(a);
-  free(str);
+  ext_free(a);
+  ext_free(str);
   TEST_OK();
   return 0;
 }

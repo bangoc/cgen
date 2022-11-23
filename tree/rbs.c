@@ -6,7 +6,7 @@
 
 struct rbstree *rbs_create(gtype_cmp_t cmp, gtype_free_t fk) {
   struct grbtree *tmp = grb_create_tree(NULL, cmp, fk);
-  struct rbstree *s = realloc(tmp, sizeof(struct rbstree));
+  struct rbstree *s = ext_realloc(tmp, sizeof(struct rbstree));
   s->size = 0;
   return s;
 }

@@ -36,9 +36,10 @@ int t2() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(t1() == 0, "t1()");
   CHECK_MSG(t2() == 0, "t2()");
-  printf("Test Ok\n");
+  TEST_OK();
   return 0;
 }

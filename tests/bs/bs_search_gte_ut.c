@@ -3,7 +3,8 @@
 #include "tree/spec/gbs.h"
 #include "tree/spec/grb.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct grbtree *t = grb_create_tree(NULL, gtype_cmp_l, NULL);
   grb_insert(t, gtype_l(1));
   grb_insert(t, gtype_l(3));

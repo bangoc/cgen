@@ -45,26 +45,39 @@ void run(struct gvector *v) {
 
 void t1(int n) {
   printf("Kịch bản sinh số ngẫu nhiên.\n");
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(n, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(n);
+#endif  // CGEN_USE_GC
   gvec_traverse(cur, v) {
     cur->l = rand();
   }
   run(v);
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
 }
 
 void t2(int n) {
   printf("Kịch bản sinh số ngẫu nhiên nhiều trùng lặp.\n");
   int m = n / 3;
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(n, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(n);
+#endif  // CGEN_USE_GC
   gvec_traverse(cur, v) {
     cur->l = rand() % m;
   }
   run(v);
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 2) {
     printf("Usage: ./prog 10000\n");
     return 1;

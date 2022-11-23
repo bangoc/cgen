@@ -6,7 +6,8 @@
 
 #include "all.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct hset *s = hset_create(gtype_hash_s, gtype_cmp_s, NULL);
   hset_insert(s, gtype_s("aaaaa"));
   hset_insert(s, gtype_s("bbbbb"));

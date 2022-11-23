@@ -81,7 +81,8 @@ int t6() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(t1() == 0, "t1()");
   CHECK_MSG(t2() == 0, "t2()");
   CHECK_MSG(t3() == 0, "t3()");
@@ -89,5 +90,6 @@ int main() {
   CHECK_MSG(t5() == 0, "t5()");
   CHECK_MSG(t6() == 0, "t6()");
   printf("Test rb_is_valid Ok\n");
+  TEST_OK();
   return 0;
 }

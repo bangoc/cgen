@@ -6,8 +6,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
   srand(time(NULL));
   for (int i = 0; i < 10; ++i) {
     gvec_append(v, gtype_l(rand() % 100));
@@ -23,6 +28,8 @@ int main() {
     printf(" %ld", g->l);
   }
   printf("\n");
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }

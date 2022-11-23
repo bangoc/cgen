@@ -5,7 +5,8 @@ void s2i_custom_node_print(struct bnnode *n) {
          rbm_node_value(n).l, rb_color_str(n));
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct rbmtree *si = s2i_create();
   s2i_put(si, "Một", 1);
   s2i_put(si, "Hai", 2);

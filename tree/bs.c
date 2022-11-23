@@ -106,6 +106,6 @@ int __bs_delete(struct bntree *t, struct bnnode *dn) {
       bn_change_child(dn, successor, top, t);
     }
   }
-  free(dn);
+  ext_free(dn);
   return 1;
 }

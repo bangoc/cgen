@@ -5,10 +5,10 @@
 
 int t1() {
   struct hset *hs = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
-  CHECK_MSG(hset_insert(hs, gtype_s(strdup("ABC"))) == 1, "Insert ABC");
-  CHECK_MSG(hset_insert(hs, gtype_s(strdup("DEF"))) == 1, "Insert DEF");
+  CHECK_MSG(hset_insert(hs, gtype_s(ext_strdup("ABC"))) == 1, "Insert ABC");
+  CHECK_MSG(hset_insert(hs, gtype_s(ext_strdup("DEF"))) == 1, "Insert DEF");
   CHECK_MSG(hset_insert(hs, gtype_s("ABC")) == 0, "Duplicate ABC");
-  CHECK_MSG(hset_insert(hs, gtype_s(strdup("DHF"))) == 1, "Inserted DHF");
+  CHECK_MSG(hset_insert(hs, gtype_s(ext_strdup("DHF"))) == 1, "Inserted DHF");
   CHECK_MSG(hset_index_of(hs, gtype_s("ABC")) != INDEX_NOT_FOUND, "Found ABC");
   CHECK_MSG(hset_remove(hs, gtype_s("ABC")) == 1, "Removed ABC");
   CHECK_MSG(hset_index_of(hs, gtype_s("ABC")) == INDEX_NOT_FOUND, "Not found ABC");
@@ -32,7 +32,8 @@ int t2() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(t1() == 0, "t1()");
   CHECK_MSG(t2() == 0, "t2()");
   TEST_OK();

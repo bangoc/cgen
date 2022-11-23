@@ -9,7 +9,11 @@ int qsort_cmp_l(const void *v1, const void *v2) {
 }
 
 int t1(int n) {
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(n, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(n);
+#endif  // CGEN_USE_GC
   for (int i = 0; i < n; ++i) {
     gvec_elem(v, i).l = rand() % n;
   }
@@ -42,6 +46,7 @@ int t1(int n) {
   CHECK_MSG(gvec_identical(vsel, vqsort), "Selection & stdlib.h qsort");
   CHECK_MSG(gvec_identical(vsel, vqins), "Selection & Mix of q2me and ins");
   CHECK_MSG(gvec_identical(vsel, vheap), "Selection & Mix of q2me and ins");
+#ifndef CGEN_USE_GC
   gvec_free(v);
   gvec_free(vsel);
   gvec_free(vins);
@@ -53,10 +58,12 @@ int t1(int n) {
   gvec_free(vqsort);
   gvec_free(vqins);
   gvec_free(vheap);
+#endif  // CGEN_USE_GC
   return 0;
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 2) {
     printf("Usage: ./prog 10000\n");
     return 1;

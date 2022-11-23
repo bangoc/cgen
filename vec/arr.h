@@ -3,6 +3,8 @@
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
+#include "base/alloc.h"
+
 #include <stdlib.h>
 
 /**
@@ -23,7 +25,7 @@ struct arr_info {
 };
 
 static inline void *arr_create_internal(long n, long elem_size, double scale) {
-  struct arr_info *info = calloc(1, sizeof(struct arr_info) + n * elem_size);
+  struct arr_info *info = ext_calloc(1, sizeof(struct arr_info) + n * elem_size);
   info->size = n;
   info->cap = n;
   info->esz = elem_size;
@@ -50,7 +52,7 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
       break; \
     } \
     struct arr_info *_info = \
-      realloc(arr_info(a), sizeof(struct arr_info) + (newcap) * arr_elemsize(a)); \
+      ext_realloc(arr_info(a), sizeof(struct arr_info) + (newcap) * arr_elemsize(a)); \
     _info->cap = (newcap); \
     (a) = (void*)(_info + 1); \
   } while (0)
@@ -64,7 +66,7 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
   } while (0)
 
 #define arr_free(a) \
-    free(arr_info(a)); \
+    ext_free(arr_info(a)); \
 
 #define arr_clear(a) \
   do { \

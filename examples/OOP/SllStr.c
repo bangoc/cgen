@@ -1,7 +1,7 @@
 #include "OOP/cgen.ic"
 
 gtype gtype_str(const char *str) {
-  return gtype_s(strdup(str));
+  return gtype_s(ext_strdup(str));
 }
 
 int print_s(gtype value) {
@@ -10,11 +10,12 @@ int print_s(gtype value) {
 }
 
 int free_s(gtype value) {
-  free(value.s);
+  ext_free(value.s);
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   SllGt list = New(SllGt);
   list->PushBack(list, gtype_str("Trời ươm nắng cho mầy hồng"));
   list->PushBack(list, gtype_str("Mây qua mau em nghiêng sầu"));

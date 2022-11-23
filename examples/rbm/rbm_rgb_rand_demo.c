@@ -20,6 +20,7 @@ enum colors {
 };
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 2) {
     printf("Usage: ./prog 10000");
     return 1;
@@ -35,7 +36,11 @@ int main(int argc, char *argv[]) {
     if (tmp) {
       gvec_append(tmp->gvec, gtype_l(i));
     } else {
+#ifndef  CGEN_USE_GC
       struct gvector *vec = gvec_create(10, NULL);
+#else  // CGEN_USE_GC
+      struct gvector *vec = gvec_create(10);
+#endif  // CGEN_USE_GC
       gvec_append(vec, gtype_l(i));
       rbm_insert(tab, gtype_s(colors[j]), gtype_gvec(vec));
     }

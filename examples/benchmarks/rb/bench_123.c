@@ -12,6 +12,7 @@ int usage() {
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 2) {
     return usage();
   }

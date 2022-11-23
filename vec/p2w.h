@@ -20,7 +20,7 @@ struct p2ways *p2w_create(gtype_cmp_t cmp);
     arr_free((h)->data); \
     arr_free((h)->index); \
     arr_free((h)->index2); \
-    free(h); \
+    ext_free(h); \
   } while (0)
 
 #define p2w_size(h) arr_size((h)->data)

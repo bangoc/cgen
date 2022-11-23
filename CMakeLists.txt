@@ -33,6 +33,7 @@ add_subdirectory(examples)
 add_subdirectory(mega-unit)
 
 add_library(bkcgen STATIC all.c)
+target_link_libraries(bkcgen gc)
 
 include(CTest)
 add_test(NAME BNLeftRotate COMMAND bn_left_rotate_ut)

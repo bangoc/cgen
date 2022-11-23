@@ -2,7 +2,8 @@
 
 #include "all.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct rbmtree *m = rbm_create(gtype_cmp_s, NULL, NULL);
   rbm_insert(m, gtype_s("Nguyen Van A"), gtype_l(1));
   rbm_insert(m, gtype_s("Tran Van D"), gtype_l(5));

@@ -4,11 +4,13 @@
  * Minh họa sử dụng cgetline
  */
 
+#include "base/alloc.h"
 #include "utils/io.h"
 
 #include <string.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   char *line = NULL;
   long n = 0;
   printf("Nhập vào 1 dòng (nhập STOP để kết thúc chương trình): ");
@@ -23,6 +25,6 @@ int main() {
     printf("Độ dài chuỗi ký tự: %zu\n", strlen(line));
     printf("Kích thước vùng nhớ: %ld\n", n);
   }
-  free(line);
+  ext_free(line);
   return 0;
 }

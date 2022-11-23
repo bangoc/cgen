@@ -14,7 +14,7 @@ int test_dll_create_node() {
   if (nn->prev || nn->next) {
     return 1;
   }
-  free(nn);
+  ext_free(nn);
   return 0;
 }
 
@@ -244,7 +244,8 @@ int test_dll_clear() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(test_dll_create_node() == 0, "dll_create_node");
   CHECK_MSG(test_dll_create_list() == 0, "dll_create");
   CHECK_MSG(test_dll_push_t1() == 0, "dll_push_t1");
@@ -255,6 +256,6 @@ int main() {
   CHECK_MSG(test_dll_length() == 0, "dll_length");
   CHECK_MSG(test_dll_erase() == 0, "dll_erase");
   CHECK_MSG(test_dll_clear() == 0, "dll_clear");
-  printf("Test Ok!\n");
+  TEST_OK();
   return 0;
 }

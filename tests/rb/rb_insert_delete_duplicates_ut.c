@@ -3,7 +3,8 @@
 
 #include "rbi.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   int a[] = {1, 2, 2, 3, 3, 3, 5, 5, 5, 5, 5, 6, 6, 6, 6, 8, 9, 10};
   int n = sizeof(a)/sizeof(a[0]);
   struct grbtree *t = rbi_create_tree(NULL);
@@ -20,5 +21,6 @@ int main() {
   }
   printf("insert_delete_duplicates ok\n");
   rbi_free_tree(t);
+  TEST_OK();
   return 0;
 }

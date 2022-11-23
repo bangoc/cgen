@@ -16,8 +16,13 @@ void print_gvec(struct gvector *v) {
   printf("\n");
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
   for (int i = 0; i < 10; ++i) {
     if (i % 2 == 1) {
       gvec_append(v, gtype_l(i));
@@ -35,6 +40,8 @@ int main() {
   }
   printf("Trạng thái sau khi thêm các số chẵn trong khoảng 0..19: \n");
   print_gvec(v);
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }

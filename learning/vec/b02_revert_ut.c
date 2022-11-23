@@ -4,7 +4,11 @@
 #include "tests/gvec/helper.h"
 
 int t1() {
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
   long a[] = {1, 2, 3, 4, 5};
   gtype b[] = {gtype_l(5), gtype_l(4), gtype_l(3),
                gtype_l(2), gtype_l(1)};
@@ -15,7 +19,9 @@ int t1() {
   gvec_revert(v);
   CHECK_MSG(gvec_sequence(v, n, b, gtype_cmp_l),
       "Reverted sequence");
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }
 

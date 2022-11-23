@@ -1,7 +1,8 @@
 #include "all.h"
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   hmap_insert(map, gtype_s("aaa"), gtype_l(100));
   hmap_insert(map, gtype_s("bbb"), gtype_l(200));

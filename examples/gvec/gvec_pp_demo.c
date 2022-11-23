@@ -28,17 +28,22 @@ int gtype_qsort_point(const void *v1, const void *v2) {
 #undef pp
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
   printf("Nhập các các điểm trên mặt phẳng hoặc điểm có tọa độ (0, 0) để kết thúc: \n");
+#ifndef CGEN_USE_GC
   struct gvector *vec = gvec_create(0, gtype_free_v);
+#else  // CGEN_USE_GC
+  struct gvector *vec = gvec_create(0);
+#endif  // CGEN_USE_GC
   struct point *p;
   for (;;) {
-    p = malloc(sizeof(struct point));
+    p = ext_malloc(sizeof(struct point));
     scanf("%lf%lf", &p->x, &p->y);
     if (p->x == 0 && p->y == 0) {
-      free(p);
+      ext_free(p);
       break;
     }
     gvec_append(vec, gtype_v(p));
@@ -51,6 +56,8 @@ int main(int argc, char *argv[]) {
     printf("\n(%.2lf, %.2lf)", p->x, p->y);
   }
   printf("\n");
+#ifndef CGEN_USE_GC
   gvec_free(vec);
+#endif  // CGEN_USE_GC
   return 0;
 }

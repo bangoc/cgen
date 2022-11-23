@@ -252,7 +252,8 @@ int test_delete_black_node_black_successor_no_child() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(test_delete_root() == 0, "lỗi ở test_delete_root");
   CHECK_MSG(test_delete_root_2nodes() == 0, "lỗi ở test_delete_root_2nodes");
   CHECK_MSG(test_delete_single_deep_child() == 0, "lỗi ở test_delete_single_deep_child");

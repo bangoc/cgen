@@ -2,7 +2,8 @@
 
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   arr_make(v, 0, int);
   arr_append(v, 1);
   arr_append(v, 2);
@@ -13,6 +14,6 @@ int main() {
   CHECK_MSG(v[1] == 2, "V1 value");
   CHECK_MSG(v[2] == 3, "V2 value");
   arr_free(v);
-  printf("Test Ok!\n");
+  TEST_OK();
   return 0;
 }

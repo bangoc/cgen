@@ -4,25 +4,37 @@
 
 #include <stdlib.h>
 
-#ifdef CGEN_USE_GC
+#ifndef CGEN_USE_GC
+
+const int cgen_use_gc = 0;
+
+malloc_fnt *ext_malloc = malloc;
+calloc_fnt *ext_calloc = calloc;
+realloc_fnt *ext_realloc = realloc;
+strdup_fnt *ext_strdup = ext_strdup;
+free_fnt *ext_free = free;
+
+#else  // CGEN_USE_GC
 
 const int cgen_use_gc = 1;
+// tgc_t gc;
 
-malloc_fnt *ext_malloc = NULL;
-calloc_fnt *ext_calloc = cgen_calloc_wrapper;
-realloc_fnt *ext_realloc = NULL;
-strdup_fnt *ext_strdup = cgen_strdup_wrapper;
+malloc_fnt *ext_malloc = GC_malloc;
+calloc_fnt *ext_calloc = malloc_based_calloc;
+realloc_fnt *ext_realloc = GC_realloc;
+strdup_fnt *ext_strdup = malloc_based_strdup;
+free_fnt *ext_free = cgen_noop_free;
 
-void *cgen_calloc_wrapper(size_t nmem, size_t sz) {
+void *malloc_based_calloc(size_t nmem, size_t sz) {
   if (!nmem) {
-    return ext_malloc(sz);
+    return malloc_based_calloc(1, sz);
   }
   void *ptr = ext_malloc(nmem * sz);
   memset(ptr, 0, nmem * sz);
   return ptr;
 }
 
-char *cgen_strdup_wrapper(const char *s) {
+char *malloc_based_strdup(const char *s) {
   size_t len = strlen(s);
   char *ptr = ext_malloc(len + 1);
   strcpy(ptr, s);
@@ -34,8 +46,18 @@ void cgen_alloc_set_base(malloc_fnt *m, realloc_fnt *re) {
   ext_realloc = re;
 }
 
-#else  // CGEN_USE_GC
+// void *cgen_gc_malloc(size_t size) {
+//   return tgc_alloc(&gc, size);
+// }
 
-const int cgen_use_gc = 0;
+// void *cgen_gc_calloc(size_t count, size_t size) {
+//   return tgc_calloc(&gc, count, size);
+// }
+
+// void *cgen_gc_realloc(void* ptr, size_t size) {
+//   return tgc_realloc(&gc, ptr, size);
+// }
+
+void cgen_noop_free(void *ptr) {}
 
 #endif  // CGEN_USE_GC

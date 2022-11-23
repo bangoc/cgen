@@ -16,14 +16,18 @@ struct gvector *read_lines(const char *fname) {
     printf("Lỗi mở tệp %s\n", fname);
     return NULL;
   }
+#ifndef CGEN_USE_GC
   struct gvector *lines = gvec_create_full(0, 100, gtype_zero, gtype_free_s);
+#else  // CGEN_USE_GC
+  struct gvector *lines = gvec_create_full(0, 100, gtype_zero);
+#endif  // CGEN_USE_GC
   char *tmp = NULL;
   while (cgetline(&tmp, NULL, fp)) {
     remove_tail_lf(tmp);
-    gvec_append(lines, gtype_s(strdup(tmp)));
+    gvec_append(lines, gtype_s(ext_strdup(tmp)));
   }
   fclose(fp);
-  free(tmp);
+  ext_free(tmp);
   return lines;
 }
 
@@ -33,7 +37,7 @@ char *parse_include(const char *line) {
     return NULL;
   }
   const char *p2 = strchr(p1 + 1, '"');
-  char *name = calloc(p2 - p1, 1);
+  char *name = ext_calloc(p2 - p1, 1);
   strncpy(name, p1 + 1, p2 - p1 - 1);
   return name;
 }
@@ -51,7 +55,7 @@ int is_source(const char *fname) {
 }
 
 char *header_guard(const char *fname) {
-  char *o = calloc(strlen(fname) + 2, 1);
+  char *o = ext_calloc(strlen(fname) + 2, 1);
   for (int i = 0; i < strlen(fname); ++i) {
     if (fname[i] == '.') {
       o[i] = '_';
@@ -84,7 +88,11 @@ void process(const char *root, const char *list_name, const char *out_name) {
   }
 
   struct rbstree *headers = rbs_create(gtype_cmp_s, gtype_free_s);
+#ifndef CGEN_USE_GC
   struct gvector *contents = gvec_create_full(0, 1000, gtype_zero, gtype_free_s);
+#else  // CGEN_USE_GC
+  struct gvector *contents = gvec_create_full(0, 1000, gtype_zero);
+#endif  // CGEN_USE_GC
   char tmp[1024];
   gvec_traverse(cur, v) {
     if (!is_include(cur->s)) {
@@ -97,26 +105,28 @@ void process(const char *root, const char *list_name, const char *out_name) {
     sprintf(origin, "\n/***********************************\n"
                     " * %s\n"
                     " ***********************************/", unit_name);
-    gvec_append(contents, gtype_s(strdup(origin)));
-    gvec_append(contents, gtype_s(strdup("")));
+    gvec_append(contents, gtype_s(ext_strdup(origin)));
+    gvec_append(contents, gtype_s(ext_strdup("")));
     gvec_traverse(cur, loc) {
       if (is_include(cur->s)) {
         if (strchr(cur->s, '"')) {
           continue;
         }
-        char *line = strdup(cur->s);
+        char *line = ext_strdup(cur->s);
         if (!rbs_insert(headers, gtype_s(line))) {
-          free(line);
+          ext_free(line);
         }
         continue;
       }
       if (is_copyright(cur->s)) {
         continue;
       }
-      gvec_append(contents, gtype_s(strdup(cur->s)));
+      gvec_append(contents, gtype_s(ext_strdup(cur->s)));
     }
+#ifndef CGEN_USE_GC
     gvec_free(loc);
-    free(unit_name);
+#endif  // CGEN_USE_GC
+    ext_free(unit_name);
   }
   char *hg = NULL;
   FILE *out = fopen(out_name, "w");
@@ -133,13 +143,13 @@ void process(const char *root, const char *list_name, const char *out_name) {
   fprintf(out, "/* (C) Nguyen Ba Ngoc 2022 */\n");
   if (ver) {
     fprintf(out, "/* Version: %s */\n\n", ver);
-    free(ver);
+    ext_free(ver);
   }
   if (is_source(out_name)) {
-    char *hn = strdup(out_name);
+    char *hn = ext_strdup(out_name);
     hn[strlen(hn) - 1] = 'h';
     fprintf(out, "#include \"%s\"\n\n", hn);
-    free(hn);
+    ext_free(hn);
   }
   rbs_traverse(cur, headers) {
     fprintf(out, "%s\n", cur->s);
@@ -157,7 +167,7 @@ void process(const char *root, const char *list_name, const char *out_name) {
   }
   if (is_header(out_name)) {
     fprintf(out, "\n#endif  // %s\n", hg);
-    free(hg);
+    ext_free(hg);
   }
   gvec_free(contents);
   rbs_free(headers);

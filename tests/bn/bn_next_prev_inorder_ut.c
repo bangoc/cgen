@@ -1,7 +1,8 @@
 #include "tests/base/utils.h"
 #include "tree/bn.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct bnnode *n1 = bn_create_node();
   struct bnnode *n2 = bn_create_node();
   struct bnnode *n3 = bn_create_node();
@@ -36,5 +37,6 @@ int main() {
   bn_free_node(n3);
   bn_free_node(n4);
   bn_free_node(n5);
+  TEST_OK();
   return 0;
 }

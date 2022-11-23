@@ -19,7 +19,8 @@ int t1() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(t1() == 0, "Test 1");
   TEST_OK();
   return 0;

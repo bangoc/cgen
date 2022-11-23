@@ -10,12 +10,19 @@
 
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
   gvec_append(v, gtype_l(1));
   gvec_append(v, gtype_l(3));
   gvec_append(v, gtype_l(5));
   gvec_pprint(v, gtype_print_l);
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }

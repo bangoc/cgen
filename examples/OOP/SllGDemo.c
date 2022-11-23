@@ -1,6 +1,7 @@
 #include "OOP/Sll.c"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   SllGt list = New(SllGt);
   list->PushBack(list, gtype_l(100));
   list->PushBack(list, gtype_l(1));

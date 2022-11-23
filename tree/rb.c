@@ -6,7 +6,7 @@ const char * color_names[] = {"Đỏ", "Đen"};
 
 struct rbnode *rb_create_node() {
   struct bnnode *tmp = bn_create_node();
-  struct rbnode *nn = realloc(tmp, sizeof(struct rbnode));
+  struct rbnode *nn = ext_realloc(tmp, sizeof(struct rbnode));
   nn->color = RB_RED;
   return nn;
 }
@@ -343,7 +343,7 @@ int __rb_delete(struct bntree *t, struct rbnode *dn) {
   if (rebalance) {
     rb_delete_fix_color(t, rebalance);
   }
-  free(dn);
+  ext_free(dn);
   return 1;
 }
 

@@ -3,6 +3,8 @@
 #ifndef BASE_CORE_H_
 #define BASE_CORE_H_
 
+#include "base/alloc.h"
+
 #include <stddef.h>
 #include <time.h>
 
@@ -14,7 +16,7 @@
 #define Delete(TYPE, ptr) do        \
         {       \
           TYPE ## _free(ptr); \
-          /*free(ptr);*/    \
+          /*ext_free(ptr);*/    \
         }       \
         while(0)
 

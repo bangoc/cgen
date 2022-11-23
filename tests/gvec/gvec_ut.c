@@ -16,7 +16,11 @@ int gtype_inc_cmp_s(const void *v1, const void *v2) {
 }
 
 int t1() {
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
   int a[] = {3, 1, 5, 6, 8, 9, 10, 2};
   int n = sizeof(a)/ sizeof(a[0]);
   for (int i = 0; i < n; ++i) {
@@ -26,26 +30,38 @@ int t1() {
   CHECK_MSG(gtype_seqi(gvec_arr(v), a, n), "vec sequence");
   gvec_qsort(v, gtype_inc_cmp_i);
   CHECK_MSG(gtype_seqi(gvec_arr(v), (int[]){1, 2, 3, 5, 6, 8, 9, 10}, n), "sorted vec seq");
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }
 
 int t2() {
-  struct gvector *v = gvec_create(0, gtype_free_s);
-  gvec_append(v, gtype_s(strdup("AAA")));
-  gvec_append(v, gtype_s(strdup("CCC")));
-  gvec_append(v, gtype_s(strdup("BBB")));
+#ifndef CGEN_USE_GC
+  struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
+  gvec_append(v, gtype_s(ext_strdup("AAA")));
+  gvec_append(v, gtype_s(ext_strdup("CCC")));
+  gvec_append(v, gtype_s(ext_strdup("BBB")));
   gvec_qsort(v, gtype_inc_cmp_s);
   CHECK_MSG(gtype_seqs(gvec_arr(v), (char*[]){"AAA", "BBB", "CCC"}, 3), "sorted strings");
   gvec_remove(v, 2);
   CHECK_MSG(gtype_seqs(gvec_arr(v), (char*[]){"AAA", "BBB"}, 2), "2 sorted strings");
   CHECK_MSG(gvec_size(v) == 2, "size 2");
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }
 
 int t3() {
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(0);
+#endif  // CGEN_USE_GC
   for (int i = 0; i < 10; ++i) {
     gvec_append(v, gtype_l(i));
   }
@@ -63,11 +79,14 @@ int t3() {
   gvec_remove(v, 0);
   CHECK_MSG(gvec_size(v) == 5, "size 5");
   CHECK_MSG(gtype_seqi(gvec_arr(v), (int[]){3, 5, 6, 7, 9}, 5), "5 seq");
+#ifndef CGEN_USE_GC
   gvec_free(v);
+#endif  // CGEN_USE_GC
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(t1() == 0, "t1()");
   CHECK_MSG(t2() == 0, "t2()");
   CHECK_MSG(t3() == 0, "t3()");

@@ -2,7 +2,8 @@
 #include "rbi_helper.h"
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct grbtree *t = rbi_create_tree(NULL);
   rbi_insert(t, 2);
   /*
@@ -161,5 +162,6 @@ int main() {
   printf("RB Build test OK\n");
 
   rbi_free_tree(t);
+  TEST_OK();
   return 0;
 }

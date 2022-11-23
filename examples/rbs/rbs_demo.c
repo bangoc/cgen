@@ -6,7 +6,8 @@
 
 #include "all.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct rbstree *s = rbs_create(gtype_cmp_s, NULL);
   rbs_insert(s, gtype_s("aaaaa"));
   rbs_insert(s, gtype_s("bbbbb"));

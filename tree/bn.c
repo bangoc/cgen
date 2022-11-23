@@ -3,11 +3,11 @@
 #include "tree/bn.h"
 
 struct bnnode *bn_create_node() {
-  return calloc(1, sizeof(struct bnnode));
+  return ext_calloc(1, sizeof(struct bnnode));
 }
 
 struct bntree *bn_create_tree(struct bnnode *root) {
-  struct bntree *tree = malloc(sizeof(struct bntree));
+  struct bntree *tree = ext_malloc(sizeof(struct bntree));
   tree->root = root;
   return tree;
 }
@@ -19,7 +19,7 @@ void __bn_free_tree(struct bntree *t) {
     tmp = cur;
   }
   bn_free_node(tmp);
-  free(t);
+  ext_free(t);
 }
 
 struct bnnode *bn_left_deepest_node(struct bnnode *node) {

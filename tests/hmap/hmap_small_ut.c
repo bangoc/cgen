@@ -1,7 +1,8 @@
 #include "vec/hmap.h"
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   hmap_insert(map, gtype_s("aa"), gtype_l(1));
   hmap_insert(map, gtype_s("bb"), gtype_l(2));

@@ -2,7 +2,8 @@
 
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct p2ways *h = p2w_create(gtype_cmp_l);
   p2w_push_with_index(h, 0, gtype_l(0));
   p2w_push_with_index(h, 1, gtype_l(100));
@@ -26,5 +27,6 @@ int main() {
   CHECK_MSG(p2w_delete_max(h).l == 200, "Delete max 200");
   CHECK_MSG(p2w_delete_max(h).l == 0, "Delete max 0");
   p2w_free(h);
+  TEST_OK();
   return 0;
 }

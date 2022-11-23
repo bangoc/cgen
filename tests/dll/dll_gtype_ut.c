@@ -100,7 +100,8 @@ int test_insert_ab() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(test_push_back_front_g() == 0, "push_back_front_g");
   CHECK_MSG(test_insert_ab() == 0, "insert a&b");
   TEST_OK();

@@ -6,7 +6,8 @@ int bn_similar_null(struct bnnode *n1, struct bnnode *n2) {
   return (n1 != NULL) == (n2 != NULL);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct bnnode *n11 = bn_create_node();
   struct bnnode *n12 = bn_create_node();
   struct bnnode *n13 = bn_create_node();
@@ -32,5 +33,6 @@ int main() {
   CHECK_MSG(bn_similar_tree(t1, t2, bn_similar_null) == 1, "Hai cây 1 -> 2 -> 3");
   bn_free_tree(t1);
   bn_free_tree(t2);
+  TEST_OK();
   return 0;
 }

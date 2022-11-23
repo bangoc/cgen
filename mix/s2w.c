@@ -3,8 +3,12 @@
 #include "mix/s2w.h"
 
 struct si2ways *s2w_create() {
-  struct si2ways *col = malloc(sizeof(struct si2ways));
+  struct si2ways *col = ext_malloc(sizeof(struct si2ways));
+#ifndef CGEN_USE_GC
   col->is = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  col->is = gvec_create(0);
+#endif  // CGEN_USE_GC
   col->si = s2i_create();
   return col;
 }
@@ -59,6 +63,8 @@ char *s2w_str(struct si2ways *col, const long id) {
 
 void s2w_free(struct si2ways *col) {
   s2i_free(col->si);
+#ifndef CGEN_USE_GC
   gvec_free(col->is);
-  free(col);
+#endif  // CGEN_USE_GC
+  ext_free(col);
 }

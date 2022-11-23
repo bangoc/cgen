@@ -14,7 +14,8 @@ struct term_freq {
   int freq;
 };
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct term_freq a[] = {
     {"aaa", 1, 10},
     {"bbb", 1, 15},

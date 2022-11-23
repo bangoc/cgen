@@ -6,6 +6,7 @@
 #include <time.h>
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 3) {
     printf("usage: ./p #Ops max_value\nExample: ./p 10000 1000\n");
     return 1;
@@ -31,5 +32,6 @@ int main(int argc, char *argv[]) {
   }
   printf("%ld thao tác Ok\n", num_ops);
   rbi_free_tree(t);
+  TEST_OK();
   return 0;
 }

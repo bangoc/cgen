@@ -4,7 +4,8 @@
 
 #define N 1000
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   int a[N];
   for (int i = 0; i < N; ++i) {
     a[i] = i;
@@ -26,5 +27,6 @@ int main() {
   }
   printf("rb_insert_delete_1k Ok\n");
   rbi_free_tree(t);
+  TEST_OK();
   return 0;
 }

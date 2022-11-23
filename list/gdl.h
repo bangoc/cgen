@@ -90,7 +90,7 @@ struct gdllist {
 #define gdl_free(list) \
   do { \
     gdl_clear(list); \
-    free(list); \
+    ext_free(list); \
   } while (0)
 
 #define gdl_inserta(list, pos, value) \

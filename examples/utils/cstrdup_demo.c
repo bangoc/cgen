@@ -2,10 +2,11 @@
 
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   char *s = "Hello worlds!";
   char *hw = cstrdup(s);
   printf("hw = %s\n", hw);
-  free(hw);
+  ext_free(hw);
   return 0;
 }

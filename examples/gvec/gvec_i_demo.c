@@ -9,11 +9,16 @@
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
   printf("Nhập các số không âm, hoặc nhập -1 để kết thúc: \n");
+#ifndef CGEN_USE_GC
   struct gvector *vec = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *vec = gvec_create(0);
+#endif  // CGEN_USE_GC
   int x;
   for (;;) {
     scanf("%d", &x);
@@ -29,6 +34,8 @@ int main(int argc, char *argv[]) {
     printf(" %ld", value->l);
   }
   printf("\n");
+#ifndef CGEN_USE_GC
   gvec_free(vec);
+#endif  // CGEN_USE_GC
   return 0;
 }

@@ -10,7 +10,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct rbmtree *map = rbm_create(gtype_cmp_l, NULL, gtype_free_hmap);
   for (int i = 0; i < 100; ++i) {
     struct hmap *tmp = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, NULL);

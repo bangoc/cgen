@@ -17,6 +17,7 @@ void print_contact(gtype v) {
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
@@ -27,7 +28,7 @@ int main(int argc, char *argv[]) {
   printf("Nhập 1 số thực: ");
   scanf("%lf", &v.d);
   printf("Bạn đã nhập: %f\n", v.d);
-  contact_t c = calloc(1, sizeof(struct contact));
+  contact_t c = ext_calloc(1, sizeof(struct contact));
   printf("Nhập sđt: ");
   clear_stdin();
   remove_tail_lf(cgetline(&(c->number), 0, stdin));
@@ -35,8 +36,8 @@ int main(int argc, char *argv[]) {
   remove_tail_lf(cgetline(&(c->fullname), 0, stdin));
   v.v = c;
   print_contact(v);
-  free(c->number);
-  free(c->fullname);
-  free(c);
+  ext_free(c->number);
+  ext_free(c->fullname);
+  ext_free(c);
   return 0;
 }

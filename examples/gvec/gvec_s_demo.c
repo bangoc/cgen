@@ -10,11 +10,16 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
   printf("Nhập vào các chuỗi ký tự hoặc STOP để kết thúc: \n");
+#ifndef CGEN_USE_GC
   struct gvector *vec = gvec_create(0, gtype_free_s);
+#else  // CGEN_USE_GC
+  struct gvector *vec = gvec_create(0);
+#endif  // CGEN_USE_GC
   char *line = NULL;
   for (;;) {
     if (!cgetline(&line, NULL, stdin)) {
@@ -24,7 +29,7 @@ int main(int argc, char *argv[]) {
     if (strcmp(line, "STOP\n") == 0 || strcmp(line, "STOP") == 0) {
       break;
     }
-    gvec_append(vec, gtype_s(strdup(line)));
+    gvec_append(vec, gtype_s(ext_strdup(line)));
   }
   printf("Bạn đã nhập: %ld chuỗi ký tự\n", gvec_size(vec));
   gvec_qsort(vec, gtype_qsort_s);
@@ -33,7 +38,9 @@ int main(int argc, char *argv[]) {
     printf("%s", value->s);
   }
   printf("\n");
+#ifndef CGEN_USE_GC
   gvec_free(vec);
-  free(line);
+  ext_free(line);
+#endif  // CGEN_USE_GC
   return 0;
 }

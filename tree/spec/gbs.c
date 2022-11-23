@@ -6,14 +6,14 @@
 
 struct gbsnode *gbs_create_node(gtype key) {
   struct bnnode *tmp = bn_create_node();
-  struct gbsnode *nn = realloc(tmp, sizeof(struct gbsnode));
+  struct gbsnode *nn = ext_realloc(tmp, sizeof(struct gbsnode));
   nn->key = key;
   return nn;
 }
 
 struct gbstree *__gbs_create_tree(struct gbsnode *root, gtype_cmp_t cmp, gtype_free_t fk) {
   struct bntree *tmp = bn_create_tree(bn_node(root));
-  struct gbstree *t = realloc(tmp, sizeof(struct gbstree));
+  struct gbstree *t = ext_realloc(tmp, sizeof(struct gbstree));
   t->cmp = cmp;
   t->fk = fk;
   return t;
@@ -32,7 +32,7 @@ struct bs_ires gbs_insert_unique(struct gbstree *t, gtype key) {
   struct gbsnode *nn = gbs_create_node(key);
   struct bs_ires r = bs_insert_unique(t, bn_node(nn), gbs_cmp_node);
   if (!r.inserted) {
-    free(nn);
+    ext_free(nn);
   }
   return r;
 }

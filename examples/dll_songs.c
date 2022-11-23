@@ -12,16 +12,17 @@ typedef struct song_s {
 } *song_t;
 
 gtype create_song_g(const char *name) {
-  song_t s = malloc(sizeof(struct song_s));
+  song_t s = ext_malloc(sizeof(struct song_s));
   strcpy(s->name, name);
   return (gtype){.v = (void*)s};
 }
 
 void free_song_g(gtype g) {
-  free(g.v);
+  ext_free(g.v);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct gdllist *list = gdl_create_list(free_song_g);
 
   // Add songs to list

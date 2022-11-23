@@ -1,17 +1,10 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
+#include "base/alloc.h"
 #include "vec/gvec.h"
 
-#ifndef CGEN_USE_GC
-struct gvector *gvec_create(long n, gtype_free_t free_value)
-#else   // CGEN_USE_GC
-struct gvector *gvec_create(long n)
-#endif  // CGEN_USE_GC
-{
-  struct gvector *v = malloc(sizeof(struct gvector));
-#ifndef CGEN_USE_GC
-  v->free_value = free_value;
-#endif  // CGEN_USE_GC
+struct gvector *_gvec_gc_create(long n) {
+  struct gvector *v = ext_malloc(sizeof(struct gvector));
   v->sz = n;
   v->cap = n;
 
@@ -21,25 +14,15 @@ struct gvector *gvec_create(long n)
     v->elems = NULL;
     return v;
   }
-  v->elems = calloc(n, sizeof(gtype));
+  v->elems = ext_calloc(n, sizeof(gtype));
   return v;
 }
 
-#ifndef CGEN_USE_GC
-struct gvector *gvec_create_full(long size, long cap, gtype value,
-      gtype_free_t free_value)
-#else  // CGEN_USE_GC
-struct gvector *gvec_create_full(long size, long cap, gtype value)
-#endif  // CGEN_USE_GC
-{
+struct gvector *_gvec_gc_create_full(long size, long cap, gtype value) {
   if (size > cap) {
     return NULL;
   }
-#ifndef CGEN_USE_GC
-  struct gvector *v = gvec_create(size, free_value);
-#else  // CGEN_USE_GC
-  struct gvector *v = gvec_create(size);
-#endif  // CGEN_USE_GC
+  struct gvector *v = _gvec_gc_create(size);
   if (cap > size) {
     gvec_reserve(v, cap);
   }
@@ -47,15 +30,34 @@ struct gvector *gvec_create_full(long size, long cap, gtype value)
   return v;
 }
 
+#ifndef CGEN_USE_GC
+
+struct gvector *_gvec_create(long n, gtype_free_t free_value) {
+  struct gvector *v = _gvec_gc_create(n);
+  v->free_value = free_value;
+  return v;
+}
+
+struct gvector *_gvec_create_full(long size, long cap, gtype value,
+                    gtype_free_t free_value) {
+  struct gvector *v = _gvec_gc_create_full(size, cap, value);
+  if (v) {
+    v->free_value = free_value;
+  }
+  return v;
+}
+
+#endif  // CGEN_USE_GC
+
 struct gvector *gvec_clone(struct gvector *v) {
-  struct gvector *v2 = malloc(sizeof(struct gvector));
+  struct gvector *v2 = ext_malloc(sizeof(struct gvector));
   memcpy(v2, v, sizeof(struct gvector));
   if (v->cap == 0) {
     v2->elems = NULL;
     return v2;
   }
   size_t elems_size = v2->cap * sizeof(gtype);
-  v2->elems = malloc(elems_size);
+  v2->elems = ext_malloc(elems_size);
   memcpy(v2->elems, v->elems, elems_size);
   return v2;
 }
@@ -86,7 +88,11 @@ void gvec_pprint(struct gvector *v, gtype_print_t pp) {
 }
 
 struct gvector *gvec_rand_l(long n) {
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(n, NULL);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(n);
+#endif  // CGEN_USE_GC
   gvec_traverse(cur, v) {
     cur->l = rand();
   }

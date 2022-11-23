@@ -18,11 +18,12 @@ void print_rbm(struct rbmtree *tab) {
   }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   srand(time(NULL));
   struct rbmtree *tab = rbm_create(gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {
-    rbm_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
+    rbm_insert(tab, gtype_s(ext_strdup(rands(10))), gtype_l(rand()));
   }
   printf("Trạng thái rbmtree sau khi thêm ngẫu nhiên 10 cặp: \n");
   print_rbm(tab);
@@ -31,7 +32,7 @@ int main() {
   print_rbm(tab);
   printf("Trạng thái rbmtree sau khi thêm phần tử mới: \n");
   for (int i = 0; i < 10; ++i) {
-    rbm_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
+    rbm_insert(tab, gtype_s(ext_strdup(rands(10))), gtype_l(rand()));
     print_rbm(tab);
   }
   rbm_free(tab);

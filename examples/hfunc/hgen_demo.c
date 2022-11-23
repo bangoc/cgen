@@ -27,7 +27,8 @@
     printf("hgen(%ld) = %lu\n", _l, (unsigned long)hgen(&_l, sizeof _l)); \
   } while (0)
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   DEMO_S("Hello world!");
   DEMO_S("Hello");
   DEMO_S("world!");

@@ -40,7 +40,7 @@ void p1w_root(struct p1way *h, gtype value);
 #define p1w_free(h) \
   do { \
     arr_free((h)->elems); \
-    free(h); \
+    ext_free(h); \
   } while (0)
 
 #define p1w_clear(h) \

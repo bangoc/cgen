@@ -7,7 +7,8 @@
 #include "all.h"
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   arr_make(a, 0, int);
   arr_resize(a, 10);
   printf("size = %zu\n", arr_size(a));

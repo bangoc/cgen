@@ -10,19 +10,19 @@ struct rbmtree *s2i_create() {
 }
 
 struct rbm_ires s2i_insert(struct rbmtree *si, const char *key, long value) {
-  char *tmp = strdup(key);
+  char *tmp = ext_strdup(key);
   struct rbm_ires r = rbm_insert(si, gtype_s(tmp), gtype_l(value));
   if (!r.inserted) {
-    free(tmp);
+    ext_free(tmp);
   }
   return r;
 }
 
 long *s2i_put(struct rbmtree *si, const char *key, long value) {
-  char *tmp = strdup(key);
+  char *tmp = ext_strdup(key);
   gtype *res = rbm_put(si, gtype_s(tmp), gtype_l(value));
   if (res) {
-    free(tmp);
+    ext_free(tmp);
   }
   return (long*)res;
 }

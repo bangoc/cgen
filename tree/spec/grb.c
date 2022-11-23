@@ -4,7 +4,7 @@
 
 struct grbnode *grb_create_node(gtype key) {
   struct rbnode *tmp = rb_create_node();
-  struct grbnode *nn = realloc(tmp, sizeof(struct grbnode));
+  struct grbnode *nn = ext_realloc(tmp, sizeof(struct grbnode));
   nn->key = key;
   return nn;
 }
@@ -15,7 +15,7 @@ int grb_cmp_node(struct bnnode *n1, struct bnnode *n2, struct bntree *t) {
 
 struct grbtree *__grb_create_tree(struct grbnode *root, gtype_cmp_t cmp, gtype_free_t fk) {
   struct bntree *tmp = bn_create_tree(bn_node(root));
-  struct grbtree *t = realloc(tmp, sizeof(struct grbtree));
+  struct grbtree *t = ext_realloc(tmp, sizeof(struct grbtree));
   t->cmp = cmp;
   t->fk = fk;
   return t;
@@ -30,7 +30,7 @@ struct bs_ires __grb_insert_unique(struct grbtree *t, gtype key) {
   struct grbnode *nn = grb_create_node(key);
   struct bs_ires r = rb_insert_unique(bn_tree(t), nn, grb_cmp_node);
   if (!r.inserted) {
-    free(nn);
+    ext_free(nn);
   }
   return r;
 }

@@ -7,7 +7,8 @@
 #include "all.h"
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   const char *words[] = {"aaa", "bbb", "ccc", "aaa"};
   int n = sizeof(words)/sizeof(words[0]);
   struct rbmtree *tab = rbm_create(gtype_cmp_s, NULL, NULL);

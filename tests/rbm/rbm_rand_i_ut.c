@@ -21,26 +21,27 @@ void gen_buff() {
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   int n;
   sscanf(argv[1], "%d", &n);
   struct rbmtree *map = rbm_create(gtype_cmp_s, gtype_free_s, gtype_free_s);
   srand(time(NULL));
-  char **keys = malloc(n * sizeof(char *)),
-       **values = malloc(n * sizeof(char *));
+  char **keys = ext_malloc(n * sizeof(char *)),
+       **values = ext_malloc(n * sizeof(char *));
   long cc = 0;
   for (int i = 0; i < n; ++i) {
     gen_buff();
-    char *tmp = strdup(buff);
+    char *tmp = ext_strdup(buff);
     struct rbm_ires ires = rbm_insert(map, gtype_s(tmp), gtype_s(NULL));
     if (!ires.inserted) {
       CHECK_MSG(rbm_size(map) == bn_size((struct bntree *)map), "Size equal bn_size");
       CHECK_MSG(rbm_size(map) == cc, "size == cc");
-      free(tmp);
+      ext_free(tmp);
       continue;
     }
     keys[cc] = tmp;
     gen_buff();
-    values[cc] = strdup(buff);
+    values[cc] = ext_strdup(buff);
     ires.value->s = values[cc];
     ++cc;
     CHECK_MSG(rbm_size(map) == bn_size((struct bntree *)map), "Size equal bn_size");
@@ -55,8 +56,8 @@ int main(int argc, char *argv[]) {
     CHECK_MSG(rbm_size(map) == cc, "size == cc");
   }
   rbm_free(map);
-  free(keys);
-  free(values);
+  ext_free(keys);
+  ext_free(values);
   TEST_OK();
   return 0;
 }

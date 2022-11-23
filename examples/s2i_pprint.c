@@ -1,6 +1,7 @@
 #include "all.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct rbmtree *si = s2i_create();
   s2i_put(si, "Một", 1);
   s2i_put(si, "Hai", 2);

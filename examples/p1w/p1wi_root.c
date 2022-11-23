@@ -15,7 +15,8 @@ void print_p1wi(struct p1way *q) {
   printf("\n");
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct p1way *q = p1w_create(gtype_cmp_l);
   p1w_enqueue(q, gtype_l(3));
   p1w_enqueue(q, gtype_l(5));

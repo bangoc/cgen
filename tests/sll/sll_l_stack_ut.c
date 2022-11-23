@@ -1,7 +1,8 @@
 #include "all.h"
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct sllist *stk = sll_create_list();
   isl_stack_push(stk, 1);
   isl_stack_push(stk, 2);
@@ -13,5 +14,6 @@ int main() {
   CHECK_MSG(isl_stack_pop(stk) == 1, "Stack 1");
   CHECK_MSG(sll_is_empty(stk), "Stack empty");
   sll_free(stk);
+  TEST_OK();
   return 0;
 }

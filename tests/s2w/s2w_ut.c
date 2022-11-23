@@ -3,7 +3,8 @@
 #include "mix/s2w.h"
 #include "tests/base/utils.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct si2ways *col = s2w_create();
   CHECK_MSG(s2w_put(col, "aaaa") == NULL, "put new aaaa");
   CHECK_MSG(s2w_put(col, "bbbb") == NULL, "put new bbbb");

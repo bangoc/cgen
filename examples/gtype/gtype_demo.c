@@ -11,7 +11,8 @@
 
 #include <stdio.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   printf("sizeof(gtype) = %zu\n", sizeof(gtype));
   long l = 10;
   double d = 3.14;

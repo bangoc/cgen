@@ -50,7 +50,7 @@ typedef void (*dll_node_print_t)(struct dlnode *);
     while (!dll_is_empty(list)) { \
       dll_pop_front(list); \
     } \
-    free(list); \
+    ext_free(list); \
   } while(0)
 
 #define dll_clear(list) \

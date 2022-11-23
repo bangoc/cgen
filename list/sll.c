@@ -6,11 +6,11 @@
 #include <stdio.h>
 
 struct slnode *sll_create_node() {
-  return calloc(1, sizeof(struct slnode));
+  return ext_calloc(1, sizeof(struct slnode));
 }
 
 struct sllist *sll_create_list() {
-  return calloc(1, sizeof(struct sllist));
+  return ext_calloc(1, sizeof(struct sllist));
 }
 
 void __sll_push_back(struct sllist *list, struct slnode *node) {
@@ -59,7 +59,7 @@ void __sll_pop_front(struct sllist *list) {
   if (list->front == NULL) {
     list->back = NULL;
   }
-  free(tmp);
+  ext_free(tmp);
   --list->length;
 }
 

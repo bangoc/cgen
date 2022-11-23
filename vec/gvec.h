@@ -84,9 +84,16 @@ struct gvector {
 #endif  // CGEN_USE_GC
 };
 
+struct gvector *_gvec_create(long n, gtype_free_t free_value);
+struct gvector *_gvec_gc_create(long n);
+struct gvector *_gvec_create_full(long size, long cap, gtype value,
+                                  gtype_free_t free_value);
+struct gvector *_gvec_gc_create_full(long size, long cap, gtype value);
+
 #ifndef CGEN_USE_GC
 
 /**
+ * Phiên bản không sử dụng gc
  * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.
  *
  * @param n Kích thước & dung lượng ban đầu của vec-tơ.
@@ -95,9 +102,10 @@ struct gvector {
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create(long n, gtype_free_t free_value);
+#define gvec_create(n, fv) _gvec_create(n, fv)
 
 /**
+ * Phiên bản không sử dụng gc
  * Hàm tạo đối tượng vec-tơ ở dạng đầy đủ, khởi tạo các phần tử với tham số value.
  *
  * @param size Kích thước ban đầu của vec-tơ.
@@ -108,13 +116,12 @@ struct gvector *gvec_create(long n, gtype_free_t free_value);
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create_full(long size, long cap, gtype value,
-        gtype_free_t free_value);
+#define gvec_create_full(size, cap, value, fv) _gvec_create_full(size, cap, value, fv)
 
 #else  // CGEN_USE_GC
 
-struct gvector *gvec_create(long n);
-struct gvector *gvec_create_full(long size, long cap, gtype value);
+#define gvec_create(n) _gvec_gc_create(n)
+#define gvec_create_full(size, cap, value) _gvec_gc_create_full(size, cap, value)
 
 #endif  // CGEN_USE_GC
 
@@ -211,7 +218,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if ((newcap) < gvec_size(v)) { \
       break; \
     } \
-    (v)->elems = realloc((v)->elems, newcap * sizeof(gtype)); \
+    (v)->elems = ext_realloc((v)->elems, newcap * sizeof(gtype)); \
     (v)->cap = newcap; \
   } while (0)
 
@@ -341,8 +348,8 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
 #define gvec_free(v) \
   do{ \
     gvec_clear(v); \
-    free((v)->elems); \
-    free(v); \
+    ext_free((v)->elems); \
+    ext_free(v); \
   } while (0)
 
 /**

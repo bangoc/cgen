@@ -1,6 +1,7 @@
 /*
   first reported by Lê Văn Duẩn
 */
+#include "tests/base/utils.h"
 #include "tree/spec/s2i.h"
 
 #include <stdio.h>
@@ -9,7 +10,8 @@ struct rbmtree *si = NULL; //cay chua string -> int
 int g_id = 0;
 
 
-int main(){
+int main(int argc, char *argv[]) {
+  GC_INIT();
   si = s2i_create();
 
   s2i_put(si, "aa",1);
@@ -19,5 +21,6 @@ int main(){
   s2i_remove(si, "bb");
   s2i_remove(si, "cc");
   s2i_free(si);
+  TEST_OK();
   return 0;
 }

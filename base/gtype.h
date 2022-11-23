@@ -7,6 +7,8 @@
  * @brief Định nghĩa kiểu ::gtype và các thành phần bổ trợ.
  */
 
+#include "base/alloc.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -147,11 +149,11 @@ static int gtype_print_s(gtype value) {
  * @return Hàm không trả về giá trị.
  */
 static void gtype_free_s(gtype v) {
-  free(v.s);
+  ext_free(v.s);
 }
 
 static void gtype_free_v(gtype v) {
-  free(v.v);
+  ext_free(v.v);
 }
 
 #endif  // BASE_GTYPE_H_

@@ -44,7 +44,8 @@ int t1() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK(t1() == 0);
   return 0;
 }

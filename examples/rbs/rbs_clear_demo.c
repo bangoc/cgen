@@ -20,11 +20,12 @@ void print_rbs(struct rbstree *tab) {
   printf("\n");
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   srand(time(NULL));
   struct rbstree *tab = rbs_create(gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < 10; ++i) {
-    rbs_insert(tab, gtype_s(strdup(rands(10))));
+    rbs_insert(tab, gtype_s(ext_strdup(rands(10))));
   }
   printf("Trạng thái sau khi thêm 10 khóa ngẫu nhiên: \n");
   print_rbs(tab);
@@ -33,7 +34,7 @@ int main() {
   print_rbs(tab);
   printf("Trạng thái sau khi thêm từng phần tử: \n");
   for (int i = 0; i < 10; ++i) {
-    rbs_insert(tab, gtype_s(strdup(rands(10))));
+    rbs_insert(tab, gtype_s(ext_strdup(rands(10))));
     print_rbs(tab);
   }
   rbs_free(tab);

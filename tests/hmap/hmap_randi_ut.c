@@ -5,11 +5,10 @@
 #include <time.h>
 
 int t1(int n) {
-  int *keys = malloc(sizeof(int) * n),
-      *values = malloc(sizeof(int) * n);
+  int *keys = ext_malloc(sizeof(int) * n),
+      *values = ext_malloc(sizeof(int) * n);
 
-  struct hmap *map = hmap_create(gtype_hash_l, gtype_cmp_l,
-      NULL, NULL);
+  struct hmap *map = hmap_create(gtype_hash_l, gtype_cmp_l, NULL, NULL);
   for (int i = 0; i < n; ++i) {
     for (;;) {
       keys[i] = rand();
@@ -29,9 +28,11 @@ int t1(int n) {
     CHECK_MSG(res.value->l == values[i], "Value at i");
   }
   CHECK_MSG(hmap_size(map) == n, "nnodes");
-  free(keys);
-  free(values);
+#ifndef CGEN_USE_GC
+  ext_free(keys);
+  ext_free(values);
   hmap_free(map);
+#endif  // CGEN_USE_GC
   return 0;
 }
 
@@ -43,12 +44,12 @@ void rands9(char *s) {
 }
 
 int t2(int n) {
-  char **keys = malloc(sizeof(char*) * n),
-       **values = malloc(sizeof(char*) * n);
-  struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, gtype_free_s);
+  char **keys = ext_malloc(sizeof(char*) * n),
+       **values = ext_malloc(sizeof(char*) * n);
+  struct hmap *map = hmap_create(gtype_hash_s, gtype_cmp_s, NULL, NULL);
   for (int i = 0; i < n; ++i) {
-    keys[i] = malloc(10);
-    values[i] = malloc(10);
+    keys[i] = ext_malloc(10);
+    values[i] = ext_malloc(10);
     for (;;) {
       rands9(keys[i]);
       if (hmap_value(map, gtype_s(keys[i])) == NULL) {
@@ -69,13 +70,16 @@ int t2(int n) {
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(hmap_remove(map, gtype_s(keys[i])) == 1, "Remove keys");
   }
+#ifndef CGEN_USE_GC
   hmap_free(map);
-  free(keys);
-  free(values);
+  ext_free(keys);
+  ext_free(values);
+#endif  // CGEN_USE_GC
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   srand(time(NULL));
   CHECK_MSG(t1(100000) == 0, "t1 100000");
   CHECK_MSG(t2(100000) == 0, "t2 100000");

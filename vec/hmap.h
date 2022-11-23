@@ -185,7 +185,7 @@ int hmap_remove(struct hmap *tab, gtype key);
     arr_free((tab)->keys); \
     arr_free((tab)->values); \
     arr_free((tab)->hashes); \
-    free(tab); \
+    ext_free(tab); \
   } while (0)
 
 /**

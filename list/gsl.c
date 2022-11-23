@@ -4,14 +4,14 @@
 
 struct gslnode *gsl_create_node(gtype value) {
   struct slnode *tmp = sll_create_node();
-  struct gslnode *nn = realloc(tmp, sizeof(struct gslnode));
+  struct gslnode *nn = ext_realloc(tmp, sizeof(struct gslnode));
   nn->value = value;
   return nn;
 }
 
 struct gsllist *gsl_create_list(gtype_free_t free_value) {
   struct sllist *tmp = sll_create_list();
-  struct gsllist *l = realloc(tmp, sizeof(struct gsllist));
+  struct gsllist *l = ext_realloc(tmp, sizeof(struct gsllist));
   l->free_value = free_value;
   return l;
 }

@@ -15,7 +15,7 @@
   } while (0)
 
 struct p2ways *p2w_create(gtype_cmp_t cmp) {
-  struct p2ways *h = malloc(sizeof(struct p2ways));
+  struct p2ways *h = ext_malloc(sizeof(struct p2ways));
   h->data = arr_create(0, gtype);
   h->index = arr_create(0, long);
   h->index2 = arr_create(0, long);

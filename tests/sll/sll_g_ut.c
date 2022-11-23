@@ -8,7 +8,8 @@ gtype pop_value_front(struct gsllist *list) {
   return value;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   struct gsllist *list = gsl_create_list(NULL);
   gsl_push_back(list, (gtype){.l = 1});
   CHECK_MSG(gsl_length(list) == 1, "Append n1 size");

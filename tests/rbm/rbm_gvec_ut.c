@@ -10,11 +10,16 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   srand(time(NULL));
   struct rbmtree *map = rbm_create(gtype_cmp_l, NULL, gtype_free_gvec);
   for (int i = 0; i < 100; ++i) {
+#ifndef CGEN_USE_GC
     struct gvector *vec = gvec_create(0, NULL);
+#else  // CGEN_USE_GC
+    struct gvector *vec = gvec_create(0);
+#endif  // CGEN_USE_GC
     int n = rand() % 100 + 1;
     for (int j = 0; j < n; ++j) {
       gvec_append(vec, gtype_l(rand()));

@@ -181,7 +181,7 @@ int delete_red_node_no_child() {
   */
   bn_connect1(n6, right, NULL);
   bn_connect1(n8, top, NULL);
-  free(n8);
+  ext_free(n8);
 
   CHECK_MSG(bn_similar_tree(t, s, rbi_similar_node) == 1, "Xóa thêm nút 8 trong cây 1");
   rbi_free_tree(t);
@@ -462,7 +462,8 @@ int builder() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(builder() == 0, "builder()");
   CHECK_MSG(delete_node_one_left_child() == 0, "Sai ở delete_node_one_left_child()");
   CHECK_MSG(delete_node_one_right_child() == 0, "Sai ở delete_node_one_right_child()");

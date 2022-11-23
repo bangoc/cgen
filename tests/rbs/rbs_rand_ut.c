@@ -21,6 +21,7 @@ void gen_buff() {
 }
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 2) {
     printf("Usage example: ./prog 1000\n");
     return 1;
@@ -29,15 +30,15 @@ int main(int argc, char *argv[]) {
   sscanf(argv[1], "%d", &n);
   struct rbstree *s = rbs_create(gtype_cmp_s, gtype_free_s);
   srand(time(NULL));
-  char **keys = malloc(n * sizeof(char *));
+  char **keys = ext_malloc(n * sizeof(char *));
   long cc = 0;
   for (int i = 0; i < n; ++i) {
     gen_buff();
-    char *tmp = strdup(buff);
+    char *tmp = ext_strdup(buff);
     if (!rbs_insert(s, gtype_s(tmp))) {
       CHECK_MSG(rbs_size(s) == bn_size((struct bntree *)s), "Size equal bn_size");
       CHECK_MSG(rbs_size(s) == cc, "size == cc");
-      free(tmp);
+      ext_free(tmp);
       continue;
     }
     keys[cc] = tmp;
@@ -53,7 +54,7 @@ int main(int argc, char *argv[]) {
     CHECK_MSG(rbs_size(s) == cc, "size == cc");
   }
   rbs_free(s);
-  free(keys);
+  ext_free(keys);
   TEST_OK();
   return 0;
 }

@@ -10,7 +10,7 @@ int test_idn_create() {
   CHECK_MSG(n->base.prev == NULL, "base->prev");
   CHECK_MSG(n->base.next == NULL, "base->next");
   CHECK_MSG(n->value == 90, "value 90");
-  free(dll_node(n));
+  ext_free(dll_node(n));
   return 0;
 }
 
@@ -61,12 +61,13 @@ int test_dll_insert_abi() {
   return 0;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   CHECK_MSG(test_idn_create() == 0, "create_node_i");
   CHECK_MSG(test_idl_push_back() == 0, "push_back_i");
   CHECK_MSG(test_idl_push_front() == 0, "push_front_i");
   CHECK_MSG(test_dll_pop_front_back_i() == 0, "pop_front_back_i");
   CHECK_MSG(test_dll_insert_abi() == 0, "insert_abi");
-  printf("Test Ok\n");
+  TEST_OK();
   return 0;
 }

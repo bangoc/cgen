@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc != 3) {
     printf("Usage: ./prog out.txt 100000\n");
     return 1;

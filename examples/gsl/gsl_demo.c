@@ -10,6 +10,7 @@
 #include <string.h>
 
 int main(int argc, char *argv[]) {
+  GC_INIT();
   if (argc == 2) {
     freopen(argv[1], "r", stdin);
   }
@@ -19,13 +20,13 @@ int main(int argc, char *argv[]) {
     if (strcmp(line, "STOP\n") == 0) {
       break;
     }
-    gsl_push_back(list, gtype_s(strdup(line)));
+    gsl_push_back(list, gtype_s(ext_strdup(line)));
   }
   printf("Đã nhập %ld dòng:\n", gsl_length(list));
   gsl_traverse(cur, list) {
     printf("%s", cur->s);
   }
-  free(line);
+  ext_free(line);
   gsl_free(list);
   return 0;
 }

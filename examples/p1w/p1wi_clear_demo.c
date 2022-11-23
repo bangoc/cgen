@@ -6,7 +6,8 @@
 
 #include "all.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  GC_INIT();
   // max heap
   struct p1way *h = p1w_create(gtype_cmp_l);
   p1w_enqueue(h, gtype_l(10));

@@ -3,6 +3,7 @@
 
 /* (C) Nguyen Ba Ngoc 2022 */
 
+#include "base/alloc.h"
 #include "vec/gvec.h"
 
 extern const char* ascii_spaces;
@@ -16,12 +17,12 @@ struct gvector *str_tokens(char *line, const char *delims);
 /*
   Trả về bản sao của chuỗi s hoặc NULL nếu không thể
   cấp phát bộ nhớ.
-  Ghi chú: strdup là một hàm trong mở rộng, không có
+  Ghi chú: ext_strdup là một hàm trong mở rộng, không có
   trong thư viện tiêu chuẩn.
 */
 static inline char * cstrdup (const char *s) {
   size_t len = strlen (s) + 1;
-  void *snew = malloc (len);
+  void *snew = ext_malloc(len);
 
   if (snew == NULL) {
     return NULL;
