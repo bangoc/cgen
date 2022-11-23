@@ -224,17 +224,28 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @param newsz Kích thước mới
  * @return Không trả về kết quả
  */
+#ifndef CGEN_USE_GC
 #define gvec_resize(v, newsz) \
   do {\
     if (newsz > gvec_capacity(v)) { \
       gvec_reserve(v, newsz); \
-    } else if (newsz < gvec_size(v) && (v)->free_value) { \
+    } \
+    else if (newsz < gvec_size(v) && (v)->free_value) { \
       for (long _j = newsz; _j < gvec_size(v); ++_j) { \
         (v)->free_value(gvec_elem(v, _j)); \
       }\
     }\
     gvec_size(v) = (newsz); \
   } while (0)
+#else // CGEN_USE_GC
+#define gvec_resize(v, newsz) \
+  do {\
+    if (newsz > gvec_capacity(v)) { \
+      gvec_reserve(v, newsz); \
+    } \
+    gvec_size(v) = (newsz); \
+  } while (0)
+#endif  // CGEN_USE_GC
 
 /**
  * Thêm giá trị val vào sau phần tử cuối cùng trong v và tăng kích thước lên 1.
