@@ -78,8 +78,13 @@ struct gvector {
   /**
    * Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
    */
+
+#ifndef CGEN_USE_GC
   gtype_free_t free_value;
+#endif  // CGEN_USE_GC
 };
+
+#ifndef CGEN_USE_GC
 
 /**
  * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.
@@ -105,6 +110,13 @@ struct gvector *gvec_create(long n, gtype_free_t free_value);
  */
 struct gvector *gvec_create_full(long size, long cap, gtype value,
         gtype_free_t free_value);
+
+#else  // CGEN_USE_GC
+
+struct gvector *gvec_create(long n);
+struct gvector *gvec_create_full(long size, long cap, gtype value);
+
+#endif  // CGEN_USE_GC
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ

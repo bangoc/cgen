@@ -2,9 +2,16 @@
 
 #include "vec/gvec.h"
 
-struct gvector *gvec_create(long n, gtype_free_t free_value) {
+#ifndef CGEN_USE_GC
+struct gvector *gvec_create(long n, gtype_free_t free_value)
+#else   // CGEN_USE_GC
+struct gvector *gvec_create(long n)
+#endif  // CGEN_USE_GC
+{
   struct gvector *v = malloc(sizeof(struct gvector));
+#ifndef CGEN_USE_GC
   v->free_value = free_value;
+#endif  // CGEN_USE_GC
   v->sz = n;
   v->cap = n;
 
@@ -18,12 +25,21 @@ struct gvector *gvec_create(long n, gtype_free_t free_value) {
   return v;
 }
 
+#ifndef CGEN_USE_GC
 struct gvector *gvec_create_full(long size, long cap, gtype value,
-      gtype_free_t free_value) {
+      gtype_free_t free_value)
+#else  // CGEN_USE_GC
+struct gvector *gvec_create_full(long size, long cap, gtype value)
+#endif  // CGEN_USE_GC
+{
   if (size > cap) {
     return NULL;
   }
+#ifndef CGEN_USE_GC
   struct gvector *v = gvec_create(size, free_value);
+#else  // CGEN_USE_GC
+  struct gvector *v = gvec_create(size);
+#endif  // CGEN_USE_GC
   if (cap > size) {
     gvec_reserve(v, cap);
   }
