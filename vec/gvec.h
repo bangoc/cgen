@@ -199,7 +199,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if ((newcap) < gvec_size(v)) { \
       break; \
     } \
-    (v)->elems = realloc((v)->elems, newcap * sizeof(gtype)); \
+    (v)->elems = ext_realloc((v)->elems, newcap * sizeof(gtype)); \
     (v)->cap = newcap; \
   } while (0)
 
@@ -318,8 +318,8 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
 #define gvec_free(v) \
   do{ \
     gvec_clear(v); \
-    free((v)->elems); \
-    free(v); \
+    ext_free((v)->elems); \
+    ext_free(v); \
   } while (0)
 
 /**

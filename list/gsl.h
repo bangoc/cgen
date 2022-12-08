@@ -85,7 +85,7 @@ struct gsllist {
 #define gsl_free(list) \
   do {\
       gsl_clear(list); \
-      free(list); \
+      ext_free(list); \
   } while (0)
 
 static inline gtype *gsl_front_value(struct gsllist *l) {

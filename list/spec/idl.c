@@ -3,7 +3,7 @@
 #include "list/spec/idl.h"
 
 struct idlnode *idl_create_node(int value) {
-  struct idlnode *n = malloc(sizeof(struct idlnode));
+  struct idlnode *n = ext_malloc(sizeof(struct idlnode));
   n->base.prev = n->base.next = NULL;
   n->value = value;
   return n;

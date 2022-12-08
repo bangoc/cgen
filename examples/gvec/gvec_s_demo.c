@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     if (strcmp(line, "STOP\n") == 0 || strcmp(line, "STOP") == 0) {
       break;
     }
-    gvec_append(vec, gtype_s(strdup(line)));
+    gvec_append(vec, gtype_s(ext_strdup(line)));
   }
   printf("Bạn đã nhập: %ld chuỗi ký tự\n", gvec_size(vec));
   gvec_qsort(vec, gtype_qsort_s);
@@ -34,6 +34,6 @@ int main(int argc, char *argv[]) {
   }
   printf("\n");
   gvec_free(vec);
-  free(line);
+  ext_free(line);
   return 0;
 }

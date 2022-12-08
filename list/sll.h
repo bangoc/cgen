@@ -44,7 +44,7 @@ typedef void (*sll_node_print_t)(struct slnode *);
     while (!sll_is_empty(list)) { \
       sll_pop_front(list); \
     } \
-    free(list); \
+    ext_free(list); \
   } while (0)
 
 #define sll_is_empty(list) \

@@ -1,2 +1,6 @@
 add_executable(arr_i_demo arr_i_demo.c)
 add_executable(arr_setsize_demo arr_setsize_demo.c)
+
+foreach (p arr_i_demo arr_setsize_demo)
+  target_link_libraries(${p} bkcgen)
+endforeach()

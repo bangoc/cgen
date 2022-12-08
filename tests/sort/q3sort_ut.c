@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 int t1(int n) {
-  gtype *a = malloc(sizeof(gtype) * n);
+  gtype *a = ext_malloc(sizeof(gtype) * n);
   for (int i = 0; i < n; ++i) {
     a[i].l = rand();
   }
@@ -13,12 +13,12 @@ int t1(int n) {
   for (int i = 0; i < n - 1; ++i) {
     CHECK_MSG(gtype_cmp_l(a[i], a[i + 1]) <= 0, "Increment sort");
   }
-  free(a);
+  ext_free(a);
   return 0;
 }
 
 int t2(int n) {
-  gtype *a = malloc(sizeof(gtype) * n);
+  gtype *a = ext_malloc(sizeof(gtype) * n);
   for (int i = 0; i < n; ++i) {
     a[i].l = i;
   }
@@ -26,7 +26,7 @@ int t2(int n) {
   for (int i = 0; i < n - 1; ++i) {
     CHECK_MSG(gtype_cmp_l(a[i], a[i + 1]) <= 0, "Increment sort");
   }
-  free(a);
+  ext_free(a);
   return 0;
 }
 

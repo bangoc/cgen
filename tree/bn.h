@@ -45,7 +45,7 @@ typedef int (*bn_compare_t)(struct bnnode *, struct bnnode *, struct bntree *);
 typedef void (*bn_node_print_t)();
 
 struct bnnode *bn_create_node();
-#define bn_free_node(n) free(n)
+#define bn_free_node(n) ext_free(n)
 
 struct bntree *bn_create_tree(struct bnnode *root);
 
@@ -93,10 +93,10 @@ struct bnnode *bn_prev_inorder(struct bnnode *x);
   do { \
     struct bnnode *_tmp = NULL; \
     bn_traverse_lrn(_cur, (t)) { \
-      free(_tmp); \
+      ext_free(_tmp); \
       _tmp = _cur; \
     } \
-    free(_tmp); \
+    ext_free(_tmp); \
     (t)->root = NULL; \
   } while (0)
 

@@ -1,5 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
+#include "base/alloc.h"
 #include "vec/hset.h"
 #include "tests/base/utils.h"
 
@@ -11,10 +12,10 @@ void rands9(char *s) {
 }
 
 int t1(int n) {
-  char **keys = malloc(n * sizeof(char *));
+  char **keys = ext_malloc(n * sizeof(char *));
   struct hset *hs = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < n; ++i) {
-    keys[i] = malloc(10);
+    keys[i] = ext_malloc(10);
     for (;;) {
       rands9(keys[i]);
       if (!hset_contains(hs, gtype_s(keys[i]))) {
@@ -30,7 +31,7 @@ int t1(int n) {
   }
   CHECK_MSG(hset_size(hs) == n, "nnodes == n");
   hset_free(hs);
-  free(keys);
+  ext_free(keys);
   return 0;
 }
 

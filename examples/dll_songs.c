@@ -12,13 +12,13 @@ typedef struct song_s {
 } *song_t;
 
 gtype create_song_g(const char *name) {
-  song_t s = malloc(sizeof(struct song_s));
+  song_t s = ext_malloc(sizeof(struct song_s));
   strcpy(s->name, name);
   return (gtype){.v = (void*)s};
 }
 
 void free_song_g(gtype g) {
-  free(g.v);
+  ext_free(g.v);
 }
 
 int main() {

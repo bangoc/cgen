@@ -1,3 +1,4 @@
+#include "base/alloc.h"
 #include "tests/base/utils.h"
 #include "tree/bn.h"
 

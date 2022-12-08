@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 struct p1way *p1w_create(gtype_cmp_t cmp) {
-  struct p1way *h = malloc(sizeof(struct p1way));
+  struct p1way *h = ext_malloc(sizeof(struct p1way));
   h->elems = arr_create(0, gtype);
   h->cmp = cmp;
   return h;

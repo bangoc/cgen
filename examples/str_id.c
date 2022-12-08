@@ -20,7 +20,7 @@ void cache_print(struct str_cache *cache) {
 }
 
 struct str_cache *create_cache() {
-  struct str_cache *sc = malloc(sizeof(struct str_cache));
+  struct str_cache *sc = ext_malloc(sizeof(struct str_cache));
   sc->si = s2i_create();
   sc->is = arr_create(0, char*);
   return sc;
@@ -31,7 +31,7 @@ long get_save_str_id(struct str_cache *cache, char *s) {
   if (id) {
     return *id;
   }
-  arr_append(cache->is, strdup(s));
+  arr_append(cache->is, ext_strdup(s));
   long id2 = arr_size(cache->is) - 1;
   s2i_put(cache->si, cache->is[id2], id2);
   return id2;
@@ -47,10 +47,10 @@ char *get_by_id(struct str_cache *cache, long id) {
 void free_cache(struct str_cache *cache) {
   s2i_free(cache->si);
   for (int i = 0; i < arr_size(cache->is); ++i) {
-    free(cache->is[i]);
+    ext_free(cache->is[i]);
   }
   arr_free(cache->is);
-  free(cache);
+  ext_free(cache);
 }
 
 int main(int argc, char *argv[]) {

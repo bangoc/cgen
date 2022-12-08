@@ -23,7 +23,7 @@ int main() {
   srand(time(NULL));
   struct hset *tab = hset_create(gtype_hash_s, gtype_cmp_s, gtype_free_s);
   for (int i = 0; i < 10; ++i) {
-    hset_insert(tab, gtype_s(strdup(rands(10))));
+    hset_insert(tab, gtype_s(ext_strdup(rands(10))));
   }
   printf("Trạng thái sau khi thêm 10 khóa ngẫu nhiên: \n");
   print_hset(tab);
@@ -32,7 +32,7 @@ int main() {
   print_hset(tab);
   printf("Trạng thái sau khi thêm từng phần tử: \n");
   for (int i = 0; i < 10; ++i) {
-    hset_insert(tab, gtype_s(strdup(rands(10))));
+    hset_insert(tab, gtype_s(ext_strdup(rands(10))));
     print_hset(tab);
   }
   hset_free(tab);

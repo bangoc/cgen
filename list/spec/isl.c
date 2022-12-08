@@ -3,7 +3,7 @@
 #include "list/spec/isl.h"
 
 struct slnode *isl_create_node(long value) {
-  struct islnode *nn = malloc(sizeof(struct islnode));
+  struct islnode *nn = ext_malloc(sizeof(struct islnode));
   nn->base.next = NULL;
   nn->value = value;
   return (struct slnode *)nn;

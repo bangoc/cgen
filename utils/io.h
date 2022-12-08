@@ -1,6 +1,8 @@
 #ifndef UTILS_IO_H_
 #define UTILS_IO_H_
 
+#include "base/alloc.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,7 +47,7 @@ static char *cgetline(char **lineptr, long *nptr, FILE *inp) {
     len = strlen(buff);
     tmp = idx + len + 1;
     if (tmp > n) {
-      *lineptr = realloc(*lineptr, tmp);
+      *lineptr = ext_realloc(*lineptr, tmp);
       if (*lineptr == NULL) {
         return NULL;  // Lỗi cấp phát bộ nhớ
       }

@@ -47,11 +47,11 @@ int sll_t1() {
 
 int test_create_list() {
   #define N 1000
-  int *a = malloc(N * sizeof(int));
+  int *a = ext_malloc(N * sizeof(int));
   for (int i = 0; i < N; ++i) {
     a[i] = i;
   }
-  free(a);
+  ext_free(a);
   struct sllist *lists[N];
   for (int i = 0; i < N; ++i) {
     lists[i] = sll_create_list();

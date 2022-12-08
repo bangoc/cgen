@@ -35,10 +35,10 @@ int main(int argc, char *argv[]) {
   struct gvector *vec = gvec_create(0, gtype_free_v);
   struct point *p;
   for (;;) {
-    p = malloc(sizeof(struct point));
+    p = ext_malloc(sizeof(struct point));
     scanf("%lf%lf", &p->x, &p->y);
     if (p->x == 0 && p->y == 0) {
-      free(p);
+      ext_free(p);
       break;
     }
     gvec_append(vec, gtype_v(p));

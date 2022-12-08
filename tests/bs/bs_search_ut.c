@@ -32,7 +32,7 @@ int main() {
   CHECK_MSG(gbs_search(t, n5.key) == &n5, "Failed search 5");
   CHECK_MSG(gbs_search(t, n6.key) == NULL, "Failed search 6");
   CHECK_MSG(gbs_search(t, n_1.key) == NULL, "Failed search -1");
-  free(t);
+  ext_free(t);
   TEST_OK();
   return 0;
 }

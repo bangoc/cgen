@@ -1,7 +1,7 @@
 #include "OOP/cgen.ic"
 
 gtype gtype_str(const char *str) {
-  return gtype_s(strdup(str));
+  return gtype_s(ext_strdup(str));
 }
 
 int print_s(gtype value) {
@@ -10,7 +10,7 @@ int print_s(gtype value) {
 }
 
 int free_s(gtype value) {
-  free(value.s);
+  ext_free(value.s);
   return 0;
 }
 

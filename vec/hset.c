@@ -13,7 +13,7 @@ static void hset_free_nodes(struct hset *hs);
 
 struct hset *hset_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key) {
-  struct hset *hs = malloc(sizeof(struct hset));
+  struct hset *hs = ext_malloc(sizeof(struct hset));
   hs->size = 0;
   hs->noccupied = 0;
   hs->hash_func = hash_func;
@@ -77,7 +77,7 @@ void hset_clear(struct hset *hs) {
 
 void hset_free(struct hset *hs) {
   hset_free_nodes(hs);
-  free(hs);
+  ext_free(hs);
 }
 
 void gtype_free_hset(gtype value) {
@@ -210,13 +210,13 @@ static void hset_realloc(struct hset *hs) {
   if (hs->capacity > old_capacity) {
     hset_realloc_arrays(hs);
     memset(hs->hashes + old_capacity, 0, (hs->capacity - old_capacity) * sizeof(uint));
-    reallocated_buckets_bitmap = calloc((hs->capacity + 31) / 32, sizeof(uint32));
+    reallocated_buckets_bitmap = ext_calloc((hs->capacity + 31) / 32, sizeof(uint32));
   } else {
-    reallocated_buckets_bitmap = calloc((old_capacity + 31) / 32, sizeof(uint32));
+    reallocated_buckets_bitmap = ext_calloc((old_capacity + 31) / 32, sizeof(uint32));
   }
 
   relocate_set(hs, old_capacity, reallocated_buckets_bitmap);
-  free(reallocated_buckets_bitmap);
+  ext_free(reallocated_buckets_bitmap);
   if (hs->capacity < old_capacity) {
     hset_realloc_arrays(hs);
   }

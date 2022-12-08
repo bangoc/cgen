@@ -22,7 +22,7 @@ int main() {
   srand(time(NULL));
   struct hmap *tab = hmap_create(gtype_hash_s, gtype_cmp_s, gtype_free_s, NULL);
   for (int i = 0; i < 10; ++i) {
-    hmap_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
+    hmap_insert(tab, gtype_s(ext_strdup(rands(10))), gtype_l(rand()));
   }
   printf("Trạng thái hmap sau khi thêm ngẫu nhiên 10 cặp: \n");
   print_hmap(tab);
@@ -31,7 +31,7 @@ int main() {
   print_hmap(tab);
   printf("Trạng thái hmap sau khi thêm phần tử mới: \n");
   for (int i = 0; i < 10; ++i) {
-    hmap_insert(tab, gtype_s(strdup(rands(10))), gtype_l(rand()));
+    hmap_insert(tab, gtype_s(ext_strdup(rands(10))), gtype_l(rand()));
     print_hmap(tab);
   }
   hmap_free(tab);

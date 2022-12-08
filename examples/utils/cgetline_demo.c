@@ -1,3 +1,4 @@
+#include "base/alloc.h"
 #include "utils/io.h"
 
 int main(int argc, char *argv[]) {
@@ -16,7 +17,7 @@ int main(int argc, char *argv[]) {
   }
   fclose(inp);
   if (s) {
-    free(s);
+    ext_free(s);
   }
   return 0;
 }

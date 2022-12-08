@@ -5,6 +5,7 @@
  * 3 * 8 + n * 13
 */
 
+#include "base/alloc.h"
 #include "vec/arr.h"
 #include "tests/base/utils.h"
 
@@ -32,14 +33,14 @@ int main() {
   for (int i = 0; i < arr_size(ss); ++i) {
     printf("%s\n", ss[i].s);
   }
-  struct s13 *tmp = malloc(7 * sizeof(struct s13));
+  struct s13 *tmp = ext_malloc(7 * sizeof(struct s13));
   if ((intptr_t)tmp % 13 == 0) {
     printf("Divided (malloc)\n");
   } else {
     printf("Not divided (malloc)\n");
   }
   CHECK_MSG(strcmp(ss[1].s, "Danang") == 0, "Arr[1] - Danang");
-  free(tmp);
+  ext_free(tmp);
   arr_free(ss);
   TEST_OK();
   return 0;

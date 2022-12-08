@@ -3,7 +3,7 @@
 #include "vec/gvec.h"
 
 struct gvector *gvec_create(long n, gtype_free_t free_value) {
-  struct gvector *v = malloc(sizeof(struct gvector));
+  struct gvector *v = ext_malloc(sizeof(struct gvector));
   v->free_value = free_value;
   v->sz = n;
   v->cap = n;
@@ -14,7 +14,7 @@ struct gvector *gvec_create(long n, gtype_free_t free_value) {
     v->elems = NULL;
     return v;
   }
-  v->elems = calloc(n, sizeof(gtype));
+  v->elems = ext_calloc(n, sizeof(gtype));
   return v;
 }
 
@@ -32,14 +32,14 @@ struct gvector *gvec_create_full(long size, long cap, gtype value,
 }
 
 struct gvector *gvec_clone(struct gvector *v) {
-  struct gvector *v2 = malloc(sizeof(struct gvector));
+  struct gvector *v2 = ext_malloc(sizeof(struct gvector));
   memcpy(v2, v, sizeof(struct gvector));
   if (v->cap == 0) {
     v2->elems = NULL;
     return v2;
   }
   size_t elems_size = v2->cap * sizeof(gtype);
-  v2->elems = malloc(elems_size);
+  v2->elems = ext_malloc(elems_size);
   memcpy(v2->elems, v->elems, elems_size);
   return v2;
 }

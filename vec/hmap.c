@@ -12,7 +12,7 @@ static void hmap_remove_node(struct hmap *tab, int i);
 
 struct hmap *hmap_create(gtype_hash_t hash_func, gtype_cmp_t cmp,
           gtype_free_t free_key, gtype_free_t free_value) {
-  struct hmap *tab = malloc(sizeof(struct hmap));
+  struct hmap *tab = ext_malloc(sizeof(struct hmap));
   tab->size = 0;
   tab->noccupied = 0;
   tab->hash_func = hash_func;
@@ -241,13 +241,13 @@ static void hmap_realloc(struct hmap *tab) {
   if (tab->capacity > old_capacity) {
     hmap_realloc_arrays(tab);
     memset(tab->hashes + old_capacity, 0, (tab->capacity - old_capacity) * sizeof(uint));
-    reallocated_buckets_bitmap = calloc((tab->capacity + 31) / 32, sizeof(uint32));
+    reallocated_buckets_bitmap = ext_calloc((tab->capacity + 31) / 32, sizeof(uint32));
   } else {
-    reallocated_buckets_bitmap = calloc((old_capacity + 31) / 32, sizeof(uint32));
+    reallocated_buckets_bitmap = ext_calloc((old_capacity + 31) / 32, sizeof(uint32));
   }
 
   relocate_map(tab, old_capacity, reallocated_buckets_bitmap);
-  free(reallocated_buckets_bitmap);
+  ext_free(reallocated_buckets_bitmap);
   if (tab->capacity < old_capacity) {
     hmap_realloc_arrays(tab);
   }

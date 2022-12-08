@@ -6,11 +6,11 @@
 #include <stdlib.h>
 
 struct dlnode *dll_create_node() {
-  return calloc(1, sizeof(struct dlnode));
+  return ext_calloc(1, sizeof(struct dlnode));
 }
 
 struct dllist *dll_create_list() {
-  return calloc(1, sizeof(struct dllist));
+  return ext_calloc(1, sizeof(struct dllist));
 }
 
 void __dll_push_back(struct dllist *list, struct dlnode *nn) {
@@ -46,7 +46,7 @@ void __dll_pop_back(struct dllist *list) {
   } else {
     list->front = NULL;
   }
-  free(tmp);
+  ext_free(tmp);
   --list->length;
 }
 
@@ -61,7 +61,7 @@ void __dll_pop_front(struct dllist *list) {
   } else {
     list->back = NULL;
   }
-  free(tmp);
+  ext_free(tmp);
   --list->length;
 }
 
@@ -117,7 +117,7 @@ void __dll_erase(struct dllist *list, struct dlnode *pos) {
              *p2 = pos->next;
   p1->next = p2;
   p2->prev = p1;
-  free(pos);
+  ext_free(pos);
   --list->length;
 }
 

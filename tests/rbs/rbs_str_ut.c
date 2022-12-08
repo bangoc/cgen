@@ -13,7 +13,7 @@ int main() {
   int n = sizeof(cases)/sizeof(cases[0]);
   for (int i = 0; i < n; ++i) {
     CHECK_MSG(!rbs_contains(s, gtype_s(cases[i])), "Should not contains ");
-    rbs_insert(s, gtype_s(strdup(cases[i])));
+    rbs_insert(s, gtype_s(ext_strdup(cases[i])));
     CHECK_MSG(rbs_contains(s, gtype_s(cases[i])), "Should contains");
   }
   rbs_free(s);

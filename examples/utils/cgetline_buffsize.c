@@ -23,6 +23,6 @@ int main() {
     printf("Độ dài chuỗi ký tự: %zu\n", strlen(line));
     printf("Kích thước vùng nhớ: %ld\n", n);
   }
-  free(line);
+  ext_free(line);
   return 0;
 }

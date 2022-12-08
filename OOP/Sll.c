@@ -43,7 +43,7 @@ void SllPPrint(Sll list) {
 
 Sll Sll_create() {
   struct sllist *base = sll_create_list();
-  Sll list = realloc(base, sizeof(SllS));
+  Sll list = ext_realloc(base, sizeof(SllS));
   MEMBER(list, Sll, PushBack);
   MEMBER(list, Sll, PushFront);
   MEMBER(list, Sll, PopFront);
@@ -60,18 +60,18 @@ SllNode SllNode_create() {
 }
 
 void Sll_free(Sll list) {
-  struct sllist *base = realloc(list, sizeof(struct sllist));
+  struct sllist *base = ext_realloc(list, sizeof(struct sllist));
   sll_free(base);
 }
 
 void SllNode_free(SllNode node) {
-  free((struct slnode *)node);
+  ext_free((struct slnode *)node);
 }
 
 /* Giao diện gtype */
 
 void SllGt_free(SllGt list) {
-  Sll tmp = realloc(list, sizeof(SllS));
+  Sll tmp = ext_realloc(list, sizeof(SllS));
   Delete(Sll, tmp);
 }
 
@@ -103,7 +103,7 @@ gtype SllGtFront(SllGt list) {
 
 SllNodeGt SllNodeGt_create(gtype value) {
   SllNode tmp = New(SllNode);
-  SllNodeGt nn = realloc(tmp, sizeof(SllNodeGtS));
+  SllNodeGt nn = ext_realloc(tmp, sizeof(SllNodeGtS));
   nn->value = value;
   return nn;
 }
@@ -120,7 +120,7 @@ void SllGtForeach(SllGt list, int (*op)()) {
 
 SllGt SllGt_create() {
   Sll tmp = New(Sll);
-  SllGt list = realloc(tmp, sizeof(SllGtS));
+  SllGt list = ext_realloc(tmp, sizeof(SllGtS));
   MEMBER(list, SllGt, PushBack);
   MEMBER(list, SllGt, PushFront);
   MEMBER(list, SllGt, PopFront);

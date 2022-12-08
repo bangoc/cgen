@@ -1,3 +1,4 @@
+#include "base/alloc.c"
 #include "base/hashes.c"
 #include "algo/sort.c"
 #include "algo/qinsort.c"
