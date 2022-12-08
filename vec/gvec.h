@@ -90,7 +90,7 @@ struct gvector {
  * * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create_simple(long n);
+struct gvector *gvec_gc(long n);
 
 /**
  * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.

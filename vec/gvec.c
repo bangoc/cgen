@@ -2,7 +2,7 @@
 
 #include "vec/gvec.h"
 
-struct gvector *gvec_create_simple(long n) {
+struct gvector *gvec_gc(long n) {
   struct gvector *v = ext_malloc(sizeof(struct gvector));
   v->sz = n;
   v->cap = n;
@@ -18,7 +18,7 @@ struct gvector *gvec_create_simple(long n) {
 }
 
 struct gvector *gvec_create(long n, gtype_free_t free_value) {
-  struct gvector *v = gvec_create_simple(n);
+  struct gvector *v = gvec_gc(n);
   if (v) {
     v->free_value = free_value;
   }

@@ -9,7 +9,7 @@
 
 int main() {
   cgen_boehm_gc_init();
-  struct gvector *v = gvec_create_simple(0);
+  struct gvector *v = gvec_gc(0);
   srand(time(NULL));
   for (int i = 0; i < 10; ++i) {
     gvec_append(v, gtype_l(rand() % 100));
