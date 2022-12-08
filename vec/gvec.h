@@ -83,6 +83,17 @@ struct gvector {
 
 /**
  * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.
+ * Không quản lý bộ nhớ động gắn với các phần tử, phù hợp
+ * với chương trình sử dụng gc.
+ *
+ * @param n Kích thước & dung lượng ban đầu của vec-tơ.
+ * * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+struct gvector *gvec_create_simple(long n);
+
+/**
+ * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.
  *
  * @param n Kích thước & dung lượng ban đầu của vec-tơ.
  * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn

@@ -23,3 +23,8 @@ add_subdirectory(hset)
 add_subdirectory(rbs)
 add_subdirectory(gtype)
 add_subdirectory(utils)
+
+find_library(GC gc)
+if(DEFINED GC)
+  add_subdirectory(gc)
+endif()

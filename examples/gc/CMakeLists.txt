@@ -1,0 +1,5 @@
+message(STATUS "GC: " ${GC})
+add_executable(gvec_gc_demo gvec_gc_demo.c)
+foreach (p gvec_gc_demo)
+  target_link_libraries(gvec_gc_demo bkcgen ${GC})
+endforeach()

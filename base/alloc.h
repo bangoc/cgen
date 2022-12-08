@@ -34,4 +34,9 @@ char *strdup_malloc_based(const char *s);
   cgen_set_strdup(strdup); \
   cgen_set_free(free)
 
+#define cgen_boehm_gc_init() \
+   GC_INIT(); \
+   cgen_heap_manager(GC_malloc, calloc_malloc_based, \
+        GC_realloc, strdup_malloc_based, free)
+
 #endif  // BASE_ALLOC_H_
