@@ -36,30 +36,32 @@ void __dll_push_front(struct dllist *list, struct dlnode *nn) {
 }
 
 void __dll_pop_back(struct dllist *list) {
-  if (dll_is_empty(list)) {
-    return;
-  }
   struct dlnode *tmp = list->back;
-  list->back = tmp->prev;
-  if (list->back) {
-    list->back->next = NULL;
-  } else {
+  if (list->back == list->front) {
+    if (list->front == NULL) {
+      return;
+    }    
     list->front = NULL;
+    list->back = NULL;
+  } else {
+    list->back = tmp->prev;
+    list->back->next = NULL;
   }
   free(tmp);
   --list->length;
 }
 
 void __dll_pop_front(struct dllist *list) {
-  if (dll_is_empty(list)) {
-    return;
-  }
   struct dlnode *tmp = list->front;
-  list->front = tmp->next;
-  if (list->front) {
-    list->front->prev = NULL;
-  } else {
+  if (list->front == list->back) {
+    if (list->front == NULL) {
+      return;
+    }
+    list->front = NULL;
     list->back = NULL;
+  } else {
+    list->front = tmp->next;
+    list->front->prev = NULL;
   }
   free(tmp);
   --list->length;

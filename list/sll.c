@@ -51,14 +51,14 @@ void __sll_inserta(struct sllist *list, struct slnode *pos, struct slnode *nn) {
 }
 
 void __sll_pop_front(struct sllist *list) {
-  if (sll_is_empty(list)) {
-    return;
-  }
-  struct slnode *tmp = list->front;
-  list->front = list->front->next;
-  if (list->front == NULL) {
+  if (list->front == list->back) {
+    if (list->front == NULL) {
+      return;
+    }
     list->back = NULL;
   }
+  struct slnode *tmp = list->front;
+  list->front = tmp->next;
   free(tmp);
   --list->length;
 }
