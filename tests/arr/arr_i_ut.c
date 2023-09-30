@@ -4,7 +4,7 @@
  * Minh họa mảng giá trị int cấp phát động.
  */
 
-#include "vec/arr.h"
+#include "arr/arr.h"
 
 #include "tests/base/utils.h"
 

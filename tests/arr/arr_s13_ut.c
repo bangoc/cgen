@@ -5,7 +5,7 @@
  * 3 * 8 + n * 13
 */
 
-#include "vec/arr.h"
+#include "arr/arr.h"
 #include "tests/base/utils.h"
 
 #include <stdint.h>

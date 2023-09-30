@@ -8,8 +8,8 @@
  * @brief Triển khai hàng đợi ưu tiên 1 chiều dựa trên cấu trúc đống.
  */
 
+#include "arr/arr.h"
 #include "base/gtype.h"
-#include "vec/arr.h"
 
 struct p1way {
   atype(gtype) *elems;

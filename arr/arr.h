@@ -1,5 +1,5 @@
-#ifndef VEC_ARR_H_
-#define VEC_ARR_H_
+#ifndef ARR_ARR_H_
+#define ARR_ARR_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -131,4 +131,4 @@ static inline void *arr_create_internal(long n, long elem_size, double scale) {
     } \
   } while (0)
 
-#endif  // VEC_ARR_H_
+#endif  // ARR_ARR_H_

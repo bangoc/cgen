@@ -3,8 +3,8 @@
 #ifndef VEC_P2W_H_
 #define VEC_P2W_H_
 
+#include "arr/arr.h"
 #include "base/gtype.h"
-#include "vec/arr.h"
 
 struct p2ways {
   atype(gtype) *data;

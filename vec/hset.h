@@ -7,9 +7,9 @@
  * Tập hợp dựa trên hàm băm (hash hs)
  */
 
+#include "arr/arr.h"
 #include "base/gtype.h"
 #include "base/hashes.h"
-#include "vec/arr.h"
 
 #include <stdint.h>
 

@@ -7,7 +7,7 @@
 #include "base/hashes.h"
 #include "algo/heap.h"
 #include "algo/sort.h"
-#include "vec/arr.h"
+#include "arr/arr.h"
 #include "vec/gvec.h"
 #include "vec/hmap.h"
 #include "vec/hset.h"

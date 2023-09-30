@@ -13,9 +13,9 @@
  * địa chỉ mở (Open addressing).
  */
 
+#include "arr/arr.h"
 #include "base/gtype.h"
 #include "base/hashes.h"
-#include "vec/arr.h"
 
 #include <stdint.h>
 
