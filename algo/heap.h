@@ -1,5 +1,5 @@
-#ifndef VEC_HEAP_H_
-#define VEC_HEAP_H_
+#ifndef ALGO_HEAP_H_
+#define ALGO_HEAP_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -18,4 +18,4 @@ void heap_shift_up(long i, gtype *a, gtype_cmp_t cmp);
  */
 void heap_make(long n, gtype *a, gtype_cmp_t cmp);
 
-#endif  // VEC_HEAP_H_
+#endif  // ALGO_HEAP_H_

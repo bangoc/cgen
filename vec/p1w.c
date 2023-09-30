@@ -4,7 +4,7 @@
  * Triển khai hàng đợi ưu tiên
  */
 
-#include "vec/heap.h"
+#include "algo/heap.h"
 #include "vec/p1w.h"
 
 #include <stdlib.h>

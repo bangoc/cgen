@@ -4,7 +4,7 @@
  * Triển khai các hàm vun đống
  */
 
-#include "vec/heap.h"
+#include "algo/heap.h"
 
 void heap_shift_down(long i, long n, gtype *a, gtype_cmp_t cmp) {
   for (;;) {

@@ -2,7 +2,7 @@
 
 #include "sort.h"
 
-#include "vec/heap.h"
+#include "algo/heap.h"
 
 void heapsort(long n, gtype *a, gtype_cmp_t cmp) {
   heap_make(n, a, cmp);
