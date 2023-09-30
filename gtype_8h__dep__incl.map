@@ -1,12 +1,11 @@
 <map id="base/gtype.h" name="base/gtype.h">
-<area shape="rect" id="node1" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="193,5,287,32"/>
-<area shape="rect" id="node2" href="$gdl_8h.html" title="Triển khai danh sách móc nối kép cho kiểu gtype Kế thừa ::struct dllist." alt="" coords="10,80,81,107"/>
-<area shape="rect" id="node3" href="$gsl_8h.html" title="Triển khai danh sách móc nối đơn cho gtype Kế thừa ::struct sllist." alt="" coords="105,80,175,107"/>
-<area shape="rect" id="node6" href="$rbm_8h.html" title="Ánh xạ khóa=&gt;giá trị khái quát dựa trên cây đỏ&#45;đen." alt="" coords="200,80,280,107"/>
-<area shape="rect" id="node8" href="$gbs_8h_source.html" title=" " alt="" coords="305,80,415,107"/>
-<area shape="rect" id="node9" href="$grb_8h_source.html" title=" " alt="" coords="439,80,547,107"/>
-<area shape="rect" id="node4" href="$que_8h_source.html" title=" " alt="" coords="5,155,80,181"/>
-<area shape="rect" id="node5" href="$stk_8h_source.html" title=" " alt="" coords="105,155,175,181"/>
-<area shape="rect" id="node7" href="$s2i_8h_source.html" title=" " alt="" coords="200,155,307,181"/>
-<area shape="rect" id="node10" href="$rbs_8h_source.html" title=" " alt="" coords="455,155,531,181"/>
+<area shape="rect" id="node1" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="188,5,283,32"/>
+<area shape="rect" id="node2" href="$gdl_8h.html" title="Triển khai danh sách móc nối kép cho kiểu gtype Kế thừa ::struct dllist." alt="" coords="5,80,76,107"/>
+<area shape="rect" id="node3" href="$gsl_8h.html" title="Triển khai danh sách móc nối đơn cho gtype Kế thừa ::struct sllist." alt="" coords="100,80,171,107"/>
+<area shape="rect" id="node6" href="$rbm_8h.html" title="Ánh xạ khóa=&gt;giá trị khái quát dựa trên cây đỏ&#45;đen." alt="" coords="195,80,275,107"/>
+<area shape="rect" id="node7" href="$gbs_8h_source.html" title=" " alt="" coords="300,80,411,107"/>
+<area shape="rect" id="node8" href="$grb_8h_source.html" title=" " alt="" coords="435,80,543,107"/>
+<area shape="rect" id="node4" href="$que_8h_source.html" title=" " alt="" coords="50,155,125,181"/>
+<area shape="rect" id="node5" href="$stk_8h_source.html" title=" " alt="" coords="149,155,220,181"/>
+<area shape="rect" id="node9" href="$rbs_8h_source.html" title=" " alt="" coords="451,155,527,181"/>
 </map>
