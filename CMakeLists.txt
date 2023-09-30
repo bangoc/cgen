@@ -24,7 +24,7 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-unused-function")
 
 add_subdirectory(tests)
 add_subdirectory(examples)
-add_subdirectory(mega-unit)
+add_subdirectory(mega)
 
 add_library(bkcgen STATIC all.c)
 
@@ -163,7 +163,7 @@ if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)
   set(cgen_include_dest "include")
   set(cgen_lib_dest "lib")
-  set(MERGE_CMD ${CMAKE_CURRENT_BINARY_DIR}/mega-unit/merge)
+  set(MERGE_CMD ${CMAKE_CURRENT_BINARY_DIR}/mega/merge)
   MESSAGE(STATUS "MERGE CMD: " ${MERGE_CMD})
   execute_process(COMMAND ${MERGE_CMD}
                     ${CMAKE_CURRENT_SOURCE_DIR} all.h bkcgen.h
