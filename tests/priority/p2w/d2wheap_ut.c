@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "priority/spec/d2w.h"
+#include "specific/d2w.h"
 
 #include "tests/base/utils.h"
 

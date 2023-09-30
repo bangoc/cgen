@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "tree/spec/s2i.h"
+#include "specific/s2i.h"
 #include "utils/io.h"
 
 #include <string.h>

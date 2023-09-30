@@ -4,7 +4,7 @@
 /* (C) Nguyen Ba Ngoc 2022 */
 
 #include "vec/gvec.h"
-#include "tree/spec/s2i.h"
+#include "specific/s2i.h"
 
 /**
  * Cấu trúc điều khiển của ánh xạ 2 chiều chuỗi <=> chỉ số nguyên.

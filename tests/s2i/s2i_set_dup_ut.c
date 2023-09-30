@@ -1,5 +1,5 @@
 #include "tests/base/utils.h"
-#include "tree/spec/s2i.h"
+#include "specific/s2i.h"
 
 #include <string.h>
 

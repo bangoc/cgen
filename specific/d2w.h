@@ -1,5 +1,5 @@
-#ifndef PRIORITY_SPEC_D2W_H_
-#define PRIORITY_SPEC_D2W_H_
+#ifndef SPECIFIC_D2W_H_
+#define SPECIFIC_D2W_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -17,4 +17,4 @@ double d2w_deactivate_max(struct p2ways *h);
 double d2w_delete_max_index(struct p2ways *h, long *idx);
 int d2w_modify(struct p2ways *h, long idx, double elem);
 
-#endif  // PRIORITY_SPEC_D2W_H_
+#endif  // SPECIFIC_D2W_H_

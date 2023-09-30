@@ -4,8 +4,8 @@
  * Ánh xạ chuỗi => số (đóng gói cây đỏ-đen)
  */
 
-#ifndef TREE_SPEC_S2I_H_
-#define TREE_SPEC_S2I_H_
+#ifndef SPECIFIC_S2I_H_
+#define SPECIFIC_S2I_H_
 
 #include "tree/rbm.h"
 
@@ -45,4 +45,4 @@ void s2i_print_node(struct bnnode *n);
 
 #define s2i_free(si) rbm_free(si)
 
-#endif  // TREE_SPEC_S2I_H_
+#endif  // SPECIFIC_S2I_H_
