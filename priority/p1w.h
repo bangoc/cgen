@@ -1,5 +1,5 @@
-#ifndef VEC_P1W_H_
-#define VEC_P1W_H_
+#ifndef PRIORITY_P1W_H_
+#define PRIORITY_P1W_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -58,4 +58,4 @@ void gtype_free_p1w(gtype value);
 
 #define p1w_arr(h) ((h)->elems)
 
-#endif  // VEC_P1W_H_
+#endif  // PRIORITY_P1W_H_

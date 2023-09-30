@@ -1,7 +1,7 @@
 /* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
-#ifndef VEC_P2W_H_
-#define VEC_P2W_H_
+#ifndef PRIORITY_P2W_H_
+#define PRIORITY_P2W_H_
 
 #include "arr/arr.h"
 #include "base/gtype.h"
@@ -54,4 +54,4 @@ int p2w_check(struct p2ways *h);
  */
 void gtype_free_p2w(gtype value);
 
-#endif  // VEC_P2W_H_
+#endif  // PRIORITY_P2W_H_

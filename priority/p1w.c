@@ -5,7 +5,7 @@
  */
 
 #include "algo/heap.h"
-#include "vec/p1w.h"
+#include "priority/p1w.h"
 
 #include <stdlib.h>
 

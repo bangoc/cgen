@@ -1,4 +1,4 @@
-#include "vec/spec/d2w.h"
+#include "priority/spec/d2w.h"
 
 int d2w_push_with_index(struct p2ways *h, long idx, double elem) {
   return p2w_push_with_index(h, idx, gtype_value(d, elem));
