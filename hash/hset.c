@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2o21 */
 
-#include "vec/hset.h"
+#include "hash/hset.h"
 
 #include <stdio.h>
 #include <stdlib.h>

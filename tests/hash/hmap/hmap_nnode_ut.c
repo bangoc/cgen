@@ -1,4 +1,4 @@
-#include "vec/hmap.h"
+#include "hash/hmap.h"
 #include "tests/base/utils.h"
 
 struct hmap_ires hmap_insert_free_key(struct hmap *map, gtype key, gtype value) {

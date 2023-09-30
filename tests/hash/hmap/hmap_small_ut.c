@@ -1,4 +1,4 @@
-#include "vec/hmap.h"
+#include "hash/hmap.h"
 #include "tests/base/utils.h"
 
 int main() {

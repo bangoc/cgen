@@ -1,5 +1,5 @@
-#ifndef VEC_HMAP_H_
-#define VEC_HMAP_H_
+#ifndef HASH_HMAP_H_
+#define HASH_HMAP_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -15,7 +15,7 @@
 
 #include "arr/arr.h"
 #include "base/gtype.h"
-#include "base/hashes.h"
+#include "hash/hashes.h"
 
 #include <stdint.h>
 
@@ -229,4 +229,4 @@ gtype *hmap_next_pvalue(struct hmap *, gtype*);
   for(gtype *key = hmap_next_pkey(map, NULL), *value = hmap_next_pvalue(map, NULL); \
      key && value; key = hmap_next_pkey(map, key), value = hmap_next_pvalue(map, value)) \
 
-#endif  // VEC_HMAP_H_
+#endif  // HASH_HMAP_H_

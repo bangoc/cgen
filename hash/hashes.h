@@ -1,5 +1,5 @@
-#ifndef BASE_HASHES_H_
-#define BASE_HASHES_H_
+#ifndef HASH_HASHES_H_
+#define HASH_HASHES_H_
 
 #include "base/gtype.h"
 
@@ -89,4 +89,4 @@ static inline uint gtype_hash_l(gtype v) {
 }
 #endif
 
-#endif  // BASE_HASHES_H_
+#endif  // HASH_HASHES_H_

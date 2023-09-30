@@ -1,5 +1,5 @@
-#ifndef VEC_HSET_H_
-#define VEC_HSET_H_
+#ifndef HASH_HSET_H_
+#define HASH_HSET_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -9,7 +9,7 @@
 
 #include "arr/arr.h"
 #include "base/gtype.h"
-#include "base/hashes.h"
+#include "hash/hashes.h"
 
 #include <stdint.h>
 
@@ -56,4 +56,4 @@ gtype *hset_next_pkey(struct hset *, gtype*);
   for(gtype *key = hset_next_pkey(map, NULL); \
      key; key = hset_next_pkey(map, key)) \
 
-#endif  // VEC_HSET_H_
+#endif  // HASH_HSET_H_

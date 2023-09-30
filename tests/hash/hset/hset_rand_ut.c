@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "vec/hset.h"
+#include "hash/hset.h"
 #include "tests/base/utils.h"
 
 void rands9(char *s) {

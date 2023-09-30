@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "vec/hmap.h"
+#include "hash/hmap.h"
 
 #include <stdio.h>
 #include <stdlib.h>

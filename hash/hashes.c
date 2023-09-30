@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "base/hashes.h"
+#include "hash/hashes.h"
 
 const int prime_mod [] =
 {
