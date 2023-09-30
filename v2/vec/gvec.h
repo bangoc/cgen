@@ -139,7 +139,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
  * @return Trả về kích thước (size) của vec-tơ, giá trị có kiểu long.
  */
-#define gvec_size(v) ((v)->sz)
+#define gvec_size(v) (0 + (v)->sz)
 
 /**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
@@ -149,7 +149,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
  * @return Trả về dung lượng (capacity) của vec-tơ, giá trị có kiểu long.
  */
-#define gvec_capacity(v) ((v)->cap)
+#define gvec_capacity(v) (0 + (v)->cap)
 
 /**
  * Tỉ lệ tăng dung lượng của vec-tơ khi append
@@ -157,7 +157,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *)
  * @return Trả về tỉ lệ tăng dung lượng (scale), có kiểu double.
  */
-#define gvec_scale(v) ((v)->scale)
+#define gvec_scale(v) (0 + (v)->scale)
 
 /**
  * Giao diện mảng của vec-tơ.
@@ -229,7 +229,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
         (v)->free_value(gvec_elem(v, _j)); \
       }\
     }\
-    gvec_size(v) = (newsz); \
+    v->sz = (newsz); \
   } while (0)
 
 /**
