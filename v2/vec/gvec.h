@@ -82,29 +82,37 @@ struct gvector {
 };
 
 /**
- * Hàm tạo đối tượng vec-tơ, khởi tạo các phần tử = 0.
+ * Hàm tạo đối tượng vec-tơ rỗng, khởi tạo số lượng phần tử = 0.
+ * Dùng cho các phần tử có kiểu vô hướng (kiểu long, double, v.v..),
+ * con trỏ free_value = NULL.
  *
- * @param n Kích thước & dung lượng ban đầu của vec-tơ.
- * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
- * với đối tượng ::gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create(long n, gtype_free_t free_value);
+struct gvector *gvec_create0(void);
 
 /**
- * Hàm tạo đối tượng vec-tơ ở dạng đầy đủ, khởi tạo các phần tử với tham số value.
+ * Hàm tạo đối tượng vec-tơ rỗng, khởi tạo số lượng phần tử = 0.
+ * Dùng cho các phần tử có kiểu con trỏ (void *, char *, v.v..)
  *
- * @param size Kích thước ban đầu của vec-tơ.
- * @param cap Dung lượng ban đầu của vec-tơ, phía gọi cần đảm bảo size <= cap.
- * @param value Giá trị ban đầu để khởi tạo các phần tử.
  * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
  * với đối tượng ::gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create_full(long size, long cap, gtype value,
-        gtype_free_t free_value);
+struct gvector *gvec_create1(gtype_free_t free_value);
+
+/**
+ * Nạp chồng các hàm tạo, gọi hàm gvec_create() - không tham số
+ * được điều hướng tới ::gvec_create0(), gọi gvec_create(ptr) - với
+ * 1 tham số được điều hướng tới ::gvec_create1(ptr).
+ * 
+ * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+#define select_create(_1, func, ...) func
+#define gvec_create(...) \
+    select_create(__VA_ARGS__, gvec_create1, gvec_create0)(__VA_ARGS__)
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ
