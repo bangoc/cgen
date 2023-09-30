@@ -397,14 +397,14 @@ void gtype_free_gvec(gtype value);
  */
 void gvec_pprint(struct gvector *v, gtype_print_t pp);
 
-/**
- * Sinh ngẫu nhiên 1 vec-tơ chứa giá trị kiểu long
- *
- * @param n Số lượng phần tử
- * @return Con trỏ tới vec-tơ được tạo, có kiểu ::struct gvector *
- */
-struct gvector *gvec_rand_l(long n);
 
+/**
+ * Gán tất cả các phần tử của vec-tơ = value
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
+ * @param value Giá trị khởi tạo.
+ * @return Không trả về giá trị.
+ */
 #define gvec_fill(v, value) \
   do { \
     gvec_traverse(_cur, v) { \
