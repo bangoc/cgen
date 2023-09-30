@@ -27,7 +27,7 @@ add_subdirectory(tests)
 add_library(bkcgen STATIC all.c)
 
 include(CTest)
-
+add_test(NAME GvecCreate COMMAND gvec_create_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)

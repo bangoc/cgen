@@ -89,30 +89,7 @@ struct gvector {
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create0(void);
-
-/**
- * Hàm tạo đối tượng vec-tơ rỗng, khởi tạo số lượng phần tử = 0.
- * Dùng cho các phần tử có kiểu con trỏ (void *, char *, v.v..)
- *
- * @param free_value con trỏ hàm giải phóng bộ nhớ bên ngoài được gắn
- * với đối tượng ::gtype. Sử dụng NULL nếu không có bộ nhớ bên ngoài.
- * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-struct gvector *gvec_create1(gtype_free_t free_value);
-
-/**
- * Nạp chồng các hàm tạo, gọi hàm gvec_create() - không tham số
- * được điều hướng tới ::gvec_create0(), gọi gvec_create(ptr) - với
- * 1 tham số được điều hướng tới ::gvec_create1(ptr).
- * 
- * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-#define select_create(_1, func, ...) func
-#define gvec_create(...) \
-    select_create(__VA_ARGS__, gvec_create1, gvec_create0)(__VA_ARGS__)
+struct gvector *gvec_create();
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ
@@ -158,6 +135,14 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @return Trả về tỉ lệ tăng dung lượng (scale), có kiểu double.
  */
 #define gvec_scale(v) (0 + (v)->scale)
+
+/**
+ * Con trỏ hàm giải phóng bộ nhớ động của phần tử
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *)
+ * @return Trả về con trỏ hàm, có kiểu gtype_free_t.
+ */
+#define gvec_free_value(v) ((gtype_free_t)(v)->free_value)
 
 /**
  * Giao diện mảng của vec-tơ.
