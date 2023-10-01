@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "vec/vector.h"
+#include "cont/vector.h"
 
 struct vector *vcreate1(long n) {
   struct vector *v = malloc(sizeof(struct vector));

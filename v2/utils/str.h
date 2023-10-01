@@ -3,7 +3,7 @@
 
 /* (C) Nguyen Ba Ngoc 2022 */
 
-#include "vec/vector.h"
+#include "cont/vector.h"
 
 extern const char* ascii_spaces;
 
