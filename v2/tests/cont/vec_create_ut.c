@@ -1,4 +1,5 @@
 /* (C) Nguyễn Bá Ngọc 2023 */
+#define CGEN_DEBUG
 #include "all.h"
 #include "tests/ut/utils.h"
 
@@ -21,6 +22,7 @@ int main() {
   CHECK_MSG((long)(vcap(v2) * vratio(v2)) > vcap(v2), 
       "grow up" );
 
+  CHECK_MSG(vcreate(-1) == NULL, "Kích thước không hợp lệ.");
   vfree(v1);
   vfree(v2);
   TEST_OK();

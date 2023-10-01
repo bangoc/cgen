@@ -13,6 +13,10 @@
  * cũng có phạm vi ứng dụng rộng hơn.
  */
 
+#ifdef CGEN_DEBUG
+#include "base/flog.h"
+#endif  // CGEN_DEBUG
+
 #include "base/gtype.h"
 
 /**
@@ -380,14 +384,14 @@ static void vpprint(struct vector *v, gtype_print_t pp) {
 static struct vector *vcreate1(long n) {
   struct vector *v = malloc(sizeof(struct vector));
   v->fv = NULL;
-  if (n <= 0) {
-    // Lỗi hàm gọi
-    v->sz = 0;
-    v->cap = 8;
-  } else {
-    v->sz = n;
-    v->cap = n;
+  if (n < 0) {
+#ifdef CGEN_DEBUG
+    flog(ERROR, "Tạo vec-tơ với kích thước không hợp lệ, n = %ld", n);
+#endif  // CGEN_DEBUG
+    return NULL;
   }
+  v->sz = n;
+  v->cap = n > 0? n: 8;
 
   /* Mặc định x 2 dung lượng mỗi lần tăng kích thước*/
   v->k = 2.0;
