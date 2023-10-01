@@ -1,5 +1,5 @@
-#ifndef VEC_VECTOR_H_
-#define VEC_VECTOR_H_
+#ifndef CONT_VECTOR_H_
+#define CONT_VECTOR_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -88,31 +88,6 @@ struct vector {
   gtype_free_t fv;
 };
 
-/**
- * Hàm tạo đối tượng vec-tơ với n phần tử.
- * Dùng cho các phần tử có kiểu vô hướng (kiểu long, double, v.v..),
- * phần tử không sử dụng bộ nhớ động. 
- * Con trỏ fv (hàm giải phóng bộ nhớ của phần tử) được khởi tạo = NULL.
- *
- * @param n Số lượng phần tử cần cấp phát.
- * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-struct vector *vcreate1(long n);
-
-/**
- * Hàm tạo đối tượng vec-tơ với n phần tử.
- * Dùng cho các phần tử có kiểu con trỏ (char *, void *, v.v..),
- * phần tử có sử dụng bộ nhớ động. 
- *
- * @param n Số lượng phần tử cần cấp phát.
- * @param fv Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
- * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-struct vector *vcreate2(long n, gtype_free_t fv);
-
-
 #define select_creator(_1, _2, func, ...) func
 /**
  * Macro điều hướng. Lệnh 1 tham số được điều hướng tới 
@@ -123,23 +98,6 @@ struct vector *vcreate2(long n, gtype_free_t fv);
  */
 #define vcreate(...) \
     select_creator(__VA_ARGS__, vcreate2, vcreate1)(__VA_ARGS__)
-
-/**
- * Hàm tạo bản sao đầy đủ của vec-tơ
- *
- * @param v Con trỏ vec-tơ
- * @return Con trỏ tới bản sao đầy đủ của vec-tơ, kiểu ::struct vector *
- */
-struct vector *vclone(struct vector *v);
-
-/**
- * Hàm kiểm tra 2 vec-tơ giống hệt nhau
- *
- * @param v1 Con trỏ vec-tơ thứ nhất
- * @param v2 Con trỏ vec-tơ thứ 2
- * @return 1 nếu giống nhau, 0 nếu ngược lại
- */
-int vsameas(struct vector *v1, struct vector *v2);
 
 /**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
@@ -359,17 +317,6 @@ int vsameas(struct vector *v1, struct vector *v2);
   } while (0)
 
 /**
- * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng vec-tơ
- * được lưu trong một cấu trúc lưu trữ khác.
- *
- * @param value Giá trị gtype đang chứa con trỏ tới vec-tơ.
- * Trước tiên value.v được ép kiểu thành struct vector *,
- * sau đó con trỏ struct vector * được truyền cho vfree.
- * @return Hàm không trả về giá trị.
- */
-void gfree_vec(gtype *value);
-
-/**
  * Sắp xếp các phần tử của vec-tơ sử dụng stdlib.h qsort.
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
@@ -380,14 +327,6 @@ void gfree_vec(gtype *value);
  */
 #define vsort(v, cmp) \
   qsort(varr(v), vsize(v), sizeof(gtype), cmp)
-
-/**
- * Xuất các phần tử của vec-tơ
- *
- * @param v Con trỏ tới đối tượng vec-tơ
- * @param pp Hàm xuất giá trị gtype
- */
-void vpprint(struct vector *v, gtype_print_t pp);
 
 /**
  * Gán tất cả các phần tử của vec-tơ = value
@@ -403,4 +342,116 @@ void vpprint(struct vector *v, gtype_print_t pp);
     } \
   } while (0)
 
-#endif  // VEC_VECTOR_H_
+/**
+ * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng vec-tơ
+ * được lưu trong một cấu trúc lưu trữ khác.
+ *
+ * @param value Giá trị gtype đang chứa con trỏ tới vec-tơ.
+ * Trước tiên value.v được ép kiểu thành struct vector *,
+ * sau đó con trỏ struct vector * được truyền cho vfree.
+ * @return Hàm không trả về giá trị.
+ */
+static void gfree_vec(gtype *value) {
+  vfree(value->vec);
+}
+
+/**
+ * Xuất các phần tử của vec-tơ
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ
+ * @param pp Hàm xuất giá trị gtype
+ */
+static void vpprint(struct vector *v, gtype_print_t pp) {
+  vtraverse(cur, v) {
+    pp(cur);
+  }
+}
+
+/**
+ * Hàm tạo đối tượng vec-tơ với n phần tử.
+ * Dùng cho các phần tử có kiểu vô hướng (kiểu long, double, v.v..),
+ * phần tử không sử dụng bộ nhớ động. 
+ * Con trỏ fv (hàm giải phóng bộ nhớ của phần tử) được khởi tạo = NULL.
+ *
+ * @param n Số lượng phần tử cần cấp phát.
+ * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+static struct vector *vcreate1(long n) {
+  struct vector *v = malloc(sizeof(struct vector));
+  v->fv = NULL;
+  if (n <= 0) {
+    // Lỗi hàm gọi
+    v->sz = 0;
+    v->cap = 8;
+  } else {
+    v->sz = n;
+    v->cap = n;
+  }
+
+  /* Mặc định x 2 dung lượng mỗi lần tăng kích thước*/
+  v->k = 2.0;
+  v->elems = calloc(v->cap, sizeof(gtype));
+  return v;
+}
+
+/**
+ * Hàm tạo đối tượng vec-tơ với n phần tử.
+ * Dùng cho các phần tử có kiểu con trỏ (char *, void *, v.v..),
+ * phần tử có sử dụng bộ nhớ động. 
+ *
+ * @param n Số lượng phần tử cần cấp phát.
+ * @param fv Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
+ * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+static struct vector *vcreate2(long n, gtype_free_t fv) {
+  struct vector *base = vcreate1(n);
+  if (base) {
+    base->fv = fv;
+  }
+  return base;
+}
+
+/**
+ * Hàm tạo bản sao đầy đủ của vec-tơ
+ *
+ * @param v Con trỏ vec-tơ
+ * @return Con trỏ tới bản sao đầy đủ của vec-tơ, kiểu ::struct vector *
+ */
+static struct vector *vclone(struct vector *v) {
+  struct vector *v2 = malloc(sizeof(struct vector));
+  memcpy(v2, v, sizeof(struct vector));
+  if (v->cap == 0) {
+    v2->elems = NULL;
+    return v2;
+  }
+  size_t elems_size = v2->cap * sizeof(gtype);
+  v2->elems = malloc(elems_size);
+  memcpy(v2->elems, v->elems, elems_size);
+  return v2;
+}
+
+/**
+ * Hàm kiểm tra 2 vec-tơ giống hệt nhau
+ *
+ * @param v1 Con trỏ vec-tơ thứ nhất
+ * @param v2 Con trỏ vec-tơ thứ 2
+ * @return 1 nếu giống nhau, 0 nếu ngược lại
+ */
+static int vsameas(struct vector *v1, struct vector *v2) {
+  if (v1->sz != v2->sz || v1->cap != v2->cap) {
+    return 0;
+  }
+  size_t elems_size = v1->cap * sizeof(gtype);
+  char *p = (char *)(v1->elems),
+       *q = (char *)(v2->elems);
+  for (size_t i = 0; i < elems_size; ++i) {
+    if (p[i] != q[i]) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+#endif  // CONT_VECTOR_H_
