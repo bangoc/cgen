@@ -7,21 +7,21 @@
 void empty_free(gtype *v) {}
 
 int main() {
-  struct vector *v1 = gvec_create(0);
-  CHECK_MSG(gvec_size(v1) == 0, "Empty vector size 0");
-  CHECK_MSG(gvec_capacity(v1) >= gvec_size(v1), "Capacity >= size");
-  CHECK_MSG(gvec_free_value(v1) == NULL, "Null pointer");
-  CHECK_MSG((long)(gvec_capacity(v1) * gvec_ratio(v1)) > gvec_capacity(v1), 
+  struct vector *v1 = vcreate(0);
+  CHECK_MSG(vsize(v1) == 0, "Empty vector size 0");
+  CHECK_MSG(vcap(v1) >= vsize(v1), "Capacity >= size");
+  CHECK_MSG(vfreeval(v1) == NULL, "Null pointer");
+  CHECK_MSG((long)(vcap(v1) * vratio(v1)) > vcap(v1), 
       "grow up" );
 
-  struct vector *v2 = gvec_create(0, empty_free);
-  CHECK_MSG(gvec_size(v2) == 0, "Empty vector size 0");
-  CHECK_MSG(gvec_capacity(v2) >= gvec_size(v2), "Capacity >= size");
-  CHECK_MSG(gvec_free_value(v2) == empty_free, "Init fv empty_free");
-  CHECK_MSG((long)(gvec_capacity(v2) * gvec_ratio(v2)) > gvec_capacity(v2), 
+  struct vector *v2 = vcreate(0, empty_free);
+  CHECK_MSG(vsize(v2) == 0, "Empty vector size 0");
+  CHECK_MSG(vcap(v2) >= vsize(v2), "Capacity >= size");
+  CHECK_MSG(vfreeval(v2) == empty_free, "Init fv empty_free");
+  CHECK_MSG((long)(vcap(v2) * vratio(v2)) > vcap(v2), 
       "grow up" );
 
-  gvec_free(v1);
-  gvec_free(v2);
+  vfree(v1);
+  vfree(v2);
   TEST_OK();
 }

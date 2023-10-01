@@ -16,35 +16,42 @@
 #include "base/gtype.h"
 
 /**
- * \headerfile "all.h"
+ * \headerfile "vector.h"
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
  *
  * Các macros điều khiển (v phải có kiểu con trỏ ::struct vector *):
  *
- *   #gvec_size(v) - Kích thước của v.
+ *   #vcreate(...) - Lựa chọn hàm tạo theo số lượng tham số.
+ * 
+ *   #vsize(v) - Kích thước của v.
  *
- *   #gvec_capacity(v) - Dung lượng của v.
+ *   #vcap(v) - Dung lượng của v.
  *
- *   #gvec_arr(v) - Mảng các phần tử của v.
+ *   #varr(v) - Mảng các phần tử của v.
  *
- *   #gvec_ref(v, i) - Con trỏ tới phần tử thứ i của v.
+ *   #vref(v, i) - Con trỏ tới phần tử thứ i của v.
  *
- *   #gvec_idx_of(v, elem_ptr) - Chỉ số của phần tử được trỏ tới bởi
- *   elem_ptr trong v.
+ *   #vidx(v, eptr) - Chỉ số của phần tử trong v được trỏ tới bởi eptr.
+ * 
+ *   #vfreeval(v) - Con trỏ hàm giải phóng bộ nhớ động của v.
  *
- *   #gvec_append(v, val) - Thêm val vào sau phần tử cuối cùng trong v.
+ *   #vappend(v, val) - Thêm val vào sau phần tử cuối cùng trong v.
  *
- *   #gvec_remove(v, idx) - Xóa phần tử có chỉ số idx khỏi v.
+ *   #vremove(v, idx) - Xóa phần tử có chỉ số idx khỏi v.
  *
- *   #gvec_reserve(v, cap) - Chủ động thiết lập dung lượng cho v.
+ *   #vreserve(v, cap) - Chủ động thiết lập dung lượng cho v.
  *
- *   #gvec_free(v) - Giải phóng bộ nhớ được cấp phát cho v.
+ *   #vfree(v) - Giải phóng bộ nhớ được cấp phát cho v.
  *
- *   #gvec_clear(v) - Làm rỗng v
+ *   #vclear(v) - Làm rỗng v
  *
- *   #gvec_qsort(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
+ *   #vsort(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
  *
- *   #gvec_traverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
+ *   #vtraverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
+ * 
+ *   #vrtraverse(cur, v) - Duyệt các phần tử của v theo chiều ngược.
+ * 
+ *   #vfill(v, value) - Gán các phần tử của v = value.
  */
 struct vector {
   /**
@@ -91,7 +98,7 @@ struct vector {
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct vector *gvec_create1(long n);
+struct vector *vcreate1(long n);
 
 /**
  * Hàm tạo đối tượng vec-tơ với n phần tử.
@@ -103,19 +110,19 @@ struct vector *gvec_create1(long n);
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct vector *gvec_create2(long n, gtype_free_t fv);
+struct vector *vcreate2(long n, gtype_free_t fv);
 
 
 #define select_creator(_1, _2, func, ...) func
 /**
  * Macro điều hướng. Lệnh 1 tham số được điều hướng tới 
- * gvec_create1, lệnh 2 tham số được điều hướng tới gvec_create2.
+ * vcreate1, lệnh 2 tham số được điều hướng tới vcreate2.
  * 
  * * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-#define gvec_create(...) \
-    select_creator(__VA_ARGS__, gvec_create2, gvec_create1)(__VA_ARGS__)
+#define vcreate(...) \
+    select_creator(__VA_ARGS__, vcreate2, vcreate1)(__VA_ARGS__)
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ
@@ -123,7 +130,7 @@ struct vector *gvec_create2(long n, gtype_free_t fv);
  * @param v Con trỏ vec-tơ
  * @return Con trỏ tới bản sao đầy đủ của vec-tơ, kiểu ::struct vector *
  */
-struct vector *gvec_clone(struct vector *v);
+struct vector *vclone(struct vector *v);
 
 /**
  * Hàm kiểm tra 2 vec-tơ giống hệt nhau
@@ -132,7 +139,7 @@ struct vector *gvec_clone(struct vector *v);
  * @param v2 Con trỏ vec-tơ thứ 2
  * @return 1 nếu giống nhau, 0 nếu ngược lại
  */
-int gvec_identical(struct vector *v1, struct vector *v2);
+int vsameas(struct vector *v1, struct vector *v2);
 
 /**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
@@ -142,7 +149,7 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Trả về kích thước (size) của vec-tơ, giá trị có kiểu long.
  */
-#define gvec_size(v) (0 + (v)->sz)
+#define vsize(v) (0 + (v)->sz)
 
 /**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
@@ -152,7 +159,7 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Trả về dung lượng (capacity) của vec-tơ, giá trị có kiểu long.
  */
-#define gvec_capacity(v) (0 + (v)->cap)
+#define vcap(v) (0 + (v)->cap)
 
 /**
  * Hệ số tăng dung lượng của vec-tơ khi append
@@ -160,7 +167,7 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
  * @return Trả về hệ số tăng dung lượng (k), có kiểu double.
  */
-#define gvec_ratio(v) (0 + (v)->k)
+#define vratio(v) (0 + (v)->k)
 
 /**
  * Con trỏ hàm giải phóng bộ nhớ động của phần tử
@@ -168,42 +175,42 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
  * @return Trả về con trỏ hàm, có kiểu gtype_free_t.
  */
-#define gvec_free_value(v) ((gtype_free_t)(v)->fv)
+#define vfreeval(v) ((gtype_free_t)(v)->fv)
 
 /**
  * Giao diện mảng của vec-tơ.
  * \code{.c}
- * gvec_arr(v)[0];  \\ Phần tử đầu tiên của vec-tơ v.
+ * varr(v)[0];  \\ Phần tử đầu tiên của vec-tơ v.
  * \endcode
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Trả về con trỏ tới phần tử đầu tiên của mảng (kiểu ::gtype *)
  */
-#define gvec_arr(v) ((v)->elems)
+#define varr(v) ((v)->elems)
 
 /**
  * Chỉ định phần tử của vec-tơ bằng chỉ số.
  * \code{.c}
- *  gvec_ref(v, 0);  // Con trỏ tới phần tử đầu tiên của vec-tơ v.
+ *  vref(v, 0);  // Con trỏ tới phần tử đầu tiên của vec-tơ v.
  * \endcode
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
- * @param i Chỉ số của phần tử, là số nguyên và < #gvec_size(v).
+ * @param i Chỉ số của phần tử, là số nguyên và < #vsize(v).
  * @return Phần tử có chỉ số i trong vec-tơ v, kết quả là lvalue có kiểu ::gtype.
  */
-#define gvec_ref(v, i) (gvec_arr(v) + (i))
+#define vref(v, i) (varr(v) + (i))
 
 /**
  * Chỉ số của phần tử trong vec-tơ.
  * \code{.c}
- * gvec_idx_of(gvec_ref(v, i)) == i;
+ * vidx(vref(v, i)) == i;
  * \endcode
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param elem_ptr Con trỏ tới 1 phần tử hợp lệ trong vec-tơ.
  * @return Chỉ số của phần tử được trỏ tới bởi elem_ptr.
  */
-#define gvec_idx_of(v, elem_ptr) ((long)((elem_ptr) - gvec_arr(v)))
+#define vidx(v, elem_ptr) ((long)((elem_ptr) - varr(v)))
 
 /**
  * Thay đổi dung lượng của vec-tơ, có thể tăng hoặc giảm
@@ -213,9 +220,9 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param newcap Dung lượng mới
  * @return Không trả về kết quả
  */
-#define gvec_reserve(v, newcap) \
+#define vreserve(v, newcap) \
   do { \
-    if ((newcap) < gvec_size(v)) { \
+    if ((newcap) < vsize(v)) { \
       break; \
     } \
     (v)->elems = realloc((v)->elems, newcap * sizeof(gtype)); \
@@ -231,13 +238,13 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param newsz Kích thước mới
  * @return Không trả về kết quả
  */
-#define gvec_resize(v, newsz) \
+#define vresize(v, newsz) \
   do {\
-    if (newsz > gvec_capacity(v)) { \
-      gvec_reserve(v, newsz); \
-    } else if (newsz < gvec_size(v) && (v)->fv) { \
-      for (long _j = newsz; _j < gvec_size(v); ++_j) { \
-        (v)->fv(gvec_ref(v, _j)); \
+    if (newsz > vcap(v)) { \
+      vreserve(v, newsz); \
+    } else if (newsz < vsize(v) && (v)->fv) { \
+      for (long _j = newsz; _j < vsize(v); ++_j) { \
+        (v)->fv(vref(v, _j)); \
       }\
     }\
     v->sz = (newsz); \
@@ -251,15 +258,15 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param val Giá trị được thêm vào vec-tơ v.
  * @return Không trả về giá trị.
  */
-#define gvec_append(v, val) \
+#define vappend(v, val) \
   do { \
-    if (gvec_size(v) == 0) { \
-      gvec_reserve(v, 10); \
-    } else if (gvec_size(v) == gvec_capacity(v)) {\
-      gvec_reserve(v, gvec_ratio(v) * gvec_size(v)); \
+    if (vsize(v) == 0) { \
+      vreserve(v, 10); \
+    } else if (vsize(v) == vcap(v)) {\
+      vreserve(v, vratio(v) * vsize(v)); \
     } \
-    *(gvec_ref(v, gvec_size(v))) = val; \
-    gvec_resize(v, gvec_size(v) + 1); \
+    *(vref(v, vsize(v))) = val; \
+    vresize(v, vsize(v) + 1); \
   } while (0)
 
 /**
@@ -270,12 +277,12 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param e Phần tử được đưa vào
  * @return Không trả về giá trị
  */
-#define gvec_force_set(v, i, e) \
+#define vfset(v, i, e) \
   do { \
-    if ((i) >= gvec_size(v)) { \
-      gvec_resize((v), (i) + 1); \
+    if ((i) >= vsize(v)) { \
+      vresize((v), (i) + 1); \
     } \
-    *(gvec_ref(v, i)) = e; \
+    *(vref(v, i)) = e; \
   } while (0)
 
 /**
@@ -287,10 +294,10 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param idx Chỉ số phần tử được xóa.
  */
-#define gvec_remove(v, idx) \
+#define vremove(v, idx) \
   do { \
-    gtype *_arr = gvec_arr(v); \
-    long _sz = gvec_size(v); \
+    gtype *_arr = varr(v); \
+    long _sz = vsize(v); \
     if ((idx) >= _sz || (idx) < 0) { \
       break; \
     } \
@@ -299,7 +306,7 @@ int gvec_identical(struct vector *v1, struct vector *v2);
       _arr[_i] = _arr[_i + 1]; \
     } \
     _arr[_sz - 1] = _tmp; \
-    gvec_resize(v, _sz - 1); \
+    vresize(v, _sz - 1); \
   } while (0)
 
 /**
@@ -309,8 +316,8 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
  * có kiểu ::gtype *.
  */
-#define gvec_traverse(cur, v) \
-  for (gtype *cur = gvec_arr(v), *end = gvec_arr(v) + gvec_size(v); \
+#define vtraverse(cur, v) \
+  for (gtype *cur = varr(v), *end = varr(v) + vsize(v); \
     cur < end; ++cur)
 
 /**
@@ -320,8 +327,8 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
  * có kiểu ::gtype *.
  */
-#define gvec_rtraverse(cur, v) \
-  for (gtype *beg = gvec_arr(v), *cur = gvec_arr(v) + gvec_size(v) -1; \
+#define vrtraverse(cur, v) \
+  for (gtype *beg = varr(v), *cur = varr(v) + vsize(v) -1; \
     cur >= beg; --cur)
 
 /**
@@ -332,10 +339,10 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng kiểu vec-tơ
  * @return Không trả về giá trị
  *
- * Tham khảo: #gvec_reserve(v, cap) - Thay đổi dung lượng
+ * Tham khảo: #vreserve(v, cap) - Thay đổi dung lượng
  */
-#define gvec_clear(v) \
-  gvec_resize(v, 0); \
+#define vclear(v) \
+  vresize(v, 0); \
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho v và các vùng nhớ ngoài
@@ -344,9 +351,9 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Không trả về giá trị.
  */
-#define gvec_free(v) \
+#define vfree(v) \
   do{ \
-    gvec_clear(v); \
+    vclear(v); \
     free((v)->elems); \
     free(v); \
   } while (0)
@@ -357,10 +364,10 @@ int gvec_identical(struct vector *v1, struct vector *v2);
  *
  * @param value Giá trị gtype đang chứa con trỏ tới vec-tơ.
  * Trước tiên value.v được ép kiểu thành struct vector *,
- * sau đó con trỏ struct vector * được truyền cho gvec_free.
+ * sau đó con trỏ struct vector * được truyền cho vfree.
  * @return Hàm không trả về giá trị.
  */
-void gtype_free_gvec(gtype value);
+void gfree_vec(gtype *value);
 
 /**
  * Sắp xếp các phần tử của vec-tơ sử dụng stdlib.h qsort.
@@ -371,8 +378,8 @@ void gtype_free_gvec(gtype value);
  * Có nguyên mẫu là int (*)(const void *, const void *);
  * @return Không trả về giá trị.
  */
-#define gvec_qsort(v, cmp) \
-  qsort(gvec_arr(v), gvec_size(v), sizeof(gtype), cmp)
+#define vsort(v, cmp) \
+  qsort(varr(v), vsize(v), sizeof(gtype), cmp)
 
 /**
  * Xuất các phần tử của vec-tơ
@@ -380,8 +387,7 @@ void gtype_free_gvec(gtype value);
  * @param v Con trỏ tới đối tượng vec-tơ
  * @param pp Hàm xuất giá trị gtype
  */
-void gvec_pprint(struct vector *v, gtype_print_t pp);
-
+void vpprint(struct vector *v, gtype_print_t pp);
 
 /**
  * Gán tất cả các phần tử của vec-tơ = value
@@ -390,9 +396,9 @@ void gvec_pprint(struct vector *v, gtype_print_t pp);
  * @param value Giá trị khởi tạo.
  * @return Không trả về giá trị.
  */
-#define gvec_fill(v, value) \
+#define vfill(v, value) \
   do { \
-    gvec_traverse(_cur, v) { \
+    vtraverse(_cur, v) { \
       *_cur = (value); \
     } \
   } while (0)

@@ -2,7 +2,7 @@
 
 #include "vec/vector.h"
 
-struct vector *gvec_create1(long n) {
+struct vector *vcreate1(long n) {
   struct vector *v = malloc(sizeof(struct vector));
   v->fv = NULL;
   if (n <= 0) {
@@ -20,15 +20,15 @@ struct vector *gvec_create1(long n) {
   return v;
 }
 
-struct vector *gvec_create2(long n, gtype_free_t fv) {
-  struct vector *base = gvec_create1(n);
+struct vector *vcreate2(long n, gtype_free_t fv) {
+  struct vector *base = vcreate1(n);
   if (base) {
     base->fv = fv;
   }
   return base;
 }
 
-struct vector *gvec_clone(struct vector *v) {
+struct vector *vclone(struct vector *v) {
   struct vector *v2 = malloc(sizeof(struct vector));
   memcpy(v2, v, sizeof(struct vector));
   if (v->cap == 0) {
@@ -41,7 +41,7 @@ struct vector *gvec_clone(struct vector *v) {
   return v2;
 }
 
-int gvec_identical(struct vector *v1, struct vector *v2) {
+int vsameas(struct vector *v1, struct vector *v2) {
   if (v1->sz != v2->sz || v1->cap != v2->cap) {
     return 0;
   }
@@ -56,12 +56,12 @@ int gvec_identical(struct vector *v1, struct vector *v2) {
   return 1;
 }
 
-void gtype_free_gvec(gtype value) {
-  gvec_free(value.gvec);
+void gfree_vec(gtype *value) {
+  vfree(value->vec);
 }
 
-void gvec_pprint(struct vector *v, gtype_print_t pp) {
-  gvec_traverse(cur, v) {
+void vpprint(struct vector *v, gtype_print_t pp) {
+  vtraverse(cur, v) {
     pp(cur);
   }
 }

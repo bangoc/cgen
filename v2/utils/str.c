@@ -7,9 +7,9 @@
 const char* ascii_spaces = "\t\n\v\f\r ";
 
 struct vector *str_tokens(char *line, const char *delims) {
-  struct vector *tokens = gvec_create(0, NULL);
+  struct vector *tokens = vcreate(0, NULL);
   tok_traverse(tk, line, delims) {
-    gvec_append(tokens, gtype_s(tk));
+    vappend(tokens, gtype_s(tk));
   }
   return tokens;
 }
