@@ -24,7 +24,7 @@ typedef union generic_type {
   union generic_type *g;
   struct gdllist *gdl;
   struct gsllist *gsl;
-  struct gvector *gvec;
+  struct vector *gvec;
   struct rbmtree *rbm;
   struct rbstree *rbs;
   struct hmap *hmap;

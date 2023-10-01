@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 int main() {
-  struct gvector *v = gvec_create(10);
+  struct vector *v = gvec_create(10);
   for (int i = 0; i < 10; ++i) {
     gvec_ref(v, i)->l = i;
   }

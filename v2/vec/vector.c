@@ -1,9 +1,9 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
-#include "vec/gvec.h"
+#include "vec/vector.h"
 
-struct gvector *gvec_create1(long n) {
-  struct gvector *v = malloc(sizeof(struct gvector));
+struct vector *gvec_create1(long n) {
+  struct vector *v = malloc(sizeof(struct vector));
   v->fv = NULL;
   if (n <= 0) {
     // Lỗi hàm gọi
@@ -20,17 +20,17 @@ struct gvector *gvec_create1(long n) {
   return v;
 }
 
-struct gvector *gvec_create2(long n, gtype_free_t fv) {
-  struct gvector *base = gvec_create1(n);
+struct vector *gvec_create2(long n, gtype_free_t fv) {
+  struct vector *base = gvec_create1(n);
   if (base) {
     base->fv = fv;
   }
   return base;
 }
 
-struct gvector *gvec_clone(struct gvector *v) {
-  struct gvector *v2 = malloc(sizeof(struct gvector));
-  memcpy(v2, v, sizeof(struct gvector));
+struct vector *gvec_clone(struct vector *v) {
+  struct vector *v2 = malloc(sizeof(struct vector));
+  memcpy(v2, v, sizeof(struct vector));
   if (v->cap == 0) {
     v2->elems = NULL;
     return v2;
@@ -41,7 +41,7 @@ struct gvector *gvec_clone(struct gvector *v) {
   return v2;
 }
 
-int gvec_identical(struct gvector *v1, struct gvector *v2) {
+int gvec_identical(struct vector *v1, struct vector *v2) {
   if (v1->sz != v2->sz || v1->cap != v2->cap) {
     return 0;
   }
@@ -60,7 +60,7 @@ void gtype_free_gvec(gtype value) {
   gvec_free(value.gvec);
 }
 
-void gvec_pprint(struct gvector *v, gtype_print_t pp) {
+void gvec_pprint(struct vector *v, gtype_print_t pp) {
   gvec_traverse(cur, v) {
     pp(cur);
   }
