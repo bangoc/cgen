@@ -5,6 +5,7 @@ project(cgen)
 option(BENCH_OP "Optimization (O1, O2, O3) benchmark" OFF)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+message(status ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(CMAKE_C_STANDARD 11)
 
