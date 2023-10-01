@@ -58,31 +58,31 @@ typedef union generic_type {
     (v2) = _tmp; \
   } while (0)
 
-typedef int (*gtype_cmp_t)(gtype, gtype);
+typedef int (*gtype_cmp_t)(const gtype*, const gtype*);
 typedef void (*gtype_free_t)(gtype*);
-typedef int (*gtype_print_t)(gtype);
+typedef int (*gtype_print_t)(const gtype*);
 
-static inline int gtype_cmp_l(gtype v1, gtype v2) {
-  return v1.l - v2.l;
+static inline int gtype_cmp_l(const gtype *v1, const gtype *v2) {
+  return v1->l - v2->l;
 }
 
-static inline int gtype_rcmp_l(gtype v1, gtype v2) {
-  return v2.l - v1.l;
+static inline int gtype_rcmp_l(const gtype *v1, const gtype *v2) {
+  return v2->l - v1->l;
 }
 
-static inline int gtype_cmp_d(gtype v1, gtype v2) {
-  if (v1.d < v2.d) {
+static inline int gtype_cmp_d(const gtype *v1, const gtype *v2) {
+  if (v1->d < v2->d) {
     return -1;
-  } else if (v1.d > v2.d) {
+  } else if (v1->d > v2->d) {
     return 1;
   }
   return 0;
 }
 
-static inline int gtype_rcmp_d(gtype v1, gtype v2) {
-  if (v2.d < v1.d) {
+static inline int gtype_rcmp_d(const gtype *v1, const gtype *v2) {
+  if (v2->d < v1->d) {
     return -1;
-  } else if (v2.d > v1.d) {
+  } else if (v2->d > v1->d) {
     return 1;
   }
   return 0;
@@ -100,12 +100,12 @@ static inline int gtype_rcmp_d(gtype v1, gtype v2) {
  *
  * \memberof generic_type
  */
-static inline int gtype_cmp_s(gtype v1, gtype v2) {
-  return strcmp(v1.s, v2.s);
+static inline int gtype_cmp_s(const gtype *v1, const gtype *v2) {
+  return strcmp(v1->s, v2->s);
 }
 
-static inline int gtype_rcmp_s(gtype v1, gtype v2) {
-  return strcmp(v2.s, v1.s);
+static inline int gtype_rcmp_s(const gtype *v1, const gtype *v2) {
+  return strcmp(v2->s, v1->s);
 }
 
 static inline int gtype_qsort_l(const void *v1, const void *v2) {
@@ -125,18 +125,18 @@ static inline int gtype_qsort_s(const void *v1, const void *v2) {
   return strcmp(((const gtype*)v1)->s, ((const gtype*)v2)->s);
 }
 
-static int gtype_print_l(gtype value) {
-  printf("%ld\n", value.l);
+static int gtype_print_l(const gtype *value) {
+  printf("%ld\n", value->l);
   return 0;  // Tương thích với foreach
 }
 
-static int gtype_print_d(gtype value) {
-  printf("%f\n", value.d);
+static int gtype_print_d(const gtype *value) {
+  printf("%f\n", value->d);
   return 0;
 }
 
-static int gtype_print_s(gtype value) {
-  printf("%s\n", value.s);
+static int gtype_print_s(const gtype *value) {
+  printf("%s\n", value->s);
   return 0;
 }
 

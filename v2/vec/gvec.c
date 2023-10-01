@@ -62,6 +62,6 @@ void gtype_free_gvec(gtype value) {
 
 void gvec_pprint(struct gvector *v, gtype_print_t pp) {
   gvec_traverse(cur, v) {
-    pp(*cur);
+    pp(cur);
   }
 }

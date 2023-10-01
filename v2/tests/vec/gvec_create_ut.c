@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 
-void empty_free(gtype v) {}
+void empty_free(gtype *v) {}
 
 int main() {
   struct gvector *v1 = gvec_create(0);
