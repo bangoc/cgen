@@ -27,7 +27,7 @@
  *
  *   #gvec_arr(v) - Mảng các phần tử của v.
  *
- *   #gvec_elem(v, i) - Phần tử thứ i của v.
+ *   #gvec_ref(v, i) - Con trỏ tới phần tử thứ i của v.
  *
  *   #gvec_idx_of(v, elem_ptr) - Chỉ số của phần tử được trỏ tới bởi
  *   elem_ptr trong v.
@@ -184,19 +184,19 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
 /**
  * Chỉ định phần tử của vec-tơ bằng chỉ số.
  * \code{.c}
- *  gvec_elem(v, 0);  \\ Phần tử đầu tiên của vec-tơ v.
+ *  gvec_ref(v, 0);  // Con trỏ tới phần tử đầu tiên của vec-tơ v.
  * \endcode
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
  * @param i Chỉ số của phần tử, là số nguyên và < #gvec_size(v).
  * @return Phần tử có chỉ số i trong vec-tơ v, kết quả là lvalue có kiểu ::gtype.
  */
-#define gvec_elem(v, i) (gvec_arr(v)[(i)])
+#define gvec_ref(v, i) (gvec_arr(v) + (i))
 
 /**
  * Chỉ số của phần tử trong vec-tơ.
  * \code{.c}
- * gvec_idx_of(&gvec_elem(v, i)) == i;
+ * gvec_idx_of(gvec_ref(v, i)) == i;
  * \endcode
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
@@ -237,7 +237,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
       gvec_reserve(v, newsz); \
     } else if (newsz < gvec_size(v) && (v)->fv) { \
       for (long _j = newsz; _j < gvec_size(v); ++_j) { \
-        (v)->fv(gvec_elem(v, _j)); \
+        (v)->fv(gvec_ref(v, _j)); \
       }\
     }\
     v->sz = (newsz); \
@@ -258,7 +258,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     } else if (gvec_size(v) == gvec_capacity(v)) {\
       gvec_reserve(v, gvec_ratio(v) * gvec_size(v)); \
     } \
-    gvec_elem(v, gvec_size(v)) = val; \
+    *(gvec_ref(v, gvec_size(v))) = val; \
     gvec_resize(v, gvec_size(v) + 1); \
   } while (0)
 
@@ -275,13 +275,11 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if ((i) >= gvec_size(v)) { \
       gvec_resize((v), (i) + 1); \
     } \
-    gvec_elem(v, i) = e; \
+    *(gvec_ref(v, i)) = e; \
   } while (0)
 
 /**
- * Xóa phần tử có chỉ số idx khỏi vec-tơ v. Nếu v->fv != NULL
- * thì gọi hàm v->fv(gvec_elem(v, i)) - Giải phóng bộ nhớ
- * được gắn với đối tượng được xóa.
+ * Xóa phần tử có chỉ số idx khỏi vec-tơ v.
  * Nếu idx là chỉ số không hợp lệ thì không có thay đổi gì, nếu ngược lại
  * thì các phần tử có chỉ số > idx được dịch sang trái 1 vị trí, và kích
  * thước vec-tơ được giảm đi 1 đơn vị.
@@ -305,14 +303,26 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
   } while (0)
 
 /**
- * Duyệt tuần tự các phần tử của vec-tơ
+ * Duyệt tuần tự các phần tử của vec-tơ theo chiều thuận
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
  * có kiểu ::gtype *.
  */
 #define gvec_traverse(cur, v) \
-  for (gtype *cur = gvec_arr(v), *end = gvec_arr(v) + gvec_size(v); cur < end; ++cur)
+  for (gtype *cur = gvec_arr(v), *end = gvec_arr(v) + gvec_size(v); \
+    cur < end; ++cur)
+
+/**
+ * Duyệt tuần tự các phần tử của vec-tơ theo chiều ngược
+ *
+ * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
+ * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
+ * có kiểu ::gtype *.
+ */
+#define gvec_rtraverse(cur, v) \
+  for (gtype *beg = gvec_arr(v), *cur = gvec_arr(v) + gvec_size(v) -1; \
+    cur >= beg; --cur)
 
 /**
  * Làm rỗng vec-tơ: Giải phóng các vùng nhớ được cấp phát cho mảng
