@@ -2,16 +2,30 @@
 
 #include "vec/gvec.h"
 
-struct gvector *gvec_create() {
+struct gvector *gvec_create1(long n) {
   struct gvector *v = malloc(sizeof(struct gvector));
-  v->free_value = NULL;
-  v->sz = 0;
-  v->cap = 8;
+  v->fv = NULL;
+  if (n <= 0) {
+    // Lỗi hàm gọi
+    v->sz = 0;
+    v->cap = 8;
+  } else {
+    v->sz = n;
+    v->cap = n;
+  }
 
-  /* Mặc định x 2 dung lượng */
-  v->scale = 2.0;
+  /* Mặc định x 2 dung lượng mỗi lần tăng kích thước*/
+  v->k = 2.0;
   v->elems = calloc(v->cap, sizeof(gtype));
   return v;
+}
+
+struct gvector *gvec_create2(long n, gtype_free_t fv) {
+  struct gvector *base = gvec_create1(n);
+  if (base) {
+    base->fv = fv;
+  }
+  return base;
 }
 
 struct gvector *gvec_clone(struct gvector *v) {

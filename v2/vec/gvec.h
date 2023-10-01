@@ -71,25 +71,51 @@ struct gvector {
 
   /**
    * Tốc độ tăng dung lượng khi append (> 1, mặc định = 2):
-   *   dung lượng mới = dung lượng cũ * scale
+   *   dung lượng mới = dung lượng cũ * k
    */
-  double scale;
+  double k;
 
   /**
    * Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
    */
-  gtype_free_t free_value;
+  gtype_free_t fv;
 };
 
 /**
- * Hàm tạo đối tượng vec-tơ rỗng, khởi tạo số lượng phần tử = 0.
+ * Hàm tạo đối tượng vec-tơ với n phần tử.
  * Dùng cho các phần tử có kiểu vô hướng (kiểu long, double, v.v..),
- * con trỏ free_value = NULL.
+ * phần tử không sử dụng bộ nhớ động. 
+ * Con trỏ fv (hàm giải phóng bộ nhớ của phần tử) được khởi tạo = NULL.
  *
+ * @param n Số lượng phần tử cần cấp phát.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct gvector *gvec_create();
+struct gvector *gvec_create1(long n);
+
+/**
+ * Hàm tạo đối tượng vec-tơ với n phần tử.
+ * Dùng cho các phần tử có kiểu con trỏ (char *, void *, v.v..),
+ * phần tử có sử dụng bộ nhớ động. 
+ *
+ * @param n Số lượng phần tử cần cấp phát.
+ * @param fv Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
+ * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+struct gvector *gvec_create2(long n, gtype_free_t fv);
+
+
+#define select_creator(_1, _2, func, ...) func
+/**
+ * Macro điều hướng. Lệnh 1 tham số được điều hướng tới 
+ * gvec_create1, lệnh 2 tham số được điều hướng tới gvec_create2.
+ * 
+ * * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
+ * \memberof gvector
+ */
+#define gvec_create(...) \
+    select_creator(__VA_ARGS__, gvec_create2, gvec_create1)(__VA_ARGS__)
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ
@@ -129,12 +155,12 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
 #define gvec_capacity(v) (0 + (v)->cap)
 
 /**
- * Tỉ lệ tăng dung lượng của vec-tơ khi append
+ * Hệ số tăng dung lượng của vec-tơ khi append
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *)
- * @return Trả về tỉ lệ tăng dung lượng (scale), có kiểu double.
+ * @return Trả về hệ số tăng dung lượng (k), có kiểu double.
  */
-#define gvec_scale(v) (0 + (v)->scale)
+#define gvec_ratio(v) (0 + (v)->k)
 
 /**
  * Con trỏ hàm giải phóng bộ nhớ động của phần tử
@@ -142,7 +168,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *)
  * @return Trả về con trỏ hàm, có kiểu gtype_free_t.
  */
-#define gvec_free_value(v) ((gtype_free_t)(v)->free_value)
+#define gvec_free_value(v) ((gtype_free_t)(v)->fv)
 
 /**
  * Giao diện mảng của vec-tơ.
@@ -209,9 +235,9 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
   do {\
     if (newsz > gvec_capacity(v)) { \
       gvec_reserve(v, newsz); \
-    } else if (newsz < gvec_size(v) && (v)->free_value) { \
+    } else if (newsz < gvec_size(v) && (v)->fv) { \
       for (long _j = newsz; _j < gvec_size(v); ++_j) { \
-        (v)->free_value(gvec_elem(v, _j)); \
+        (v)->fv(gvec_elem(v, _j)); \
       }\
     }\
     v->sz = (newsz); \
@@ -230,7 +256,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
     if (gvec_size(v) == 0) { \
       gvec_reserve(v, 10); \
     } else if (gvec_size(v) == gvec_capacity(v)) {\
-      gvec_reserve(v, gvec_scale(v) * gvec_size(v)); \
+      gvec_reserve(v, gvec_ratio(v) * gvec_size(v)); \
     } \
     gvec_elem(v, gvec_size(v)) = val; \
     gvec_resize(v, gvec_size(v) + 1); \
@@ -253,8 +279,8 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
   } while (0)
 
 /**
- * Xóa phần tử có chỉ số idx khỏi vec-tơ v. Nếu v->free_value != NULL
- * thì gọi hàm v->free_value(gvec_elem(v, i)) - Giải phóng bộ nhớ
+ * Xóa phần tử có chỉ số idx khỏi vec-tơ v. Nếu v->fv != NULL
+ * thì gọi hàm v->fv(gvec_elem(v, i)) - Giải phóng bộ nhớ
  * được gắn với đối tượng được xóa.
  * Nếu idx là chỉ số không hợp lệ thì không có thay đổi gì, nếu ngược lại
  * thì các phần tử có chỉ số > idx được dịch sang trái 1 vị trí, và kích
@@ -303,7 +329,7 @@ int gvec_identical(struct gvector *v1, struct gvector *v2);
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho v và các vùng nhớ ngoài
- * được gắn với các phần tử của vec-tơ nếu có (v->free_value != NULL).
+ * được gắn với các phần tử của vec-tơ nếu có (v->fv != NULL).
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct gvector *).
  * @return Không trả về giá trị.
