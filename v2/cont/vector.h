@@ -23,7 +23,8 @@
  * \headerfile "vector.h"
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
  *
- * Các macros điều khiển (v phải có kiểu con trỏ ::struct vector *):
+ * Các macros điều khiển và vấn tin 
+ *   (v phải có kiểu con trỏ ::struct vector *):
  *
  *   #vcreate(...) - Lựa chọn hàm tạo theo số lượng tham số.
  * 
@@ -74,20 +75,16 @@ struct vector {
   long cap;
 
   /**
-   * Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng
-   * ::gtype trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng
-   * bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được
-   * bỏ qua.
-   */
-
-  /**
    * Tốc độ tăng dung lượng khi append (> 1, mặc định = 2):
    *   dung lượng mới = dung lượng cũ * k
    */
   double k;
 
   /**
-   * Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
+   * Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng
+   * ::gtype trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng
+   * bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được
+   * bỏ qua.
    */
   gtype_free_t fv;
 };
