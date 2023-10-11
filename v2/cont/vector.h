@@ -244,6 +244,14 @@ struct vector {
     *(vref(v, i)) = e; \
   } while (0)
 
+
+#if defined CGEN_DEBUG
+#define VREMOVE_RANGE_ERROR \
+  flog("Xóa phần tử với chỉ số không hợp lệ sz = %ld, \
+        idx = %ld", _sz, (long)idx);
+#else /*CGEN_DEBUG*/
+#define VREMOVE_RANGE_ERROR
+#endif  /*CGEN_DEBUG*/
 /**
  * Xóa phần tử có chỉ số idx khỏi vec-tơ v.
  * Nếu idx là chỉ số không hợp lệ thì không có thay đổi gì, nếu ngược lại
@@ -258,6 +266,7 @@ struct vector {
     gtype *_arr = varr(v); \
     long _sz = vsize(v); \
     if ((idx) >= _sz || (idx) < 0) { \
+      VREMOVE_RANGE_ERROR \
       break; \
     } \
     gtype _tmp = _arr[(idx)]; \
@@ -383,7 +392,7 @@ static struct vector *vcreate1(long n) {
   v->fv = NULL;
   if (n < 0) {
 #ifdef CGEN_DEBUG
-    flog(ERROR, "Tạo vec-tơ với kích thước không hợp lệ, n = %ld", n);
+    flog("Tạo vec-tơ với kích thước không hợp lệ, n = %ld", n);
 #endif  // CGEN_DEBUG
     return NULL;
   }

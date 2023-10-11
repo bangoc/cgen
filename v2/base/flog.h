@@ -11,20 +11,8 @@
 
 #define FLOG_VERSION "1.0.0";
 
-static const char *flog_names[] = 
-    {"ALL", "TRACE", "DEBUG", "INFO", "WARNING", "ERROR", "NONE"};
-
-enum flog_levels { ALL, TRACE, DEBUG, INFO, WARNING, ERROR, NONE };
-
-#define flog(LEVEL, ...) _flog(LEVEL, __FILE__, __LINE__, __VA_ARGS__)
-static void _flog(int level, 
-      const char *file, int line, const char *fmt, ...) {
-
-  if (level < TRACE || level > ERROR) {
-    flog(ERROR, "%s", "Gọi flog với LEVEL không hợp lệ.");
-    return;
-  }
-
+#define flog(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
+static void _flog(const char *file, int line, const char *fmt, ...) {
   const char *filename = (strrchr(file, '/') ? strrchr(file, '/') + 1 : file);
 
   time_t t = time(NULL);
@@ -32,8 +20,7 @@ static void _flog(int level,
   va_list args;
   char buffer[16];
   buffer[strftime(buffer, sizeof(buffer), "%H:%M:%S", lt)] = '\0';
-  fprintf(stderr, "%s %-8s %s:%d: ", buffer, flog_names[level],
-          filename, line);
+  fprintf(stderr, "%s %s:%d: ", buffer, filename, line);
 
   va_start(args, fmt);
   vfprintf(stderr, fmt, args);
