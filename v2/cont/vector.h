@@ -366,18 +366,6 @@ static void gfree_vec(gtype *value) {
 }
 
 /**
- * Xuất các phần tử của vec-tơ
- *
- * @param v Con trỏ tới đối tượng vec-tơ
- * @param pp Hàm xuất giá trị gtype
- */
-static void vpprint(struct vector *v, gtype_print_t pp) {
-  vtraverse(cur, v) {
-    pp(cur);
-  }
-}
-
-/**
  * Hàm tạo đối tượng vec-tơ với n phần tử.
  * Dùng cho các phần tử có kiểu vô hướng (kiểu long, double, v.v..),
  * phần tử không sử dụng bộ nhớ động. 

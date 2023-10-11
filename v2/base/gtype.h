@@ -22,15 +22,9 @@ typedef union generic_type {
   char *s;
   void *v;
   union generic_type *g;
-  struct gdllist *gdl;
   struct gsllist *gsl;
   struct vector *vec;
   struct rbmtree *rbm;
-  struct rbstree *rbs;
-  struct hmap *hmap;
-  struct hset *hset;
-  struct p1way *p1w;
-  struct p2ways *p2w;
 } gtype;
 
 #define gtype_zero (gtype_l(0l))
@@ -41,15 +35,9 @@ typedef union generic_type {
 #define gtype_s(value) gtype_value(s, (char *)value)
 #define gtype_v(value) gtype_value(v, value)
 #define gtype_g(value) gtype_value(g, value)
-#define gtype_gdl(value) gtype_value(gdl, value)
 #define gtype_gsl(value) gtype_value(gsl, value)
 #define gtype_gvec(value) gtype_value(gvec, value)
 #define gtype_rbm(value) gtype_value(rbm, value)
-#define gtype_rbs(value) gtype_value(rbs, value)
-#define gtype_hmap(value) gtype_value(hmap, value)
-#define gtype_hset(value) gtype_value(hset, value)
-#define gtype_p1w(value) gtype_value(p1w, value)
-#define gtype_p2w(value) gtype_value(p2w, value)
 
 #define gtype_swap(v1, v2) \
   do { \
