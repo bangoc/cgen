@@ -1,5 +1,5 @@
-#ifndef CONT_VECTOR_H_
-#define CONT_VECTOR_H_
+#ifndef CONT__VECTOR_H_
+#define CONT__VECTOR_H_
 
 /* (C) Nguyen Ba Ngoc 2021 */
 
@@ -452,4 +452,4 @@ static int vsameas(struct vector *v1, struct vector *v2) {
   return 1;
 }
 
-#endif  // CONT_VECTOR_H_
+#endif  // CONT__VECTOR_H_
