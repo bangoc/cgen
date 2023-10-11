@@ -2,6 +2,10 @@
 
 #include "vector.h"
 
+#ifdef CGEN_DEBUG
+#include "base/flog.h"
+#endif  // CGEN_DEBUG
+
 /**
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
  *

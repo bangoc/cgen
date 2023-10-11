@@ -13,10 +13,6 @@
  * cũng có phạm vi ứng dụng rộng hơn.
  */
 
-#ifdef CGEN_DEBUG
-#include "base/flog.h"
-#endif  // CGEN_DEBUG
-
 #include "base/gtype.h"
 
 /**
