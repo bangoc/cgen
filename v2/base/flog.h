@@ -12,16 +12,11 @@
 #define FLOG_VERSION "1.0.0";
 
 #define flog(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
-static void _flog(const char *file, int line, const char *fmt, ...) {
+static inline void _flog(const char *file, int line, const char *fmt, ...) {
   const char *filename = (strrchr(file, '/') ? strrchr(file, '/') + 1 : file);
+  fprintf(stderr, "%s:%d: ", filename, line);
 
-  time_t t = time(NULL);
-  struct tm *lt = localtime(&t);
   va_list args;
-  char buffer[16];
-  buffer[strftime(buffer, sizeof(buffer), "%H:%M:%S", lt)] = '\0';
-  fprintf(stderr, "%s %s:%d: ", buffer, filename, line);
-
   va_start(args, fmt);
   vfprintf(stderr, fmt, args);
   va_end(args);

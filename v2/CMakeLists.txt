@@ -14,6 +14,7 @@ endif (NOT CMAKE_BUILD_TYPE)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Debug)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -DCGEN_DEBUG")
 endif()
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release)
