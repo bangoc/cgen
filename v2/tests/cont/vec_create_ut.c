@@ -1,5 +1,4 @@
 /* (C) Nguyễn Bá Ngọc 2023 */
-#define CGEN_DEBUG
 #include "all.h"
 #include "tests/ut/utils.h"
 

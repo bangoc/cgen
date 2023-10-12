@@ -1,10 +1,10 @@
 /* (C) Nguyen Ba Ngoc 2023 */
 
-#include "vector.h"
-
 #ifdef CGEN_DEBUG
 #include "base/flog.h"
 #endif  // CGEN_DEBUG
+
+#include "cont/vector.h"
 
 /**
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
@@ -155,17 +155,17 @@ void gfree_vec(gtype *value) {
   vfree(value->vec);
 }
 
-struct vector *vcreate1(long n) {
+struct vector *vcreate1(long sz) {
   struct vector *v = malloc(sizeof(struct vector));
   v->fv = NULL;
-  if (n < 0) {
+  if (sz < 0) {
 #ifdef CGEN_DEBUG
-    flog("Tạo vec-tơ với kích thước không hợp lệ, n = %ld", n);
+    flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
 #endif  // CGEN_DEBUG
     return NULL;
   }
-  v->sz = n;
-  v->cap = n > 0? n: 8;
+  v->sz = sz;
+  v->cap = sz > 0? sz: 8;
 
   /* Mặc định x 2 dung lượng mỗi lần tăng kích thước*/
   v->k = 2.0;
@@ -173,8 +173,8 @@ struct vector *vcreate1(long n) {
   return v;
 }
 
-struct vector *vcreate2(long n, gtype_free_t fv) {
-  struct vector *base = vcreate1(n);
+struct vector *vcreate2(long sz, gtype_free_t fv) {
+  struct vector *base = vcreate1(sz);
   if (base) {
     base->fv = fv;
   }
@@ -207,4 +207,27 @@ int vsameas(struct vector *v1, struct vector *v2) {
     }
   }
   return 1;
+}
+
+struct vector *vpush(struct vector *v, gtype val) {
+  vappend(v, val);
+  return v;
+}
+
+struct vector *vpop(struct vector *v) {
+  if (!v || v->sz == 0) {
+    flog("Xóa ngăn xếp không hợp lệ.");
+    return NULL;
+  }
+  vresize(v, v->sz - 1);
+  return v;
+}
+
+struct vector *vtop(struct vector *v, gtype *out) {
+  if (!v || v->sz == 0) {
+    flog("Đọc đỉnh của ngăn xếp không hợp lệ.");
+    return NULL;
+  }
+  *out = v->elems[v->sz - 1];
+  return v;
 }

@@ -13,6 +13,7 @@
  * cũng có phạm vi ứng dụng rộng hơn.
  */
 
+#include "base/core.h"
 #include "base/gtype.h"
 
 /**
@@ -170,28 +171,57 @@ void vfill(struct vector *v, gtype value);
 void gfree_vec(gtype *value);
 
 /**
- * Hàm tạo đối tượng vec-tơ với n phần tử.
+ * Hỗ trợ sử dụng vec-tơ như ngăn xếp - xếp phần tử
+ * vào ngăn xếp.
+ * 
+ * @param v - Con trỏ tới đối tượng vec-tơ.
+ * @param val - Phần tử cần thêm vào.
+ * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
+ */
+struct vector *vpush(struct vector *v, gtype val);
+
+/**
+ * Hỗ trợ sử dụng vec-tơ như ngăn xếp - xóa phần tử 
+ * khỏi ngăn xếp.
+ * 
+ * @param v - Con trỏ tới đối tượng vec-tơ.
+ * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
+ */
+struct vector *vpop(struct vector *v);
+
+/**
+ * Hỗ trợ sử dụng vec-tơ như ngăn xếp - đọc phần tử
+ * trên đỉnh ngăn xếp.
+ * 
+ * @param v - Con trỏ tới đối tượng vec-tơ.
+ * @param out - Con trỏ tới đối tượng lưu giá trị đầu ra.
+ * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
+ */
+struct vector *vtop(struct vector *v, gtype *out);
+
+/**
+ * Hàm tạo đối tượng vec-tơ với kích thước ban đầu = sz.
  * Dùng cho các phần tử có kiểu vô hướng (kiểu long, double, v.v..),
  * phần tử không sử dụng bộ nhớ động. 
  * Con trỏ fv (hàm giải phóng bộ nhớ của phần tử) được khởi tạo = NULL.
  *
- * @param n Số lượng phần tử cần cấp phát.
+ * @param sz Số lượng phần tử cần cấp phát.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct vector *vcreate1(long n);
+struct vector *vcreate1(long sz);
 
 /**
- * Hàm tạo đối tượng vec-tơ với n phần tử.
+ * Hàm tạo đối tượng vec-tơ với sz phần tử.
  * Dùng cho các phần tử có kiểu con trỏ (char *, void *, v.v..),
  * phần tử có sử dụng bộ nhớ động. 
  *
- * @param n Số lượng phần tử cần cấp phát.
+ * @param sz Số lượng phần tử cần cấp phát.
  * @param fv Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct vector *vcreate2(long n, gtype_free_t fv);
+struct vector *vcreate2(long sz, gtype_free_t fv);
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ
@@ -210,7 +240,6 @@ struct vector *vclone(struct vector *v);
  */
 int vsameas(struct vector *v1, struct vector *v2);
 
-#define select_creator(_1, _2, func, ...) func
 /**
  * Macro điều hướng. Lệnh 1 tham số được điều hướng tới 
  * vcreate1, lệnh 2 tham số được điều hướng tới vcreate2.

@@ -8,6 +8,7 @@
 
 #include <stdarg.h>
 #include <stdio.h>
+#include <string.h>
 
 #define FLOG_VERSION "1.0.0";
 
