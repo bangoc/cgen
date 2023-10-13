@@ -151,14 +151,14 @@ void gfree_vec(gtype *value) {
 }
 
 struct vector *vcreate1(long sz) {
-  struct vector *v = malloc(sizeof(struct vector));
-  v->fv = NULL;
   if (sz < 0) {
 #ifdef CGEN_DEBUG
     flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
 #endif  // CGEN_DEBUG
     return NULL;
   }
+  struct vector *v = malloc(sizeof(struct vector));
+  v->fv = NULL;
   v->sz = sz;
   v->cap = sz > 0? sz: 8;
 

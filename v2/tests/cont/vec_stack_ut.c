@@ -24,5 +24,6 @@ int main() {
   vpop(vpop(v));
   vtop(v, &val);
   CHECK_MSG(val.l == 1, "Đỉnh = 1");
+  vfree(v);
   TEST_OK();
 }

@@ -30,6 +30,8 @@ add_library(bkcgen STATIC all.c)
 include(CTest)
 add_test(NAME VecCreate COMMAND vec_create_ut)
 add_test(NAME VecTraverse COMMAND vec_traverse_ut)
+add_test(NAME VecStackUt COMMAND vec_stack_ut)
+add_test(NAME QueueBasicUt COMMAND queue_basic_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)
