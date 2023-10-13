@@ -112,19 +112,14 @@ void vappend(struct vector *v, gtype val) {
   ++v->sz;
 }
 
-#if defined CGEN_DEBUG
-#define VREMOVE_RANGE_ERROR \
-  flog("Xóa phần tử với chỉ số không hợp lệ sz = %ld, \
-        idx = %ld", _sz, (long)idx);
-#else /*CGEN_DEBUG*/
-#define VREMOVE_RANGE_ERROR
-#endif  /*CGEN_DEBUG*/
-
 void vremove(struct vector *v, long idx) {
   gtype *_arr = varr(v);
   long _sz = vsize(v);
   if ((idx) >= _sz || (idx) < 0) {
-    VREMOVE_RANGE_ERROR
+#if defined CGEN_DEBUG
+  flog("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", 
+      _sz, (long)idx);
+#endif  // CGEN_DEBUG
     return;
   }
   gtype _tmp = _arr[(idx)];
