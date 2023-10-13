@@ -162,6 +162,7 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
 #ifndef CONT_VECTOR_H_
 #define CONT_VECTOR_H_ 
 long vsize(const struct vector *v);
+int vempty(const struct vector *v);
 long vcap(const struct vector *v);
 double vratio(const struct vector *v);
 gtype_free_t vfreeval(const struct vector *v);
@@ -193,5 +194,20 @@ int vsameas(struct vector *v1, struct vector *v2);
     cur >= beg; --cur)
 #define vsort(v,cmp) \
   qsort(varr(v), vsize(v), sizeof(gtype), cmp)
+#endif
+
+/***** ./cont/queue.h *****/
+#ifndef CONT_QUEUE_H_
+#define CONT_QUEUE_H_ 
+#define qcreate(...) \
+    select_creator(__VA_ARGS__, qcreate2, qcreate1)(__VA_ARGS__)
+struct queue *qcreate1(long cap);
+struct queue *qenque(struct queue* q, gtype val);
+struct queue *qdeque(struct queue *q);
+struct queue *qpeek(struct queue *q, gtype *out);
+int qempty(const struct queue *q);
+long qsize(const struct queue *q);
+long qnext(const struct queue *q, long id);
+void qfree(struct queue *q);
 #endif
 #endif  // CGEN_H_

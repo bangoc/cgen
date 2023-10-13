@@ -54,7 +54,7 @@ struct queue *qpeek(struct queue *q, gtype *out);
  * @param q - Con trỏ tới hàng đợi.
  * @return Giá trị != 0 nếu rỗng, hoặc 0 nếu không rỗng.
  */
-int qempty(struct queue *q);
+int qempty(const struct queue *q);
 
 /**
  * Đọc số lượng phần tử đang có trong hàng đợi
@@ -62,7 +62,7 @@ int qempty(struct queue *q);
  * @param q - Con trỏ tới hàng đợi.
  * @return Số lượng phần tử đang có trong hàng đợi.
  */
-long qsize(struct queue *q);
+long qsize(const struct queue *q);
 
 /**
  * Chỉ số tiếp theo, cho phép xoay vòng
@@ -71,7 +71,7 @@ long qsize(struct queue *q);
  * @param id - chỉ số hiện tại
  * @return Chỉ số tiếp theo. qnext(q, q->cap) == 0
  */
-long qnext(struct queue *q, long id);
+long qnext(const struct queue *q, long id);
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho hàng đợi

@@ -27,6 +27,14 @@
 long vsize(const struct vector *v);
 
 /**
+ * Kiểm tra xem vec-tơ có rỗng không
+ * 
+ * @param v - Con trỏ tới vec-tơ.
+ * @return 1 nếu vec-tơ rỗng, 0 nếu có phần tử.
+ */
+int vempty(const struct vector *v);
+
+/**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
  * còn capacity là số lượng phần tử đã được cấp phát cho
  * mảng cơ sở (arr), size luôn luôn <= cap.

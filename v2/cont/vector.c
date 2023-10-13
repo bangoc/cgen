@@ -56,6 +56,10 @@ long vsize(const struct vector *v) {
   return v->sz;
 }
 
+int vempty(const struct vector *v) {
+  return v->sz == 0;
+}
+
 long vcap(const struct vector *v) {
   return v->cap;
 }

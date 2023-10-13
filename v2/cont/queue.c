@@ -112,15 +112,15 @@ struct queue *qpeek(struct queue *q, gtype *out) {
   return q;
 }
 
-long qnext(struct queue *q, long id) {
+long qnext(const struct queue *q, long id) {
   return (id + 1) % q->cap;
 }
 
-int qempty(struct queue *q) {
+int qempty(const struct queue *q) {
   return q->sz == 0;
 }
 
-long qsize(struct queue *q) {
+long qsize(const struct queue *q) {
   return q->sz;
 }
 

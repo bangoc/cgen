@@ -16,6 +16,9 @@ struct vector {
 long vsize(const struct vector *v) {
   return v->sz;
 }
+int vempty(const struct vector *v) {
+  return v->sz == 0;
+}
 long vcap(const struct vector *v) {
   return v->cap;
 }
@@ -97,14 +100,14 @@ void gfree_vec(gtype *value) {
   vfree(value->vec);
 }
 struct vector *vcreate1(long sz) {
-  struct vector *v = malloc(sizeof(struct vector));
-  v->fv = NULL;
   if (sz < 0) {
 #ifdef CGEN_DEBUG
     flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
 #endif
     return NULL;
   }
+  struct vector *v = malloc(sizeof(struct vector));
+  v->fv = NULL;
   v->sz = sz;
   v->cap = sz > 0? sz: 8;
   v->k = 2.0;
@@ -163,4 +166,115 @@ struct vector *vtop(struct vector *v, gtype *out) {
   }
   *out = v->elems[v->sz - 1];
   return v;
+}
+
+/***** ./cont/queue.c *****/
+#include <stdlib.h>
+struct queue {
+  long sz;
+  long cap;
+  long fi;
+  long la;
+  gtype_free_t fv;
+  gtype *elems;
+};
+struct queue *qcreate1(long cap) {
+  if (cap < 0) {
+#ifdef CGEN_DEBUG
+    flog("Tạo hàng đợi với tham số không hợp lệ.");
+#endif
+    return NULL;
+  }
+  struct queue *q = malloc(sizeof(struct queue));
+  if (!q) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi cấp phát bộ nhớ cho hàng đợi.");
+#endif
+    return NULL;
+  }
+  q->sz = 0;
+  q->cap = cap > 0? cap: 8;
+  q->fi = -1;
+  q->la = -1;
+  q->elems = calloc(cap, sizeof(gtype));
+  if (!q->elems) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi cấp phát bộ nhớ cho các phần tử");
+#endif
+    free(q);
+    return NULL;
+  }
+  return q;
+}
+struct queue *qenque(struct queue* q, gtype val) {
+  if (!q) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi tham số NULL");
+#endif
+  }
+  if (q->sz == 0) {
+    q->fi = q->la = 0;
+    q->elems[0] = val;
+    ++q->sz;
+    return q;
+  }
+  if (q->sz < q->cap) {
+    q->la = qnext(q, q->la);
+    q->elems[q->la] = val;
+    ++q->sz;
+    return q;
+  }
+  q->cap *= 2;
+  void *tmp = realloc(q->elems, q->cap * sizeof(gtype));
+  if (!tmp) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi mở rộng bộ nhớ.");
+#endif
+    return NULL;
+  }
+  q->elems = tmp;
+  if (q->fi > q->la) {
+    for (long i = 0; i <= q->la; ++i) {
+      q->elems[q->sz + i] = q->elems[i];
+    }
+    q->la += q->sz;
+  }
+  q->la = qnext(q, q->la);
+  q->elems[q->la] = val;
+  ++q->sz;
+  return q;
+}
+struct queue *qdeque(struct queue *q) {
+  if (!q || q->sz == 0) {
+#ifdef CGEN_DEBUG
+    flog("Hàng đợi không hợp lệ");
+#endif
+    return NULL;
+  }
+  q->fi = qnext(q, q->fi);
+  --q->sz;
+  return q;
+}
+struct queue *qpeek(struct queue *q, gtype *out) {
+  if (!q || q->sz == 0) {
+#ifdef CGEN_DEBUG
+    flog("Hàng đợi không hợp lệ");
+#endif
+    return NULL;
+  }
+  *out = q->elems[q->fi];
+  return q;
+}
+long qnext(const struct queue *q, long id) {
+  return (id + 1) % q->cap;
+}
+int qempty(const struct queue *q) {
+  return q->sz == 0;
+}
+long qsize(const struct queue *q) {
+  return q->sz;
+}
+void qfree(struct queue *q) {
+  free(q->elems);
+  free(q);
 }
