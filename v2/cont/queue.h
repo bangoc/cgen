@@ -6,35 +6,13 @@
 #include "base/gtype.h"
 
 /**
- * Macro điều hướng. Lệnh 1 tham số được điều hướng tới 
- * vcreate1, lệnh 2 tham số được điều hướng tới vcreate2.
- * 
- * * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-#define qcreate(...) \
-    select_creator(__VA_ARGS__, qcreate2, qcreate1)(__VA_ARGS__)
-
-/**
  * Tạo hàng đợi.
  * 
  * @param cap - Dung lượng, cap = 0 được mặc định thành 8
  * để đảm bảo elems != NULL
  * @return Con trỏ tới hàng đợi được tạo, hoặc NULL nếu thất bại
  */
-struct queue *qcreate1(long cap);
-
-/**
- * Tạo hàng đợi trong trường hợp phần tử là con trỏ 
- * tới vùng nhớ bên ngoài.
- * 
- * @param cap - Dung lượng, cap = 0 được mặc định thành 8
- * để đảm bảo elems != NULL
- * @param fv - Con trỏ hàm giải phóng vùng nhớ đệm nằm ngoài 
- * các phần tử.
- * @return Con trỏ tới hàng đợi được tạo, hoặc NULL nếu thất bại.
- */
-struct queue *qcreate2(long cap, gtype_free_t fv);
+struct queue *qcreate(long cap);
 
 /**
  * Thêm phần tử vào cuối hàng đợi 
@@ -92,5 +70,21 @@ long qnext(const struct queue *q, long id);
  * @return - Không trả về giá trị
  */
 void qfree(struct queue *q);
+
+/**
+ * Truy vấn con trỏ hàm fv
+ * 
+ * @return con trỏ hàm giải phóng bộ nhớ phần tử - fv.
+ */
+gtype_free_t qfv(struct queue *q);
+
+/**
+ * Thiết lập con trỏ hàm giải phóng phần tử.
+ * 
+ * @param q - Con trỏ tới hàng đợi
+ * @param fv - Con trỏ hàm giải phóng bộ nhớ của phần tử
+ * @return Chuyển tiếp con trỏ q
+ */
+struct queue *qsetfv(struct queue *q, gtype_free_t fv);
 
 #endif  // CONT_QUEUE_H_

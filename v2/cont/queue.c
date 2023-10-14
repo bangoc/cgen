@@ -14,7 +14,7 @@ struct queue {
   gtype *elems;
 };
 
-struct queue *qcreate1(long cap) {
+struct queue *qcreate(long cap) {
   if (cap < 0) {
 #ifdef CGEN_DEBUG
     flog("Tạo hàng đợi với tham số không hợp lệ.");
@@ -41,18 +41,6 @@ struct queue *qcreate1(long cap) {
     free(q);
     return NULL;
   }
-  return q;
-}
-
-struct queue *qcreate2(long cap, gtype_free_t fv) {
-  struct queue *q = qcreate1(cap);
-  if (!q) {
-#ifdef CGEN_DEBUG
-    flog("Lỗi tạo hàng đợi");
-#endif  // CGEN_DEBUG    
-    return NULL;
-  }
-  q->fv = fv;
   return q;
 }
 
@@ -138,6 +126,15 @@ int qempty(const struct queue *q) {
 
 long qsize(const struct queue *q) {
   return q->sz;
+}
+
+gtype_free_t qfv(struct queue *q) {
+  return q->fv;
+}
+
+struct queue *qsetfv(struct queue *q, gtype_free_t fv) {
+  q->fv = fv;
+  return q;
 }
 
 void qfree(struct queue *q) {

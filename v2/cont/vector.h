@@ -58,7 +58,16 @@ double vratio(const struct vector *v);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
  * @return Trả về con trỏ hàm, có kiểu gtype_free_t.
  */
-gtype_free_t vfreeval(const struct vector *v);
+gtype_free_t vfv(const struct vector *v);
+
+/**
+ * Thiết lập con trỏ hàm giải phóng bộ nhớ động của phần tử
+ * 
+ * @param v Con trỏ tới đối tượng vec-tơ
+ * @param fv Con trỏ hàm giải phóng bộ nhớ
+ * @return Chuyển tiếp con trỏ v
+ */
+struct vector *vsetfv(struct vector *v, gtype_free_t fv);
 
 /**
  * Giao diện mảng của vec-tơ.
@@ -217,19 +226,7 @@ struct vector *vtop(struct vector *v, gtype *out);
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
  * \memberof gvector
  */
-struct vector *vcreate1(long sz);
-
-/**
- * Hàm tạo đối tượng vec-tơ với sz phần tử.
- * Dùng cho các phần tử có kiểu con trỏ (char *, void *, v.v..),
- * phần tử có sử dụng bộ nhớ động. 
- *
- * @param sz Số lượng phần tử cần cấp phát.
- * @param fv Con trỏ hàm giải phóng bộ nhớ động của các phần tử.
- * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-struct vector *vcreate2(long sz, gtype_free_t fv);
+struct vector *vcreate(long sz);
 
 /**
  * Hàm tạo bản sao đầy đủ của vec-tơ
@@ -247,16 +244,6 @@ struct vector *vclone(struct vector *v);
  * @return 1 nếu giống nhau, 0 nếu ngược lại
  */
 int vsameas(struct vector *v1, struct vector *v2);
-
-/**
- * Macro điều hướng. Lệnh 1 tham số được điều hướng tới 
- * vcreate1, lệnh 2 tham số được điều hướng tới vcreate2.
- * 
- * * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
- */
-#define vcreate(...) \
-    select_creator(__VA_ARGS__, vcreate2, vcreate1)(__VA_ARGS__)
 
 /**
  * Duyệt tuần tự các phần tử của vec-tơ theo chiều thuận

@@ -6,8 +6,6 @@
 #include <stddef.h>
 #include <time.h>
 
-#define select_creator(_1, _2, func, ...) func
-
 #define container_of(ptr, type, member) \
   ((type *)((void*)(ptr) - offsetof(type, member)))
 

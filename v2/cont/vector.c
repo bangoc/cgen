@@ -68,8 +68,13 @@ double vratio(const struct vector *v) {
   return v->k;
 }
 
-gtype_free_t vfreeval(const struct vector *v) {
+gtype_free_t vfv(const struct vector *v) {
   return v->fv;
+}
+
+struct vector *vsetfv(struct vector *v, gtype_free_t fv) {
+  v->fv = fv;
+  return v;
 }
 
 gtype *varr(struct vector *v) {
@@ -154,7 +159,7 @@ void gfree_vec(gtype *value) {
   vfree(value->vec);
 }
 
-struct vector *vcreate1(long sz) {
+struct vector *vcreate(long sz) {
   if (sz < 0) {
 #ifdef CGEN_DEBUG
     flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
@@ -170,14 +175,6 @@ struct vector *vcreate1(long sz) {
   v->k = 2.0;
   v->elems = calloc(v->cap, sizeof(gtype));
   return v;
-}
-
-struct vector *vcreate2(long sz, gtype_free_t fv) {
-  struct vector *base = vcreate1(sz);
-  if (base) {
-    base->fv = fv;
-  }
-  return base;
 }
 
 struct vector *vclone(struct vector *v) {
