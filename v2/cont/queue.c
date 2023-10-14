@@ -32,6 +32,7 @@ struct queue *qcreate1(long cap) {
   q->cap = cap > 0? cap: 8;
   q->fi = -1;
   q->la = -1;
+  q->fv = NULL;
   q->elems = calloc(cap, sizeof(gtype));
   if (!q->elems) {
 #ifdef CGEN_DEBUG
@@ -40,6 +41,18 @@ struct queue *qcreate1(long cap) {
     free(q);
     return NULL;
   }
+  return q;
+}
+
+struct queue *qcreate2(long cap, gtype_free_t fv) {
+  struct queue *q = qcreate1(cap);
+  if (!q) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi tạo hàng đợi");
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  q->fv = fv;
   return q;
 }
 
@@ -96,6 +109,9 @@ struct queue *qdeque(struct queue *q) {
 #endif  // CGEN_DEBUG
     return NULL;
   }
+  if (q->fv) {
+    q->fv(q->elems + q->fi);
+  }
   q->fi = qnext(q, q->fi);
   --q->sz;
   return q;
@@ -125,6 +141,9 @@ long qsize(const struct queue *q) {
 }
 
 void qfree(struct queue *q) {
+  while (!qempty(q)) {
+    qdeque(q);
+  }
   free(q->elems);
   free(q);
 }

@@ -18,11 +18,23 @@
 /**
  * Tạo hàng đợi.
  * 
- * @param cap - Dung lượng, cap = 0 được tự động chuyển thành 8
+ * @param cap - Dung lượng, cap = 0 được mặc định thành 8
  * để đảm bảo elems != NULL
  * @return Con trỏ tới hàng đợi được tạo, hoặc NULL nếu thất bại
  */
 struct queue *qcreate1(long cap);
+
+/**
+ * Tạo hàng đợi trong trường hợp phần tử là con trỏ 
+ * tới vùng nhớ bên ngoài.
+ * 
+ * @param cap - Dung lượng, cap = 0 được mặc định thành 8
+ * để đảm bảo elems != NULL
+ * @param fv - Con trỏ hàm giải phóng vùng nhớ đệm nằm ngoài 
+ * các phần tử.
+ * @return Con trỏ tới hàng đợi được tạo, hoặc NULL nếu thất bại.
+ */
+struct queue *qcreate2(long cap, gtype_free_t fv);
 
 /**
  * Thêm phần tử vào cuối hàng đợi 
