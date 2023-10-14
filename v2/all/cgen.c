@@ -150,19 +150,22 @@ struct vector *vpush(struct vector *v, gtype val) {
 }
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
+#ifdef CGEN_DEBUG
     flog("Xóa ngăn xếp không hợp lệ.");
+#endif
     return NULL;
   }
   vresize(v, v->sz - 1);
   return v;
 }
-struct vector *vtop(struct vector *v, gtype *out) {
+gtype *vtop(struct vector *v) {
   if (!v || v->sz == 0) {
+#ifdef CGEN_DEBUG
     flog("Đọc đỉnh của ngăn xếp không hợp lệ.");
+#endif
     return NULL;
   }
-  *out = v->elems[v->sz - 1];
-  return v;
+  return v->elems + (v->sz - 1);
 }
 
 /***** ./cont/queue.c *****/
@@ -256,15 +259,14 @@ struct queue *qdeque(struct queue *q) {
   --q->sz;
   return q;
 }
-struct queue *qpeek(struct queue *q, gtype *out) {
+gtype *qpeek(struct queue *q) {
   if (!q || q->sz == 0) {
 #ifdef CGEN_DEBUG
     flog("Hàng đợi không hợp lệ");
 #endif
     return NULL;
   }
-  *out = q->elems[q->fi];
-  return q;
+  return q->elems + q->fi;
 }
 long qnext(const struct queue *q, long id) {
   return (id + 1) % q->cap;
@@ -334,7 +336,7 @@ gtype *sfront(struct slist *list) {
 gtype *sback(struct slist *list) {
   return (gtype*)list->back;
 }
-long slen(struct slist *list) {
+long ssize(struct slist *list) {
   return list->length;
 }
 int sempty(struct slist *list) {
@@ -412,15 +414,14 @@ struct slist *spush(struct slist *list, gtype elem) {
 struct slist *spop(struct slist *list) {
   return sdfront(list);
 }
-struct slist *stop(struct slist *list, gtype *out) {
-  if (list == NULL || sempty(list) || out == NULL) {
+gtype *stop(struct slist *list) {
+  if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("ngăn xếp ở trạng thái không hợp lệ.");
+    flog("Ngăn xếp ở trạng thái không hợp lệ.");
 #endif
     return NULL;
   }
-  *out = *sfront(list);
-  return list;
+  return sfront(list);
 }
 struct slist *senque(struct slist *list, gtype elem) {
   return sappend(list, elem);
@@ -428,13 +429,12 @@ struct slist *senque(struct slist *list, gtype elem) {
 struct slist *sdeque(struct slist *list) {
   return sdfront(list);
 }
-struct slist *speek(struct slist *list, gtype *out) {
-  if (list == NULL || sempty(list) || out == NULL) {
+gtype *speek(struct slist *list) {
+  if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
     flog("hàng đợi ở trạng thái không hợp lệ.");
 #endif
     return NULL;
   }
-  *out = *sfront(list);
-  return list;
+  return sfront(list);
 }

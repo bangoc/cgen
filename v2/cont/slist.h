@@ -37,7 +37,7 @@ gtype *sback(struct slist *list);
  * 
  * @return Giá trị list->length
  */
-long slen(struct slist *list);
+long ssize(struct slist *list);
 
 /**
  * Truy cập con trỏ fv của list
@@ -132,11 +132,10 @@ struct slist *spop(struct slist *list);
  * Đọc đỉnh của ngăn xếp.
  * 
  * @param list - Con trỏ tới ngăn xếp.
- * @param out - Tham số đầu ra, trỏ tới đối tượng lưu kết quả.
- * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
- * list ở trạng thái không hợp lệ.
+ * @return Con trỏ tới phần tử ở đỉnh ngăn xếp, hoặc NULL
+ * nếu không tồn tại.
  */
-struct slist *stop(struct slist *list, gtype *out);
+gtype *stop(struct slist *list);
 
 
 /*** Giao diện hàng đợi ***/
@@ -164,11 +163,10 @@ struct slist *sdeque(struct slist *list);
  * Đọc phần tử hiện hành trong hàng đợi.
  * 
  * @param list - Con trỏ tới hàng đợi.
- * @param out - Con trỏ tới đối tượng lưu kết quả.
- * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
- * list ở trạng thái không hợp lệ.
+ * @return Con trỏ tới phần tử hiện hành nếu có, hoặc NULL
+ * nếu không tồn tại.
  */
-struct slist *speek(struct slist *list, gtype *out);
+gtype *speek(struct slist *list);
 
 
 #endif  // CONT_SLIST_H_

@@ -31,12 +31,13 @@ struct queue *qenque(struct queue* q, gtype val);
 struct queue *qdeque(struct queue *q);
 
 /**
- * Đọc phần tử ở đầu hàng đợi vào tham số out
+ * Tham chiếu phần tử hiện hành của hàng đợi
  * 
  * @param q - Con trỏ tới hàng đợi.
- * @param out - Con trỏ tới đối tượng lưu giá trị đầu ra.
+ * @return Con trỏ tới phần tử hiện hành, hoặc NULL nếu không 
+ * tồn tại.
  */ 
-struct queue *qpeek(struct queue *q, gtype *out);
+gtype *qpeek(struct queue *q);
 
 /**
  * Kiểm tra xem hàng đợi rỗng hay không

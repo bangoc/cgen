@@ -206,15 +206,16 @@ struct vector *vpush(struct vector *v, gtype val);
  */
 struct vector *vpop(struct vector *v);
 
+/*** Giao diện ngăn xếp ***/
+
 /**
- * Hỗ trợ sử dụng vec-tơ như ngăn xếp - đọc phần tử
- * trên đỉnh ngăn xếp.
+ * Đọc đỉnh của ngăn xếp.
  * 
  * @param v - Con trỏ tới đối tượng vec-tơ.
- * @param out - Con trỏ tới đối tượng lưu giá trị đầu ra.
- * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
+ * @return Trả về con trỏ tới đỉnh ngăn xếp nếu tồn tại, 
+ * hoặc NULL nếu không tồn tại.
  */
-struct vector *vtop(struct vector *v, gtype *out);
+gtype *vtop(struct vector *v);
 
 /**
  * Hàm tạo đối tượng vec-tơ với kích thước ban đầu = sz.

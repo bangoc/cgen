@@ -61,7 +61,7 @@ gtype *sback(struct slist *list) {
   return (gtype*)list->back;
 }
 
-long slen(struct slist *list) {
+long ssize(struct slist *list) {
   return list->length;
 }
 
@@ -149,15 +149,14 @@ struct slist *spop(struct slist *list) {
   return sdfront(list);
 }
 
-struct slist *stop(struct slist *list, gtype *out) {
-  if (list == NULL || sempty(list) || out == NULL) {
+gtype *stop(struct slist *list) {
+  if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("ngăn xếp ở trạng thái không hợp lệ.");
+    flog("Ngăn xếp ở trạng thái không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }
-  *out = *sfront(list);
-  return list;
+  return sfront(list);
 }
 
 struct slist *senque(struct slist *list, gtype elem) {
@@ -168,13 +167,12 @@ struct slist *sdeque(struct slist *list) {
   return sdfront(list);
 }
 
-struct slist *speek(struct slist *list, gtype *out) {
-  if (list == NULL || sempty(list) || out == NULL) {
+gtype *speek(struct slist *list) {
+  if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
     flog("hàng đợi ở trạng thái không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }
-  *out = *sfront(list);
-  return list;
+  return sfront(list);
 }

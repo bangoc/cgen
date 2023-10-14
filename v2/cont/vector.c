@@ -212,18 +212,21 @@ struct vector *vpush(struct vector *v, gtype val) {
 
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
+#ifdef CGEN_DEBUG
     flog("Xóa ngăn xếp không hợp lệ.");
+#endif  // CGEN_DEBUG
     return NULL;
   }
   vresize(v, v->sz - 1);
   return v;
 }
 
-struct vector *vtop(struct vector *v, gtype *out) {
+gtype *vtop(struct vector *v) {
   if (!v || v->sz == 0) {
+#ifdef CGEN_DEBUG
     flog("Đọc đỉnh của ngăn xếp không hợp lệ.");
+#endif  // CGEN_DEBUG
     return NULL;
   }
-  *out = v->elems[v->sz - 1];
-  return v;
+  return v->elems + (v->sz - 1);
 }

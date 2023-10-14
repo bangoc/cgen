@@ -179,7 +179,7 @@ void vfill(struct vector *v, gtype value);
 void gfree_vec(gtype *value);
 struct vector *vpush(struct vector *v, gtype val);
 struct vector *vpop(struct vector *v);
-struct vector *vtop(struct vector *v, gtype *out);
+gtype *vtop(struct vector *v);
 struct vector *vcreate(long sz);
 struct vector *vclone(struct vector *v);
 int vsameas(struct vector *v1, struct vector *v2);
@@ -199,7 +199,7 @@ int vsameas(struct vector *v1, struct vector *v2);
 struct queue *qcreate(long cap);
 struct queue *qenque(struct queue* q, gtype val);
 struct queue *qdeque(struct queue *q);
-struct queue *qpeek(struct queue *q, gtype *out);
+gtype *qpeek(struct queue *q);
 int qempty(const struct queue *q);
 long qsize(const struct queue *q);
 long qnext(const struct queue *q, long id);
@@ -214,7 +214,7 @@ struct queue *qsetfv(struct queue *q, gtype_free_t fv);
 struct slist *screate();
 gtype *sfront(struct slist *list);
 gtype *sback(struct slist *list);
-long slen(struct slist *list);
+long ssize(struct slist *list);
 gtype_free_t sfv(struct slist *list);
 struct slist *ssetfv(struct slist *list, gtype_free_t fv);
 void sfree(struct slist *list);
@@ -227,9 +227,9 @@ struct slist *sdfront(struct slist *list);
               cur = (gtype*)((struct snode*)cur)->next)
 struct slist *spush(struct slist *list, gtype elem);
 struct slist *spop(struct slist *list);
-struct slist *stop(struct slist *list, gtype *out);
+gtype *stop(struct slist *list);
 struct slist *senque(struct slist *list, gtype elem);
 struct slist *sdeque(struct slist *list);
-struct slist *speek(struct slist *list, gtype *out);
+gtype *speek(struct slist *list);
 #endif
 #endif  // CGEN_H_

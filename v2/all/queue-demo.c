@@ -9,8 +9,8 @@ int main() {
   }
   gtype val;
   while (!qempty(q)) {
-    qdeque(qpeek(q, &val));
-    printf(" %f", val.d);
+    printf(" %f", qpeek(q)->d);
+    qdeque(q);
   }
   printf("\n");
   qfree(q);

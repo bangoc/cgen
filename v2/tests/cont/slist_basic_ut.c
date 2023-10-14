@@ -17,7 +17,7 @@ int main() {
   CHECK_MSG(sfront(sdfront(list))->l == 100, "front 100");
   CHECK_MSG(sfront(sdfront(list))->l == 200, "front 200");
   CHECK_MSG(sfront(sdfront(list))->l == 300, "front 300");
-  CHECK_MSG(slen(list) == 1, "length == 1");
+  CHECK_MSG(ssize(list) == 1, "length == 1");
 
   sdfront(list);
   CHECK_MSG(sempty(list), "Empty list");

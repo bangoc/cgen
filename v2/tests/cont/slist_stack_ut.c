@@ -11,18 +11,13 @@ int main() {
   spush(list, gtype_l(5));
   spush(list, gtype_l(7));
   spush(list, gtype_l(9));
-  CHECK_MSG(slen(list) == 5, "length == 5");
-  gtype val;
-  stop(list, &val);
-  CHECK_MSG(val.l == 9, "top == 9");
-  stop(spop(list), &val);
-  CHECK_MSG(val.l == 7, "top == 7");
-  stop(spop(list), &val);
-  CHECK_MSG(val.l == 5, "top == 5");
-  stop(spop(list), &val);
-  CHECK_MSG(val.l == 3, "top == 3");
-  stop(spop(list), &val);
-  CHECK_MSG(val.l == 1, "top == 1");
+  CHECK_MSG(ssize(list) == 5, "length == 5");
+  CHECK_MSG(stop(list)->l == 9, "top == 9");
+  CHECK_MSG(stop(spop(list))->l == 7, "top == 7");
+  CHECK_MSG(stop(spop(list))->l == 5, "top == 5");
+  CHECK_MSG(stop(spop(list))->l == 3, "top == 3");
+  CHECK_MSG(stop(spop(list))->l == 1, "top == 1");
+  CHECK_MSG(ssize(list) == 1, "len == 1");
   sfree(list);
   TEST_OK();
 }

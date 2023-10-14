@@ -105,15 +105,14 @@ struct queue *qdeque(struct queue *q) {
   return q;
 }
 
-struct queue *qpeek(struct queue *q, gtype *out) {
+gtype *qpeek(struct queue *q) {
   if (!q || q->sz == 0) {
 #ifdef CGEN_DEBUG
     flog("Hàng đợi không hợp lệ");
 #endif  // CGEN_DEBUG
     return NULL;
   }
-  *out = q->elems[q->fi];
-  return q;
+  return q->elems + q->fi;
 }
 
 long qnext(const struct queue *q, long id) {
