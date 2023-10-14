@@ -25,8 +25,12 @@ long vcap(const struct vector *v) {
 double vratio(const struct vector *v) {
   return v->k;
 }
-gtype_free_t vfreeval(const struct vector *v) {
+gtype_free_t vfv(const struct vector *v) {
   return v->fv;
+}
+struct vector *vsetfv(struct vector *v, gtype_free_t fv) {
+  v->fv = fv;
+  return v;
 }
 gtype *varr(struct vector *v) {
   return v->elems;
@@ -99,7 +103,7 @@ void vfill(struct vector *v, gtype value) {
 void gfree_vec(gtype *value) {
   vfree(value->vec);
 }
-struct vector *vcreate1(long sz) {
+struct vector *vcreate(long sz) {
   if (sz < 0) {
 #ifdef CGEN_DEBUG
     flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
@@ -113,13 +117,6 @@ struct vector *vcreate1(long sz) {
   v->k = 2.0;
   v->elems = calloc(v->cap, sizeof(gtype));
   return v;
-}
-struct vector *vcreate2(long sz, gtype_free_t fv) {
-  struct vector *base = vcreate1(sz);
-  if (base) {
-    base->fv = fv;
-  }
-  return base;
 }
 struct vector *vclone(struct vector *v) {
   struct vector *v2 = malloc(sizeof(struct vector));
@@ -178,7 +175,7 @@ struct queue {
   gtype_free_t fv;
   gtype *elems;
 };
-struct queue *qcreate1(long cap) {
+struct queue *qcreate(long cap) {
   if (cap < 0) {
 #ifdef CGEN_DEBUG
     flog("Tạo hàng đợi với tham số không hợp lệ.");
@@ -196,6 +193,7 @@ struct queue *qcreate1(long cap) {
   q->cap = cap > 0? cap: 8;
   q->fi = -1;
   q->la = -1;
+  q->fv = NULL;
   q->elems = calloc(cap, sizeof(gtype));
   if (!q->elems) {
 #ifdef CGEN_DEBUG
@@ -251,6 +249,9 @@ struct queue *qdeque(struct queue *q) {
 #endif
     return NULL;
   }
+  if (q->fv) {
+    q->fv(q->elems + q->fi);
+  }
   q->fi = qnext(q, q->fi);
   --q->sz;
   return q;
@@ -274,7 +275,166 @@ int qempty(const struct queue *q) {
 long qsize(const struct queue *q) {
   return q->sz;
 }
+gtype_free_t qfv(struct queue *q) {
+  return q->fv;
+}
+struct queue *qsetfv(struct queue *q, gtype_free_t fv) {
+  q->fv = fv;
+  return q;
+}
 void qfree(struct queue *q) {
+  while (!qempty(q)) {
+    qdeque(q);
+  }
   free(q->elems);
   free(q);
+}
+
+/***** ./cont/slist.c *****/
+#ifdef CGEN_DEBUG
+#endif
+struct snode {
+  gtype data;
+  struct snode *next;
+};
+struct slist {
+  struct snode *front;
+  struct snode *back;
+  gtype_free_t fv;
+  long length;
+};
+struct snode *snode(gtype data) {
+  struct snode *tmp = malloc(sizeof(struct snode));
+  if (!tmp) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi cấp phát bộ nhớ tạo nút.");
+#endif
+    return NULL;
+  }
+  tmp->data = data;
+  tmp->next = NULL;
+  return tmp;
+}
+struct slist *screate() {
+  struct slist *tmp = malloc(sizeof(struct slist));
+  if (!tmp) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi cấp phát bộ nhớ tạo danh sách.");
+#endif
+    return NULL;
+  }
+  tmp->front = tmp->back = NULL;
+  tmp->fv = NULL;
+  tmp->length = 0;
+  return tmp;
+}
+gtype *sfront(struct slist *list) {
+  return (gtype*)list->front;
+}
+gtype *sback(struct slist *list) {
+  return (gtype*)list->back;
+}
+long slen(struct slist *list) {
+  return list->length;
+}
+int sempty(struct slist *list) {
+  return list->front == NULL && list->back == NULL;
+}
+struct slist *sappend(struct slist *list, gtype data) {
+  struct snode *node = snode(data);
+  if (!node) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi tạo nút");
+#endif
+    return NULL;
+  }
+  if (list->front == NULL) {
+    list->front = list->back = node;
+  } else {
+    list->back->next = node;
+    list->back = node;
+  }
+  ++list->length;
+  return list;
+}
+struct slist *sprepend(struct slist *list, gtype data) {
+  struct snode *node = snode(data);
+  if (!node) {
+#ifdef CGEN_DEBUG
+    flog("Lỗi tạo nút");
+#endif
+    return NULL;
+  }
+  if (list->front == NULL) {
+    list->front = list->back = node;
+  } else {
+    node->next = list->front;
+    list->front = node;
+  }
+  ++list->length;
+  return list;
+}
+struct slist *sdfront(struct slist *list) {
+  if (!list || sempty(list)) {
+#ifdef CGEN_DEBUG
+    flog("Xóa đầu danh sách không hợp lệ.");
+#endif
+    return NULL;
+  }
+  if (list->front == list->back) {
+    list->back = NULL;
+  }
+  struct snode *tmp = list->front;
+  list->front = tmp->next;
+  if (list->fv) {
+    list->fv((gtype*)tmp);
+  }
+  free(tmp);
+  --list->length;
+  return list;
+}
+gtype_free_t sfv(struct slist *list) {
+  return list->fv;
+}
+struct slist *ssetfv(struct slist *list, gtype_free_t fv) {
+  list->fv = fv;
+  return list;
+}
+void sfree(struct slist *list) {
+  while (!sempty(list)) {
+    sdfront(list);
+  }
+  free(list);
+}
+struct slist *spush(struct slist *list, gtype elem) {
+  return sprepend(list, elem);
+}
+struct slist *spop(struct slist *list) {
+  return sdfront(list);
+}
+struct slist *stop(struct slist *list, gtype *out) {
+  if (list == NULL || sempty(list) || out == NULL) {
+#ifdef CGEN_DEBUG
+    flog("ngăn xếp ở trạng thái không hợp lệ.");
+#endif
+    return NULL;
+  }
+  *out = *sfront(list);
+  return list;
+}
+struct slist *senque(struct slist *list, gtype elem) {
+  return sappend(list, elem);
+}
+struct slist *sdeque(struct slist *list) {
+  return sdfront(list);
+}
+struct slist *speek(struct slist *list, gtype *out) {
+  if (list == NULL || sempty(list) || out == NULL) {
+#ifdef CGEN_DEBUG
+    flog("hàng đợi ở trạng thái không hợp lệ.");
+#endif
+    return NULL;
+  }
+  *out = *sfront(list);
+  return list;
 }

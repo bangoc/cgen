@@ -9,7 +9,6 @@
 #define BASE_CORE_H_ 
 #include <stddef.h>
 #include <time.h>
-#define select_creator(_1,_2,func,...) func
 #define container_of(ptr,type,member) \
   ((type *)((void*)(ptr) - offsetof(type, member)))
 #define New(TYPE,...) TYPE ## _create( __VA_ARGS__ )
@@ -165,7 +164,8 @@ long vsize(const struct vector *v);
 int vempty(const struct vector *v);
 long vcap(const struct vector *v);
 double vratio(const struct vector *v);
-gtype_free_t vfreeval(const struct vector *v);
+gtype_free_t vfv(const struct vector *v);
+struct vector *vsetfv(struct vector *v, gtype_free_t fv);
 gtype *varr(struct vector *v);
 gtype *vref(struct vector *v, long i);
 long vidx(struct vector *v, gtype *elem_ptr);
@@ -180,12 +180,9 @@ void gfree_vec(gtype *value);
 struct vector *vpush(struct vector *v, gtype val);
 struct vector *vpop(struct vector *v);
 struct vector *vtop(struct vector *v, gtype *out);
-struct vector *vcreate1(long sz);
-struct vector *vcreate2(long sz, gtype_free_t fv);
+struct vector *vcreate(long sz);
 struct vector *vclone(struct vector *v);
 int vsameas(struct vector *v1, struct vector *v2);
-#define vcreate(...) \
-    select_creator(__VA_ARGS__, vcreate2, vcreate1)(__VA_ARGS__)
 #define vtraverse(cur,v) \
   for (gtype *cur = varr(v), *end = varr(v) + vsize(v); \
     cur < end; ++cur)
@@ -199,9 +196,7 @@ int vsameas(struct vector *v1, struct vector *v2);
 /***** ./cont/queue.h *****/
 #ifndef CONT_QUEUE_H_
 #define CONT_QUEUE_H_ 
-#define qcreate(...) \
-    select_creator(__VA_ARGS__, qcreate2, qcreate1)(__VA_ARGS__)
-struct queue *qcreate1(long cap);
+struct queue *qcreate(long cap);
 struct queue *qenque(struct queue* q, gtype val);
 struct queue *qdeque(struct queue *q);
 struct queue *qpeek(struct queue *q, gtype *out);
@@ -209,5 +204,32 @@ int qempty(const struct queue *q);
 long qsize(const struct queue *q);
 long qnext(const struct queue *q, long id);
 void qfree(struct queue *q);
+gtype_free_t qfv(struct queue *q);
+struct queue *qsetfv(struct queue *q, gtype_free_t fv);
+#endif
+
+/***** ./cont/slist.h *****/
+#ifndef CONT_SLIST_H_
+#define CONT_SLIST_H_ 
+struct slist *screate();
+gtype *sfront(struct slist *list);
+gtype *sback(struct slist *list);
+long slen(struct slist *list);
+gtype_free_t sfv(struct slist *list);
+struct slist *ssetfv(struct slist *list, gtype_free_t fv);
+void sfree(struct slist *list);
+int sempty(struct slist *list);
+struct slist *sappend(struct slist *list, gtype data);
+struct slist *sprepend(struct slist *list, gtype data);
+struct slist *sdfront(struct slist *list);
+#define straverse(cur,list) \
+  for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
+              cur = (gtype*)((struct snode*)cur)->next)
+struct slist *spush(struct slist *list, gtype elem);
+struct slist *spop(struct slist *list);
+struct slist *stop(struct slist *list, gtype *out);
+struct slist *senque(struct slist *list, gtype elem);
+struct slist *sdeque(struct slist *list);
+struct slist *speek(struct slist *list, gtype *out);
 #endif
 #endif  // CGEN_H_
