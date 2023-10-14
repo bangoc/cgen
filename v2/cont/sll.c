@@ -140,3 +140,41 @@ void sfree(struct slist *list) {
   }
   free(list);
 }
+
+struct slist *spush(struct slist *list, gtype elem) {
+  return sprepend(list, elem);
+}
+
+struct slist *spop(struct slist *list) {
+  return sdfront(list);
+}
+
+struct slist *stop(struct slist *list, gtype *out) {
+  if (list == NULL || sempty(list) || out == NULL) {
+#ifdef CGEN_DEBUG
+    flog("ngăn xếp ở trạng thái không hợp lệ.");
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  *out = *sfront(list);
+  return list;
+}
+
+struct slist *senque(struct slist *list, gtype elem) {
+  return sappend(list, elem);
+}
+
+struct slist *sdeque(struct slist *list) {
+  return sdfront(list);
+}
+
+struct slist *speek(struct slist *list, gtype *out) {
+  if (list == NULL || sempty(list) || out == NULL) {
+#ifdef CGEN_DEBUG
+    flog("hàng đợi ở trạng thái không hợp lệ.");
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  *out = *sfront(list);
+  return list;
+}

@@ -11,13 +11,6 @@
 #include "base/gtype.h"
 
 /**
- * Hàm tạo nút
- * 
- * @return con trỏ tới nút nếu thành công, hoặc NULL nếu thất bại.
- */
-struct snode *snode(gtype data);
-
-/**
  * Hàm tạo danh sách
  * 
  * @return Trả về con trỏ tới danh sách nếu thành công,
@@ -113,5 +106,69 @@ struct slist *sdfront(struct slist *list);
 #define straverse(cur, list) \
   for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
               cur = (gtype*)((struct snode*)cur)->next)
+
+/*** Giao diện ngăn xếp ***/
+
+/**
+ * Thêm phần tử vào ngăn xếp.
+ * 
+ * @param list - Con trỏ tới danh sách.
+ * @param elem - Phần tử được thêm vào.
+ * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
+ * list ở trạng thái không hợp lệ.
+ */
+struct slist *spush(struct slist *list, gtype elem);
+
+/**
+ * Xóa phần tử khỏi ngăn xếp
+ * 
+ * @param list - Con trỏ tới ngăn xếp.
+ * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
+ * list ở trạng thái không hợp lệ.
+ */
+struct slist *spop(struct slist *list);
+
+/**
+ * Đọc đỉnh của ngăn xếp.
+ * 
+ * @param list - Con trỏ tới ngăn xếp.
+ * @param out - Tham số đầu ra, trỏ tới đối tượng lưu kết quả.
+ * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
+ * list ở trạng thái không hợp lệ.
+ */
+struct slist *stop(struct slist *list, gtype *out);
+
+
+/*** Giao diện hàng đợi ***/
+
+/**
+ * Thêm phần tử vào hàng đợi
+ * 
+ * @param list - Con trỏ tới hàng đợi.
+ * @param elem - Phần tử được thêm vào.
+ * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu list ở trạng 
+ * thái không hợp lệ.
+ */
+struct slist *senque(struct slist *list, gtype elem);
+
+/**
+ * Xóa phần tử khỏi hàng đợi.
+ * 
+ * @param list - Con trỏ tới hàng đợi.
+ * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
+ * list ở trạng thái không hợp lệ.
+ */
+struct slist *sdeque(struct slist *list);
+
+/**
+ * Đọc phần tử hiện hành trong hàng đợi.
+ * 
+ * @param list - Con trỏ tới hàng đợi.
+ * @param out - Con trỏ tới đối tượng lưu kết quả.
+ * @return Chuyển tiếp con trỏ list, hoặc trả về NULL nếu 
+ * list ở trạng thái không hợp lệ.
+ */
+struct slist *speek(struct slist *list, gtype *out);
+
 
 #endif  // CONT_SLL_H_

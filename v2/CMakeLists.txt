@@ -33,6 +33,8 @@ add_test(NAME VecTraverse COMMAND vec_traverse_ut)
 add_test(NAME VecStackUt COMMAND vec_stack_ut)
 add_test(NAME QueueBasicUt COMMAND queue_basic_ut)
 add_test(NAME SListBasicUt COMMAND slist_basic_ut)
+add_test(NAME SListStackUt COMMAND slist_stack_ut)
+add_test(NAME SListQueueUt COMMAND slist_queue_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)
