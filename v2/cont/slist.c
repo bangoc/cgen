@@ -4,7 +4,7 @@
 #include "base/flog.h"
 #endif  // CGEN_DEBUG
 
-#include "cont/sll.h"
+#include "cont/slist.h"
 
 /**
  * Cấu trúc mô tả nút của danh sách móc nối đơn

@@ -1,7 +1,7 @@
 /* (C) Nguyen Ba Ngoc 2023 */
 
-#ifndef CONT_SLL_H_
-#define CONT_SLL_H_
+#ifndef CONT_SLIST_H_
+#define CONT_SLIST_H_
 
 /** @file
  * @brief Triển khai danh sách móc nối đơn với gtype
@@ -171,4 +171,4 @@ struct slist *sdeque(struct slist *list);
 struct slist *speek(struct slist *list, gtype *out);
 
 
-#endif  // CONT_SLL_H_
+#endif  // CONT_SLIST_H_
