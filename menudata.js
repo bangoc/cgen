@@ -28,10 +28,24 @@ var menudata={children:[
 {text:"Cấu trúc cơ sở dữ liệu (Data Structures)",url:"annotated.html"},
 {text:"Index cấu trúc cơ sở dữ liệu",url:"classes.html"},
 {text:"Các trường dữ liệu",url:"functions.html",children:[
-{text:"Tất cả",url:"functions.html"},
-{text:"Các hàm",url:"functions_func.html"}]}]},
+{text:"Tất cả",url:"functions.html",children:[
+{text:"c",url:"functions.html#index_c"},
+{text:"d",url:"functions.html#index_d"},
+{text:"e",url:"functions.html#index_e"},
+{text:"f",url:"functions.html#index_f"},
+{text:"g",url:"functions.html#index_g"},
+{text:"k",url:"functions.html#index_k"},
+{text:"s",url:"functions.html#index_s"},
+{text:"v",url:"functions.html#index_v"}]},
+{text:"Các hàm",url:"functions_func.html",children:[
+{text:"d",url:"functions_func.html#index_d"},
+{text:"g",url:"functions_func.html#index_g"},
+{text:"s",url:"functions_func.html#index_s"},
+{text:"v",url:"functions_func.html#index_v"}]},
+{text:"Các biến",url:"functions_vars.html"}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"Danh mục File",url:"files.html"},
 {text:"Toàn cục",url:"globals.html",children:[
 {text:"Tất cả",url:"globals.html"},
-{text:"Typedefs",url:"globals_type.html"}]}]}]}
+{text:"Typedefs",url:"globals_type.html"},
+{text:"Định nghĩa",url:"globals_defs.html"}]}]}]}

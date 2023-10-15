@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['generic_5ftype_5',['generic_type',['../uniongeneric__type.html',1,'']]]
+  ['dlist_78',['dlist',['../structdlist.html',1,'']]],
+  ['dnode_79',['dnode',['../structdnode.html',1,'']]]
 ];

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Thư viện cgen: cont/slist.h File nguồn</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Thư viện cgen
+   </div>
+   <div id="projectbrief">Triển khai khái quát của các cấu trúc dữ liệu và giải thuật cho lập trình C</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Được biên soạn bởi Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Tìm kiếm','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Tìm kiếm');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_71f2f021c0efc6e04fc6699a6f0122c0.html">cont</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">slist.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="slist_8h.html">Tới Thông tin của file này.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">/* (C) Nguyen Ba Ngoc 2023 */</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#ifndef CONT_SLIST_H_</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#define CONT_SLIST_H_</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="core_8h.html">base/core.h</a>&quot;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="gtype_8h.html">base/gtype.h</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a4b2939da788ad2ced784a80426e73c99">screate</a>();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *<a class="code" href="structslist.html#ae454360a698a02563d741c70f70b5fcd">sfront</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *<a class="code" href="structslist.html#aa336364a51205ca2c7d4b02382af9e6e">sback</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">long</span> <a class="code" href="structslist.html#af354fc4376b338a89d1319acf96af17e">ssize</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;gtype_free_t <a class="code" href="structslist.html#a965dc8c5dfc2b749a0e652f08f5c975f">sfv</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a6f425ffa1a46b815f0ea6c91ecd84566">ssetfv</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list, gtype_free_t fv);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keywordtype">void</span> <a class="code" href="structslist.html#aae7f225d52c999c6663bf10835ff1737">sfree</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">int</span> <a class="code" href="structslist.html#aedaa583a72563fc158b293c2da09a6b4">sempty</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#acf699bb2a1f37c09c40cb525da87f0d5">sappend</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list, <a class="code" href="uniongeneric__type.html">gtype</a> data);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a580c086063247a4947920f3f0615032a">sprepend</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list, <a class="code" href="uniongeneric__type.html">gtype</a> data);</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a9321841ec725cb79824e1dfe104e9a5d">sdfront</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">/*** Giao diện ngăn xếp ***/</span></div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#af45d54c6421f53fb6414782ef25fb0ad">spush</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list, <a class="code" href="uniongeneric__type.html">gtype</a> elem);</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a3372d74842597d207edc34dbd5afd180">spop</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *<a class="code" href="structslist.html#abdc32c13e9545b2669b6c5d49d1d4875">stop</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">/*** Giao diện hàng đợi ***/</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a41adac9c161989ee6089307373eedacc">senque</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list, <a class="code" href="uniongeneric__type.html">gtype</a> elem);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">struct </span><a class="code" href="structslist.html">slist</a> *<a class="code" href="structslist.html#a913e0eab531727c1ff9c5470d4d18ee3">sdeque</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *<a class="code" href="structslist.html#a1d6f7fb4fc6d18702fbb14d6af131f59">speek</a>(<span class="keyword">struct</span> <a class="code" href="structslist.html">slist</a> *list);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno"><a class="line" href="slist_8h.html#a6140d6d9a550907ecc0b69d9b1ec7e1b">  187</a></span>&#160;<span class="preprocessor">#define straverse(cur, list) \</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="preprocessor">  for (gtype *cur = (gtype*)sfront(list); cur != NULL; \</span></div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="preprocessor">              cur = (gtype*)((struct snode*)cur)-&gt;next)</span></div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// CONT_SLIST_H_</span></div>
+<div class="ttc" id="acore_8h_html"><div class="ttname"><a href="core_8h.html">core.h</a></div><div class="ttdoc">Các thành phần nền tảng: Biểu thức tính toán con trỏ, đo thời gian thực thi, v.v..</div></div>
+<div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
+<div class="ttc" id="astructslist_html"><div class="ttname"><a href="structslist.html">slist</a></div><div class="ttdef"><b>Definition:</b> slist.c:22</div></div>
+<div class="ttc" id="astructslist_html_a1d6f7fb4fc6d18702fbb14d6af131f59"><div class="ttname"><a href="structslist.html#a1d6f7fb4fc6d18702fbb14d6af131f59">slist::speek</a></div><div class="ttdeci">gtype * speek(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:170</div></div>
+<div class="ttc" id="astructslist_html_a3372d74842597d207edc34dbd5afd180"><div class="ttname"><a href="structslist.html#a3372d74842597d207edc34dbd5afd180">slist::spop</a></div><div class="ttdeci">struct slist * spop(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:148</div></div>
+<div class="ttc" id="astructslist_html_a41adac9c161989ee6089307373eedacc"><div class="ttname"><a href="structslist.html#a41adac9c161989ee6089307373eedacc">slist::senque</a></div><div class="ttdeci">struct slist * senque(struct slist *list, gtype elem)</div><div class="ttdef"><b>Definition:</b> slist.c:162</div></div>
+<div class="ttc" id="astructslist_html_a4b2939da788ad2ced784a80426e73c99"><div class="ttname"><a href="structslist.html#a4b2939da788ad2ced784a80426e73c99">slist::screate</a></div><div class="ttdeci">struct slist * screate()</div><div class="ttdef"><b>Definition:</b> slist.c:42</div></div>
+<div class="ttc" id="astructslist_html_a580c086063247a4947920f3f0615032a"><div class="ttname"><a href="structslist.html#a580c086063247a4947920f3f0615032a">slist::sprepend</a></div><div class="ttdeci">struct slist * sprepend(struct slist *list, gtype data)</div><div class="ttdef"><b>Definition:</b> slist.c:90</div></div>
+<div class="ttc" id="astructslist_html_a6f425ffa1a46b815f0ea6c91ecd84566"><div class="ttname"><a href="structslist.html#a6f425ffa1a46b815f0ea6c91ecd84566">slist::ssetfv</a></div><div class="ttdeci">struct slist * ssetfv(struct slist *list, gtype_free_t fv)</div><div class="ttdef"><b>Definition:</b> slist.c:132</div></div>
+<div class="ttc" id="astructslist_html_a913e0eab531727c1ff9c5470d4d18ee3"><div class="ttname"><a href="structslist.html#a913e0eab531727c1ff9c5470d4d18ee3">slist::sdeque</a></div><div class="ttdeci">struct slist * sdeque(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:166</div></div>
+<div class="ttc" id="astructslist_html_a9321841ec725cb79824e1dfe104e9a5d"><div class="ttname"><a href="structslist.html#a9321841ec725cb79824e1dfe104e9a5d">slist::sdfront</a></div><div class="ttdeci">struct slist * sdfront(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:108</div></div>
+<div class="ttc" id="astructslist_html_a965dc8c5dfc2b749a0e652f08f5c975f"><div class="ttname"><a href="structslist.html#a965dc8c5dfc2b749a0e652f08f5c975f">slist::sfv</a></div><div class="ttdeci">gtype_free_t sfv(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:128</div></div>
+<div class="ttc" id="astructslist_html_aa336364a51205ca2c7d4b02382af9e6e"><div class="ttname"><a href="structslist.html#aa336364a51205ca2c7d4b02382af9e6e">slist::sback</a></div><div class="ttdeci">gtype * sback(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:60</div></div>
+<div class="ttc" id="astructslist_html_aae7f225d52c999c6663bf10835ff1737"><div class="ttname"><a href="structslist.html#aae7f225d52c999c6663bf10835ff1737">slist::sfree</a></div><div class="ttdeci">void sfree(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:137</div></div>
+<div class="ttc" id="astructslist_html_abdc32c13e9545b2669b6c5d49d1d4875"><div class="ttname"><a href="structslist.html#abdc32c13e9545b2669b6c5d49d1d4875">slist::stop</a></div><div class="ttdeci">gtype * stop(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:152</div></div>
+<div class="ttc" id="astructslist_html_acf699bb2a1f37c09c40cb525da87f0d5"><div class="ttname"><a href="structslist.html#acf699bb2a1f37c09c40cb525da87f0d5">slist::sappend</a></div><div class="ttdeci">struct slist * sappend(struct slist *list, gtype data)</div><div class="ttdef"><b>Definition:</b> slist.c:72</div></div>
+<div class="ttc" id="astructslist_html_ae454360a698a02563d741c70f70b5fcd"><div class="ttname"><a href="structslist.html#ae454360a698a02563d741c70f70b5fcd">slist::sfront</a></div><div class="ttdeci">gtype * sfront(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:56</div></div>
+<div class="ttc" id="astructslist_html_aedaa583a72563fc158b293c2da09a6b4"><div class="ttname"><a href="structslist.html#aedaa583a72563fc158b293c2da09a6b4">slist::sempty</a></div><div class="ttdeci">int sempty(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:68</div></div>
+<div class="ttc" id="astructslist_html_af354fc4376b338a89d1319acf96af17e"><div class="ttname"><a href="structslist.html#af354fc4376b338a89d1319acf96af17e">slist::ssize</a></div><div class="ttdeci">long ssize(struct slist *list)</div><div class="ttdef"><b>Definition:</b> slist.c:64</div></div>
+<div class="ttc" id="astructslist_html_af45d54c6421f53fb6414782ef25fb0ad"><div class="ttname"><a href="structslist.html#af45d54c6421f53fb6414782ef25fb0ad">slist::spush</a></div><div class="ttdeci">struct slist * spush(struct slist *list, gtype elem)</div><div class="ttdef"><b>Definition:</b> slist.c:144</div></div>
+<div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Được biên soạn bởi&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>
