@@ -3,24 +3,22 @@ Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản
 
 # Hướng dẫn biên dịch
 
-Tệp mã nguồn, ví dụ main.c:
+Mã nguồn thư viện được đóng gói trong 2 tệp [cgen.h](all/cgen.h)
+và [cgen.c](all/cgen.c) trong thư mục all.
+
+## 1. Biên dịch trực tiếp trong môi trường dòng lệnh
+
+Chèn [cgen.h](all/cgen.h) trong mã nguồn chương trình,
 
 ```C
 #include "cgen.h"
 /*...*/
 ```
-
-Trong đó all.h là tệp tổng hợp các tệp tiêu đề của cgen.
-
-## 1. Biên dịch với gcc trong môi trường dòng lệnh
+Giả sử tệp mã nguồn chương trình là main.c, và các tệp main.c, cgen.c và cgen.h trong cùng 1 thư mục, trong điều kiện đó có thể biên dịch với gcc bằng lệnh theo định dạng:
 
 ```console
-gcc -o prog main.c ${CGEN_PATH}/all.c -I ${CGEN_PATH}
+gcc -o prog main.c cgen.c --std=c11
 ```
-
-Trong đó ${CGEN_PATH} là đường dẫn tới thư mục cgen;
-
-all.c là tệp tổng hợp các tệp .c (mã nguồn) của cgen.
 
 ## 2. Biên dịch với ninja và cmake
 
@@ -50,16 +48,7 @@ mkdir b
 cd b
 cmake .. -G Ninja
 ninja
-```
-## 3. Sử dụng định dạng 1 tệp
-```C
-#include "cgen.h"
-/*...*/
-```
-gcc -o prog main.c cgen.c
 
-Các tệp tổng hợp cgen.h và cgen.c có thể được tải về từ trang [Xuất bản (release)](https://github.com/bangoc/cgen/releases), hoặc tự tạo với công cụ merge trong mega-unit.
-
-## 4. Tài liệu
+## 3. Tài liệu
 
 Xem tài liệu chi tiết ở địa chỉ [APIs doc](https://bangoc.github.io/cgen/)
