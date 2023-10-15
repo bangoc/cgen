@@ -1,8 +1,0 @@
-#ifndef OOP_CGEN_IC_
-#define OOP_CGEN_IC_
-
-/* (C) Nguyen Ba Ngoc, 2021 */
-
-#include "OOP/Sll.c"
-
-#endif  // OOP_CGEN_IC_

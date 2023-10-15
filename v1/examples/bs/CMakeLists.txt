@@ -1,1 +1,0 @@
-add_executable(ddemo bs_demo_with_type_double.c)

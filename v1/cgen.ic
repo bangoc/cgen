@@ -1,6 +1,0 @@
-#ifndef CGEN_HC_
-#define CGEN_HC_
-
-#include "all.c"
-
-#endif  // CGEN_HC_
