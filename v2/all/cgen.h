@@ -232,4 +232,28 @@ struct slist *senque(struct slist *list, gtype elem);
 struct slist *sdeque(struct slist *list);
 gtype *speek(struct slist *list);
 #endif
+
+/***** ./cont/dlist.h *****/
+#ifndef CONT_DLIST_H_
+#define CONT_DLIST_H_ 
+struct dlist *dcreate();
+gtype *dfront(struct dlist *list);
+gtype *dback(struct dlist *list);
+long dsize(struct dlist *list);
+#define dtraverse(cur,list) \
+  for (gtype *cur = (gtype*)((list)->front); cur != NULL; \
+              cur = (gtype*)((struct dnode *)cur->next))
+#define drtraverse(cur,list) \
+  for (gtype *cur = (gtype*)((list)->back); cur != NULL; \
+              cur = (gtype*)((struct dnode *)cur->prev))
+int dempty(struct dlist *list);
+void dfree(struct dlist *list);
+void dclear(struct dlist *list);
+struct dlist *dappend(struct dlist *list, gtype elem);
+struct dlist *dprepend(struct dlist *list, gtype elem);
+struct dlist *ddfront(struct dlist *list);
+struct dlist *ddback(struct dlist *list);
+gtype_free_t dfv(struct dlist *list);
+struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
+#endif
 #endif  // CGEN_H_

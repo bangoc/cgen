@@ -16,6 +16,7 @@ process ./base/flog.h ./all/cgen.h
 process ./cont/vector.h ./all/cgen.h
 process ./cont/queue.h ./all/cgen.h
 process ./cont/slist.h ./all/cgen.h
+process ./cont/dlist.h ./all/cgen.h
 
 echo "#endif  // CGEN_H_" >> ./all/cgen.h
 
@@ -28,3 +29,4 @@ echo '#include "cgen.h"' >> ./all/cgen.c
 process ./cont/vector.c ./all/cgen.c
 process ./cont/queue.c ./all/cgen.c
 process ./cont/slist.c ./all/cgen.c
+process ./cont/dlist.c ./all/cgen.c
