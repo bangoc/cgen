@@ -1,11 +1,11 @@
-#ifndef BASE_GTYPE_H_
-#define BASE_GTYPE_H_
-
 /* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
 /** @file
  * @brief Định nghĩa kiểu ::gtype và các thành phần bổ trợ.
  */
+
+#ifndef BASE_GTYPE_H_
+#define BASE_GTYPE_H_
 
 #include <stdio.h>
 #include <string.h>

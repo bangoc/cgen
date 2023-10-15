@@ -1,7 +1,10 @@
 /* (C) Nguyễn Bá Ngọc 2023 */
 
-// flog = formatted log, xuất thông báo lỗi với cú pháp 
-// định dạng tương tự printf.
+/** @file
+ * @brief Các công cụ hỗ trợ xuất các thông tin hỗ trợ gỡ lỗi.
+ * flog = formatted log, xuất thông báo lỗi với cú pháp.
+ * Thiết kế tương tự printf.
+ */
 
 #ifndef BASE_FLOG_H_
 #define BASE_FLOG_H_

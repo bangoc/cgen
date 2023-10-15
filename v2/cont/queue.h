@@ -11,6 +11,7 @@
  * @param cap - Dung lượng, cap = 0 được mặc định thành 8
  * để đảm bảo elems != NULL
  * @return Con trỏ tới hàng đợi được tạo, hoặc NULL nếu thất bại
+ * \memberof queue
  */
 struct queue *qcreate(long cap);
 
@@ -20,6 +21,7 @@ struct queue *qcreate(long cap);
  * @param val - Phần tử được thêm vào.
  * @param q - Con trỏ tới hàng đợi
  * @return Chuyển tiếp con trỏ q
+ * \memberof queue
  */
 struct queue *qenque(struct queue* q, gtype val);
 
@@ -36,6 +38,7 @@ struct queue *qdeque(struct queue *q);
  * @param q - Con trỏ tới hàng đợi.
  * @return Con trỏ tới phần tử hiện hành, hoặc NULL nếu không 
  * tồn tại.
+ * \memberof queue
  */ 
 gtype *qpeek(struct queue *q);
 
@@ -44,6 +47,7 @@ gtype *qpeek(struct queue *q);
  * 
  * @param q - Con trỏ tới hàng đợi.
  * @return Giá trị != 0 nếu rỗng, hoặc 0 nếu không rỗng.
+ * \memberof queue
  */
 int qempty(const struct queue *q);
 
@@ -52,6 +56,7 @@ int qempty(const struct queue *q);
  * 
  * @param q - Con trỏ tới hàng đợi.
  * @return Số lượng phần tử đang có trong hàng đợi.
+ * \memberof queue
  */
 long qsize(const struct queue *q);
 
@@ -61,6 +66,7 @@ long qsize(const struct queue *q);
  * @param q - Con trỏ tới hàng đợi
  * @param id - chỉ số hiện tại
  * @return Chỉ số tiếp theo. qnext(q, q->cap) == 0
+ * \memberof queue
  */
 long qnext(const struct queue *q, long id);
 
@@ -69,13 +75,16 @@ long qnext(const struct queue *q, long id);
  * 
  * @param q - Con trỏ tới hàng đợi
  * @return - Không trả về giá trị
+ * \memberof queue
  */
 void qfree(struct queue *q);
 
 /**
  * Truy vấn con trỏ hàm fv
  * 
- * @return con trỏ hàm giải phóng bộ nhớ phần tử - fv.
+ * @param q Con trỏ tới hàng đợi.
+ * @return Con trỏ hàm giải phóng bộ nhớ phần tử - fv.
+ * \memberof queue
  */
 gtype_free_t qfv(struct queue *q);
 
@@ -85,6 +94,7 @@ gtype_free_t qfv(struct queue *q);
  * @param q - Con trỏ tới hàng đợi
  * @param fv - Con trỏ hàm giải phóng bộ nhớ của phần tử
  * @return Chuyển tiếp con trỏ q
+ * \memberof queue
  */
 struct queue *qsetfv(struct queue *q, gtype_free_t fv);
 

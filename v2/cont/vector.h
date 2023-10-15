@@ -1,6 +1,3 @@
-#ifndef CONT_VECTOR_H_
-#define CONT_VECTOR_H_
-
 /* (C) Nguyen Ba Ngoc 2021 */
 
 /** @file
@@ -13,6 +10,9 @@
  * cũng có phạm vi ứng dụng rộng hơn.
  */
 
+#ifndef CONT_VECTOR_H_
+#define CONT_VECTOR_H_
+
 #include "base/core.h"
 #include "base/gtype.h"
 
@@ -23,6 +23,7 @@
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Trả về kích thước (size) của vec-tơ, giá trị có kiểu long.
+ * \memberof vector
  */
 long vsize(const struct vector *v);
 
@@ -31,6 +32,7 @@ long vsize(const struct vector *v);
  * 
  * @param v - Con trỏ tới vec-tơ.
  * @return 1 nếu vec-tơ rỗng, 0 nếu có phần tử.
+ * \memberof vector
  */
 int vempty(const struct vector *v);
 
@@ -41,6 +43,7 @@ int vempty(const struct vector *v);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Trả về dung lượng (capacity) của vec-tơ, giá trị có kiểu long.
+ * \memberof vector
  */
 long vcap(const struct vector *v);
 
@@ -49,6 +52,7 @@ long vcap(const struct vector *v);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
  * @return Trả về hệ số tăng dung lượng (k), có kiểu double.
+ * \memberof vector
  */
 double vratio(const struct vector *v);
 
@@ -57,6 +61,7 @@ double vratio(const struct vector *v);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
  * @return Trả về con trỏ hàm, có kiểu gtype_free_t.
+ * \memberof vector
  */
 gtype_free_t vfv(const struct vector *v);
 
@@ -66,6 +71,7 @@ gtype_free_t vfv(const struct vector *v);
  * @param v Con trỏ tới đối tượng vec-tơ
  * @param fv Con trỏ hàm giải phóng bộ nhớ
  * @return Chuyển tiếp con trỏ v
+ * \memberof vector
  */
 struct vector *vsetfv(struct vector *v, gtype_free_t fv);
 
@@ -77,6 +83,7 @@ struct vector *vsetfv(struct vector *v, gtype_free_t fv);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Trả về con trỏ tới phần tử đầu tiên của mảng (kiểu ::gtype *)
+ * \memberof vector
  */
 gtype *varr(struct vector *v);
 
@@ -88,7 +95,9 @@ gtype *varr(struct vector *v);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param i Chỉ số của phần tử, là số nguyên và < #vsize(v).
- * @return Phần tử có chỉ số i trong vec-tơ v, kết quả là lvalue có kiểu ::gtype.
+ * @return Phần tử có chỉ số i trong vec-tơ v, 
+ * kết quả là lvalue có kiểu ::gtype.
+ * \memberof vector
  */
 gtype *vref(struct vector *v, long i);
 
@@ -101,6 +110,7 @@ gtype *vref(struct vector *v, long i);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param elem_ptr Con trỏ tới 1 phần tử hợp lệ trong vec-tơ.
  * @return Chỉ số của phần tử được trỏ tới bởi elem_ptr.
+ * \memberof vector
  */
 long vidx(struct vector *v, gtype *elem_ptr);
 
@@ -110,9 +120,10 @@ long vidx(struct vector *v, gtype *elem_ptr);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param newcap Dung lượng mới
- * @return Không trả về kết quả
+ * @return Chuyển tiếp con trỏ v.
+ * \memberof vector
  */
-void vreserve(struct vector *v, long newcap);
+struct vector *vreserve(struct vector *v, long newcap);
 
 /**
  * Thay đổi kích thước của vec-tơ, có thể tăng hoặc giảm.
@@ -121,9 +132,10 @@ void vreserve(struct vector *v, long newcap);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param newsz Kích thước mới
- * @return Không trả về kết quả
+ * @return Chuyển tiếp con trỏ v
+ * \memberof vector
  */
-void vresize(struct vector *v, long newsz);
+struct vector *vresize(struct vector *v, long newsz);
 
 /**
  * Thêm giá trị val vào sau phần tử cuối cùng trong v và tăng kích thước lên 1.
@@ -131,9 +143,10 @@ void vresize(struct vector *v, long newsz);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param val Giá trị được thêm vào vec-tơ v.
- * @return Không trả về giá trị.
+ * @return Chuyển tiếp con trỏ v.
+ * \memberof vector
  */
-void vappend(struct vector *v, gtype val);
+struct vector *vappend(struct vector *v, gtype val);
 
 /**
  * Xóa phần tử có chỉ số idx khỏi vec-tơ v.
@@ -143,8 +156,11 @@ void vappend(struct vector *v, gtype val);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param idx Chỉ số phần tử được xóa.
+ * @return Chuyển tiếp con trỏ v nếu thành công, hoặc NULL
+ * nếu phát sinh lỗi.
+ * \memberof vector
  */
-void vremove(struct vector *v, long idx);
+struct vector *vremove(struct vector *v, long idx);
 
 /**
  * Làm rỗng vec-tơ: Giải phóng các vùng nhớ được cấp phát cho mảng
@@ -152,11 +168,12 @@ void vremove(struct vector *v, long idx);
  * dung lượng vec-tơ không thay đổi.
  *
  * @param v Con trỏ tới đối tượng kiểu vec-tơ
- * @return Không trả về giá trị
+ * @return Chuyển tiếp con trỏ v.
  *
  * Tham khảo: vresize(v, cap) - Thay đổi kích thước vec-tơ
+ * \memberof vector
  */
-void vclear(struct vector *v);
+struct vector *vclear(struct vector *v);
 
 /**
  * Giải phóng bộ nhớ được cấp phát cho v và các vùng nhớ ngoài
@@ -164,6 +181,7 @@ void vclear(struct vector *v);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Không trả về giá trị.
+ * \memberof vector
  */
 void vfree(struct vector *v);
 
@@ -173,6 +191,7 @@ void vfree(struct vector *v);
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param value Giá trị khởi tạo.
  * @return Không trả về giá trị.
+ * \memberof vector
  */
 void vfill(struct vector *v, gtype value);
 
@@ -184,6 +203,7 @@ void vfill(struct vector *v, gtype value);
  * Trước tiên value.v được ép kiểu thành struct vector *,
  * sau đó con trỏ struct vector * được truyền cho vfree.
  * @return Hàm không trả về giá trị.
+ * \memberof gtype
  */
 void gfree_vec(gtype *value);
 
@@ -194,6 +214,7 @@ void gfree_vec(gtype *value);
  * @param v - Con trỏ tới đối tượng vec-tơ.
  * @param val - Phần tử cần thêm vào.
  * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
+ * \memberof vector
  */
 struct vector *vpush(struct vector *v, gtype val);
 
@@ -203,6 +224,7 @@ struct vector *vpush(struct vector *v, gtype val);
  * 
  * @param v - Con trỏ tới đối tượng vec-tơ.
  * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
+ * \memberof vector
  */
 struct vector *vpop(struct vector *v);
 
@@ -214,6 +236,7 @@ struct vector *vpop(struct vector *v);
  * @param v - Con trỏ tới đối tượng vec-tơ.
  * @return Trả về con trỏ tới đỉnh ngăn xếp nếu tồn tại, 
  * hoặc NULL nếu không tồn tại.
+ * \memberof vector
  */
 gtype *vtop(struct vector *v);
 
@@ -225,7 +248,7 @@ gtype *vtop(struct vector *v);
  *
  * @param sz Số lượng phần tử cần cấp phát.
  * @return Trả về đối tượng tạo được nếu thành công hoặc NULL nếu thất bại.
- * \memberof gvector
+ * \memberof vector
  */
 struct vector *vcreate(long sz);
 
@@ -234,6 +257,7 @@ struct vector *vcreate(long sz);
  *
  * @param v Con trỏ vec-tơ
  * @return Con trỏ tới bản sao đầy đủ của vec-tơ, kiểu ::struct vector *
+ * \memberof vector
  */
 struct vector *vclone(struct vector *v);
 
@@ -243,6 +267,7 @@ struct vector *vclone(struct vector *v);
  * @param v1 Con trỏ vec-tơ thứ nhất
  * @param v2 Con trỏ vec-tơ thứ 2
  * @return 1 nếu giống nhau, 0 nếu ngược lại
+ * \memberof vector
  */
 int vsameas(struct vector *v1, struct vector *v2);
 

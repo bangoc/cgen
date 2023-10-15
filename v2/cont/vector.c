@@ -12,8 +12,6 @@
  * Các macros điều khiển và vấn tin 
  *   (v phải có kiểu con trỏ ::struct vector *):
  *
- *   #vcreate(...) - Lựa chọn hàm tạo theo số lượng tham số.
- *
  *   #vsort(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
  *
  *   #vtraverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
@@ -89,18 +87,19 @@ long vidx(struct vector *v, gtype *elem_ptr) {
   return elem_ptr - v->elems;
 }
 
-void vreserve(struct vector *v, long newcap) {
+struct vector *vreserve(struct vector *v, long newcap) {
   if (newcap < v->sz) {
 #ifdef CGEN_DEBUG
     flog("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->sz);
 #endif  // CGEN_DEBUG
-    return;
+    return NULL;
   }
   v->elems = realloc(v->elems, newcap * sizeof(gtype));
   v->cap = newcap;
+  return v;
 }
 
-void vresize(struct vector *v, long newsz) {
+struct vector *vresize(struct vector *v, long newsz) {
   if (newsz > v->cap) {
     vreserve(v, newsz);
   } else if (newsz < v->sz && v->fv) {
@@ -109,9 +108,10 @@ void vresize(struct vector *v, long newsz) {
     }
   }
   v->sz = newsz;
+  return v;
 }
 
-void vappend(struct vector *v, gtype val) {
+struct vector *vappend(struct vector *v, gtype val) {
   if (v->sz == 0) {
     vreserve(v, 10);
   } else if (v->sz == v->cap) {
@@ -119,9 +119,10 @@ void vappend(struct vector *v, gtype val) {
   }
   v->elems[v->sz] = val;
   ++v->sz;
+  return v;
 }
 
-void vremove(struct vector *v, long idx) {
+struct vector *vremove(struct vector *v, long idx) {
   gtype *_arr = varr(v);
   long _sz = vsize(v);
   if ((idx) >= _sz || (idx) < 0) {
@@ -129,7 +130,7 @@ void vremove(struct vector *v, long idx) {
   flog("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", 
       _sz, (long)idx);
 #endif  // CGEN_DEBUG
-    return;
+    return NULL;
   }
   gtype _tmp = _arr[(idx)];
   for (long _i = (idx); _i < _sz - 1; ++_i) {
@@ -137,10 +138,11 @@ void vremove(struct vector *v, long idx) {
   }
   _arr[_sz - 1] = _tmp;
   vresize(v, _sz - 1);
+  return v;
 }
 
-void vclear(struct vector *v) {
-  vresize(v, 0);
+struct vector *vclear(struct vector *v) {
+  return vresize(v, 0);
 }
 
 void vfree(struct vector *v) {

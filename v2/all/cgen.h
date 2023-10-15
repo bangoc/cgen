@@ -169,11 +169,11 @@ struct vector *vsetfv(struct vector *v, gtype_free_t fv);
 gtype *varr(struct vector *v);
 gtype *vref(struct vector *v, long i);
 long vidx(struct vector *v, gtype *elem_ptr);
-void vreserve(struct vector *v, long newcap);
-void vresize(struct vector *v, long newsz);
-void vappend(struct vector *v, gtype val);
-void vremove(struct vector *v, long idx);
-void vclear(struct vector *v);
+struct vector *vreserve(struct vector *v, long newcap);
+struct vector *vresize(struct vector *v, long newsz);
+struct vector *vappend(struct vector *v, gtype val);
+struct vector *vremove(struct vector *v, long idx);
+struct vector *vclear(struct vector *v);
 void vfree(struct vector *v);
 void vfill(struct vector *v, gtype value);
 void gfree_vec(gtype *value);
@@ -222,15 +222,15 @@ int sempty(struct slist *list);
 struct slist *sappend(struct slist *list, gtype data);
 struct slist *sprepend(struct slist *list, gtype data);
 struct slist *sdfront(struct slist *list);
-#define straverse(cur,list) \
-  for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
-              cur = (gtype*)((struct snode*)cur)->next)
 struct slist *spush(struct slist *list, gtype elem);
 struct slist *spop(struct slist *list);
 gtype *stop(struct slist *list);
 struct slist *senque(struct slist *list, gtype elem);
 struct slist *sdeque(struct slist *list);
 gtype *speek(struct slist *list);
+#define straverse(cur,list) \
+  for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
+              cur = (gtype*)((struct snode*)cur)->next)
 #endif
 
 /***** ./cont/dlist.h *****/

@@ -1,5 +1,10 @@
 /* (C) 2021 Nguyen Ba Ngoc (bangoc) */
 
+/** @file
+ * @brief Các thành phần nền tảng: Biểu thức tính toán con trỏ,
+ * đo thời gian thực thi, v.v..
+ */
+
 #ifndef BASE_CORE_H_
 #define BASE_CORE_H_
 
