@@ -12,34 +12,33 @@
 #include <stdlib.h>
 
 /**
- * \headerfile "all.h"
  * Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu được triển khai.
- * ::gtype có thể thay thế cho 1 nhóm kiểu dữ liệu.
+ * \ref gtype có thể thay thế cho 1 nhóm kiểu dữ liệu.
  */
 typedef union generic_type {
   long l;
   double d;
   char *s;
   void *v;
-  union generic_type *g;
-  struct gsllist *gsl;
+  struct dlist *dl;
+  struct slist *sl;
   struct vector *vec;
-  struct rbmtree *rbm;
+  struct treemap *tm;
 } gtype;
 
-#define gtype_zero (gtype_l(0l))
+#define GZERO (GLONG(0l))
 
-#define gtype_value(type, val) ((gtype){.type = (val)})
-#define gtype_l(value) gtype_value(l, value)
-#define gtype_d(value) gtype_value(d, value)
-#define gtype_s(value) gtype_value(s, (char *)value)
-#define gtype_v(value) gtype_value(v, value)
-#define gtype_g(value) gtype_value(g, value)
-#define gtype_gsl(value) gtype_value(gsl, value)
-#define gtype_gvec(value) gtype_value(gvec, value)
-#define gtype_rbm(value) gtype_value(rbm, value)
+#define GTYPE(type, val) ((gtype){.type = (val)})
+#define GLONG(value) GTYPE(l, value)
+#define GDOUBLE(value) GTYPE(d, value)
+#define GSTR(value) GTYPE(s, (char *)value)
+#define GVOID(value) GTYPE(v, value)
+#define GDLIST(value) GTYPE(dl, value)
+#define GSLIST(value) GTYPE(sl, value)
+#define GVECTOR(value) GTYPE(vec, value)
+#define GTREEMAP(value) GTYPE(tm, value)
 
-#define gtype_swap(v1, v2) \
+#define GSWAP(v1, v2) \
   do { \
     gtype _tmp = (v1); \
     (v1) = (v2); \

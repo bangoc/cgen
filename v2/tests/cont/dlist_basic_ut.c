@@ -5,12 +5,12 @@
 
 int main() {
   struct dlist *list = dcreate();
-  dappend(list, gtype_l(10));
-  dappend(list, gtype_l(30));
-  dappend(list, gtype_l(50));
-  dprepend(list, gtype_l(20));
-  dprepend(list, gtype_l(40));
-  dprepend(list, gtype_l(60));
+  dappend(list, GLONG(10));
+  dappend(list, GLONG(30));
+  dappend(list, GLONG(50));
+  dprepend(list, GLONG(20));
+  dprepend(list, GLONG(40));
+  dprepend(list, GLONG(60));
   CHECK_MSG(dsize(list) == 6, "size == 6");
   CHECK_MSG(dfront(list)->l == 60, "front 60");
   CHECK_MSG(dfront(ddfront(list))->l == 40, "front 40");

@@ -1,7 +1,8 @@
 /* (C) Nguyen Ba Ngoc, 2021 */
 
 /** @file
- * @brief Khai báo giao diện danh sách móc nối kép với các phần tử \ref gtype
+ * @brief Khai báo giao diện danh sách móc nối kép với 
+ * các phần tử \ref gtype
  */
 
 

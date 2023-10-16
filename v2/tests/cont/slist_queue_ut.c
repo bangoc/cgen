@@ -5,11 +5,11 @@
 
 int main() {
   struct slist *list = screate();
-  senque(list, gtype_l(20));
-  senque(list, gtype_l(30));
-  senque(list, gtype_l(50));
-  senque(list, gtype_l(60));
-  senque(list, gtype_l(90));
+  senque(list, GLONG(20));
+  senque(list, GLONG(30));
+  senque(list, GLONG(50));
+  senque(list, GLONG(60));
+  senque(list, GLONG(90));
   CHECK_MSG(ssize(list) == 5, "length == 5");
   CHECK_MSG(speek(list)->l == 20, "first == 20");
   CHECK_MSG(speek(sdeque(list))->l == 30, "first == 30");

@@ -6,11 +6,11 @@
 
 int main() {
   struct slist *list = screate();
-  spush(list, gtype_l(1));
-  spush(list, gtype_l(3));
-  spush(list, gtype_l(5));
-  spush(list, gtype_l(7));
-  spush(list, gtype_l(9));
+  spush(list, GLONG(1));
+  spush(list, GLONG(3));
+  spush(list, GLONG(5));
+  spush(list, GLONG(7));
+  spush(list, GLONG(9));
   CHECK_MSG(ssize(list) == 5, "length == 5");
   CHECK_MSG(stop(list)->l == 9, "top == 9");
   CHECK_MSG(stop(spop(list))->l == 7, "top == 7");
