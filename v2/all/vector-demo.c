@@ -6,10 +6,10 @@ int main() {
   int n;
   scanf("%d", &n);
   struct vector *v = vcreate(n);
-  vtraverse(cur, v) {
+  VTRAVERSE(cur, v) {
     scanf("%ld", (long*)cur);
   }
-  vrtraverse(cur, v) {
+  VRTRAVERSE(cur, v) {
     printf("%ld ", cur->l);
   }
   printf("\n");

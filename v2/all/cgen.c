@@ -44,7 +44,7 @@ long vidx(struct vector *v, gtype *elem_ptr) {
 struct vector *vreserve(struct vector *v, long newcap) {
   if (newcap < v->sz) {
 #ifdef CGEN_DEBUG
-    flog("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->sz);
+    FLOG("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->sz);
 #endif
     return NULL;
   }
@@ -78,7 +78,7 @@ struct vector *vremove(struct vector *v, long idx) {
   long _sz = vsize(v);
   if ((idx) >= _sz || (idx) < 0) {
 #if defined CGEN_DEBUG
-  flog("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld",
+  FLOG("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld",
       _sz, (long)idx);
 #endif
     return NULL;
@@ -100,7 +100,7 @@ void vfree(struct vector *v) {
   free(v);
 }
 void vfill(struct vector *v, gtype value) {
-  vtraverse(_cur, v) {
+  VTRAVERSE(_cur, v) {
     *_cur = (value);
   }
 }
@@ -110,7 +110,7 @@ void gfree_vec(gtype *value) {
 struct vector *vcreate(long sz) {
   if (sz < 0) {
 #ifdef CGEN_DEBUG
-    flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
+    FLOG("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
 #endif
     return NULL;
   }
@@ -155,7 +155,7 @@ struct vector *vpush(struct vector *v, gtype val) {
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Xóa ngăn xếp không hợp lệ.");
+    FLOG("Xóa ngăn xếp không hợp lệ.");
 #endif
     return NULL;
   }
@@ -165,7 +165,7 @@ struct vector *vpop(struct vector *v) {
 gtype *vtop(struct vector *v) {
   if (!v || v->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Đọc đỉnh của ngăn xếp không hợp lệ.");
+    FLOG("Đọc đỉnh của ngăn xếp không hợp lệ.");
 #endif
     return NULL;
   }
@@ -185,14 +185,14 @@ struct queue {
 struct queue *qcreate(long cap) {
   if (cap < 0) {
 #ifdef CGEN_DEBUG
-    flog("Tạo hàng đợi với tham số không hợp lệ.");
+    FLOG("Tạo hàng đợi với tham số không hợp lệ.");
 #endif
     return NULL;
   }
   struct queue *q = malloc(sizeof(struct queue));
   if (!q) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ cho hàng đợi.");
+    FLOG("Lỗi cấp phát bộ nhớ cho hàng đợi.");
 #endif
     return NULL;
   }
@@ -204,7 +204,7 @@ struct queue *qcreate(long cap) {
   q->elems = calloc(cap, sizeof(gtype));
   if (!q->elems) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ cho các phần tử");
+    FLOG("Lỗi cấp phát bộ nhớ cho các phần tử");
 #endif
     free(q);
     return NULL;
@@ -214,7 +214,7 @@ struct queue *qcreate(long cap) {
 struct queue *qenque(struct queue* q, gtype val) {
   if (!q) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi tham số NULL");
+    FLOG("Lỗi tham số NULL");
 #endif
   }
   if (q->sz == 0) {
@@ -233,7 +233,7 @@ struct queue *qenque(struct queue* q, gtype val) {
   void *tmp = realloc(q->elems, q->cap * sizeof(gtype));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi mở rộng bộ nhớ.");
+    FLOG("Lỗi mở rộng bộ nhớ.");
 #endif
     return NULL;
   }
@@ -252,7 +252,7 @@ struct queue *qenque(struct queue* q, gtype val) {
 struct queue *qdeque(struct queue *q) {
   if (!q || q->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Hàng đợi không hợp lệ");
+    FLOG("Hàng đợi không hợp lệ");
 #endif
     return NULL;
   }
@@ -266,7 +266,7 @@ struct queue *qdeque(struct queue *q) {
 gtype *qpeek(struct queue *q) {
   if (!q || q->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Hàng đợi không hợp lệ");
+    FLOG("Hàng đợi không hợp lệ");
 #endif
     return NULL;
   }
@@ -313,7 +313,7 @@ struct snode *snode(gtype data) {
   struct snode *tmp = malloc(sizeof(struct snode));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ tạo nút.");
+    FLOG("Lỗi cấp phát bộ nhớ tạo nút.");
 #endif
     return NULL;
   }
@@ -325,7 +325,7 @@ struct slist *screate() {
   struct slist *tmp = malloc(sizeof(struct slist));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ tạo danh sách.");
+    FLOG("Lỗi cấp phát bộ nhớ tạo danh sách.");
 #endif
     return NULL;
   }
@@ -350,7 +350,7 @@ struct slist *sappend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi tạo nút");
+    FLOG("Lỗi tạo nút");
 #endif
     return NULL;
   }
@@ -367,7 +367,7 @@ struct slist *sprepend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi tạo nút");
+    FLOG("Lỗi tạo nút");
 #endif
     return NULL;
   }
@@ -383,7 +383,7 @@ struct slist *sprepend(struct slist *list, gtype data) {
 struct slist *sdfront(struct slist *list) {
   if (!list || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Xóa đầu danh sách không hợp lệ.");
+    FLOG("Xóa đầu danh sách không hợp lệ.");
 #endif
     return NULL;
   }
@@ -421,7 +421,7 @@ struct slist *spop(struct slist *list) {
 gtype *stop(struct slist *list) {
   if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Ngăn xếp ở trạng thái không hợp lệ.");
+    FLOG("Ngăn xếp ở trạng thái không hợp lệ.");
 #endif
     return NULL;
   }
@@ -436,7 +436,7 @@ struct slist *sdeque(struct slist *list) {
 gtype *speek(struct slist *list) {
   if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("hàng đợi ở trạng thái không hợp lệ.");
+    FLOG("hàng đợi ở trạng thái không hợp lệ.");
 #endif
     return NULL;
   }
@@ -460,7 +460,7 @@ struct dnode *dnode(gtype data) {
   struct dnode *tmp = malloc(sizeof(struct dnode));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Không thể cấp phát bộ nhớ cho nút.");
+    FLOG("Không thể cấp phát bộ nhớ cho nút.");
 #endif
     return NULL;
   }
@@ -472,7 +472,7 @@ struct dlist *dcreate() {
   struct dlist *tmp = malloc(sizeof(struct dlist));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Không thể cấp phát bộ nhớ cho danh sách.");
+    FLOG("Không thể cấp phát bộ nhớ cho danh sách.");
 #endif
     return NULL;
   }
@@ -508,13 +508,13 @@ struct dlist *dappend(struct dlist *list, gtype elem) {
   struct dnode *nn = dnode(elem);
   if (!nn) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif
     return NULL;
   }
   if (!list) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif
     return NULL;
   }
@@ -532,13 +532,13 @@ struct dlist *dprepend(struct dlist *list, gtype elem) {
   struct dnode *nn = dnode(elem);
   if (!nn) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif
     return NULL;
   }
   if (!list) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif
     return NULL;
   }
@@ -555,7 +555,7 @@ struct dlist *dprepend(struct dlist *list, gtype elem) {
 struct dlist *ddfront(struct dlist *list) {
   if (!list || dempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi danh sách không hợp lệ.");
+    FLOG("Lỗi danh sách không hợp lệ.");
 #endif
     return NULL;
   }
@@ -577,7 +577,7 @@ struct dlist *ddfront(struct dlist *list) {
 struct dlist *ddback(struct dlist *list) {
   if (!list || dempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi danh sách không hợp lệ.");
+    FLOG("Lỗi danh sách không hợp lệ.");
 #endif
     return NULL;
   }
@@ -602,7 +602,7 @@ gtype_free_t dfv(struct dlist *list) {
 struct dlist *dsetfv(struct dlist *list, gtype_free_t fv) {
   if (!list) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi danh sách không hợp lệ.");
+    FLOG("Lỗi danh sách không hợp lệ.");
 #endif
     return NULL;
   }

@@ -9,15 +9,8 @@
 #define BASE_CORE_H_ 
 #include <stddef.h>
 #include <time.h>
-#define container_of(ptr,type,member) \
+#define CONTAINER_OF(ptr,type,member) \
   ((type *)((void*)(ptr) - offsetof(type, member)))
-#define New(TYPE,...) TYPE ## _create( __VA_ARGS__ )
-#define Delete(TYPE,ptr) do \
-        { \
-          TYPE ## _free(ptr); \
-                            \
-        } \
-        while(0)
 #define BENCH(NAME,ITER,...) do { \
         double _sum = 0, _start, _stop; \
         for (int _i = 0; _i < (ITER); ++_i) { \
@@ -144,7 +137,7 @@ static void gtype_free_v(gtype v) {
 #include <stdio.h>
 #include <string.h>
 #define FLOG_VERSION "1.0.0";
-#define flog(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
+#define FLOG(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
 static inline void _flog(const char *file, int line, const char *fmt, ...) {
   const char *filename = (strrchr(file, '/') ? strrchr(file, '/') + 1 : file);
   fprintf(stderr, "%s:%d: ", filename, line);
@@ -183,13 +176,13 @@ gtype *vtop(struct vector *v);
 struct vector *vcreate(long sz);
 struct vector *vclone(struct vector *v);
 int vsameas(struct vector *v1, struct vector *v2);
-#define vtraverse(cur,v) \
+#define VTRAVERSE(cur,v) \
   for (gtype *cur = varr(v), *end = varr(v) + vsize(v); \
     cur < end; ++cur)
-#define vrtraverse(cur,v) \
+#define VRTRAVERSE(cur,v) \
   for (gtype *beg = varr(v), *cur = varr(v) + vsize(v) -1; \
     cur >= beg; --cur)
-#define vsort(v,cmp) \
+#define VSORT(v,cmp) \
   qsort(varr(v), vsize(v), sizeof(gtype), cmp)
 #endif
 
@@ -228,7 +221,7 @@ gtype *stop(struct slist *list);
 struct slist *senque(struct slist *list, gtype elem);
 struct slist *sdeque(struct slist *list);
 gtype *speek(struct slist *list);
-#define straverse(cur,list) \
+#define STRAVERSE(cur,list) \
   for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
               cur = (gtype*)((struct snode*)cur)->next)
 #endif
@@ -249,10 +242,10 @@ struct dlist *ddfront(struct dlist *list);
 struct dlist *ddback(struct dlist *list);
 gtype_free_t dfv(struct dlist *list);
 struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
-#define dtraverse(cur,list) \
+#define DTRAVERSE(cur,list) \
   for (gtype *cur = (gtype*)((list)->front); cur != NULL; \
               cur = (gtype*)((struct dnode *)cur->next))
-#define drtraverse(cur,list) \
+#define DRTRAVERSE(cur,list) \
   for (gtype *cur = (gtype*)((list)->back); cur != NULL; \
               cur = (gtype*)((struct dnode *)cur->prev))
 #endif

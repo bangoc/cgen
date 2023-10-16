@@ -31,14 +31,14 @@ struct queue {
 struct queue *qcreate(long cap) {
   if (cap < 0) {
 #ifdef CGEN_DEBUG
-    flog("Tạo hàng đợi với tham số không hợp lệ.");
+    FLOG("Tạo hàng đợi với tham số không hợp lệ.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
   struct queue *q = malloc(sizeof(struct queue));
   if (!q) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ cho hàng đợi.");
+    FLOG("Lỗi cấp phát bộ nhớ cho hàng đợi.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -50,7 +50,7 @@ struct queue *qcreate(long cap) {
   q->elems = calloc(cap, sizeof(gtype));
   if (!q->elems) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ cho các phần tử");
+    FLOG("Lỗi cấp phát bộ nhớ cho các phần tử");
 #endif  // CGEN_DEBUG
     free(q);
     return NULL;
@@ -61,7 +61,7 @@ struct queue *qcreate(long cap) {
 struct queue *qenque(struct queue* q, gtype val) {
   if (!q) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi tham số NULL");
+    FLOG("Lỗi tham số NULL");
 #endif  // CGEN_DEBUG
   }
 
@@ -86,7 +86,7 @@ struct queue *qenque(struct queue* q, gtype val) {
   void *tmp = realloc(q->elems, q->cap * sizeof(gtype));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi mở rộng bộ nhớ.");
+    FLOG("Lỗi mở rộng bộ nhớ.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -107,7 +107,7 @@ struct queue *qenque(struct queue* q, gtype val) {
 struct queue *qdeque(struct queue *q) {
   if (!q || q->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Hàng đợi không hợp lệ");
+    FLOG("Hàng đợi không hợp lệ");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -122,7 +122,7 @@ struct queue *qdeque(struct queue *q) {
 gtype *qpeek(struct queue *q) {
   if (!q || q->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Hàng đợi không hợp lệ");
+    FLOG("Hàng đợi không hợp lệ");
 #endif  // CGEN_DEBUG
     return NULL;
   }

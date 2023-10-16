@@ -9,11 +9,11 @@ int main() {
   for (int i = 0; i < 10; ++i) {
     vref(v, i)->l = i;
   }
-  vtraverse(cur, v) {
+  VTRAVERSE(cur, v) {
     printf(" %ld", cur->l);
   }
   printf("\n");
-  vrtraverse(cur, v) {
+  VRTRAVERSE(cur, v) {
     printf(" %ld", cur->l);
   }
   printf("\n");

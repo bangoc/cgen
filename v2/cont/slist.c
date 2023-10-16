@@ -23,7 +23,7 @@ struct snode {
  * slist = single linked list
  * 
  * Các Macros:
- *    #straverse(cur, list) - Duyệt các phần tử của list theo chiều thuận.
+ *    #STRAVERSE(cur, list) - Duyệt các phần tử của list theo chiều thuận.
  *    Biến cur sẽ có kiểu \ref gtype *
  */
 struct slist {
@@ -44,7 +44,7 @@ struct snode *snode(gtype data) {
   struct snode *tmp = malloc(sizeof(struct snode));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ tạo nút.");
+    FLOG("Lỗi cấp phát bộ nhớ tạo nút.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -57,7 +57,7 @@ struct slist *screate() {
   struct slist *tmp = malloc(sizeof(struct slist));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi cấp phát bộ nhớ tạo danh sách.");
+    FLOG("Lỗi cấp phát bộ nhớ tạo danh sách.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -87,7 +87,7 @@ struct slist *sappend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi tạo nút");
+    FLOG("Lỗi tạo nút");
 #endif  // CGEN_DEBUG   
     return NULL; 
   }
@@ -105,7 +105,7 @@ struct slist *sprepend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi tạo nút");
+    FLOG("Lỗi tạo nút");
 #endif  // CGEN_DEBUG   
     return NULL; 
   }
@@ -122,7 +122,7 @@ struct slist *sprepend(struct slist *list, gtype data) {
 struct slist *sdfront(struct slist *list) {
   if (!list || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Xóa đầu danh sách không hợp lệ.");
+    FLOG("Xóa đầu danh sách không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }
@@ -166,7 +166,7 @@ struct slist *spop(struct slist *list) {
 gtype *stop(struct slist *list) {
   if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Ngăn xếp ở trạng thái không hợp lệ.");
+    FLOG("Ngăn xếp ở trạng thái không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }
@@ -184,7 +184,7 @@ struct slist *sdeque(struct slist *list) {
 gtype *speek(struct slist *list) {
   if (list == NULL || sempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("hàng đợi ở trạng thái không hợp lệ.");
+    FLOG("hàng đợi ở trạng thái không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }

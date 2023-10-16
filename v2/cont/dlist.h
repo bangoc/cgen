@@ -145,7 +145,7 @@ struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
  * @param cur Con trỏ tới phần tử hiện hành của tiến trình duyệt.
  * @param list Con trỏ tới danh sách.
  */
-#define dtraverse(cur, list) \
+#define DTRAVERSE(cur, list) \
   for (gtype *cur = (gtype*)((list)->front); cur != NULL; \
               cur = (gtype*)((struct dnode *)cur->next))
 
@@ -155,7 +155,7 @@ struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
  * @param cur Con trỏ tới phần tử hiện hành của tiến trình duyệt.
  * @param list Con trỏ tới danh sách.
  */
-#define drtraverse(cur, list) \
+#define DRTRAVERSE(cur, list) \
   for (gtype *cur = (gtype*)((list)->back); cur != NULL; \
               cur = (gtype*)((struct dnode *)cur->prev))
 

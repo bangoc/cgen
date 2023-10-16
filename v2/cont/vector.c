@@ -12,11 +12,11 @@
  * Các macros điều khiển và vấn tin 
  *   (v phải có kiểu con trỏ \ref vector *):
  *
- *   #vsort(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
+ *   #VSORT(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
  *
- *   #vtraverse(cur, v) - Duyệt các phần tử của v theo chiều thuận.
+ *   #VTRAVERSE(cur, v) - Duyệt các phần tử của v theo chiều thuận.
  * 
- *   #vrtraverse(cur, v) - Duyệt các phần tử của v theo chiều ngược.
+ *   #VRTRAVERSE(cur, v) - Duyệt các phần tử của v theo chiều ngược.
  * 
  */
 struct vector {
@@ -84,7 +84,7 @@ long vidx(struct vector *v, gtype *elem_ptr) {
 struct vector *vreserve(struct vector *v, long newcap) {
   if (newcap < v->sz) {
 #ifdef CGEN_DEBUG
-    flog("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->sz);
+    FLOG("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->sz);
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -121,7 +121,7 @@ struct vector *vremove(struct vector *v, long idx) {
   long _sz = vsize(v);
   if ((idx) >= _sz || (idx) < 0) {
 #if defined CGEN_DEBUG
-  flog("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", 
+  FLOG("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", 
       _sz, (long)idx);
 #endif  // CGEN_DEBUG
     return NULL;
@@ -146,7 +146,7 @@ void vfree(struct vector *v) {
 }
 
 void vfill(struct vector *v, gtype value) {
-  vtraverse(_cur, v) { 
+  VTRAVERSE(_cur, v) { 
     *_cur = (value); 
   } 
 }
@@ -158,7 +158,7 @@ void gfree_vec(gtype *value) {
 struct vector *vcreate(long sz) {
   if (sz < 0) {
 #ifdef CGEN_DEBUG
-    flog("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
+    FLOG("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -209,7 +209,7 @@ struct vector *vpush(struct vector *v, gtype val) {
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Xóa ngăn xếp không hợp lệ.");
+    FLOG("Xóa ngăn xếp không hợp lệ.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -220,7 +220,7 @@ struct vector *vpop(struct vector *v) {
 gtype *vtop(struct vector *v) {
   if (!v || v->sz == 0) {
 #ifdef CGEN_DEBUG
-    flog("Đọc đỉnh của ngăn xếp không hợp lệ.");
+    FLOG("Đọc đỉnh của ngăn xếp không hợp lệ.");
 #endif  // CGEN_DEBUG
     return NULL;
   }

@@ -11,17 +11,8 @@
 #include <stddef.h>
 #include <time.h>
 
-#define container_of(ptr, type, member) \
+#define CONTAINER_OF(ptr, type, member) \
   ((type *)((void*)(ptr) - offsetof(type, member)))
-
-#define New(TYPE, ...) TYPE ## _create(  __VA_ARGS__ )
-
-#define Delete(TYPE, ptr) do        \
-        {       \
-          TYPE ## _free(ptr); \
-          /*free(ptr);*/    \
-        }       \
-        while(0)
 
 #define BENCH(NAME, ITER, ...)    do { \
         double _sum = 0, _start, _stop; \

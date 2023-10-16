@@ -278,7 +278,7 @@ int vsameas(struct vector *v1, struct vector *v2);
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
  * có kiểu \ref gtype *.
  */
-#define vtraverse(cur, v) \
+#define VTRAVERSE(cur, v) \
   for (gtype *cur = varr(v), *end = varr(v) + vsize(v); \
     cur < end; ++cur)
 
@@ -289,7 +289,7 @@ int vsameas(struct vector *v1, struct vector *v2);
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
  * có kiểu \ref gtype *.
  */
-#define vrtraverse(cur, v) \
+#define VRTRAVERSE(cur, v) \
   for (gtype *beg = varr(v), *cur = varr(v) + vsize(v) -1; \
     cur >= beg; --cur)
 
@@ -301,7 +301,7 @@ int vsameas(struct vector *v1, struct vector *v2);
  * Đối số cmp có kiểu như hàm so sánh cho qsort (stdlib.h).
  * Có nguyên mẫu là int (*)(const void *, const void *);
  */
-#define vsort(v, cmp) \
+#define VSORT(v, cmp) \
   qsort(varr(v), vsize(v), sizeof(gtype), cmp)
 
 #endif  // CONT__VECTOR_H_

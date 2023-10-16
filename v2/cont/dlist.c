@@ -25,10 +25,10 @@ struct dnode {
  * 
  * Các macros:
  * 
- *   #dtraverse(cur, list) - Duyệt các phần tử của list theo chiều thuận.
+ *   #DTRAVERSE(cur, list) - Duyệt các phần tử của list theo chiều thuận.
  *   Biến cur sẽ có kiểu \ref gtype *
  * 
- *   #drtraverse(cur, list) - Duyệt các phần tử của list theo chiều ngược.
+ *   #DRTRAVERSE(cur, list) - Duyệt các phần tử của list theo chiều ngược.
  *   Biến cur sẽ có kiểu \ref gtype *
  */
 struct dlist {
@@ -49,7 +49,7 @@ struct dnode *dnode(gtype data) {
   struct dnode *tmp = malloc(sizeof(struct dnode));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Không thể cấp phát bộ nhớ cho nút.");
+    FLOG("Không thể cấp phát bộ nhớ cho nút.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
@@ -62,7 +62,7 @@ struct dlist *dcreate() {
   struct dlist *tmp = malloc(sizeof(struct dlist));
   if (!tmp) {
 #ifdef CGEN_DEBUG
-    flog("Không thể cấp phát bộ nhớ cho danh sách.");
+    FLOG("Không thể cấp phát bộ nhớ cho danh sách.");
 #endif  // CGEN_DEBUG
     return NULL;
   }  
@@ -105,13 +105,13 @@ struct dlist *dappend(struct dlist *list, gtype elem) {
   struct dnode *nn = dnode(elem);
   if (!nn) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif  // CGEN_DEBUG  
     return NULL;  
   }
   if (!list) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif  // CGEN_DEBUG  
     return NULL;     
   }
@@ -130,13 +130,13 @@ struct dlist *dprepend(struct dlist *list, gtype elem) {
   struct dnode *nn = dnode(elem);
   if (!nn) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif  // CGEN_DEBUG  
     return NULL;  
   }
   if (!list) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi không thể tạo nút.");
+    FLOG("Lỗi không thể tạo nút.");
 #endif  // CGEN_DEBUG  
     return NULL;     
   }
@@ -154,7 +154,7 @@ struct dlist *dprepend(struct dlist *list, gtype elem) {
 struct dlist *ddfront(struct dlist *list) {
   if (!list || dempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi danh sách không hợp lệ.");
+    FLOG("Lỗi danh sách không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }
@@ -177,7 +177,7 @@ struct dlist *ddfront(struct dlist *list) {
 struct dlist *ddback(struct dlist *list) {
   if (!list || dempty(list)) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi danh sách không hợp lệ.");
+    FLOG("Lỗi danh sách không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;
   }
@@ -204,7 +204,7 @@ gtype_free_t dfv(struct dlist *list) {
 struct dlist *dsetfv(struct dlist *list, gtype_free_t fv) {
   if (!list) {
 #ifdef CGEN_DEBUG
-    flog("Lỗi danh sách không hợp lệ.");
+    FLOG("Lỗi danh sách không hợp lệ.");
 #endif  // CGEN_DEBUG    
     return NULL;    
   }

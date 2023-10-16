@@ -15,7 +15,7 @@
 
 #define FLOG_VERSION "1.0.0";
 
-#define flog(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
+#define FLOG(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
 static inline void _flog(const char *file, int line, const char *fmt, ...) {
   const char *filename = (strrchr(file, '/') ? strrchr(file, '/') + 1 : file);
   fprintf(stderr, "%s:%d: ", filename, line);

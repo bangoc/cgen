@@ -184,7 +184,7 @@ gtype *speek(struct slist *list);
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
  * có kiểu ::gtype *.
  */
-#define straverse(cur, list) \
+#define STRAVERSE(cur, list) \
   for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
               cur = (gtype*)((struct snode*)cur)->next)
 
