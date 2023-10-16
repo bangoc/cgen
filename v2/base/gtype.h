@@ -49,15 +49,15 @@ typedef int (*gtype_cmp_t)(const gtype*, const gtype*);
 typedef void (*gtype_free_t)(gtype*);
 typedef int (*gtype_print_t)(const gtype*);
 
-static inline int gtype_cmp_l(const gtype *v1, const gtype *v2) {
+static inline int glong_cmp(const gtype *v1, const gtype *v2) {
   return v1->l - v2->l;
 }
 
-static inline int gtype_rcmp_l(const gtype *v1, const gtype *v2) {
+static inline int glong_rcmp(const gtype *v1, const gtype *v2) {
   return v2->l - v1->l;
 }
 
-static inline int gtype_cmp_d(const gtype *v1, const gtype *v2) {
+static inline int gdouble_cmp(const gtype *v1, const gtype *v2) {
   if (v1->d < v2->d) {
     return -1;
   } else if (v1->d > v2->d) {
@@ -66,7 +66,7 @@ static inline int gtype_cmp_d(const gtype *v1, const gtype *v2) {
   return 0;
 }
 
-static inline int gtype_rcmp_d(const gtype *v1, const gtype *v2) {
+static inline int gdouble_rcmp(const gtype *v1, const gtype *v2) {
   if (v2->d < v1->d) {
     return -1;
   } else if (v2->d > v1->d) {
@@ -87,11 +87,11 @@ static inline int gtype_rcmp_d(const gtype *v1, const gtype *v2) {
  *
  * \memberof generic_type
  */
-static inline int gtype_cmp_s(const gtype *v1, const gtype *v2) {
+static inline int gstr_cmp(const gtype *v1, const gtype *v2) {
   return strcmp(v1->s, v2->s);
 }
 
-static inline int gtype_rcmp_s(const gtype *v1, const gtype *v2) {
+static inline int gstr_rcmp(const gtype *v1, const gtype *v2) {
   return strcmp(v2->s, v1->s);
 }
 

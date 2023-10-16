@@ -25,7 +25,10 @@ enum tmcolors {
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
 struct tmnode {
-  /** Khóa */
+  /** 
+   * Khóa, bắt buộc là phần tử đầu tiên để có thể
+   * ép kiểu thành con trỏ tới nút và ngược lại.
+   */
   gtype key;
 
   /** Giá trị */
@@ -43,6 +46,8 @@ struct tmnode {
   /** Nút đỉnh */
   struct tmnode *top;
 };
+
+#define TMCOLOR(n) ((n)? (n)->color: TMBLACK)
 
 struct tmnode *tmnode(const gtype key, const gtype value) {
   struct tmnode *tmp = malloc(sizeof(struct tmnode));
@@ -155,7 +160,7 @@ static void tfixup(struct treemap *t, struct tmnode *n, struct tmnode *p) {
     if (p == p->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
       struct tmnode *_u = p->top->right; \
-      if (_u->color == TMRED) { \
+      if (TMCOLOR(_u) == TMRED) { \
         /*     GP                gp  <- n mới                      \
              p   u  thành>>>   P    U                              \
           ->n <-     có thể vi phạm tính chất 4 nếu gp->top là đỏ,\
@@ -171,7 +176,7 @@ static void tfixup(struct treemap *t, struct tmnode *n, struct tmnode *p) {
           n->color = TMBLACK; \
           break; \
         } \
-        if (p->color == TMBLACK) { \
+        if (TMCOLOR(p) == TMBLACK) { \
           /* Các tính chất đã được thỏa mãn */ \
           break; \
         } \
@@ -238,12 +243,65 @@ gtype *tinsert(struct treemap *t, const gtype key, const gtype value) {
     }
   }
   *loc = nn;
+  nn->top = top;
   if (top == NULL) {
     nn->color = TMBLACK;
-  } else if (top->color == TMRED) {
+  } else if (TMCOLOR(top) == TMRED) {
     /* Vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4
        có thể bị vi phạm). */
     tfixup(t, nn, top);
   }
+  ++t->size;
   return NULL;
+}
+
+long tsize(const struct treemap *t) {
+  return t->size;
+}
+
+gtype *tvalue(gtype *key) {
+  return &((struct tmnode*)key)->value;
+}
+
+struct tmnode *tlmost(struct tmnode *n) {
+  if (!n) {
+    return NULL;
+  }
+  while (n->left != NULL) {
+    n = n->left;
+  }
+  return n;
+}
+
+struct tmnode *troot(struct treemap *t) {
+  return t->root;
+}
+
+struct tmnode *tnextin(struct tmnode *x)  {
+  if (!x) {
+    return NULL;
+  }
+  struct tmnode *y;
+  if (x->right != NULL) {
+    y = tlmost(x->right);
+  } else {
+    y = x->top;
+    while (y != NULL && x == y->right) {
+      x = y;
+      y = y->top;
+    }
+  }
+  return y;
+}
+
+void tnext(gtype **k, gtype **v) {
+  struct tmnode *n = (struct tmnode *)(*k);
+  struct tmnode *tmp = tnextin(n);
+  if (!tmp) {
+    *k = NULL;
+    *v = NULL;
+    return;
+  }
+  *k = &tmp->key;
+  *v = &tmp->value;
 }
