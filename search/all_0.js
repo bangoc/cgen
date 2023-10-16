@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['cap_0',['cap',['../structvector.html#a60bb5d97b9bc8d0904b85078774a158f',1,'vector']]],
-  ['cgen_1',['cgen',['../index.html',1,'']]],
-  ['core_2eh_2',['core.h',['../core_8h.html',1,'']]]
+  ['back_0',['back',['../structdlist.html#aeb2a0a6c95186e350077dc87d2973fcb',1,'dlist::back()'],['../structslist.html#a07a9e8feb8123371aec9667241723b6f',1,'slist::back()']]]
 ];

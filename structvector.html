@@ -141,7 +141,7 @@ các trường đữ liệu</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
 <div class="textblock"><p>Cấu trúc biểu diễn vec-tơ của các giá trị <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>.</p>
-<p>Các macros điều khiển và vấn tin (v phải có kiểu con trỏ ::struct vector *):</p>
+<p>Các macros điều khiển và vấn tin (v phải có kiểu con trỏ <a class="el" href="structvector.html">vector</a> *):</p>
 <p><a class="el" href="vector_8h.html#ac5dc316186813023ee14fbada22f0a4f">vsort(v, cmp)</a> - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.</p>
 <p><a class="el" href="vector_8h.html#ae4c143d83554bedb9bffa62600d18a59">vtraverse(cur, v)</a> - Duyệt các phần tử của v theo chiều thuận.</p>
 <p><a class="el" href="vector_8h.html#a3a26c51a41589968735e8f9a15c7b161">vrtraverse(cur, v)</a> - Duyệt các phần tử của v theo chiều ngược. </p>
@@ -199,7 +199,7 @@ các trường đữ liệu</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Giao diện mảng của vec-tơ. </p><div class="fragment"><div class="line"><a class="code" href="structvector.html#a4e70a0309db4687307b1b4522855562d">varr</a>(v)[0];  \\ Phần tử đầu tiên của vec-tơ v.</div>
-<div class="ttc" id="astructvector_html_a4e70a0309db4687307b1b4522855562d"><div class="ttname"><a href="structvector.html#a4e70a0309db4687307b1b4522855562d">vector::varr</a></div><div class="ttdeci">gtype * varr(struct vector *v)</div><div class="ttdef"><b>Definition:</b> vector.c:78</div></div>
+<div class="ttc" id="astructvector_html_a4e70a0309db4687307b1b4522855562d"><div class="ttname"><a href="structvector.html#a4e70a0309db4687307b1b4522855562d">vector::varr</a></div><div class="ttdeci">gtype * varr(struct vector *v)</div><div class="ttdef"><b>Definition:</b> vector.c:72</div></div>
 </div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *). </td></tr>
@@ -456,8 +456,8 @@ các trường đữ liệu</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Chỉ số của phần tử trong vec-tơ. </p><div class="fragment"><div class="line"><a class="code" href="structvector.html#a6331e3fd5c97466f0854a3f5d353c8ba">vidx</a>(<a class="code" href="structvector.html#adb61383f1b4bec36ad08144e886ac6b5">vref</a>(v, i)) == i;</div>
-<div class="ttc" id="astructvector_html_a6331e3fd5c97466f0854a3f5d353c8ba"><div class="ttname"><a href="structvector.html#a6331e3fd5c97466f0854a3f5d353c8ba">vector::vidx</a></div><div class="ttdeci">long vidx(struct vector *v, gtype *elem_ptr)</div><div class="ttdef"><b>Definition:</b> vector.c:86</div></div>
-<div class="ttc" id="astructvector_html_adb61383f1b4bec36ad08144e886ac6b5"><div class="ttname"><a href="structvector.html#adb61383f1b4bec36ad08144e886ac6b5">vector::vref</a></div><div class="ttdeci">gtype * vref(struct vector *v, long i)</div><div class="ttdef"><b>Definition:</b> vector.c:82</div></div>
+<div class="ttc" id="astructvector_html_a6331e3fd5c97466f0854a3f5d353c8ba"><div class="ttname"><a href="structvector.html#a6331e3fd5c97466f0854a3f5d353c8ba">vector::vidx</a></div><div class="ttdeci">long vidx(struct vector *v, gtype *elem_ptr)</div><div class="ttdef"><b>Definition:</b> vector.c:80</div></div>
+<div class="ttc" id="astructvector_html_adb61383f1b4bec36ad08144e886ac6b5"><div class="ttname"><a href="structvector.html#adb61383f1b4bec36ad08144e886ac6b5">vector::vref</a></div><div class="ttdeci">gtype * vref(struct vector *v, long i)</div><div class="ttdef"><b>Definition:</b> vector.c:76</div></div>
 </div><!-- fragment --><dl class="params"><dt>Các tham số</dt><dd>
   <table class="params">
     <tr><td class="paramname">v</td><td>Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *). </td></tr>
@@ -874,7 +874,7 @@ các trường đữ liệu</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được bỏ qua. </p>
+<p>Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> trong mảng. Nếu != <code>NULL</code> thì hàm được gọi khi giải phóng bộ nhớ của vec-tơ, nếu ngược lại (== <code>NULL</code>) thì các gọi hàm được bỏ qua. </p>
 
 </div>
 </div>

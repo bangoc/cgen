@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['flog_2eh_22',['flog.h',['../flog_8h.html',1,'']]],
-  ['fv_23',['fv',['../structvector.html#a0e6faf9df2e3afd61d4482fb7def7196',1,'vector']]]
+  ['elems_23',['elems',['../structqueue.html#ae60c565d7596bf2a74d0bcc01ea622ba',1,'queue::elems()'],['../structvector.html#ae60c565d7596bf2a74d0bcc01ea622ba',1,'vector::elems()']]]
 ];

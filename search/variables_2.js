@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fv_145',['fv',['../structvector.html#a0e6faf9df2e3afd61d4482fb7def7196',1,'vector']]]
+  ['data_181',['data',['../structdnode.html#af52ba8f186711c3012d67edcd8740891',1,'dnode::data()'],['../structsnode.html#af52ba8f186711c3012d67edcd8740891',1,'snode::data()']]]
 ];

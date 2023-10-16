@@ -1,20 +1,13 @@
 var searchData=
 [
-  ['sappend_104',['sappend',['../structslist.html#acf699bb2a1f37c09c40cb525da87f0d5',1,'slist']]],
-  ['sback_105',['sback',['../structslist.html#aa336364a51205ca2c7d4b02382af9e6e',1,'slist']]],
-  ['screate_106',['screate',['../structslist.html#a4b2939da788ad2ced784a80426e73c99',1,'slist']]],
-  ['sdeque_107',['sdeque',['../structslist.html#a913e0eab531727c1ff9c5470d4d18ee3',1,'slist']]],
-  ['sdfront_108',['sdfront',['../structslist.html#a9321841ec725cb79824e1dfe104e9a5d',1,'slist']]],
-  ['sempty_109',['sempty',['../structslist.html#aedaa583a72563fc158b293c2da09a6b4',1,'slist']]],
-  ['senque_110',['senque',['../structslist.html#a41adac9c161989ee6089307373eedacc',1,'slist']]],
-  ['sfree_111',['sfree',['../structslist.html#aae7f225d52c999c6663bf10835ff1737',1,'slist']]],
-  ['sfront_112',['sfront',['../structslist.html#ae454360a698a02563d741c70f70b5fcd',1,'slist']]],
-  ['sfv_113',['sfv',['../structslist.html#a965dc8c5dfc2b749a0e652f08f5c975f',1,'slist']]],
-  ['speek_114',['speek',['../structslist.html#a1d6f7fb4fc6d18702fbb14d6af131f59',1,'slist']]],
-  ['spop_115',['spop',['../structslist.html#a3372d74842597d207edc34dbd5afd180',1,'slist']]],
-  ['sprepend_116',['sprepend',['../structslist.html#a580c086063247a4947920f3f0615032a',1,'slist']]],
-  ['spush_117',['spush',['../structslist.html#af45d54c6421f53fb6414782ef25fb0ad',1,'slist']]],
-  ['ssetfv_118',['ssetfv',['../structslist.html#a6f425ffa1a46b815f0ea6c91ecd84566',1,'slist']]],
-  ['ssize_119',['ssize',['../structslist.html#af354fc4376b338a89d1319acf96af17e',1,'slist']]],
-  ['stop_120',['stop',['../structslist.html#abdc32c13e9545b2669b6c5d49d1d4875',1,'slist']]]
+  ['qcreate_130',['qcreate',['../structqueue.html#a2c06c4ed6534ace4c21440f0c4c3abfd',1,'queue']]],
+  ['qdeque_131',['qdeque',['../queue_8h.html#add02f9cfd5dec4a613513dad630bf88e',1,'queue.c']]],
+  ['qempty_132',['qempty',['../structqueue.html#a2b5ece276889dc2cd37b498f39c4da29',1,'queue']]],
+  ['qenque_133',['qenque',['../structqueue.html#a799b3dc6b0b88128d793b17640c1a1ce',1,'queue']]],
+  ['qfree_134',['qfree',['../structqueue.html#a1081c991481891d0cc6a1a59da877db9',1,'queue']]],
+  ['qfv_135',['qfv',['../structqueue.html#a9671baee54c0ef25a5107958e5eb05af',1,'queue']]],
+  ['qnext_136',['qnext',['../structqueue.html#a81a59366dec1de4948969d9ff372cf21',1,'queue']]],
+  ['qpeek_137',['qpeek',['../structqueue.html#a197af8682835a43c565515b0e5cb9cdf',1,'queue']]],
+  ['qsetfv_138',['qsetfv',['../structqueue.html#a5395b1528fcb2f41fc092d4176abcf58',1,'queue']]],
+  ['qsize_139',['qsize',['../structqueue.html#a4a32de0d5da681967f59806e82901f6a',1,'queue']]]
 ];

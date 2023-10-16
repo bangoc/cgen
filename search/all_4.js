@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['generic_5ftype_24',['generic_type',['../uniongeneric__type.html',1,'']]],
-  ['gtype_25',['gtype',['../gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46',1,'gtype.h']]],
-  ['gtype_2eh_26',['gtype.h',['../gtype_8h.html',1,'']]],
-  ['gtype_5fcmp_5fs_27',['gtype_cmp_s',['../uniongeneric__type.html#a132c9b9c4c55890f18989a8ce9a8609a',1,'generic_type']]]
+  ['fi_24',['fi',['../structqueue.html#a21f0cec08882da123f3f449b92306885',1,'queue']]],
+  ['flog_2eh_25',['flog.h',['../flog_8h.html',1,'']]],
+  ['front_26',['front',['../structdlist.html#a5607bdbad6d2fa1e4e1b81723c0ea8fc',1,'dlist::front()'],['../structslist.html#aceb34dcaa6a344feb84fbace29cde6a6',1,'slist::front()']]],
+  ['fv_27',['fv',['../structdlist.html#a0e6faf9df2e3afd61d4482fb7def7196',1,'dlist::fv()'],['../structqueue.html#a0e6faf9df2e3afd61d4482fb7def7196',1,'queue::fv()'],['../structslist.html#a0e6faf9df2e3afd61d4482fb7def7196',1,'slist::fv()'],['../structvector.html#a0e6faf9df2e3afd61d4482fb7def7196',1,'vector::fv()']]]
 ];

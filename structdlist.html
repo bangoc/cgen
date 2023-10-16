@@ -63,7 +63,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Các hàm thành viên Public</a>  </div>
+<a href="#pub-methods">Các hàm thành viên Public</a> &#124;
+<a href="#pub-attribs">các trường đữ liệu</a>  </div>
   <div class="headertitle">
 <div class="title">dlist Struct Tham chiếu</div>  </div>
 </div><!--header-->
@@ -106,11 +107,25 @@ Các hàm thành viên Public</h2></td></tr>
 <tr class="separator:aeff20ced97c5fb0058e1b3137746893a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b7ffc008612348b4eb8acc2009eba0"><td class="memItemLeft" align="right" valign="top">gtype_free_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#a20b7ffc008612348b4eb8acc2009eba0">dfv</a> (struct <a class="el" href="structdlist.html">dlist</a> *list)</td></tr>
 <tr class="separator:a20b7ffc008612348b4eb8acc2009eba0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fb4f87b1020a5a8b4eae79b5795686e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdlist.html">dlist</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#a6fb4f87b1020a5a8b4eae79b5795686e">dsetfv</a> (struct <a class="el" href="structdlist.html">dlist</a> *list, gtype_free_t fv)</td></tr>
+<tr class="memitem:a6fb4f87b1020a5a8b4eae79b5795686e"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdlist.html">dlist</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#a6fb4f87b1020a5a8b4eae79b5795686e">dsetfv</a> (struct <a class="el" href="structdlist.html">dlist</a> *list, gtype_free_t <a class="el" href="structdlist.html#a0e6faf9df2e3afd61d4482fb7def7196">fv</a>)</td></tr>
 <tr class="separator:a6fb4f87b1020a5a8b4eae79b5795686e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+các trường đữ liệu</h2></td></tr>
+<tr class="memitem:a5607bdbad6d2fa1e4e1b81723c0ea8fc"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdnode.html">dnode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#a5607bdbad6d2fa1e4e1b81723c0ea8fc">front</a></td></tr>
+<tr class="separator:a5607bdbad6d2fa1e4e1b81723c0ea8fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2a0a6c95186e350077dc87d2973fcb"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdnode.html">dnode</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#aeb2a0a6c95186e350077dc87d2973fcb">back</a></td></tr>
+<tr class="separator:aeb2a0a6c95186e350077dc87d2973fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2b29049fcd8b777a54a1529743b2390"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#ae2b29049fcd8b777a54a1529743b2390">length</a></td></tr>
+<tr class="separator:ae2b29049fcd8b777a54a1529743b2390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e6faf9df2e3afd61d4482fb7def7196"><td class="memItemLeft" align="right" valign="top">gtype_free_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdlist.html#a0e6faf9df2e3afd61d4482fb7def7196">fv</a></td></tr>
+<tr class="separator:a0e6faf9df2e3afd61d4482fb7def7196"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
-<div class="textblock"><p>Cấu trúc mô tả danh sách móc nối kép dlist = double linked list </p>
+<div class="textblock"><p>Cấu trúc mô tả danh sách móc nối kép dlist = double linked list</p>
+<p>Các macros:</p>
+<p><a class="el" href="dlist_8h.html#aa1e8807ccc498ee8387df3a6cf64cd01">dtraverse(cur, list)</a> - Duyệt các phần tử của list theo chiều thuận. Biến cur sẽ có kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> *</p>
+<p><a class="el" href="dlist_8h.html#a52f3e98a853a5a2b472d10c67d081245">drtraverse(cur, list)</a> - Duyệt các phần tử của list theo chiều ngược. Biến cur sẽ có kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> * </p>
 </div><h2 class="groupheader">Thông tin về hàm thành viên</h2>
 <a id="a5343235481343e15422047af5b0ec479"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5343235481343e15422047af5b0ec479">&#9670;&nbsp;</a></span>dappend()</h2>
@@ -473,6 +488,67 @@ Các hàm thành viên Public</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Giá trị trả về</dt><dd>Độ dài - số lượng phần tử trong danh sách </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Thông tin về trường</h2>
+<a id="aeb2a0a6c95186e350077dc87d2973fcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb2a0a6c95186e350077dc87d2973fcb">&#9670;&nbsp;</a></span>back</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structdnode.html">dnode</a>* back</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Con trỏ tới cuối danh sách </p>
+
+</div>
+</div>
+<a id="a5607bdbad6d2fa1e4e1b81723c0ea8fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5607bdbad6d2fa1e4e1b81723c0ea8fc">&#9670;&nbsp;</a></span>front</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structdnode.html">dnode</a>* front</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Con trỏ tới đầu danh sách </p>
+
+</div>
+</div>
+<a id="a0e6faf9df2e3afd61d4482fb7def7196"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e6faf9df2e3afd61d4482fb7def7196">&#9670;&nbsp;</a></span>fv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">gtype_free_t fv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Con trỏ hàm giải phóng bộ nhớ ngoài của phần tử </p>
+
+</div>
+</div>
+<a id="ae2b29049fcd8b777a54a1529743b2390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2b29049fcd8b777a54a1529743b2390">&#9670;&nbsp;</a></span>length</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long length</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Độ dài (số lượng phần tử trong danh sách) </p>
 
 </div>
 </div>

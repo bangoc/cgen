@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vector_83',['vector',['../structvector.html',1,'']]]
+  ['slist_104',['slist',['../structslist.html',1,'']]],
+  ['snode_105',['snode',['../structsnode.html',1,'']]]
 ];

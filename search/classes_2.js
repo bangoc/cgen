@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['slist_81',['slist',['../structslist.html',1,'']]],
-  ['snode_82',['snode',['../structsnode.html',1,'']]]
+  ['queue_103',['queue',['../structqueue.html',1,'']]]
 ];

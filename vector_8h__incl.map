@@ -1,5 +1,5 @@
 <map id="cont/vector.h" name="cont/vector.h">
-<area shape="rect" id="node1" title="Vec&#45;tơ của các giá trị gtype." alt="" coords="145,5,252,32"/>
+<area shape="rect" id="node1" title="Khai báo giao diện vec&#45;tơ của các giá trị gtype." alt="" coords="145,5,252,32"/>
 <area shape="rect" id="node2" href="$core_8h.html" title="Các thành phần nền tảng: Biểu thức tính toán con trỏ, đo thời gian thực thi, v.v.." alt="" coords="87,80,185,107"/>
 <area shape="rect" id="node5" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="237,80,344,107"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,155,80,181"/>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['k_146',['k',['../structvector.html#ac8a270bda1a0784095b5ec578129c28a',1,'vector']]]
+  ['elems_182',['elems',['../structqueue.html#ae60c565d7596bf2a74d0bcc01ea622ba',1,'queue::elems()'],['../structvector.html#ae60c565d7596bf2a74d0bcc01ea622ba',1,'vector::elems()']]]
 ];

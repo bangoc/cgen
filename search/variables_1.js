@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['elems_144',['elems',['../structvector.html#ae60c565d7596bf2a74d0bcc01ea622ba',1,'vector']]]
+  ['cap_180',['cap',['../structqueue.html#a60bb5d97b9bc8d0904b85078774a158f',1,'queue::cap()'],['../structvector.html#a60bb5d97b9bc8d0904b85078774a158f',1,'vector::cap()']]]
 ];
