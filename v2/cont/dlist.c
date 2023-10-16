@@ -9,19 +9,39 @@
  * dnode = double linked node
  */
 struct dnode {
+  /** Dữ liệu lưu trong nút */
   gtype data;
+
+  /** Con trỏ tới nút liền sau */
   struct dnode *next;
+
+  /** Con trỏ tới nút liền trước */
   struct dnode *prev;
 };
 
 /**
  * Cấu trúc mô tả danh sách móc nối kép
  * dlist = double linked list
+ * 
+ * Các macros:
+ * 
+ *   #dtraverse(cur, list) - Duyệt các phần tử của list theo chiều thuận.
+ *   Biến cur sẽ có kiểu \ref gtype *
+ * 
+ *   #drtraverse(cur, list) - Duyệt các phần tử của list theo chiều ngược.
+ *   Biến cur sẽ có kiểu \ref gtype *
  */
 struct dlist {
+  /** Con trỏ tới đầu danh sách */
   struct dnode *front;
+
+  /** Con trỏ tới cuối danh sách */
   struct dnode *back;
+
+  /** Độ dài (số lượng phần tử trong danh sách) */
   long length;
+
+  /** Con trỏ hàm giải phóng bộ nhớ ngoài của phần tử */
   gtype_free_t fv;
 };
 

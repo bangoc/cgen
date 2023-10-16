@@ -11,18 +11,32 @@
  * snode = single linked node
  */
 struct snode {
+  /** Dữ liệu được lưu trong nút */
   gtype data;
+
+  /** Con trỏ tới phần tử liền sau */
   struct snode *next;
 };
 
 /**
  * Cấu trúc mô tả danh sách móc nối đơn
  * slist = single linked list
+ * 
+ * Các Macros:
+ *    #straverse(cur, list) - Duyệt các phần tử của list theo chiều thuận.
+ *    Biến cur sẽ có kiểu \ref gtype *
  */
 struct slist {
+  /** Con trỏ tới phần tử ở đầu danh sách */
   struct snode *front;
+
+  /** Con trỏ tới phần tử ở cuối danh sách */
   struct snode *back;
+
+  /** Con trỏ hàm giải phóng bộ nhớ động của phần tử */
   gtype_free_t fv;
+
+  /** Độ dài (số lượng phần tử) của danh sách */
   long length;
 };
 

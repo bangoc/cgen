@@ -1,7 +1,10 @@
 #ifndef UTILS_STR_H_
 #define UTILS_STR_H_
 
-/* (C) Nguyen Ba Ngoc 2022 */
+/* (C) Nguyễn Bá Ngọc 2022 */
+/** @file
+ * @brief Các công cụ hỗ trợ xử lý chuỗi ký tự.
+ */
 
 #include "cont/vector.h"
 

@@ -5,12 +5,26 @@
 
 #include <stdlib.h>
 
+/** 
+ * Hàng đợi FIFO dựa trên mảng động 
+ */
 struct queue {
+  /** Kích thước (số lượng phần tử) của hàng đợi */
   long sz;
+
+  /** Dung lượng (số chỗ) được cấp phát cho hàng đợi */
   long cap;
+
+  /** Chỉ số phần tử đầu tiên */
   long fi;
+
+  /** Chỉ số phần tử cuối cùng */
   long la;
+
+  /** Con trỏ hàm giải phóng bộ nhớ phần tử */
   gtype_free_t fv;
+
+  /** Con trỏ tới mảng phần tử */
   gtype *elems;
 };
 

@@ -1,6 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2023 */
 /** @file
- * @brief Triển khai danh sách móc nối đơn với gtype
+ * @brief Khai báo giao diện danh sách móc nối đơn với kiểu \ref gtype
  */
 
 #ifndef CONT_SLIST_H_

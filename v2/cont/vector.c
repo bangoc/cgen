@@ -10,7 +10,7 @@
  * Cấu trúc biểu diễn vec-tơ của các giá trị ::gtype.
  *
  * Các macros điều khiển và vấn tin 
- *   (v phải có kiểu con trỏ ::struct vector *):
+ *   (v phải có kiểu con trỏ \ref vector *):
  *
  *   #vsort(v, cmp) - Sắp xếp các phần tử của v bằng qsort với hàm so sánh cmp.
  *
@@ -20,19 +20,13 @@
  * 
  */
 struct vector {
-  /**
-   * Mảng cơ sở lưu các đối tượng ::gtype
-   */
+  /** Mảng cơ sở lưu các đối tượng  \ref gtype */
   gtype *elems;
 
-  /**
-   * Kích thước: Số lượng phần tử đang có trong vec-tơ
-   */
+  /** Kích thước: Số lượng phần tử đang có trong vec-tơ */
   long sz;
 
-  /**
-   * Dung lượng: Số lượng phần tử đã được cấp phát
-   */
+  /** Dung lượng: Số lượng phần tử đã được cấp phát */
   long cap;
 
   /**
@@ -43,8 +37,8 @@ struct vector {
 
   /**
    * Con trỏ tới hàm giải phóng dữ liệu được quản lý qua đối tượng
-   * ::gtype trong mảng. Nếu != NULL thì hàm được gọi khi giải phóng
-   * bộ nhớ của vec-tơ, nếu ngược lại (== NULL) thì các gọi hàm được
+   * \ref gtype trong mảng. Nếu != \c NULL thì hàm được gọi khi giải phóng
+   * bộ nhớ của vec-tơ, nếu ngược lại (== \c NULL) thì các gọi hàm được
    * bỏ qua.
    */
   gtype_free_t fv;

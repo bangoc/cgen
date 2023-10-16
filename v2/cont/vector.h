@@ -1,7 +1,7 @@
 /* (C) Nguyen Ba Ngoc 2021 */
 
 /** @file
- * @brief Vec-tơ của các giá trị ::gtype.
+ * @brief Khai báo giao diện vec-tơ của các giá trị \ref gtype.
  *
  * Có thể truy cập ngẫu nhiên đến 1 phần tử bất kỳ trong vec-tơ
  * theo chỉ số và sắp xếp nhanh vec-tơ tương tự như mảng.
@@ -276,7 +276,7 @@ int vsameas(struct vector *v1, struct vector *v2);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
- * có kiểu ::gtype *.
+ * có kiểu \ref gtype *.
  */
 #define vtraverse(cur, v) \
   for (gtype *cur = varr(v), *end = varr(v) + vsize(v); \
@@ -287,7 +287,7 @@ int vsameas(struct vector *v1, struct vector *v2);
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @param cur Con trỏ tới phần tự hiện tại của vec-tơ trong vòng lặp,
- * có kiểu ::gtype *.
+ * có kiểu \ref gtype *.
  */
 #define vrtraverse(cur, v) \
   for (gtype *beg = varr(v), *cur = varr(v) + vsize(v) -1; \
@@ -300,7 +300,6 @@ int vsameas(struct vector *v1, struct vector *v2);
  * @param cmp Con trỏ tới hàm so sách các đối tượng ::gtype được lưu trong vec-tơ.
  * Đối số cmp có kiểu như hàm so sánh cho qsort (stdlib.h).
  * Có nguyên mẫu là int (*)(const void *, const void *);
- * @return Không trả về giá trị.
  */
 #define vsort(v, cmp) \
   qsort(varr(v), vsize(v), sizeof(gtype), cmp)

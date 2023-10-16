@@ -2,6 +2,9 @@
 #define CONT_QUEUE_H_
 
 /* (C) Nguyễn Bá Ngọc 2023 */
+/** @file
+ * @brief Khai báo giao diện hàng đợi FIFO dựa trên mảng động của \ref gtype
+ */
 
 #include "base/gtype.h"
 

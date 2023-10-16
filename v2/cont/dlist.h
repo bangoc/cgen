@@ -1,7 +1,7 @@
 /* (C) Nguyen Ba Ngoc, 2021 */
 
 /** @file
- * @brief Triển khai danh sách móc nối kép với các phần tử kiểu gtype
+ * @brief Khai báo giao diện danh sách móc nối kép với các phần tử \ref gtype
  */
 
 
@@ -45,27 +45,6 @@ gtype *dback(struct dlist *list);
  * \memberof dlist
  */
 long dsize(struct dlist *list);
-
-
-/**
- * Cấu trúc duyệt theo chiều thuận.
- * 
- * @param cur Con trỏ tới phần tử hiện hành của tiến trình duyệt.
- * @param list Con trỏ tới danh sách.
- */
-#define dtraverse(cur, list) \
-  for (gtype *cur = (gtype*)((list)->front); cur != NULL; \
-              cur = (gtype*)((struct dnode *)cur->next))
-
-/**
- * Cấu trúc duyệt theo chiều ngược.
- * 
- * @param cur Con trỏ tới phần tử hiện hành của tiến trình duyệt.
- * @param list Con trỏ tới danh sách.
- */
-#define drtraverse(cur, list) \
-  for (gtype *cur = (gtype*)((list)->back); cur != NULL; \
-              cur = (gtype*)((struct dnode *)cur->prev))
 
 /**
  * Kiểm tra danh sách rỗng hay không.
@@ -157,5 +136,26 @@ gtype_free_t dfv(struct dlist *list);
  * \memberof dlist
  */
 struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
+
+
+/**
+ * Cấu trúc duyệt theo chiều thuận.
+ * 
+ * @param cur Con trỏ tới phần tử hiện hành của tiến trình duyệt.
+ * @param list Con trỏ tới danh sách.
+ */
+#define dtraverse(cur, list) \
+  for (gtype *cur = (gtype*)((list)->front); cur != NULL; \
+              cur = (gtype*)((struct dnode *)cur->next))
+
+/**
+ * Cấu trúc duyệt theo chiều ngược.
+ * 
+ * @param cur Con trỏ tới phần tử hiện hành của tiến trình duyệt.
+ * @param list Con trỏ tới danh sách.
+ */
+#define drtraverse(cur, list) \
+  for (gtype *cur = (gtype*)((list)->back); cur != NULL; \
+              cur = (gtype*)((struct dnode *)cur->prev))
 
 #endif  // CONT_DLIST_H_

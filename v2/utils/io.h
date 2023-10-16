@@ -1,6 +1,11 @@
 #ifndef UTILS_IO_H_
 #define UTILS_IO_H_
 
+/* (C) Nguyễn Bá Ngọc 2023 */
+/** @file
+ * @brief Các công cụ hỗ trợ nhập và xuất 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
