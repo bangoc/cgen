@@ -40,6 +40,21 @@ struct tmap *tcreate(gtype_cmp_t cmp);
 gtype *tinsert(struct tmap *t, const gtype key, const gtype value);
 
 /**
+ * Nếu key không có trong t thì bỏ qua, nếu ngược lại thì xóa cặp
+ * khóa & giá trị tương ứng trong t, fk và fv
+ * được gọi nếu != NULL.
+ *
+ * @param t - Con trỏ tới bảng cây.
+ * @param key - Khóa cần xóa.
+ * @return Chuyển tiếp con trỏ t nếu thành công, hoặc NULL
+ * nếu không xóa được (key không có trong bảng).
+ *
+ * \memberof tmap
+ *
+ */
+struct tmap *tremove(struct tmap *t, gtype key);
+
+/**
  * Truy vấn kích thước (số lượng phần tử) của cây.
  * 
  * @param t - Con trỏ tới cây.
