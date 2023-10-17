@@ -4,7 +4,7 @@
 /* (C) Nguyễn Bá Ngọc 2023 */
 /**
  * @file
- * @brief Khai báo giao diện cấu trúc \ref treemap
+ * @brief Khai báo giao diện cấu trúc \ref tmap
  */
 
 /**
@@ -21,9 +21,9 @@
  * @return Trả về con trỏ tới bảng cây nếu thành công, hoặc NULL
  * nếu không thể cấp phát bộ nhớ.
  *
- * \memberof treemap
+ * \memberof tmap
  */
-struct treemap *tcreate(gtype_cmp_t cmp);
+struct tmap *tcreate(gtype_cmp_t cmp);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
@@ -35,25 +35,25 @@ struct treemap *tcreate(gtype_cmp_t cmp);
  * @return Trả về đối tượng trả về con trỏ tới value nếu đã tồn tại,
  * hoặc NULL nếu chưa tồn tại hoặc phát sinh lỗi.
  *
- * \memberof treemap
+ * \memberof tmap
  */
-gtype *tinsert(struct treemap *t, const gtype key, const gtype value);
+gtype *tinsert(struct tmap *t, const gtype key, const gtype value);
 
 /**
  * Truy vấn kích thước (số lượng phần tử) của cây.
  * 
  * @param t - Con trỏ tới cây.
  * @return Số lượng phần tử của cây.
- * \memberof treemap
+ * \memberof tmap
  */
-long tsize(const struct treemap *t);
+long tsize(const struct tmap *t);
 
 /**
  * Truy cập con trỏ tới value khi biết con trỏ tới key
  * 
  * @param key - Con trỏ tới khóa của nút.
  * @return Con trỏ tới giá trị của nút.
- * \memberof treemap
+ * \memberof tmap
  */
 gtype *tvalue(gtype *key);
 
@@ -63,18 +63,18 @@ gtype *tvalue(gtype *key);
  * @param n - Con trỏ tới 1 nút.
  * @return Con trỏ tới nút trái nhất trong cây con
  * với gốc là n.
- * \memberof tmnode
+ * \memberof tnode
  */
-struct tmnode *tlmost(struct tmnode *n);
+struct tnode *tlmost(struct tnode *n);
 
 /**
  * Truy cập gốc của cây
  * 
  * @param t - Con trỏ tới cây.
  * @return Trả về con trỏ tới gốc của cây.
- * \memberof treemap
+ * \memberof tmap
  */
-struct tmnode *troot(struct treemap *t);
+struct tnode *troot(struct tmap *t);
 
 /** 
  * Tìm nút liền sau của x
@@ -82,9 +82,9 @@ struct tmnode *troot(struct treemap *t);
  * @param x - Con trỏ tới 1 nút của cây.
  * @return Trả về con trỏ tới nút liền sau nếu có,
  * hoặc NULL nếu không.
- * \memberof tmnode
+ * \memberof tnode
  */
-struct tmnode *tnextin(struct tmnode *x);
+struct tnode *tnextin(struct *x);
 
 /**
  * Dịch chuyển cặp khóa và giá trị sang vị trí tiếp theo theo chiều
@@ -93,7 +93,7 @@ struct tmnode *tnextin(struct tmnode *x);
  * @param pk - Con trỏ tới con trỏ tới khóa.
  * @param pv - Con trỏ tới con trỏ tới giá trị tương ứng.
  * @return Không trả về giá trị.
- * \memberof treemap
+ * \memberof tmap
  */
 void tnext(gtype **k, gtype **v);
 

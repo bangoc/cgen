@@ -4,7 +4,7 @@
 #include "tests/ut/utils.h"
 
 int main() {
-  struct treemap *tm = tcreate(glong_cmp);
+  struct tmap *tm = tcreate(glong_cmp);
   tinsert(tm, GLONG(1), GDOUBLE(1.11));
   tinsert(tm, GLONG(2), GDOUBLE(1.12));
   tinsert(tm, GLONG(3), GDOUBLE(1.13));

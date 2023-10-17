@@ -47,7 +47,7 @@ typedef union generic_type {
   struct dlist *dl;
   struct slist *sl;
   struct vector *vec;
-  struct treemap *tm;
+  struct tmap *tm;
 } gtype;
 #define GZERO (GLONG(0l))
 #define GTYPE(type,val) ((gtype){.type = (val)})

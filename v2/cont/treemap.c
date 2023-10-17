@@ -5,7 +5,7 @@
  * cây đỏ đen với khóa và giá trị có kiểu \ref gtype.
  */
 
-#include "cont/treemap.h"
+#include "cont/tmap.h"
 
 #include <stdlib.h>
 
@@ -13,18 +13,18 @@
  *  đỏ = 0, đen = 1 như vậy chúng ta có 
  * tổng giá trị mầu = số lượng nút đen
  */
-enum tmcolors {
-  TMRED = 0,
-  TMBLACK = 1
+enum tcolors {
+  RED = 0,
+  BLACK = 1
 };
 
 /**
- * Cấu trúc nút của treemap, là mở rộng nút của cây đỏ đen.
- * tmnode = Red-black tree map node
+ * Cấu trúc nút của tmap, là mở rộng nút của cây đỏ đen.
+ * tnode = Red-black tree map node
  *
  * \private Người sử dụng không cần thao tác với kiểu này.
  */
-struct tmnode {
+struct tnode {
   /** 
    * Khóa, bắt buộc là phần tử đầu tiên để có thể
    * ép kiểu thành con trỏ tới nút và ngược lại.
@@ -35,22 +35,26 @@ struct tmnode {
   gtype value;
   
   /** Mầu của nút */
-  enum tmcolors color;
+  enum tcolors color;
 
   /** Con trỏ tới nút con trái */
-  struct tmnode *left;
+  struct tnode *left;
 
   /** Nút con phải */
-  struct tmnode *right;
+  struct tnode *right;
 
   /** Nút đỉnh */
-  struct tmnode *top;
+  struct tnode *top;
 };
 
-#define TMCOLOR(n) ((n)? (n)->color: TMBLACK)
+#define TCOLOR_OF(n) ((n)? (n)->color: BLACK)
+#define TIS_RED(n) (TCOLOR_OF(n) == RED)
+#define TIS_BLACK(n) (TCOLOR_OF(n) == BLACK)
+#define TPAINT_BLACK(n) ((n)->color = BLACK)
+#define TPAINT_RED(n) ((n)->color = RED)
 
-struct tmnode *tmnode(const gtype key, const gtype value) {
-  struct tmnode *tmp = malloc(sizeof(struct tmnode));
+struct tnode *tnode(const gtype key, const gtype value) {
+  struct tnode *tmp = malloc(sizeof(struct tnode));
   if (!tmp) {
 #ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ cho nút.");
@@ -59,14 +63,14 @@ struct tmnode *tmnode(const gtype key, const gtype value) {
   }
   tmp->key = key;
   tmp->value = value;
-  tmp->color = TMRED;
+  tmp->color = RED;
   tmp->left = tmp->right = tmp->top = NULL;
   return tmp;
 }
 
 /**
- * Cấu trúc điều khiển của bảng cây treemap, được tạo bằng hàm
- * treemap = red black map tree
+ * Cấu trúc điều khiển của bảng cây tmap, được tạo bằng hàm
+ * tmap = red black map tree
  *
  * rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
  *
@@ -74,21 +78,21 @@ struct tmnode *tmnode(const gtype key, const gtype value) {
  * 
  *   #TMTRAVERSE(k, v, map) - Duyệt tuần tự các cặp trong map.
  */
-struct treemap {
-  struct tmnode *root;
+struct tmap {
+  struct tnode *root;
   gtype_cmp_t cmp;
   gtype_free_t fk, fv;
   long size;
 };
 
-struct treemap *tcreate(gtype_cmp_t cmp) {
+struct tmap *tcreate(gtype_cmp_t cmp) {
   if (!cmp) {
 #ifdef CGEN_DEBUG
     FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh.");
     return NULL;
 #endif  // CGEN_DEBUG    
   }
-  struct treemap *t = malloc(sizeof(struct treemap));
+  struct tmap *t = malloc(sizeof(struct tmap));
   if (!t) {
 #ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ.");
@@ -119,7 +123,7 @@ struct treemap *tcreate(gtype_cmp_t cmp) {
 /* x là trục xoay */
 #define TROTATE(t, x, right, left) \
   do { \
-    struct tmnode *_y = (x)->right; \
+    struct tnode *_y = (x)->right; \
     (x)->right = _y->left; \
     if (_y->left != NULL) { \
       _y->left->top = (x); \
@@ -130,7 +134,7 @@ struct treemap *tcreate(gtype_cmp_t cmp) {
     (x)->top = _y; \
   } while (0)
 
-static void tfixup(struct treemap *t, struct tmnode *n, struct tmnode *p) {
+static void tfixup(struct tmap *t, struct tnode *n, struct tnode *p) {
   /*
    * Các biến:
    * t - con trỏ tới cây (tree)
@@ -159,24 +163,24 @@ static void tfixup(struct treemap *t, struct tmnode *n, struct tmnode *p) {
 
     if (p == p->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
-      struct tmnode *_u = p->top->right; \
-      if (TMCOLOR(_u) == TMRED) { \
+      struct tnode *_u = p->top->right; \
+      if (TCOLOR_OF(_u) == RED) { \
         /*     GP                gp  <- n mới                      \
              p   u  thành>>>   P    U                              \
           ->n <-     có thể vi phạm tính chất 4 nếu gp->top là đỏ,\
                      n có thể là con trái hoặc con phải của p     \
          */ \
-        p->color = TMBLACK; \
-        _u->color = TMBLACK; \
-        p->top->color = TMRED; \
+        p->color = BLACK; \
+        _u->color = BLACK; \
+        p->top->color = RED; \
         n = p->top; \
         p = n->top; \
         if (p == NULL) { \
           /* n là gốc của cây */ \
-          n->color = TMBLACK; \
+          n->color = BLACK; \
           break; \
         } \
-        if (TMCOLOR(p) == TMBLACK) { \
+        if (TCOLOR_OF(p) == BLACK) { \
           /* Các tính chất đã được thỏa mãn */ \
           break; \
         } \
@@ -201,8 +205,8 @@ static void tfixup(struct treemap *t, struct tmnode *n, struct tmnode *p) {
                     U                                 \
             Thỏa mãn các tính chất của cây đỏ đen     \
          */                                           \
-        p->color = TMBLACK; \
-        p->top->color = TMRED; \
+        p->color = BLACK; \
+        p->top->color = RED; \
         p = p->top; \
         TROTATE(t, p, left, right); \
         break;  \
@@ -215,17 +219,17 @@ static void tfixup(struct treemap *t, struct tmnode *n, struct tmnode *p) {
   }
 }
 
-gtype *tinsert(struct treemap *t, const gtype key, const gtype value) {
-  struct tmnode *nn = tmnode(key, value);
+gtype *tinsert(struct tmap *t, const gtype key, const gtype value) {
+  struct tnode *nn = tnode(key, value);
   if (!nn) {
 #ifdef CGEN_DEBUG
     FLOG("Không thể tạo nút mới.");
     return NULL;
 #endif  // CGEN_DEBUG    
   }
-  struct tmnode *top = NULL;
-  struct tmnode *x = t->root;
-  struct tmnode **loc = &t->root;
+  struct tnode *top = NULL;
+  struct tnode *x = t->root;
+  struct tnode **loc = &t->root;
   int rl = 0;
   while (x) {
     rl = t->cmp(&key, &x->key);
@@ -245,8 +249,8 @@ gtype *tinsert(struct treemap *t, const gtype key, const gtype value) {
   *loc = nn;
   nn->top = top;
   if (top == NULL) {
-    nn->color = TMBLACK;
-  } else if (TMCOLOR(top) == TMRED) {
+    nn->color = BLACK;
+  } else if (TCOLOR_OF(top) == RED) {
     /* Vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4
        có thể bị vi phạm). */
     tfixup(t, nn, top);
@@ -255,15 +259,15 @@ gtype *tinsert(struct treemap *t, const gtype key, const gtype value) {
   return NULL;
 }
 
-long tsize(const struct treemap *t) {
+long tsize(const struct tmap *t) {
   return t->size;
 }
 
 gtype *tvalue(gtype *key) {
-  return &((struct tmnode*)key)->value;
+  return &((struct tnode*)key)->value;
 }
 
-struct tmnode *tlmost(struct tmnode *n) {
+struct tnode *tlmost(struct tnode *n) {
   if (!n) {
     return NULL;
   }
@@ -273,15 +277,15 @@ struct tmnode *tlmost(struct tmnode *n) {
   return n;
 }
 
-struct tmnode *troot(struct treemap *t) {
+struct tnode *troot(struct tmap *t) {
   return t->root;
 }
 
-struct tmnode *tnextin(struct tmnode *x)  {
+struct tnode *tnextin(struct tnode *x)  {
   if (!x) {
     return NULL;
   }
-  struct tmnode *y;
+  struct tnode *y;
   if (x->right != NULL) {
     y = tlmost(x->right);
   } else {
@@ -295,8 +299,8 @@ struct tmnode *tnextin(struct tmnode *x)  {
 }
 
 void tnext(gtype **k, gtype **v) {
-  struct tmnode *n = (struct tmnode *)(*k);
-  struct tmnode *tmp = tnextin(n);
+  struct tnode *n = (struct tnode *)(*k);
+  struct tnode *tmp = tnextin(n);
   if (!tmp) {
     *k = NULL;
     *v = NULL;
