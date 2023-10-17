@@ -38,6 +38,8 @@ add_test(NAME SListQueueUt COMMAND slist_queue_ut)
 add_test(NAME DListBasicUT COMMAND dlist_basic_ut)
 add_test(NAME TMInsertTraverseFailOverUT 
          COMMAND tm_insert_traverse_failover_ut)
+add_test(NAME TMRandInsertDeleteUT 
+         COMMAND tm_rand_insert_delete_ut 10000 1000)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)

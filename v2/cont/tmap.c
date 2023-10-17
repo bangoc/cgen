@@ -524,12 +524,58 @@ gtype *tvalue(gtype *key) {
 
 struct tnode *tlmost(struct tnode *n) {
   if (!n) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");    
+#endif  // CGEN_DEBUG    
     return NULL;
   }
   while (n->left != NULL) {
     n = n->left;
   }
   return n;
+}
+
+struct tnode *tleft_deepest(struct tnode *n) {
+  if (!n) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");    
+#endif  // CGEN_DEBUG
+    return NULL;
+  }
+  for (;;) {
+    if (n->left) {
+      n = n->left;
+    } else if (n->right) {
+      n = n->right;
+    } else {
+      break;
+    }
+  }
+  return n;
+}
+
+void tnext_lrn(gtype **pk, gtype **pv) {
+  struct tnode *node = (struct tnode *)(*pk);
+  if (!node) {
+#ifdef CGEN_DEBUG 
+    FLOG("Tham số không hợp lệ");
+#endif  // CGEN_DEBUG   
+    return;
+  }
+  struct tnode *top = node->top;
+
+  /* Nếu chúng ta đang ở nút, thì chúng ta đã xử lý các nút con */
+  if (top && node == top->left && top->right) {
+    /* Nếu chúng ta đang ở đỉnh của nút trái thì di chuyển 
+     sang nhánh phải và sau đó đến tận cùng phía trái */
+    *pk = (gtype*)tleft_deepest(top->right);
+    *pv = tvalue(*pk);
+    return;
+  }
+  /* Ngược lại chúng ta đang ở đỉnh của nút phải,
+     và nút đỉnh phải là nút tiếp theo.*/
+  *pk = (gtype*)top;
+  *pv = tvalue(*pk);
 }
 
 struct tnode *troot(struct tmap *t) {
@@ -563,4 +609,58 @@ void tnext(gtype **k, gtype **v) {
   }
   *k = &tmp->key;
   *v = &tmp->value;
+}
+
+int tis_red(struct tnode *n) {
+  return TIS_RED(n);
+}
+
+int tis_black(struct tnode *n) {
+  return TIS_BLACK(n);
+}
+
+struct tnode *tleft_of(struct tnode *n) {
+  if (!n) {
+#ifndef CGEN_DEBUG
+    FLOG("Nút không hợp lệ.");
+    return NULL;
+#endif  // CGEN_DEBUG    
+  }
+  return n->left;
+}
+
+struct tnode *tright_of(struct tnode *n) {
+  if (!n) {
+#ifndef CGEN_DEBUG
+    FLOG("Nút không hợp lệ.");
+    return NULL;
+#endif  // CGEN_DEBUG    
+  }
+  return n->right;
+}
+
+struct tnode *ttop_of(struct tnode *n) {
+  if (!n) {
+#ifndef CGEN_DEBUG
+    FLOG("Nút không hợp lệ.");
+    return NULL;
+#endif  // CGEN_DEBUG    
+  }
+  return n->top;
+}
+
+void tfree(struct tmap *t) {
+  struct tnode *tmp = NULL;
+  TTRAVERSE_LRN(k, v, t) {
+    free(tmp);
+    tmp = (struct tnode *)k;
+    if (t->fk) {
+      t->fk(k);
+    }
+    if (t->fv) {
+      t->fv(k);
+    }
+  }
+  free(tmp);
+  free(t);
 }
