@@ -54,18 +54,18 @@ struct tnode {
 #define TPAINT_RED(n) ((n)->color = RED)
 
 struct tnode *tnode(const gtype key, const gtype value) {
-  struct tnode *tmp = malloc(sizeof(struct tnode));
-  if (!tmp) {
+  struct tnode *nn = malloc(sizeof(struct tnode));
+  if (!nn) {
 #ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ cho nút.");
 #endif  // CGEN_DEBUG
     return NULL;
   }
-  tmp->key = key;
-  tmp->value = value;
-  tmp->color = RED;
-  tmp->left = tmp->right = tmp->top = NULL;
-  return tmp;
+  nn->key = key;
+  nn->value = value;
+  TPAINT_RED(nn);
+  nn->left = nn->right = nn->top = NULL;
+  return nn;
 }
 
 /**
@@ -164,23 +164,23 @@ static void tfixup(struct tmap *t, struct tnode *n, struct tnode *p) {
     if (p == p->top->left) {
 #define IMPL_INSERT_FIXUP(left, right) \
       struct tnode *_u = p->top->right; \
-      if (TCOLOR_OF(_u) == RED) { \
+      if (TIS_RED(_u)) { \
         /*     GP                gp  <- n mới                      \
              p   u  thành>>>   P    U                              \
           ->n <-     có thể vi phạm tính chất 4 nếu gp->top là đỏ,\
                      n có thể là con trái hoặc con phải của p     \
          */ \
-        p->color = BLACK; \
-        _u->color = BLACK; \
-        p->top->color = RED; \
+        TPAINT_BLACK(p); \
+        TPAINT_BLACK(_u); \
+        TPAINT_RED(p->top); \
         n = p->top; \
         p = n->top; \
         if (p == NULL) { \
           /* n là gốc của cây */ \
-          n->color = BLACK; \
+          TPAINT_BLACK(n); \
           break; \
         } \
-        if (TCOLOR_OF(p) == BLACK) { \
+        if (TIS_BLACK(p)) { \
           /* Các tính chất đã được thỏa mãn */ \
           break; \
         } \
@@ -205,8 +205,8 @@ static void tfixup(struct tmap *t, struct tnode *n, struct tnode *p) {
                     U                                 \
             Thỏa mãn các tính chất của cây đỏ đen     \
          */                                           \
-        p->color = BLACK; \
-        p->top->color = RED; \
+        TPAINT_BLACK(p); \
+        TPAINT_RED(p->top); \
         p = p->top; \
         TROTATE(t, p, left, right); \
         break;  \
@@ -250,7 +250,7 @@ gtype *tinsert(struct tmap *t, const gtype key, const gtype value) {
   nn->top = top;
   if (top == NULL) {
     nn->color = BLACK;
-  } else if (TCOLOR_OF(top) == RED) {
+  } else if (TIS_RED(top)) {
     /* Vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4
        có thể bị vi phạm). */
     tfixup(t, nn, top);

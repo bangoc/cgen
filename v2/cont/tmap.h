@@ -84,7 +84,7 @@ struct tnode *troot(struct tmap *t);
  * hoặc NULL nếu không.
  * \memberof tnode
  */
-struct tnode *tnextin(struct *x);
+struct tnode *tnextin(struct tnode *x);
 
 /**
  * Dịch chuyển cặp khóa và giá trị sang vị trí tiếp theo theo chiều
