@@ -14,5 +14,8 @@ int main() {
   TTRAVERSE(k, v, tm) {
     printf("%ld:%f\n", k->l, v->d);
   }
+  TRTRAVERSE(k, v, tm) {
+    printf("%ld:%f\n", k->l, v->d);
+  }
   TEST_OK();
 }

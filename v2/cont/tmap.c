@@ -518,19 +518,36 @@ long tsize(const struct tmap *t) {
   return t->size;
 }
 
-gtype *tvalue(gtype *key) {
-  return &((struct tnode*)key)->value;
+gtype *tkey_of(struct tnode *n) {
+  return &n->key;
 }
 
-struct tnode *tlmost(struct tnode *n) {
+gtype *tvalue_of(struct tnode *n) {
+  return &n->value;
+}
+
+struct tnode *tleft_most(struct tnode *n) {
   if (!n) {
 #ifdef CGEN_DEBUG
     FLOG("Tham số nút không hợp lệ.");    
 #endif  // CGEN_DEBUG    
     return NULL;
   }
-  while (n->left != NULL) {
+  while (n->left) {
     n = n->left;
+  }
+  return n;
+}
+
+struct tnode *tright_most(struct tnode *n) {
+  if (!n) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");    
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  while (n->right) {
+    n = n->right;
   }
   return n;
 }
@@ -554,7 +571,21 @@ struct tnode *tleft_deepest(struct tnode *n) {
   return n;
 }
 
-void tnext_lrn(gtype **pk, gtype **pv) {
+struct tnode *tnext_lrn(struct tnode *x) {
+  struct tnode *top = x->top;
+
+  /* Nếu chúng ta đang ở nút, thì chúng ta đã xử lý các nút con */
+  if (top && x == top->left && top->right) {
+    /* Nếu chúng ta đang ở đỉnh của nút trái thì di chuyển 
+     sang nhánh phải và sau đó đến tận cùng phía trái */
+    return tleft_deepest(top->right);
+  }
+  /* Ngược lại chúng ta đang ở đỉnh của nút phải,
+     và nút đỉnh phải là nút tiếp theo.*/
+  return top;
+}
+
+void tnextkv_lrn(gtype **pk, gtype **pv) {
   struct tnode *node = (struct tnode *)(*pk);
   if (!node) {
 #ifdef CGEN_DEBUG 
@@ -562,46 +593,70 @@ void tnext_lrn(gtype **pk, gtype **pv) {
 #endif  // CGEN_DEBUG   
     return;
   }
-  struct tnode *top = node->top;
-
-  /* Nếu chúng ta đang ở nút, thì chúng ta đã xử lý các nút con */
-  if (top && node == top->left && top->right) {
-    /* Nếu chúng ta đang ở đỉnh của nút trái thì di chuyển 
-     sang nhánh phải và sau đó đến tận cùng phía trái */
-    *pk = (gtype*)tleft_deepest(top->right);
-    *pv = tvalue(*pk);
+  struct tnode *tmp = tnext_lrn(node);
+  if (tmp) {
+    *pk = &tmp->key;
+    *pv = &tmp->value;
     return;
   }
-  /* Ngược lại chúng ta đang ở đỉnh của nút phải,
-     và nút đỉnh phải là nút tiếp theo.*/
-  *pk = (gtype*)top;
-  *pv = tvalue(*pk);
+  *pk = *pv = NULL;
 }
 
 struct tnode *troot(struct tmap *t) {
   return t->root;
 }
 
-struct tnode *tnextin(struct tnode *x)  {
+struct tnode *tnext_lnr(struct tnode *x) {
   if (!x) {
+#ifdef CGEN_DEBUG
+    FLOG("Truy cập nút NULL");
+#endif  // CGEN_DEBUG    
     return NULL;
   }
-  struct tnode *y;
-  if (x->right != NULL) {
-    y = tlmost(x->right);
-  } else {
-    y = x->top;
-    while (y != NULL && x == y->right) {
-      x = y;
-      y = y->top;
-    }
+  if (x->right) {
+    return tleft_most(x->right);
   }
-  return y;
+  struct tnode *top = x->top;
+  while (top != NULL && x == top->right) {
+    x = top;
+    top = x->top;
+  }
+  return top;
 }
 
-void tnext(gtype **k, gtype **v) {
+void tnextkv_lnr(gtype **k, gtype **v) {
   struct tnode *n = (struct tnode *)(*k);
-  struct tnode *tmp = tnextin(n);
+  struct tnode *tmp = tnext_lnr(n);
+  if (!tmp) {
+    *k = NULL;
+    *v = NULL;
+    return;
+  }
+  *k = &tmp->key;
+  *v = &tmp->value;
+}
+
+struct tnode *tprev_lnr(struct tnode *x) {
+  if (!x) {
+#ifdef CGEN_DEBUG
+    FLOG("Truy cập nút NULL");
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  if (x->left) {
+    return tright_most(x->left);
+  }
+  struct tnode *top = x->top;
+  while (top != NULL && x == top->left) {
+    x = top;
+    top = x->top;
+  }
+  return top;
+}
+
+void tprevkv_lnr(gtype **k, gtype **v) {
+  struct tnode *n = (struct tnode *)(*k);
+  struct tnode *tmp = tprev_lnr(n);
   if (!tmp) {
     *k = NULL;
     *v = NULL;
