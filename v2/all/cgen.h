@@ -94,7 +94,11 @@ static int gtype_print_s(const gtype value) {
 #include <stdio.h>
 #include <string.h>
 #define FLOG_VERSION "1.0.0";
-#define FLOG(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
+#ifdef CGEN_DEBUG
+  #define FLOG(...) _flog(__FILE__, __LINE__, __VA_ARGS__)
+#else
+  #define FLOG(...)
+#endif
 static inline void _flog(const char *file, int line, const char *fmt, ...) {
   const char *filename = (strrchr(file, '/') ? strrchr(file, '/') + 1 : file);
   fprintf(stderr, "%s:%d: ", filename, line);

@@ -5,6 +5,7 @@
  * cây đỏ đen với khóa và giá trị có kiểu \ref gtype.
  */
 
+#include "base/flog.h"
 #include "cont/tmap.h"
 
 #include <stdlib.h>
@@ -21,8 +22,6 @@ enum tcolors {
 /**
  * Cấu trúc nút của tmap, là mở rộng nút của cây đỏ đen.
  * tnode = Red-black tree map node
- *
- * \private Người sử dụng không cần thao tác với kiểu này.
  */
 struct tnode {
   /** 
@@ -58,9 +57,7 @@ struct tnode {
 struct tnode *tnode(const gtype key, const gtype value) {
   struct tnode *nn = malloc(sizeof(struct tnode));
   if (!nn) {
-#ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ cho nút.");
-#endif  // CGEN_DEBUG
     return NULL;
   }
   nn->key = key;
@@ -89,17 +86,13 @@ struct tmap {
 
 struct tmap *tcreate(gcmp_fn_t cmp) {
   if (!cmp) {
-#ifdef CGEN_DEBUG
     FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh.");
     return NULL;
-#endif  // CGEN_DEBUG    
   }
   struct tmap *t = malloc(sizeof(struct tmap));
   if (!t) {
-#ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ.");
     return NULL;
-#endif  // CGEN_DEBUG
   }
   t->root = NULL;
   t->cmp = cmp;
@@ -224,10 +217,8 @@ static void tput_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
 gtype *tput(struct tmap *t, const gtype key, const gtype value) {
   struct tnode *nn = tnode(key, value);
   if (!nn) {
-#ifdef CGEN_DEBUG
     FLOG("Không thể tạo nút mới.");
     return NULL;
-#endif  // CGEN_DEBUG    
   }
   struct tnode *top = NULL;
   struct tnode *x = t->root;
@@ -263,9 +254,7 @@ gtype *tput(struct tmap *t, const gtype key, const gtype value) {
 
 struct tnode *tsearch(struct tmap *t, gtype key) {
   if (!t || !t->cmp) {
-#ifdef CGEN_DEBUG
     FLOG("Bảng ở trạng thái không hợp lệ.");
-#endif  // CGEN_DEBUG
     return NULL;    
   }
   int rl;
@@ -536,9 +525,7 @@ gtype *tvalue_of(struct tnode *n) {
 
 struct tnode *tleft_most(struct tnode *n) {
   if (!n) {
-#ifdef CGEN_DEBUG
-    FLOG("Tham số nút không hợp lệ.");    
-#endif  // CGEN_DEBUG    
+    FLOG("Tham số nút không hợp lệ.");
     return NULL;
   }
   while (n->left) {
@@ -549,9 +536,7 @@ struct tnode *tleft_most(struct tnode *n) {
 
 struct tnode *tright_most(struct tnode *n) {
   if (!n) {
-#ifdef CGEN_DEBUG
-    FLOG("Tham số nút không hợp lệ.");    
-#endif  // CGEN_DEBUG    
+    FLOG("Tham số nút không hợp lệ.");
     return NULL;
   }
   while (n->right) {
@@ -562,9 +547,7 @@ struct tnode *tright_most(struct tnode *n) {
 
 struct tnode *tleft_deepest(struct tnode *n) {
   if (!n) {
-#ifdef CGEN_DEBUG
-    FLOG("Tham số nút không hợp lệ.");    
-#endif  // CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");
     return NULL;
   }
   for (;;) {
@@ -596,9 +579,7 @@ struct tnode *tnext_lrn(struct tnode *x) {
 void tnextkv_lrn(gtype **pk, gtype **pv) {
   struct tnode *node = (struct tnode *)(*pk);
   if (!node) {
-#ifdef CGEN_DEBUG 
     FLOG("Tham số không hợp lệ");
-#endif  // CGEN_DEBUG   
     return;
   }
   struct tnode *tmp = tnext_lrn(node);
@@ -616,9 +597,7 @@ struct tnode *troot(struct tmap *t) {
 
 struct tnode *tnext_lnr(struct tnode *x) {
   if (!x) {
-#ifdef CGEN_DEBUG
     FLOG("Truy cập nút NULL");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   if (x->right) {
@@ -646,9 +625,7 @@ void tnextkv_lnr(gtype **k, gtype **v) {
 
 struct tnode *tprev_lnr(struct tnode *x) {
   if (!x) {
-#ifdef CGEN_DEBUG
     FLOG("Truy cập nút NULL");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   if (x->left) {
@@ -684,30 +661,24 @@ int tis_black(struct tnode *n) {
 
 struct tnode *tleft_of(struct tnode *n) {
   if (!n) {
-#ifndef CGEN_DEBUG
     FLOG("Nút không hợp lệ.");
     return NULL;
-#endif  // CGEN_DEBUG    
   }
   return n->left;
 }
 
 struct tnode *tright_of(struct tnode *n) {
   if (!n) {
-#ifndef CGEN_DEBUG
     FLOG("Nút không hợp lệ.");
     return NULL;
-#endif  // CGEN_DEBUG    
   }
   return n->right;
 }
 
 struct tnode *ttop_of(struct tnode *n) {
   if (!n) {
-#ifndef CGEN_DEBUG
     FLOG("Nút không hợp lệ.");
     return NULL;
-#endif  // CGEN_DEBUG    
   }
   return n->top;
 }
@@ -738,9 +709,7 @@ free_fn_t tfv(struct tmap *t) {
 
 struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
   if (!t) {
-#ifdef CGEN_DEBUG
     FLOG("Tham số t không hợp lệ.");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   t->fk = fk;
@@ -749,9 +718,7 @@ struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
 
 struct tmap *tsetfv(struct tmap *t, free_fn_t fv) {
   if (!t) {
-#ifdef CGEN_DEBUG
     FLOG("Tham số t không hợp lệ.");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   t->fv = fv;

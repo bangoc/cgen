@@ -1,9 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2023 */
 
-#ifdef CGEN_DEBUG
 #include "base/flog.h"
-#endif  // CGEN_DEBUG
-
 #include "cont/slist.h"
 
 /**
@@ -43,9 +40,7 @@ struct slist {
 struct snode *snode(gtype data) {
   struct snode *tmp = malloc(sizeof(struct snode));
   if (!tmp) {
-#ifdef CGEN_DEBUG
     FLOG("Lỗi cấp phát bộ nhớ tạo nút.");
-#endif  // CGEN_DEBUG
     return NULL;
   }
   tmp->data = data;
@@ -56,9 +51,7 @@ struct snode *snode(gtype data) {
 struct slist *screate() {
   struct slist *tmp = malloc(sizeof(struct slist));
   if (!tmp) {
-#ifdef CGEN_DEBUG
     FLOG("Lỗi cấp phát bộ nhớ tạo danh sách.");
-#endif  // CGEN_DEBUG
     return NULL;
   }
   tmp->front = tmp->back = NULL;
@@ -86,9 +79,7 @@ int sempty(struct slist *list) {
 struct slist *sappend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
-#ifdef CGEN_DEBUG
     FLOG("Lỗi tạo nút");
-#endif  // CGEN_DEBUG   
     return NULL; 
   }
   if (list->front == NULL) {
@@ -104,9 +95,7 @@ struct slist *sappend(struct slist *list, gtype data) {
 struct slist *sprepend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
-#ifdef CGEN_DEBUG
     FLOG("Lỗi tạo nút");
-#endif  // CGEN_DEBUG   
     return NULL; 
   }
   if (list->front == NULL) {
@@ -121,9 +110,7 @@ struct slist *sprepend(struct slist *list, gtype data) {
 
 struct slist *sdfront(struct slist *list) {
   if (!list || sempty(list)) {
-#ifdef CGEN_DEBUG
     FLOG("Xóa đầu danh sách không hợp lệ.");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   if (list->front == list->back) {
@@ -165,9 +152,7 @@ struct slist *spop(struct slist *list) {
 
 gtype *stop(struct slist *list) {
   if (list == NULL || sempty(list)) {
-#ifdef CGEN_DEBUG
     FLOG("Ngăn xếp ở trạng thái không hợp lệ.");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   return sfront(list);
@@ -183,9 +168,7 @@ struct slist *sdeque(struct slist *list) {
 
 gtype *speek(struct slist *list) {
   if (list == NULL || sempty(list)) {
-#ifdef CGEN_DEBUG
     FLOG("hàng đợi ở trạng thái không hợp lệ.");
-#endif  // CGEN_DEBUG    
     return NULL;
   }
   return sfront(list);

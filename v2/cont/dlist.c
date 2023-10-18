@@ -1,6 +1,7 @@
 /* (C) Nguyễn Bá Ngọc 2023 */
 
-#include "dlist.h"
+#include "base/flog.h"
+#include "cont/dlist.h"
 
 #include <stdlib.h>
 
@@ -48,9 +49,7 @@ struct dlist {
 struct dnode *dnode(gtype data) {
   struct dnode *tmp = malloc(sizeof(struct dnode));
   if (!tmp) {
-#ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ cho nút.");
-#endif  // CGEN_DEBUG
     return NULL;
   }
   tmp->data = data;
@@ -61,9 +60,7 @@ struct dnode *dnode(gtype data) {
 struct dlist *dcreate() {
   struct dlist *tmp = malloc(sizeof(struct dlist));
   if (!tmp) {
-#ifdef CGEN_DEBUG
     FLOG("Không thể cấp phát bộ nhớ cho danh sách.");
-#endif  // CGEN_DEBUG
     return NULL;
   }  
   tmp->front = tmp->back = NULL;
@@ -102,18 +99,14 @@ void dclear(struct dlist *list) {
 }
 
 struct dlist *dappend(struct dlist *list, gtype elem) {
+  if (!list) {
+    FLOG("Lỗi danh sách chưa khởi tạo.");
+    return NULL;
+  }
   struct dnode *nn = dnode(elem);
   if (!nn) {
-#ifdef CGEN_DEBUG
     FLOG("Lỗi không thể tạo nút.");
-#endif  // CGEN_DEBUG  
     return NULL;  
-  }
-  if (!list) {
-#ifdef CGEN_DEBUG
-    FLOG("Lỗi không thể tạo nút.");
-#endif  // CGEN_DEBUG  
-    return NULL;     
   }
   if (dempty(list)) {
     list->front = list->back = nn;
@@ -127,18 +120,14 @@ struct dlist *dappend(struct dlist *list, gtype elem) {
 }
 
 struct dlist *dprepend(struct dlist *list, gtype elem) {
+  if (!list) {
+    FLOG("Lỗi danh sách chưa khởi tạo.");
+    return NULL;
+  }
   struct dnode *nn = dnode(elem);
   if (!nn) {
-#ifdef CGEN_DEBUG
     FLOG("Lỗi không thể tạo nút.");
-#endif  // CGEN_DEBUG  
-    return NULL;  
-  }
-  if (!list) {
-#ifdef CGEN_DEBUG
-    FLOG("Lỗi không thể tạo nút.");
-#endif  // CGEN_DEBUG  
-    return NULL;     
+    return NULL;
   }
   if (dempty(list)) {
     list->front = list->back = nn;
@@ -153,9 +142,7 @@ struct dlist *dprepend(struct dlist *list, gtype elem) {
 
 struct dlist *ddfront(struct dlist *list) {
   if (!list || dempty(list)) {
-#ifdef CGEN_DEBUG
-    FLOG("Lỗi danh sách không hợp lệ.");
-#endif  // CGEN_DEBUG    
+    FLOG("Lỗi truy cập danh sách không hợp lệ.");
     return NULL;
   }
   struct dnode *tmp = list->front;
@@ -176,9 +163,7 @@ struct dlist *ddfront(struct dlist *list) {
 
 struct dlist *ddback(struct dlist *list) {
   if (!list || dempty(list)) {
-#ifdef CGEN_DEBUG
-    FLOG("Lỗi danh sách không hợp lệ.");
-#endif  // CGEN_DEBUG    
+    FLOG("Lỗi truy cập danh sách không hợp lệ.");
     return NULL;
   }
   struct dnode *tmp = list->back;
@@ -203,9 +188,7 @@ free_fn_t dfv(struct dlist *list) {
 
 struct dlist *dsetfv(struct dlist *list, free_fn_t fv) {
   if (!list) {
-#ifdef CGEN_DEBUG
-    FLOG("Lỗi danh sách không hợp lệ.");
-#endif  // CGEN_DEBUG    
+    FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;    
   }
   list->fv = fv;

@@ -1,9 +1,6 @@
 /* (C) Nguyen Ba Ngoc 2023 */
 
-#ifdef CGEN_DEBUG
 #include "base/flog.h"
-#endif  // CGEN_DEBUG
-
 #include "cont/vector.h"
 
 /**
@@ -83,9 +80,7 @@ long vidx(struct vector *v, gtype *elem_ptr) {
 
 struct vector *vreserve(struct vector *v, long newcap) {
   if (newcap < v->sz) {
-#ifdef CGEN_DEBUG
     FLOG("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->sz);
-#endif  // CGEN_DEBUG
     return NULL;
   }
   v->elems = realloc(v->elems, newcap * sizeof(gtype));
@@ -120,10 +115,8 @@ struct vector *vremove(struct vector *v, long idx) {
   gtype *_arr = varr(v);
   long _sz = vsize(v);
   if ((idx) >= _sz || (idx) < 0) {
-#if defined CGEN_DEBUG
-  FLOG("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", 
-      _sz, (long)idx);
-#endif  // CGEN_DEBUG
+    FLOG("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld",
+         _sz, (long)idx);
     return NULL;
   }
   gtype _tmp = _arr[(idx)];
@@ -153,9 +146,7 @@ void vfill(struct vector *v, gtype value) {
 
 struct vector *vcreate(long sz) {
   if (sz < 0) {
-#ifdef CGEN_DEBUG
     FLOG("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz);
-#endif  // CGEN_DEBUG
     return NULL;
   }
   struct vector *v = malloc(sizeof(struct vector));
@@ -206,9 +197,7 @@ struct vector *vpush(struct vector *v, gtype val) {
 
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
-#ifdef CGEN_DEBUG
     FLOG("Xóa ngăn xếp không hợp lệ.");
-#endif  // CGEN_DEBUG
     return NULL;
   }
   vresize(v, v->sz - 1);
@@ -217,9 +206,7 @@ struct vector *vpop(struct vector *v) {
 
 gtype *vtop(struct vector *v) {
   if (!v || v->sz == 0) {
-#ifdef CGEN_DEBUG
     FLOG("Đọc đỉnh của ngăn xếp không hợp lệ.");
-#endif  // CGEN_DEBUG
     return NULL;
   }
   return v->elems + (v->sz - 1);
@@ -227,9 +214,7 @@ gtype *vtop(struct vector *v) {
 
 struct vector *vinsert_before(struct vector *v, gtype e, long i) {
   if (!v || i < 0 || i >= v->sz) {
-#ifdef CGEN_DEBUG
     FLOG("Đầu vào không hợp lệ.");
-#endif  // CGEN_DEBUG
     return NULL;    
   }
   vresize(v, v->sz + 1);
