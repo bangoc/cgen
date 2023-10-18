@@ -1,6 +1,5 @@
 <map id="dlist" name="dlist">
-<area shape="rect" id="node1" title=" " alt="" coords="5,216,56,243"/>
-<area shape="rect" id="node2" href="$uniongeneric__type.html" title=" " alt="" coords="37,5,144,32"/>
-<area shape="rect" id="node3" href="$structvector.html" title=" " alt="" coords="61,111,123,137"/>
-<area shape="rect" id="node4" href="$structdnode.html" title=" " alt="" coords="151,111,214,137"/>
+<area shape="rect" id="node1" title=" " alt="" coords="33,201,84,228"/>
+<area shape="rect" id="node2" href="$structdnode.html" title=" " alt="" coords="27,96,90,123"/>
+<area shape="rect" id="node3" href="$uniongeneric__type.html" title=" " alt="" coords="5,5,112,32"/>
 </map>

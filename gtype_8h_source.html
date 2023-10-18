@@ -84,114 +84,97 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="keywordtype">double</span> d;</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="keywordtype">char</span> *s;</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="keywordtype">void</span> *v;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="keyword">union </span><a class="code" href="uniongeneric__type.html">generic_type</a> *g;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">struct </span>gsllist *gsl;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;  <span class="keyword">struct </span><a class="code" href="structvector.html">vector</a> *vec;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;  <span class="keyword">struct </span>rbmtree *rbm;</div>
-<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">   28</a></span>&#160;} <a class="code" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>;</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160; </div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define gtype_zero (gtype_l(0l))</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define gtype_value(type, val) ((gtype){.type = (val)})</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define gtype_l(value) gtype_value(l, value)</span></div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define gtype_d(value) gtype_value(d, value)</span></div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">#define gtype_s(value) gtype_value(s, (char *)value)</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#define gtype_v(value) gtype_value(v, value)</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define gtype_g(value) gtype_value(g, value)</span></div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#define gtype_gsl(value) gtype_value(gsl, value)</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#define gtype_gvec(value) gtype_value(gvec, value)</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define gtype_rbm(value) gtype_value(rbm, value)</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="preprocessor">#define gtype_swap(v1, v2) \</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="preprocessor">  do { \</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">    gtype _tmp = (v1); \</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="preprocessor">    (v1) = (v2); \</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="preprocessor">    (v2) = _tmp; \</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">   24</a></span>&#160;} <a class="code" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define GZERO (GLONG(0l))</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define GTYPE(type, val) ((gtype){.type = (val)})</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define GLONG(value) GTYPE(l, value)</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#define GDOUBLE(value) GTYPE(d, value)</span></div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="preprocessor">#define GSTR(value) GTYPE(s, (char *)value)</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#define GVOID(value) GTYPE(v, value)</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#define GSWAP(v1, v2) \</span></div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="preprocessor">  do { \</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">    gtype _tmp = (v1); \</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">    (v1) = (v2); \</span></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">    (v2) = _tmp; \</span></div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">  } while (0)</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">typedef</span> int (*gcmp_fn_t)(<span class="keyword">const</span> <a class="code" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>, <span class="keyword">const</span> <a class="code" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">typedef</span> int (*gprint_fn_t)(<span class="keyword">const</span> <a class="code" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">typedef</span> void (*free_fn_t)(<span class="keywordtype">void</span>*);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> glong_cmp(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v2) {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;  <span class="keywordflow">return</span> v1.l - v2.l;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;}</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">typedef</span> int (*gtype_cmp_t)(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">typedef</span> void (*gtype_free_t)(<a class="code" href="uniongeneric__type.html">gtype</a>*);</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">typedef</span> int (*gtype_print_t)(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> glong_rcmp(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v2) {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordflow">return</span> v2.l - v1.l;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;}</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_cmp_l(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v2) {</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">return</span> v1-&gt;l - v2-&gt;l;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;}</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_rcmp_l(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v2) {</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  <span class="keywordflow">return</span> v2-&gt;l - v1-&gt;l;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;}</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_cmp_d(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v2) {</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;  <span class="keywordflow">if</span> (v1-&gt;d &lt; v2-&gt;d) {</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (v1-&gt;d &gt; v2-&gt;d) {</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  }</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;}</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_rcmp_d(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v2) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  <span class="keywordflow">if</span> (v2-&gt;d &lt; v1-&gt;d) {</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (v2-&gt;d &gt; v1-&gt;d) {</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  }</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;}</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="uniongeneric__type.html#a132c9b9c4c55890f18989a8ce9a8609a">   91</a></span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="uniongeneric__type.html#a132c9b9c4c55890f18989a8ce9a8609a">gtype_cmp_s</a>(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v2) {</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">return</span> strcmp(v1-&gt;s, v2-&gt;s);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gdouble_cmp(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v2) {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;  <span class="keywordflow">if</span> (v1.d &lt; v2.d) {</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (v1.d &gt; v2.d) {</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;  }</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;}</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gdouble_rcmp(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v2) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;  <span class="keywordflow">if</span> (v2.d &lt; v1.d) {</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (v2.d &gt; v1.d) {</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;}</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="uniongeneric__type.html#ae040a70e80f5ac1bea8d263c85fd448a">   83</a></span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="uniongeneric__type.html#ae040a70e80f5ac1bea8d263c85fd448a">gstr_cmp</a>(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v2) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordflow">return</span> strcmp(v1.s, v2.s);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gstr_rcmp(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> v2) {</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordflow">return</span> strcmp(v2.s, v1.s);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;}</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_qsort_l(<span class="keyword">const</span> <span class="keywordtype">void</span> *v1, <span class="keyword">const</span> <span class="keywordtype">void</span> *v2) {</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordflow">return</span> ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;l - ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;l;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;}</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160; </div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_rcmp_s(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v1, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *v2) {</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">return</span> strcmp(v2-&gt;s, v1-&gt;s);</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;}</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_qsort_l(<span class="keyword">const</span> <span class="keywordtype">void</span> *v1, <span class="keyword">const</span> <span class="keywordtype">void</span> *v2) {</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  <span class="keywordflow">return</span> ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;l - ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;l;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;}</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_qsort_d(<span class="keyword">const</span> <span class="keywordtype">void</span> *v1, <span class="keyword">const</span> <span class="keywordtype">void</span> *v2) {</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;  <span class="keywordflow">if</span> (((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;l &gt; ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;l) {</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordflow">return</span> 1;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;l &lt; ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;l) {</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;  }</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;}</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_qsort_s(<span class="keyword">const</span> <span class="keywordtype">void</span> *v1, <span class="keyword">const</span> <span class="keywordtype">void</span> *v2) {</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;  <span class="keywordflow">return</span> strcmp(((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;s, ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;s);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;}</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> gtype_print_l(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *value) {</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;  printf(<span class="stringliteral">&quot;%ld\n&quot;</span>, value-&gt;l);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  <span class="keywordflow">return</span> 0;  <span class="comment">// Tương thích với foreach</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;}</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> gtype_print_d(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *value) {</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;  printf(<span class="stringliteral">&quot;%f\n&quot;</span>, value-&gt;d);</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;}</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160; </div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> gtype_print_s(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> *value) {</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  printf(<span class="stringliteral">&quot;%s\n&quot;</span>, value-&gt;s);</div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;  <span class="keywordflow">return</span> 0;</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;}</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> gtype_free_s(<a class="code" href="uniongeneric__type.html">gtype</a> v) {</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;  free(v.s);</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;}</div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="keyword">static</span> <span class="keywordtype">void</span> gtype_free_v(<a class="code" href="uniongeneric__type.html">gtype</a> v) {</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  free(v.v);</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;}</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// BASE_GTYPE_H_</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_qsort_d(<span class="keyword">const</span> <span class="keywordtype">void</span> *v1, <span class="keyword">const</span> <span class="keywordtype">void</span> *v2) {</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordflow">if</span> (((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;l &gt; ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;l) {</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordflow">return</span> 1;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;  } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;l &lt; ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;l) {</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;  }</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;}</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">int</span> gtype_qsort_s(<span class="keyword">const</span> <span class="keywordtype">void</span> *v1, <span class="keyword">const</span> <span class="keywordtype">void</span> *v2) {</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keywordflow">return</span> strcmp(((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v1)-&gt;s, ((<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a>*)v2)-&gt;s);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;}</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> gtype_print_l(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> value) {</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;  printf(<span class="stringliteral">&quot;%ld\n&quot;</span>, value.l);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;  <span class="keywordflow">return</span> 0;  <span class="comment">// Tương thích với foreach</span></div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;}</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> gtype_print_d(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> value) {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  printf(<span class="stringliteral">&quot;%f\n&quot;</span>, value.d);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;}</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160; </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="keyword">static</span> <span class="keywordtype">int</span> gtype_print_s(<span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> value) {</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;  printf(<span class="stringliteral">&quot;%s\n&quot;</span>, value.s);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// BASE_GTYPE_H_</span></div>
 <div class="ttc" id="agtype_8h_html_a22df69f0a905ba3f8c833d29b2adfa46"><div class="ttname"><a href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a></div><div class="ttdeci">union generic_type gtype</div></div>
-<div class="ttc" id="astructvector_html"><div class="ttname"><a href="structvector.html">vector</a></div><div class="ttdef"><b>Definition:</b> vector.c:22</div></div>
 <div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
-<div class="ttc" id="auniongeneric__type_html_a132c9b9c4c55890f18989a8ce9a8609a"><div class="ttname"><a href="uniongeneric__type.html#a132c9b9c4c55890f18989a8ce9a8609a">generic_type::gtype_cmp_s</a></div><div class="ttdeci">static int gtype_cmp_s(const gtype *v1, const gtype *v2)</div><div class="ttdef"><b>Definition:</b> gtype.h:91</div></div>
+<div class="ttc" id="auniongeneric__type_html_ae040a70e80f5ac1bea8d263c85fd448a"><div class="ttname"><a href="uniongeneric__type.html#ae040a70e80f5ac1bea8d263c85fd448a">generic_type::gstr_cmp</a></div><div class="ttdeci">static int gstr_cmp(const gtype v1, const gtype v2)</div><div class="ttdef"><b>Definition:</b> gtype.h:83</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

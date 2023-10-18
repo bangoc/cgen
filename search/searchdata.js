@@ -1,13 +1,14 @@
 var indexSectionsWithContent =
 {
-  0: "bcdefgiklnpqsv",
-  1: "dgqsv",
-  2: "cdfgiqsv",
-  3: "dgqsv",
+  0: "bcdefgiklnpqstv",
+  1: "dgqstv",
+  2: "cdfgiqstv",
+  3: "dgqstv",
   4: "bcdefklnps",
   5: "g",
-  6: "dsv",
-  7: "c"
+  6: "t",
+  7: "dstv",
+  8: "c"
 };
 
 var indexSectionNames =
@@ -18,8 +19,9 @@ var indexSectionNames =
   3: "functions",
   4: "variables",
   5: "typedefs",
-  6: "defines",
-  7: "pages"
+  6: "enums",
+  7: "defines",
+  8: "pages"
 };
 
 var indexSectionLabels =
@@ -30,7 +32,8 @@ var indexSectionLabels =
   3: "Các hàm",
   4: "Các biến",
   5: "Typedefs",
-  6: "Định nghĩa",
-  7: "Trang"
+  6: "Enumerations",
+  7: "Định nghĩa",
+  8: "Trang"
 };
 

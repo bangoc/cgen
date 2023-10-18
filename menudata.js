@@ -41,12 +41,14 @@ var menudata={children:[
 {text:"p",url:"functions.html#index_p"},
 {text:"q",url:"functions.html#index_q"},
 {text:"s",url:"functions.html#index_s"},
+{text:"t",url:"functions.html#index_t"},
 {text:"v",url:"functions.html#index_v"}]},
 {text:"Các hàm",url:"functions_func.html",children:[
 {text:"d",url:"functions_func.html#index_d"},
 {text:"g",url:"functions_func.html#index_g"},
 {text:"q",url:"functions_func.html#index_q"},
 {text:"s",url:"functions_func.html#index_s"},
+{text:"t",url:"functions_func.html#index_t"},
 {text:"v",url:"functions_func.html#index_v"}]},
 {text:"Các biến",url:"functions_vars.html"}]}]},
 {text:"Files",url:"files.html",children:[
@@ -55,4 +57,5 @@ var menudata={children:[
 {text:"Tất cả",url:"globals.html"},
 {text:"Các hàm",url:"globals_func.html"},
 {text:"Typedefs",url:"globals_type.html"},
+{text:"Enumerations",url:"globals_enum.html"},
 {text:"Định nghĩa",url:"globals_defs.html"}]}]}]}

@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Thư viện cgen: cont/tmap.c File Tham chiếu</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Thư viện cgen
+   </div>
+   <div id="projectbrief">Triển khai khái quát của các cấu trúc dữ liệu và giải thuật cho lập trình C</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Được biên soạn bởi Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Tìm kiếm','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Tìm kiếm');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_71f2f021c0efc6e04fc6699a6f0122c0.html">cont</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Cấu trúc cơ sở dữ liệu</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Các hàm</a>  </div>
+  <div class="headertitle">
+<div class="title">tmap.c File Tham chiếu</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Triển khai cấu trúc tra cứu dựa trên cây đỏ đen với khóa và giá trị có kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>.  
+<a href="#details">Tiếp...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="tmap_8h_source.html">cont/tmap.h</a>&quot;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Kèm theo graph phụ thuộc cho tmap.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="tmap_8c__incl.png" border="0" usemap="#acont_2tmap_8c" alt=""/></div>
+<map name="acont_2tmap_8c" id="acont_2tmap_8c">
+<area shape="rect" title="Triển khai cấu trúc tra cứu dựa trên cây đỏ đen với khóa và giá trị có kiểu gtype." alt="" coords="131,5,229,32"/>
+<area shape="rect" href="tmap_8h.html" title="Khai báo giao diện cấu trúc tmap và tnode tương ứng." alt="" coords="86,80,186,107"/>
+<area shape="rect" title=" " alt="" coords="191,229,262,256"/>
+<area shape="rect" href="gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="80,155,187,181"/>
+<area shape="rect" title=" " alt="" coords="5,229,72,256"/>
+<area shape="rect" title=" " alt="" coords="97,229,167,256"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Cấu trúc cơ sở dữ liệu</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtmap.html">tmap</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:adc736ee9f8d80d5bd013efb43eaecff5"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tmap_8c.html#adc736ee9f8d80d5bd013efb43eaecff5">tcolors</a> </td></tr>
+<tr class="separator:adc736ee9f8d80d5bd013efb43eaecff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Các hàm</h2></td></tr>
+<tr class="memitem:a75afdcebe571c299c7bd4cad5e38c5ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tmap_8c.html#a75afdcebe571c299c7bd4cad5e38c5ce">tfree</a> (struct <a class="el" href="structtmap.html">tmap</a> *t)</td></tr>
+<tr class="separator:a75afdcebe571c299c7bd4cad5e38c5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e081b67f2ca8125836c165a434f050c"><td class="memItemLeft" align="right" valign="top">free_fn_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tmap_8c.html#a3e081b67f2ca8125836c165a434f050c">tfk</a> (struct <a class="el" href="structtmap.html">tmap</a> *t)</td></tr>
+<tr class="separator:a3e081b67f2ca8125836c165a434f050c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9160760977ec0e9f254989e512d23f4"><td class="memItemLeft" align="right" valign="top">free_fn_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tmap_8c.html#af9160760977ec0e9f254989e512d23f4">tfv</a> (struct <a class="el" href="structtmap.html">tmap</a> *t)</td></tr>
+<tr class="separator:af9160760977ec0e9f254989e512d23f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89548ccc9cc603cb61933980266720d6"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tmap_8c.html#a89548ccc9cc603cb61933980266720d6">tsetfk</a> (struct <a class="el" href="structtmap.html">tmap</a> *t, free_fn_t fk)</td></tr>
+<tr class="separator:a89548ccc9cc603cb61933980266720d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e2b02933fe1aedfc6a23cbc2f4bfe83"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="tmap_8c.html#a8e2b02933fe1aedfc6a23cbc2f4bfe83">tsetfv</a> (struct <a class="el" href="structtmap.html">tmap</a> *t, free_fn_t fv)</td></tr>
+<tr class="separator:a8e2b02933fe1aedfc6a23cbc2f4bfe83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
+<div class="textblock"><p>Triển khai cấu trúc tra cứu dựa trên cây đỏ đen với khóa và giá trị có kiểu <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. </p>
+</div><h2 class="groupheader">Thông tin về Enumeration Type</h2>
+<a id="adc736ee9f8d80d5bd013efb43eaecff5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc736ee9f8d80d5bd013efb43eaecff5">&#9670;&nbsp;</a></span>tcolors</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="tmap_8c.html#adc736ee9f8d80d5bd013efb43eaecff5">tcolors</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Các giá trị mầu của nút. đỏ = 0, đen = 1 như vậy chúng ta có tổng giá trị mầu = số lượng nút đen </p>
+
+</div>
+</div>
+<h2 class="groupheader">Thông tin về hàm</h2>
+<a id="a3e081b67f2ca8125836c165a434f050c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e081b67f2ca8125836c165a434f050c">&#9670;&nbsp;</a></span>tfk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">free_fn_t tfk </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Truy cập thành viên fk của tmap.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>- Con trỏ tới bảng cây. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ hàm fk. </dd></dl>
+
+</div>
+</div>
+<a id="a75afdcebe571c299c7bd4cad5e38c5ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75afdcebe571c299c7bd4cad5e38c5ce">&#9670;&nbsp;</a></span>tfree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tfree </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Giải phóng bộ nhớ của bảng cây.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>- Con trỏ tới bảng. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Không trả về giá trị. </dd></dl>
+
+</div>
+</div>
+<a id="af9160760977ec0e9f254989e512d23f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9160760977ec0e9f254989e512d23f4">&#9670;&nbsp;</a></span>tfv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">free_fn_t tfv </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td>
+          <td class="paramname"><em>t</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Truy cập thành viên fv của tmap.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>- Con trỏ tới bảng cây. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Trả về con trỏ hàm fv. </dd></dl>
+
+</div>
+</div>
+<a id="a89548ccc9cc603cb61933980266720d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89548ccc9cc603cb61933980266720d6">&#9670;&nbsp;</a></span>tsetfk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structtmap.html">tmap</a>* tsetfk </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">free_fn_t&#160;</td>
+          <td class="paramname"><em>fk</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Thiết lập thành viên fk của tmap.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>- Con trỏ tới bảng cây. </td></tr>
+    <tr><td class="paramname">fk</td><td>- Con trỏ tới hàm giải phóng bộ nhớ của khóa. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Chuyển tiếp con trỏ t, hoặc trả về NULL nếu phát sinh lỗi. </dd></dl>
+
+</div>
+</div>
+<a id="a8e2b02933fe1aedfc6a23cbc2f4bfe83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e2b02933fe1aedfc6a23cbc2f4bfe83">&#9670;&nbsp;</a></span>tsetfv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structtmap.html">tmap</a>* tsetfv </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structtmap.html">tmap</a> *&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">free_fn_t&#160;</td>
+          <td class="paramname"><em>fv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Thiết lập thành viên fv của tmap.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">t</td><td>- Con trỏ tới bảng cây. </td></tr>
+    <tr><td class="paramname">fv</td><td>- Con trỏ tới hàm giải phóng bộ nhớ của khóa. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Chuyển tiếp con trỏ t, hoặc trả về NULL nếu phát sinh lỗi. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Được biên soạn bởi&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>

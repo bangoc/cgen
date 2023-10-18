@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Thư viện cgen: cont/tmap.h File nguồn</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Thư viện cgen
+   </div>
+   <div id="projectbrief">Triển khai khái quát của các cấu trúc dữ liệu và giải thuật cho lập trình C</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Được biên soạn bởi Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Tìm kiếm','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Tìm kiếm');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_71f2f021c0efc6e04fc6699a6f0122c0.html">cont</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">tmap.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="tmap_8h.html">Tới Thông tin của file này.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef CONT_TREEMAP_H_</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define CONT_TREEMAP_H_</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">/* (C) Nguyễn Bá Ngọc 2023 */</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="gtype_8h.html">base/gtype.h</a>&quot;</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">/******* Giao diện tnode ******/</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">struct </span>tnode;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">struct </span><a class="code" href="structtmap.html">tmap</a>;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *tkey_of(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *tvalue_of(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">struct </span>tnode *tleft_most(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">struct </span>tnode *tright_most(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">struct </span>tnode *tleft_deepest(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">struct </span>tnode *tnext_lrn(<span class="keyword">struct</span> tnode *x);</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="keywordtype">void</span> tnextkv_lrn(<a class="code" href="uniongeneric__type.html">gtype</a> **pk, <a class="code" href="uniongeneric__type.html">gtype</a> **pv);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="keyword">struct </span>tnode *tprev_lnr(<span class="keyword">struct</span> tnode *x);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="keywordtype">void</span> tprevkv_lnr(<a class="code" href="uniongeneric__type.html">gtype</a> **pk, <a class="code" href="uniongeneric__type.html">gtype</a> **pv);</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="keyword">struct </span>tnode *tnext_lnr(<span class="keyword">struct</span> tnode *x);</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="keywordtype">void</span> tnextkv_lnr(<a class="code" href="uniongeneric__type.html">gtype</a> **k, <a class="code" href="uniongeneric__type.html">gtype</a> **v);</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="keywordtype">int</span> tis_red(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="keywordtype">int</span> tis_black(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="keyword">struct </span>tnode *tleft_of(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="keyword">struct </span>tnode *tright_of(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;<span class="keyword">struct </span>tnode *ttop_of(<span class="keyword">struct</span> tnode *n);</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;<span class="comment">/******* Giao diện tmap ******/</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;<span class="keyword">struct </span><a class="code" href="structtmap.html">tmap</a> *<a class="code" href="structtmap.html#a8a4685a03b417dd961057b80446c2855">tcreate</a>(gcmp_fn_t cmp);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *<a class="code" href="structtmap.html#a49434ab90afe6172281a52551c73af31">tput</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> key, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> value);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;<a class="code" href="uniongeneric__type.html">gtype</a> *<a class="code" href="structtmap.html#acf16ce72c4020a002e1e91afe05e17c9">tget</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t, <span class="keyword">const</span> <a class="code" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<span class="keyword">struct </span><a class="code" href="structtmap.html">tmap</a> *<a class="code" href="structtmap.html#ae0d5116bb1f0b28918d2051aa565712b">tremove</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t, <a class="code" href="uniongeneric__type.html">gtype</a> key);</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;<span class="keywordtype">long</span> <a class="code" href="structtmap.html#ac234c8a31cb121dc2409b85e45ad8d75">tsize</a>(<span class="keyword">const</span> <span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;<span class="keyword">struct </span>tnode *<a class="code" href="structtmap.html#afb2b38fc1a188f75c9d62fd2273dca1a">troot</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t);</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160; </div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;free_fn_t <a class="code" href="tmap_8h.html#a3e081b67f2ca8125836c165a434f050c">tfk</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160; </div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;free_fn_t <a class="code" href="tmap_8h.html#af9160760977ec0e9f254989e512d23f4">tfv</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t);</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160; </div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;<span class="keyword">struct </span><a class="code" href="structtmap.html">tmap</a> *<a class="code" href="tmap_8h.html#a89548ccc9cc603cb61933980266720d6">tsetfk</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t, free_fn_t fk);</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160; </div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;<span class="keyword">struct </span><a class="code" href="structtmap.html">tmap</a> *<a class="code" href="tmap_8h.html#a8e2b02933fe1aedfc6a23cbc2f4bfe83">tsetfv</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t, free_fn_t fv);</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;<span class="keywordtype">void</span> <a class="code" href="tmap_8h.html#a75afdcebe571c299c7bd4cad5e38c5ce">tfree</a>(<span class="keyword">struct</span> <a class="code" href="structtmap.html">tmap</a> *t);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160; </div>
+<div class="line"><a name="l00304"></a><span class="lineno"><a class="line" href="tmap_8h.html#a0749b8baaadc811b88b30aeac041c559">  304</a></span>&#160;<span class="preprocessor">#define TTRAVERSE_LNR(k, v, t) \</span></div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="preprocessor">  for (gtype *k = (gtype*)tleft_most(troot(t)), \</span></div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;<span class="preprocessor">             *v = k? tvalue_of((struct tnode*)k): NULL; \</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;<span class="preprocessor">       k != NULL &amp;&amp; v != NULL; tnextkv_lnr(&amp;k, &amp;v))</span></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="tmap_8h.html#a86eef52208357ba93d3f6af0a248d4bb">  313</a></span>&#160;<span class="preprocessor">#define TTRAVERSE(k, v, t) TTRAVERSE_LNR(k, v, t)</span></div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00325"></a><span class="lineno"><a class="line" href="tmap_8h.html#a5fe4be4abe587836d3cfd579877a1cb1">  325</a></span>&#160;<span class="preprocessor">#define TTRAVERSE_RNL(k, v, t) \</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;<span class="preprocessor">  for (gtype *k = (gtype*)tright_most(troot(t)), \</span></div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;<span class="preprocessor">             *v = k? tvalue_of((struct tnode*)k): NULL; \</span></div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="preprocessor">       k != NULL &amp;&amp; v != NULL; tprevkv_lnr(&amp;k, &amp;v))</span></div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
+<div class="line"><a name="l00334"></a><span class="lineno"><a class="line" href="tmap_8h.html#a2bc46c3c8125905ab6025287587afb46">  334</a></span>&#160;<span class="preprocessor">#define TRTRAVERSE(k, v, t) TTRAVERSE_RNL(k, v, t)</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160; </div>
+<div class="line"><a name="l00346"></a><span class="lineno"><a class="line" href="tmap_8h.html#a3bccb2eca7c9244ef3c2150bca7b0c96">  346</a></span>&#160;<span class="preprocessor">#define TTRAVERSE_LRN(k, v, t) \</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor">  for (gtype *k = (gtype*)tleft_deepest(troot(t)), \</span></div>
+<div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;<span class="preprocessor">             *v = k? tvalue_of((struct tnode *)k): NULL; \</span></div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;<span class="preprocessor">       k != NULL; tnextkv_lrn(&amp;k, &amp;v))</span></div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// CONT_TREEMAP_H_</span></div>
+<div class="ttc" id="agtype_8h_html"><div class="ttname"><a href="gtype_8h.html">gtype.h</a></div><div class="ttdoc">Định nghĩa kiểu gtype và các thành phần bổ trợ.</div></div>
+<div class="ttc" id="astructtmap_html"><div class="ttname"><a href="structtmap.html">tmap</a></div><div class="ttdef"><b>Definition:</b> tmap.c:83</div></div>
+<div class="ttc" id="astructtmap_html_a49434ab90afe6172281a52551c73af31"><div class="ttname"><a href="structtmap.html#a49434ab90afe6172281a52551c73af31">tmap::tput</a></div><div class="ttdeci">gtype * tput(struct tmap *t, const gtype key, const gtype value)</div><div class="ttdef"><b>Definition:</b> tmap.c:207</div></div>
+<div class="ttc" id="astructtmap_html_a8a4685a03b417dd961057b80446c2855"><div class="ttname"><a href="structtmap.html#a8a4685a03b417dd961057b80446c2855">tmap::tcreate</a></div><div class="ttdeci">struct tmap * tcreate(gcmp_fn_t cmp)</div><div class="ttdef"><b>Definition:</b> tmap.c:90</div></div>
+<div class="ttc" id="astructtmap_html_ac234c8a31cb121dc2409b85e45ad8d75"><div class="ttname"><a href="structtmap.html#ac234c8a31cb121dc2409b85e45ad8d75">tmap::tsize</a></div><div class="ttdeci">long tsize(const struct tmap *t)</div><div class="ttdef"><b>Definition:</b> tmap.c:446</div></div>
+<div class="ttc" id="astructtmap_html_acf16ce72c4020a002e1e91afe05e17c9"><div class="ttname"><a href="structtmap.html#acf16ce72c4020a002e1e91afe05e17c9">tmap::tget</a></div><div class="ttdeci">gtype * tget(struct tmap *t, const gtype key)</div><div class="ttdef"><b>Definition:</b> tmap.c:266</div></div>
+<div class="ttc" id="astructtmap_html_ae0d5116bb1f0b28918d2051aa565712b"><div class="ttname"><a href="structtmap.html#ae0d5116bb1f0b28918d2051aa565712b">tmap::tremove</a></div><div class="ttdeci">struct tmap * tremove(struct tmap *t, gtype key)</div><div class="ttdef"><b>Definition:</b> tmap.c:430</div></div>
+<div class="ttc" id="astructtmap_html_afb2b38fc1a188f75c9d62fd2273dca1a"><div class="ttname"><a href="structtmap.html#afb2b38fc1a188f75c9d62fd2273dca1a">tmap::troot</a></div><div class="ttdeci">struct tnode * troot(struct tmap *t)</div><div class="ttdef"><b>Definition:</b> tmap.c:534</div></div>
+<div class="ttc" id="atmap_8h_html_a3e081b67f2ca8125836c165a434f050c"><div class="ttname"><a href="tmap_8h.html#a3e081b67f2ca8125836c165a434f050c">tfk</a></div><div class="ttdeci">free_fn_t tfk(struct tmap *t)</div><div class="ttdef"><b>Definition:</b> tmap.c:652</div></div>
+<div class="ttc" id="atmap_8h_html_a75afdcebe571c299c7bd4cad5e38c5ce"><div class="ttname"><a href="tmap_8h.html#a75afdcebe571c299c7bd4cad5e38c5ce">tfree</a></div><div class="ttdeci">void tfree(struct tmap *t)</div><div class="ttdef"><b>Definition:</b> tmap.c:636</div></div>
+<div class="ttc" id="atmap_8h_html_a89548ccc9cc603cb61933980266720d6"><div class="ttname"><a href="tmap_8h.html#a89548ccc9cc603cb61933980266720d6">tsetfk</a></div><div class="ttdeci">struct tmap * tsetfk(struct tmap *t, free_fn_t fk)</div><div class="ttdef"><b>Definition:</b> tmap.c:660</div></div>
+<div class="ttc" id="atmap_8h_html_a8e2b02933fe1aedfc6a23cbc2f4bfe83"><div class="ttname"><a href="tmap_8h.html#a8e2b02933fe1aedfc6a23cbc2f4bfe83">tsetfv</a></div><div class="ttdeci">struct tmap * tsetfv(struct tmap *t, free_fn_t fv)</div><div class="ttdef"><b>Definition:</b> tmap.c:671</div></div>
+<div class="ttc" id="atmap_8h_html_af9160760977ec0e9f254989e512d23f4"><div class="ttname"><a href="tmap_8h.html#af9160760977ec0e9f254989e512d23f4">tfv</a></div><div class="ttdeci">free_fn_t tfv(struct tmap *t)</div><div class="ttdef"><b>Definition:</b> tmap.c:656</div></div>
+<div class="ttc" id="auniongeneric__type_html"><div class="ttname"><a href="uniongeneric__type.html">generic_type</a></div><div class="ttdef"><b>Definition:</b> gtype.h:19</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Được biên soạn bởi&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
+</small></address>
+</body>
+</html>

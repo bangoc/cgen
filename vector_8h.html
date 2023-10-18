@@ -67,7 +67,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Định nghĩa</a>  </div>
+<a href="#define-members">Định nghĩa</a> &#124;
+<a href="#func-members">Các hàm</a>  </div>
   <div class="headertitle">
 <div class="title">vector.h File Tham chiếu</div>  </div>
 </div><!--header-->
@@ -106,25 +107,30 @@ Kèm theo graph phụ thuộc cho vector.h:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Định nghĩa</h2></td></tr>
-<tr class="memitem:ae4c143d83554bedb9bffa62600d18a59"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#ae4c143d83554bedb9bffa62600d18a59">vtraverse</a>(cur,  v)</td></tr>
-<tr class="separator:ae4c143d83554bedb9bffa62600d18a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a26c51a41589968735e8f9a15c7b161"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#a3a26c51a41589968735e8f9a15c7b161">vrtraverse</a>(cur,  v)</td></tr>
-<tr class="separator:a3a26c51a41589968735e8f9a15c7b161"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5dc316186813023ee14fbada22f0a4f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#ac5dc316186813023ee14fbada22f0a4f">vsort</a>(v,  cmp)&#160;&#160;&#160;  qsort(<a class="el" href="structvector.html#a4e70a0309db4687307b1b4522855562d">varr</a>(v), <a class="el" href="structvector.html#ab79883389e5e8d168c4e1ab1f2738748">vsize</a>(v), sizeof(<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>), cmp)</td></tr>
-<tr class="separator:ac5dc316186813023ee14fbada22f0a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00de47055616f1da5a29a138ae1c7498"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#a00de47055616f1da5a29a138ae1c7498">VTRAVERSE</a>(cur,  v)</td></tr>
+<tr class="separator:a00de47055616f1da5a29a138ae1c7498"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add7d7065ceca613f6ae8a6991088bd44"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#add7d7065ceca613f6ae8a6991088bd44">VRTRAVERSE</a>(cur,  v)</td></tr>
+<tr class="separator:add7d7065ceca613f6ae8a6991088bd44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d23aed2270063e2f6f66f2557cec96b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#a7d23aed2270063e2f6f66f2557cec96b">VSORT</a>(v,  cmp)&#160;&#160;&#160;  qsort(<a class="el" href="structvector.html#a4e70a0309db4687307b1b4522855562d">varr</a>(v), <a class="el" href="structvector.html#ab79883389e5e8d168c4e1ab1f2738748">vsize</a>(v), sizeof(<a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>), cmp)</td></tr>
+<tr class="separator:a7d23aed2270063e2f6f66f2557cec96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Các hàm</h2></td></tr>
+<tr class="memitem:a908552e977538466dfafe032bd2b37b5"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structvector.html">vector</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vector_8h.html#a908552e977538466dfafe032bd2b37b5">vinsert_before</a> (struct <a class="el" href="structvector.html">vector</a> *v, <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a> e, long i)</td></tr>
+<tr class="separator:a908552e977538466dfafe032bd2b37b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Mô tả chi tiết</h2>
 <div class="textblock"><p>Khai báo giao diện vec-tơ của các giá trị <a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>. </p>
 <p>Có thể truy cập ngẫu nhiên đến 1 phần tử bất kỳ trong vec-tơ theo chỉ số và sắp xếp nhanh vec-tơ tương tự như mảng. Kích thước của vec-tơ có thể thay đổi sau khi được tạo (dựa trên realloc) vì vậy linh động hơn mảng thông thường và cũng có phạm vi ứng dụng rộng hơn. </p>
 </div><h2 class="groupheader">Thông tin về định nghĩa</h2>
-<a id="a3a26c51a41589968735e8f9a15c7b161"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a26c51a41589968735e8f9a15c7b161">&#9670;&nbsp;</a></span>vrtraverse</h2>
+<a id="add7d7065ceca613f6ae8a6991088bd44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add7d7065ceca613f6ae8a6991088bd44">&#9670;&nbsp;</a></span>VRTRAVERSE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define vrtraverse</td>
+          <td class="memname">#define VRTRAVERSE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">cur, </td>
@@ -158,14 +164,14 @@ Kèm theo graph phụ thuộc cho vector.h:</div>
 
 </div>
 </div>
-<a id="ac5dc316186813023ee14fbada22f0a4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5dc316186813023ee14fbada22f0a4f">&#9670;&nbsp;</a></span>vsort</h2>
+<a id="a7d23aed2270063e2f6f66f2557cec96b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d23aed2270063e2f6f66f2557cec96b">&#9670;&nbsp;</a></span>VSORT</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define vsort</td>
+          <td class="memname">#define VSORT</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">v, </td>
@@ -194,14 +200,14 @@ Kèm theo graph phụ thuộc cho vector.h:</div>
 
 </div>
 </div>
-<a id="ae4c143d83554bedb9bffa62600d18a59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4c143d83554bedb9bffa62600d18a59">&#9670;&nbsp;</a></span>vtraverse</h2>
+<a id="a00de47055616f1da5a29a138ae1c7498"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00de47055616f1da5a29a138ae1c7498">&#9670;&nbsp;</a></span>VTRAVERSE</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define vtraverse</td>
+          <td class="memname">#define VTRAVERSE</td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname">cur, </td>
@@ -229,6 +235,51 @@ Kèm theo graph phụ thuộc cho vector.h:</div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Thông tin về hàm</h2>
+<a id="a908552e977538466dfafe032bd2b37b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a908552e977538466dfafe032bd2b37b5">&#9670;&nbsp;</a></span>vinsert_before()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct <a class="el" href="structvector.html">vector</a>* vinsert_before </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structvector.html">vector</a> *&#160;</td>
+          <td class="paramname"><em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="gtype_8h.html#a22df69f0a905ba3f8c833d29b2adfa46">gtype</a>&#160;</td>
+          <td class="paramname"><em>e</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Thêm 1 phần tử vào trước 1 phần tử đang có trong vec-tơ.</p>
+<dl class="params"><dt>Các tham số</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">v</td><td>- Con trỏ tới vec-tơ. </td></tr>
+    <tr><td class="paramname">e</td><td>- Phần tử được thêm vào. </td></tr>
+    <tr><td class="paramname">i</td><td>- Chỉ số phần tử được sử dụng làm chốt. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Giá trị trả về</dt><dd>Chuyển tiếp vec-tơ v, hoặc trả về NULL nếu phát sinh lỗi. </dd></dl>
 
 </div>
 </div>

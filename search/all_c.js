@@ -9,7 +9,7 @@ var searchData=
   ['senque_56',['senque',['../structslist.html#a41adac9c161989ee6089307373eedacc',1,'slist']]],
   ['sfree_57',['sfree',['../structslist.html#aae7f225d52c999c6663bf10835ff1737',1,'slist']]],
   ['sfront_58',['sfront',['../structslist.html#ae454360a698a02563d741c70f70b5fcd',1,'slist']]],
-  ['sfv_59',['sfv',['../structslist.html#a965dc8c5dfc2b749a0e652f08f5c975f',1,'slist']]],
+  ['sfv_59',['sfv',['../structslist.html#a2640ec00a79d8b43c66eae662c254f1e',1,'slist']]],
   ['slist_60',['slist',['../structslist.html',1,'']]],
   ['slist_2eh_61',['slist.h',['../slist_8h.html',1,'']]],
   ['snode_62',['snode',['../structsnode.html',1,'']]],
@@ -17,10 +17,10 @@ var searchData=
   ['spop_64',['spop',['../structslist.html#a3372d74842597d207edc34dbd5afd180',1,'slist']]],
   ['sprepend_65',['sprepend',['../structslist.html#a580c086063247a4947920f3f0615032a',1,'slist']]],
   ['spush_66',['spush',['../structslist.html#af45d54c6421f53fb6414782ef25fb0ad',1,'slist']]],
-  ['ssetfv_67',['ssetfv',['../structslist.html#a6f425ffa1a46b815f0ea6c91ecd84566',1,'slist']]],
+  ['ssetfv_67',['ssetfv',['../structslist.html#a0613b92b6c21ea8c0e474b6f84ac30a2',1,'slist']]],
   ['ssize_68',['ssize',['../structslist.html#af354fc4376b338a89d1319acf96af17e',1,'slist']]],
   ['stop_69',['stop',['../structslist.html#abdc32c13e9545b2669b6c5d49d1d4875',1,'slist']]],
   ['str_2eh_70',['str.h',['../str_8h.html',1,'']]],
-  ['straverse_71',['straverse',['../slist_8h.html#a6140d6d9a550907ecc0b69d9b1ec7e1b',1,'slist.h']]],
+  ['straverse_71',['STRAVERSE',['../slist_8h.html#ac0bfee9b80dbbbeef94a8d848067cce4',1,'slist.h']]],
   ['sz_72',['sz',['../structqueue.html#a8856b4540a810b7077cf9f83e8193aa9',1,'queue::sz()'],['../structvector.html#a8856b4540a810b7077cf9f83e8193aa9',1,'vector::sz()']]]
 ];

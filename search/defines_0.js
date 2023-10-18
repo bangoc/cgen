@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['drtraverse_193',['drtraverse',['../dlist_8h.html#a52f3e98a853a5a2b472d10c67d081245',1,'dlist.h']]],
-  ['dtraverse_194',['dtraverse',['../dlist_8h.html#aa1e8807ccc498ee8387df3a6cf64cd01',1,'dlist.h']]]
+  ['drtraverse_230',['DRTRAVERSE',['../dlist_8h.html#a3b38e7705c909fb74459f09ff456af9b',1,'dlist.h']]],
+  ['dtraverse_231',['DTRAVERSE',['../dlist_8h.html#a9e07d7f2dd3533ad371f0654ab0e6e33',1,'dlist.h']]]
 ];

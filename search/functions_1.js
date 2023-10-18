@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gtype_5fcmp_5fs_129',['gtype_cmp_s',['../uniongeneric__type.html#a132c9b9c4c55890f18989a8ce9a8609a',1,'generic_type']]]
+  ['gstr_5fcmp_153',['gstr_cmp',['../uniongeneric__type.html#ae040a70e80f5ac1bea8d263c85fd448a',1,'generic_type']]]
 ];
