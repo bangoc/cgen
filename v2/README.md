@@ -3,12 +3,12 @@ Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản
 
 # Hướng dẫn biên dịch
 
-Mã nguồn thư viện được đóng gói trong 2 tệp cgen.h
-và cgen.c trong thư mục all.
+Mã nguồn thư viện được đóng gói trong 2 tệp [cgen.h](https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.h)
+và [cgen.c](https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.c) trong thư mục all.
 
 ## 1. Biên dịch trực tiếp trong môi trường dòng lệnh
 
-Chèn cgen.h trong mã nguồn chương trình,
+Chèn [cgen.h](https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.h) trong mã nguồn chương trình,
 
 ```C
 #include "cgen.h"
