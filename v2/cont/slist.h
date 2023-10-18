@@ -6,7 +6,6 @@
 #ifndef CONT_SLIST_H_
 #define CONT_SLIST_H_
 
-#include "base/core.h"
 #include "base/gtype.h"
 
 struct slist;

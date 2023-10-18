@@ -13,7 +13,6 @@
 #ifndef CONT_VECTOR_H_
 #define CONT_VECTOR_H_
 
-#include "base/core.h"
 #include "base/gtype.h"
 
 struct vector;

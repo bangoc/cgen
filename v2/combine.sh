@@ -10,7 +10,6 @@ process() {
   echo -e "\n/***** $1 *****/" >> $2
   gcc -fpreprocessed -dD -P -E $1 | sed "/#include \"/d" >> $2
 }
-process ./base/core.h ./all/cgen.h
 process ./base/gtype.h ./all/cgen.h
 process ./base/flog.h ./all/cgen.h
 process ./cont/vector.h ./all/cgen.h
@@ -18,6 +17,7 @@ process ./cont/queue.h ./all/cgen.h
 process ./cont/slist.h ./all/cgen.h
 process ./cont/dlist.h ./all/cgen.h
 process ./cont/tmap.h  ./all/cgen.h
+process ./utils/bench.h ./all/cgen.h
 
 echo "#endif  // CGEN_H_" >> ./all/cgen.h
 
