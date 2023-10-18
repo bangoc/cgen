@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     int value = rand() % max_value + 1;
     if (op == 0) {
       // insert
-      tinsert(t, GLONG(value), GLONG(0));
+      tput(t, GLONG(value), GLONG(0));
     } else {
       // delete
       tremove(t, GLONG(value));

@@ -202,7 +202,18 @@ struct tmap *tcreate(gtype_cmp_t cmp);
  *
  * \memberof tmap
  */
-gtype *tinsert(struct tmap *t, const gtype key, const gtype value);
+gtype *tput(struct tmap *t, const gtype key, const gtype value);
+
+/**
+ * Truy cập giá trị được gắn với khóa
+ * 
+ * @param key - Khóa.
+ * @param value - Trả về con trỏ tới giá trị tương ứng,
+ * hoặc NULL nếu khóa không có trong bảng.
+ * 
+ * \memberof tmap
+ */
+gtype *tget(struct tmap *t, const gtype key);
 
 /**
  * Nếu key không có trong t thì bỏ qua, nếu ngược lại thì xóa cặp

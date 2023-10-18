@@ -136,7 +136,7 @@ struct tmap *tcreate(gtype_cmp_t cmp) {
     (x)->top = _y; \
   } while (0)
 
-static void tinsert_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
+static void tput_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
   /*
    * Các biến:
    * t - con trỏ tới cây (tree)
@@ -221,7 +221,7 @@ static void tinsert_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
   }
 }
 
-gtype *tinsert(struct tmap *t, const gtype key, const gtype value) {
+gtype *tput(struct tmap *t, const gtype key, const gtype value) {
   struct tnode *nn = tnode(key, value);
   if (!nn) {
 #ifdef CGEN_DEBUG
@@ -255,13 +255,13 @@ gtype *tinsert(struct tmap *t, const gtype key, const gtype value) {
   } else if (TIS_RED(top)) {
     /* Vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4
        có thể bị vi phạm). */
-    tinsert_fixup(t, nn, top);
+    tput_fixup(t, nn, top);
   }
   ++t->size;
   return NULL;
 }
 
-struct tnode *tsearch(struct tmap *t, gtype *key) {
+struct tnode *tsearch(struct tmap *t, gtype key) {
   if (!t || !t->cmp) {
 #ifdef CGEN_DEBUG
     FLOG("Bảng ở trạng thái không hợp lệ.");
@@ -271,13 +271,21 @@ struct tnode *tsearch(struct tmap *t, gtype *key) {
   int rl;
   struct tnode *x = t->root;
   while (x) {
-    rl = t->cmp(key, (gtype*)x);
+    rl = t->cmp(&key, (gtype*)x);
     if (rl == 0) {
       return x;
     }
     x = rl < 0? x->left: x->right;
   }
   return NULL;
+}
+
+gtype *tget(struct tmap *t, const gtype key) {
+  struct tnode *n = tsearch(t, key);
+  if (!n) {
+    return NULL;
+  }
+  return &n->value;
 }
 
 static void tdelete_fixup(struct tmap *t, struct tnode *parent) {
@@ -499,7 +507,7 @@ static struct tmap *tdelete(struct tmap *t, struct tnode *dn) {
 }
 
 struct tmap *tremove(struct tmap *t, gtype key) {
-  struct tnode *n = tsearch(t, &key);
+  struct tnode *n = tsearch(t, key);
   if (!n) {
     return NULL;
   }
