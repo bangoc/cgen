@@ -67,39 +67,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p ><a class="anchor" id="md_README"></a>Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản</p>
-<h1>Hướng dẫn biên dịch</h1>
-<p >Tệp mã nguồn, ví dụ main.c:</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cgen.h&quot;</span></div>
-<div class="line"><span class="comment">/*...*/</span></div>
-</div><!-- fragment --><p >Trong đó all.h là tệp tổng hợp các tệp tiêu đề của cgen.</p>
-<h2>1. Biên dịch với gcc trong môi trường dòng lệnh</h2>
-<div class="fragment"><div class="line">gcc -o prog main.c ${CGEN_PATH}/all.c -I ${CGEN_PATH}</div>
-</div><!-- fragment --><p >Trong đó ${CGEN_PATH} là đường dẫn tới thư mục cgen;</p>
-<p >all.c là tệp tổng hợp các tệp .c (mã nguồn) của cgen.</p>
-<h2>2. Biên dịch với ninja và cmake</h2>
-<p >Cách đơn giản nhất là đặt cgen bên trong (là thư mục con của) thư mục dự án. Giả sử thư mục dự án có cấu trúc như sau:</p>
-<div class="fragment"><div class="line">my-project</div>
-<div class="line">  cgen</div>
-<div class="line">  main.c</div>
-<div class="line">  CMakeLists.txt</div>
-<div class="line">  ...</div>
-</div><!-- fragment --><p >Tạo tệp CMakeLists.txt với các nội dung sau:</p>
-<div class="fragment"><div class="line">add_subdirectory(cgen)</div>
-<div class="line">include_directories(cgen)</div>
-<div class="line">add_executable(prog main.c)</div>
-<div class="line">target_link_libraries(prog bkcgen)</div>
-</div><!-- fragment --><p >Nên thực hiện biên dịch dự án trong một thư mục độc lập, ví dụ:</p>
-<div class="fragment"><div class="line">mkdir b</div>
-<div class="line">cd b</div>
-<div class="line">cmake .. -G Ninja</div>
-<div class="line">ninja</div>
-</div><!-- fragment --> <h2>3. Sử dụng định dạng 1 tệp</h2>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cgen.h&quot;</span></div>
-<div class="line"><span class="comment">/*...*/</span></div>
-</div><!-- fragment --><p> gcc -o prog main.c cgen.c</p>
-<p >Các tệp tổng hợp cgen.h và cgen.c có thể được tải về từ trang <a href="https://github.com/bangoc/cgen/releases">Xuất bản (release)</a>, hoặc tự tạo với công cụ merge trong mega-unit.</p>
-<h2>4. Tài liệu</h2>
-<p >Xem tài liệu chi tiết ở địa chỉ <a href="https://bangoc.github.io/cgen/">APIs doc</a> </p>
+<p >Xem tài liệu phiên bản mới nhất đang được phát triển <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2">v2</a> ở địa chỉ <a href="https://bangoc.github.io/cgen/">APIs doc</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
