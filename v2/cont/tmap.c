@@ -234,7 +234,7 @@ gtype *tput(struct tmap *t, const gtype key, const gtype value) {
   struct tnode **loc = &t->root;
   int rl = 0;
   while (x) {
-    rl = t->cmp(&key, &x->key);
+    rl = t->cmp(key, x->key);
     if (rl == 0) {
       free(nn);
       return &x->value;
@@ -271,7 +271,7 @@ struct tnode *tsearch(struct tmap *t, gtype key) {
   int rl;
   struct tnode *x = t->root;
   while (x) {
-    rl = t->cmp(&key, (gtype*)x);
+    rl = t->cmp(key, x->key);
     if (rl == 0) {
       return x;
     }
@@ -512,10 +512,10 @@ struct tmap *tremove(struct tmap *t, gtype key) {
     return NULL;
   }
   if (t->fk) {
-    t->fk(&n->key);
+    t->fk(n->key);
   }
   if (t->fv) {
-    t->fv(&n->value);
+    t->fv(n->value);
   }
   tdelete(t, n);
   --(t->size);
@@ -718,10 +718,10 @@ void tfree(struct tmap *t) {
     free(tmp);
     tmp = (struct tnode *)k;
     if (t->fk) {
-      t->fk(k);
+      t->fk(*k);
     }
     if (t->fv) {
-      t->fv(k);
+      t->fv(*v);
     }
   }
   free(tmp);

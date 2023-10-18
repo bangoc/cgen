@@ -98,7 +98,7 @@ struct vector *vresize(struct vector *v, long newsz) {
     vreserve(v, newsz);
   } else if (newsz < v->sz && v->fv) {
     for (long j = newsz; j < vsize(v); ++j) {
-      v->fv(v->elems + j);
+      v->fv(v->elems[j]);
     }
   }
   v->sz = newsz;

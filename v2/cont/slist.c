@@ -132,7 +132,7 @@ struct slist *sdfront(struct slist *list) {
   struct snode *tmp = list->front;
   list->front = tmp->next;
   if (list->fv) {
-    list->fv((gtype*)tmp);
+    list->fv(tmp->data);
   }
   free(tmp);
   --list->length;

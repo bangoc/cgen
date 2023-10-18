@@ -112,7 +112,7 @@ struct queue *qdeque(struct queue *q) {
     return NULL;
   }
   if (q->fv) {
-    q->fv(q->elems + q->fi);
+    q->fv(q->elems[q->fi]);
   }
   q->fi = qnext(q, q->fi);
   --q->sz;

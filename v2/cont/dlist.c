@@ -167,7 +167,7 @@ struct dlist *ddfront(struct dlist *list) {
     list->front->prev = NULL;
   }
   if (list->fv) {
-    list->fv((gtype*)tmp);
+    list->fv(tmp->data);
   }
   free(tmp);
   --list->length;
@@ -190,7 +190,7 @@ struct dlist *ddback(struct dlist *list) {
     list->back->next = NULL;
   }
   if (list->fv) {
-    list->fv((gtype*)tmp);
+    list->fv(tmp->data);
   }
   free(tmp);
   --list->length;

@@ -17,5 +17,6 @@ int main() {
   TRTRAVERSE(k, v, tm) {
     printf("%ld:%f\n", k->l, v->d);
   }
+  tfree(tm);
   TEST_OK();
 }
