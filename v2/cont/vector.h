@@ -163,6 +163,16 @@ struct vector *vappend(struct vector *v, gtype val);
 struct vector *vremove(struct vector *v, long idx);
 
 /**
+ * Thêm 1 phần tử vào trước 1 phần tử đang có trong vec-tơ.
+ * 
+ * @param v - Con trỏ tới vec-tơ.
+ * @param e - Phần tử được thêm vào.
+ * @param i - Chỉ số phần tử được sử dụng làm chốt.
+ * @return Chuyển tiếp vec-tơ v, hoặc trả về NULL nếu phát sinh lỗi.
+ */
+struct vector *vinsert_before(struct vector *v, gtype e, long i);
+
+/**
  * Làm rỗng vec-tơ: Giải phóng các vùng nhớ được cấp phát cho mảng
  * và các phần tử của v. Sau đó thiết lập lại kích thước vec-tơ = 0,
  * dung lượng vec-tơ không thay đổi.

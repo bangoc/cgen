@@ -226,3 +226,18 @@ gtype *vtop(struct vector *v) {
   }
   return v->elems + (v->sz - 1);
 }
+
+struct vector *vinsert_before(struct vector *v, gtype e, long i) {
+  if (!v || i < 0 || i >= v->sz) {
+#ifdef CGEN_DEBUG
+    FLOG("Đầu vào không hợp lệ.");
+#endif  // CGEN_DEBUG
+    return NULL;    
+  }
+  vresize(v, v->sz + 1);
+  for (long j = v->sz - 1; j > i; --j) {
+    v->elems[j] = v->elems[j - 1];
+  }
+  v->elems[i] = e;
+  return NULL;
+}
