@@ -1,10 +1,7 @@
 <map id="cont/slist.h" name="cont/slist.h">
-<area shape="rect" id="node1" title="Khai báo giao diện danh sách móc nối đơn với kiểu gtype." alt="" coords="152,5,245,32"/>
-<area shape="rect" id="node2" href="$core_8h.html" title="Các thành phần nền tảng: Biểu thức tính toán con trỏ, đo thời gian thực thi, v.v.." alt="" coords="87,80,185,107"/>
-<area shape="rect" id="node5" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="237,80,344,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,80,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="104,155,168,181"/>
-<area shape="rect" id="node6" title=" " alt="" coords="192,155,259,181"/>
-<area shape="rect" id="node7" title=" " alt="" coords="283,155,354,181"/>
-<area shape="rect" id="node8" title=" " alt="" coords="378,155,449,181"/>
+<area shape="rect" id="node1" title="Khai báo giao diện danh sách móc nối đơn với kiểu gtype." alt="" coords="85,5,179,32"/>
+<area shape="rect" id="node2" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="79,80,185,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,155,72,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="97,155,167,181"/>
+<area shape="rect" id="node5" title=" " alt="" coords="191,155,262,181"/>
 </map>

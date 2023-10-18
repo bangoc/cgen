@@ -1,11 +1,8 @@
 <map id="utils/str.h" name="utils/str.h">
-<area shape="rect" id="node1" title="Các công cụ hỗ trợ xử lý chuỗi ký tự." alt="" coords="157,5,240,32"/>
-<area shape="rect" id="node2" href="$vector_8h.html" title="Khai báo giao diện vec&#45;tơ của các giá trị gtype." alt="" coords="145,80,252,107"/>
-<area shape="rect" id="node3" href="$core_8h.html" title="Các thành phần nền tảng: Biểu thức tính toán con trỏ, đo thời gian thực thi, v.v.." alt="" coords="87,155,185,181"/>
-<area shape="rect" id="node6" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="237,155,344,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="5,229,80,256"/>
-<area shape="rect" id="node5" title=" " alt="" coords="104,229,168,256"/>
-<area shape="rect" id="node7" title=" " alt="" coords="192,229,259,256"/>
-<area shape="rect" id="node8" title=" " alt="" coords="283,229,354,256"/>
-<area shape="rect" id="node9" title=" " alt="" coords="378,229,449,256"/>
+<area shape="rect" id="node1" title="Các công cụ hỗ trợ xử lý chuỗi ký tự." alt="" coords="91,5,173,32"/>
+<area shape="rect" id="node2" href="$vector_8h.html" title="Khai báo giao diện vec&#45;tơ của các giá trị gtype." alt="" coords="79,80,185,107"/>
+<area shape="rect" id="node3" href="$gtype_8h.html" title="Định nghĩa kiểu gtype và các thành phần bổ trợ." alt="" coords="79,155,185,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="5,229,72,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="97,229,167,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="191,229,262,256"/>
 </map>
