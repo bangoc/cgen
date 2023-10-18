@@ -18,5 +18,5 @@ int main() {
     printf("%ld:%f\n", k->l, v->d);
   }
   tfree(tm);
-  TEST_OK();
+  return 0;
 }

@@ -57,7 +57,7 @@ struct vector *vresize(struct vector *v, long newsz) {
     vreserve(v, newsz);
   } else if (newsz < v->sz && v->fv) {
     for (long j = newsz; j < vsize(v); ++j) {
-      v->fv(v->elems + j);
+      v->fv(v->elems[j].v);
     }
   }
   v->sz = newsz;
@@ -104,9 +104,6 @@ void vfill(struct vector *v, gtype value) {
     *_cur = (value);
   }
 }
-void gfree_vec(gtype *value) {
-  vfree(value->vec);
-}
 struct vector *vcreate(long sz) {
   if (sz < 0) {
 #ifdef CGEN_DEBUG
@@ -135,7 +132,9 @@ struct vector *vclone(struct vector *v) {
   return v2;
 }
 int vsameas(struct vector *v1, struct vector *v2) {
-  if (v1->sz != v2->sz || v1->cap != v2->cap) {
+  if (v1->sz != v2->sz ||
+      v1->cap != v2->cap ||
+      v1->fv != v2->fv) {
     return 0;
   }
   size_t elems_size = v1->cap * sizeof(gtype);
@@ -170,6 +169,20 @@ gtype *vtop(struct vector *v) {
     return NULL;
   }
   return v->elems + (v->sz - 1);
+}
+struct vector *vinsert_before(struct vector *v, gtype e, long i) {
+  if (!v || i < 0 || i >= v->sz) {
+#ifdef CGEN_DEBUG
+    FLOG("Đầu vào không hợp lệ.");
+#endif
+    return NULL;
+  }
+  vresize(v, v->sz + 1);
+  for (long j = v->sz - 1; j > i; --j) {
+    v->elems[j] = v->elems[j - 1];
+  }
+  v->elems[i] = e;
+  return NULL;
 }
 
 /***** ./cont/queue.c *****/
@@ -257,7 +270,7 @@ struct queue *qdeque(struct queue *q) {
     return NULL;
   }
   if (q->fv) {
-    q->fv(q->elems + q->fi);
+    q->fv(q->elems[q->fi].v);
   }
   q->fi = qnext(q, q->fi);
   --q->sz;
@@ -393,7 +406,7 @@ struct slist *sdfront(struct slist *list) {
   struct snode *tmp = list->front;
   list->front = tmp->next;
   if (list->fv) {
-    list->fv((gtype*)tmp);
+    list->fv(tmp->data.v);
   }
   free(tmp);
   --list->length;
@@ -568,7 +581,7 @@ struct dlist *ddfront(struct dlist *list) {
     list->front->prev = NULL;
   }
   if (list->fv) {
-    list->fv((gtype*)tmp);
+    list->fv(tmp->data.v);
   }
   free(tmp);
   --list->length;
@@ -590,7 +603,7 @@ struct dlist *ddback(struct dlist *list) {
     list->back->next = NULL;
   }
   if (list->fv) {
-    list->fv((gtype*)tmp);
+    list->fv(tmp->data.v);
   }
   free(tmp);
   --list->length;
@@ -608,4 +621,535 @@ struct dlist *dsetfv(struct dlist *list, free_fn_t fv) {
   }
   list->fv = fv;
   return list;
+}
+
+/***** ./cont/tmap.c *****/
+#include <stdlib.h>
+enum tcolors {
+  RED = 0,
+  BLACK = 1
+};
+struct tnode {
+  gtype key;
+  gtype value;
+  enum tcolors color;
+  struct tnode *left;
+  struct tnode *right;
+  struct tnode *top;
+};
+#define TCOLOR_OF(n) ((n)? (n)->color: BLACK)
+#define TIS_RED(n) (TCOLOR_OF(n) == RED)
+#define TIS_BLACK(n) (TCOLOR_OF(n) == BLACK)
+#define TPAINT_BLACK(n) ((n)->color = BLACK)
+#define TPAINT_RED(n) ((n)->color = RED)
+#define TPAINT(n,c) ((n)->color = (c))
+#define TSET_PC(n,p,c) (n)->top = (p); TPAINT(n, c)
+struct tnode *tnode(const gtype key, const gtype value) {
+  struct tnode *nn = malloc(sizeof(struct tnode));
+  if (!nn) {
+#ifdef CGEN_DEBUG
+    FLOG("Không thể cấp phát bộ nhớ cho nút.");
+#endif
+    return NULL;
+  }
+  nn->key = key;
+  nn->value = value;
+  TPAINT_RED(nn);
+  nn->left = nn->right = nn->top = NULL;
+  return nn;
+}
+struct tmap {
+  struct tnode *root;
+  gcmp_fn_t cmp;
+  free_fn_t fk, fv;
+  long size;
+};
+struct tmap *tcreate(gcmp_fn_t cmp) {
+  if (!cmp) {
+#ifdef CGEN_DEBUG
+    FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh.");
+    return NULL;
+#endif
+  }
+  struct tmap *t = malloc(sizeof(struct tmap));
+  if (!t) {
+#ifdef CGEN_DEBUG
+    FLOG("Không thể cấp phát bộ nhớ.");
+    return NULL;
+#endif
+  }
+  t->root = NULL;
+  t->cmp = cmp;
+  t->fv = t->fk = NULL;
+  t->size = 0;
+  return t;
+}
+#define TCHANGE(old_node,new_node,parent,t) \
+  do { \
+    if (parent) { \
+      if (parent->left == old_node) { \
+        parent->left = new_node; \
+      } else { \
+        parent->right = new_node; \
+      } \
+    } else { \
+      t->root = new_node; \
+    } \
+  } while (0)
+#define TROTATE(t,x,right,left) \
+  do { \
+    struct tnode *_y = (x)->right; \
+    (x)->right = _y->left; \
+    if (_y->left != NULL) { \
+      _y->left->top = (x); \
+    } \
+    _y->top = (x)->top; \
+    TCHANGE(x, _y, (x)->top, t); \
+    _y->left = (x); \
+    (x)->top = _y; \
+  } while (0)
+static void tput_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
+  while (1) {
+    if (p == p->top->left) {
+#define IMPL_INSERT_FIXUP(left,right) \
+      struct tnode *_u = p->top->right; \
+      if (TIS_RED(_u)) { \
+            \
+        TPAINT_BLACK(p); \
+        TPAINT_BLACK(_u); \
+        TPAINT_RED(p->top); \
+        n = p->top; \
+        p = n->top; \
+        if (p == NULL) { \
+                                       \
+          TPAINT_BLACK(n); \
+          break; \
+        } \
+        if (TIS_BLACK(p)) { \
+                                                            \
+          break; \
+        } \
+      } else { \
+        if (n == n->top->right) { \
+              \
+          TROTATE(t, p, right, left); \
+          n = p; \
+          p = n->top; \
+        } \
+                                                      \
+        TPAINT_BLACK(p); \
+        TPAINT_RED(p->top); \
+        p = p->top; \
+        TROTATE(t, p, left, right); \
+        break; \
+      }
+      IMPL_INSERT_FIXUP(left, right)
+    } else {
+      IMPL_INSERT_FIXUP(right, left)
+    }
+#undef IMPL_INSERT_FIXUP
+  }
+}
+gtype *tput(struct tmap *t, const gtype key, const gtype value) {
+  struct tnode *nn = tnode(key, value);
+  if (!nn) {
+#ifdef CGEN_DEBUG
+    FLOG("Không thể tạo nút mới.");
+    return NULL;
+#endif
+  }
+  struct tnode *top = NULL;
+  struct tnode *x = t->root;
+  struct tnode **loc = &t->root;
+  int rl = 0;
+  while (x) {
+    rl = t->cmp(key, x->key);
+    if (rl == 0) {
+      free(nn);
+      return &x->value;
+    }
+    top = x;
+    if (rl < 0) {
+      x = top->left;
+      loc = &top->left;
+    } else {
+      x = top->right;
+      loc = &top->right;
+    }
+  }
+  *loc = nn;
+  nn->top = top;
+  if (top == NULL) {
+    nn->color = BLACK;
+  } else if (TIS_RED(top)) {
+    tput_fixup(t, nn, top);
+  }
+  ++t->size;
+  return NULL;
+}
+struct tnode *tsearch(struct tmap *t, gtype key) {
+  if (!t || !t->cmp) {
+#ifdef CGEN_DEBUG
+    FLOG("Bảng ở trạng thái không hợp lệ.");
+#endif
+    return NULL;
+  }
+  int rl;
+  struct tnode *x = t->root;
+  while (x) {
+    rl = t->cmp(key, x->key);
+    if (rl == 0) {
+      return x;
+    }
+    x = rl < 0? x->left: x->right;
+  }
+  return NULL;
+}
+gtype *tget(struct tmap *t, const gtype key) {
+  struct tnode *n = tsearch(t, key);
+  if (!n) {
+    return NULL;
+  }
+  return &n->value;
+}
+static void tdelete_fixup(struct tmap *t, struct tnode *parent) {
+  struct tnode *node = NULL, *sibling,
+          *cn,
+          *dn;
+  while (1) {
+    sibling = parent->right;
+    if (node != sibling) {
+#define ERASE_COLOR_SYMMETRY(left,right) \
+         \
+      if (TIS_RED(sibling)) { \
+                                                  \
+        TROTATE(t, parent, right, left); \
+        TPAINT_RED(parent); \
+        TPAINT_BLACK(sibling); \
+        sibling = parent->right; \
+      } \
+      dn = sibling->right; \
+      if (TIS_BLACK(dn)) { \
+        cn = sibling->left; \
+        if (TIS_BLACK(cn)) { \
+                                                                     \
+          TPAINT_RED(sibling); \
+          if (TIS_RED(parent)) { \
+            TPAINT_BLACK(parent); \
+          } else { \
+            node = parent; \
+            parent = node->top; \
+            if (parent) { \
+              continue; \
+            } \
+          } \
+          break; \
+        } \
+                                                                     \
+        TROTATE(t, sibling, left, right); \
+        sibling = parent->right; \
+      } \
+          \
+      dn = sibling->right; \
+      TROTATE(t, parent, right, left); \
+      TPAINT(sibling, TCOLOR_OF(parent)); \
+      TPAINT_BLACK(parent); \
+      TPAINT_BLACK(dn); \
+      break
+      ERASE_COLOR_SYMMETRY(left, right);
+    } else {
+      sibling = parent->left;
+      ERASE_COLOR_SYMMETRY(right, left);
+#undef ERASE_COLOR_SYMMETRY
+    }
+  }
+}
+static struct tmap *tdelete(struct tmap *t, struct tnode *dn) {
+  struct tnode *node = dn;
+  struct tnode *child = node->right,
+            *tmp = node->left,
+            *parent, *rebalance;
+  struct tnode *p;
+  enum tcolors c;
+  if (!tmp) {
+    p = node->top;
+    c = TCOLOR_OF(node);
+    parent = p;
+    TCHANGE(node, child, parent, t);
+    if (child) {
+      TSET_PC(child, p, c);
+      rebalance = NULL;
+    } else {
+      rebalance = c == BLACK? parent: NULL;
+    }
+    tmp = parent;
+  } else if (!child) {
+    p = node->top;
+    c = TCOLOR_OF(node);
+    TSET_PC(tmp, p, c);
+    parent = p;
+    TCHANGE(node, tmp, parent, t);
+    rebalance = NULL;
+    tmp = parent;
+  } else {
+    struct tnode *successor = child, *child2;
+    tmp = child->left;
+    if (!tmp) {
+      parent = successor;
+      child2 = successor->right;
+    } else {
+      do {
+        parent = successor;
+        successor = tmp;
+        tmp = tmp->left;
+      } while (tmp);
+      child2 = successor->right;
+      parent->left = child2;
+      successor->right = child;
+      child->top = successor;
+    }
+    tmp = node->left;
+    successor->left = tmp;
+    tmp->top = successor;
+    p = node->top;
+    c = TCOLOR_OF(node);
+    tmp = p;
+    TCHANGE(node, successor, tmp, t);
+    if (child2) {
+      TSET_PC(child2, parent, BLACK);
+      rebalance = NULL;
+    } else {
+      enum tcolors c2 = TCOLOR_OF(successor);
+      rebalance = c2 == BLACK? parent: NULL;
+    }
+    TSET_PC(successor, p, c);
+    tmp = successor;
+  }
+  if (rebalance) {
+    tdelete_fixup(t, rebalance);
+  }
+  free(dn);
+  return t;
+}
+struct tmap *tremove(struct tmap *t, gtype key) {
+  struct tnode *n = tsearch(t, key);
+  if (!n) {
+    return NULL;
+  }
+  if (t->fk) {
+    t->fk(n->key.v);
+  }
+  if (t->fv) {
+    t->fv(n->value.v);
+  }
+  tdelete(t, n);
+  --(t->size);
+  return t;
+}
+long tsize(const struct tmap *t) {
+  return t->size;
+}
+gtype *tkey_of(struct tnode *n) {
+  return &n->key;
+}
+gtype *tvalue_of(struct tnode *n) {
+  return &n->value;
+}
+struct tnode *tleft_most(struct tnode *n) {
+  if (!n) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");
+#endif
+    return NULL;
+  }
+  while (n->left) {
+    n = n->left;
+  }
+  return n;
+}
+struct tnode *tright_most(struct tnode *n) {
+  if (!n) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");
+#endif
+    return NULL;
+  }
+  while (n->right) {
+    n = n->right;
+  }
+  return n;
+}
+struct tnode *tleft_deepest(struct tnode *n) {
+  if (!n) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số nút không hợp lệ.");
+#endif
+    return NULL;
+  }
+  for (;;) {
+    if (n->left) {
+      n = n->left;
+    } else if (n->right) {
+      n = n->right;
+    } else {
+      break;
+    }
+  }
+  return n;
+}
+struct tnode *tnext_lrn(struct tnode *x) {
+  struct tnode *top = x->top;
+  if (top && x == top->left && top->right) {
+    return tleft_deepest(top->right);
+  }
+  return top;
+}
+void tnextkv_lrn(gtype **pk, gtype **pv) {
+  struct tnode *node = (struct tnode *)(*pk);
+  if (!node) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số không hợp lệ");
+#endif
+    return;
+  }
+  struct tnode *tmp = tnext_lrn(node);
+  if (tmp) {
+    *pk = &tmp->key;
+    *pv = &tmp->value;
+    return;
+  }
+  *pk = *pv = NULL;
+}
+struct tnode *troot(struct tmap *t) {
+  return t->root;
+}
+struct tnode *tnext_lnr(struct tnode *x) {
+  if (!x) {
+#ifdef CGEN_DEBUG
+    FLOG("Truy cập nút NULL");
+#endif
+    return NULL;
+  }
+  if (x->right) {
+    return tleft_most(x->right);
+  }
+  struct tnode *top = x->top;
+  while (top != NULL && x == top->right) {
+    x = top;
+    top = x->top;
+  }
+  return top;
+}
+void tnextkv_lnr(gtype **k, gtype **v) {
+  struct tnode *n = (struct tnode *)(*k);
+  struct tnode *tmp = tnext_lnr(n);
+  if (!tmp) {
+    *k = NULL;
+    *v = NULL;
+    return;
+  }
+  *k = &tmp->key;
+  *v = &tmp->value;
+}
+struct tnode *tprev_lnr(struct tnode *x) {
+  if (!x) {
+#ifdef CGEN_DEBUG
+    FLOG("Truy cập nút NULL");
+#endif
+    return NULL;
+  }
+  if (x->left) {
+    return tright_most(x->left);
+  }
+  struct tnode *top = x->top;
+  while (top != NULL && x == top->left) {
+    x = top;
+    top = x->top;
+  }
+  return top;
+}
+void tprevkv_lnr(gtype **k, gtype **v) {
+  struct tnode *n = (struct tnode *)(*k);
+  struct tnode *tmp = tprev_lnr(n);
+  if (!tmp) {
+    *k = NULL;
+    *v = NULL;
+    return;
+  }
+  *k = &tmp->key;
+  *v = &tmp->value;
+}
+int tis_red(struct tnode *n) {
+  return TIS_RED(n);
+}
+int tis_black(struct tnode *n) {
+  return TIS_BLACK(n);
+}
+struct tnode *tleft_of(struct tnode *n) {
+  if (!n) {
+#ifndef CGEN_DEBUG
+    FLOG("Nút không hợp lệ.");
+    return NULL;
+#endif
+  }
+  return n->left;
+}
+struct tnode *tright_of(struct tnode *n) {
+  if (!n) {
+#ifndef CGEN_DEBUG
+    FLOG("Nút không hợp lệ.");
+    return NULL;
+#endif
+  }
+  return n->right;
+}
+struct tnode *ttop_of(struct tnode *n) {
+  if (!n) {
+#ifndef CGEN_DEBUG
+    FLOG("Nút không hợp lệ.");
+    return NULL;
+#endif
+  }
+  return n->top;
+}
+void tfree(struct tmap *t) {
+  struct tnode *tmp = NULL;
+  TTRAVERSE_LRN(key, value, t) {
+    free(tmp);
+    tmp = (struct tnode *)key;
+    if (t->fk) {
+      t->fk(key->v);
+    }
+    if (t->fv) {
+      t->fv(value->v);
+    }
+  }
+  free(tmp);
+  free(t);
+}
+free_fn_t tfk(struct tmap *t) {
+  return t->fk;
+}
+free_fn_t tfv(struct tmap *t) {
+  return t->fv;
+}
+struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
+  if (!t) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số t không hợp lệ.");
+#endif
+    return NULL;
+  }
+  t->fk = fk;
+  return t;
+}
+struct tmap *tsetfv(struct tmap *t, free_fn_t fv) {
+  if (!t) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số t không hợp lệ.");
+#endif
+    return NULL;
+  }
+  t->fv = fv;
+  return t;
 }

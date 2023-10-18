@@ -44,10 +44,6 @@ typedef union generic_type {
   double d;
   char *s;
   void *v;
-  struct dlist *dl;
-  struct slist *sl;
-  struct vector *vec;
-  struct tmap *tm;
 } gtype;
 #define GZERO (GLONG(0l))
 #define GTYPE(type,val) ((gtype){.type = (val)})
@@ -55,46 +51,42 @@ typedef union generic_type {
 #define GDOUBLE(value) GTYPE(d, value)
 #define GSTR(value) GTYPE(s, (char *)value)
 #define GVOID(value) GTYPE(v, value)
-#define GDLIST(value) GTYPE(dl, value)
-#define GSLIST(value) GTYPE(sl, value)
-#define GVECTOR(value) GTYPE(vec, value)
-#define GTREEMAP(value) GTYPE(tm, value)
 #define GSWAP(v1,v2) \
   do { \
     gtype _tmp = (v1); \
     (v1) = (v2); \
     (v2) = _tmp; \
   } while (0)
-typedef int (*gcmp_fn_t)(const gtype*, const gtype*);
-typedef void (*free_fn_t)(gtype*);
-typedef int (*gprint_fn_t)(const gtype*);
-static inline int glong_cmp(const gtype *v1, const gtype *v2) {
-  return v1->l - v2->l;
+typedef int (*gcmp_fn_t)(const gtype, const gtype);
+typedef int (*gprint_fn_t)(const gtype);
+typedef void (*free_fn_t)(void*);
+static inline int glong_cmp(const gtype v1, const gtype v2) {
+  return v1.l - v2.l;
 }
-static inline int glong_rcmp(const gtype *v1, const gtype *v2) {
-  return v2->l - v1->l;
+static inline int glong_rcmp(const gtype v1, const gtype v2) {
+  return v2.l - v1.l;
 }
-static inline int gdouble_cmp(const gtype *v1, const gtype *v2) {
-  if (v1->d < v2->d) {
+static inline int gdouble_cmp(const gtype v1, const gtype v2) {
+  if (v1.d < v2.d) {
     return -1;
-  } else if (v1->d > v2->d) {
+  } else if (v1.d > v2.d) {
     return 1;
   }
   return 0;
 }
-static inline int gdouble_rcmp(const gtype *v1, const gtype *v2) {
-  if (v2->d < v1->d) {
+static inline int gdouble_rcmp(const gtype v1, const gtype v2) {
+  if (v2.d < v1.d) {
     return -1;
-  } else if (v2->d > v1->d) {
+  } else if (v2.d > v1.d) {
     return 1;
   }
   return 0;
 }
-static inline int gstr_cmp(const gtype *v1, const gtype *v2) {
-  return strcmp(v1->s, v2->s);
+static inline int gstr_cmp(const gtype v1, const gtype v2) {
+  return strcmp(v1.s, v2.s);
 }
-static inline int gstr_rcmp(const gtype *v1, const gtype *v2) {
-  return strcmp(v2->s, v1->s);
+static inline int gstr_rcmp(const gtype v1, const gtype v2) {
+  return strcmp(v2.s, v1.s);
 }
 static inline int gtype_qsort_l(const void *v1, const void *v2) {
   return ((const gtype*)v1)->l - ((const gtype*)v2)->l;
@@ -110,23 +102,17 @@ static inline int gtype_qsort_d(const void *v1, const void *v2) {
 static inline int gtype_qsort_s(const void *v1, const void *v2) {
   return strcmp(((const gtype*)v1)->s, ((const gtype*)v2)->s);
 }
-static int gtype_print_l(const gtype *value) {
-  printf("%ld\n", value->l);
+static int gtype_print_l(const gtype value) {
+  printf("%ld\n", value.l);
   return 0;
 }
-static int gtype_print_d(const gtype *value) {
-  printf("%f\n", value->d);
+static int gtype_print_d(const gtype value) {
+  printf("%f\n", value.d);
   return 0;
 }
-static int gtype_print_s(const gtype *value) {
-  printf("%s\n", value->s);
+static int gtype_print_s(const gtype value) {
+  printf("%s\n", value.s);
   return 0;
-}
-static void gtype_free_s(gtype v) {
-  free(v.s);
-}
-static void gtype_free_v(gtype v) {
-  free(v.v);
 }
 #endif
 
@@ -153,6 +139,7 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
 /***** ./cont/vector.h *****/
 #ifndef CONT_VECTOR_H_
 #define CONT_VECTOR_H_ 
+struct vector;
 long vsize(const struct vector *v);
 int vempty(const struct vector *v);
 long vcap(const struct vector *v);
@@ -166,10 +153,10 @@ struct vector *vreserve(struct vector *v, long newcap);
 struct vector *vresize(struct vector *v, long newsz);
 struct vector *vappend(struct vector *v, gtype val);
 struct vector *vremove(struct vector *v, long idx);
+struct vector *vinsert_before(struct vector *v, gtype e, long i);
 struct vector *vclear(struct vector *v);
 void vfree(struct vector *v);
 void vfill(struct vector *v, gtype value);
-void gfree_vec(gtype *value);
 struct vector *vpush(struct vector *v, gtype val);
 struct vector *vpop(struct vector *v);
 gtype *vtop(struct vector *v);
@@ -189,6 +176,7 @@ int vsameas(struct vector *v1, struct vector *v2);
 /***** ./cont/queue.h *****/
 #ifndef CONT_QUEUE_H_
 #define CONT_QUEUE_H_ 
+struct queue;
 struct queue *qcreate(long cap);
 struct queue *qenque(struct queue* q, gtype val);
 struct queue *qdeque(struct queue *q);
@@ -204,6 +192,7 @@ struct queue *qsetfv(struct queue *q, free_fn_t fv);
 /***** ./cont/slist.h *****/
 #ifndef CONT_SLIST_H_
 #define CONT_SLIST_H_ 
+struct slist;
 struct slist *screate();
 gtype *sfront(struct slist *list);
 gtype *sback(struct slist *list);
@@ -229,6 +218,7 @@ gtype *speek(struct slist *list);
 /***** ./cont/dlist.h *****/
 #ifndef CONT_DLIST_H_
 #define CONT_DLIST_H_ 
+struct dlist;
 struct dlist *dcreate();
 gtype *dfront(struct dlist *list);
 gtype *dback(struct dlist *list);
@@ -248,5 +238,53 @@ struct dlist *dsetfv(struct dlist *list, free_fn_t fv);
 #define DRTRAVERSE(cur,list) \
   for (gtype *cur = (gtype*)((list)->back); cur != NULL; \
               cur = (gtype*)((struct dnode *)cur->prev))
+#endif
+
+/***** ./cont/tmap.h *****/
+#ifndef CONT_TREEMAP_H_
+#define CONT_TREEMAP_H_ 
+struct tnode;
+struct tmap;
+gtype *tkey_of(struct tnode *n);
+gtype *tvalue_of(struct tnode *n);
+struct tnode *tleft_most(struct tnode *n);
+struct tnode *tright_most(struct tnode *n);
+struct tnode *tleft_deepest(struct tnode *n);
+struct tnode *tnext_lrn(struct tnode *x);
+void tnextkv_lrn(gtype **pk, gtype **pv);
+struct tnode *tprev_lnr(struct tnode *x);
+void tprevkv_lnr(gtype **pk, gtype **pv);
+struct tnode *tnext_lnr(struct tnode *x);
+void tnextkv_lnr(gtype **k, gtype **v);
+int tis_red(struct tnode *n);
+int tis_black(struct tnode *n);
+struct tnode *tleft_of(struct tnode *n);
+struct tnode *tright_of(struct tnode *n);
+struct tnode *ttop_of(struct tnode *n);
+struct tmap *tcreate(gcmp_fn_t cmp);
+gtype *tput(struct tmap *t, const gtype key, const gtype value);
+gtype *tget(struct tmap *t, const gtype key);
+struct tmap *tremove(struct tmap *t, gtype key);
+long tsize(const struct tmap *t);
+struct tnode *troot(struct tmap *t);
+free_fn_t tfk(struct tmap *t);
+free_fn_t tfv(struct tmap *t);
+struct tmap *tsetfk(struct tmap *t, free_fn_t fk);
+struct tmap *tsetfv(struct tmap *t, free_fn_t fv);
+void tfree(struct tmap *t);
+#define TTRAVERSE_LNR(k,v,t) \
+  for (gtype *k = (gtype*)tleft_most(troot(t)), \
+             *v = k? tvalue_of((struct tnode*)k): NULL; \
+       k != NULL && v != NULL; tnextkv_lnr(&k, &v))
+#define TTRAVERSE(k,v,t) TTRAVERSE_LNR(k, v, t)
+#define TTRAVERSE_RNL(k,v,t) \
+  for (gtype *k = (gtype*)tright_most(troot(t)), \
+             *v = k? tvalue_of((struct tnode*)k): NULL; \
+       k != NULL && v != NULL; tprevkv_lnr(&k, &v))
+#define TRTRAVERSE(k,v,t) TTRAVERSE_RNL(k, v, t)
+#define TTRAVERSE_LRN(k,v,t) \
+  for (gtype *k = (gtype*)tleft_deepest(troot(t)), \
+             *v = k? tvalue_of((struct tnode *)k): NULL; \
+       k != NULL; tnextkv_lrn(&k, &v))
 #endif
 #endif  // CGEN_H_
