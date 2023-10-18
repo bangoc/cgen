@@ -42,6 +42,7 @@ add_test(NAME TMRandInsertDeleteUT
          COMMAND tm_rand_insert_delete_ut 10000 1000)
 add_test(NAME VecAppendInsertUT COMMAND vec_append_insert_ut)
 add_test(NAME VecStrFailoverUT COMMAND vec_str_failover_ut)
+add_test(NAME VecOfVecsUT COMMAND vec_of_vecs_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)

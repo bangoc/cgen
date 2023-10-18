@@ -59,7 +59,7 @@ typedef union generic_type {
   } while (0)
 typedef int (*gcmp_fn_t)(const gtype, const gtype);
 typedef int (*gprint_fn_t)(const gtype);
-typedef void (*free_fn_t)(void*);
+typedef void (*free_fn_t)();
 static inline int glong_cmp(const gtype v1, const gtype v2) {
   return v1.l - v2.l;
 }
