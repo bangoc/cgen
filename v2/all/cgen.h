@@ -65,9 +65,9 @@ typedef union generic_type {
     (v1) = (v2); \
     (v2) = _tmp; \
   } while (0)
-typedef int (*gtype_cmp_t)(const gtype*, const gtype*);
-typedef void (*gtype_free_t)(gtype*);
-typedef int (*gtype_print_t)(const gtype*);
+typedef int (*gcmp_fn_t)(const gtype*, const gtype*);
+typedef void (*free_fn_t)(gtype*);
+typedef int (*gprint_fn_t)(const gtype*);
 static inline int glong_cmp(const gtype *v1, const gtype *v2) {
   return v1->l - v2->l;
 }
@@ -157,8 +157,8 @@ long vsize(const struct vector *v);
 int vempty(const struct vector *v);
 long vcap(const struct vector *v);
 double vratio(const struct vector *v);
-gtype_free_t vfv(const struct vector *v);
-struct vector *vsetfv(struct vector *v, gtype_free_t fv);
+free_fn_t vfv(const struct vector *v);
+struct vector *vsetfv(struct vector *v, free_fn_t fv);
 gtype *varr(struct vector *v);
 gtype *vref(struct vector *v, long i);
 long vidx(struct vector *v, gtype *elem_ptr);
@@ -197,8 +197,8 @@ int qempty(const struct queue *q);
 long qsize(const struct queue *q);
 long qnext(const struct queue *q, long id);
 void qfree(struct queue *q);
-gtype_free_t qfv(struct queue *q);
-struct queue *qsetfv(struct queue *q, gtype_free_t fv);
+free_fn_t qfv(struct queue *q);
+struct queue *qsetfv(struct queue *q, free_fn_t fv);
 #endif
 
 /***** ./cont/slist.h *****/
@@ -208,8 +208,8 @@ struct slist *screate();
 gtype *sfront(struct slist *list);
 gtype *sback(struct slist *list);
 long ssize(struct slist *list);
-gtype_free_t sfv(struct slist *list);
-struct slist *ssetfv(struct slist *list, gtype_free_t fv);
+free_fn_t sfv(struct slist *list);
+struct slist *ssetfv(struct slist *list, free_fn_t fv);
 void sfree(struct slist *list);
 int sempty(struct slist *list);
 struct slist *sappend(struct slist *list, gtype data);
@@ -240,8 +240,8 @@ struct dlist *dappend(struct dlist *list, gtype elem);
 struct dlist *dprepend(struct dlist *list, gtype elem);
 struct dlist *ddfront(struct dlist *list);
 struct dlist *ddback(struct dlist *list);
-gtype_free_t dfv(struct dlist *list);
-struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
+free_fn_t dfv(struct dlist *list);
+struct dlist *dsetfv(struct dlist *list, free_fn_t fv);
 #define DTRAVERSE(cur,list) \
   for (gtype *cur = (gtype*)((list)->front); cur != NULL; \
               cur = (gtype*)((struct dnode *)cur->next))

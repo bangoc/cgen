@@ -41,7 +41,7 @@ struct vector {
    * bộ nhớ của vec-tơ, nếu ngược lại (== \c NULL) thì các gọi hàm được
    * bỏ qua.
    */
-  gtype_free_t fv;
+  free_fn_t fv;
 };
 
 long vsize(const struct vector *v) {
@@ -60,11 +60,11 @@ double vratio(const struct vector *v) {
   return v->k;
 }
 
-gtype_free_t vfv(const struct vector *v) {
+free_fn_t vfv(const struct vector *v) {
   return v->fv;
 }
 
-struct vector *vsetfv(struct vector *v, gtype_free_t fv) {
+struct vector *vsetfv(struct vector *v, free_fn_t fv) {
   v->fv = fv;
   return v;
 }
@@ -98,7 +98,7 @@ struct vector *vresize(struct vector *v, long newsz) {
     vreserve(v, newsz);
   } else if (newsz < v->sz && v->fv) {
     for (long j = newsz; j < vsize(v); ++j) {
-      v->fv(v->elems[j]);
+      v->fv(v->elems[j].v);
     }
   }
   v->sz = newsz;
@@ -151,10 +151,6 @@ void vfill(struct vector *v, gtype value) {
   } 
 }
 
-void gfree_vec(gtype *value) {
-  vfree(value->vec);
-}
-
 struct vector *vcreate(long sz) {
   if (sz < 0) {
 #ifdef CGEN_DEBUG
@@ -187,7 +183,9 @@ struct vector *vclone(struct vector *v) {
 }
 
 int vsameas(struct vector *v1, struct vector *v2) {
-  if (v1->sz != v2->sz || v1->cap != v2->cap) {
+  if (v1->sz != v2->sz || 
+      v1->cap != v2->cap || 
+      v1->fv != v2->fv) {
     return 0;
   }
   size_t elems_size = v1->cap * sizeof(gtype);

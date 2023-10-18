@@ -42,7 +42,7 @@ struct dlist {
   long length;
 
   /** Con trỏ hàm giải phóng bộ nhớ ngoài của phần tử */
-  gtype_free_t fv;
+  free_fn_t fv;
 };
 
 struct dnode *dnode(gtype data) {
@@ -167,7 +167,7 @@ struct dlist *ddfront(struct dlist *list) {
     list->front->prev = NULL;
   }
   if (list->fv) {
-    list->fv(tmp->data);
+    list->fv(tmp->data.v);
   }
   free(tmp);
   --list->length;
@@ -190,18 +190,18 @@ struct dlist *ddback(struct dlist *list) {
     list->back->next = NULL;
   }
   if (list->fv) {
-    list->fv(tmp->data);
+    list->fv(tmp->data.v);
   }
   free(tmp);
   --list->length;
   return list;
 }
 
-gtype_free_t dfv(struct dlist *list) {
+free_fn_t dfv(struct dlist *list) {
   return list->fv;
 }
 
-struct dlist *dsetfv(struct dlist *list, gtype_free_t fv) {
+struct dlist *dsetfv(struct dlist *list, free_fn_t fv) {
   if (!list) {
 #ifdef CGEN_DEBUG
     FLOG("Lỗi danh sách không hợp lệ.");

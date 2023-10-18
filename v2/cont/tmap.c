@@ -74,7 +74,7 @@ struct tnode *tnode(const gtype key, const gtype value) {
  * Cấu trúc điều khiển của bảng cây tmap, được tạo bằng hàm
  * tmap = red black map tree
  *
- * rbm_create(gtype_cmp_t cmp, gtype_free_t free_key, gtype_free_t free_value).
+ * rbm_create(gcmp_fn_t cmp, free_fn_t free_key, free_fn_t free_value).
  *
  * Các macro hỗ trợ:
  * 
@@ -82,12 +82,12 @@ struct tnode *tnode(const gtype key, const gtype value) {
  */
 struct tmap {
   struct tnode *root;
-  gtype_cmp_t cmp;
-  gtype_free_t fk, fv;
+  gcmp_fn_t cmp;
+  free_fn_t fk, fv;
   long size;
 };
 
-struct tmap *tcreate(gtype_cmp_t cmp) {
+struct tmap *tcreate(gcmp_fn_t cmp) {
   if (!cmp) {
 #ifdef CGEN_DEBUG
     FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh.");
@@ -512,10 +512,10 @@ struct tmap *tremove(struct tmap *t, gtype key) {
     return NULL;
   }
   if (t->fk) {
-    t->fk(n->key);
+    t->fk(n->key.v);
   }
   if (t->fv) {
-    t->fv(n->value);
+    t->fv(n->value.v);
   }
   tdelete(t, n);
   --(t->size);
@@ -714,16 +714,46 @@ struct tnode *ttop_of(struct tnode *n) {
 
 void tfree(struct tmap *t) {
   struct tnode *tmp = NULL;
-  TTRAVERSE_LRN(k, v, t) {
+  TTRAVERSE_LRN(key, value, t) {
     free(tmp);
-    tmp = (struct tnode *)k;
+    tmp = (struct tnode *)key;
     if (t->fk) {
-      t->fk(*k);
+      t->fk(key->v);
     }
     if (t->fv) {
-      t->fv(*v);
+      t->fv(value->v);
     }
   }
   free(tmp);
   free(t);
+}
+
+free_fn_t tfk(struct tmap *t) {
+  return t->fk;
+}
+
+free_fn_t tfv(struct tmap *t) {
+  return t->fv;
+}
+
+struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
+  if (!t) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số t không hợp lệ.");
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  t->fk = fk;
+  return t;
+}
+
+struct tmap *tsetfv(struct tmap *t, free_fn_t fv) {
+  if (!t) {
+#ifdef CGEN_DEBUG
+    FLOG("Tham số t không hợp lệ.");
+#endif  // CGEN_DEBUG    
+    return NULL;
+  }
+  t->fv = fv;
+  return t;
 }

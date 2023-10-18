@@ -9,6 +9,8 @@
 #include "base/core.h"
 #include "base/gtype.h"
 
+struct slist;
+
 /**
  * Hàm tạo danh sách
  * 
@@ -48,7 +50,7 @@ long ssize(struct slist *list);
  * @return Con trỏ fv.
  * \memberof slist
  */
-gtype_free_t sfv(struct slist *list);
+free_fn_t sfv(struct slist *list);
 
 /**
  * Thiết lập con trỏ fv của list
@@ -58,7 +60,7 @@ gtype_free_t sfv(struct slist *list);
  * @return Chuyển tiếp con trỏ list
  * \memberof slist
  */
-struct slist *ssetfv(struct slist *list, gtype_free_t fv);
+struct slist *ssetfv(struct slist *list, free_fn_t fv);
 
 /**
  * Hàm giải phóng bộ nhớ của danh sách

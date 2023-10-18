@@ -9,6 +9,10 @@
 #ifndef CONT_DLIST_H_
 #define CONT_DLIST_H_
 
+#include "base/gtype.h"
+
+struct dlist;
+
 /**
  * Hàm tạo danh sách
  * 
@@ -125,7 +129,7 @@ struct dlist *ddback(struct dlist *list);
  * @return Trả về con trỏ fv.
  * \memberof dlist
  */
-gtype_free_t dfv(struct dlist *list);
+free_fn_t dfv(struct dlist *list);
 
 /**
  * Thiết lập con trỏ fv
@@ -136,7 +140,7 @@ gtype_free_t dfv(struct dlist *list);
  * hoặc NULL nếu tham số list không hợp lệ.
  * \memberof dlist
  */
-struct dlist *dsetfv(struct dlist *list, gtype_free_t fv);
+struct dlist *dsetfv(struct dlist *list, free_fn_t fv);
 
 
 /**

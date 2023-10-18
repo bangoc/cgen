@@ -16,6 +16,8 @@
 #include "base/core.h"
 #include "base/gtype.h"
 
+struct vector;
+
 /**
  * Trong vec-tơ size là số lượng phần tử mảng đã sử dụng,
  * còn capacity là số lượng phần tử đã được cấp phát cho
@@ -60,10 +62,10 @@ double vratio(const struct vector *v);
  * Con trỏ hàm giải phóng bộ nhớ động của phần tử
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
- * @return Trả về con trỏ hàm, có kiểu gtype_free_t.
+ * @return Trả về con trỏ hàm, có kiểu free_fn_t.
  * \memberof vector
  */
-gtype_free_t vfv(const struct vector *v);
+free_fn_t vfv(const struct vector *v);
 
 /**
  * Thiết lập con trỏ hàm giải phóng bộ nhớ động của phần tử
@@ -73,7 +75,7 @@ gtype_free_t vfv(const struct vector *v);
  * @return Chuyển tiếp con trỏ v
  * \memberof vector
  */
-struct vector *vsetfv(struct vector *v, gtype_free_t fv);
+struct vector *vsetfv(struct vector *v, free_fn_t fv);
 
 /**
  * Giao diện mảng của vec-tơ.
@@ -204,18 +206,6 @@ void vfree(struct vector *v);
  * \memberof vector
  */
 void vfill(struct vector *v, gtype value);
-
-/**
- * Hàm giải phóng bộ nhớ cho trường hợp con trỏ tới đối tượng vec-tơ
- * được lưu trong một cấu trúc lưu trữ khác.
- *
- * @param value Giá trị gtype đang chứa con trỏ tới vec-tơ.
- * Trước tiên value.v được ép kiểu thành struct vector *,
- * sau đó con trỏ struct vector * được truyền cho vfree.
- * @return Hàm không trả về giá trị.
- * \memberof gtype
- */
-void gfree_vec(gtype *value);
 
 /**
  * Hỗ trợ sử dụng vec-tơ như ngăn xếp - xếp phần tử

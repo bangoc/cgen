@@ -11,7 +11,7 @@ struct vector {
   long sz;
   long cap;
   double k;
-  gtype_free_t fv;
+  free_fn_t fv;
 };
 long vsize(const struct vector *v) {
   return v->sz;
@@ -25,10 +25,10 @@ long vcap(const struct vector *v) {
 double vratio(const struct vector *v) {
   return v->k;
 }
-gtype_free_t vfv(const struct vector *v) {
+free_fn_t vfv(const struct vector *v) {
   return v->fv;
 }
-struct vector *vsetfv(struct vector *v, gtype_free_t fv) {
+struct vector *vsetfv(struct vector *v, free_fn_t fv) {
   v->fv = fv;
   return v;
 }
@@ -179,7 +179,7 @@ struct queue {
   long cap;
   long fi;
   long la;
-  gtype_free_t fv;
+  free_fn_t fv;
   gtype *elems;
 };
 struct queue *qcreate(long cap) {
@@ -281,10 +281,10 @@ int qempty(const struct queue *q) {
 long qsize(const struct queue *q) {
   return q->sz;
 }
-gtype_free_t qfv(struct queue *q) {
+free_fn_t qfv(struct queue *q) {
   return q->fv;
 }
-struct queue *qsetfv(struct queue *q, gtype_free_t fv) {
+struct queue *qsetfv(struct queue *q, free_fn_t fv) {
   q->fv = fv;
   return q;
 }
@@ -306,7 +306,7 @@ struct snode {
 struct slist {
   struct snode *front;
   struct snode *back;
-  gtype_free_t fv;
+  free_fn_t fv;
   long length;
 };
 struct snode *snode(gtype data) {
@@ -399,10 +399,10 @@ struct slist *sdfront(struct slist *list) {
   --list->length;
   return list;
 }
-gtype_free_t sfv(struct slist *list) {
+free_fn_t sfv(struct slist *list) {
   return list->fv;
 }
-struct slist *ssetfv(struct slist *list, gtype_free_t fv) {
+struct slist *ssetfv(struct slist *list, free_fn_t fv) {
   list->fv = fv;
   return list;
 }
@@ -454,7 +454,7 @@ struct dlist {
   struct dnode *front;
   struct dnode *back;
   long length;
-  gtype_free_t fv;
+  free_fn_t fv;
 };
 struct dnode *dnode(gtype data) {
   struct dnode *tmp = malloc(sizeof(struct dnode));
@@ -596,10 +596,10 @@ struct dlist *ddback(struct dlist *list) {
   --list->length;
   return list;
 }
-gtype_free_t dfv(struct dlist *list) {
+free_fn_t dfv(struct dlist *list) {
   return list->fv;
 }
-struct dlist *dsetfv(struct dlist *list, gtype_free_t fv) {
+struct dlist *dsetfv(struct dlist *list, free_fn_t fv) {
   if (!list) {
 #ifdef CGEN_DEBUG
     FLOG("Lỗi danh sách không hợp lệ.");

@@ -188,7 +188,7 @@ struct tnode *ttop_of(struct tnode *n);
  *
  * \memberof tmap
  */
-struct tmap *tcreate(gtype_cmp_t cmp);
+struct tmap *tcreate(gcmp_fn_t cmp);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
@@ -246,6 +246,42 @@ long tsize(const struct tmap *t);
  * \memberof tmap
  */
 struct tnode *troot(struct tmap *t);
+
+/**
+ * Truy cập thành viên fk của tmap.
+ * 
+ * @param t - Con trỏ tới bảng cây.
+ * @return Trả về con trỏ hàm fk.
+ */
+free_fn_t tfk(struct tmap *t);
+
+/**
+ * Truy cập thành viên fv của tmap.
+ * 
+ * @param t - Con trỏ tới bảng cây.
+ * @return Trả về con trỏ hàm fv.
+ */
+free_fn_t tfv(struct tmap *t);
+
+/**
+ * Thiết lập thành viên fk của tmap.
+ * 
+ * @param t - Con trỏ tới bảng cây.
+ * @param fk - Con trỏ tới hàm giải phóng bộ nhớ của khóa.
+ * @return Chuyển tiếp con trỏ t, hoặc trả về NULL nếu phát
+ * sinh lỗi.
+ */
+struct tmap *tsetfk(struct tmap *t, free_fn_t fk);
+
+/**
+ * Thiết lập thành viên fv của tmap.
+ * 
+ * @param t - Con trỏ tới bảng cây.
+ * @param fv - Con trỏ tới hàm giải phóng bộ nhớ của khóa.
+ * @return Chuyển tiếp con trỏ t, hoặc trả về NULL nếu phát
+ * sinh lỗi.
+ */
+struct tmap *tsetfv(struct tmap *t, free_fn_t fv);
 
 /**
  * Giải phóng bộ nhớ của bảng cây.

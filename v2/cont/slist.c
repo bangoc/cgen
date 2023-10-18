@@ -34,7 +34,7 @@ struct slist {
   struct snode *back;
 
   /** Con trỏ hàm giải phóng bộ nhớ động của phần tử */
-  gtype_free_t fv;
+  free_fn_t fv;
 
   /** Độ dài (số lượng phần tử) của danh sách */
   long length;
@@ -132,18 +132,18 @@ struct slist *sdfront(struct slist *list) {
   struct snode *tmp = list->front;
   list->front = tmp->next;
   if (list->fv) {
-    list->fv(tmp->data);
+    list->fv(tmp->data.v);
   }
   free(tmp);
   --list->length;
   return list;
 }
 
-gtype_free_t sfv(struct slist *list) {
+free_fn_t sfv(struct slist *list) {
   return list->fv;
 }
 
-struct slist *ssetfv(struct slist *list, gtype_free_t fv) {
+struct slist *ssetfv(struct slist *list, free_fn_t fv) {
   list->fv = fv;
   return list;
 }

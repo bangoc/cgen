@@ -8,6 +8,8 @@
 
 #include "base/gtype.h"
 
+struct queue;
+
 /**
  * Tạo hàng đợi.
  * 
@@ -89,7 +91,7 @@ void qfree(struct queue *q);
  * @return Con trỏ hàm giải phóng bộ nhớ phần tử - fv.
  * \memberof queue
  */
-gtype_free_t qfv(struct queue *q);
+free_fn_t qfv(struct queue *q);
 
 /**
  * Thiết lập con trỏ hàm giải phóng phần tử.
@@ -99,6 +101,6 @@ gtype_free_t qfv(struct queue *q);
  * @return Chuyển tiếp con trỏ q
  * \memberof queue
  */
-struct queue *qsetfv(struct queue *q, gtype_free_t fv);
+struct queue *qsetfv(struct queue *q, free_fn_t fv);
 
 #endif  // CONT_QUEUE_H_

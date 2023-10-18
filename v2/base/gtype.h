@@ -12,7 +12,8 @@
 #include <stdlib.h>
 
 /**
- * Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu được triển khai.
+ * Kiểu dữ liệu cơ bản của các cấu trúc dữ liệu và thuật toán 
+ * được triển khai trong thư viện.
  * \ref gtype có thể thay thế cho 1 nhóm kiểu dữ liệu.
  */
 typedef union generic_type {
@@ -20,10 +21,6 @@ typedef union generic_type {
   double d;
   char *s;
   void *v;
-  struct dlist *dl;
-  struct slist *sl;
-  struct vector *vec;
-  struct tmap *tm;
 } gtype;
 
 #define GZERO (GLONG(0l))
@@ -33,10 +30,6 @@ typedef union generic_type {
 #define GDOUBLE(value) GTYPE(d, value)
 #define GSTR(value) GTYPE(s, (char *)value)
 #define GVOID(value) GTYPE(v, value)
-#define GDLIST(value) GTYPE(dl, value)
-#define GSLIST(value) GTYPE(sl, value)
-#define GVECTOR(value) GTYPE(vec, value)
-#define GTREEMAP(value) GTYPE(tm, value)
 
 #define GSWAP(v1, v2) \
   do { \
@@ -45,9 +38,9 @@ typedef union generic_type {
     (v2) = _tmp; \
   } while (0)
 
-typedef int (*gtype_cmp_t)(const gtype, const gtype);
-typedef void (*gtype_free_t)(gtype);
-typedef int (*gtype_print_t)(const gtype);
+typedef int (*gcmp_fn_t)(const gtype, const gtype);
+typedef int (*gprint_fn_t)(const gtype);
+typedef void (*free_fn_t)(void*);
 
 static inline int glong_cmp(const gtype v1, const gtype v2) {
   return v1.l - v2.l;
@@ -125,20 +118,6 @@ static int gtype_print_d(const gtype value) {
 static int gtype_print_s(const gtype value) {
   printf("%s\n", value.s);
   return 0;
-}
-
-/**
- * Giải phóng chuỗi được trỏ đến bởi con trỏ v.s
- *
- * @param v Giá trị gtype chứa con trỏ tới chuỗi.
- * @return Hàm không trả về giá trị.
- */
-static void gtype_free_s(gtype v) {
-  free(v.s);
-}
-
-static void gtype_free_v(gtype v) {
-  free(v.v);
 }
 
 #endif  // BASE_GTYPE_H_

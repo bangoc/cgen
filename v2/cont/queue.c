@@ -22,7 +22,7 @@ struct queue {
   long la;
 
   /** Con trỏ hàm giải phóng bộ nhớ phần tử */
-  gtype_free_t fv;
+  free_fn_t fv;
 
   /** Con trỏ tới mảng phần tử */
   gtype *elems;
@@ -112,7 +112,7 @@ struct queue *qdeque(struct queue *q) {
     return NULL;
   }
   if (q->fv) {
-    q->fv(q->elems[q->fi]);
+    q->fv(q->elems[q->fi].v);
   }
   q->fi = qnext(q, q->fi);
   --q->sz;
@@ -141,11 +141,11 @@ long qsize(const struct queue *q) {
   return q->sz;
 }
 
-gtype_free_t qfv(struct queue *q) {
+free_fn_t qfv(struct queue *q) {
   return q->fv;
 }
 
-struct queue *qsetfv(struct queue *q, gtype_free_t fv) {
+struct queue *qsetfv(struct queue *q, free_fn_t fv) {
   q->fv = fv;
   return q;
 }
