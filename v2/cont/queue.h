@@ -34,6 +34,7 @@ struct queue *qenque(struct queue* q, gtype val);
  * Xóa phần tử khỏi hàng đợi
  * @param q - Con trỏ tới hàng đợi.
  * @return Chuyển tiếp con trỏ q
+ * \memberof queue
  */
 struct queue *qdeque(struct queue *q);
 
