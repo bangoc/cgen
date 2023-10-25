@@ -68,7 +68,7 @@ $(function() {
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_README"></a>Triển khai khái quát các cấu trúc dữ liệu lưu trữ cơ bản</p>
 <h1>Hướng dẫn biên dịch</h1>
-<p>Mã nguồn thư viện được đóng gói trong 2 tệp <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.h">cgen.h</a> và <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.c">cgen.c</a> trong thư mục all.</p>
+<p>Mã nguồn thư viện được đóng gói trong 2 tệp <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.h">cgen.h</a> và <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.c">cgen.c</a> trong thư mục <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all">all</a>.</p>
 <h2>1. Biên dịch trực tiếp trong môi trường dòng lệnh</h2>
 <p>Chèn <a href="https://github.com/bangoc/cgen/tree/v2-start-simplify/v2/all/cgen.h">cgen.h</a> trong mã nguồn chương trình,</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;cgen.h&quot;</span></div>
@@ -88,8 +88,11 @@ $(function() {
 <div class="line">add_executable(prog main.c)</div>
 <div class="line">target_link_libraries(prog bkcgen)</div>
 </div><!-- fragment --><p>Nên thực hiện biên dịch dự án trong một thư mục độc lập, ví dụ:</p>
-<p>```console mkdir b cd b cmake .. -G Ninja ninja</p>
-<h2>3. Tài liệu</h2>
+<div class="fragment"><div class="line">mkdir b</div>
+<div class="line">cd b</div>
+<div class="line">cmake .. -G Ninja</div>
+<div class="line">ninja</div>
+</div><!-- fragment --><h2>3. Tài liệu</h2>
 <p>Xem tài liệu chi tiết ở địa chỉ <a href="https://bangoc.github.io/cgen/">APIs doc</a> </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->

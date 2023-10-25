@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['dlist_144',['dlist',['../structdlist.html',1,'']]],
-  ['dnode_145',['dnode',['../structdnode.html',1,'']]]
+  ['dlist_150',['dlist',['../structdlist.html',1,'']]],
+  ['dnode_151',['dnode',['../structdnode.html',1,'']]]
 ];
