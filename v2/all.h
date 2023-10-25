@@ -1,6 +1,7 @@
 #ifndef ALL_H_
 #define ALL_H_
 
+#include "algo/perm.h"
 #include "base/gtype.h"
 #include "cont/queue.h"
 #include "cont/dlist.h"

@@ -48,6 +48,7 @@ mkdir b
 cd b
 cmake .. -G Ninja
 ninja
+```
 
 ## 3. Tài liệu
 

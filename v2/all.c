@@ -1,3 +1,4 @@
+#include "algo/perm.c"
 #include "cont/queue.c"
 #include "cont/dlist.c"
 #include "cont/slist.c"
