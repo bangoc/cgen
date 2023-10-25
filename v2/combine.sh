@@ -17,6 +17,7 @@ process ./cont/queue.h ./all/cgen.h
 process ./cont/slist.h ./all/cgen.h
 process ./cont/dlist.h ./all/cgen.h
 process ./cont/tmap.h  ./all/cgen.h
+process ./algo/perm.h ./all/cgen.h
 process ./utils/bench.h ./all/cgen.h
 
 echo "#endif  // CGEN_H_" >> ./all/cgen.h
@@ -32,3 +33,4 @@ process ./cont/queue.c ./all/cgen.c
 process ./cont/slist.c ./all/cgen.c
 process ./cont/dlist.c ./all/cgen.c
 process ./cont/tmap.c ./all/cgen.c
+process ./algo/perm.c ./all/cgen.c

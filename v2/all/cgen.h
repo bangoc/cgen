@@ -263,6 +263,16 @@ void tfree(struct tmap *t);
        k != NULL; tnextkv_lrn(&k, &v))
 #endif
 
+/***** ./algo/perm.h *****/
+#ifndef ALGO_PERM_H_
+#define ALGO_PERM_H_ 
+struct vector *create_perm(long n);
+struct vector *next_perm(struct vector *v);
+struct vector *prev_perm(struct vector *v);
+int has_next_perm(struct vector *v);
+int has_prev_perm(struct vector *v);
+#endif
+
 /***** ./utils/bench.h *****/
 #ifndef BASE_CORE_H_
 #define BASE_CORE_H_ 
