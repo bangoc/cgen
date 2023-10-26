@@ -10,6 +10,7 @@ struct point *point_create(int r, int c) {
   struct point *p = malloc(sizeof(struct point));
   p->r = r;
   p->c = c;
+  return q;
 }
 
 void point_free(void *v) {
