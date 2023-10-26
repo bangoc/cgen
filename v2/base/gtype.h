@@ -42,6 +42,22 @@ typedef union generic_type {
         gtype: func, \
         default: func##_v)(cont, value)
 
+#define VALUE(elem, member) _Generic((elem),\
+        gtype: gget_##member,\
+        gtype*: pgget_##member)(elem)
+#define LONGG(elem) VALUE(elem, l)
+#define DOUBLEG(elem) VALUE(elem, d)
+#define STRG(elem) VALUE(elem, s)
+#define VOIDG(elem) VALUE(elem, v)
+static inline long gget_l(gtype g) { return g.l; }
+static inline double gget_d(gtype g) { return g.d; }
+static inline char *gget_s(gtype g) { return g.s; }
+static inline void *gget_v(gtype g) { return g.v; }
+static inline long pgget_l(gtype *g) { return g->l; }
+static inline double pgget_d(gtype *g) { return g->d; }
+static inline char *pgget_s(gtype *g) { return g->s; }
+static inline void *pgget_v(gtype *g) { return g->v; }
+
 #define GSWAP(v1, v2) \
   do { \
     gtype _tmp = (v1); \

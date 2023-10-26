@@ -159,7 +159,7 @@ static inline struct vector *_vappend_d(struct vector *v, double elem) {
 static inline struct vector *_vappend_s(struct vector *v, char *elem) {
   return _vappend(v, GSTR(elem));
 }
-static inline struct vector *_vappend_v(struct vector *v, char *elem) {
+static inline struct vector *_vappend_v(struct vector *v, void *elem) {
   return _vappend(v, GVOID(elem));
 }
 
