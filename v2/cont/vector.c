@@ -100,7 +100,7 @@ struct vector *vresize(struct vector *v, long newsz) {
   return v;
 }
 
-struct vector *vappend(struct vector *v, gtype val) {
+struct vector *_vappend(struct vector *v, gtype val) {
   if (v->sz == 0) {
     vreserve(v, 10);
   } else if (v->sz == v->cap) {

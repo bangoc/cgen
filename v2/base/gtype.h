@@ -28,8 +28,19 @@ typedef union generic_type {
 #define GTYPE(type, val) ((gtype){.type = (val)})
 #define GLONG(value) GTYPE(l, value)
 #define GDOUBLE(value) GTYPE(d, value)
-#define GSTR(value) GTYPE(s, (char *)value)
+#define GSTR(value) GTYPE(s, value)
 #define GVOID(value) GTYPE(v, value)
+#define GCALL2(func, cont, value) \
+    _Generic((value), \
+        char: func##_l, \
+        short: func##_l, \
+        int: func##_l, \
+        long: func##_l, \
+        float: func##_d, \
+        double: func##_d, \
+        char *: func##_s, \
+        gtype: func, \
+        default: func##_v)(cont, value)
 
 #define GSWAP(v1, v2) \
   do { \
