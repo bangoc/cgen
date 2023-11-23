@@ -3,7 +3,7 @@ int icmp(const void *p1, const void *p2) {
   return *(const int*)p1 - *(const int *)p2;
 }
 typedef int (*cmp_t)(const void *p1, const void *p2);
-int bsearch(const void *a, int n, int sz, const void *v, cmp_t cmp) {
+int my_bsearch(const void *a, int n, int sz, const void *v, cmp_t cmp) {
   int l = 0, r = n - 1;
   while (l <= r) {
     int m = (l + r) / 2;
@@ -24,5 +24,5 @@ int main(int argc, char *argv[]) {
   int n = sizeof(a)/sizeof(a[0]);
   int v;
   sscanf(argv[1], "%d", &v);
-  printf("%d\n", bsearch(a, n, sizeof(int), &v, icmp));
+  printf("%d\n", my_bsearch(a, n, sizeof(int), &v, icmp));
 }
