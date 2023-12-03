@@ -34,6 +34,8 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define acreate(elemtype, size) \
    acreate_internal(size, sizeof(elemtype), 2.0)
 
+#define aelem(a, i) (*(a))[i]
+
 #define areserve(a, newcap) \
   do { \
     if ((newcap) < asize(a)) { \
@@ -86,5 +88,15 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define atraverse(iter_decl, cur, a) \
   for (iter_decl cur = *(a), *_end = cur + asize(a); \
        cur < _end; ++cur)
+
+#define aremove(a, idx) \
+    do { \
+      for (long _i = (idx); _i < asize(a) - 1; ++_i) { \
+        aelem(a, _i) = aelem(a, _i + 1); \
+      } \
+    } while (0)
+#define apush(a, elem) aappend(a, elem)
+#define atop(a) aelem(a, asize(a) - 1)
+#define apop(a) aremove(a, asize(a) - 1)
 
 #endif  // CONT_ARR_H_
