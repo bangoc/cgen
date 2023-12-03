@@ -20,8 +20,34 @@ typedef union generic_type {
 #define GTYPE(type,val) ((gtype){.type = (val)})
 #define GLONG(value) GTYPE(l, value)
 #define GDOUBLE(value) GTYPE(d, value)
-#define GSTR(value) GTYPE(s, (char *)value)
+#define GSTR(value) GTYPE(s, value)
 #define GVOID(value) GTYPE(v, value)
+#define GCALL2(func,cont,value) \
+    _Generic((value), \
+        char: func##_l, \
+        short: func##_l, \
+        int: func##_l, \
+        long: func##_l, \
+        float: func##_d, \
+        double: func##_d, \
+        char *: func##_s, \
+        gtype: func, \
+        default: func##_v)(cont, value)
+#define VALUE(elem,member) _Generic((elem),\
+        gtype: gget_##member,\
+        gtype*: pgget_##member)(elem)
+#define LONGG(elem) VALUE(elem, l)
+#define DOUBLEG(elem) VALUE(elem, d)
+#define STRG(elem) VALUE(elem, s)
+#define VOIDG(elem) VALUE(elem, v)
+static inline long gget_l(gtype g) { return g.l; }
+static inline double gget_d(gtype g) { return g.d; }
+static inline char *gget_s(gtype g) { return g.s; }
+static inline void *gget_v(gtype g) { return g.v; }
+static inline long pgget_l(gtype *g) { return g->l; }
+static inline double pgget_d(gtype *g) { return g->d; }
+static inline char *pgget_s(gtype *g) { return g->s; }
+static inline void *pgget_v(gtype *g) { return g->v; }
 #define GSWAP(v1,v2) \
   do { \
     gtype _tmp = (v1); \
@@ -126,7 +152,20 @@ gtype *vref(struct vector *v, long i);
 long vidx(struct vector *v, gtype *elem_ptr);
 struct vector *vreserve(struct vector *v, long newcap);
 struct vector *vresize(struct vector *v, long newsz);
-struct vector *vappend(struct vector *v, gtype val);
+struct vector *_vappend(struct vector *v, gtype val);
+#define vappend(v,elem) GCALL2(_vappend, v, elem)
+static inline struct vector *_vappend_l(struct vector *v, long elem) {
+  return _vappend(v, GLONG(elem));
+}
+static inline struct vector *_vappend_d(struct vector *v, double elem) {
+  return _vappend(v, GDOUBLE(elem));
+}
+static inline struct vector *_vappend_s(struct vector *v, char *elem) {
+  return _vappend(v, GSTR(elem));
+}
+static inline struct vector *_vappend_v(struct vector *v, void *elem) {
+  return _vappend(v, GVOID(elem));
+}
 struct vector *vremove(struct vector *v, long idx);
 struct vector *vinsert_before(struct vector *v, gtype e, long i);
 struct vector *vclear(struct vector *v);

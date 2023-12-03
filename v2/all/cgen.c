@@ -59,10 +59,8 @@ struct vector *vresize(struct vector *v, long newsz) {
   v->sz = newsz;
   return v;
 }
-struct vector *vappend(struct vector *v, gtype val) {
-  if (v->sz == 0) {
-    vreserve(v, 10);
-  } else if (v->sz == v->cap) {
+struct vector *_vappend(struct vector *v, gtype val) {
+  if (v->sz == v->cap) {
     vreserve(v, v->k * v->sz);
   }
   v->elems[v->sz] = val;
