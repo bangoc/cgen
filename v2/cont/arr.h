@@ -88,9 +88,8 @@ static inline void *acreate_internal(long size, long esz, double rio) {
  * typeof ban đầu là 1 từ khóa trong mở rộng của GNU,
  * và đến nay đã chính thức trở thành 1 từ khóa của ISO C kể từ C23
  */
-#define atraverse(iter_decl, cur, a) \
-  for (iter_decl cur = *(a), *_end = cur + asize(a); \
-       cur < _end; ++cur)
+#define afor(i, a) \
+  for (long i = 0; i < asize(a); ++i)
 
 #define aremove(a, idx) \
     do { \
