@@ -34,6 +34,9 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define acreate(elemtype, size) \
    acreate_internal(size, sizeof(elemtype), 2.0)
 
+#define adecl(elemtype, name) elemtype **name
+#define amake(elemtype, name, size) \
+   adecl(elemtype, name) = acreate(elemtype, size)
 #define aelem(a, i) (*(a))[i]
 
 #define areserve(a, newcap) \
@@ -91,9 +94,13 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 
 #define aremove(a, idx) \
     do { \
+      if (asize(a) == 0) { \
+        break; \
+      } \
       for (long _i = (idx); _i < asize(a) - 1; ++_i) { \
         aelem(a, _i) = aelem(a, _i + 1); \
       } \
+      --asize(a); \
     } while (0)
 #define apush(a, elem) aappend(a, elem)
 #define atop(a) aelem(a, asize(a) - 1)
