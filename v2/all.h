@@ -3,6 +3,7 @@
 
 #include "algo/perm.h"
 #include "base/gtype.h"
+#include "cont/arr.h"
 #include "cont/queue.h"
 #include "cont/dlist.h"
 #include "cont/slist.h"

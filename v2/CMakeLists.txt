@@ -46,6 +46,7 @@ add_test(NAME VecOfVecsUT COMMAND vec_of_vecs_ut)
 add_test(NAME PermFailOverUT COMMAND perm_failover_ut)
 add_test(NAME VecAppendLongUT COMMAND vec_append_long_ut)
 add_test(NAME VecTupleUT COMMAND vec_tuple_ut)
+add_test(NAME ArrIntDemoUT COMMAND arr_int_demo_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)
