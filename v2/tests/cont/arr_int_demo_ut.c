@@ -26,7 +26,7 @@ int simple_traverse() {
 
 int main() {
   CHECK_MSG(simple_traverse(), "Simple traverse");
-  int **a = acreate(int, 0);
+  amake(int, a, 0);
   int elem;
   while (scanf("%d", &elem) == 1) {
     aappend(a, elem);
