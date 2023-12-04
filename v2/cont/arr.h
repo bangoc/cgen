@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 struct ainfo {
+  void *elems;
   long size;
   long cap;
   long esz;
@@ -14,17 +15,16 @@ struct ainfo {
 
 static inline void *acreate_internal(long size, long esz, double rio) {
   long cap = size > 0? size: 8;
-  struct ainfo *info = malloc(sizeof(struct ainfo) + cap * esz);
+  struct ainfo *info = malloc(sizeof(struct ainfo));
+  info->elems = malloc(cap * esz);
   info->size = size;
   info->cap = cap;
   info->esz = esz;
   info->rio = rio;
-  void **p = malloc(sizeof(void*));
-  *p = info + 1;
-  return p;
+  return &info->elems;
 }
 
-#define ainfo(a) ((struct ainfo *)((void*)(*(a)) - sizeof(struct ainfo)))
+#define ainfo(a) ((struct ainfo *)(a))
 #define asize(a) (ainfo(a)->size)
 #define acap(a) (ainfo(a)->cap)
 #define aesz(a) (ainfo(a)->esz)
@@ -45,9 +45,9 @@ static inline void *acreate_internal(long size, long esz, double rio) {
       break; \
     } \
     struct ainfo *_info = ainfo(a); \
-    _info = realloc(_info, sizeof(struct ainfo) + (newcap) * _info->esz); \
+    _info->elems = realloc(_info->elems, (newcap) * _info->esz); \
     _info->cap = (newcap); \
-    *(a) = (void*)(_info + 1); \
+    *(a) = _info->elems; \
   } while (0)
 
 #define aresize(a, newsize) \
@@ -60,8 +60,8 @@ static inline void *acreate_internal(long size, long esz, double rio) {
   } while (0)
 
 #define afree(a) \
-    free(ainfo(a)); \
-    free(a)
+    free(*(a)); \
+    free(ainfo(a))
 
 #define aclear(a) \
   do { \

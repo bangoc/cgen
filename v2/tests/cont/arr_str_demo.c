@@ -11,5 +11,9 @@ int main() {
   afor(i, a) {
     printf("%s\n", aelem(a, i));
   }
+  afor(i, a) {
+    free(aelem(a, i));
+  }
+  afree(a);
   TEST_OK();
 }
