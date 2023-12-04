@@ -24,12 +24,6 @@ static inline void *acreate_internal(long size, long esz, double rio) {
   return &info->elems;
 }
 
-#define ainfo(a) ((struct ainfo *)(a))
-#define asize(a) (ainfo(a)->size)
-#define acap(a) (ainfo(a)->cap)
-#define aesz(a) (ainfo(a)->esz)
-#define ario(a) (ainfo(a)->rio)
-
 /* Mặc định rio = 2 */
 #define acreate(elemtype, size) \
    acreate_internal(size, sizeof(elemtype), 2.0)
@@ -37,7 +31,14 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define adecl(elemtype, name) elemtype **name
 #define amake(elemtype, name, size) \
    adecl(elemtype, name) = acreate(elemtype, size)
-#define aelem(a, i) (*(a))[i]
+
+#define ainfo(a) ((struct ainfo *)(a))
+#define asize(a) (ainfo(a)->size)
+#define acap(a) (ainfo(a)->cap)
+#define aesz(a) (ainfo(a)->esz)
+#define ario(a) (ainfo(a)->rio)
+#define aarr(a) (*(a))
+#define aelem(a, i) aarr(a)[i]
 
 #define areserve(a, newcap) \
   do { \
@@ -53,7 +54,6 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define aresize(a, newsize) \
   do { \
     if (newsize > acap(a)) {  \
-      printf("newsize: %ld\n"); \
       areserve((a), newsize); \
     } \
     asize(a) = (newsize); \
@@ -104,5 +104,23 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define apush(a, elem) aappend(a, elem)
 #define atop(a) aelem(a, asize(a) - 1)
 #define apop(a) aremove(a, asize(a) - 1)
+#define aenque(a, elem) aappend(a, elem)
+#define apeek(a, head) aelem(a, head)
+#define adeque(a, head) \
+    do { \
+      struct ainfo *_info = ainfo(a); \
+      if (head >= _info->size) { \
+        break; \
+      } \
+      ++head; \
+      if (_info->cap / (_info->size - head + 1) > 10) { \
+        for (long _i = head; _i < _info->size; ++_i) { \
+          aelem(a, _i - head) = aelem(a, _i); \
+        } \
+        aresize(a, _info->size - head); \
+        areserve(a, _info->size + 8); \
+        head = 0; \
+      } \
+    } while (0)
 
 #endif  // CONT_ARR_H_
