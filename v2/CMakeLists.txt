@@ -50,6 +50,7 @@ add_test(NAME ArrIntDemoUT COMMAND echo 3 1 2 5 8 9 | arr_int_demo_ut)
 add_test(NAME ArrIntStackDemo COMMAND arr_int_stack_demo)
 add_test(NAME ArrStrDemo COMMAND arr_str_demo)
 add_test(NAME ArrIntQueueDemo COMMAND arr_int_queue_demo)
+add_test(NAME ArrInsertbUT  COMMAND arr_insertb_ut)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)
