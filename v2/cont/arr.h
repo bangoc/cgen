@@ -113,7 +113,7 @@ static inline void *acreate_internal(long size, long esz, double rio) {
         break; \
       } \
       ++head; \
-      if (_info->cap / (_info->size - head + 1) > 10) { \
+      if (head / (_info->cap - head + 1) > 8) { \
         for (long _i = head; _i < _info->size; ++_i) { \
           aelem(a, _i - head) = aelem(a, _i); \
         } \

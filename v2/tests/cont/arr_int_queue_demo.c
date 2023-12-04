@@ -2,13 +2,14 @@
 #include "all.h"
 int main() {
   amake(int, a, 0);
-  aenque(a, 3);
-  aenque(a, 5);
-  aenque(a, 7);
+  for (int i = 0; i < 64; ++i) {
+    aenque(a, i);
+  }
   int head = 0;
   while (head < asize(a)) {
-    printf("%d\n", apeek(a, head));
+    printf(" %d", apeek(a, head));
     adeque(a, head);
+    printf(" %d %ld %ld\n", head, asize(a), acap(a));
   }
   afree(a);
 }
