@@ -205,23 +205,42 @@ static inline void *acreate_internal(long size, long esz, double rio) {
      } \
      (*(a))[_info->size++] = (elem); \
    } while (0)
+#define ainsertb(a,elem,pos) \
+   do { \
+     long _pos = (pos); \
+     struct ainfo *_info = ainfo(a); \
+     aresize(a, _info->size + 1); \
+     _info = ainfo(a); \
+     for (long _i = _info->size - 1; _i > _pos; --_i) { \
+        aelem(a, _i) = aelem(a, _i - 1); \
+     } \
+     aelem(a, _pos) = elem; \
+     printf("pos: %ld\n", _pos); \
+   } while (0)
 #define aqsort(a,cmp) \
    qsort(*(a), asize(a), aesz(a), cmp)
 #define afor(i,a) \
   for (long i = 0; i < asize(a); ++i)
-#define aremove(a,idx) \
+#define aremove(a,pos) \
     do { \
       if (asize(a) == 0) { \
         break; \
       } \
-      for (long _i = (idx); _i < asize(a) - 1; ++_i) { \
+      for (long _i = (pos); _i < asize(a) - 1; ++_i) { \
         aelem(a, _i) = aelem(a, _i + 1); \
       } \
       --asize(a); \
     } while (0)
 #define apush(a,elem) aappend(a, elem)
 #define atop(a) aelem(a, asize(a) - 1)
-#define apop(a) aremove(a, asize(a) - 1)
+#define apop(a) \
+  do { \
+    struct ainfo *_info = ainfo(a); \
+    aremove(a, _info->size - 1); \
+    if (_info->cap / (_info->size + 1) > 8) { \
+      areserve(a, _info->size + 8); \
+    } \
+  } while (0)
 #define aenque(a,elem) aappend(a, elem)
 #define apeek(a,head) aelem(a, head)
 #define adeque(a,head) \

@@ -104,12 +104,12 @@ static inline void *acreate_internal(long size, long esz, double rio) {
 #define afor(i, a) \
   for (long i = 0; i < asize(a); ++i)
 
-#define aremove(a, idx) \
+#define aremove(a, pos) \
     do { \
       if (asize(a) == 0) { \
         break; \
       } \
-      for (long _i = (idx); _i < asize(a) - 1; ++_i) { \
+      for (long _i = (pos); _i < asize(a) - 1; ++_i) { \
         aelem(a, _i) = aelem(a, _i + 1); \
       } \
       --asize(a); \
