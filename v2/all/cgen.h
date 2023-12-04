@@ -137,6 +137,93 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
 }
 #endif
 
+/***** ./cont/arr.h *****/
+#ifndef CONT_ARR_H_
+#define CONT_ARR_H_ 
+#include <stdlib.h>
+struct ainfo {
+  void *elems;
+  long size;
+  long cap;
+  long esz;
+  double rio;
+};
+static inline void *acreate_internal(long size, long esz, double rio) {
+  long cap = size > 0? size: 8;
+  struct ainfo *info = malloc(sizeof(struct ainfo));
+  info->elems = malloc(cap * esz);
+  info->size = size;
+  info->cap = cap;
+  info->esz = esz;
+  info->rio = rio;
+  return &info->elems;
+}
+#define ainfo(a) ((struct ainfo *)(a))
+#define asize(a) (ainfo(a)->size)
+#define acap(a) (ainfo(a)->cap)
+#define aesz(a) (ainfo(a)->esz)
+#define ario(a) (ainfo(a)->rio)
+#define acreate(elemtype,size) \
+   acreate_internal(size, sizeof(elemtype), 2.0)
+#define adecl(elemtype,name) elemtype **name
+#define amake(elemtype,name,size) \
+   adecl(elemtype, name) = acreate(elemtype, size)
+#define aelem(a,i) (*(a))[i]
+#define areserve(a,newcap) \
+  do { \
+    if ((newcap) < asize(a)) { \
+      break; \
+    } \
+    struct ainfo *_info = ainfo(a); \
+    _info->elems = realloc(_info->elems, (newcap) * _info->esz); \
+    _info->cap = (newcap); \
+    *(a) = _info->elems; \
+  } while (0)
+#define aresize(a,newsize) \
+  do { \
+    if (newsize > acap(a)) { \
+      printf("newsize: %ld\n"); \
+      areserve((a), newsize); \
+    } \
+    asize(a) = (newsize); \
+  } while (0)
+#define afree(a) \
+    free(*(a)); \
+    free(ainfo(a))
+#define aclear(a) \
+  do { \
+    aresize(a, 0); \
+    areserve(a, 8); \
+  } while (0)
+#define aappend(a,elem) \
+   do { \
+     struct ainfo *_info = ainfo(a); \
+     if (_info->size >= _info->cap) { \
+       long _newcap = _info->cap * _info->rio; \
+       areserve((a), _newcap); \
+       _info = ainfo(a); \
+     } \
+     (*(a))[_info->size++] = (elem); \
+   } while (0)
+#define aqsort(a,cmp) \
+   qsort(*(a), asize(a), aesz(a), cmp)
+#define afor(i,a) \
+  for (long i = 0; i < asize(a); ++i)
+#define aremove(a,idx) \
+    do { \
+      if (asize(a) == 0) { \
+        break; \
+      } \
+      for (long _i = (idx); _i < asize(a) - 1; ++_i) { \
+        aelem(a, _i) = aelem(a, _i + 1); \
+      } \
+      --asize(a); \
+    } while (0)
+#define apush(a,elem) aappend(a, elem)
+#define atop(a) aelem(a, asize(a) - 1)
+#define apop(a) aremove(a, asize(a) - 1)
+#endif
+
 /***** ./cont/vector.h *****/
 #ifndef CONT_VECTOR_H_
 #define CONT_VECTOR_H_ 
