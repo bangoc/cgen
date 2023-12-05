@@ -52,7 +52,7 @@ struct queue *qcreate(long cap) {
   return q;
 }
 
-struct queue *qenque(struct queue* q, gtype val) {
+struct queue *_qenque(struct queue* q, gtype val) {
   if (!q) {
     FLOG("Lỗi hàng đợi chưa khởi tạo.");
     return NULL;

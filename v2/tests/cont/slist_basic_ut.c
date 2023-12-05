@@ -4,12 +4,12 @@
 
 int main() {
   struct slist *list = screate();
-  sappend(list, GLONG(100));
-  sappend(list, GLONG(200));
-  sappend(list, GLONG(300));
-  sprepend(list, GLONG(2));
-  sprepend(list, GLONG(4));
-  sprepend(list, GLONG(6));
+  sappend(list, 100);
+  sappend(list, 200);
+  sappend(list, 300);
+  sprepend(list, 2);
+  sprepend(list, 4);
+  sprepend(list, 6);
   CHECK_MSG(sfront(list)->l == 6, "front 6");
   CHECK_MSG(sback(list)->l == 300, "back 300");
   CHECK_MSG(sfront(sdfront(list))->l == 4, "front 6");

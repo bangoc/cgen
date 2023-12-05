@@ -10,11 +10,11 @@
 int main() {
   struct vector *v = vcreate(0);
   vsetfv(v, free);
-  vappend(v, GSTR(strdup("aaaaaaaa")));
-  vappend(v, GSTR(strdup("bbbbb")));
-  vappend(v, GSTR(strdup("ccccccccccc")));
-  vappend(v, GSTR(strdup("ddddddd")));
-  vappend(v, GSTR(strdup("eeeeeeeeeeeeeeee")));
+  vappend(v, strdup("aaaaaaaa"));
+  vappend(v, strdup("bbbbb"));
+  vappend(v, strdup("ccccccccccc"));
+  vappend(v, strdup("ddddddd"));
+  vappend(v, strdup("eeeeeeeeeeeeeeee"));
   VTRAVERSE(cur, v) {
     printf("%s\n", cur->s);
   }

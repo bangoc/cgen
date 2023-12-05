@@ -88,6 +88,8 @@ struct vector *vsetfv(struct vector *v, destructor_fnt fv);
  */
 gtype *varr(struct vector *v);
 
+#define velem(v, i) varr(v)[i]
+
 /**
  * Chỉ định phần tử của vec-tơ bằng chỉ số.
  * \code{.c}
@@ -148,7 +150,7 @@ struct vector *vresize(struct vector *v, long newsz);
  * \memberof vector
  */
 struct vector *_vappend(struct vector *v, gtype val);
-#define vappend(v, elem) _vappend(v, TO_GTYPE(elem))
+#define vappend(v, elem) _vappend(v, GTYPE(elem))
 
 /**
  * Xóa phần tử có chỉ số idx khỏi vec-tơ v.
@@ -172,7 +174,8 @@ struct vector *vremove(struct vector *v, long idx);
  * @param i - Chỉ số phần tử được sử dụng làm chốt.
  * @return Chuyển tiếp vec-tơ v, hoặc trả về NULL nếu phát sinh lỗi.
  */
-struct vector *vinsert_before(struct vector *v, gtype e, long i);
+struct vector *_vinsertb(struct vector *v, gtype e, long i);
+#define vinsertb(v, e, i) _vinsertb(v, GTYPE(e), i)
 
 /**
  * Làm rỗng vec-tơ: Giải phóng các vùng nhớ được cấp phát cho mảng
@@ -205,7 +208,8 @@ void vfree(void *op);
  * @return Không trả về giá trị.
  * \memberof vector
  */
-void vfill(struct vector *v, gtype value);
+void _vfill(struct vector *v, gtype value);
+#define vfill(v, value) _vfill(v, GTYPE(value))
 
 /**
  * Hỗ trợ sử dụng vec-tơ như ngăn xếp - xếp phần tử
@@ -216,7 +220,7 @@ void vfill(struct vector *v, gtype value);
  * @return Con trỏ v - hỗ trợ chuỗi gọi hàm.
  * \memberof vector
  */
-struct vector *vpush(struct vector *v, gtype val);
+#define vpush(v, val) vappend(v, val)
 
 /**
  * Hỗ trợ sử dụng vec-tơ như ngăn xếp - xóa phần tử 

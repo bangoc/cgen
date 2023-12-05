@@ -11,10 +11,10 @@ int main() {
   vappend(v, "cccccccccc");
   struct point p = {10, 20};
   vappend(v, &p);
-  printf("%ld\n", LONGG(varr(v)[0]));
-  printf("%f\n", DOUBLEG(vref(v, 1)));
-  printf("%s\n", STRG(vref(v, 2)));
-  struct point *tmp = VOIDG(vref(v, 3));
+  printf("%ld\n", velem(v, 0).l);
+  printf("%f\n", vref(v, 1)->d);
+  printf("%s\n", vref(v, 2)->s);
+  struct point *tmp = vref(v, 3)->v;
   printf("(%d, %d)\n", tmp->x, tmp->y);
   vfree(v);
 }

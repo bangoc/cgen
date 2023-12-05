@@ -14,18 +14,18 @@ int main() {
   vsetfv(v, vfree);
   vsetfv(v1, free);
   vsetfv(v3, free);
-  vappend(v, GVOID(v1));
-  vappend(v, GVOID(v2));
-  vappend(v, GVOID(v3));
-  vappend(v1, GSTR(strdup("aaa")));
-  vappend(v1, GSTR(strdup("aaaaaa")));
-  vappend(v1, GSTR(strdup("aaaaaaaaa")));
-  vappend(v2, GSTR("bbb"));
-  vappend(v2, GSTR("bbbbbb"));
-  vappend(v2, GSTR("bbbbbbbb"));
-  vappend(v3, GSTR(strdup("cc")));
-  vappend(v3, GSTR(strdup("ccccc")));
-  vappend(v3, GSTR(strdup("cccccccccccc")));
+  vappend(v, v1);
+  vappend(v, v2);
+  vappend(v, v3);
+  vappend(v1, strdup("aaa"));
+  vappend(v1, strdup("aaaaaa"));
+  vappend(v1, strdup("aaaaaaaaa"));
+  vappend(v2, "bbb");
+  vappend(v2, "bbbbbb");
+  vappend(v2, "bbbbbbbb");
+  vappend(v3, strdup("cc"));
+  vappend(v3, strdup("ccccc"));
+  vappend(v3, strdup("cccccccccccc"));
   VTRAVERSE(cur, v) {
     struct vector *tmp = (struct vector *)cur->v;
     VTRAVERSE(elem, tmp) {

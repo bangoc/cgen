@@ -137,7 +137,7 @@ void vfree(void *op) {
   free(v);
 }
 
-void vfill(struct vector *v, gtype value) {
+void _vfill(struct vector *v, gtype value) {
   VTRAVERSE(_cur, v) { 
     *_cur = (value); 
   } 
@@ -189,11 +189,6 @@ int vsameas(struct vector *v1, struct vector *v2) {
   return 1;
 }
 
-struct vector *vpush(struct vector *v, gtype val) {
-  vappend(v, val);
-  return v;
-}
-
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
     FLOG("Xóa ngăn xếp không hợp lệ.");
@@ -211,7 +206,7 @@ gtype *vtop(struct vector *v) {
   return v->elems + (v->sz - 1);
 }
 
-struct vector *vinsert_before(struct vector *v, gtype e, long i) {
+struct vector *_vinsertb(struct vector *v, gtype e, long i) {
   if (!v || i < 0 || i >= v->sz) {
     FLOG("Đầu vào không hợp lệ.");
     return NULL;    

@@ -223,7 +223,7 @@ static void tput_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
   }
 }
 
-gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
+gtype *_tput(struct tmap *t, const gtype key, const gtype value) {
   struct tnode *nn = tnode(key, value);
   if (!nn) {
     FLOG("Không thể tạo nút mới.");
@@ -261,7 +261,7 @@ gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
   return NULL;
 }
 
-struct tnode *tsearch(struct tmap *t, gtype key) {
+static struct tnode *tsearch(struct tmap *t, gtype key) {
   if (!t || !t->cmp) {
     FLOG("Bảng ở trạng thái không hợp lệ.");
     return NULL;    
@@ -278,7 +278,7 @@ struct tnode *tsearch(struct tmap *t, gtype key) {
   return NULL;
 }
 
-gtype *tget(struct tmap *t, const gtype key) {
+gtype *_tget(struct tmap *t, const gtype key) {
   struct tnode *n = tsearch(t, key);
   if (!n) {
     return NULL;
@@ -504,7 +504,7 @@ static struct tmap *tdelete(struct tmap *t, struct tnode *dn) {
   return t;
 }
 
-struct tmap *tremove(struct tmap *t, gtype key) {
+struct tmap *_tremove(struct tmap *t, gtype key) {
   struct tnode *n = tsearch(t, key);
   if (!n) {
     return NULL;

@@ -28,7 +28,8 @@ struct queue *qcreate(long cap);
  * @return Chuyển tiếp con trỏ q
  * \memberof queue
  */
-struct queue *qenque(struct queue* q, gtype val);
+struct queue *_qenque(struct queue* q, gtype val);
+#define qenque(q, val) _qenque(q, GTYPE(val))
 
 /**
  * Xóa phần tử khỏi hàng đợi

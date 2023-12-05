@@ -92,7 +92,7 @@ void vfree(void *op) {
   free((v)->elems);
   free(v);
 }
-void vfill(struct vector *v, gtype value) {
+void _vfill(struct vector *v, gtype value) {
   VTRAVERSE(_cur, v) {
     *_cur = (value);
   }
@@ -138,10 +138,6 @@ int vsameas(struct vector *v1, struct vector *v2) {
   }
   return 1;
 }
-struct vector *vpush(struct vector *v, gtype val) {
-  vappend(v, val);
-  return v;
-}
 struct vector *vpop(struct vector *v) {
   if (!v || v->sz == 0) {
     FLOG("Xóa ngăn xếp không hợp lệ.");
@@ -157,7 +153,7 @@ gtype *vtop(struct vector *v) {
   }
   return v->elems + (v->sz - 1);
 }
-struct vector *vinsert_before(struct vector *v, gtype e, long i) {
+struct vector *_vinsertb(struct vector *v, gtype e, long i) {
   if (!v || i < 0 || i >= v->sz) {
     FLOG("Đầu vào không hợp lệ.");
     return NULL;
@@ -203,7 +199,7 @@ struct queue *qcreate(long cap) {
   }
   return q;
 }
-struct queue *qenque(struct queue* q, gtype val) {
+struct queue *_qenque(struct queue* q, gtype val) {
   if (!q) {
     FLOG("Lỗi hàng đợi chưa khởi tạo.");
     return NULL;
@@ -326,7 +322,7 @@ long ssize(struct slist *list) {
 int sempty(struct slist *list) {
   return list->front == NULL && list->back == NULL;
 }
-struct slist *sappend(struct slist *list, gtype data) {
+struct slist *_sappend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
     FLOG("Lỗi tạo nút");
@@ -341,7 +337,7 @@ struct slist *sappend(struct slist *list, gtype data) {
   ++list->length;
   return list;
 }
-struct slist *sprepend(struct slist *list, gtype data) {
+struct slist *_sprepend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
     FLOG("Lỗi tạo nút");
@@ -387,24 +383,12 @@ void sfree(void *op) {
   }
   free(list);
 }
-struct slist *spush(struct slist *list, gtype elem) {
-  return sprepend(list, elem);
-}
-struct slist *spop(struct slist *list) {
-  return sdfront(list);
-}
 gtype *stop(struct slist *list) {
   if (list == NULL || sempty(list)) {
     FLOG("Ngăn xếp ở trạng thái không hợp lệ.");
     return NULL;
   }
   return sfront(list);
-}
-struct slist *senque(struct slist *list, gtype elem) {
-  return sappend(list, elem);
-}
-struct slist *sdeque(struct slist *list) {
-  return sdfront(list);
 }
 gtype *speek(struct slist *list) {
   if (list == NULL || sempty(list)) {
@@ -472,7 +456,7 @@ void dclear(struct dlist *list) {
     ddfront(list);
   }
 }
-struct dlist *dappend(struct dlist *list, gtype elem) {
+struct dlist *_dappend(struct dlist *list, gtype elem) {
   if (!list) {
     FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;
@@ -492,7 +476,7 @@ struct dlist *dappend(struct dlist *list, gtype elem) {
   ++list->length;
   return list;
 }
-struct dlist *dprepend(struct dlist *list, gtype elem) {
+struct dlist *_dprepend(struct dlist *list, gtype elem) {
   if (!list) {
     FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;
@@ -693,7 +677,7 @@ static void tput_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
 #undef IMPL_INSERT_FIXUP
   }
 }
-gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
+gtype *_tput(struct tmap *t, const gtype key, const gtype value) {
   struct tnode *nn = tnode(key, value);
   if (!nn) {
     FLOG("Không thể tạo nút mới.");
@@ -728,7 +712,7 @@ gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
   ++t->size;
   return NULL;
 }
-struct tnode *tsearch(struct tmap *t, gtype key) {
+static struct tnode *tsearch(struct tmap *t, gtype key) {
   if (!t || !t->cmp) {
     FLOG("Bảng ở trạng thái không hợp lệ.");
     return NULL;
@@ -744,7 +728,7 @@ struct tnode *tsearch(struct tmap *t, gtype key) {
   }
   return NULL;
 }
-gtype *tget(struct tmap *t, const gtype key) {
+gtype *_tget(struct tmap *t, const gtype key) {
   struct tnode *n = tsearch(t, key);
   if (!n) {
     return NULL;
@@ -870,7 +854,7 @@ static struct tmap *tdelete(struct tmap *t, struct tnode *dn) {
   free(dn);
   return t;
 }
-struct tmap *tremove(struct tmap *t, gtype key) {
+struct tmap *_tremove(struct tmap *t, gtype key) {
   struct tnode *n = tsearch(t, key);
   if (!n) {
     return NULL;

@@ -9,12 +9,12 @@
 
 int main() {
   struct vector *v = vcreate(0);
-  vpush(v, GLONG(1));
-  vpush(v, GLONG(3));
-  vpush(v, GLONG(5));
+  vpush(v, 1);
+  vpush(v, 3);
+  vpush(v, 5);
   CHECK_MSG(vtop(v)->l == 5, "Đỉnh = 5");
   CHECK_MSG(vtop(vpop(v))->l == 3, "Đỉnh = 3");
-  vpush(vpop(v), GLONG(7));
+  vpush(vpop(v), 7);
   CHECK_MSG(vtop(v)->l == 7, "Đỉnh = 7");
   CHECK_MSG(vtop(vpop(v))->l == 1, "Đỉnh = 1");
   vfree(v);

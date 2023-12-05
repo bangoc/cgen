@@ -89,7 +89,8 @@ void dclear(struct dlist *list);
  * không thể thêm vào danh sách.
  * \memberof dlist
  */
-struct dlist *dappend(struct dlist *list, gtype elem);
+struct dlist *_dappend(struct dlist *list, gtype elem);
+#define dappend(list, elem) _dappend(list, GTYPE(elem))
 
 /**
  * Thêm phần tử vào đầu danh sách
@@ -100,7 +101,8 @@ struct dlist *dappend(struct dlist *list, gtype elem);
  * không thể thêm vào danh sách.
  * \memberof dlist
  */
-struct dlist *dprepend(struct dlist *list, gtype elem);
+struct dlist *_dprepend(struct dlist *list, gtype elem);
+#define dprepend(list, elem) _dprepend(list, GTYPE(elem))
 
 /**
  * Xóa phần tử ở đầu danh sách.

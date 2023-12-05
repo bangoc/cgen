@@ -88,7 +88,8 @@ int sempty(struct slist *list);
  * nếu thất bại.
  * \memberof slist
  */
-struct slist *sappend(struct slist *list, gtype data);
+struct slist *_sappend(struct slist *list, gtype data);
+#define sappend(list, data) _sappend(list, GTYPE(data))
 
 /**
  * Hàm bổ xung phần tử vào đầu danh sách
@@ -99,7 +100,8 @@ struct slist *sappend(struct slist *list, gtype data);
  * nếu thất bại.
  * \memberof slist
  */
-struct slist *sprepend(struct slist *list, gtype data);
+struct slist *_sprepend(struct slist *list, gtype data);
+#define sprepend(list, data) _sprepend(list, GTYPE(data))
 
 /**
  * Hàm xóa phần tử đầu tiên của danh sách
@@ -122,7 +124,7 @@ struct slist *sdfront(struct slist *list);
  * list ở trạng thái không hợp lệ.
  * \memberof slist
  */
-struct slist *spush(struct slist *list, gtype elem);
+#define spush(list, elem) sprepend(list, elem)
 
 /**
  * Xóa phần tử khỏi ngăn xếp
@@ -132,7 +134,7 @@ struct slist *spush(struct slist *list, gtype elem);
  * list ở trạng thái không hợp lệ.
  * \memberof slist
  */
-struct slist *spop(struct slist *list);
+#define spop(list) sdfront(list)
 
 /**
  * Đọc đỉnh của ngăn xếp.
@@ -156,7 +158,7 @@ gtype *stop(struct slist *list);
  * thái không hợp lệ.
  * \memberof slist
  */
-struct slist *senque(struct slist *list, gtype elem);
+#define senque(list, elem) sappend(list, elem)
 
 /**
  * Xóa phần tử khỏi hàng đợi.
@@ -166,7 +168,7 @@ struct slist *senque(struct slist *list, gtype elem);
  * list ở trạng thái không hợp lệ.
  * \memberof slist
  */
-struct slist *sdeque(struct slist *list);
+#define sdeque(list) sdfront(list)
 
 /**
  * Đọc phần tử hiện hành trong hàng đợi.

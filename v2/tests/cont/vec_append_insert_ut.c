@@ -5,12 +5,12 @@
 
 int main() {
   struct vector *v = vcreate(0);
-  vappend(v, GLONG(1));
-  vappend(v, GLONG(5));
-  vappend(v, GLONG(9));
-  vinsert_before(v, GLONG(3), 1);  // 1 3 5 9
-  vinsert_before(v, GLONG(0), 0);  // 0 1 3 5 9
-  vinsert_before(v, GLONG(7), 3);  // 0 1 3 7 5 9
+  vappend(v, 1);
+  vappend(v, 5);
+  vappend(v, 9);
+  vinsertb(v, 3, 1);  // 1 3 5 9
+  vinsertb(v, 0, 0);  // 0 1 3 5 9
+  vinsertb(v, 7, 3);  // 0 1 3 7 5 9
   VTRAVERSE(cur, v) {
     printf(" %ld", cur->l);
   }

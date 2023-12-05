@@ -6,11 +6,11 @@
 
 int main() {
   struct queue *q = qcreate(3);
-  CHECK_MSG(qenque(q, GLONG(1)) == q, "enque 1");
-  CHECK_MSG(qenque(qenque(q, GLONG(3)), GLONG(5)) == q, "enque 3, 5");
+  CHECK_MSG(qenque(q, 1) == q, "enque 1");
+  CHECK_MSG(qenque(qenque(q, 3), 5) == q, "enque 3, 5");
   CHECK_MSG(qpeek(q)->l == 1, "peek 1");
   CHECK_MSG(qpeek(qdeque(q))->l == 3, "peek 3");
-  qenque(qenque(qenque(q, GLONG(7)), GLONG(9)), GLONG(11));
+  qenque(qenque(qenque(q, 7), 9), 11);
   CHECK_MSG(qpeek(q)->l == 3, "peek 3");
   CHECK_MSG(qpeek(qdeque(q))->l == 5, "peek 5");
   CHECK_MSG(qpeek(qdeque(q))->l == 7, "peek 7");

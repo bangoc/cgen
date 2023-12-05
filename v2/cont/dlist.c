@@ -99,7 +99,7 @@ void dclear(struct dlist *list) {
   }
 }
 
-struct dlist *dappend(struct dlist *list, gtype elem) {
+struct dlist *_dappend(struct dlist *list, gtype elem) {
   if (!list) {
     FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;
@@ -120,7 +120,7 @@ struct dlist *dappend(struct dlist *list, gtype elem) {
   return list;
 }
 
-struct dlist *dprepend(struct dlist *list, gtype elem) {
+struct dlist *_dprepend(struct dlist *list, gtype elem) {
   if (!list) {
     FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;

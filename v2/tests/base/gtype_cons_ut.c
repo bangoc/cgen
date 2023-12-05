@@ -12,7 +12,7 @@ void printl(const gtype g) {
   printf("%ld\n", g.l);
 }
 
-#define call(func, param) func(TO_GTYPE(param))
+#define call(func, param) func(GTYPE(param))
 
 int main() {
   call(printd, 1.101);

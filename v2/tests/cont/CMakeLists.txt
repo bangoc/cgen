@@ -20,6 +20,7 @@ add_executable(arr_int_stack_demo arr_int_stack_demo.c)
 add_executable(arr_str_demo arr_str_demo.c)
 add_executable(arr_int_queue_demo arr_int_queue_demo.c)
 add_executable(arr_insertb_ut arr_insertb_ut.c)
+add_executable(vec_sort_ut vec_sort_ut.c)
 
 foreach (p vec_create_ut vec_traverse_ut vec_stack_ut
            queue_basic_ut slist_basic_ut slist_stack_ut
@@ -28,6 +29,6 @@ foreach (p vec_create_ut vec_traverse_ut vec_stack_ut
            tm_rand_insert_delete_ut vec_append_insert_ut
            vec_str_failover_ut vec_of_vecs_ut vec_append_long_ut
            vec_tuple_ut arr_int_demo_ut arr_int_stack_demo arr_str_demo
-           arr_int_queue_demo arr_insertb_ut)
+           arr_int_queue_demo arr_insertb_ut vec_sort_ut)
   target_link_libraries(${p} bkcgen)
 endforeach()

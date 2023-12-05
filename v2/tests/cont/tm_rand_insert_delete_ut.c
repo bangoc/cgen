@@ -20,10 +20,10 @@ int main(int argc, char *argv[]) {
     int value = rand() % max_value + 1;
     if (op == 0) {
       // insert
-      tput(t, GLONG(value), GLONG(0));
+      tput(t, value, 0);
     } else {
       // delete
-      tremove(t, GLONG(value));
+      tremove(t, value);
     }
 
     // Kiểm tra sau từng thao tác

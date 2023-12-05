@@ -16,28 +16,22 @@ typedef union generic_type {
   char *s;
   void *v;
 } gtype;
-#define GZERO (GLONG(0l))
-#define GTYPE(type,val) ((gtype){.type = (val)})
-#define GLONG(value) GTYPE(l, value)
-#define GDOUBLE(value) GTYPE(d, value)
-#define GSTR(value) GTYPE(s, value)
-#define GVOID(value) GTYPE(v, value)
 static inline gtype gtype_from_long(long value) {
-  return GLONG(value);
+  return (gtype){.l = value};
 }
 static inline gtype gtype_from_double(double value) {
-  return GDOUBLE(value);
+  return (gtype){.d = value};
 }
 static inline gtype gtype_from_str(char *value) {
-  return GSTR(value);
+  return (gtype){.s = value};
 }
 static inline gtype gtype_from_void(void *value) {
-  return GVOID(value);
+  return (gtype){.v = value};
 }
 static inline gtype gtype_from_gtype(gtype value) {
   return value;
 }
-#define TO_GTYPE(value) \
+#define GTYPE(value) \
     _Generic((value), \
         char: gtype_from_long, \
         short: gtype_from_long, \
@@ -49,40 +43,13 @@ static inline gtype gtype_from_gtype(gtype value) {
         gtype: gtype_from_gtype, \
         default: gtype_from_void \
     )(value)
-#define VALUE(elem,member) _Generic((elem),\
-        gtype: gget_##member,\
-        gtype*: pgget_##member)(elem)
-#define LONGG(elem) VALUE(elem, l)
-#define DOUBLEG(elem) VALUE(elem, d)
-#define STRG(elem) VALUE(elem, s)
-#define VOIDG(elem) VALUE(elem, v)
-static inline long gget_l(gtype g) { return g.l; }
-static inline double gget_d(gtype g) { return g.d; }
-static inline char *gget_s(gtype g) { return g.s; }
-static inline void *gget_v(gtype g) { return g.v; }
-static inline long pgget_l(gtype *g) { return g->l; }
-static inline double pgget_d(gtype *g) { return g->d; }
-static inline char *pgget_s(gtype *g) { return g->s; }
-static inline void *pgget_v(gtype *g) { return g->v; }
+#define GZERO (GTYPE(0l))
 #define GSWAP(v1,v2) \
   do { \
     gtype _tmp = (v1); \
     (v1) = (v2); \
     (v2) = _tmp; \
   } while (0)
-typedef int (*gprint_fn_t)(const gtype);
-static int gtype_print_l(const gtype value) {
-  printf("%ld\n", value.l);
-  return 0;
-}
-static int gtype_print_d(const gtype value) {
-  printf("%f\n", value.d);
-  return 0;
-}
-static int gtype_print_s(const gtype value) {
-  printf("%s\n", value.s);
-  return 0;
-}
 #endif
 
 /***** ./base/flog.h *****/
@@ -284,18 +251,21 @@ double vratio(const struct vector *v);
 destructor_fnt vfv(const struct vector *v);
 struct vector *vsetfv(struct vector *v, destructor_fnt fv);
 gtype *varr(struct vector *v);
+#define velem(v,i) varr(v)[i]
 gtype *vref(struct vector *v, long i);
 long vidx(struct vector *v, gtype *elem_ptr);
 struct vector *vreserve(struct vector *v, long newcap);
 struct vector *vresize(struct vector *v, long newsz);
 struct vector *_vappend(struct vector *v, gtype val);
-#define vappend(v,elem) _vappend(v, TO_GTYPE(elem))
+#define vappend(v,elem) _vappend(v, GTYPE(elem))
 struct vector *vremove(struct vector *v, long idx);
-struct vector *vinsert_before(struct vector *v, gtype e, long i);
+struct vector *_vinsertb(struct vector *v, gtype e, long i);
+#define vinsertb(v,e,i) _vinsertb(v, GTYPE(e), i)
 struct vector *vclear(struct vector *v);
 void vfree(void *op);
-void vfill(struct vector *v, gtype value);
-struct vector *vpush(struct vector *v, gtype val);
+void _vfill(struct vector *v, gtype value);
+#define vfill(v,value) _vfill(v, GTYPE(value))
+#define vpush(v,val) vappend(v, val)
 struct vector *vpop(struct vector *v);
 gtype *vtop(struct vector *v);
 struct vector *vcreate(long sz);
@@ -316,7 +286,8 @@ int vsameas(struct vector *v1, struct vector *v2);
 #define CONT_QUEUE_H_ 
 struct queue;
 struct queue *qcreate(long cap);
-struct queue *qenque(struct queue* q, gtype val);
+struct queue *_qenque(struct queue* q, gtype val);
+#define qenque(q,val) _qenque(q, GTYPE(val))
 struct queue *qdeque(struct queue *q);
 gtype *qpeek(struct queue *q);
 int qempty(const struct queue *q);
@@ -339,14 +310,16 @@ destructor_fnt sfv(struct slist *list);
 struct slist *ssetfv(struct slist *list, destructor_fnt fv);
 void sfree(void *op);
 int sempty(struct slist *list);
-struct slist *sappend(struct slist *list, gtype data);
-struct slist *sprepend(struct slist *list, gtype data);
+struct slist *_sappend(struct slist *list, gtype data);
+#define sappend(list,data) _sappend(list, GTYPE(data))
+struct slist *_sprepend(struct slist *list, gtype data);
+#define sprepend(list,data) _sprepend(list, GTYPE(data))
 struct slist *sdfront(struct slist *list);
-struct slist *spush(struct slist *list, gtype elem);
-struct slist *spop(struct slist *list);
+#define spush(list,elem) sprepend(list, elem)
+#define spop(list) sdfront(list)
 gtype *stop(struct slist *list);
-struct slist *senque(struct slist *list, gtype elem);
-struct slist *sdeque(struct slist *list);
+#define senque(list,elem) sappend(list, elem)
+#define sdeque(list) sdfront(list)
 gtype *speek(struct slist *list);
 #define STRAVERSE(cur,list) \
   for (gtype *cur = (gtype*)sfront(list); cur != NULL; \
@@ -364,8 +337,10 @@ long dsize(struct dlist *list);
 int dempty(struct dlist *list);
 void dfree(void *op);
 void dclear(struct dlist *list);
-struct dlist *dappend(struct dlist *list, gtype elem);
-struct dlist *dprepend(struct dlist *list, gtype elem);
+struct dlist *_dappend(struct dlist *list, gtype elem);
+#define dappend(list,elem) _dappend(list, GTYPE(elem))
+struct dlist *_dprepend(struct dlist *list, gtype elem);
+#define dprepend(list,elem) _dprepend(list, GTYPE(elem))
 struct dlist *ddfront(struct dlist *list);
 struct dlist *ddback(struct dlist *list);
 destructor_fnt dfv(struct dlist *list);
@@ -401,11 +376,12 @@ struct tnode *tright_of(struct tnode *n);
 struct tnode *ttop_of(struct tnode *n);
 struct tmap *tcreate(compare_fnt cmp);
 struct tmap *tconstruct(compare_fnt cmp, destructor_fnt fk, destructor_fnt fv);
-gtype *tput_internal(struct tmap *t, const gtype key, const gtype value);
-#define tput(t,k,v) \
-   tput_internal(t, TO_GTYPE(k), TO_GTYPE(v))
-gtype *tget(struct tmap *t, const gtype key);
-struct tmap *tremove(struct tmap *t, gtype key);
+gtype *_tput(struct tmap *t, const gtype key, const gtype value);
+#define tput(t,k,v) _tput(t, GTYPE(k), GTYPE(v))
+gtype *_tget(struct tmap *t, const gtype key);
+#define tget(t,key) _tget(t, GTYPE(key))
+struct tmap *_tremove(struct tmap *t, gtype key);
+#define tremove(t,key) _tremove(t, GTYPE(key))
 long tsize(const struct tmap *t);
 struct tnode *troot(struct tmap *t);
 destructor_fnt tfk(struct tmap *t);

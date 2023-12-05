@@ -23,35 +23,27 @@ typedef union generic_type {
   void *v;
 } gtype;
 
-#define GZERO (GLONG(0l))
-
-#define GTYPE(type, val) ((gtype){.type = (val)})
-#define GLONG(value) GTYPE(l, value)
-#define GDOUBLE(value) GTYPE(d, value)
-#define GSTR(value) GTYPE(s, value)
-#define GVOID(value) GTYPE(v, value)
-
 static inline gtype gtype_from_long(long value) {
-  return GLONG(value);
+  return (gtype){.l = value};
 }
 
 static inline gtype gtype_from_double(double value) {
-  return GDOUBLE(value);
+  return (gtype){.d = value};
 }
 
 static inline gtype gtype_from_str(char *value) {
-  return GSTR(value);
+  return (gtype){.s = value};
 }
 
 static inline gtype gtype_from_void(void *value) {
-  return GVOID(value);
+  return (gtype){.v = value};
 }
 
 static inline gtype gtype_from_gtype(gtype value) {
   return value;
 }
 
-#define TO_GTYPE(value) \
+#define GTYPE(value) \
     _Generic((value), \
         char: gtype_from_long, \
         short: gtype_from_long, \
@@ -64,21 +56,7 @@ static inline gtype gtype_from_gtype(gtype value) {
         default: gtype_from_void \
     )(value)
 
-#define VALUE(elem, member) _Generic((elem),\
-        gtype: gget_##member,\
-        gtype*: pgget_##member)(elem)
-#define LONGG(elem) VALUE(elem, l)
-#define DOUBLEG(elem) VALUE(elem, d)
-#define STRG(elem) VALUE(elem, s)
-#define VOIDG(elem) VALUE(elem, v)
-static inline long gget_l(gtype g) { return g.l; }
-static inline double gget_d(gtype g) { return g.d; }
-static inline char *gget_s(gtype g) { return g.s; }
-static inline void *gget_v(gtype g) { return g.v; }
-static inline long pgget_l(gtype *g) { return g->l; }
-static inline double pgget_d(gtype *g) { return g->d; }
-static inline char *pgget_s(gtype *g) { return g->s; }
-static inline void *pgget_v(gtype *g) { return g->v; }
+#define GZERO (GTYPE(0l))
 
 #define GSWAP(v1, v2) \
   do { \
@@ -86,22 +64,5 @@ static inline void *pgget_v(gtype *g) { return g->v; }
     (v1) = (v2); \
     (v2) = _tmp; \
   } while (0)
-
-typedef int (*gprint_fn_t)(const gtype);
-
-static int gtype_print_l(const gtype value) {
-  printf("%ld\n", value.l);
-  return 0;  // Tương thích với foreach
-}
-
-static int gtype_print_d(const gtype value) {
-  printf("%f\n", value.d);
-  return 0;
-}
-
-static int gtype_print_s(const gtype value) {
-  printf("%s\n", value.s);
-  return 0;
-}
 
 #endif  // BASE_GTYPE_H_

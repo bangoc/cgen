@@ -218,10 +218,8 @@ struct tmap *tconstruct(compare_fnt cmp, destructor_fnt fk, destructor_fnt fv);
  *
  * \memberof tmap
  */
-gtype *tput_internal(struct tmap *t, const gtype key, const gtype value);
-
-#define tput(t, k, v) \
-   tput_internal(t, TO_GTYPE(k), TO_GTYPE(v))
+gtype *_tput(struct tmap *t, const gtype key, const gtype value);
+#define tput(t, k, v) _tput(t, GTYPE(k), GTYPE(v))
 
 /**
  * Truy cập giá trị được gắn với khóa
@@ -232,7 +230,8 @@ gtype *tput_internal(struct tmap *t, const gtype key, const gtype value);
  * 
  * \memberof tmap
  */
-gtype *tget(struct tmap *t, const gtype key);
+gtype *_tget(struct tmap *t, const gtype key);
+#define tget(t, key) _tget(t, GTYPE(key))
 
 /**
  * Nếu key không có trong t thì bỏ qua, nếu ngược lại thì xóa cặp
@@ -246,7 +245,8 @@ gtype *tget(struct tmap *t, const gtype key);
  * \memberof tmap
  *
  */
-struct tmap *tremove(struct tmap *t, gtype key);
+struct tmap *_tremove(struct tmap *t, gtype key);
+#define tremove(t, key) _tremove(t, GTYPE(key))
 
 /**
  * Truy vấn kích thước (số lượng phần tử) của cây.

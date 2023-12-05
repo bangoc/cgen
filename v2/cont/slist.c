@@ -76,7 +76,7 @@ int sempty(struct slist *list) {
   return list->front == NULL && list->back == NULL;
 }
 
-struct slist *sappend(struct slist *list, gtype data) {
+struct slist *_sappend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
     FLOG("Lỗi tạo nút");
@@ -92,7 +92,7 @@ struct slist *sappend(struct slist *list, gtype data) {
   return list;
 }
 
-struct slist *sprepend(struct slist *list, gtype data) {
+struct slist *_sprepend(struct slist *list, gtype data) {
   struct snode *node = snode(data);
   if (!node) {
     FLOG("Lỗi tạo nút");
@@ -143,28 +143,12 @@ void sfree(void *op) {
   free(list);
 }
 
-struct slist *spush(struct slist *list, gtype elem) {
-  return sprepend(list, elem);
-}
-
-struct slist *spop(struct slist *list) {
-  return sdfront(list);
-}
-
 gtype *stop(struct slist *list) {
   if (list == NULL || sempty(list)) {
     FLOG("Ngăn xếp ở trạng thái không hợp lệ.");
     return NULL;
   }
   return sfront(list);
-}
-
-struct slist *senque(struct slist *list, gtype elem) {
-  return sappend(list, elem);
-}
-
-struct slist *sdeque(struct slist *list) {
-  return sdfront(list);
 }
 
 gtype *speek(struct slist *list) {
