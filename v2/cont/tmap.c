@@ -71,7 +71,7 @@ struct tnode *tnode(const gtype key, const gtype value) {
  * Cấu trúc điều khiển của bảng cây tmap, được tạo bằng hàm
  * tmap = red black map tree
  *
- * rbm_create(gcmp_fn_t cmp, free_fn_t free_key, free_fn_t free_value).
+ * rbm_create(gcmp_fn_t cmp, destructor_fnt free_key, destructor_fnt free_value).
  *
  * Các macro hỗ trợ:
  * 
@@ -80,7 +80,7 @@ struct tnode *tnode(const gtype key, const gtype value) {
 struct tmap {
   struct tnode *root;
   gcmp_fn_t cmp;
-  free_fn_t fk, fv;
+  destructor_fnt fk, fv;
   long size;
 };
 
@@ -98,6 +98,15 @@ struct tmap *tcreate(gcmp_fn_t cmp) {
   t->cmp = cmp;
   t->fv = t->fk = NULL;
   t->size = 0;
+  return t;
+}
+
+struct tmap *tconstruct(gcmp_fn_t cmp, destructor_fnt fk, destructor_fnt fv) {
+  struct tmap *t = tcreate(cmp);
+  if (t) {
+    tsetfk(t, fk);
+    tsetfv(t, fv);
+  }
   return t;
 }
 
@@ -683,7 +692,8 @@ struct tnode *ttop_of(struct tnode *n) {
   return n->top;
 }
 
-void tfree(struct tmap *t) {
+void tfree(void *op) {
+  struct tmap *t = op;
   struct tnode *tmp = NULL;
   TTRAVERSE_LRN(key, value, t) {
     free(tmp);
@@ -699,15 +709,15 @@ void tfree(struct tmap *t) {
   free(t);
 }
 
-free_fn_t tfk(struct tmap *t) {
+destructor_fnt tfk(struct tmap *t) {
   return t->fk;
 }
 
-free_fn_t tfv(struct tmap *t) {
+destructor_fnt tfv(struct tmap *t) {
   return t->fv;
 }
 
-struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
+struct tmap *tsetfk(struct tmap *t, destructor_fnt fk) {
   if (!t) {
     FLOG("Tham số t không hợp lệ.");
     return NULL;
@@ -716,7 +726,7 @@ struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
   return t;
 }
 
-struct tmap *tsetfv(struct tmap *t, free_fn_t fv) {
+struct tmap *tsetfv(struct tmap *t, destructor_fnt fv) {
   if (!t) {
     FLOG("Tham số t không hợp lệ.");
     return NULL;

@@ -6,7 +6,7 @@
 #ifndef CONT_SLIST_H_
 #define CONT_SLIST_H_
 
-#include "base/gtype.h"
+#include "base/core.h"
 
 struct slist;
 
@@ -49,7 +49,7 @@ long ssize(struct slist *list);
  * @return Con trỏ fv.
  * \memberof slist
  */
-free_fn_t sfv(struct slist *list);
+destructor_fnt sfv(struct slist *list);
 
 /**
  * Thiết lập con trỏ fv của list
@@ -59,16 +59,16 @@ free_fn_t sfv(struct slist *list);
  * @return Chuyển tiếp con trỏ list
  * \memberof slist
  */
-struct slist *ssetfv(struct slist *list, free_fn_t fv);
+struct slist *ssetfv(struct slist *list, destructor_fnt fv);
 
 /**
  * Hàm giải phóng bộ nhớ của danh sách
  * 
- * @param list - Con trỏ tới danh sách.
+ * @param op - Con trỏ tới danh sách.
  * @return Hàm không trả về giá trị.
  * \memberof slist
  */
-void sfree(struct slist *list);
+void sfree(void *op);
 
 /**
  * Hàm kiểm tra danh sách rỗng hay không

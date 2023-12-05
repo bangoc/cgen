@@ -8,7 +8,7 @@
  * tương ứng.
  */
 
-#include "base/gtype.h"
+#include "base/core.h"
 
 /******* Giao diện tnode ******/
 
@@ -191,6 +191,22 @@ struct tnode *ttop_of(struct tnode *n);
 struct tmap *tcreate(gcmp_fn_t cmp);
 
 /**
+ * Hàm tạo đối tượng điều khiển bảng cây với đầy đủ các tham số.
+ *
+ * @param cmp Con trỏ tới hàm so sánh các giá trị khóa, tham số bắt buộc,
+ * phải != NULL.
+ * @param fk Con trỏ tới hàm giải phóng bộ nhớ của khóa, thiết lập nếu
+ * sử dụng con trỏ và cấp phát động. Có thể thiết lập = NULL.
+ * @param fv Con trỏ tới hàm giải phóng bố nhớ của giá trị, thiết lập nếu
+ * sử dụng con trỏ và cấp phát động. Có thể thiết lập = NULL;
+ * @return Trả về con trỏ tới bảng cây nếu thành công, hoặc NULL
+ * nếu không thể cấp phát bộ nhớ.
+ *
+ * \memberof tmap
+ */
+struct tmap *tconstruct(gcmp_fn_t cmp, destructor_fnt fk, destructor_fnt fv);
+
+/**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì
  * bỏ qua.
  *
@@ -256,7 +272,7 @@ struct tnode *troot(struct tmap *t);
  * @param t - Con trỏ tới bảng cây.
  * @return Trả về con trỏ hàm fk.
  */
-free_fn_t tfk(struct tmap *t);
+destructor_fnt tfk(struct tmap *t);
 
 /**
  * Truy cập thành viên fv của tmap.
@@ -264,7 +280,7 @@ free_fn_t tfk(struct tmap *t);
  * @param t - Con trỏ tới bảng cây.
  * @return Trả về con trỏ hàm fv.
  */
-free_fn_t tfv(struct tmap *t);
+destructor_fnt tfv(struct tmap *t);
 
 /**
  * Thiết lập thành viên fk của tmap.
@@ -274,7 +290,7 @@ free_fn_t tfv(struct tmap *t);
  * @return Chuyển tiếp con trỏ t, hoặc trả về NULL nếu phát
  * sinh lỗi.
  */
-struct tmap *tsetfk(struct tmap *t, free_fn_t fk);
+struct tmap *tsetfk(struct tmap *t, destructor_fnt fk);
 
 /**
  * Thiết lập thành viên fv của tmap.
@@ -284,15 +300,15 @@ struct tmap *tsetfk(struct tmap *t, free_fn_t fk);
  * @return Chuyển tiếp con trỏ t, hoặc trả về NULL nếu phát
  * sinh lỗi.
  */
-struct tmap *tsetfv(struct tmap *t, free_fn_t fv);
+struct tmap *tsetfv(struct tmap *t, destructor_fnt fv);
 
 /**
  * Giải phóng bộ nhớ của bảng cây.
  * 
- * @param t - Con trỏ tới bảng.
+ * @param op - Con trỏ tới bảng cây.
  * @return Không trả về giá trị.
  */
-void tfree(struct tmap *t);
+void tfree(void *op);
 
 /**
  * Duyệt tuần tự các cặp khóa & giá trị trong bảng t theo thứ tự

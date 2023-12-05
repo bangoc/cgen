@@ -13,7 +13,7 @@
 #ifndef CONT_VECTOR_H_
 #define CONT_VECTOR_H_
 
-#include "base/gtype.h"
+#include "base/core.h"
 
 struct vector;
 
@@ -61,10 +61,10 @@ double vratio(const struct vector *v);
  * Con trỏ hàm giải phóng bộ nhớ động của phần tử
  *
  * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *)
- * @return Trả về con trỏ hàm, có kiểu free_fn_t.
+ * @return Trả về con trỏ hàm, có kiểu destructor_fnt.
  * \memberof vector
  */
-free_fn_t vfv(const struct vector *v);
+destructor_fnt vfv(const struct vector *v);
 
 /**
  * Thiết lập con trỏ hàm giải phóng bộ nhớ động của phần tử
@@ -74,7 +74,7 @@ free_fn_t vfv(const struct vector *v);
  * @return Chuyển tiếp con trỏ v
  * \memberof vector
  */
-struct vector *vsetfv(struct vector *v, free_fn_t fv);
+struct vector *vsetfv(struct vector *v, destructor_fnt fv);
 
 /**
  * Giao diện mảng của vec-tơ.
@@ -191,11 +191,11 @@ struct vector *vclear(struct vector *v);
  * Giải phóng bộ nhớ được cấp phát cho v và các vùng nhớ ngoài
  * được gắn với các phần tử của vec-tơ nếu có (v->fv != NULL).
  *
- * @param v Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
+ * @param op Con trỏ tới đối tượng vec-tơ (có kiểu struct vector *).
  * @return Không trả về giá trị.
  * \memberof vector
  */
-void vfree(struct vector *v);
+void vfree(void *op);
 
 /**
  * Gán tất cả các phần tử của vec-tơ = value

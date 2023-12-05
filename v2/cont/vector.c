@@ -38,7 +38,7 @@ struct vector {
    * bộ nhớ của vec-tơ, nếu ngược lại (== \c NULL) thì các gọi hàm được
    * bỏ qua.
    */
-  free_fn_t fv;
+  destructor_fnt fv;
 };
 
 long vsize(const struct vector *v) {
@@ -57,11 +57,11 @@ double vratio(const struct vector *v) {
   return v->k;
 }
 
-free_fn_t vfv(const struct vector *v) {
+destructor_fnt vfv(const struct vector *v) {
   return v->fv;
 }
 
-struct vector *vsetfv(struct vector *v, free_fn_t fv) {
+struct vector *vsetfv(struct vector *v, destructor_fnt fv) {
   v->fv = fv;
   return v;
 }
@@ -130,7 +130,8 @@ struct vector *vclear(struct vector *v) {
   return vresize(v, 0);
 }
 
-void vfree(struct vector *v) {
+void vfree(void *op) {
+  struct vector *v = op;
   vclear(v);
   free((v)->elems);
   free(v);

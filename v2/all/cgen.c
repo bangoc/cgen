@@ -9,7 +9,7 @@ struct vector {
   long sz;
   long cap;
   double k;
-  free_fn_t fv;
+  destructor_fnt fv;
 };
 long vsize(const struct vector *v) {
   return v->sz;
@@ -23,10 +23,10 @@ long vcap(const struct vector *v) {
 double vratio(const struct vector *v) {
   return v->k;
 }
-free_fn_t vfv(const struct vector *v) {
+destructor_fnt vfv(const struct vector *v) {
   return v->fv;
 }
-struct vector *vsetfv(struct vector *v, free_fn_t fv) {
+struct vector *vsetfv(struct vector *v, destructor_fnt fv) {
   v->fv = fv;
   return v;
 }
@@ -176,7 +176,7 @@ struct queue {
   long cap;
   long fi;
   long la;
-  free_fn_t fv;
+  destructor_fnt fv;
   gtype *elems;
 };
 struct queue *qcreate(long cap) {
@@ -265,10 +265,10 @@ int qempty(const struct queue *q) {
 long qsize(const struct queue *q) {
   return q->sz;
 }
-free_fn_t qfv(struct queue *q) {
+destructor_fnt qfv(struct queue *q) {
   return q->fv;
 }
-struct queue *qsetfv(struct queue *q, free_fn_t fv) {
+struct queue *qsetfv(struct queue *q, destructor_fnt fv) {
   q->fv = fv;
   return q;
 }
@@ -288,7 +288,7 @@ struct snode {
 struct slist {
   struct snode *front;
   struct snode *back;
-  free_fn_t fv;
+  destructor_fnt fv;
   long length;
 };
 struct snode *snode(gtype data) {
@@ -371,10 +371,10 @@ struct slist *sdfront(struct slist *list) {
   --list->length;
   return list;
 }
-free_fn_t sfv(struct slist *list) {
+destructor_fnt sfv(struct slist *list) {
   return list->fv;
 }
-struct slist *ssetfv(struct slist *list, free_fn_t fv) {
+struct slist *ssetfv(struct slist *list, destructor_fnt fv) {
   list->fv = fv;
   return list;
 }
@@ -422,7 +422,7 @@ struct dlist {
   struct dnode *front;
   struct dnode *back;
   long length;
-  free_fn_t fv;
+  destructor_fnt fv;
 };
 struct dnode *dnode(gtype data) {
   struct dnode *tmp = malloc(sizeof(struct dnode));
@@ -548,10 +548,10 @@ struct dlist *ddback(struct dlist *list) {
   --list->length;
   return list;
 }
-free_fn_t dfv(struct dlist *list) {
+destructor_fnt dfv(struct dlist *list) {
   return list->fv;
 }
-struct dlist *dsetfv(struct dlist *list, free_fn_t fv) {
+struct dlist *dsetfv(struct dlist *list, destructor_fnt fv) {
   if (!list) {
     FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;
@@ -596,7 +596,7 @@ struct tnode *tnode(const gtype key, const gtype value) {
 struct tmap {
   struct tnode *root;
   gcmp_fn_t cmp;
-  free_fn_t fk, fv;
+  destructor_fnt fk, fv;
   long size;
 };
 struct tmap *tcreate(gcmp_fn_t cmp) {
@@ -1036,13 +1036,13 @@ void tfree(struct tmap *t) {
   free(tmp);
   free(t);
 }
-free_fn_t tfk(struct tmap *t) {
+destructor_fnt tfk(struct tmap *t) {
   return t->fk;
 }
-free_fn_t tfv(struct tmap *t) {
+destructor_fnt tfv(struct tmap *t) {
   return t->fv;
 }
-struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
+struct tmap *tsetfk(struct tmap *t, destructor_fnt fk) {
   if (!t) {
     FLOG("Tham số t không hợp lệ.");
     return NULL;
@@ -1050,7 +1050,7 @@ struct tmap *tsetfk(struct tmap *t, free_fn_t fk) {
   t->fk = fk;
   return t;
 }
-struct tmap *tsetfv(struct tmap *t, free_fn_t fv) {
+struct tmap *tsetfv(struct tmap *t, destructor_fnt fv) {
   if (!t) {
     FLOG("Tham số t không hợp lệ.");
     return NULL;

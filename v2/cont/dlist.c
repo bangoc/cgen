@@ -43,7 +43,7 @@ struct dlist {
   long length;
 
   /** Con trỏ hàm giải phóng bộ nhớ ngoài của phần tử */
-  free_fn_t fv;
+  destructor_fnt fv;
 };
 
 struct dnode *dnode(gtype data) {
@@ -85,7 +85,8 @@ int dempty(struct dlist *list) {
   return dfront(list) == NULL && dback(list) == NULL;
 }
 
-void dfree(struct dlist *list) {
+void dfree(void *op) {
+  struct dlist *list = op;
   while (!dempty(list)) {
     ddfront(list);
   }
@@ -182,11 +183,11 @@ struct dlist *ddback(struct dlist *list) {
   return list;
 }
 
-free_fn_t dfv(struct dlist *list) {
+destructor_fnt dfv(struct dlist *list) {
   return list->fv;
 }
 
-struct dlist *dsetfv(struct dlist *list, free_fn_t fv) {
+struct dlist *dsetfv(struct dlist *list, destructor_fnt fv) {
   if (!list) {
     FLOG("Lỗi danh sách chưa khởi tạo.");
     return NULL;    

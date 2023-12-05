@@ -9,7 +9,7 @@
 #ifndef CONT_DLIST_H_
 #define CONT_DLIST_H_
 
-#include "base/gtype.h"
+#include "base/core.h"
 
 struct dlist;
 
@@ -63,11 +63,11 @@ int dempty(struct dlist *list);
 /**
  * Giải phóng bộ nhớ được cấp phát cho danh sách 
  * 
- * @param list - Con trỏ tới danh sách.
+ * @param op - Con trỏ tới danh sách.
  * @return Hàm không trả về giá trị.
  * \memberof dlist
  */
-void dfree(struct dlist *list);
+void dfree(void *op);
 
 
 /**
@@ -129,7 +129,7 @@ struct dlist *ddback(struct dlist *list);
  * @return Trả về con trỏ fv.
  * \memberof dlist
  */
-free_fn_t dfv(struct dlist *list);
+destructor_fnt dfv(struct dlist *list);
 
 /**
  * Thiết lập con trỏ fv
@@ -140,7 +140,7 @@ free_fn_t dfv(struct dlist *list);
  * hoặc NULL nếu tham số list không hợp lệ.
  * \memberof dlist
  */
-struct dlist *dsetfv(struct dlist *list, free_fn_t fv);
+struct dlist *dsetfv(struct dlist *list, destructor_fnt fv);
 
 
 /**

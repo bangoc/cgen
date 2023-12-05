@@ -22,7 +22,7 @@ struct queue {
   long la;
 
   /** Con trỏ hàm giải phóng bộ nhớ phần tử */
-  free_fn_t fv;
+  destructor_fnt fv;
 
   /** Con trỏ tới mảng phần tử */
   gtype *elems;
@@ -128,16 +128,17 @@ long qsize(const struct queue *q) {
   return q->sz;
 }
 
-free_fn_t qfv(struct queue *q) {
+destructor_fnt qfv(struct queue *q) {
   return q->fv;
 }
 
-struct queue *qsetfv(struct queue *q, free_fn_t fv) {
+struct queue *qsetfv(struct queue *q, destructor_fnt fv) {
   q->fv = fv;
   return q;
 }
 
-void qfree(struct queue *q) {
+void qfree(void *op) {
+  struct queue *q = op;
   while (!qempty(q)) {
     qdeque(q);
   }

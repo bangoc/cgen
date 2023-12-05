@@ -6,7 +6,7 @@
  * @brief Khai báo giao diện hàng đợi FIFO dựa trên mảng động của \ref gtype
  */
 
-#include "base/gtype.h"
+#include "base/core.h"
 
 struct queue;
 
@@ -79,11 +79,11 @@ long qnext(const struct queue *q, long id);
 /**
  * Giải phóng bộ nhớ được cấp phát cho hàng đợi
  * 
- * @param q - Con trỏ tới hàng đợi
+ * @param op - Con trỏ tới hàng đợi
  * @return - Không trả về giá trị
  * \memberof queue
  */
-void qfree(struct queue *q);
+void qfree(void *op);
 
 /**
  * Truy vấn con trỏ hàm fv
@@ -92,7 +92,7 @@ void qfree(struct queue *q);
  * @return Con trỏ hàm giải phóng bộ nhớ phần tử - fv.
  * \memberof queue
  */
-free_fn_t qfv(struct queue *q);
+destructor_fnt qfv(struct queue *q);
 
 /**
  * Thiết lập con trỏ hàm giải phóng phần tử.
@@ -102,6 +102,6 @@ free_fn_t qfv(struct queue *q);
  * @return Chuyển tiếp con trỏ q
  * \memberof queue
  */
-struct queue *qsetfv(struct queue *q, free_fn_t fv);
+struct queue *qsetfv(struct queue *q, destructor_fnt fv);
 
 #endif  // CONT_QUEUE_H_
