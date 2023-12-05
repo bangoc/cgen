@@ -86,7 +86,8 @@ struct vector *vremove(struct vector *v, long idx) {
 struct vector *vclear(struct vector *v) {
   return vresize(v, 0);
 }
-void vfree(struct vector *v) {
+void vfree(void *op) {
+  struct vector *v = op;
   vclear(v);
   free((v)->elems);
   free(v);
@@ -272,7 +273,8 @@ struct queue *qsetfv(struct queue *q, destructor_fnt fv) {
   q->fv = fv;
   return q;
 }
-void qfree(struct queue *q) {
+void qfree(void *op) {
+  struct queue *q = op;
   while (!qempty(q)) {
     qdeque(q);
   }
@@ -378,7 +380,8 @@ struct slist *ssetfv(struct slist *list, destructor_fnt fv) {
   list->fv = fv;
   return list;
 }
-void sfree(struct slist *list) {
+void sfree(void *op) {
+  struct slist *list = op;
   while (!sempty(list)) {
     sdfront(list);
   }
@@ -457,7 +460,8 @@ long dsize(struct dlist *list) {
 int dempty(struct dlist *list) {
   return dfront(list) == NULL && dback(list) == NULL;
 }
-void dfree(struct dlist *list) {
+void dfree(void *op) {
+  struct dlist *list = op;
   while (!dempty(list)) {
     ddfront(list);
   }
@@ -595,11 +599,11 @@ struct tnode *tnode(const gtype key, const gtype value) {
 }
 struct tmap {
   struct tnode *root;
-  gcmp_fn_t cmp;
+  compare_fnt cmp;
   destructor_fnt fk, fv;
   long size;
 };
-struct tmap *tcreate(gcmp_fn_t cmp) {
+struct tmap *tcreate(compare_fnt cmp) {
   if (!cmp) {
     FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh.");
     return NULL;
@@ -613,6 +617,14 @@ struct tmap *tcreate(gcmp_fn_t cmp) {
   t->cmp = cmp;
   t->fv = t->fk = NULL;
   t->size = 0;
+  return t;
+}
+struct tmap *tconstruct(compare_fnt cmp, destructor_fnt fk, destructor_fnt fv) {
+  struct tmap *t = tcreate(cmp);
+  if (t) {
+    tsetfk(t, fk);
+    tsetfv(t, fv);
+  }
   return t;
 }
 #define TCHANGE(old_node,new_node,parent,t) \
@@ -692,7 +704,7 @@ gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
   struct tnode **loc = &t->root;
   int rl = 0;
   while (x) {
-    rl = t->cmp(key, x->key);
+    rl = t->cmp(&key, &x->key);
     if (rl == 0) {
       free(nn);
       return &x->value;
@@ -724,7 +736,7 @@ struct tnode *tsearch(struct tmap *t, gtype key) {
   int rl;
   struct tnode *x = t->root;
   while (x) {
-    rl = t->cmp(key, x->key);
+    rl = t->cmp(&key, &x->key);
     if (rl == 0) {
       return x;
     }
@@ -1021,7 +1033,8 @@ struct tnode *ttop_of(struct tnode *n) {
   }
   return n->top;
 }
-void tfree(struct tmap *t) {
+void tfree(void *op) {
+  struct tmap *t = op;
   struct tnode *tmp = NULL;
   TTRAVERSE_LRN(key, value, t) {
     free(tmp);

@@ -188,7 +188,7 @@ struct tnode *ttop_of(struct tnode *n);
  *
  * \memberof tmap
  */
-struct tmap *tcreate(gcmp_fn_t cmp);
+struct tmap *tcreate(compare_fnt cmp);
 
 /**
  * Hàm tạo đối tượng điều khiển bảng cây với đầy đủ các tham số.
@@ -204,7 +204,7 @@ struct tmap *tcreate(gcmp_fn_t cmp);
  *
  * \memberof tmap
  */
-struct tmap *tconstruct(gcmp_fn_t cmp, destructor_fnt fk, destructor_fnt fv);
+struct tmap *tconstruct(compare_fnt cmp, destructor_fnt fk, destructor_fnt fv);
 
 /**
  * Thêm cặp (key, value) vào bảng t. Nếu key đã tồn tại thì

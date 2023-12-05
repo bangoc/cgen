@@ -70,51 +70,7 @@ static inline void *pgget_v(gtype *g) { return g->v; }
     (v1) = (v2); \
     (v2) = _tmp; \
   } while (0)
-typedef int (*gcmp_fn_t)(const gtype, const gtype);
 typedef int (*gprint_fn_t)(const gtype);
-typedef void (*destructor_fnt)();
-static inline int glong_cmp(const gtype v1, const gtype v2) {
-  return v1.l - v2.l;
-}
-static inline int glong_rcmp(const gtype v1, const gtype v2) {
-  return v2.l - v1.l;
-}
-static inline int gdouble_cmp(const gtype v1, const gtype v2) {
-  if (v1.d < v2.d) {
-    return -1;
-  } else if (v1.d > v2.d) {
-    return 1;
-  }
-  return 0;
-}
-static inline int gdouble_rcmp(const gtype v1, const gtype v2) {
-  if (v2.d < v1.d) {
-    return -1;
-  } else if (v2.d > v1.d) {
-    return 1;
-  }
-  return 0;
-}
-static inline int gstr_cmp(const gtype v1, const gtype v2) {
-  return strcmp(v1.s, v2.s);
-}
-static inline int gstr_rcmp(const gtype v1, const gtype v2) {
-  return strcmp(v2.s, v1.s);
-}
-static inline int gtype_qsort_l(const void *v1, const void *v2) {
-  return ((const gtype*)v1)->l - ((const gtype*)v2)->l;
-}
-static inline int gtype_qsort_d(const void *v1, const void *v2) {
-  if (((const gtype*)v1)->l > ((const gtype*)v2)->l) {
-    return 1;
-  } else if (((const gtype*)v1)->l < ((const gtype*)v2)->l) {
-    return -1;
-  }
-  return 0;
-}
-static inline int gtype_qsort_s(const void *v1, const void *v2) {
-  return strcmp(((const gtype*)v1)->s, ((const gtype*)v2)->s);
-}
 static int gtype_print_l(const gtype value) {
   printf("%ld\n", value.l);
   return 0;
@@ -150,6 +106,46 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
   va_end(args);
   fprintf(stderr, "\n");
   fflush(stderr);
+}
+#endif
+
+/***** ./base/fnt.h *****/
+#ifndef BASE_FNT_H_
+#define BASE_FNT_H_ 
+#include <string.h>
+typedef int (*compare_fnt)(const void *p1, const void *p2);
+typedef void (*destructor_fnt)(void *p);
+static inline int cmpl(const void *p1, const void *p2) {
+  return *(const int*)p1 - *(const int*)p2;
+}
+static inline int rcmpl(const void *p1, const void *p2) {
+  return *(const int*)p2 - *(const int*)p1;
+}
+static inline int cmpd(const void *p1, const void *p2) {
+  double v1 = *(const double *)p1, v2 = *(const double *)p2;
+  if (v1 < v2) {
+    return - 1;
+  } else if (v1 > v2) {
+    return 1;
+  }
+  return 0;
+}
+static inline int rcmpd(const void *p1, const void *p2) {
+  double v2 = *(const double *)p1, v1 = *(const double *)p2;
+  if (v1 < v2) {
+    return - 1;
+  } else if (v1 > v2) {
+    return 1;
+  }
+  return 0;
+}
+static inline int cmps(const void *p1, const void *p2) {
+  char *const *s1 = p1, *const *s2 = p2;
+  return strcmp(*s1, *s2);
+}
+static inline int rcmps(const void *p1, const void *p2) {
+  char *const *s2 = p1, *const *s1 = p2;
+  return strcmp(*s1, *s2);
 }
 #endif
 
@@ -297,7 +293,7 @@ struct vector *_vappend(struct vector *v, gtype val);
 struct vector *vremove(struct vector *v, long idx);
 struct vector *vinsert_before(struct vector *v, gtype e, long i);
 struct vector *vclear(struct vector *v);
-void vfree(struct vector *v);
+void vfree(void *op);
 void vfill(struct vector *v, gtype value);
 struct vector *vpush(struct vector *v, gtype val);
 struct vector *vpop(struct vector *v);
@@ -326,7 +322,7 @@ gtype *qpeek(struct queue *q);
 int qempty(const struct queue *q);
 long qsize(const struct queue *q);
 long qnext(const struct queue *q, long id);
-void qfree(struct queue *q);
+void qfree(void *op);
 destructor_fnt qfv(struct queue *q);
 struct queue *qsetfv(struct queue *q, destructor_fnt fv);
 #endif
@@ -341,7 +337,7 @@ gtype *sback(struct slist *list);
 long ssize(struct slist *list);
 destructor_fnt sfv(struct slist *list);
 struct slist *ssetfv(struct slist *list, destructor_fnt fv);
-void sfree(struct slist *list);
+void sfree(void *op);
 int sempty(struct slist *list);
 struct slist *sappend(struct slist *list, gtype data);
 struct slist *sprepend(struct slist *list, gtype data);
@@ -366,7 +362,7 @@ gtype *dfront(struct dlist *list);
 gtype *dback(struct dlist *list);
 long dsize(struct dlist *list);
 int dempty(struct dlist *list);
-void dfree(struct dlist *list);
+void dfree(void *op);
 void dclear(struct dlist *list);
 struct dlist *dappend(struct dlist *list, gtype elem);
 struct dlist *dprepend(struct dlist *list, gtype elem);
@@ -403,7 +399,8 @@ int tis_black(struct tnode *n);
 struct tnode *tleft_of(struct tnode *n);
 struct tnode *tright_of(struct tnode *n);
 struct tnode *ttop_of(struct tnode *n);
-struct tmap *tcreate(gcmp_fn_t cmp);
+struct tmap *tcreate(compare_fnt cmp);
+struct tmap *tconstruct(compare_fnt cmp, destructor_fnt fk, destructor_fnt fv);
 gtype *tput_internal(struct tmap *t, const gtype key, const gtype value);
 #define tput(t,k,v) \
    tput_internal(t, TO_GTYPE(k), TO_GTYPE(v))
@@ -415,7 +412,7 @@ destructor_fnt tfk(struct tmap *t);
 destructor_fnt tfv(struct tmap *t);
 struct tmap *tsetfk(struct tmap *t, destructor_fnt fk);
 struct tmap *tsetfv(struct tmap *t, destructor_fnt fv);
-void tfree(struct tmap *t);
+void tfree(void *op);
 #define TTRAVERSE_LNR(k,v,t) \
   for (gtype *k = (gtype*)tleft_most(troot(t)), \
              *v = k? tvalue_of((struct tnode*)k): NULL; \

@@ -4,7 +4,7 @@
 #include "tests/ut/utils.h"
 
 int main() {
-  struct tmap *tm = tcreate(glong_cmp);
+  struct tmap *tm = tcreate(cmpl);
   tput(tm, GLONG(1), GDOUBLE(1.11));
   tput(tm, GLONG(2), GDOUBLE(1.12));
   tput(tm, GLONG(3), GDOUBLE(1.13));

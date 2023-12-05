@@ -87,71 +87,7 @@ static inline void *pgget_v(gtype *g) { return g->v; }
     (v2) = _tmp; \
   } while (0)
 
-typedef int (*gcmp_fn_t)(const gtype, const gtype);
 typedef int (*gprint_fn_t)(const gtype);
-
-static inline int glong_cmp(const gtype v1, const gtype v2) {
-  return v1.l - v2.l;
-}
-
-static inline int glong_rcmp(const gtype v1, const gtype v2) {
-  return v2.l - v1.l;
-}
-
-static inline int gdouble_cmp(const gtype v1, const gtype v2) {
-  if (v1.d < v2.d) {
-    return -1;
-  } else if (v1.d > v2.d) {
-    return 1;
-  }
-  return 0;
-}
-
-static inline int gdouble_rcmp(const gtype v1, const gtype v2) {
-  if (v2.d < v1.d) {
-    return -1;
-  } else if (v2.d > v1.d) {
-    return 1;
-  }
-  return 0;
-}
-
-/**
- * Hàm so sánh các giá trị gtype chứa con trỏ chuỗi ký tự.
- *
- * @param v1 Đối số thứ nhất.
- * @param v2 Đỗ số thứ 2.
- * @return Giá trị trả về theo định dạng strcmp <br>
- *   -1 nếu v1.s < v2.s, <br>
- *    1 nếu ngược lại và v1.s > v2.s, <br>
- *    0 nếu ngược lại (v1.s == v2.s). <br>
- *
- * \memberof generic_type
- */
-static inline int gstr_cmp(const gtype v1, const gtype v2) {
-  return strcmp(v1.s, v2.s);
-}
-
-static inline int gstr_rcmp(const gtype v1, const gtype v2) {
-  return strcmp(v2.s, v1.s);
-}
-
-static inline int gtype_qsort_l(const void *v1, const void *v2) {
-  return ((const gtype*)v1)->l - ((const gtype*)v2)->l;
-}
-
-static inline int gtype_qsort_d(const void *v1, const void *v2) {
-  if (((const gtype*)v1)->l > ((const gtype*)v2)->l) {
-    return 1;
-  } else if (((const gtype*)v1)->l < ((const gtype*)v2)->l) {
-    return -1;
-  }
-  return 0;
-}
-
-static inline int gtype_qsort_s(const void *v1, const void *v2) {
-  return strcmp(((const gtype*)v1)->s, ((const gtype*)v2)->s);
-}
 
 static int gtype_print_l(const gtype value) {
   printf("%ld\n", value.l);

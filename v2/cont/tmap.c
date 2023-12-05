@@ -71,7 +71,7 @@ struct tnode *tnode(const gtype key, const gtype value) {
  * Cấu trúc điều khiển của bảng cây tmap, được tạo bằng hàm
  * tmap = red black map tree
  *
- * rbm_create(gcmp_fn_t cmp, destructor_fnt free_key, destructor_fnt free_value).
+ * rbm_create(compare_fnt cmp, destructor_fnt free_key, destructor_fnt free_value).
  *
  * Các macro hỗ trợ:
  * 
@@ -79,12 +79,12 @@ struct tnode *tnode(const gtype key, const gtype value) {
  */
 struct tmap {
   struct tnode *root;
-  gcmp_fn_t cmp;
+  compare_fnt cmp;
   destructor_fnt fk, fv;
   long size;
 };
 
-struct tmap *tcreate(gcmp_fn_t cmp) {
+struct tmap *tcreate(compare_fnt cmp) {
   if (!cmp) {
     FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh.");
     return NULL;
@@ -101,7 +101,7 @@ struct tmap *tcreate(gcmp_fn_t cmp) {
   return t;
 }
 
-struct tmap *tconstruct(gcmp_fn_t cmp, destructor_fnt fk, destructor_fnt fv) {
+struct tmap *tconstruct(compare_fnt cmp, destructor_fnt fk, destructor_fnt fv) {
   struct tmap *t = tcreate(cmp);
   if (t) {
     tsetfk(t, fk);
@@ -234,7 +234,7 @@ gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
   struct tnode **loc = &t->root;
   int rl = 0;
   while (x) {
-    rl = t->cmp(key, x->key);
+    rl = t->cmp(&key, &x->key);
     if (rl == 0) {
       free(nn);
       return &x->value;
@@ -269,7 +269,7 @@ struct tnode *tsearch(struct tmap *t, gtype key) {
   int rl;
   struct tnode *x = t->root;
   while (x) {
-    rl = t->cmp(key, x->key);
+    rl = t->cmp(&key, &x->key);
     if (rl == 0) {
       return x;
     }

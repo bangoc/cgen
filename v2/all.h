@@ -2,6 +2,7 @@
 #define ALL_H_
 
 #include "algo/perm.h"
+#include "base/fnt.h"
 #include "base/gtype.h"
 #include "cont/arr.h"
 #include "cont/queue.h"
