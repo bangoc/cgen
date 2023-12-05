@@ -22,17 +22,33 @@ typedef union generic_type {
 #define GDOUBLE(value) GTYPE(d, value)
 #define GSTR(value) GTYPE(s, value)
 #define GVOID(value) GTYPE(v, value)
-#define GCALL2(func,cont,value) \
+static inline gtype gtype_from_long(long value) {
+  return GLONG(value);
+}
+static inline gtype gtype_from_double(double value) {
+  return GDOUBLE(value);
+}
+static inline gtype gtype_from_str(char *value) {
+  return GSTR(value);
+}
+static inline gtype gtype_from_void(void *value) {
+  return GVOID(value);
+}
+static inline gtype gtype_from_gtype(gtype value) {
+  return value;
+}
+#define TO_GTYPE(value) \
     _Generic((value), \
-        char: func##_l, \
-        short: func##_l, \
-        int: func##_l, \
-        long: func##_l, \
-        float: func##_d, \
-        double: func##_d, \
-        char *: func##_s, \
-        gtype: func, \
-        default: func##_v)(cont, value)
+        char: gtype_from_long, \
+        short: gtype_from_long, \
+        int: gtype_from_long, \
+        long: gtype_from_long, \
+        float: gtype_from_double, \
+        double: gtype_from_double, \
+        char *: gtype_from_str, \
+        gtype: gtype_from_gtype, \
+        default: gtype_from_void \
+    )(value)
 #define VALUE(elem,member) _Generic((elem),\
         gtype: gget_##member,\
         gtype*: pgget_##member)(elem)
@@ -277,19 +293,7 @@ long vidx(struct vector *v, gtype *elem_ptr);
 struct vector *vreserve(struct vector *v, long newcap);
 struct vector *vresize(struct vector *v, long newsz);
 struct vector *_vappend(struct vector *v, gtype val);
-#define vappend(v,elem) GCALL2(_vappend, v, elem)
-static inline struct vector *_vappend_l(struct vector *v, long elem) {
-  return _vappend(v, GLONG(elem));
-}
-static inline struct vector *_vappend_d(struct vector *v, double elem) {
-  return _vappend(v, GDOUBLE(elem));
-}
-static inline struct vector *_vappend_s(struct vector *v, char *elem) {
-  return _vappend(v, GSTR(elem));
-}
-static inline struct vector *_vappend_v(struct vector *v, void *elem) {
-  return _vappend(v, GVOID(elem));
-}
+#define vappend(v,elem) _vappend(v, TO_GTYPE(elem))
 struct vector *vremove(struct vector *v, long idx);
 struct vector *vinsert_before(struct vector *v, gtype e, long i);
 struct vector *vclear(struct vector *v);
@@ -400,7 +404,9 @@ struct tnode *tleft_of(struct tnode *n);
 struct tnode *tright_of(struct tnode *n);
 struct tnode *ttop_of(struct tnode *n);
 struct tmap *tcreate(gcmp_fn_t cmp);
-gtype *tput(struct tmap *t, const gtype key, const gtype value);
+gtype *tput_internal(struct tmap *t, const gtype key, const gtype value);
+#define tput(t,k,v) \
+   tput_internal(t, TO_GTYPE(k), TO_GTYPE(v))
 gtype *tget(struct tmap *t, const gtype key);
 struct tmap *tremove(struct tmap *t, gtype key);
 long tsize(const struct tmap *t);

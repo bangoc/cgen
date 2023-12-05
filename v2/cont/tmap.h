@@ -202,7 +202,10 @@ struct tmap *tcreate(gcmp_fn_t cmp);
  *
  * \memberof tmap
  */
-gtype *tput(struct tmap *t, const gtype key, const gtype value);
+gtype *tput_internal(struct tmap *t, const gtype key, const gtype value);
+
+#define tput(t, k, v) \
+   tput_internal(t, TO_GTYPE(k), TO_GTYPE(v))
 
 /**
  * Truy cập giá trị được gắn với khóa

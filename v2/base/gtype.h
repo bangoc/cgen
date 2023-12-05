@@ -30,17 +30,39 @@ typedef union generic_type {
 #define GDOUBLE(value) GTYPE(d, value)
 #define GSTR(value) GTYPE(s, value)
 #define GVOID(value) GTYPE(v, value)
-#define GCALL2(func, cont, value) \
+
+static inline gtype gtype_from_long(long value) {
+  return GLONG(value);
+}
+
+static inline gtype gtype_from_double(double value) {
+  return GDOUBLE(value);
+}
+
+static inline gtype gtype_from_str(char *value) {
+  return GSTR(value);
+}
+
+static inline gtype gtype_from_void(void *value) {
+  return GVOID(value);
+}
+
+static inline gtype gtype_from_gtype(gtype value) {
+  return value;
+}
+
+#define TO_GTYPE(value) \
     _Generic((value), \
-        char: func##_l, \
-        short: func##_l, \
-        int: func##_l, \
-        long: func##_l, \
-        float: func##_d, \
-        double: func##_d, \
-        char *: func##_s, \
-        gtype: func, \
-        default: func##_v)(cont, value)
+        char: gtype_from_long, \
+        short: gtype_from_long, \
+        int: gtype_from_long, \
+        long: gtype_from_long, \
+        float: gtype_from_double, \
+        double: gtype_from_double, \
+        char *: gtype_from_str, \
+        gtype: gtype_from_gtype, \
+        default: gtype_from_void \
+    )(value)
 
 #define VALUE(elem, member) _Generic((elem),\
         gtype: gget_##member,\

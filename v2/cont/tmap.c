@@ -214,7 +214,7 @@ static void tput_fixup(struct tmap *t, struct tnode *n, struct tnode *p) {
   }
 }
 
-gtype *tput(struct tmap *t, const gtype key, const gtype value) {
+gtype *tput_internal(struct tmap *t, const gtype key, const gtype value) {
   struct tnode *nn = tnode(key, value);
   if (!nn) {
     FLOG("Không thể tạo nút mới.");

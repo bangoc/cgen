@@ -148,20 +148,7 @@ struct vector *vresize(struct vector *v, long newsz);
  * \memberof vector
  */
 struct vector *_vappend(struct vector *v, gtype val);
-
-#define vappend(v, elem) GCALL2(_vappend, v, elem)
-static inline struct vector *_vappend_l(struct vector *v, long elem) {
-  return _vappend(v, GLONG(elem));
-}
-static inline struct vector *_vappend_d(struct vector *v, double elem) {
-  return _vappend(v, GDOUBLE(elem));
-}
-static inline struct vector *_vappend_s(struct vector *v, char *elem) {
-  return _vappend(v, GSTR(elem));
-}
-static inline struct vector *_vappend_v(struct vector *v, void *elem) {
-  return _vappend(v, GVOID(elem));
-}
+#define vappend(v, elem) _vappend(v, TO_GTYPE(elem))
 
 /**
  * Xóa phần tử có chỉ số idx khỏi vec-tơ v.
