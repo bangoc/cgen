@@ -90,7 +90,6 @@ static inline void *acreate_internal(long size, long esz, double rio) {
         aelem(a, _i) = aelem(a, _i - 1); \
      } \
      aelem(a, _pos) = elem; \
-     printf("pos: %ld\n", _pos); \
    } while (0)
 
 #define aqsort(a, cmp) \
