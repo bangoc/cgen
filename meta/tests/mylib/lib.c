@@ -2,3 +2,4 @@
 #include "tests/mylib/lib.h"
 
 VIMPL(vectint, int, vi);
+VIMPL(vectdbl, double, vd);

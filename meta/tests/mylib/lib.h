@@ -4,12 +4,16 @@
 
 #include "all.h"
 VDECL(vectint, int, vi);
+VDECL(vectdbl, double, vd);
 
 #define VMATCH(v, api) \
   _Generic((v), \
-    struct vectint *: vi##api \
+    struct vectint *: vi##api, \
+    struct vectdbl *: vd##api \
   )
 
+#define VCONSTRUCT(vecname, objname, size) \
+  struct vecname *objname = VMATCH((struct vecname *)NULL, create)(size)
 #define VRESERVE(v, ...) VMATCH(v, reserve)(v, __VA_ARGS__)
 #define VRESIZE(v, ...) VMATCH(v, resize)(v, __VA_ARGS__)
 #define VAPPEND(v, ...) VMATCH(v, append)(v, __VA_ARGS__)

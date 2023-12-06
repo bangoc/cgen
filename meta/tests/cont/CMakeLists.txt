@@ -1,4 +1,5 @@
 add_executable(vec_int_demo vec_int_demo.c)
-foreach(p vec_int_demo)
+add_executable(vec_dbl_demo vec_dbl_demo.c)
+foreach(p vec_int_demo vec_dbl_demo)
   target_link_libraries(${p} bkcgen)
 endforeach()
