@@ -224,7 +224,6 @@ gtype *_tput(struct tmap *t, const gtype key, const gtype value);
 /**
  * Truy cập giá trị được gắn với khóa
  * 
- * @param t - Con trỏ tới bảng.
  * @param key - Khóa.
  * @param value - Trả về con trỏ tới giá trị tương ứng,
  * hoặc NULL nếu khóa không có trong bảng.
@@ -233,22 +232,6 @@ gtype *_tput(struct tmap *t, const gtype key, const gtype value);
  */
 gtype *_tget(struct tmap *t, const gtype key);
 #define tget(t, key) _tget(t, GTYPE(key))
-
-/**
- * Thiết lập value là con trỏ tới giá trị tương ứng với key
- *
- * @param t - Con trỏ tới bảng.
- * @param k - Khóa.
- * @param v - Con trỏ đầu ra lưu giá trị.
- */
-#define tbind(t, k_, v_) \
-  _Generic((v_), \
-    long *:   (v_) = (long*)tget(t, k_), \
-    double *: (v_) = (double*)tget(t, k_), \
-    char *:   (v_) = tget(t, k_)->s, \
-    void *:   (v_) = tget(t, k_)->v, \
-    default:  (v_) = tget(t, k_)->v \
-  )
 
 /**
  * Nếu key không có trong t thì bỏ qua, nếu ngược lại thì xóa cặp
