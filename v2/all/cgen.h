@@ -380,6 +380,14 @@ gtype *_tput(struct tmap *t, const gtype key, const gtype value);
 #define tput(t,k,v) _tput(t, GTYPE(k), GTYPE(v))
 gtype *_tget(struct tmap *t, const gtype key);
 #define tget(t,key) _tget(t, GTYPE(key))
+#define tbind(t,k_,v_) \
+  _Generic((v_), \
+    long *: (v_) = (long*)tget(t, k_), \
+    double *: (v_) = (double*)tget(t, k_), \
+    char *: (v_) = tget(t, k_)->s, \
+    void *: (v_) = tget(t, k_)->v, \
+    default: (v_) = tget(t, k_)->v \
+  )
 struct tmap *_tremove(struct tmap *t, gtype key);
 #define tremove(t,key) _tremove(t, GTYPE(key))
 long tsize(const struct tmap *t);

@@ -53,6 +53,7 @@ add_test(NAME ArrIntQueueDemo COMMAND arr_int_queue_demo)
 add_test(NAME ArrInsertbUT  COMMAND arr_insertb_ut)
 add_test(NAME GtypeConsUT COMMAND gtype_cons_ut)
 add_test(NAME VecSortUT COMMAND vec_sort_ut)
+add_test(NAME TMapPutBindDemo COMMAND tmap_put_bind_demo)
 
 if (${CMAKE_BUILD_TYPE} STREQUAL Release AND
     ${CMAKE_PROJECT_NAME} STREQUAL cgen)
