@@ -10,7 +10,7 @@ int main() {
   struct vectint *v = vicreate(0);
   int elem;
   while (scanf("%d", &elem) == 1) {
-    viappend(v, elem);
+    VAPPEND(v, elem);
   }
   printf("%ld %ld\n", VSIZE(v), VCAP(v));
   VSORT(v, rcmpi);
@@ -18,6 +18,6 @@ int main() {
     printf(" %d", VELEM(v, i));
   }
   printf("\n");
-  vifree(v);
+  VFREE(v);
   TEST_OK();
 }
