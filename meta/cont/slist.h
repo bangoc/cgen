@@ -32,10 +32,8 @@ struct sname *prefix##prepend(struct sname *list, dtype data); \
 struct sname *prefix##dfront(struct sname *list); \
 struct sname *prefix##push(struct sname *list, dtype elem); \
 struct sname *prefix##pop(struct sname *list); \
-dtype *prefix##top(struct sname *list); \
 struct sname *prefix##enque(struct sname *list, dtype elem); \
-struct sname *prefix##deque(struct sname *list); \
-dtype *prefix##peek(struct sname *list)
+struct sname *prefix##deque(struct sname *list)
 
 #define SIMPL(sname, dtype, prefix) \
 struct sname##_node *sname##_node(dtype data) { \
