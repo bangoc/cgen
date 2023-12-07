@@ -29,4 +29,22 @@ VDECL(vectdbl, double, vd);
 #define VPEEK(v) VMATCH(v, peek)(v)
 #define VDEQUE(v, ...) VMATCH(v, deque)(v, __VA_ARGS__)
 
+SDECL(silist, int, si);
+#define SMATCH(list, api) \
+  _Generic((list), \
+      struct silist *: si##api \
+    )
+
+#define SCONSTRUCT(sname, objname) \
+  struct sname *objname = SMATCH((struct sname *)NULL, create)()
+#define SFREE(list) SMATCH(list, free)(list)
+#define SAPPEND(list, ...) SMATCH(list, append)(list, __VA_ARGS__)
+#define SPREPEND(list, ...) SMATCH(list, prepend)(list, __VA_ARGS__)
+#define SDFRONT(list) SMATCH(list, dfront)(list)
+
+#define SPUSH(list, elem) SPREPEND(list, elem)
+#define SPOP(list) SDFRONT(list)
+#define SENQUE(list, elem) SAPPEND(list, elem)
+#define SDEQUE(list) SDFRONT(list)
+
 #endif  // TESTS_MYLIB_LIB_H_
