@@ -63,6 +63,7 @@ TDECL(tsimap, char *, int, tsi);
 #define TNEXT_LRN(n) TNODE_MATCH(n, next_lrn)(n)
 #define TNEXT_LNR(n) TNODE_MATCH(n, next_lnr)(n)
 #define TPREV_LNR(n) TNODE_MATCH(n, prev_lnr)(n)
+#define TFIRST_LRN(t) TMATCH(t, first_lrn)(t)
 #define TFIRST_LNR(t) TMATCH(t, first_lnr)(t)
 #define TLAST_LNR(t) TMATCH(t, last_lnr)(t)
 #define TCONSTRUCT(tname, objname, ...) \
