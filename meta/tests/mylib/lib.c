@@ -4,3 +4,4 @@
 VIMPL(vectint, int, vi);
 VIMPL(vectdbl, double, vd);
 SIMPL(silist, int, si);
+TIMPL(tsimap, char *, int, tsi);
