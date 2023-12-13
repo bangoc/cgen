@@ -133,6 +133,6 @@ struct sname *prefix##enque(struct sname *list, dtype elem) { \
 } \
 struct sname *prefix##deque(struct sname *list) { \
   return prefix##dfront(list); \
-} \
+}
 
 #endif  // CONT_SLIST_H_
