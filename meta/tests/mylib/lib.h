@@ -5,11 +5,13 @@
 #include "all.h"
 VDECL(vectint, int, vi);
 VDECL(vectdbl, double, vd);
+VDECL(vectstr, char *, vs);
 
 #define VMATCH(v, api) \
   _Generic((v), \
     struct vectint *: vi##api, \
-    struct vectdbl *: vd##api \
+    struct vectdbl *: vd##api, \
+    struct vectstr *:vs##api \
   )
 
 SDECL(silist, int, si);

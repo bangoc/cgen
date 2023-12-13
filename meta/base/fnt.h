@@ -2,6 +2,7 @@
 #ifndef BASE_FNT_H_
 #define BASE_FNT_H_
 
+#include <stdlib.h>
 #include <string.h>
 
 typedef int (*compare_fnt)(const void *p1, const void *p2);
@@ -46,6 +47,10 @@ static inline int cmps(const void *p1, const void *p2) {
 static inline int rcmps(const void *p1, const void *p2) {
   char *const *s2 = p1, *const *s1 = p2;
   return strcmp(*s1, *s2);
+}
+
+static inline void frees(void *p) {
+  free(*(char**)p);
 }
 
 #endif  // BASE_FNT_H_
