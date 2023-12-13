@@ -23,6 +23,22 @@
 #define VLASTIDX(v) (VSIZE(v) - 1)
 #define VEMPTY(v) (VSIZE(v) == 0)
 #define VSORT(v, cmp) qsort(v->elems, v->size, sizeof(v->elems[0]), cmp)
+#define VCONSTRUCT(vecname, objname, size) \
+  struct vecname *objname = VMATCH((struct vecname *)NULL, create)(size)
+#define VRESERVE(v, ...) VMATCH(v, reserve)(v, __VA_ARGS__)
+#define VRESIZE(v, ...) VMATCH(v, resize)(v, __VA_ARGS__)
+#define VAPPEND(v, ...) VMATCH(v, append)(v, __VA_ARGS__)
+#define VREMOVE(v, ...) VMATCH(v, remove)(v, __VA_ARGS__)
+#define VINSERTB(v, ...) VMATCH(v, insertb)(v, __VA_ARGS__)
+#define VCLEAR(v) VMATCH(v, clear)(v)
+#define VFREE(v) VMATCH(v, free)(v)
+#define VFILL(v, ...) VMATCH(v, fill)(v, __VA_ARGS__)
+#define VPUSH(v, ...) VMATCH(v, push)(v, __VA_ARGS__)
+#define VPOP(v) VMATCH(v, pop)(v)
+#define VTOP(v) VMATCH(v, top)(v)
+#define VENQUE(v, ...) VMATCH(v, enque)(v, __VA_ARGS__)
+#define VPEEK(v) VMATCH(v, peek)(v)
+#define VDEQUE(v, ...) VMATCH(v, deque)(v, __VA_ARGS__)
 
 #define VFOR(i, v) \
   for (long i = 0; i < VSIZE(v); ++i)

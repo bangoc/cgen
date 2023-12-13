@@ -22,6 +22,17 @@ struct sname { \
 #define SPEEK(list) SFRONT(list)
 #define SBACK(list) ((list)->back->data)
 #define SEMPTY(list) (SSIZE(list) == 0)
+#define SCONSTRUCT(sname, objname) \
+  struct sname *objname = SMATCH((struct sname *)NULL, create)()
+#define SFREE(list) SMATCH(list, free)(list)
+#define SAPPEND(list, ...) SMATCH(list, append)(list, __VA_ARGS__)
+#define SPREPEND(list, ...) SMATCH(list, prepend)(list, __VA_ARGS__)
+#define SDFRONT(list) SMATCH(list, dfront)(list)
+
+#define SPUSH(list, elem) SPREPEND(list, elem)
+#define SPOP(list) SDFRONT(list)
+#define SENQUE(list, elem) SAPPEND(list, elem)
+#define SDEQUE(list) SDFRONT(list)
 
 #define SDECL(sname, dtype, prefix) \
 SDEFN(sname, dtype); \
