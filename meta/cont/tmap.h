@@ -26,12 +26,12 @@ struct tname { \
   long size; \
 }
 
-#define TCOLOR_OF(n) ((n)? (n)->color: BLACK)
-#define TIS_RED(n) (TCOLOR_OF(n) == RED)
-#define TIS_BLACK(n) (TCOLOR_OF(n) == BLACK)
-#define TPAINT_BLACK(n) ((n)->color = BLACK)
-#define TPAINT_RED(n) ((n)->color = RED)
-#define TPAINT(n, c) ((n)->color = (c))
+#define TCOLOR(n) ((n)? (n)->color: BLACK)
+#define TIS_RED(n) ((n) && (n)->color == RED)
+#define TIS_BLACK(n) (!(n) || (n)->color == BLACK)
+#define TPAINT_BLACK(n) (n)->color = BLACK
+#define TPAINT_RED(n) (n)->color = RED
+#define TPAINT(n, c) (n)->color = (c)
 #define TSET_PC(n, p, c) (n)->top = (p); TPAINT(n, c)
 #define TKEY(n) ((n)->key)
 #define TVALUE(n) ((n)->value)
@@ -297,7 +297,7 @@ do { \
        */ \
       dn = s->right; \
       TROTATE(t, p, right, left, u_); \
-      TPAINT(s, TCOLOR_OF(p)); \
+      TPAINT(s, p->color); \
       TPAINT_BLACK(p); \
       TPAINT_BLACK(dn); \
       break
@@ -426,7 +426,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
      * mầu trong lân cận để tránh gọi hàm sửa mầu sau này.
      */ \
     p = node->top; \
-    c = TCOLOR_OF(node); \
+    c = node->color; \
     parent = p; \
     TCHANGE(node, child, parent, t); \
     if (child) { \
@@ -439,7 +439,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   } else if (!child) { \
     /* Vẫn trường hợp 1 nhưng nút con là node->left */ \
     p = node->top; \
-    c = TCOLOR_OF(node); \
+    c = node->color; \
     TSET_PC(tmp, p, c); \
     parent = p; \
     TCHANGE(node, tmp, parent, t); \
@@ -487,14 +487,14 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     successor->left = tmp; \
     tmp->top = successor; \
     p = node->top; \
-    c = TCOLOR_OF(node); \
+    c = node->color; \
     tmp = p; \
     TCHANGE(node, successor, tmp, t); \
     if (child2) { \
       TSET_PC(child2, parent, BLACK); \
       rebalance = NULL; \
     } else { \
-      enum tcolors c2 = TCOLOR_OF(successor); \
+      enum tcolors c2 = successor->color; \
       rebalance = c2 == BLACK? parent: NULL; \
     } \
     TSET_PC(successor, p, c); \
