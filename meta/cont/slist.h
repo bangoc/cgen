@@ -58,7 +58,7 @@ struct sname *sname() { \
 } \
 void prefix##free(void *po) { \
   struct sname *list = po; \
-  while (!SEMPTY(list)) { \
+  while (!prefix##empty(list)) { \
     prefix##dfront(list); \
   } \
   free(list); \
@@ -94,7 +94,7 @@ struct sname *prefix##prepend(struct sname *list, dtype data) {\
   return list; \
 } \
 struct sname *prefix##dfront(struct sname *list) {\
-  if (!list || SEMPTY(list)) { \
+  if (!list || prefix##empty(list)) { \
     FLOG("Xóa đầu danh sách không hợp lệ."); \
     return NULL; \
   } \

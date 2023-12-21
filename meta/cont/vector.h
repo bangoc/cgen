@@ -4,6 +4,8 @@
 
 #include "base/core.h"
 
+#define VLASTIDX(v) ((v)->size - 1)
+
 #define VDEFN(vecname, elemtype) \
   struct vecname { \
     elemtype *elems; \
@@ -114,7 +116,7 @@ void prefix##free(void *po) { \
   free(v); \
 } \
 struct vecname *prefix##fill(struct vecname *v, elemtype value) { \
-  VFOR(i, v) {\
+  for (long i = 0; i < v->size; ++i) {\
     v->elems[i] = value; \
   } \
   return v; \

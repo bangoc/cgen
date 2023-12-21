@@ -75,6 +75,7 @@ static inline void frees(void *p) {
 /***** ./cont/vector.h *****/
 #ifndef CONT_VECTOR_H_
 #define CONT_VECTOR_H_ 
+#define VLASTIDX(v) ((v)->size - 1)
 #define VDEFN(vecname,elemtype) \
   struct vecname { \
     elemtype *elems; \
@@ -183,7 +184,7 @@ void prefix##free(void *po) { \
   free(v); \
 } \
 struct vecname *prefix##fill(struct vecname *v, elemtype value) { \
-  VFOR(i, v) {\
+  for (long i = 0; i < v->size; ++i) {\
     v->elems[i] = value; \
   } \
   return v; \
@@ -285,7 +286,7 @@ struct sname *sname() { \
 } \
 void prefix##free(void *po) { \
   struct sname *list = po; \
-  while (!SEMPTY(list)) { \
+  while (!prefix##empty(list)) { \
     prefix##dfront(list); \
   } \
   free(list); \
@@ -321,7 +322,7 @@ struct sname *prefix##prepend(struct sname *list, dtype data) {\
   return list; \
 } \
 struct sname *prefix##dfront(struct sname *list) {\
-  if (!list || SEMPTY(list)) { \
+  if (!list || prefix##empty(list)) { \
     FLOG("Xóa đầu danh sách không hợp lệ."); \
     return NULL; \
   } \
