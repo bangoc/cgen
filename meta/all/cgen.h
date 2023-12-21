@@ -709,10 +709,10 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   return t; \
 } \
 vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
-  struct TNN(tname) *nn = TNN(tname)(key, value); \
-  struct TNN(tname) *top = NULL; \
-  struct TNN(tname) *x = t->root; \
-  struct TNN(tname) **loc = &t->root; \
+  struct TNN(tname) *nn = TNN(tname)(key, value), \
+                    *top = NULL, \
+                    *x = t->root, \
+                   **loc = &t->root; \
   int rl = 0; \
   while (x) { \
     rl = t->cmp(&key, &x->key); \
