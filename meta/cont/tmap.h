@@ -46,6 +46,7 @@ struct TNN(tname) *prefix##first_lrn(struct tname *t); \
 struct TNN(tname) *prefix##first_lnr(struct tname *t); \
 struct TNN(tname) *prefix##last_lnr(struct tname *t); \
 struct tname *prefix##create(compare_fnt cmp); \
+struct tname *tname(compare_fnt cmp); \
 vtype *prefix##put(struct tname *t, ktype key, vtype value); \
 vtype *prefix##get(struct tname *t, ktype key); \
 struct tname *prefix##remove(struct tname *t, ktype key); \
@@ -387,6 +388,9 @@ struct tname *prefix##create(compare_fnt cmp) { \
   t->size = 0; \
   return t; \
 } \
+struct tname *tname(compare_fnt cmp) { \
+  return prefix##create(cmp); \
+} \
 static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
   struct TNN(tname) *child = node->right, \
@@ -558,5 +562,9 @@ void prefix##free(void *po) { \
   } \
   free(t); \
 }
+
+#define TDECL_IMPL(tname, keytype, valtype, prefix) \
+TDECL(tname, keytype, valtype, prefix); \
+TIMPL(tname, keytype, valtype, prefix)
 
 #endif  // CONT_TMAP_H_

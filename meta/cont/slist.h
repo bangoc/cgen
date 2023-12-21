@@ -18,6 +18,7 @@ struct sname { \
 #define SDECL(sname, dtype, prefix) \
 SDEFN(sname, dtype); \
 struct sname *prefix##create(); \
+struct sname *sname(); \
 void prefix##free(void *po); \
 struct sname *prefix##append(struct sname *list, dtype data); \
 struct sname *prefix##prepend(struct sname *list, dtype data); \
@@ -51,6 +52,9 @@ struct sname *prefix##create() { \
   tmp->fv = NULL; \
   tmp->size = 0; \
   return tmp; \
+} \
+struct sname *sname() { \
+  return prefix##create(); \
 } \
 void prefix##free(void *po) { \
   struct sname *list = po; \
