@@ -23,9 +23,12 @@ struct sname *prefix##append(struct sname *list, dtype data); \
 struct sname *prefix##prepend(struct sname *list, dtype data); \
 struct sname *prefix##dfront(struct sname *list); \
 struct sname *prefix##push(struct sname *list, dtype elem); \
+dtype *prefix##top(struct sname *list); \
 struct sname *prefix##pop(struct sname *list); \
 struct sname *prefix##enque(struct sname *list, dtype elem); \
-struct sname *prefix##deque(struct sname *list)
+dtype *prefix##peek(struct sname *list); \
+struct sname *prefix##deque(struct sname *list); \
+int prefix##empty(struct sname *list)
 
 #define SIMPL(sname, dtype, prefix) \
 struct sname##_node *sname##_node(dtype data) { \
@@ -106,14 +109,27 @@ struct sname *prefix##dfront(struct sname *list) {\
 struct sname *prefix##push(struct sname *list, dtype elem) { \
   return prefix##prepend(list, elem); \
 } \
+dtype *prefix##top(struct sname *list) { \
+  return &list->front->data; \
+} \
 struct sname *prefix##pop(struct sname *list) {\
   return prefix##dfront(list); \
 } \
 struct sname *prefix##enque(struct sname *list, dtype elem) { \
   return prefix##append(list, elem); \
 } \
+dtype *prefix##peek(struct sname *list) {\
+  return &list->front->data; \
+} \
 struct sname *prefix##deque(struct sname *list) { \
   return prefix##dfront(list); \
+} \
+int prefix##empty(struct sname *list) { \
+  return list->front == NULL || list->back == NULL; \
 }
+
+#define SDECL_IMPL(sname, dtype, prefix) \
+SDECL(sname, dtype, prefix); \
+SIMPL(sname, dtype, prefix)
 
 #endif  // CONT_SLIST_H_
