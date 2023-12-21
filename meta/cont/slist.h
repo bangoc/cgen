@@ -29,8 +29,7 @@ struct sname *prefix##pop(struct sname *list); \
 struct sname *prefix##enque(struct sname *list, dtype elem); \
 dtype *prefix##peek(struct sname *list); \
 struct sname *prefix##deque(struct sname *list); \
-int prefix##empty(struct sname *list); \
-long prefix##size(struct sname *list)
+int prefix##empty(struct sname *list)
 
 #define SIMPL(sname, dtype, prefix) \
 struct sname##_node *sname##_node(dtype data) { \
@@ -131,9 +130,6 @@ struct sname *prefix##deque(struct sname *list) { \
 } \
 int prefix##empty(struct sname *list) { \
   return list->front == NULL || list->back == NULL; \
-} \
-long prefix##size(struct sname *list) { \
-  return list->size; \
 }
 
 #define SDECL_IMPL(sname, dtype, prefix) \
