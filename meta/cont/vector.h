@@ -16,6 +16,8 @@
 #define VDECL(vecname, elemtype, prefix) \
 VDEFN(vecname, elemtype); \
 struct vecname *prefix##create(long sz); \
+struct vecname *vecname(long sz); \
+int prefix##empty(struct vecname *v); \
 struct vecname *prefix##reserve(struct vecname *v, long newcap); \
 struct vecname *prefix##resize(struct vecname *v, long newsz); \
 struct vecname *prefix##append(struct vecname *v, elemtype val); \
@@ -44,6 +46,12 @@ struct vecname *prefix##create(long sz) { \
   v->rio = 2.0; \
   v->elems = calloc(v->cap, sizeof(elemtype)); \
   return v; \
+} \
+struct vecname *vecname(long sz) { \
+  return prefix##create(sz); \
+} \
+int prefix##empty(struct vecname *v) { \
+  return v->size == 0; \
 } \
 struct vecname *prefix##reserve(struct vecname *v, long newcap) {\
   if (newcap < v->size) { \
@@ -147,5 +155,9 @@ struct vecname *prefix##deque(struct vecname *v, long *head) {\
   *head = h; \
   return v; \
 }
+
+#define VDECL_IMPL(vecname, elemtype, prefix) \
+VDECL(vecname, elemtype, prefix); \
+VIMPL(vecname, elemtype, prefix)
 
 #endif  // CONT_VECTOR_H_
