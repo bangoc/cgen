@@ -86,6 +86,8 @@ static inline void frees(void *p) {
 #define VDECL(vecname,elemtype,prefix) \
 VDEFN(vecname, elemtype); \
 struct vecname *prefix##create(long sz); \
+struct vecname *vecname(long sz); \
+int prefix##empty(struct vecname *v); \
 struct vecname *prefix##reserve(struct vecname *v, long newcap); \
 struct vecname *prefix##resize(struct vecname *v, long newsz); \
 struct vecname *prefix##append(struct vecname *v, elemtype val); \
@@ -113,6 +115,12 @@ struct vecname *prefix##create(long sz) { \
   v->rio = 2.0; \
   v->elems = calloc(v->cap, sizeof(elemtype)); \
   return v; \
+} \
+struct vecname *vecname(long sz) { \
+  return prefix##create(sz); \
+} \
+int prefix##empty(struct vecname *v) { \
+  return v->size == 0; \
 } \
 struct vecname *prefix##reserve(struct vecname *v, long newcap) {\
   if (newcap < v->size) { \
@@ -216,6 +224,9 @@ struct vecname *prefix##deque(struct vecname *v, long *head) {\
   *head = h; \
   return v; \
 }
+#define VDECL_IMPL(vecname,elemtype,prefix) \
+VDECL(vecname, elemtype, prefix); \
+VIMPL(vecname, elemtype, prefix)
 #endif
 
 /***** ./cont/slist.h *****/
@@ -235,14 +246,18 @@ struct sname { \
 #define SDECL(sname,dtype,prefix) \
 SDEFN(sname, dtype); \
 struct sname *prefix##create(); \
+struct sname *sname(); \
 void prefix##free(void *po); \
 struct sname *prefix##append(struct sname *list, dtype data); \
 struct sname *prefix##prepend(struct sname *list, dtype data); \
 struct sname *prefix##dfront(struct sname *list); \
 struct sname *prefix##push(struct sname *list, dtype elem); \
+dtype *prefix##top(struct sname *list); \
 struct sname *prefix##pop(struct sname *list); \
 struct sname *prefix##enque(struct sname *list, dtype elem); \
-struct sname *prefix##deque(struct sname *list)
+dtype *prefix##peek(struct sname *list); \
+struct sname *prefix##deque(struct sname *list); \
+int prefix##empty(struct sname *list)
 #define SIMPL(sname,dtype,prefix) \
 struct sname##_node *sname##_node(dtype data) { \
   struct sname##_node *tmp = malloc(sizeof(struct sname##_node)); \
@@ -264,6 +279,9 @@ struct sname *prefix##create() { \
   tmp->fv = NULL; \
   tmp->size = 0; \
   return tmp; \
+} \
+struct sname *sname() { \
+  return prefix##create(); \
 } \
 void prefix##free(void *po) { \
   struct sname *list = po; \
@@ -322,15 +340,27 @@ struct sname *prefix##dfront(struct sname *list) {\
 struct sname *prefix##push(struct sname *list, dtype elem) { \
   return prefix##prepend(list, elem); \
 } \
+dtype *prefix##top(struct sname *list) { \
+  return &list->front->data; \
+} \
 struct sname *prefix##pop(struct sname *list) {\
   return prefix##dfront(list); \
 } \
 struct sname *prefix##enque(struct sname *list, dtype elem) { \
   return prefix##append(list, elem); \
 } \
+dtype *prefix##peek(struct sname *list) {\
+  return &list->front->data; \
+} \
 struct sname *prefix##deque(struct sname *list) { \
   return prefix##dfront(list); \
+} \
+int prefix##empty(struct sname *list) { \
+  return list->front == NULL || list->back == NULL; \
 }
+#define SDECL_IMPL(sname,dtype,prefix) \
+SDECL(sname, dtype, prefix); \
+SIMPL(sname, dtype, prefix)
 #endif
 
 /***** ./cont/tmap.h *****/
@@ -375,6 +405,7 @@ struct TNN(tname) *prefix##first_lrn(struct tname *t); \
 struct TNN(tname) *prefix##first_lnr(struct tname *t); \
 struct TNN(tname) *prefix##last_lnr(struct tname *t); \
 struct tname *prefix##create(compare_fnt cmp); \
+struct tname *tname(compare_fnt cmp); \
 vtype *prefix##put(struct tname *t, ktype key, vtype value); \
 vtype *prefix##get(struct tname *t, ktype key); \
 struct tname *prefix##remove(struct tname *t, ktype key); \
@@ -597,6 +628,9 @@ struct tname *prefix##create(compare_fnt cmp) { \
   t->size = 0; \
   return t; \
 } \
+struct tname *tname(compare_fnt cmp) { \
+  return prefix##create(cmp); \
+} \
 static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
   struct TNN(tname) *child = node->right, \
@@ -743,5 +777,8 @@ void prefix##free(void *po) { \
   } \
   free(t); \
 }
+#define TDECL_IMPL(tname,keytype,valtype,prefix) \
+TDECL(tname, keytype, valtype, prefix); \
+TIMPL(tname, keytype, valtype, prefix)
 #endif
 #endif  // CGEN_H_
