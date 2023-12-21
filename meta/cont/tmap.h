@@ -33,30 +33,6 @@ struct tname { \
 #define TPAINT_RED(n) (n)->color = RED
 #define TPAINT(n, c) (n)->color = (c)
 #define TSET_PC(n, p, c) (n)->top = (p); TPAINT(n, c)
-#define TKEY(n) ((n)->key)
-#define TVALUE(n) ((n)->value)
-#define TLEFT(n) ((n)->left)
-#define TRIGHT(n) ((n)->right)
-#define TTOP(n) ((n)->top)
-#define TSIZE(t) ((t)->size)
-#define TROOT(t) ((t)->root)
-#define TFK(t) ((t)->fk)
-#define TFV(t) ((t)->fv)
-#define TLEFT_MOST(n) TNODE_MATCH(n, left_most)(n)
-#define TRIGHT_MOST(n) TNODE_MATCH(n, right_most)(n)
-#define TLEFT_DEEPEST(n) TNODE_MATCH(n, left_deepest)(n)
-#define TNEXT_LRN(n) TNODE_MATCH(n, next_lrn)(n)
-#define TNEXT_LNR(n) TNODE_MATCH(n, next_lnr)(n)
-#define TPREV_LNR(n) TNODE_MATCH(n, prev_lnr)(n)
-#define TFIRST_LRN(t) TMATCH(t, first_lrn)(t)
-#define TFIRST_LNR(t) TMATCH(t, first_lnr)(t)
-#define TLAST_LNR(t) TMATCH(t, last_lnr)(t)
-#define TCONSTRUCT(tname, objname, ...) \
-  struct tname *objname = TMATCH((struct tname *)NULL, create)(__VA_ARGS__)
-#define TPUT(t, k, v) TMATCH(t, put)(t, k, v)
-#define TGET(t, k) TMATCH(t, get)(t, k)
-#define TREMOVE(t, k) TMATCH(t, remove)(t, k)
-#define TFREE(t) TMATCH(t, free)(t)
 
 #define TDECL(tname, ktype, vtype, prefix) \
 TDEFN(tname, ktype, vtype); \

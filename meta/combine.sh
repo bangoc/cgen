@@ -15,14 +15,5 @@ process ./base/fnt.h ./all/cgen.h
 process ./cont/vector.h ./all/cgen.h
 process ./cont/slist.h ./all/cgen.h
 process ./cont/tmap.h ./all/cgen.h
-process ./tests/mylib/lib.h ./all/cgen.h
 
 echo "#endif  // CGEN_H_" >> ./all/cgen.h
-
-echo "/** (C) Nguyễn Bá Ngọc 2023" > ./all/cgen.c
-echo -n " *  cgen version:" >> ./all/cgen.c
-cat ./VERSION >> ./all/cgen.c
-echo -e "\n */" >> ./all/cgen.c
-
-echo '#include "cgen.h"' >> ./all/cgen.c
-process ./tests/mylib/lib.c ./all/cgen.c
