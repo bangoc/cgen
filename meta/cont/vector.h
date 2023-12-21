@@ -4,8 +4,6 @@
 
 #include "base/core.h"
 
-#define VLASTIDX(v) ((v)->size - 1)
-
 #define VDEFN(vecname, elemtype) \
   struct vecname { \
     elemtype *elems; \
@@ -30,10 +28,7 @@ void prefix##free(void *po); \
 struct vecname *prefix##fill(struct vecname *v, elemtype value); \
 struct vecname *prefix##push(struct vecname *v, elemtype elem); \
 struct vecname *prefix##pop(struct vecname *v); \
-elemtype *prefix##top(struct vecname *v); \
-struct vecname *prefix##enque(struct vecname *v, elemtype elem); \
-elemtype *prefix##peek(struct vecname *v, long *head); \
-struct vecname *prefix##deque(struct vecname *v, long *head)
+elemtype *prefix##top(struct vecname *v)
 
 #define VIMPL(vecname, elemtype, prefix) \
 struct vecname *prefix##create(long sz) { \
@@ -100,7 +95,7 @@ struct vecname *prefix##remove(struct vecname *v, long idx) { \
 struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos) { \
  prefix##resize(v, v->size + 1); \
  elemtype *arr = v->elems; \
- for (long i = VLASTIDX(v); i > pos; --i) { \
+ for (long i = v->size - 1; i > pos; --i) { \
    arr[i] = arr[i - 1]; \
  } \
  arr[pos] = elem; \
@@ -125,37 +120,10 @@ struct vecname *prefix##push(struct vecname *v, elemtype elem) { \
   return prefix##append(v, elem); \
 }\
 struct vecname *prefix##pop(struct vecname *v) { \
-  return prefix##remove(v, VLASTIDX(v)); \
+  return prefix##remove(v, v->size - 1); \
 } \
 elemtype *prefix##top(struct vecname *v) { \
-  return v->elems + (VLASTIDX(v)); \
-} \
-struct vecname *prefix##enque(struct vecname *v, elemtype elem) { \
-  return prefix##append(v, elem); \
-} \
-elemtype *prefix##peek(struct vecname *v, long *head) { \
-  return v->elems + *head; \
-} \
-struct vecname *prefix##deque(struct vecname *v, long *head) {\
-  long h = *head; \
-  if (h >= v->size) { \
-    return NULL; \
-  } \
-  if (v->fv) {\
-    v->fv(v->elems + h); \
-  } \
-  ++h; \
-  if (h / (v->cap - h + 1) > 8) { \
-    elemtype *a = v->elems; \
-    for (long i = h; i < v->size; ++i) { \
-      a[i - h] = a[i]; \
-    } \
-    v->size -= h; \
-    prefix##reserve(v, v->size + 8); \
-    h = 0; \
-  } \
-  *head = h; \
-  return v; \
+  return v->elems + (v->size - 1); \
 }
 
 #define VDECL_IMPL(vecname, elemtype, prefix) \

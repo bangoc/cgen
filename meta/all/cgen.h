@@ -72,162 +72,52 @@ static inline void frees(void *p) {
 }
 #endif
 
-/***** ./cont/vector.h *****/
-#ifndef CONT_VECTOR_H_
-#define CONT_VECTOR_H_ 
-#define VLASTIDX(v) ((v)->size - 1)
-#define VDEFN(vecname,elemtype) \
-  struct vecname { \
-    elemtype *elems; \
-    long size; \
-    long cap; \
-    double rio; \
-    destructor_fnt fv; \
-  }
-#define VDECL(vecname,elemtype,prefix) \
-VDEFN(vecname, elemtype); \
-struct vecname *prefix##create(long sz); \
-struct vecname *vecname(long sz); \
-int prefix##empty(struct vecname *v); \
-struct vecname *prefix##reserve(struct vecname *v, long newcap); \
-struct vecname *prefix##resize(struct vecname *v, long newsz); \
-struct vecname *prefix##append(struct vecname *v, elemtype val); \
-struct vecname *prefix##remove(struct vecname *v, long idx); \
-struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos); \
-struct vecname *prefix##clear(struct vecname *v); \
-void prefix##free(void *po); \
-struct vecname *prefix##fill(struct vecname *v, elemtype value); \
-struct vecname *prefix##push(struct vecname *v, elemtype elem); \
-struct vecname *prefix##pop(struct vecname *v); \
-elemtype *prefix##top(struct vecname *v); \
-struct vecname *prefix##enque(struct vecname *v, elemtype elem); \
-elemtype *prefix##peek(struct vecname *v, long *head); \
-struct vecname *prefix##deque(struct vecname *v, long *head)
-#define VIMPL(vecname,elemtype,prefix) \
-struct vecname *prefix##create(long sz) { \
-  if (sz < 0) { \
-    FLOG("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz); \
-    return NULL; \
-  } \
-  struct vecname *v = malloc(sizeof(struct vecname)); \
-  v->fv = NULL; \
-  v->size = sz; \
-  v->cap = sz > 0? sz: 8; \
-  v->rio = 2.0; \
-  v->elems = calloc(v->cap, sizeof(elemtype)); \
-  return v; \
-} \
-struct vecname *vecname(long sz) { \
-  return prefix##create(sz); \
-} \
-int prefix##empty(struct vecname *v) { \
-  return v->size == 0; \
-} \
-struct vecname *prefix##reserve(struct vecname *v, long newcap) {\
-  if (newcap < v->size) { \
-    FLOG("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->size); \
-    return NULL; \
-  } \
-  v->elems = realloc(v->elems, newcap * sizeof(elemtype)); \
-  v->cap = newcap; \
-  return v; \
-} \
-struct vecname *prefix##resize(struct vecname *v, long newsize) {\
-  if (newsize > v->cap) { \
-    prefix##reserve(v, newsize); \
-  } else if (newsize < v->size && v->fv) { \
-    for (long j_ = newsize; j_ < v->size; ++j_) { \
-      v->fv(v->elems + j_); \
-    } \
-  } \
-  v->size = newsize; \
-  return v; \
-} \
-struct vecname *prefix##append(struct vecname *v, elemtype val) {\
-  if (v->size == v->cap) { \
-    prefix##reserve(v, v->rio * v->size); \
-  } \
-  v->elems[v->size] = val; \
-  ++v->size; \
-  return v; \
-} \
-struct vecname *prefix##remove(struct vecname *v, long idx) { \
-  long sz = v->size; \
-  if (idx >= sz || idx < 0) { \
-    FLOG("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", sz, idx); \
-    return NULL; \
-  } \
-  elemtype *arr = v->elems; \
-  elemtype tmp = arr[idx]; \
-  for (long i = idx; i < sz - 1; ++i) { \
-    arr[i] = arr[i + 1]; \
-  } \
-  arr[sz - 1] = tmp; \
-  return prefix##resize(v, sz - 1); \
-}\
-struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos) { \
- prefix##resize(v, v->size + 1); \
- elemtype *arr = v->elems; \
- for (long i = VLASTIDX(v); i > pos; --i) { \
-   arr[i] = arr[i - 1]; \
- } \
- arr[pos] = elem; \
- return v; \
-} \
-struct vecname *prefix##clear(struct vecname *v) { \
-  return prefix##resize(v, 0); \
-} \
-void prefix##free(void *po) { \
-  struct vecname *v = po; \
-  prefix##resize(v, 0); \
-  free(v->elems); \
-  free(v); \
-} \
-struct vecname *prefix##fill(struct vecname *v, elemtype value) { \
-  for (long i = 0; i < v->size; ++i) {\
-    v->elems[i] = value; \
-  } \
-  return v; \
-} \
-struct vecname *prefix##push(struct vecname *v, elemtype elem) { \
-  return prefix##append(v, elem); \
-}\
-struct vecname *prefix##pop(struct vecname *v) { \
-  return prefix##remove(v, VLASTIDX(v)); \
-} \
-elemtype *prefix##top(struct vecname *v) { \
-  return v->elems + (VLASTIDX(v)); \
-} \
-struct vecname *prefix##enque(struct vecname *v, elemtype elem) { \
-  return prefix##append(v, elem); \
-} \
-elemtype *prefix##peek(struct vecname *v, long *head) { \
-  return v->elems + *head; \
-} \
-struct vecname *prefix##deque(struct vecname *v, long *head) {\
-  long h = *head; \
-  if (h >= v->size) { \
-    return NULL; \
-  } \
-  if (v->fv) {\
-    v->fv(v->elems + h); \
-  } \
-  ++h; \
-  if (h / (v->cap - h + 1) > 8) { \
-    elemtype *a = v->elems; \
-    for (long i = h; i < v->size; ++i) { \
-      a[i - h] = a[i]; \
-    } \
-    v->size -= h; \
-    prefix##reserve(v, v->size + 8); \
-    h = 0; \
-  } \
-  *head = h; \
-  return v; \
+/***** ./base/gtype.h *****/
+#ifndef BASE_GTYPE_H_
+#define BASE_GTYPE_H_ 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+typedef union generic_type {
+  long l;
+  double d;
+  char *s;
+  void *v;
+} gtype;
+static inline gtype gtype_from_long(long value) {
+  return (gtype){.l = value};
 }
-#define VDECL_IMPL(vecname,elemtype,prefix) \
-VDECL(vecname, elemtype, prefix); \
-VIMPL(vecname, elemtype, prefix)
+static inline gtype gtype_from_double(double value) {
+  return (gtype){.d = value};
+}
+static inline gtype gtype_from_str(char *value) {
+  return (gtype){.s = value};
+}
+static inline gtype gtype_from_void(void *value) {
+  return (gtype){.v = value};
+}
+static inline gtype gtype_from_gtype(gtype value) {
+  return value;
+}
+#define GTYPE(value) \
+    _Generic((value), \
+        char: gtype_from_long, \
+        short: gtype_from_long, \
+        int: gtype_from_long, \
+        long: gtype_from_long, \
+        float: gtype_from_double, \
+        double: gtype_from_double, \
+        char *: gtype_from_str, \
+        gtype: gtype_from_gtype, \
+        default: gtype_from_void \
+    )(value)
+#define GZERO (GTYPE(0l))
+#define GSWAP(v1,v2) \
+  do { \
+    gtype _tmp = (v1); \
+    (v1) = (v2); \
+    (v2) = _tmp; \
+  } while (0)
 #endif
 
 /***** ./cont/slist.h *****/
@@ -785,5 +675,132 @@ void prefix##free(void *po) { \
 #define TDECL_IMPL(tname,keytype,valtype,prefix) \
 TDECL(tname, keytype, valtype, prefix); \
 TIMPL(tname, keytype, valtype, prefix)
+#endif
+
+/***** ./cont/vector.h *****/
+#ifndef CONT_VECTOR_H_
+#define CONT_VECTOR_H_ 
+#define VDEFN(vecname,elemtype) \
+  struct vecname { \
+    elemtype *elems; \
+    long size; \
+    long cap; \
+    double rio; \
+    destructor_fnt fv; \
+  }
+#define VDECL(vecname,elemtype,prefix) \
+VDEFN(vecname, elemtype); \
+struct vecname *prefix##create(long sz); \
+struct vecname *vecname(long sz); \
+int prefix##empty(struct vecname *v); \
+struct vecname *prefix##reserve(struct vecname *v, long newcap); \
+struct vecname *prefix##resize(struct vecname *v, long newsz); \
+struct vecname *prefix##append(struct vecname *v, elemtype val); \
+struct vecname *prefix##remove(struct vecname *v, long idx); \
+struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos); \
+struct vecname *prefix##clear(struct vecname *v); \
+void prefix##free(void *po); \
+struct vecname *prefix##fill(struct vecname *v, elemtype value); \
+struct vecname *prefix##push(struct vecname *v, elemtype elem); \
+struct vecname *prefix##pop(struct vecname *v); \
+elemtype *prefix##top(struct vecname *v)
+#define VIMPL(vecname,elemtype,prefix) \
+struct vecname *prefix##create(long sz) { \
+  if (sz < 0) { \
+    FLOG("Tạo vec-tơ với kích thước không hợp lệ, sz = %ld", sz); \
+    return NULL; \
+  } \
+  struct vecname *v = malloc(sizeof(struct vecname)); \
+  v->fv = NULL; \
+  v->size = sz; \
+  v->cap = sz > 0? sz: 8; \
+  v->rio = 2.0; \
+  v->elems = calloc(v->cap, sizeof(elemtype)); \
+  return v; \
+} \
+struct vecname *vecname(long sz) { \
+  return prefix##create(sz); \
+} \
+int prefix##empty(struct vecname *v) { \
+  return v->size == 0; \
+} \
+struct vecname *prefix##reserve(struct vecname *v, long newcap) {\
+  if (newcap < v->size) { \
+    FLOG("Dự trữ với dung lượng (%ld) < kích thước (%ld)", newcap, v->size); \
+    return NULL; \
+  } \
+  v->elems = realloc(v->elems, newcap * sizeof(elemtype)); \
+  v->cap = newcap; \
+  return v; \
+} \
+struct vecname *prefix##resize(struct vecname *v, long newsize) {\
+  if (newsize > v->cap) { \
+    prefix##reserve(v, newsize); \
+  } else if (newsize < v->size && v->fv) { \
+    for (long j_ = newsize; j_ < v->size; ++j_) { \
+      v->fv(v->elems + j_); \
+    } \
+  } \
+  v->size = newsize; \
+  return v; \
+} \
+struct vecname *prefix##append(struct vecname *v, elemtype val) {\
+  if (v->size == v->cap) { \
+    prefix##reserve(v, v->rio * v->size); \
+  } \
+  v->elems[v->size] = val; \
+  ++v->size; \
+  return v; \
+} \
+struct vecname *prefix##remove(struct vecname *v, long idx) { \
+  long sz = v->size; \
+  if (idx >= sz || idx < 0) { \
+    FLOG("Xóa phần tử với chỉ số không hợp lệ sz = %ld, idx = %ld", sz, idx); \
+    return NULL; \
+  } \
+  elemtype *arr = v->elems; \
+  elemtype tmp = arr[idx]; \
+  for (long i = idx; i < sz - 1; ++i) { \
+    arr[i] = arr[i + 1]; \
+  } \
+  arr[sz - 1] = tmp; \
+  return prefix##resize(v, sz - 1); \
+}\
+struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos) { \
+ prefix##resize(v, v->size + 1); \
+ elemtype *arr = v->elems; \
+ for (long i = v->size - 1; i > pos; --i) { \
+   arr[i] = arr[i - 1]; \
+ } \
+ arr[pos] = elem; \
+ return v; \
+} \
+struct vecname *prefix##clear(struct vecname *v) { \
+  return prefix##resize(v, 0); \
+} \
+void prefix##free(void *po) { \
+  struct vecname *v = po; \
+  prefix##resize(v, 0); \
+  free(v->elems); \
+  free(v); \
+} \
+struct vecname *prefix##fill(struct vecname *v, elemtype value) { \
+  for (long i = 0; i < v->size; ++i) {\
+    v->elems[i] = value; \
+  } \
+  return v; \
+} \
+struct vecname *prefix##push(struct vecname *v, elemtype elem) { \
+  return prefix##append(v, elem); \
+}\
+struct vecname *prefix##pop(struct vecname *v) { \
+  return prefix##remove(v, v->size - 1); \
+} \
+elemtype *prefix##top(struct vecname *v) { \
+  return v->elems + (v->size - 1); \
+}
+#define VDECL_IMPL(vecname,elemtype,prefix) \
+VDECL(vecname, elemtype, prefix); \
+VIMPL(vecname, elemtype, prefix)
 #endif
 #endif  // CGEN_H_
