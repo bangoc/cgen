@@ -103,8 +103,9 @@ static void heap_make(void *a, int n, int sz, compare_fnt cmp) {
 static int *first_perm(int n) {
   int *a = malloc((n + 1) * sizeof(int));
   a[0] = n;
-  for (int i = 1; i <= n; ++i) {
-    a[i] = i - 1;
+  ++a;
+  for (int i = 0; i < n; ++i) {
+    a[i] = i;
   }
   return a + 1;
 }
@@ -150,8 +151,51 @@ static int has_next_perm(int *a) {
 }
 
 static void free_perm(int *a) {
-  --a;
-  free(a);
+  free(a - 1);
+}
+
+static int *first_comb(int k, int n) {
+  if (k > n || k < 1) {
+    return NULL;
+  }
+  int *a = malloc((k + 2) * sizeof(int));
+  a[0] = k;
+  a[1] = n;
+  a += 2;
+  for (int i = 0; i < k; ++i) {
+    a[i] = i;
+  }
+  return a;
+}
+
+static int next_comb(int *a) {
+  int k = a[-2], n = a[-1], r = k - 1;
+  while (r >= 0) {
+    if (a[r] < n - k + r) {
+      ++a[r];
+      for (int i = r + 1; i < k; ++i) {
+        a[i] = a[i - 1] + 1;
+      }
+      return 1;
+    }
+    --r;
+  }
+  return 0;
+}
+
+static int has_next_comb(int *a) {
+  int k = a[-2], n = a[-1], r = k - 1;
+  while (r >= 0) {
+    if (a[r] < n - k + r) {
+      return 1;
+    }
+    --r;
+  }
+  return 0;
+}
+
+static void free_comb(int *a) {
+  free(a - 2);
 }
 
 #endif  // ALGO_ALGO_H_
