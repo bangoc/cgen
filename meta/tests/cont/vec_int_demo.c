@@ -2,10 +2,6 @@
 #include "tests/mylib/lib.h"
 #include "tests/utils.h"
 
-int rcmpi(const void *p1, const void *p2) {
-  return *(const int*)p2 - *(const int *)p1;
-}
-
 int main() {
   VCONSTRUCT(vectint, v, 0);
   int elem;

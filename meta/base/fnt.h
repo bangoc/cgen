@@ -8,12 +8,12 @@
 typedef int (*compare_fnt)(const void *p1, const void *p2);
 typedef void (*destructor_fnt)(void *p);
 
-/* Mong đợi p1 và p2 trỏ tới các đối tượng long */
-static inline int cmpl(const void *p1, const void *p2) {
+/* Mong đợi p1 và p2 trỏ tới các đối tượng int */
+static inline int cmpi(const void *p1, const void *p2) {
   return *(const int*)p1 - *(const int*)p2;
 }
 
-static inline int rcmpl(const void *p1, const void *p2) {
+static inline int rcmpi(const void *p1, const void *p2) {
   return *(const int*)p2 - *(const int*)p1;
 }
 
