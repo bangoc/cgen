@@ -42,9 +42,9 @@ struct TNN(tname) *prefix##left_deepest(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##next_lrn(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##next_lnr(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n); \
-struct TNN(tname) *prefix##first_lrn(struct tname *t); \
-struct TNN(tname) *prefix##first_lnr(struct tname *t); \
-struct TNN(tname) *prefix##last_lnr(struct tname *t); \
+struct TNN(tname) *prefix##first_lrn(struct TNN(tname) *root); \
+struct TNN(tname) *prefix##first_lnr(struct TNN(tname) *root); \
+struct TNN(tname) *prefix##last_lnr(struct TNN(tname) *root); \
 struct tname *prefix##create(compare_fnt cmp); \
 struct tname *tname(compare_fnt cmp); \
 vtype *prefix##put(struct tname *t, ktype key, vtype value); \
@@ -363,14 +363,14 @@ struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n) { \
   } \
   return top; \
 } \
-struct TNN(tname) *prefix##first_lrn(struct tname *t) { \
-  return prefix##left_deepest(t->root); \
+struct TNN(tname) *prefix##first_lrn(struct TNN(tname) *root) { \
+  return prefix##left_deepest(root); \
 } \
-struct TNN(tname) *prefix##first_lnr(struct tname *t) { \
-  return prefix##left_most(t->root); \
+struct TNN(tname) *prefix##first_lnr(struct TNN(tname) *root) { \
+  return prefix##left_most(root); \
 } \
-struct TNN(tname) *prefix##last_lnr(struct tname *t) { \
-  return prefix##right_most(t->root); \
+struct TNN(tname) *prefix##last_lnr(struct TNN(tname) *root) { \
+  return prefix##right_most(root); \
 } \
 struct tname *prefix##create(compare_fnt cmp) { \
   if (!cmp) { \
@@ -547,7 +547,7 @@ struct tname *prefix##remove(struct tname *t, ktype key) { \
 } \
 void prefix##free(void *po) { \
   struct tname *t = po; \
-  struct TNN(tname) *n = prefix##first_lrn(t); \
+  struct TNN(tname) *n = prefix##first_lrn(t->root); \
   struct TNN(tname) *tmp = NULL; \
   while (n) { \
     if (t->fk) { \

@@ -58,9 +58,9 @@ struct simap_node *sileft_deepest(struct simap_node *n);
 struct simap_node *sinext_lrn(struct simap_node *n);
 struct simap_node *sinext_lnr(struct simap_node *n);
 struct simap_node *siprev_lnr(struct simap_node *n);
-struct simap_node *sifirst_lrn(struct simap *t);
-struct simap_node *sifirst_lnr(struct simap *t);
-struct simap_node *silast_lnr(struct simap *t);
+struct simap_node *sifirst_lrn(struct simap_node *t);
+struct simap_node *sifirst_lnr(struct simap_node *t);
+struct simap_node *silast_lnr(struct simap_node *t);
 struct simap *sicreate(compare_fnt cmp);
 struct simap *simap(compare_fnt cmp);
 int *siput(struct simap *t, char *key, int value);
@@ -128,14 +128,14 @@ struct simap_node *siprev_lnr(struct simap_node *n) {
   }
   return top;
 }
-struct simap_node *sifirst_lrn(struct simap *t) {
-  return sileft_deepest(t->root);
+struct simap_node *sifirst_lrn(struct simap_node *root) {
+  return sileft_deepest(root);
 }
-struct simap_node *sifirst_lnr(struct simap *t) {
-  return sileft_most(t->root);
+struct simap_node *sifirst_lnr(struct simap_node *root) {
+  return sileft_most(root);
 }
-struct simap_node *silast_lnr(struct simap *t) {
-  return siright_most(t->root);
+struct simap_node *silast_lnr(struct simap_node *root) {
+  return siright_most(root);
 }
 struct simap *sicreate(compare_fnt cmp) {
   if (!cmp) {
@@ -662,7 +662,7 @@ struct simap *siremove(struct simap *t, char *key) {
 }
 void sifree(void *po) {
   struct simap *t = po;
-  struct simap_node *n = sifirst_lrn(t);
+  struct simap_node *n = sifirst_lrn(t->root);
   struct simap_node *tmp = ((void *)0);
   while (n) {
     if (t->fk) {

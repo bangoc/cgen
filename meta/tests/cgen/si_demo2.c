@@ -19,7 +19,7 @@ int main() {
     }
   }
   free(key);
-  struct TNN(simap) *nd = sifirst_lnr(si);
+  struct TNN(simap) *nd = sifirst_lnr(si->root);
   while (nd) {
     printf("%s: %d\n", nd->key, nd->value);
     nd = sinext_lnr(nd);

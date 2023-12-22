@@ -15,13 +15,13 @@ int main() {
   printf("bbb: %d\n", *TGET(si, "bbb"));
   printf("ccc: %d\n", *TGET(si, "aaa"));
   printf("--- Duyệt thứ tự thuận ---\n");
-  struct TNN(tsimap) *n = TFIRST_LNR(si);
+  struct TNN(tsimap) *n = TFIRST_LNR(si->root);
   while (n) {
     printf("%s: %d\n", n->key, n->value);
     n = TNEXT_LNR(n);
   }
   printf("--- Duyệt thứ tự ngược ---\n");
-  n = TLAST_LNR(si);
+  n = TLAST_LNR(si->root);
   while (n) {
     printf("%s: %d\n", n->key, n->value);
     n = TPREV_LNR(n);
