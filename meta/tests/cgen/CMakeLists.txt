@@ -1,6 +1,0 @@
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../all)
-add_executable(si_demo si_demo.c)
-add_executable(si_demo2 si_demo2.c)
-add_executable(si_demo_full si_demo_full.c)
-add_executable(list_stack_queue_demo list_stack_queue_demo.c)
-add_executable(vec_stack_demo vec_stack_demo.c)

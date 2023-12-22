@@ -19,7 +19,7 @@ void demo_queue() {
   senque(q, "bbbbbbb");
   senque(q, "ccccccccccccccccc");
   while (!sempty(q)) {
-    printf("%ld: %s\n", q->size, *speek(q));
+    printf("%ld: %s\n", ssize(q), *speek(q));
     sdeque(q);
   }
   sfree(q);

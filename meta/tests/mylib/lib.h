@@ -23,7 +23,10 @@ SDECL(silist, int, si);
 TDECL(tsimap, char *, int, tsi);
 #define TMATCH(map, api) \
   _Generic((map), \
-    struct tsimap *: tsi##api, \
+    struct tsimap *: tsi##api \
+  )
+#define TNODE_MATCH(node, api) \
+  _Generic((node), \
     struct tsimap_node *: tsi##api \
   )
 
@@ -88,12 +91,12 @@ TDECL(tsimap, char *, int, tsi);
 #define TROOT(t) ((t)->root)
 #define TFK(t) ((t)->fk)
 #define TFV(t) ((t)->fv)
-#define TLEFT_MOST(n) TMATCH(n, left_most)(n)
-#define TRIGHT_MOST(n) TMATCH(n, right_most)(n)
-#define TLEFT_DEEPEST(n) TMATCH(n, left_deepest)(n)
-#define TNEXT_LRN(n) TMATCH(n, next_lrn)(n)
-#define TNEXT_LNR(n) TMATCH(n, next_lnr)(n)
-#define TPREV_LNR(n) TMATCH(n, prev_lnr)(n)
+#define TLEFT_MOST(n) TNODE_MATCH(n, left_most)(n)
+#define TRIGHT_MOST(n) TNODE_MATCH(n, right_most)(n)
+#define TLEFT_DEEPEST(n) TNODE_MATCH(n, left_deepest)(n)
+#define TNEXT_LRN(n) TNODE_MATCH(n, next_lrn)(n)
+#define TNEXT_LNR(n) TNODE_MATCH(n, next_lnr)(n)
+#define TPREV_LNR(n) TNODE_MATCH(n, prev_lnr)(n)
 #define TFIRST_LRN(t) TMATCH(t, first_lrn)(t)
 #define TFIRST_LNR(t) TMATCH(t, first_lnr)(t)
 #define TLAST_LNR(t) TMATCH(t, last_lnr)(t)
