@@ -35,10 +35,10 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
 #include <string.h>
 typedef int (*compare_fnt)(const void *p1, const void *p2);
 typedef void (*destructor_fnt)(void *p);
-static inline int cmpl(const void *p1, const void *p2) {
+static inline int cmpi(const void *p1, const void *p2) {
   return *(const int*)p1 - *(const int*)p2;
 }
-static inline int rcmpl(const void *p1, const void *p2) {
+static inline int rcmpi(const void *p1, const void *p2) {
   return *(const int*)p2 - *(const int*)p1;
 }
 static inline int cmpd(const void *p1, const void *p2) {
@@ -72,52 +72,187 @@ static inline void frees(void *p) {
 }
 #endif
 
-/***** ./base/gtype.h *****/
-#ifndef BASE_GTYPE_H_
-#define BASE_GTYPE_H_ 
-#include <stdio.h>
-#include <string.h>
+/***** ./algo/algo.h *****/
+#ifndef ALGO_ALGO_H_
+#define ALGO_ALGO_H_ 
 #include <stdlib.h>
-typedef union generic_type {
-  long l;
-  double d;
-  char *s;
-  void *v;
-} gtype;
-static inline gtype gtype_from_long(long value) {
-  return (gtype){.l = value};
+static inline void vswap(void *o1, void *o2, int sz) {
+  char tmp, *p = o1, *q = o2;
+  for (int i = 0; i < sz; ++i) {
+    tmp = *p;
+    *p = *q;
+    *q = tmp;
+    ++p;
+    ++q;
+  }
 }
-static inline gtype gtype_from_double(double value) {
-  return (gtype){.d = value};
+static void q2sort(void *a, int n, int sz, compare_fnt cmp) {
+  if (n <= 1) {
+    return;
+  }
+  void *left = a, *right = a + (n - 2) * sz;
+  void *v = a + (n - 1) * sz;
+  for (;;) {
+    while (cmp(v, left) > 0) {
+      left += sz;
+    }
+    while (cmp(right, v) > 0) {
+      if (right == a) {
+        break;
+      }
+      right -= sz;
+    }
+    if (left >= right) {
+      break;
+    }
+    vswap(left, right, sz);
+    left += sz;
+    right -= sz;
+  }
+  vswap(left, v, sz);
+  right = left + sz;
+  left = left - sz;
+  q2sort(a, (left - a)/sz + 1, sz, cmp);
+  q2sort(right, (a - right)/sz + n, sz, cmp);
 }
-static inline gtype gtype_from_str(char *value) {
-  return (gtype){.s = value};
+static int binsearch(const void *a, int n, int sz, const void *v, compare_fnt cmp) {
+  int l = 0, r = n - 1;
+  while (l <= r) {
+    int m = (l + r) / 2;
+    int x = cmp(a + m * sz, v);
+    if (x == 0) {
+      return m;
+    }
+    if (x < 0) {
+      l = m + 1;
+    } else if (x > 0) {
+      r = m - 1;
+    }
+  }
+  return -1;
 }
-static inline gtype gtype_from_void(void *value) {
-  return (gtype){.v = value};
+#define HTOP(i) (((i) - 1) >> 1)
+#define HLEFT(i) (((i) << 1) + 1)
+#define HRIGHT(i) (((i) << 1) + 2)
+static void heap_shift_down(void *a, int n, int sz, int i, compare_fnt cmp) {
+  for (;;) {
+    int lc = HLEFT(i), rc = HRIGHT(i), top = i;
+    if (lc < n && cmp(a + top * sz, a + lc * sz) < 0) {
+      top = lc;
+    }
+    if (rc < n && cmp(a + top * sz, a + rc * sz) < 0) {
+      top = rc;
+    }
+    if (top == i) {
+      break;
+    }
+    vswap(a + i * sz, a + top * sz, sz);
+    i = top;
+  }
 }
-static inline gtype gtype_from_gtype(gtype value) {
-  return value;
+static void heap_shift_up(void *a, int n, int sz, int i, compare_fnt cmp) {
+  int j = HTOP(i);
+  while (i > 0 && cmp(a + j * sz, a + i * sz) < 0) {
+    vswap(a + i * sz, a + j * sz, sz);
+    i = j;
+    j = HTOP(i);
+  }
 }
-#define GTYPE(value) \
-    _Generic((value), \
-        char: gtype_from_long, \
-        short: gtype_from_long, \
-        int: gtype_from_long, \
-        long: gtype_from_long, \
-        float: gtype_from_double, \
-        double: gtype_from_double, \
-        char *: gtype_from_str, \
-        gtype: gtype_from_gtype, \
-        default: gtype_from_void \
-    )(value)
-#define GZERO (GTYPE(0l))
-#define GSWAP(v1,v2) \
-  do { \
-    gtype _tmp = (v1); \
-    (v1) = (v2); \
-    (v2) = _tmp; \
-  } while (0)
+static void heap_make(void *a, int n, int sz, compare_fnt cmp) {
+  for (int i = n / 2; i >= 0; --i) {
+    heap_shift_down(a, n, sz, i, cmp);
+  }
+}
+static int *first_perm(int n) {
+  int *a = malloc((n + 1) * sizeof(int));
+  a[0] = n;
+  ++a;
+  for (int i = 0; i < n; ++i) {
+    a[i] = i;
+  }
+  return a + 1;
+}
+static int next_perm(int *a) {
+  int n = a[-1], k = n -1;
+  while (k > 0) {
+    if (a[k - 1] < a[k]) {
+      break;
+    }
+    --k;
+  }
+  if (k == 0) {
+    return 0;
+  }
+  int i = k - 1, l = n - 1;
+  while (a[l] < a[i]) {
+    --l;
+  }
+  int tmp = a[l];
+  a[l] = a[i];
+  a[i] = tmp;
+  l = n - 1;
+  while (k < l) {
+    tmp = a[k];
+    a[k] = a[l];
+    a[l] = tmp;
+    ++k;
+    --l;
+  }
+  return 1;
+}
+static int has_next_perm(int *a) {
+  int n = a[-1], k = n -1;
+  while (k > 0) {
+    if (a[k - 1] < a[k]) {
+      return 1;
+    }
+    --k;
+  }
+  return 0;
+}
+static void free_perm(int *a) {
+  free(a - 1);
+}
+static int *first_comb(int k, int n) {
+  if (k > n || k < 1) {
+    return NULL;
+  }
+  int *a = malloc((k + 2) * sizeof(int));
+  a[0] = k;
+  a[1] = n;
+  a += 2;
+  for (int i = 0; i < k; ++i) {
+    a[i] = i;
+  }
+  return a;
+}
+static int next_comb(int *a) {
+  int k = a[-2], n = a[-1], r = k - 1;
+  while (r >= 0) {
+    if (a[r] < n - k + r) {
+      ++a[r];
+      for (int i = r + 1; i < k; ++i) {
+        a[i] = a[i - 1] + 1;
+      }
+      return 1;
+    }
+    --r;
+  }
+  return 0;
+}
+static int has_next_comb(int *a) {
+  int k = a[-2], n = a[-1], r = k - 1;
+  while (r >= 0) {
+    if (a[r] < n - k + r) {
+      return 1;
+    }
+    --r;
+  }
+  return 0;
+}
+static void free_comb(int *a) {
+  free(a - 2);
+}
 #endif
 
 /***** ./cont/slist.h *****/

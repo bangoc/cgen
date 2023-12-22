@@ -1,4 +1,4 @@
-#include "algo/algo.h"
+#include "all.h"
 #include <stdio.h>
 void aprint(int n, double *a) {
   printf("%d: ", n);

@@ -85,7 +85,7 @@ static void heap_shift_down(void *a, int n, int sz, int i, compare_fnt cmp) {
   }
 }
 
-void heap_shift_up(void *a, int n, int sz, int i, compare_fnt cmp) {
+static void heap_shift_up(void *a, int n, int sz, int i, compare_fnt cmp) {
   int j = HTOP(i);
   while (i > 0 && cmp(a + j * sz, a + i * sz) < 0) {
     vswap(a + i * sz, a + j * sz, sz);

@@ -1,4 +1,4 @@
-#include "algo/algo.h"
+#include "all.h"
 #include <stdio.h>
 int main() {
   int n = 5, *a = first_perm(n);
