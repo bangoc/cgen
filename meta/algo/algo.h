@@ -4,6 +4,7 @@
 #define ALGO_ALGO_H_
 
 #include "base/fnt.h"
+#include <stdlib.h>
 
 static inline void vswap(void *o1, void *o2, int sz) {
   char tmp, *p = o1, *q = o2;
@@ -97,6 +98,60 @@ static void heap_make(void *a, int n, int sz, compare_fnt cmp) {
   for (int i = n / 2; i >= 0; --i) {
     heap_shift_down(a, n, sz, i, cmp);
   }
+}
+
+static int *first_perm(int n) {
+  int *a = malloc((n + 1) * sizeof(int));
+  a[0] = n;
+  for (int i = 1; i <= n; ++i) {
+    a[i] = i - 1;
+  }
+  return a + 1;
+}
+
+static int next_perm(int *a) {
+  int n = a[-1], k = n -1;
+  while (k > 0) {
+    if (a[k - 1] < a[k]) {
+      break;
+    }
+    --k;
+  }
+  if (k == 0) {
+    return 0;
+  }
+  int i = k - 1, l = n - 1;
+  while (a[l] < a[i]) {
+    --l;
+  }
+  int tmp = a[l];
+  a[l] = a[i];
+  a[i] = tmp;
+  l = n - 1;
+  while (k < l) {
+    tmp = a[k];
+    a[k] = a[l];
+    a[l] = tmp;
+    ++k;
+    --l;
+  }
+  return 1;
+}
+
+static int has_next_perm(int *a) {
+  int n = a[-1], k = n -1;
+  while (k > 0) {
+    if (a[k - 1] < a[k]) {
+      return 1;
+    }
+    --k;
+  }
+  return 0;
+}
+
+static void free_perm(int *a) {
+  --a;
+  free(a);
 }
 
 #endif  // ALGO_ALGO_H_
