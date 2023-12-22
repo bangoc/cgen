@@ -1,6 +1,6 @@
 /* (C) Nguyễn Bá Ngọc 2023 */
-#ifndef TESTS_MYLIB_LIB_H_
-#define TESTS_MYLIB_LIB_H_
+#ifndef MYLIB_LIB_H_
+#define MYLIB_LIB_H_
 
 #include "all.h"
 VDECL(vectint, int, vi);
@@ -107,4 +107,4 @@ TDECL(tsimap, char *, int, tsi);
 #define TREMOVE(t, k) TMATCH(t, remove)(t, k)
 #define TFREE(t) TMATCH(t, free)(t)
 
-#endif  // TESTS_MYLIB_LIB_H_
+#endif  // MYLIB_LIB_H_

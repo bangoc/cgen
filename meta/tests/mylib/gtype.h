@@ -4,8 +4,8 @@
  * @brief Định nghĩa kiểu ::gtype và các thành phần bổ trợ.
  */
 
-#ifndef BASE_GTYPE_H_
-#define BASE_GTYPE_H_
+#ifndef MYLIB_GTYPE_H_
+#define MYLIB_GTYPE_H_
 
 #include <stdio.h>
 #include <string.h>
@@ -65,4 +65,4 @@ static inline gtype gtype_from_gtype(gtype value) {
     (v2) = _tmp; \
   } while (0)
 
-#endif  // BASE_GTYPE_H_
+#endif  // MYLIB_GTYPE_H_

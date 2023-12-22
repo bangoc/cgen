@@ -4,6 +4,5 @@
 
 #include "base/flog.h"
 #include "base/fnt.h"
-#include "base/gtype.h"
 
 #endif  // BASE_CORE_H_

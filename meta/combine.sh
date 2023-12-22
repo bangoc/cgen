@@ -12,7 +12,6 @@ process() {
 }
 process ./base/flog.h ./all/cgen.h
 process ./base/fnt.h ./all/cgen.h
-process ./base/gtype.h ./all/cgen.h
 process ./cont/slist.h ./all/cgen.h
 process ./cont/tmap.h ./all/cgen.h
 process ./cont/vector.h ./all/cgen.h
