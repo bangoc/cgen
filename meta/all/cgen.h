@@ -34,7 +34,6 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
 #include <stdlib.h>
 #include <string.h>
 typedef int (*compare_fnt)(const void *p1, const void *p2);
-typedef void (*destructor_fnt)(void *p);
 static inline int cmpi(const void *p1, const void *p2) {
   return *(const int*)p1 - *(const int*)p2;
 }
@@ -67,8 +66,8 @@ static inline int rcmps(const void *p1, const void *p2) {
   char *const *s2 = p1, *const *s1 = p2;
   return strcmp(*s1, *s2);
 }
-static inline void frees(void *p) {
-  free(*(char**)p);
+static inline void frees(char *s) {
+  free(s);
 }
 #endif
 
@@ -266,14 +265,15 @@ struct sname##_node { \
 struct sname { \
   struct sname##_node *front; \
   struct sname##_node *back; \
-  destructor_fnt fv; \
+  void (*fv)(dtype); \
   long size; \
 }
 #define SDECL(sname,dtype,prefix) \
 SDEFN(sname, dtype); \
 struct sname *prefix##create(); \
 struct sname *sname(); \
-void prefix##free(void *po); \
+void prefix##clear(struct sname *list); \
+void prefix##free(struct sname *list); \
 struct sname *prefix##append(struct sname *list, dtype data); \
 struct sname *prefix##prepend(struct sname *list, dtype data); \
 struct sname *prefix##dfront(struct sname *list); \
@@ -309,11 +309,13 @@ struct sname *prefix##create() { \
 struct sname *sname() { \
   return prefix##create(); \
 } \
-void prefix##free(void *po) { \
-  struct sname *list = po; \
+void prefix##clear(struct sname *list) { \
   while (!prefix##empty(list)) { \
     prefix##dfront(list); \
   } \
+} \
+void prefix##free(struct sname *list) { \
+  prefix##clear(list); \
   free(list); \
 } \
 struct sname *prefix##append(struct sname *list, dtype data) {\
@@ -357,7 +359,7 @@ struct sname *prefix##dfront(struct sname *list) {\
   struct sname##_node *tmp = list->front; \
   list->front = tmp->next; \
   if (list->fv) { \
-    list->fv(&tmp->data); \
+    list->fv(tmp->data); \
   } \
   free(tmp); \
   --list->size; \
@@ -409,7 +411,8 @@ struct TNN(tname) { \
 struct tname { \
   struct TNN(tname) *root; \
   compare_fnt cmp; \
-  destructor_fnt fk, fv; \
+  void (*fk)(ktype);\
+  void (*fv)(vtype); \
   long size; \
 }
 #define TCOLOR(n) ((n)? (n)->color: BLACK)
@@ -432,10 +435,11 @@ struct TNN(tname) *prefix##first_lnr(struct tname *t); \
 struct TNN(tname) *prefix##last_lnr(struct tname *t); \
 struct tname *prefix##create(compare_fnt cmp); \
 struct tname *tname(compare_fnt cmp); \
+void prefix##clear(struct tname *t); \
+void prefix##free(struct tname *t); \
 vtype *prefix##put(struct tname *t, ktype key, vtype value); \
 vtype *prefix##get(struct tname *t, ktype key); \
-struct tname *prefix##remove(struct tname *t, ktype key); \
-void prefix##free(void *po)
+struct tname *prefix##remove(struct tname *t, ktype key)
 #define TSEARCH(t,key,x) \
 do { \
   int rl; \
@@ -650,12 +654,33 @@ struct tname *prefix##create(compare_fnt cmp) { \
   } \
   t->root = NULL; \
   t->cmp = cmp; \
-  t->fv = t->fk = NULL; \
+  t->fk = NULL; \
+  t->fv = NULL; \
   t->size = 0; \
   return t; \
 } \
 struct tname *tname(compare_fnt cmp) { \
   return prefix##create(cmp); \
+} \
+void prefix##clear(struct tname *t) { \
+  struct TNN(tname) *n = prefix##first_lrn(t); \
+  struct TNN(tname) *tmp = NULL; \
+  while (n) { \
+    if (t->fk) { \
+      t->fk(n->key); \
+    } \
+    if (t->fv) { \
+      t->fv(n->value); \
+    } \
+    tmp = n; \
+    n = prefix##next_lrn(n); \
+    free(tmp); \
+  } \
+  t->size = 0; \
+} \
+void prefix##free(struct tname *t) { \
+  prefix##clear(t); \
+  free(t); \
 } \
 static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
@@ -777,31 +802,14 @@ struct tname *prefix##remove(struct tname *t, ktype key) { \
     return NULL; \
   } \
   if (t->fk) { \
-    t->fk(&n->key); \
+    t->fk(n->key); \
   } \
   if (t->fv) { \
-    t->fv(&n->value); \
+    t->fv(n->value); \
   }\
   prefix##delete(t, n);\
   --(t->size); \
   return t; \
-} \
-void prefix##free(void *po) { \
-  struct tname *t = po; \
-  struct TNN(tname) *n = prefix##first_lrn(t); \
-  struct TNN(tname) *tmp = NULL; \
-  while (n) { \
-    if (t->fk) { \
-      t->fk(&n->key); \
-    } \
-    if (t->fv) { \
-      t->fv(&n->value); \
-    } \
-    tmp = n; \
-    n = prefix##next_lrn(n); \
-    free(tmp); \
-  } \
-  free(t); \
 }
 #define TDECL_IMPL(tname,keytype,valtype,prefix) \
 TDECL(tname, keytype, valtype, prefix); \
@@ -817,20 +825,20 @@ TIMPL(tname, keytype, valtype, prefix)
     long size; \
     long cap; \
     double rio; \
-    destructor_fnt fv; \
+    void (*fv)(elemtype); \
   }
 #define VDECL(vecname,elemtype,prefix) \
 VDEFN(vecname, elemtype); \
 struct vecname *prefix##create(long sz); \
 struct vecname *vecname(long sz); \
+struct vecname *prefix##clear(struct vecname *v); \
+void prefix##free(struct vecname *po); \
 int prefix##empty(struct vecname *v); \
 struct vecname *prefix##reserve(struct vecname *v, long newcap); \
 struct vecname *prefix##resize(struct vecname *v, long newsz); \
 struct vecname *prefix##append(struct vecname *v, elemtype val); \
 struct vecname *prefix##remove(struct vecname *v, long idx); \
 struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos); \
-struct vecname *prefix##clear(struct vecname *v); \
-void prefix##free(void *po); \
 struct vecname *prefix##fill(struct vecname *v, elemtype value); \
 struct vecname *prefix##push(struct vecname *v, elemtype elem); \
 struct vecname *prefix##pop(struct vecname *v); \
@@ -852,6 +860,14 @@ struct vecname *prefix##create(long sz) { \
 struct vecname *vecname(long sz) { \
   return prefix##create(sz); \
 } \
+struct vecname *prefix##clear(struct vecname *v) { \
+  return prefix##resize(v, 0); \
+} \
+void prefix##free(struct vecname *v) { \
+  prefix##clear(v); \
+  free(v->elems); \
+  free(v); \
+} \
 int prefix##empty(struct vecname *v) { \
   return v->size == 0; \
 } \
@@ -869,7 +885,7 @@ struct vecname *prefix##resize(struct vecname *v, long newsize) {\
     prefix##reserve(v, newsize); \
   } else if (newsize < v->size && v->fv) { \
     for (long j_ = newsize; j_ < v->size; ++j_) { \
-      v->fv(v->elems + j_); \
+      v->fv(v->elems[j_]); \
     } \
   } \
   v->size = newsize; \
@@ -905,15 +921,6 @@ struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos) { \
  } \
  arr[pos] = elem; \
  return v; \
-} \
-struct vecname *prefix##clear(struct vecname *v) { \
-  return prefix##resize(v, 0); \
-} \
-void prefix##free(void *po) { \
-  struct vecname *v = po; \
-  prefix##resize(v, 0); \
-  free(v->elems); \
-  free(v); \
 } \
 struct vecname *prefix##fill(struct vecname *v, elemtype value) { \
   for (long i = 0; i < v->size; ++i) {\

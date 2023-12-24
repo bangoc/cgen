@@ -1,4 +1,5 @@
 #include "cgen.h"
+#include "tests/utils.h"
 SDECL_IMPL(list, char *, s);
 void demo_stack() {
   printf("Demo stack: ==== \n");
@@ -27,4 +28,5 @@ void demo_queue() {
 int main() {
   demo_stack();
   demo_queue();
+  TEST_OK();
 }

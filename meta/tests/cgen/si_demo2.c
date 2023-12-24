@@ -1,6 +1,7 @@
 /* Đếm tần suất từ */
 
 #include "cgen.h"
+#include "tests/utils.h"
 
 TDECL_IMPL(simap, char *, int, si);
 
@@ -25,4 +26,5 @@ int main() {
     nd = sinext_lnr(nd);
   }
   sifree(si);
+  TEST_OK();
 }

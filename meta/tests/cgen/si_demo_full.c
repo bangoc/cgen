@@ -3,11 +3,10 @@
 #include <string.h>
 
 typedef int (*compare_fnt)(const void *p1, const void *p2);
-typedef void (*destructor_fnt)(void *p);
-static inline int cmpl(const void *p1, const void *p2) {
+static inline int cmpi(const void *p1, const void *p2) {
   return *(const int *)p1 - *(const int *)p2;
 }
-static inline int rcmpl(const void *p1, const void *p2) {
+static inline int rcmpi(const void *p1, const void *p2) {
   return *(const int *)p2 - *(const int *)p1;
 }
 static inline int cmpd(const void *p1, const void *p2) {
@@ -36,7 +35,178 @@ static inline int rcmps(const void *p1, const void *p2) {
   char *const *s2 = p1, *const *s1 = p2;
   return strcmp(*s1, *s2);
 }
-static inline void frees(void *p) { free(*(char **)p); }
+static inline void frees(char *s) { free(s); }
+static inline void vswap(void *o1, void *o2, int sz) {
+  char tmp, *p = o1, *q = o2;
+  for (int i = 0; i < sz; ++i) {
+    tmp = *p;
+    *p = *q;
+    *q = tmp;
+    ++p;
+    ++q;
+  }
+}
+static void q2sort(void *a, int n, int sz, compare_fnt cmp) {
+  if (n <= 1) {
+    return;
+  }
+  void *left = a, *right = a + (n - 2) * sz;
+  void *v = a + (n - 1) * sz;
+  for (;;) {
+    while (cmp(v, left) > 0) {
+      left += sz;
+    }
+    while (cmp(right, v) > 0) {
+      if (right == a) {
+        break;
+      }
+      right -= sz;
+    }
+    if (left >= right) {
+      break;
+    }
+    vswap(left, right, sz);
+    left += sz;
+    right -= sz;
+  }
+  vswap(left, v, sz);
+  right = left + sz;
+  left = left - sz;
+  q2sort(a, (left - a) / sz + 1, sz, cmp);
+  q2sort(right, (a - right) / sz + n, sz, cmp);
+}
+static int binsearch(const void *a, int n, int sz, const void *v,
+                     compare_fnt cmp) {
+  int l = 0, r = n - 1;
+  while (l <= r) {
+    int m = (l + r) / 2;
+    int x = cmp(a + m * sz, v);
+    if (x == 0) {
+      return m;
+    }
+    if (x < 0) {
+      l = m + 1;
+    } else if (x > 0) {
+      r = m - 1;
+    }
+  }
+  return -1;
+}
+static void heap_shift_down(void *a, int n, int sz, int i, compare_fnt cmp) {
+  for (;;) {
+    int lc = (((i) << 1) + 1), rc = (((i) << 1) + 2), top = i;
+    if (lc < n && cmp(a + top * sz, a + lc * sz) < 0) {
+      top = lc;
+    }
+    if (rc < n && cmp(a + top * sz, a + rc * sz) < 0) {
+      top = rc;
+    }
+    if (top == i) {
+      break;
+    }
+    vswap(a + i * sz, a + top * sz, sz);
+    i = top;
+  }
+}
+static void heap_shift_up(void *a, int n, int sz, int i, compare_fnt cmp) {
+  int j = (((i)-1) >> 1);
+  while (i > 0 && cmp(a + j * sz, a + i * sz) < 0) {
+    vswap(a + i * sz, a + j * sz, sz);
+    i = j;
+    j = (((i)-1) >> 1);
+  }
+}
+static void heap_make(void *a, int n, int sz, compare_fnt cmp) {
+  for (int i = n / 2; i >= 0; --i) {
+    heap_shift_down(a, n, sz, i, cmp);
+  }
+}
+static int *first_perm(int n) {
+  int *a = malloc((n + 1) * sizeof(int));
+  a[0] = n;
+  ++a;
+  for (int i = 0; i < n; ++i) {
+    a[i] = i;
+  }
+  return a + 1;
+}
+static int next_perm(int *a) {
+  int n = a[-1], k = n - 1;
+  while (k > 0) {
+    if (a[k - 1] < a[k]) {
+      break;
+    }
+    --k;
+  }
+  if (k == 0) {
+    return 0;
+  }
+  int i = k - 1, l = n - 1;
+  while (a[l] < a[i]) {
+    --l;
+  }
+  int tmp = a[l];
+  a[l] = a[i];
+  a[i] = tmp;
+  l = n - 1;
+  while (k < l) {
+    tmp = a[k];
+    a[k] = a[l];
+    a[l] = tmp;
+    ++k;
+    --l;
+  }
+  return 1;
+}
+static int has_next_perm(int *a) {
+  int n = a[-1], k = n - 1;
+  while (k > 0) {
+    if (a[k - 1] < a[k]) {
+      return 1;
+    }
+    --k;
+  }
+  return 0;
+}
+static void free_perm(int *a) { free(a - 1); }
+static int *first_comb(int k, int n) {
+  if (k > n || k < 1) {
+    return ((void *)0);
+  }
+  int *a = malloc((k + 2) * sizeof(int));
+  a[0] = k;
+  a[1] = n;
+  a += 2;
+  for (int i = 0; i < k; ++i) {
+    a[i] = i;
+  }
+  return a;
+}
+static int next_comb(int *a) {
+  int k = a[-2], n = a[-1], r = k - 1;
+  while (r >= 0) {
+    if (a[r] < n - k + r) {
+      ++a[r];
+      for (int i = r + 1; i < k; ++i) {
+        a[i] = a[i - 1] + 1;
+      }
+      return 1;
+    }
+    --r;
+  }
+  return 0;
+}
+static int has_next_comb(int *a) {
+  int k = a[-2], n = a[-1], r = k - 1;
+  while (r >= 0) {
+    if (a[r] < n - k + r) {
+      return 1;
+    }
+    --r;
+  }
+  return 0;
+}
+static void free_comb(int *a) { free(a - 2); }
 enum tcolors { RED = 0, BLACK = 1 };
 struct simap_node {
   char *key;
@@ -49,7 +219,8 @@ struct simap_node {
 struct simap {
   struct simap_node *root;
   compare_fnt cmp;
-  destructor_fnt fk, fv;
+  void (*fk)(char *);
+  void (*fv)(int);
   long size;
 };
 struct simap_node *sileft_most(struct simap_node *n);
@@ -63,10 +234,11 @@ struct simap_node *sifirst_lnr(struct simap *t);
 struct simap_node *silast_lnr(struct simap *t);
 struct simap *sicreate(compare_fnt cmp);
 struct simap *simap(compare_fnt cmp);
+void siclear(struct simap *t);
+void sifree(struct simap *t);
 int *siput(struct simap *t, char *key, int value);
 int *siget(struct simap *t, char *key);
 struct simap *siremove(struct simap *t, char *key);
-void sifree(void *po);
 struct simap_node *simap_node(char *key, int value) {
   struct simap_node *nn = malloc(sizeof(struct simap_node));
   nn->key = key;
@@ -149,12 +321,33 @@ struct simap *sicreate(compare_fnt cmp) {
   }
   t->root = ((void *)0);
   t->cmp = cmp;
-  t->fv = t->fk = ((void *)0);
+  t->fk = ((void *)0);
+  t->fv = ((void *)0);
   t->size = 0;
   return t;
 }
 struct simap *simap(compare_fnt cmp) {
   return sicreate(cmp);
+}
+void siclear(struct simap *t) {
+  struct simap_node *n = sifirst_lrn(t);
+  struct simap_node *tmp = ((void *)0);
+  while (n) {
+    if (t->fk) {
+      t->fk(n->key);
+    }
+    if (t->fv) {
+      t->fv(n->value);
+    }
+    tmp = n;
+    n = sinext_lrn(n);
+    free(tmp);
+  }
+  t->size = 0;
+}
+void sifree(struct simap *t) {
+  siclear(t);
+  free(t);
 }
 static struct simap *sidelete(struct simap *t, struct simap_node *dn) {
   struct simap_node *node = dn;
@@ -449,10 +642,8 @@ static struct simap *sidelete(struct simap *t, struct simap_node *dn) {
   return t;
 }
 int *siput(struct simap *t, char *key, int value) {
-  struct simap_node *nn = simap_node(key, value);
-  struct simap_node *top = ((void *)0);
-  struct simap_node *x = t->root;
-  struct simap_node **loc = &t->root;
+  struct simap_node *nn = simap_node(key, value), *top = ((void *)0),
+                    *x = t->root, **loc = &t->root;
   int rl = 0;
   while (x) {
     rl = t->cmp(&key, &x->key);
@@ -651,31 +842,14 @@ struct simap *siremove(struct simap *t, char *key) {
     return ((void *)0);
   }
   if (t->fk) {
-    t->fk(&n->key);
+    t->fk(n->key);
   }
   if (t->fv) {
-    t->fv(&n->value);
+    t->fv(n->value);
   }
   sidelete(t, n);
   --(t->size);
   return t;
-}
-void sifree(void *po) {
-  struct simap *t = po;
-  struct simap_node *n = sifirst_lrn(t);
-  struct simap_node *tmp = ((void *)0);
-  while (n) {
-    if (t->fk) {
-      t->fk(&n->key);
-    }
-    if (t->fv) {
-      t->fv(&n->value);
-    }
-    tmp = n;
-    n = sinext_lrn(n);
-    free(tmp);
-  }
-  free(t);
 };
 int main() {
   char key[100];
@@ -695,4 +869,6 @@ int main() {
     nd = sinext_lnr(nd);
   }
   sifree(si);
+  printf("Test Ok!\n");
+  ;
 }

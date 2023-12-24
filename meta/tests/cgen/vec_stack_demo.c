@@ -1,4 +1,5 @@
 #include "cgen.h"
+#include "tests/utils.h"
 
 VDECL_IMPL(ivector, int, vi);
 VDECL_IMPL(svector, char *, vs);
@@ -24,4 +25,5 @@ int main() {
   }
   vifree(stk);
   demo_vector_str();
+  TEST_OK();
 }
