@@ -1,7 +1,9 @@
 # cgen
-Thư viện cgen bao gồm tập macro để sinh các cấu trúc lưu trữ thông dụng như vec-tơ, ánh xạ khóa-giá trị dựa trên cây đỏ-đen, và danh sách móc nối đơn.
+Thư viện cgen hiện đang bao gồm tập macro để sinh các cấu trúc lưu trữ thông dụng như vec-tơ, ánh xạ khóa-giá trị dựa trên cây đỏ-đen, và danh sách móc nối đơn.
 
 Bên cạnh đó thư viện cũng cung cấp các triển khai khái quát của các giải thuật thông dụng dựa trên mảng như sắp xếp nhanh, tìm kiếm nhị phân, v.v..
+
+Trong tương lai gần nhất dự kiến sẽ bổ xung thêm bảng băm, và xa hơn có thể là những thành phần hữu ích khác nữa.
 
 ## Ví dụ tạo ánh xạ char * => int:
 ```C
