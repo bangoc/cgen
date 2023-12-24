@@ -5,6 +5,12 @@ Bên cạnh đó thư viện cũng cung cấp các triển khai khái quát củ
 
 Trong tương lai gần nhất dự kiến sẽ bổ xung thêm bảng băm, và xa hơn có thể là những thành phần hữu ích khác nữa.
 
+Tất cả mã nguồn cần thiết đã được đóng gói trong 1 tệp tiêu đề [cgen.h](all/cgen.h) trong thư mục [all](all).
+Để sử dụng chỉ cần chèn vào đơn vị biên dịch, ví dụ đơn giản nhất:
+```C
+#include "cgen.h"
+```
+
 ## Ví dụ tạo ánh xạ char * => int:
 ```C
 TDECL_IMPL(simap, char *, int, si);
