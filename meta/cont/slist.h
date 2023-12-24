@@ -11,7 +11,7 @@ struct sname##_node { \
 struct sname { \
   struct sname##_node *front; \
   struct sname##_node *back; \
-  destructor_fnt fv; \
+  void (*fv)(dtype); \
   long size; \
 }
 
@@ -19,7 +19,8 @@ struct sname { \
 SDEFN(sname, dtype); \
 struct sname *prefix##create(); \
 struct sname *sname(); \
-void prefix##free(void *po); \
+void prefix##clear(struct sname *list); \
+void prefix##free(struct sname *list); \
 struct sname *prefix##append(struct sname *list, dtype data); \
 struct sname *prefix##prepend(struct sname *list, dtype data); \
 struct sname *prefix##dfront(struct sname *list); \
@@ -56,11 +57,13 @@ struct sname *prefix##create() { \
 struct sname *sname() { \
   return prefix##create(); \
 } \
-void prefix##free(void *po) { \
-  struct sname *list = po; \
+void prefix##clear(struct sname *list) { \
   while (!prefix##empty(list)) { \
     prefix##dfront(list); \
   } \
+} \
+void prefix##free(struct sname *list) { \
+  prefix##clear(list); \
   free(list); \
 } \
 struct sname *prefix##append(struct sname *list, dtype data) {\
@@ -104,7 +107,7 @@ struct sname *prefix##dfront(struct sname *list) {\
   struct sname##_node *tmp = list->front; \
   list->front = tmp->next; \
   if (list->fv) { \
-    list->fv(&tmp->data); \
+    list->fv(tmp->data); \
   } \
   free(tmp); \
   --list->size; \

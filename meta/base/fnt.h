@@ -6,7 +6,6 @@
 #include <string.h>
 
 typedef int (*compare_fnt)(const void *p1, const void *p2);
-typedef void (*destructor_fnt)(void *p);
 
 /* Mong đợi p1 và p2 trỏ tới các đối tượng int */
 static inline int cmpi(const void *p1, const void *p2) {
@@ -49,8 +48,8 @@ static inline int rcmps(const void *p1, const void *p2) {
   return strcmp(*s1, *s2);
 }
 
-static inline void frees(void *p) {
-  free(*(char**)p);
+static inline void frees(char *s) {
+  free(s);
 }
 
 #endif  // BASE_FNT_H_

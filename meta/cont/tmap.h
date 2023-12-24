@@ -22,7 +22,8 @@ struct TNN(tname) { \
 struct tname { \
   struct TNN(tname) *root; \
   compare_fnt cmp; \
-  destructor_fnt fk, fv; \
+  void (*fk)(ktype);\
+  void (*fv)(vtype); \
   long size; \
 }
 
@@ -47,10 +48,11 @@ struct TNN(tname) *prefix##first_lnr(struct tname *t); \
 struct TNN(tname) *prefix##last_lnr(struct tname *t); \
 struct tname *prefix##create(compare_fnt cmp); \
 struct tname *tname(compare_fnt cmp); \
+void prefix##clear(struct tname *t); \
+void prefix##free(struct tname *t); \
 vtype *prefix##put(struct tname *t, ktype key, vtype value); \
 vtype *prefix##get(struct tname *t, ktype key); \
-struct tname *prefix##remove(struct tname *t, ktype key); \
-void prefix##free(void *po)
+struct tname *prefix##remove(struct tname *t, ktype key)
 
 #define TSEARCH(t, key, x)  \
 do { \
@@ -384,12 +386,33 @@ struct tname *prefix##create(compare_fnt cmp) { \
   } \
   t->root = NULL; \
   t->cmp = cmp; \
-  t->fv = t->fk = NULL; \
+  t->fk = NULL; \
+  t->fv = NULL; \
   t->size = 0; \
   return t; \
 } \
 struct tname *tname(compare_fnt cmp) { \
   return prefix##create(cmp); \
+} \
+void prefix##clear(struct tname *t) { \
+  struct TNN(tname) *n = prefix##first_lrn(t); \
+  struct TNN(tname) *tmp = NULL; \
+  while (n) { \
+    if (t->fk) { \
+      t->fk(n->key); \
+    } \
+    if (t->fv) { \
+      t->fv(n->value); \
+    } \
+    tmp = n; \
+    n = prefix##next_lrn(n); \
+    free(tmp); \
+  } \
+  t->size = 0; \
+} \
+void prefix##free(struct tname *t) { \
+  prefix##clear(t); \
+  free(t); \
 } \
 static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
@@ -536,31 +559,14 @@ struct tname *prefix##remove(struct tname *t, ktype key) { \
     return NULL; \
   } \
   if (t->fk) { \
-    t->fk(&n->key); \
+    t->fk(n->key); \
   } \
   if (t->fv) { \
-    t->fv(&n->value); \
+    t->fv(n->value); \
   }\
   prefix##delete(t, n);\
   --(t->size); \
   return t; \
-} \
-void prefix##free(void *po) { \
-  struct tname *t = po; \
-  struct TNN(tname) *n = prefix##first_lrn(t); \
-  struct TNN(tname) *tmp = NULL; \
-  while (n) { \
-    if (t->fk) { \
-      t->fk(&n->key); \
-    } \
-    if (t->fv) { \
-      t->fv(&n->value); \
-    } \
-    tmp = n; \
-    n = prefix##next_lrn(n); \
-    free(tmp); \
-  } \
-  free(t); \
 }
 
 #define TDECL_IMPL(tname, keytype, valtype, prefix) \

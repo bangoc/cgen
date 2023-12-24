@@ -3,13 +3,9 @@
 VDECL_IMPL(ivector, int, vi);
 TDECL_IMPL(svmap, char*, struct ivector *, sv);
 
-void vifree_wrapper(void *v) {
-  struct ivector **obj = v;
-  vifree(*obj);
-}
 int main() {
   struct svmap *sv = svmap(cmps);
-  sv->fv = vifree_wrapper;
+  sv->fv = vifree;
   struct ivector *va = ivector(0);
   svput(sv, "aaa", va);
   struct ivector *vb = ivector(0);

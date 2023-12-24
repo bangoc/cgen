@@ -10,21 +10,21 @@
     long size; \
     long cap; \
     double rio; \
-    destructor_fnt fv; \
+    void (*fv)(elemtype); \
   }
 
 #define VDECL(vecname, elemtype, prefix) \
 VDEFN(vecname, elemtype); \
 struct vecname *prefix##create(long sz); \
 struct vecname *vecname(long sz); \
+struct vecname *prefix##clear(struct vecname *v); \
+void prefix##free(struct vecname *po); \
 int prefix##empty(struct vecname *v); \
 struct vecname *prefix##reserve(struct vecname *v, long newcap); \
 struct vecname *prefix##resize(struct vecname *v, long newsz); \
 struct vecname *prefix##append(struct vecname *v, elemtype val); \
 struct vecname *prefix##remove(struct vecname *v, long idx); \
 struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos); \
-struct vecname *prefix##clear(struct vecname *v); \
-void prefix##free(void *po); \
 struct vecname *prefix##fill(struct vecname *v, elemtype value); \
 struct vecname *prefix##push(struct vecname *v, elemtype elem); \
 struct vecname *prefix##pop(struct vecname *v); \
@@ -47,6 +47,14 @@ struct vecname *prefix##create(long sz) { \
 struct vecname *vecname(long sz) { \
   return prefix##create(sz); \
 } \
+struct vecname *prefix##clear(struct vecname *v) { \
+  return prefix##resize(v, 0); \
+} \
+void prefix##free(struct vecname *v) { \
+  prefix##clear(v); \
+  free(v->elems); \
+  free(v); \
+} \
 int prefix##empty(struct vecname *v) { \
   return v->size == 0; \
 } \
@@ -64,7 +72,7 @@ struct vecname *prefix##resize(struct vecname *v, long newsize) {\
     prefix##reserve(v, newsize); \
   } else if (newsize < v->size && v->fv) { \
     for (long j_ = newsize; j_ < v->size; ++j_) { \
-      v->fv(v->elems + j_); \
+      v->fv(v->elems[j_]); \
     } \
   } \
   v->size = newsize; \
@@ -100,15 +108,6 @@ struct vecname *prefix##insertb(struct vecname *v, elemtype elem, long pos) { \
  } \
  arr[pos] = elem; \
  return v; \
-} \
-struct vecname *prefix##clear(struct vecname *v) { \
-  return prefix##resize(v, 0); \
-} \
-void prefix##free(void *po) { \
-  struct vecname *v = po; \
-  prefix##resize(v, 0); \
-  free(v->elems); \
-  free(v); \
 } \
 struct vecname *prefix##fill(struct vecname *v, elemtype value) { \
   for (long i = 0; i < v->size; ++i) {\
