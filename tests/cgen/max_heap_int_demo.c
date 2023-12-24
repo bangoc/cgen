@@ -1,4 +1,4 @@
-#include "all.h"
+#include "cgen.h"
 #include <stdio.h>
 
 int main(int argc, char *argv[]) {

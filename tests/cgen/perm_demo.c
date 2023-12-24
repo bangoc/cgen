@@ -1,4 +1,4 @@
-#include "all.h"
+#include "cgen.h"
 #include <stdio.h>
 int main() {
   int n = 5, *a = first_perm(n);

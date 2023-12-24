@@ -1,4 +1,4 @@
-#include "all.h"
+#include "cgen.h"
 #include <stdio.h>
 int icmp(const void *p1, const void *p2) {
   return *(const int*)p1 - *(const int *)p2;

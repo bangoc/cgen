@@ -1,4 +1,4 @@
-#include "all.h"
+#include "cgen.h"
 
 VDECL_IMPL(ivector, int, vi);
 TDECL_IMPL(svmap, char*, struct ivector *, sv);

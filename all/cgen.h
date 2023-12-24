@@ -394,6 +394,7 @@ SIMPL(sname, dtype, prefix)
 /***** ./cont/tmap.h *****/
 #ifndef CONT_TMAP_H_
 #define CONT_TMAP_H_ 
+#include <stddef.h>
 enum tcolors {
   RED = 0,
   BLACK = 1
@@ -433,6 +434,7 @@ struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##first_lrn(struct tname *t); \
 struct TNN(tname) *prefix##first_lnr(struct tname *t); \
 struct TNN(tname) *prefix##last_lnr(struct tname *t); \
+struct TNN(tname) *prefix##pval_node(void *pv); \
 struct tname *prefix##create(compare_fnt cmp); \
 struct tname *tname(compare_fnt cmp); \
 void prefix##clear(struct tname *t); \
@@ -641,6 +643,10 @@ struct TNN(tname) *prefix##first_lnr(struct tname *t) { \
 } \
 struct TNN(tname) *prefix##last_lnr(struct tname *t) { \
   return prefix##right_most(t->root); \
+} \
+struct TNN(tname) *prefix##pval_node(void *pv) { \
+  void *tmp = pv; \
+  return tmp - offsetof(struct TNN(tname), value); \
 } \
 struct tname *prefix##create(compare_fnt cmp) { \
   if (!cmp) { \
