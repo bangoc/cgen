@@ -70,13 +70,13 @@ do { \
   } \
 } while (0)
 
-#define TCHANGE(old_node, new_node, parent, t) \
+#define TCHANGE(old_node, new_node, top, t) \
   do { \
-    if (parent) { \
-      if (parent->left == old_node) { \
-        parent->left = new_node; \
+    if (top) { \
+      if (top->left == old_node) { \
+        top->left = new_node; \
       } else { \
-        parent->right = new_node; \
+        top->right = new_node; \
       } \
     } else { \
       t->root = new_node; \
@@ -155,9 +155,9 @@ do { \
    * Các biến:
    * t - con trỏ tới cây (tree)
    * n - ban đầu là nút mới được thêm vào (node)
-   * p - là đỉnh của n (parent, n->top)
+   * p - là đỉnh của n (n->top)
    * u - nút đối xứng của p trong cây, chú bác của n (uncle)
-   * gp - ông của n, là đỉnh của p (grandparent, p->top)
+   * gp - ông của n, là đỉnh của p (p->top)
    *
    * Trong các ví dụ minh họa thì nút có tên được viết hoa là nút đen,
    *    nút có tên viết thường là nút đỏ, nút có thể là đen hoặc đỏ
@@ -252,7 +252,7 @@ do { \
          * nút đen (S, vi phạm tính chất 5).
          *
          * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
-         * xoay trái tại parent, cn được tô bằng mầu của p, dn và p
+         * xoay trái tại top, cn được tô bằng mầu của p, dn và p
          * được tô mầu đen)
          *
          *   (p)            (cn)
@@ -266,7 +266,7 @@ do { \
         TROTATE(t, s, left, right, u_); \
         s = p->right; \
       } \
-      /* Trường hợp 4 - Xoay trái ở parent + đảo mầu các nút
+      /* Trường hợp 4 - Xoay trái ở top + đảo mầu các nút
        * (p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
        * p và dn được tô mầu đen, s có mầu của p,
        * còn cn giữ nguyênmầu của nó)
@@ -425,7 +425,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
   struct TNN(tname) *child = node->right, \
             *tmp = node->left, \
-            *parent, *rebalance; \
+            *top, *rebalance; \
   struct TNN(tname) *p; \
   enum tcolors c; \
   if (!tmp) { \
@@ -437,24 +437,22 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
      */ \
     p = node->top; \
     c = node->color; \
-    parent = p; \
-    TCHANGE(node, child, parent, t); \
+    top = p; \
+    TCHANGE(node, child, top, t); \
     if (child) { \
       TSET_PC(child, p, c); \
       rebalance = NULL; \
     } else { \
-      rebalance = c == BLACK? parent: NULL; \
+      rebalance = c == BLACK? top: NULL; \
     } \
-    tmp = parent; \
   } else if (!child) { \
     /* Vẫn trường hợp 1 nhưng nút con là node->left */ \
     p = node->top; \
     c = node->color; \
     TSET_PC(tmp, p, c); \
-    parent = p; \
-    TCHANGE(node, tmp, parent, t); \
+    top = p; \
+    TCHANGE(node, tmp, top, t); \
     rebalance = NULL; \
-    tmp = parent; \
   } else { \
     struct TNN(tname) *successor = child, *child2; \
     tmp = child->left; \
@@ -467,7 +465,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
        *        \
        *        (c)
        */ \
-      parent = successor; \
+      top = successor; \
       child2 = successor->right; \
     } else { \
       /* Trường hợp 3: Nút liền sau node là nút trái nhất trong
@@ -484,12 +482,12 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
        *    (c)
        */ \
       do { \
-        parent = successor; \
+        top = successor; \
         successor = tmp; \
         tmp = tmp->left; \
       } while (tmp); \
       child2 = successor->right; \
-      parent->left = child2; \
+      top->left = child2; \
       successor->right = child; \
       child->top = successor; \
     } \
@@ -501,14 +499,13 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     tmp = p; \
     TCHANGE(node, successor, tmp, t); \
     if (child2) { \
-      TSET_PC(child2, parent, BLACK); \
+      TSET_PC(child2, top, BLACK); \
       rebalance = NULL; \
     } else { \
       enum tcolors c2 = successor->color; \
-      rebalance = c2 == BLACK? parent: NULL; \
+      rebalance = c2 == BLACK? top: NULL; \
     } \
     TSET_PC(successor, p, c); \
-    tmp = successor; \
   } \
   if (rebalance) { \
     struct TNN(tname) *n, *s, *cn, *dn, *u_; \
