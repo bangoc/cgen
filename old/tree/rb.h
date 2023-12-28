@@ -18,8 +18,8 @@
  * 2) Nút gốc là nút đen
  * 3) Tất cả các nút lá (NULL) là các nút đen
  * 4) Cả hai con của nút đỏ là các nút đen
- * 5) Tất cả các đường đi đơn giản từ nút gốc tới các nút lá đều có
- *    cùng số lượng nút đen.
+ * 5) Đối với mỗi nút, tất cả các đường đi đơn giản từ nó
+ *    tới các nút lá đều có cùng số lượng nút đen.
  */
 
 // đỏ = 0, đen = 1 như vậy chúng ta có tổng giá trị mầu = số lượng nút đen
