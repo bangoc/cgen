@@ -93,99 +93,81 @@ struct bst_node *bst_pvalnode(int *pval) {
   return pval? ((void*)pval) - offsetof(struct bst_node, value): NULL;
 }
 
+void bst_change(struct bst_node *old_node, struct bst_node *new_node,
+                struct bst_tree *t) {
+  struct bst_node *top = old_node->top;
+  if (top) {
+    if (top->left == old_node) {
+      top->left = new_node;
+    } else if (top->right == old_node) {
+      top->right = new_node;
+    }
+  } else {
+    t->root = new_node;
+  }
+  if (new_node) {
+    new_node->top = top;
+  }
+}
+
 /* Xóa nút tương ứng với khóa khỏi cây
  * Trả về 1 nếu đã xóa, hoặc 0 nếu khóa không tồn tại
  */
 int bst_remove(struct bst_tree *t, char *key) {
-  struct bst_node *dn = bst_pvalnode(bst_search(t, key));
-  if (!dn) {
+  struct bst_node *d = bst_pvalnode(bst_search(t, key));
+  if (!d) {
     return 0;
   }
-  struct bst_node *node = dn;
-  struct bst_node *child = node->right, *tmp = node->left, *top;
-  struct bst_node *p;
+  struct bst_node *n = d, *nr = n->right, *tmp = n->left;
   if (!tmp) {
-    top = node->top;
-    if (top) {
-      if (top->left == node) {
-        top->left = child;
-      } else {
-        top->right = child;
-      }
-    } else {
-      t->root = child;
-    }
-    if (child) {
-      child->top = top;
-    }
-  } else if (!child) {
-    top = node->top;
-    if (top) {
-      if (top->left == node) {
-        top->left = tmp;
-      } else {
-        top->right = tmp;
-      }
-    } else {
-      t->root = tmp;
-    }
-    tmp->top = top;
+    bst_change(n, nr, t);
+  } else if (!nr) {
+    bst_change(n, tmp, t);
   } else {
-    struct bst_node *successor = child, *child2;
-    tmp = child->left;
-    /* Trường hợp 2: Nút liền sau node là con phải của node.
+    struct bst_node *s = nr;
+    /* Trường hợp 2: Nút liền sau n là con phải của n.
        *
        *    (n)          (s)
        *    / \          / \
-       *  (x) (s)  ->  (x) (c)
+       *  (x) (s)  ->  (x) (sr)
        *        \
-       *        (c)
+       *        (sr)
        */
-    if (!tmp) {
-      child2 = successor->right;
-    } else {
-       /* Trường hợp 3: Nút liền sau node là nút trái nhất trong
-       * cây con phải của node
+    tmp = nr->left;
+    if (tmp) {
+       /* Trường hợp 3: Nút liền sau n là nút trái nhất trong
+       * cây con phải của n
        *
        *    (n)          (s)
        *    / \          / \
-       *  (x) (y)  ->  (x) (y)
+       *  (x)(nr)  ->  (x)(nr)
        *      /            /
-       *    (p)          (p)
+       *   (top)         (top)
        *    /            /
-       *  (s)          (c)
+       *  (s)          (sr)
        *    \
-       *    (c)
+       *    (sr)
        */
+      struct bst_node *top;
       do {
-        top = successor;
-        successor = tmp;
+        top = s;
+        s = tmp;
         tmp = tmp->left;
       } while (tmp);
-      child2 = successor->right;
-      top->left = child2;
-      if (child2) {
-        child2->top = top;
+      struct bst_node *sr = s->right;
+      top->left = sr;
+      if (sr) {
+        sr->top = top;
       }
-      successor->right = child;
-      child->top = successor;
+      s->right = nr;
+      nr->top = s;
     }
-    tmp = node->left;
-    successor->left = tmp;
-    tmp->top = successor;
-    p = node->top;
-    if (p) {
-      if (p->left == node) {
-        p->left = successor;
-      } else {
-        p->right = successor;
-      }
-    } else {
-      t->root = successor;
-    }
-    successor->top = p;
+    tmp = n->left;
+    s->left = tmp;
+    tmp->top = s;
+    bst_change(n, s, t);
   }
-  free(dn);
+  free(d);
   --t->size;
   return 1;
 }
