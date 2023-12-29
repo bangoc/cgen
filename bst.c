@@ -176,8 +176,8 @@ void bst_node_print_lnr(struct bst_node *n, int depth) {
   if (n->left) {
     bst_node_print_lnr(n->left, depth + 1);
   }
-  for (int i = 0; i < depth * 2; ++i) {
-    printf(" ");
+  if (depth > 0) {
+    printf("%1$*2$c", ' ', 2 * depth);
   }
   printf("(%s: %d)\n", n->key, n->value);
   if (n->right) {
