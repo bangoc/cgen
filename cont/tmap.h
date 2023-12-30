@@ -452,18 +452,27 @@ struct TNN(tname) *TNN(tname)(ktype key, vtype value) { \
   return nn; \
 } \
 struct TNN(tname) *prefix##left_most(struct TNN(tname) *n) { \
+  if (!n) { \
+    return NULL; \
+  } \
   while (n->left) { \
     n = n->left; \
   } \
   return n; \
 } \
 struct TNN(tname) *prefix##right_most(struct TNN(tname) *n) { \
+  if (!n) { \
+    return NULL; \
+  } \
   while (n->right) { \
     n = n->right; \
   } \
   return n; \
 } \
 struct TNN(tname) *prefix##left_deepest(struct TNN(tname) *n) { \
+  if (!n) { \
+    return NULL; \
+  } \
   for (;;) { \
     if (n->left) { \
       n = n->left; \
@@ -586,13 +595,13 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     tmp = child->left; \
     if (!tmp) { \
       /* Trường hợp 2: Nút liền sau node là con phải của node.
-     *+
-     *    (n)          (s)
-     *    / \          / \
-     *  (x) (s)  ->  (x) (c2)
-     *        \
-     *        (c2)
-     */ \
+       *
+       *    (n)          (s)
+       *    / \          / \
+       *  (x) (s)  ->  (x) (c2)
+       *        \
+       *        (c2)
+       */ \
       top = successor; \
       child2 = successor->right; \
     } else { \
@@ -638,6 +647,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     prefix##delete_fixup(t, rebalance); \
   } \
   free(dn); \
+  --(t->size); \
   return t; \
 } \
 vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
@@ -699,7 +709,6 @@ struct tname *prefix##remove(struct tname *t, ktype key) { \
     t->fv(n->value); \
   }\
   prefix##delete(t, n);\
-  --(t->size); \
   return t; \
 }
 

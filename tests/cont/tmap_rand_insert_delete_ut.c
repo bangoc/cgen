@@ -33,6 +33,9 @@ int main(int argc, char *argv[]) {
     CHECK_MSG(rb_is_valid(t), "Không phải cây đỏ-đen");
   }
   printf("%ld thao tác Ok\n", num_ops);
+  while (t->size) {
+    iidelete(t, t->root);
+  }
   iifree(t);
   TEST_OK();
 }
