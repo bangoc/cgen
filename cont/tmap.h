@@ -452,27 +452,18 @@ struct TNN(tname) *TNN(tname)(ktype key, vtype value) { \
   return nn; \
 } \
 struct TNN(tname) *prefix##left_most(struct TNN(tname) *n) { \
-  if (!n) { \
-    return NULL; \
-  } \
   while (n->left) { \
     n = n->left; \
   } \
   return n; \
 } \
 struct TNN(tname) *prefix##right_most(struct TNN(tname) *n) { \
-  if (!n) { \
-    return NULL; \
-  } \
   while (n->right) { \
     n = n->right; \
   } \
   return n; \
 } \
 struct TNN(tname) *prefix##left_deepest(struct TNN(tname) *n) { \
-  if (!n) { \
-    return NULL; \
-  } \
   for (;;) { \
     if (n->left) { \
       n = n->left; \
@@ -514,13 +505,13 @@ struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n) { \
   return top; \
 } \
 struct TNN(tname) *prefix##first_lrn(struct tname *t) { \
-  return prefix##left_deepest(t->root); \
+  return t->root? prefix##left_deepest(t->root): NULL; \
 } \
 struct TNN(tname) *prefix##first_lnr(struct tname *t) { \
-  return prefix##left_most(t->root); \
+  return t->root? prefix##left_most(t->root): NULL; \
 } \
 struct TNN(tname) *prefix##last_lnr(struct tname *t) { \
-  return prefix##right_most(t->root); \
+  return t->root? prefix##right_most(t->root): NULL; \
 } \
 struct TNN(tname) *prefix##pval_node(void *pv) { \
   return pv? pv - offsetof(struct TNN(tname), value): NULL; \
