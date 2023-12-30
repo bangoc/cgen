@@ -113,7 +113,7 @@ static inline void prefix##put_fixup(struct tname *t, struct TNN(tname) *n) {\
    * u - nút đối xứng của p trong cây, chú bác của n (uncle)
    * pp - là đỉnh của p (p->top)
    *
-   * Trong các ví dụ minh họa thì nút có tên được viết hoa là nút đen,
+   * Trong các sơ đồ minh họa cây thì nút có tên được viết hoa là nút đen,
    *    nút có tên viết thường là nút đỏ, nút có thể là đen hoặc đỏ
    *    (không ảnh hưởng đển tính đúng đắn) thì được đặt trong dấu ()
    */ \
@@ -168,7 +168,7 @@ static inline void prefix##put_fixup(struct tname *t, struct TNN(tname) *n) {\
                 PP                   pp
              p     U  lật mầu >>   P   U
            n                      n
-          >>> & sau khi xoay phải ở GP thành =>>>
+          >>> & sau khi xoay phải ở PP thành =>>>
               P
             n    pp
                     U
@@ -562,13 +562,13 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
             *tmp = node->left, \
             *top, *rebalance; \
   enum tcolors c; \
-  if (!tmp) { \
-    /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
+  /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
      *
-     * Nếu có một con thì nút con phải là nút đỏ do tính chất 5,
+     * Nếu chỉ có 1 con thì nút con phải là nút đỏ do tính chất 5,
      * và nó phải là nút đen theo tính chất 4. Chúng ta điều chỉnh
      * mầu trong lân cận để tránh gọi hàm sửa mầu sau này.
      */ \
+  if (!tmp) { \
     top = node->top; \
     c = node->color; \
     prefix##change(node, child, t); \
@@ -579,7 +579,6 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
       rebalance = c == BLACK? top: NULL; \
     } \
   } else if (!child) { \
-    /* Vẫn trường hợp 1 nhưng nút con là node->left */ \
     top = node->top; \
     c = node->color; \
     prefix##change(node, tmp, t); \
