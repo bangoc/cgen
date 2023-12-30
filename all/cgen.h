@@ -442,90 +442,128 @@ void prefix##free(struct tname *t); \
 vtype *prefix##put(struct tname *t, ktype key, vtype value); \
 vtype *prefix##get(struct tname *t, ktype key); \
 struct tname *prefix##remove(struct tname *t, ktype key)
-#define TSEARCH(t,key,x) \
-do { \
-  int rl; \
-  x = t->root; \
-  while (x) { \
-    rl = t->cmp(&key, &x->key); \
-    if (rl == 0) { \
-      break; \
-    } \
-    x = rl < 0? x->left: x->right; \
-  } \
-} while (0)
-#define TCHANGE(old_node,new_node,parent,t) \
-  do { \
-    if (parent) { \
-      if (parent->left == old_node) { \
-        parent->left = new_node; \
-      } else { \
-        parent->right = new_node; \
-      } \
+#define TIMPL(tname,ktype,vtype,prefix) \
+static inline void prefix##change(struct TNN(tname) *old_node, \
+        struct TNN(tname) *new_node, struct tname *t) { \
+  struct TNN(tname) *top = old_node->top; \
+  if (top) { \
+    if (top->left == old_node) { \
+      top->left = new_node; \
     } else { \
-      t->root = new_node; \
+      top->right = new_node; \
     } \
-  } while (0)
-#define TROTATE(t,x,right,left,y_) \
-  do { \
-    y_ = (x)->right; \
-    (x)->right = y_->left; \
-    if (y_->left != NULL) { \
-      y_->left->top = (x); \
-    } \
-    y_->top = (x)->top; \
-    TCHANGE(x, y_, (x)->top, t); \
-    y_->left = (x); \
-    (x)->top = y_; \
-  } while (0)
-#define IMPL_INSERT_FIXUP(t,n,p,left,right,y_) \
-      if (TIS_RED(p->top->right)) { \
+  } else { \
+    t->root = new_node; \
+  } \
+  if (new_node) { \
+    (new_node)->top = top; \
+  } \
+} \
+   \
+static inline void prefix##rotate_left(struct tname *t, struct TNN(tname) *x) { \
+  struct TNN(tname) *y = x->right; \
+  x->right = y->left; \
+  if (y->left != NULL) { \
+    y->left->top = x; \
+  } \
+  prefix##change(x, y, t); \
+  y->left = x; \
+  x->top = y; \
+}\
+   \
+static inline void prefix##rotate_right(struct tname *t, struct TNN(tname) *x) { \
+  struct TNN(tname) *y = x->left; \
+  x->left = y->right; \
+  if (y->right != NULL) { \
+    y->right->top = x; \
+  } \
+  prefix##change(x, y, t); \
+  y->right = x; \
+  x->top = y; \
+}\
+static inline void prefix##put_fixup(struct tname *t, struct TNN(tname) *n) {\
+      \
+  struct TNN(tname) *p = n->top, *pp = p->top; \
+      \
+  while (1) { \
+    if (p == pp->left) { \
+      if (TIS_RED(pp->right)) { \
             \
         TPAINT_BLACK(p); \
-        TPAINT_BLACK(p->top->right); \
-        TPAINT_RED(p->top); \
-        n = p->top; \
+        TPAINT_BLACK(pp->right); \
+        TPAINT_RED(pp); \
+        n = pp; \
         p = n->top; \
         if (p == NULL) { \
                                        \
           TPAINT_BLACK(n); \
           break; \
         } \
+        pp = p->top; \
         if (TIS_BLACK(p)) { \
                                                             \
           break; \
         } \
       } else { \
-        if (n == n->top->right) { \
+        if (n == p->right) { \
               \
-          TROTATE(t, p, right, left, y_); \
+          prefix##rotate_## left(t, p); \
           n = p; \
           p = n->top; \
         } \
             \
         TPAINT_BLACK(p); \
-        TPAINT_RED(p->top); \
-        p = p->top; \
-        TROTATE(t, p, left, right, y_); \
+        TPAINT_RED(pp); \
+        prefix##rotate_## right(t, pp); \
         break; \
-      }
-#define TPUT_FIXUP(t,n,p,y_) \
-do { \
-      \
-  while (1) { \
-        \
-    if (p == p->top->left) { \
-      IMPL_INSERT_FIXUP(t, n, p, left, right, y_) \
+      } \
     } else { \
-       IMPL_INSERT_FIXUP(t, n, p, right, left, y_) \
+                                                      \
+      if (TIS_RED(pp->left)) { \
+            \
+        TPAINT_BLACK(p); \
+        TPAINT_BLACK(pp->left); \
+        TPAINT_RED(pp); \
+        n = pp; \
+        p = n->top; \
+        if (p == NULL) { \
+                                       \
+          TPAINT_BLACK(n); \
+          break; \
+        } \
+        pp = p->top; \
+        if (TIS_BLACK(p)) { \
+                                                            \
+          break; \
+        } \
+      } else { \
+        if (n == p->left) { \
+              \
+          prefix##rotate_## right(t, p); \
+          n = p; \
+          p = n->top; \
+          pp = p->top; \
+        } \
+            \
+        TPAINT_BLACK(p); \
+        TPAINT_RED(pp); \
+        prefix##rotate_## left(t, pp); \
+        break; \
+      } \
     } \
   } \
-} while (0)
-#define ERASE_COLOR_SYMMETRY(left,right,p,n,s,cn,dn,u_) \
-         \
+}\
+static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {\
+                                                                    \
+  struct TNN(tname) *n = NULL, *s, *dn, *cn; \
+      \
+      \
+  while (1) { \
+    s = p->right; \
+    if (n != s) { \
       if (TIS_RED(s)) { \
             \
-        TROTATE(t, p, right, left, u_); \
+        prefix##rotate_## left(t, p); \
         TPAINT_RED(p); \
         TPAINT_BLACK(s); \
         s = p->right; \
@@ -548,32 +586,53 @@ do { \
           break; \
         } \
             \
-        TROTATE(t, s, left, right, u_); \
+        prefix##rotate_## right(t, s); \
         s = p->right; \
       } \
           \
       dn = s->right; \
-      TROTATE(t, p, right, left, u_); \
+      prefix##rotate_ ##left(t, p); \
       TPAINT(s, p->color); \
       TPAINT_BLACK(p); \
       TPAINT_BLACK(dn); \
-      break
-#define TDELETE_FIXUP(t,p,n,s,cn,dn,u_) \
-do { \
-                                                                    \
-  n = NULL; \
-  while (1) { \
-       \
-    s = p->right; \
-    if (n != s) { \
-      ERASE_COLOR_SYMMETRY(left, right, p, n, s, cn, dn, u_); \
+      break; \
     } else { \
+                                                                        \
       s = p->left; \
-      ERASE_COLOR_SYMMETRY(right, left, p, n, s, cn, dn, u_); \
+      if (TIS_RED(s)) { \
+        prefix##rotate_## right(t, p); \
+        TPAINT_RED(p); \
+        TPAINT_BLACK(s); \
+        s = p->left; \
+      } \
+      dn = s->left; \
+      if (TIS_BLACK(dn)) { \
+        cn = s->right; \
+        if (TIS_BLACK(cn)) { \
+          TPAINT_RED(s); \
+          if (TIS_RED(p)) { \
+            TPAINT_BLACK(p); \
+          } else { \
+            n = p; \
+            p = n->top; \
+            if (p) { \
+              continue; \
+            } \
+          } \
+          break; \
+        } \
+        prefix##rotate_## left(t, s); \
+        s = p->left; \
+      } \
+      dn = s->left; \
+      prefix##rotate_ ##right(t, p); \
+      TPAINT(s, p->color); \
+      TPAINT_BLACK(p); \
+      TPAINT_BLACK(dn); \
+      break; \
     } \
   } \
-} while (0)
-#define TIMPL(tname,ktype,vtype,prefix) \
+}\
 struct TNN(tname) *TNN(tname)(ktype key, vtype value) { \
   struct TNN(tname) *nn = malloc(sizeof(struct TNN(tname))); \
   nn->key = key; \
@@ -636,17 +695,16 @@ struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n) { \
   return top; \
 } \
 struct TNN(tname) *prefix##first_lrn(struct tname *t) { \
-  return prefix##left_deepest(t->root); \
+  return t->root? prefix##left_deepest(t->root): NULL; \
 } \
 struct TNN(tname) *prefix##first_lnr(struct tname *t) { \
-  return prefix##left_most(t->root); \
+  return t->root? prefix##left_most(t->root): NULL; \
 } \
 struct TNN(tname) *prefix##last_lnr(struct tname *t) { \
-  return prefix##right_most(t->root); \
+  return t->root? prefix##right_most(t->root): NULL; \
 } \
 struct TNN(tname) *prefix##pval_node(void *pv) { \
-  void *tmp = pv; \
-  return tmp - offsetof(struct TNN(tname), value); \
+  return pv? pv - offsetof(struct TNN(tname), value): NULL; \
 } \
 struct tname *prefix##create(compare_fnt cmp) { \
   if (!cmp) { \
@@ -692,72 +750,62 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
   struct TNN(tname) *child = node->right, \
             *tmp = node->left, \
-            *parent, *rebalance; \
-  struct TNN(tname) *p; \
-  enum tcolors c; \
+            *top, *rebalance; \
+      \
   if (!tmp) { \
-        \
-    p = node->top; \
-    c = node->color; \
-    parent = p; \
-    TCHANGE(node, child, parent, t); \
+    prefix##change(node, child, t); \
     if (child) { \
-      TSET_PC(child, p, c); \
+                                                                      \
+      TPAINT_BLACK(child); \
       rebalance = NULL; \
     } else { \
-      rebalance = c == BLACK? parent: NULL; \
+      rebalance = TIS_BLACK(node)? node->top: NULL; \
     } \
-    tmp = parent; \
   } else if (!child) { \
-                                                                 \
-    p = node->top; \
-    c = node->color; \
-    TSET_PC(tmp, p, c); \
-    parent = p; \
-    TCHANGE(node, tmp, parent, t); \
+                                                           \
+    prefix##change(node, tmp, t); \
+    TPAINT_BLACK(tmp); \
     rebalance = NULL; \
-    tmp = parent; \
   } else { \
     struct TNN(tname) *successor = child, *child2; \
     tmp = child->left; \
     if (!tmp) { \
           \
-      parent = successor; \
+      top = successor; \
       child2 = successor->right; \
     } else { \
           \
       do { \
-        parent = successor; \
         successor = tmp; \
         tmp = tmp->left; \
       } while (tmp); \
+      top = successor->top; \
       child2 = successor->right; \
-      parent->left = child2; \
+      top->left = child2; \
+      if (child2) { \
+        child2->top = top; \
+      } \
       successor->right = child; \
       child->top = successor; \
     } \
+                                                                                     \
     tmp = node->left; \
     successor->left = tmp; \
     tmp->top = successor; \
-    p = node->top; \
-    c = node->color; \
-    tmp = p; \
-    TCHANGE(node, successor, tmp, t); \
     if (child2) { \
-      TSET_PC(child2, parent, BLACK); \
+      TPAINT_BLACK(child2); \
       rebalance = NULL; \
-    } else { \
-      enum tcolors c2 = successor->color; \
-      rebalance = c2 == BLACK? parent: NULL; \
-    } \
-    TSET_PC(successor, p, c); \
-    tmp = successor; \
+    } else {\
+      rebalance = TIS_BLACK(successor) ? top: NULL; \
+    }\
+    prefix##change(node, successor, t); \
+    TPAINT(successor, node->color); \
   } \
   if (rebalance) { \
-    struct TNN(tname) *n, *s, *cn, *dn, *u_; \
-    TDELETE_FIXUP(t, rebalance, n, s, cn, dn, u_); \
+    prefix##delete_fixup(t, rebalance); \
   } \
   free(dn); \
+  --(t->size); \
   return t; \
 } \
 vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
@@ -787,23 +835,27 @@ vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
     nn->color = BLACK; \
   } else if (TIS_RED(top)) { \
                                      \
-    struct TNN(tname) *y_; \
-    TPUT_FIXUP(t, nn, top, y_); \
+    prefix##put_fixup(t, nn); \
   } \
   ++t->size; \
   return NULL; \
 } \
 vtype *prefix##get(struct tname *t, ktype key) { \
-  struct TNN(tname) *x; \
-  TSEARCH(t, key, x); \
+  struct TNN(tname) *x = t->root; \
+  while (x) { \
+    int rl = t->cmp(&key, &x->key); \
+    if (rl == 0) { \
+      break; \
+    } \
+    x = rl < 0? x->left: x->right; \
+  } \
   if (!x) { \
     return NULL; \
   } \
   return &x->value; \
 } \
 struct tname *prefix##remove(struct tname *t, ktype key) { \
-  struct TNN(tname) *n; \
-  TSEARCH(t, key, n); \
+  struct TNN(tname) *n = prefix##pval_node(prefix##get(t, key)); \
   if (!n) { \
     return NULL; \
   } \
@@ -814,7 +866,6 @@ struct tname *prefix##remove(struct tname *t, ktype key) { \
     t->fv(n->value); \
   }\
   prefix##delete(t, n);\
-  --(t->size); \
   return t; \
 }
 #define TDECL_IMPL(tname,keytype,valtype,prefix) \

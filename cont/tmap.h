@@ -245,131 +245,18 @@ static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {
   /* Trong các sơ đồ cây nút viết hoa là nút đen,
    * nút viết thường là nút đỏ, nút trong ngoặc có thể là đỏ hoặc đen.
    */ \
-  /* Trường hợp 1.1 - Xoay trái ở p
-   *
-   *     P               S
-   *    / \             / \
-   *   N   s    -->    p   DN
-   *      / \         / \
-   *     CN  DN      N   CN <- s mới
-   */ \
-  /*
-   * Trường hợp 1.2 - Đảo mầu s, p có thể có mầu bất kỳ (có mầu đỏ
-   * sau khi xử lý trường hợp 1)
-   *
-   *    (p)           (p)
-   *    / \           / \
-   *   N   S    -->  N   s
-   *      / \           / \
-   *     CN  DN        CN  DN
-   *
-   * Vi phạm ràng buộc 5 có thể được khắc phục bằng cách đảo mầu p
-   * thành đen nếu nó là nút đỏ, hoặc đệ quy tại p nếu ngược lại.
-   */ \
-  /*
-   * Trường hợp 1.3 - Xoay phải tại s (p có thể có mầu bất kỳ)
-   *
-   *              (p)           (p)
-   *              / \           / \
-   *             N   S    -->  N   cn
-   *                / \             \
-   *               cn  DN            S
-   *                                  \
-   *                                   DN
-   * Lưu ý: + p có thể là nút đỏ, và nếu như vậy thì cả p và
-   * cn đều là các nút đỏ sau khi xoay (vi phạm ràng buộc 4).
-   *
-   * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm 1
-   * nút đen (S, vi phạm tính chất 5).
-   *
-   * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
-   * xoay phải tại p, cn được tô bằng mầu của p, dn và p
-   * được tô mầu đen)
-   *
-   *   (p)            (cn)
-   *   / \            /  \
-   *  N   cn   -->   P    S
-   *       \        /      \
-   *        S      N        DN
-   *         \
-   *          DN
-   */ \
-  /* Trường hợp 1.4 - Xoay trái ở p + đảo mầu các nút,
-   * p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
-   * mầu của cn không thay đổi, s có mầu cũ của p, p và dn được tô mầu đen.
-   *
-   *      (p)             (s)
-   *      / \             / \
-   *     N   S     -->   P   Dn
-   *        / \         / \
-   *      (cn) dn      N  (cn)
-   */ \
-  /*
-   * Trường hợp 2.1 - Xoay phải ở p
-   *
-   *      P                  S
-   *     / \                / \
-   *    s   N -->         CN   p
-   *   / \                    / \
-   *  CN  DN        s mới -> DN   N
-   */ \
-  /*
-   * Trường hợp 2.2 - Đảo mầu s, p có thể có mầu bất kỳ (mầu đỏ sau
-   * khi xử lý trường hợp 1)
-   *
-   *        (p)           (p)
-   *        / \           / \
-   *       S   N -->     s   N
-   *      / \           / \
-   *     CN  DN        CN  DN
-   *
-   * Vi phạm ràng buộc 5, có thể được khắc phục bằng cách đảo mầu p
-   * thành đen nếu nó là nút đỏ, hoặc đệ quy tại p nếu ngược lại.
-   */ \
-  /*
-   * Trường hợp 2.3 - Xoay phải tại s (p có thể có mầu bất
-   * kỳ)
-   *
-   *             (p)            (p)
-   *             / \            / \
-   *            S  N  -->     cn   N
-   *           / \             \
-   *          cn  DN            S
-   *                             \
-   *                              DN
-   * Nếu p là nút đỏ, thì cả p và CN đều là các nút đỏ sau khi xoay
-   *   => Vi phạm ràng buộc 4.
-   *
-   * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm một
-   * nút đen (S, vi phạm tính chất 5).
-   *
-   * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
-   * xoay trái tại top, cn được tô bằng mầu của p, dn và p
-   * được tô mầu đen)
-   *
-   *   (p)            (cn)
-   *   / \            /  \
-   *  N   cn   -->   P    S
-   *       \        /      \
-   *        S      N        DN
-   *         \
-   *          DN
-   */ \
-  /* Trường hợp 2.4 - Xoay phải ở p + đảo mầu các nút,
-   * p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
-   * mầu của cn không thay đổi, s có mầu cũ của p, p và dn được tô mầu đen.
-   *
-   *          (p)             (s)
-   *          / \             /  \
-   *         S   N   -->    DN    P
-   *        / \                 /   \
-   *       dn (cn)            (cn)   N
-   */ \
   while (1) { \
     s = p->right; \
     if (n != s) { \
       if (TIS_RED(s)) { \
-        /* Trường hợp 1.1 */ \
+        /* Trường hợp 1 - Xoay trái ở p
+         *
+         *     P               S
+         *    / \             / \
+         *   N   s    -->    p   DN
+         *      / \         / \
+         *     CN  DN      N   CN <- s mới
+         */ \
         prefix##rotate_## left(t, p); \
         TPAINT_RED(p); \
         TPAINT_BLACK(s); \
@@ -379,7 +266,19 @@ static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {
       if (TIS_BLACK(dn)) { \
         cn = s->left; \
         if (TIS_BLACK(cn)) { \
-          /* Trường hợp 1.2 */ \
+          /*
+           * Trường hợp 2 - Đảo mầu s, p có thể có mầu bất kỳ (có mầu đỏ
+           * sau khi xử lý trường hợp 1)
+           *
+           *    (p)           (p)
+           *    / \           / \
+           *   N   S    -->  N   s
+           *      / \           / \
+           *     CN  DN        CN  DN
+           *
+           * Vi phạm ràng buộc 5 có thể được khắc phục bằng cách đảo mầu p
+           * thành đen nếu nó là nút đỏ, hoặc đệ quy tại p nếu ngược lại.
+           */ \
           TPAINT_RED(s); \
           if (TIS_RED(p)) { \
             TPAINT_BLACK(p); \
@@ -392,11 +291,48 @@ static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {
           } \
           break; \
         } \
-        /* Trường hợp 1.3 */ \
+        /*
+         * Trường hợp 3 - Xoay phải tại s (p có thể có mầu bất kỳ)
+         *
+         *              (p)           (p)
+         *              / \           / \
+         *             N   S    -->  N   cn
+         *                / \             \
+         *               cn  DN            S
+         *                                  \
+         *                                   DN
+         * Lưu ý: + p có thể là nút đỏ, và nếu như vậy thì cả p và
+         * cn đều là các nút đỏ sau khi xoay (vi phạm ràng buộc 4).
+         *
+         * + Đường đi từ p qua cn sau đó rẽ về phía N  bị giảm 1
+         * nút đen (S) => vi phạm tính chất 5.
+         *
+         * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
+         * xoay trái tại p, cn được tô bằng mầu của p, dn và p
+         * được tô mầu đen)
+         *
+         *   (p)            (cn)
+         *   / \            /  \
+         *  N   cn   -->   P    S
+         *       \        /      \
+         *        S      N        DN
+         *         \
+         *          DN
+         */ \
         prefix##rotate_## right(t, s); \
         s = p->right; \
       } \
-      /* Trường hợp 1.4 */ \
+      /* Trường hợp 4 - Xoay trái ở p + đảo mầu các nút,
+       * p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
+       * mầu của cn không thay đổi, s có mầu cũ của p,
+       * còn p và dn được tô mầu đen.
+       *
+       *      (p)             (s)
+       *      / \             / \
+       *     N   S     -->   P   DN
+       *        / \         / \
+       *      (cn) dn      N  (cn)
+       */ \
       dn = s->right; \
       prefix##rotate_ ##left(t, p); \
       TPAINT(s, p->color); \
@@ -404,9 +340,9 @@ static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {
       TPAINT_BLACK(dn); \
       break; \
     } else { \
+      /* Đối xứng với trường hợp n là con trái của p */ \
       s = p->left; \
       if (TIS_RED(s)) { \
-        /* Trường hợp 2.1 */ \
         prefix##rotate_## right(t, p); \
         TPAINT_RED(p); \
         TPAINT_BLACK(s); \
@@ -416,7 +352,6 @@ static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {
       if (TIS_BLACK(dn)) { \
         cn = s->right; \
         if (TIS_BLACK(cn)) { \
-          /* Trường hợp 2.2 */ \
           TPAINT_RED(s); \
           if (TIS_RED(p)) { \
             TPAINT_BLACK(p); \
@@ -429,11 +364,9 @@ static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {
           } \
           break; \
         } \
-        /* Trường hợp 2.3 */ \
         prefix##rotate_## left(t, s); \
         s = p->left; \
       } \
-      /* Trường hợp 2.4 */ \
       dn = s->left; \
       prefix##rotate_ ##right(t, p); \
       TPAINT(s, p->color); \
