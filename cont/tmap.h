@@ -57,149 +57,320 @@ vtype *prefix##put(struct tname *t, ktype key, vtype value); \
 vtype *prefix##get(struct tname *t, ktype key); \
 struct tname *prefix##remove(struct tname *t, ktype key)
 
-#define TSEARCH(t, key, x)  \
-do { \
-  int rl; \
-  x = t->root; \
-  while (x) { \
-    rl = t->cmp(&key, &x->key); \
-    if (rl == 0) { \
-      break; \
-    } \
-    x = rl < 0? x->left: x->right; \
-  } \
-} while (0)
-
-#define TCHANGE(old_node, new_node, top, t) \
-  do { \
-    if (top) { \
-      if (top->left == old_node) { \
-        top->left = new_node; \
-      } else { \
-        top->right = new_node; \
-      } \
+#define TIMPL(tname, ktype, vtype, prefix) \
+static inline void prefix##change(struct TNN(tname) *old_node, \
+        struct TNN(tname) *new_node, struct tname *t) { \
+  struct TNN(tname) *top = old_node->top; \
+  if (top) { \
+    if (top->left == old_node) { \
+      top->left = new_node; \
     } else { \
-      t->root = new_node; \
+      top->right = new_node; \
     } \
-  } while (0)
-/*     p                  p               p
-         x                   x              r
-      l     r <- y        l    rl         x
-          rl                            l   rl
-*/
-#define TROTATE(t, x, right, left, y_) \
-  do { \
-    y_ = (x)->right; \
-    (x)->right = y_->left; \
-    if (y_->left != NULL) { \
-      y_->left->top = (x); \
-    } \
-    y_->top = (x)->top; \
-    TCHANGE(x, y_, (x)->top, t); \
-    y_->left = (x); \
-    (x)->top = y_; \
-  } while (0)
-
-#define IMPL_INSERT_FIXUP(t, n, p, left, right, y_) \
-      if (TIS_RED(p->top->right)) { \
-        /*     GP                gp  <- n mới
-             p   u  thành>>>   P    U
-          ->n <-     có thể vi phạm tính chất 4 nếu gp->top là đỏ,
-                     n có thể là con trái hoặc con phải của p
-         */ \
-        TPAINT_BLACK(p); \
-        TPAINT_BLACK(p->top->right); \
-        TPAINT_RED(p->top); \
-        n = p->top; \
-        p = n->top; \
-        if (p == NULL) { \
-          /* n là gốc của cây */ \
-          TPAINT_BLACK(n); \
-          break; \
-        } \
-        if (TIS_BLACK(p)) { \
-          /* Các tính chất đã được thỏa mãn */ \
-          break; \
-        } \
-      } else { \
-        if (n == n->top->right) { \
-          /*     GP                  GP
-               p    U  thành>>>   n <-p  U
-                n               p  <-n mới
-           */ \
-          TROTATE(t, p, right, left, y_); \
-          n = p; \
-          p = n->top; \
-        } \
-        /*
-         + n là con trái của p
-                GP                   gp
-             p     U  lật mầu >>   P   U
-           n                      n
-          >>> & sau khi xoay phải ở GP thành =>>>
-              P
-            n    gp
-                    U
-            Thỏa mãn các tính chất của cây đỏ đen
-         */ \
-        TPAINT_BLACK(p); \
-        TPAINT_RED(p->top); \
-        p = p->top; \
-        TROTATE(t, p, left, right, y_); \
-        break;  \
-      }
-
-#define TPUT_FIXUP(t, n, p, y_) \
-do { \
+  } else { \
+    t->root = new_node; \
+  } \
+  if (new_node) { \
+    (new_node)->top = top; \
+  } \
+} \
+/*     p                            p
+         x                            r
+      l     r <- y                   x
+          rl                       l   rl
+*/ \
+static inline void prefix##rotate_left(struct tname *t, struct TNN(tname) *x) { \
+  struct TNN(tname) *y = x->right; \
+  x->right = y->left; \
+  if (y->left != NULL) { \
+    y->left->top = x; \
+  } \
+  prefix##change(x, y, t); \
+  y->left = x; \
+  x->top = y; \
+}\
+/*     p                       p
+         x                        l
+   y->l     r                       x
+        lr                        lr  r
+*/ \
+static inline void prefix##rotate_right(struct tname *t, struct TNN(tname) *x) { \
+  struct TNN(tname) *y = x->left; \
+  x->left = y->right; \
+  if (y->right != NULL) { \
+    y->right->top = x; \
+  } \
+  prefix##change(x, y, t); \
+  y->right = x; \
+  x->top = y; \
+}\
+static inline void prefix##put_fixup(struct tname *t, struct TNN(tname) *n) {\
   /*
    * Các biến:
    * t - con trỏ tới cây (tree)
    * n - ban đầu là nút mới được thêm vào (node)
    * p - là đỉnh của n (n->top)
    * u - nút đối xứng của p trong cây, chú bác của n (uncle)
-   * gp - ông của n, là đỉnh của p (p->top)
+   * pp - là đỉnh của p (p->top)
    *
    * Trong các ví dụ minh họa thì nút có tên được viết hoa là nút đen,
    *    nút có tên viết thường là nút đỏ, nút có thể là đen hoặc đỏ
    *    (không ảnh hưởng đển tính đúng đắn) thì được đặt trong dấu ()
    */ \
+  struct TNN(tname) *p = n->top, *pp = p->top; \
+  /* Các bất biến của vòng lặp:
+   *  + p là đỉnh của n, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn
+   *    p-n: n và p là các nút đỏ (tính chất 4). Vấn đề này được
+   *    khắc phục trong quá trình n được đẩy lên phía gốc.
+   * Ban đầu n là nút mới được thêm vào, sau mỗi vòng lặp n tiến
+   * gần hơn về phía gốc của cây. Vòng lặp dừng lại khi p ==
+   * NULL (n là gốc của cây) hoặc p được tô mầu đen.
+   *
+   * Trong vòng lặp chúng ta có
+   *  + n->top != NULL và p->top != NULL (bởi vì n và p
+   * là các nút đỏ)
+   */ \
   while (1) { \
-    /* Các bất biến của vòng lặp:
-     *  + p là đỉnh của n, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn
-     *    p-n: n và p là các nút đỏ (tính chất 4). Vấn đề này được
-     *    khắc phục trong quá trình n được đẩy lên phía gốc.
-     * Ban đầu n là nút mới được thêm vào, sau mỗi vòng lặp n tiến
-     * gần hơn về phía gốc của cây. Vòng lặp dừng lại khi p ==
-     * NULL (n là gốc của cây) hoặc p được tô mầu đen.
-     *
-     * Trong vòng lặp chúng ta có
-     *  + n->top != NULL và p->top != NULL (bởi vì n và p
-     * là các nút đỏ)
-     */ \
-    if (p == p->top->left) { \
-      IMPL_INSERT_FIXUP(t, n, p, left, right, y_) \
+    if (p == pp->left) { \
+      if (TIS_RED(pp->right)) { \
+        /*     PP                pp  <- n mới
+             p   u  thành>>>   P    U
+          ->n <-                n mới có thể vi phạm tính chất 4 nếu pp->top là đỏ,
+                                có thể là con trái hoặc con phải trong cây.
+         */ \
+        TPAINT_BLACK(p); \
+        TPAINT_BLACK(pp->right); \
+        TPAINT_RED(pp); \
+        n = pp; \
+        p = n->top; \
+        if (p == NULL) { \
+          /* n là gốc của cây */ \
+          TPAINT_BLACK(n); \
+          break; \
+        } \
+        pp = p->top; \
+        if (TIS_BLACK(p)) { \
+          /* Các tính chất đã được thỏa mãn */ \
+          break; \
+        } \
+      } else { \
+        if (n == p->right) { \
+          /*     PP                  PP
+               p    U  thành>>>   n <-p  U
+                n               p  <-n mới
+           */ \
+          prefix##rotate_## left(t, p); \
+          n = p; \
+          p = n->top; \
+        } \
+        /*
+         + n là con trái của p
+                PP                   pp
+             p     U  lật mầu >>   P   U
+           n                      n
+          >>> & sau khi xoay phải ở GP thành =>>>
+              P
+            n    pp
+                    U
+            Thỏa mãn các tính chất của cây đỏ đen
+         */ \
+        TPAINT_BLACK(p); \
+        TPAINT_RED(pp); \
+        prefix##rotate_## right(t, pp); \
+        break;  \
+      } \
     } else { \
-       IMPL_INSERT_FIXUP(t, n, p, right, left, y_) \
+      /* Trường hợp p là con phải của pp */ \
+      if (TIS_RED(pp->left)) { \
+        /*     PP                pp  <- n mới
+             u   p  thành>>>   U    P
+              ->n <-            n mới có thể vi phạm tính chất 4 nếu pp->top là đỏ,
+                                có thể là con trái hoặc con phải trong cây.
+         */ \
+        TPAINT_BLACK(p); \
+        TPAINT_BLACK(pp->left); \
+        TPAINT_RED(pp); \
+        n = pp; \
+        p = n->top; \
+        if (p == NULL) { \
+          /* n là gốc của cây */ \
+          TPAINT_BLACK(n); \
+          break; \
+        } \
+        pp = p->top; \
+        if (TIS_BLACK(p)) { \
+          /* Các tính chất đã được thỏa mãn */ \
+          break; \
+        } \
+      } else { \
+        if (n == p->left) { \
+          /*     PP                    PP
+               U    p    thành>>>    U    n <-p
+                  n                          p  <-n mới
+           */ \
+          prefix##rotate_## right(t, p); \
+          n = p; \
+          p = n->top; \
+          pp = p->top; \
+        } \
+        /*
+         + n là con phải của p
+                PP                      pp
+              U    p     lật mầu >>   U    P
+                     n                       n
+          >>> & sau khi xoay trái ở pp thành =>>>
+                    P
+                 pp    n
+               U
+            Thỏa mãn các tính chất của cây đỏ đen
+         */ \
+        TPAINT_BLACK(p); \
+        TPAINT_RED(pp); \
+        prefix##rotate_## left(t, pp); \
+        break;  \
+      } \
     } \
   } \
-} while (0)
-
-#define ERASE_COLOR_SYMMETRY(left, right, p, n, s, cn, dn, u_) \
-      /* Trong các ký hiệu cây chữ cái đầu viết thường là nút đỏ,
-       *    chữ cái đầu viết hoa là nút đen,
-       *    nút được để trong ngoặc có thể là đỏ hoặc đen.
-      */ \
+}\
+static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {\
+  /*n - node, s - sibling, cn - close nephew, dn - distant nephew */\
+  struct TNN(tname) *n = NULL, *s, *dn, *cn; \
+  /*
+   * Các tính chất bất biến trong vòng lặp:
+   * - n là nút đen (== NULL trong lần lặp đầu tiên)
+   * - n không phải là nút gốc (top của nó khác NULL)
+   * - Tất cả các đường dẫn tới lá đi qua p va n có số
+   *   lượng nút đen ít hơn 1 so với các đường dẫn khác.
+   */ \
+  /* Trong các sơ đồ cây nút viết hoa là nút đen,
+   * nút viết thường là nút đỏ, nút trong ngoặc có thể là đỏ hoặc đen.
+   */ \
+  /* Trường hợp 1.1 - Xoay trái ở p
+   *
+   *     P               S
+   *    / \             / \
+   *   N   s    -->    p   DN
+   *      / \         / \
+   *     CN  DN      N   CN <- s mới
+   */ \
+  /*
+   * Trường hợp 1.2 - Đảo mầu s, p có thể có mầu bất kỳ (có mầu đỏ
+   * sau khi xử lý trường hợp 1)
+   *
+   *    (p)           (p)
+   *    / \           / \
+   *   N   S    -->  N   s
+   *      / \           / \
+   *     CN  DN        CN  DN
+   *
+   * Vi phạm ràng buộc 5 có thể được khắc phục bằng cách đảo mầu p
+   * thành đen nếu nó là nút đỏ, hoặc đệ quy tại p nếu ngược lại.
+   */ \
+  /*
+   * Trường hợp 1.3 - Xoay phải tại s (p có thể có mầu bất kỳ)
+   *
+   *              (p)           (p)
+   *              / \           / \
+   *             N   S    -->  N   cn
+   *                / \             \
+   *               cn  DN            S
+   *                                  \
+   *                                   DN
+   * Lưu ý: + p có thể là nút đỏ, và nếu như vậy thì cả p và
+   * cn đều là các nút đỏ sau khi xoay (vi phạm ràng buộc 4).
+   *
+   * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm 1
+   * nút đen (S, vi phạm tính chất 5).
+   *
+   * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
+   * xoay phải tại p, cn được tô bằng mầu của p, dn và p
+   * được tô mầu đen)
+   *
+   *   (p)            (cn)
+   *   / \            /  \
+   *  N   cn   -->   P    S
+   *       \        /      \
+   *        S      N        DN
+   *         \
+   *          DN
+   */ \
+  /* Trường hợp 1.4 - Xoay trái ở p + đảo mầu các nút,
+   * p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
+   * mầu của cn không thay đổi, s có mầu cũ của p, p và dn được tô mầu đen.
+   *
+   *      (p)             (s)
+   *      / \             / \
+   *     N   S     -->   P   Dn
+   *        / \         / \
+   *      (cn) dn      N  (cn)
+   */ \
+  /*
+   * Trường hợp 2.1 - Xoay phải ở p
+   *
+   *      P                  S
+   *     / \                / \
+   *    s   N -->         CN   p
+   *   / \                    / \
+   *  CN  DN        s mới -> DN   N
+   */ \
+  /*
+   * Trường hợp 2.2 - Đảo mầu s, p có thể có mầu bất kỳ (mầu đỏ sau
+   * khi xử lý trường hợp 1)
+   *
+   *        (p)           (p)
+   *        / \           / \
+   *       S   N -->     s   N
+   *      / \           / \
+   *     CN  DN        CN  DN
+   *
+   * Vi phạm ràng buộc 5, có thể được khắc phục bằng cách đảo mầu p
+   * thành đen nếu nó là nút đỏ, hoặc đệ quy tại p nếu ngược lại.
+   */ \
+  /*
+   * Trường hợp 2.3 - Xoay phải tại s (p có thể có mầu bất
+   * kỳ)
+   *
+   *             (p)            (p)
+   *             / \            / \
+   *            S  N  -->     cn   N
+   *           / \             \
+   *          cn  DN            S
+   *                             \
+   *                              DN
+   * Nếu p là nút đỏ, thì cả p và CN đều là các nút đỏ sau khi xoay
+   *   => Vi phạm ràng buộc 4.
+   *
+   * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm một
+   * nút đen (S, vi phạm tính chất 5).
+   *
+   * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
+   * xoay trái tại top, cn được tô bằng mầu của p, dn và p
+   * được tô mầu đen)
+   *
+   *   (p)            (cn)
+   *   / \            /  \
+   *  N   cn   -->   P    S
+   *       \        /      \
+   *        S      N        DN
+   *         \
+   *          DN
+   */ \
+  /* Trường hợp 2.4 - Xoay phải ở p + đảo mầu các nút,
+   * p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
+   * mầu của cn không thay đổi, s có mầu cũ của p, p và dn được tô mầu đen.
+   *
+   *          (p)             (s)
+   *          / \             /  \
+   *         S   N   -->    DN    P
+   *        / \                 /   \
+   *       dn (cn)            (cn)   N
+   */ \
+  while (1) { \
+    s = p->right; \
+    if (n != s) { \
       if (TIS_RED(s)) { \
-        /*
-         * Trường hợp 1 - Xoay trái ở p
-         *
-         *     P               S
-         *    / \             / \
-         *   N   s    -->    p   Dn
-         *      / \         / \
-         *     Cn  Dn      N   Cn <- sibling mới
-         */ \
-        TROTATE(t, p, right, left, u_); \
+        /* Trường hợp 1.1 */ \
+        prefix##rotate_## left(t, p); \
         TPAINT_RED(p); \
         TPAINT_BLACK(s); \
         s = p->right; \
@@ -208,20 +379,7 @@ do { \
       if (TIS_BLACK(dn)) { \
         cn = s->left; \
         if (TIS_BLACK(cn)) { \
-          /*
-           * Trường hợp 2 - Đảo mầu sibling, p có thể có mầu bất kỳ
-           *
-           *    (p)           (p)
-           *    / \           / \
-           *   N   S    -->  N   s
-           *      / \           / \
-           *     Cn  Dn        Cn  Dn
-           *
-           * Điều này dẫn tới vi phạm ràng buộc 5), vi phạm này có
-           * thể được khắc phục bằng cách đảo mầu p thành đen nếu nó
-           * là nút đỏ, hoặc đệ quy tại p nếu ngược lại. Nút p có
-           * mầu đỏ sau khi xử lý trường hợp 1.
-           */ \
+          /* Trường hợp 1.2 */ \
           TPAINT_RED(s); \
           if (TIS_RED(p)) { \
             TPAINT_BLACK(p); \
@@ -234,79 +392,57 @@ do { \
           } \
           break; \
         } \
-        /*
-         * Trường hợp 3 - Xoay phải tại sibling (p có thể có mầu bất
-         * kỳ)
-         *
-         *              (p)           (p)
-         *              / \           / \
-         *             N   S    -->  N   cn
-         *                / \             \
-         *               cn  Dn            S
-         *                                  \
-         *                                   Dn
-         * Lưu ý: + p có thể là nút đỏ, và nếu như vậy thì cả p và
-         * Cn đều là các nút đỏ sau khi xoay (vi phạm ràng buộc 4).
-         *
-         * + Đường đi từ p qua cn sau đó rẽ về phía N bị giảm một
-         * nút đen (S, vi phạm tính chất 5).
-         *
-         * Các vấn đề  này được xử lý trong trường hợp 4: Sau khi
-         * xoay trái tại top, cn được tô bằng mầu của p, dn và p
-         * được tô mầu đen)
-         *
-         *   (p)            (cn)
-         *   / \            /  \
-         *  N   cn   -->   P    S
-         *       \        /      \
-         *        S      N        Dn
-         *         \
-         *          Dn
-         */ \
-        TROTATE(t, s, left, right, u_); \
+        /* Trường hợp 1.3 */ \
+        prefix##rotate_## right(t, s); \
         s = p->right; \
       } \
-      /* Trường hợp 4 - Xoay trái ở top + đảo mầu các nút
-       * (p và cn có thể có mầu bất kỳ trước khi xoay. Sau khi xoay
-       * p và dn được tô mầu đen, s có mầu của p,
-       * còn cn giữ nguyênmầu của nó)
-       *
-       *      (p)             (s)
-       *      / \             / \
-       *     N   S     -->   P   Dn
-       *        / \         / \
-       *      (cn) dn      N  (cn)
-       */ \
+      /* Trường hợp 1.4 */ \
       dn = s->right; \
-      TROTATE(t, p, right, left, u_); \
+      prefix##rotate_ ##left(t, p); \
       TPAINT(s, p->color); \
       TPAINT_BLACK(p); \
       TPAINT_BLACK(dn); \
-      break
-
-#define TDELETE_FIXUP(t, p, n, s, cn, dn, u_) \
-do { \
-  /*n - node, s - sibling, cn - close nephew, dn - distant nephew */\
-  n = NULL; \
-  while (1) { \
-    /*
-    * Các tính chất bất biến trong vòng lặp:
-    * - n là nút đen (hoặc NULL trong lần lặp đầu tiên)
-    * - n không phải là nút gốc (top của nó khác NULL)
-    * - Tất cả các đường dẫn tới lá đi qua p va n có số
-    *   lượng nút đen ít hơn 1 so với các đường dẫn khác.
-    */ \
-    s = p->right; \
-    if (n != s) {  /* n == p->left */ \
-      ERASE_COLOR_SYMMETRY(left, right, p, n, s, cn, dn, u_); \
+      break; \
     } else { \
       s = p->left; \
-      ERASE_COLOR_SYMMETRY(right, left, p, n, s, cn, dn, u_); \
+      if (TIS_RED(s)) { \
+        /* Trường hợp 2.1 */ \
+        prefix##rotate_## right(t, p); \
+        TPAINT_RED(p); \
+        TPAINT_BLACK(s); \
+        s = p->left; \
+      } \
+      dn = s->left; \
+      if (TIS_BLACK(dn)) { \
+        cn = s->right; \
+        if (TIS_BLACK(cn)) { \
+          /* Trường hợp 2.2 */ \
+          TPAINT_RED(s); \
+          if (TIS_RED(p)) { \
+            TPAINT_BLACK(p); \
+          } else { \
+            n = p; \
+            p = n->top; \
+            if (p) { \
+              continue; \
+            } \
+          } \
+          break; \
+        } \
+        /* Trường hợp 2.3 */ \
+        prefix##rotate_## left(t, s); \
+        s = p->left; \
+      } \
+      /* Trường hợp 2.4 */ \
+      dn = s->left; \
+      prefix##rotate_ ##right(t, p); \
+      TPAINT(s, p->color); \
+      TPAINT_BLACK(p); \
+      TPAINT_BLACK(dn); \
+      break; \
     } \
   } \
-} while (0)
-
-#define TIMPL(tname, ktype, vtype, prefix) \
+}\
 struct TNN(tname) *TNN(tname)(ktype key, vtype value) { \
   struct TNN(tname) *nn = malloc(sizeof(struct TNN(tname))); \
   nn->key = key; \
@@ -378,8 +514,7 @@ struct TNN(tname) *prefix##last_lnr(struct tname *t) { \
   return prefix##right_most(t->root); \
 } \
 struct TNN(tname) *prefix##pval_node(void *pv) { \
-  void *tmp = pv; \
-  return tmp - offsetof(struct TNN(tname), value); \
+  return pv? pv - offsetof(struct TNN(tname), value): NULL; \
 } \
 struct tname *prefix##create(compare_fnt cmp) { \
   if (!cmp) { \
@@ -426,7 +561,6 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *child = node->right, \
             *tmp = node->left, \
             *top, *rebalance; \
-  struct TNN(tname) *p; \
   enum tcolors c; \
   if (!tmp) { \
     /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
@@ -435,23 +569,21 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
      * và nó phải là nút đen theo tính chất 4. Chúng ta điều chỉnh
      * mầu trong lân cận để tránh gọi hàm sửa mầu sau này.
      */ \
-    p = node->top; \
+    top = node->top; \
     c = node->color; \
-    top = p; \
-    TCHANGE(node, child, top, t); \
+    prefix##change(node, child, t); \
     if (child) { \
-      TSET_PC(child, p, c); \
+      TPAINT(child, c); \
       rebalance = NULL; \
     } else { \
       rebalance = c == BLACK? top: NULL; \
     } \
   } else if (!child) { \
     /* Vẫn trường hợp 1 nhưng nút con là node->left */ \
-    p = node->top; \
+    top = node->top; \
     c = node->color; \
-    TSET_PC(tmp, p, c); \
-    top = p; \
-    TCHANGE(node, tmp, top, t); \
+    prefix##change(node, tmp, t); \
+    TPAINT(tmp, c); \
     rebalance = NULL; \
   } else { \
     struct TNN(tname) *successor = child, *child2; \
@@ -494,10 +626,6 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     tmp = node->left; \
     successor->left = tmp; \
     tmp->top = successor; \
-    p = node->top; \
-    c = node->color; \
-    tmp = p; \
-    TCHANGE(node, successor, tmp, t); \
     if (child2) { \
       TSET_PC(child2, top, BLACK); \
       rebalance = NULL; \
@@ -505,11 +633,13 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
       enum tcolors c2 = successor->color; \
       rebalance = c2 == BLACK? top: NULL; \
     } \
-    TSET_PC(successor, p, c); \
+    tmp = node->top; \
+    c = node->color; \
+    prefix##change(node, successor, t); \
+    TPAINT(successor, c); \
   } \
   if (rebalance) { \
-    struct TNN(tname) *n, *s, *cn, *dn, *u_; \
-    TDELETE_FIXUP(t, rebalance, n, s, cn, dn, u_); \
+    prefix##delete_fixup(t, rebalance); \
   } \
   free(dn); \
   return t; \
@@ -542,23 +672,27 @@ vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
   } else if (TIS_RED(top)) { \
     /* Vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4
        có thể bị vi phạm). */ \
-    struct TNN(tname) *y_; \
-    TPUT_FIXUP(t, nn, top, y_); \
+    prefix##put_fixup(t, nn); \
   } \
   ++t->size; \
   return NULL; \
 } \
 vtype *prefix##get(struct tname *t, ktype key) { \
-  struct TNN(tname) *x; \
-  TSEARCH(t, key, x); \
+  struct TNN(tname) *x = t->root; \
+  while (x) { \
+    int rl = t->cmp(&key, &x->key); \
+    if (rl == 0) { \
+      break; \
+    } \
+    x = rl < 0? x->left: x->right; \
+  } \
   if (!x) { \
     return NULL; \
   } \
   return &x->value; \
 } \
 struct tname *prefix##remove(struct tname *t, ktype key) { \
-  struct TNN(tname) *n; \
-  TSEARCH(t, key, n); \
+  struct TNN(tname) *n = prefix##pval_node(prefix##get(t, key)); \
   if (!n) { \
     return NULL; \
   } \
