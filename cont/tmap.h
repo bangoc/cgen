@@ -561,46 +561,42 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
   struct TNN(tname) *child = node->right, \
             *tmp = node->left, \
             *top, *rebalance; \
-  enum tcolors c; \
   /* Trường hợp 1: Nếu nút đang xóa có không quá 1 nút con (dễ)
-     *
-     * Nếu chỉ có 1 con thì nút con phải là nút đỏ do tính chất 5,
-     * và nó phải là nút đen theo tính chất 4. Chúng ta điều chỉnh
-     * mầu trong lân cận để tránh gọi hàm sửa mầu sau này.
-     */ \
+   *
+   * Nếu chỉ có 1 con thì nút con phải là nút đỏ do tính chất 5,
+   * và nó phải là nút đen theo tính chất 4. Có thể điều chỉnh
+   * mầu trong lân cận để giữ các tính chất cây đỏ-dên.
+   */ \
   if (!tmp) { \
-    top = node->top; \
-    c = node->color; \
     prefix##change(node, child, t); \
     if (child) { \
-      TPAINT(child, c); \
+      /* node phải là nút đen và child phải là nút đỏ */ \
+      TPAINT_BLACK(child); \
       rebalance = NULL; \
     } else { \
-      rebalance = c == BLACK? top: NULL; \
+      rebalance = TIS_BLACK(node)? node->top: NULL; \
     } \
   } else if (!child) { \
-    top = node->top; \
-    c = node->color; \
+    /* node phải là nút đen và tmp là nút đỏ */ \
     prefix##change(node, tmp, t); \
-    TPAINT(tmp, c); \
+    TPAINT_BLACK(tmp); \
     rebalance = NULL; \
   } else { \
     struct TNN(tname) *successor = child, *child2; \
     tmp = child->left; \
     if (!tmp) { \
       /* Trường hợp 2: Nút liền sau node là con phải của node.
-       *
-       *    (n)          (s)
-       *    / \          / \
-       *  (x) (s)  ->  (x) (c)
-       *        \
-       *        (c)
-       */ \
+     *+
+     *    (n)          (s)
+     *    / \          / \
+     *  (x) (s)  ->  (x) (c2)
+     *        \
+     *        (c2)
+     */ \
       top = successor; \
       child2 = successor->right; \
     } else { \
-      /* Trường hợp 3: Nút liền sau node là nút trái nhất trong
-       * cây con phải của node
+      /* Trường hợp 3: Con phải của node có con trái.
        *
        *    (n)          (s)
        *    / \          / \
@@ -613,29 +609,30 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
        *    (c)
        */ \
       do { \
-        top = successor; \
         successor = tmp; \
         tmp = tmp->left; \
       } while (tmp); \
+      top = successor->top; \
       child2 = successor->right; \
       top->left = child2; \
+      if (child2) { \
+        child2->top = top; \
+      } \
       successor->right = child; \
       child->top = successor; \
     } \
+    /* Cấy successor vào vị trí của node cho cả trường hợp 2 và 3 */ \
     tmp = node->left; \
     successor->left = tmp; \
     tmp->top = successor; \
     if (child2) { \
-      TSET_PC(child2, top, BLACK); \
+      TPAINT_BLACK(child2); \
       rebalance = NULL; \
-    } else { \
-      enum tcolors c2 = successor->color; \
-      rebalance = c2 == BLACK? top: NULL; \
-    } \
-    tmp = node->top; \
-    c = node->color; \
+    } else {\
+      rebalance = TIS_BLACK(successor) ? top: NULL; \
+    }\
     prefix##change(node, successor, t); \
-    TPAINT(successor, c); \
+    TPAINT(successor, node->color); \
   } \
   if (rebalance) { \
     prefix##delete_fixup(t, rebalance); \
