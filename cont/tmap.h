@@ -492,6 +492,9 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
       TPAINT_BLACK(child); \
       rebalance = NULL; \
     } else { \
+      /* Cả 2 con của node đều là NULL => Vị trí cũ của node
+       * được thay bằng con trỏ NULL. Nếu node là nút đen thì
+       * độ cao đen của đường đi qua node giảm 1 => vi phạm tính chất 5. */ \
       rebalance = TIS_BLACK(node)? node->top: NULL; \
     } \
   } else if (!child) { \
@@ -522,9 +525,9 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
        *      /            /
        *    (p)          (p)
        *    /            /
-       *  (s)          (c)
+       *  (s)          (c2)
        *    \
-       *    (c)
+       *    (c2)
        */ \
       do { \
         successor = tmp; \
@@ -544,15 +547,22 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     successor->left = tmp; \
     tmp->top = successor; \
     if (child2) { \
+      /* child2 phải là nút đỏ và top của nó phải là nút đen do top của nó
+       * không có con trái */ \
       TPAINT_BLACK(child2); \
       rebalance = NULL; \
     } else {\
+      /* child2 == NULL => Vị trí cũ của successor được thay bằng NULL,
+       * Nếu successor là nút đen thì độ cao đen của đường đi qua child2
+       * bị giảm 1 => vi phạm tính chất 5 */ \
       rebalance = TIS_BLACK(successor) ? top: NULL; \
     }\
     prefix##change(node, successor, t); \
     TPAINT(successor, node->color); \
   } \
   if (rebalance) { \
+    /* Nút rebalance có 1 con NULL sao cho đường đi qua đó
+     * ngắn hơn 1 so với các đường đi khác */ \
     prefix##delete_fixup(t, rebalance); \
   } \
   free(dn); \
