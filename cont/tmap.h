@@ -35,7 +35,6 @@ struct tname { \
 #define TPAINT_BLACK(n) (n)->color = BLACK
 #define TPAINT_RED(n) (n)->color = RED
 #define TPAINT(n, c) (n)->color = (c)
-#define TSET_PC(n, p, c) (n)->top = (p); TPAINT(n, c)
 
 #define TDECL(tname, ktype, vtype, prefix) \
 TDEFN(tname, ktype, vtype); \
@@ -45,21 +44,21 @@ struct TNN(tname) *prefix##left_deepest(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##next_lrn(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##next_lnr(struct TNN(tname) *n); \
 struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n); \
-struct TNN(tname) *prefix##first_lrn(struct tname *t); \
-struct TNN(tname) *prefix##first_lnr(struct tname *t); \
-struct TNN(tname) *prefix##last_lnr(struct tname *t); \
+struct TNN(tname) *prefix##first_lrn(struct tname *tm); \
+struct TNN(tname) *prefix##first_lnr(struct tname *tm); \
+struct TNN(tname) *prefix##last_lnr(struct tname *tm); \
 struct TNN(tname) *prefix##pval_node(void *pv); \
 struct tname *prefix##create(compare_fnt cmp); \
 struct tname *tname(compare_fnt cmp); \
-void prefix##clear(struct tname *t); \
-void prefix##free(struct tname *t); \
-vtype *prefix##put(struct tname *t, ktype key, vtype value); \
-vtype *prefix##get(struct tname *t, ktype key); \
-struct tname *prefix##remove(struct tname *t, ktype key)
+void prefix##clear(struct tname *tm); \
+void prefix##free(struct tname *tm); \
+vtype *prefix##put(struct tname *tm, ktype key, vtype value); \
+vtype *prefix##get(struct tname *tm, ktype key); \
+struct tname *prefix##remove(struct tname *tm, ktype key)
 
 #define TIMPL(tname, ktype, vtype, prefix) \
-static inline void prefix##change(struct TNN(tname) *old_node, \
-        struct TNN(tname) *new_node, struct tname *t) { \
+static inline void prefix##change(struct tname *tm, struct TNN(tname) *old_node, \
+        struct TNN(tname) *new_node) { \
   struct TNN(tname) *top = old_node->top; \
   if (top) { \
     if (top->left == old_node) { \
@@ -68,294 +67,294 @@ static inline void prefix##change(struct TNN(tname) *old_node, \
       top->right = new_node; \
     } \
   } else { \
-    t->root = new_node; \
+    tm->root = new_node; \
   } \
   if (new_node) { \
     (new_node)->top = top; \
   } \
 } \
-/*     p                            p
-         x                            r
-      l     r <- y                   x
-          rl                       l   rl
+/*       x                                r
+      l     r <- y                    x       z
+          rl  z                     l   rl
 */ \
-static inline void prefix##rotate_left(struct tname *t, struct TNN(tname) *x) { \
+static inline void prefix##rotate_left(struct tname *tm, struct TNN(tname) *x) { \
   struct TNN(tname) *y = x->right; \
   x->right = y->left; \
   if (y->left != NULL) { \
     y->left->top = x; \
   } \
-  prefix##change(x, y, t); \
+  prefix##change(tm, x, y); \
   y->left = x; \
   x->top = y; \
 }\
-/*     p                       p
-         x                        l
-   y->l     r                       x
-        lr                        lr  r
+/*       x                      l
+   y->l     r               z       x
+    z   lr                        lr  r
 */ \
-static inline void prefix##rotate_right(struct tname *t, struct TNN(tname) *x) { \
+static inline void prefix##rotate_right(struct tname *tm, struct TNN(tname) *x) { \
   struct TNN(tname) *y = x->left; \
   x->left = y->right; \
   if (y->right != NULL) { \
     y->right->top = x; \
   } \
-  prefix##change(x, y, t); \
+  prefix##change(tm, x, y); \
   y->right = x; \
   x->top = y; \
 }\
-static inline void prefix##put_fixup(struct tname *t, struct TNN(tname) *n) {\
+static inline void prefix##put_fixup(struct tname *tm, struct TNN(tname) *n) {\
   /*
    * Các biến:
-   * t - con trỏ tới cây (tree)
-   * n - ban đầu là nút mới được thêm vào (node)
-   * p - là đỉnh của n (n->top)
-   * u - nút đối xứng của p trong cây, chú bác của n (uncle)
-   * pp - là đỉnh của p (p->top)
+   * tm - con trỏ tới bảng cây (tree map)
+   * n  - ban đầu là nút mới được thêm vào (node)
+   * t  - là đỉnh của n (n->top)
+   * s  - nút đứng cạnh t trong cây (side)
+   * tt - là đỉnh của t (t->top)
    *
    * Trong các sơ đồ minh họa cây thì nút có tên được viết hoa là nút đen,
-   *    nút có tên viết thường là nút đỏ, nút có thể là đen hoặc đỏ
-   *    (không ảnh hưởng đển tính đúng đắn) thì được đặt trong dấu ()
+   *    nút có tên viết thường là nút đỏ, nút được đặt trong dấu () có thể
+   *    là nút đen hoặc nút đỏ (không ảnh hưởng đển tính đúng đắn).
    */ \
-  struct TNN(tname) *p = n->top, *pp = p->top; \
+  struct TNN(tname) *t = n->top, *tt = t->top; \
   /* Các bất biến của vòng lặp:
-   *  + p là đỉnh của n, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn
-   *    p-n: n và p là các nút đỏ (tính chất 4). Vấn đề này được
+   *  + t là đỉnh của n, tính chất cây đỏ đen chỉ bị vi phạm ở đoạn
+   *    t-n: t và n là các nút đỏ (tính chất 4). Vấn đề này được
    *    khắc phục trong quá trình n được đẩy lên phía gốc.
    * Ban đầu n là nút mới được thêm vào, sau mỗi vòng lặp n tiến
-   * gần hơn về phía gốc của cây. Vòng lặp dừng lại khi p ==
-   * NULL (n là gốc của cây) hoặc p được tô mầu đen.
+   * gần hơn về phía gốc của cây. Vòng lặp dừng lại khi t ==
+   * NULL (n là gốc của cây) hoặc t được tô mầu đen.
    *
    * Trong vòng lặp chúng ta có
-   *  + n->top != NULL và p->top != NULL (bởi vì n và p
-   * là các nút đỏ)
+   *  + n->top != NULL và t->top != NULL (vì n và t là các nút đỏ)
    */ \
   while (1) { \
-    if (p == pp->left) { \
-      if (TIS_RED(pp->right)) { \
-        /*     PP                pp  <- n mới
-             p   u  thành>>>   P    U
-          ->n <-                n mới có thể vi phạm tính chất 4 nếu pp->top là đỏ,
+    if (t == tt->left) { \
+      /* t thuộc nhánh trái của tt - đối xứng với tường hợp t thuộc nhánh phải */ \
+      if (TIS_RED(tt->right)) { \
+        /*Nếu s là nút đỏ => Đảo mầu t và s thành các nút đen, TT thành nút đỏ.
+               TT                tt  <- n mới
+             t   s  thành>>>   T    S
+          ->n <-                n mới có thể vi phạm tính chất 4 nếu tt->top là đỏ,
                                 có thể là con trái hoặc con phải trong cây.
          */ \
-        TPAINT_BLACK(p); \
-        TPAINT_BLACK(pp->right); \
-        TPAINT_RED(pp); \
-        n = pp; \
-        p = n->top; \
-        if (p == NULL) { \
+        TPAINT_BLACK(t); \
+        TPAINT_BLACK(tt->right); \
+        TPAINT_RED(tt); \
+        n = tt; \
+        t = n->top; \
+        if (t == NULL) { \
           /* n là gốc của cây */ \
           TPAINT_BLACK(n); \
           break; \
         } \
-        pp = p->top; \
-        if (TIS_BLACK(p)) { \
+        tt = t->top; \
+        if (TIS_BLACK(t)) { \
           /* Đã thỏa mãn các tính chất */ \
           break; \
         } \
       } else { \
-        if (n == p->right) { \
-          /*     PP                  PP
-               p    U  thành>>>   n <-p  U
-                n               p  <-n mới
+        /* Trường hợp s là nút đen */ \
+        if (n == t->right) { \
+          /* Nếu n thuộc nhánh phải của t thì xoay trái tại t
+                 TT                  TT
+               t    S  thành>>>   n <-t  S
+                n               t  <-n mới
            */ \
-          prefix##rotate_## left(t, p); \
-          n = p; \
-          p = n->top; \
+          prefix##rotate_## left(tm, t); \
+          n = t; \
+          t = n->top; \
         } \
-        /*
-         + n là con trái của p
-                PP                   pp
-             p     U  lật mầu >>   P   U
+        /* Trường hợp n thuộc nhánh trái của t => Đảo mầu TT thành đỏ và t thành đen,
+                TT                   tt
+             t     S  đảo mầu >>   T   S
            n                      n
-          >>> & sau khi xoay phải ở PP thành =>>>
-              P
-            n    pp
-                    U
-            Thỏa mãn các tính chất
+          Các tính chất được thỏa mãn sau khi xoay phải ở TT.
+              T
+            n    tt
+                    S
          */ \
-        TPAINT_BLACK(p); \
-        TPAINT_RED(pp); \
-        prefix##rotate_## right(t, pp); \
+        TPAINT_BLACK(t); \
+        TPAINT_RED(tt); \
+        prefix##rotate_## right(tm, tt); \
         break;  \
       } \
     } else { \
-      /* Đối xứng với trường hợp p thuộc nhánh trái */ \
-      if (TIS_RED(pp->left)) { \
-        TPAINT_BLACK(p); \
-        TPAINT_BLACK(pp->left); \
-        TPAINT_RED(pp); \
-        n = pp; \
-        p = n->top; \
-        if (p == NULL) { \
+      /* Đối xứng với trường hợp t thuộc nhánh trái */ \
+      if (TIS_RED(tt->left)) { \
+        TPAINT_BLACK(t); \
+        TPAINT_BLACK(tt->left); \
+        TPAINT_RED(tt); \
+        n = tt; \
+        t = n->top; \
+        if (t == NULL) { \
           TPAINT_BLACK(n); \
           break; \
         } \
-        pp = p->top; \
-        if (TIS_BLACK(p)) { \
+        tt = t->top; \
+        if (TIS_BLACK(t)) { \
           break; \
         } \
       } else { \
-        if (n == p->left) { \
-          prefix##rotate_## right(t, p); \
-          n = p; \
-          p = n->top; \
-          pp = p->top; \
+        if (n == t->left) { \
+          prefix##rotate_## right(tm, t); \
+          n = t; \
+          t = n->top; \
+          tt = t->top; \
         } \
-        TPAINT_BLACK(p); \
-        TPAINT_RED(pp); \
-        prefix##rotate_## left(t, pp); \
+        TPAINT_BLACK(t); \
+        TPAINT_RED(tt); \
+        prefix##rotate_## left(tm, tt); \
         break;  \
       } \
     } \
   } \
 }\
-static inline void prefix##delete_fixup(struct tname *t, struct TNN(tname)* p) {\
-  /*n - node, s - sibling, cn - close nephew, dn - distant nephew */\
-  struct TNN(tname) *n = NULL, *s, *dn, *cn; \
+static inline void prefix##delete_fixup(struct tname *tm, struct TNN(tname)* t) {\
+  /* n - nút, s - nút cạnh n (side), cn - nút cháu ở phía n (close nephew),
+   * dn - nút cháu ở xa n (distant nephew) */\
+  struct TNN(tname) *n = NULL, *s, *cn, *dn; \
   /*
    * Các tính chất bất biến trong vòng lặp:
    * - n là nút đen (== NULL trong lần lặp đầu tiên)
-   * - n không phải là nút gốc (top của nó khác NULL)
-   * - Tất cả các đường dẫn tới lá đi qua p va n có số
-   *   lượng nút đen ít hơn 1 so với các đường dẫn khác.
+   * - n không phải là nút gốc (đỉnh của nó khác NULL)
+   * - Tất cả các đường dẫn tới lá đi qua t và n có số
+   *   lượng nút đen ít hơn 1 so với các đường dẫn khác (vi phạm tính chất 5).
    */ \
   /* Trong các sơ đồ cây nút viết hoa là nút đen,
    * nút viết thường là nút đỏ, nút trong ngoặc có thể là đỏ hoặc đen.
    */ \
   while (1) { \
-    s = p->right; \
+    s = t->right; \
     if (n != s) { \
-      /* Kịch bản n thuộc nhánh trái của p - đối xứng với trường hợp
-       * nhánh phải */ \
+      /* Kịch bản n thuộc nhánh trái của t - đối xứng với trường hợp
+       * n thuộc nhánh phải */ \
       if (TIS_RED(s)) { \
-        /* Trường hợp 1, s là nút đỏ (vì vậy P, CN, DN là các nút đen)
-         * => Xoay trái ở p, tô p thành đỏ và S thành đen.
+        /* Trường hợp 1, s là nút đỏ (vì vậy T, CN, DN là các nút đen)
+         * => Xoay trái ở t, tô t thành đỏ và S thành đen.
          *
-         *     P               S
+         *     T               S
          *    / \             / \
-         *   N   s    -->    p   DN
+         *   N   s    -->    t   DN
          *      / \         / \
          *     CN  DN      N   CN <- s mới
          */ \
-        prefix##rotate_## left(t, p); \
-        TPAINT_RED(p); \
+        prefix##rotate_## left(tm, t); \
+        TPAINT_RED(t); \
         TPAINT_BLACK(s); \
-        s = p->right; \
+        s = t->right; \
       } \
       dn = s->right; \
       if (TIS_BLACK(dn)) { \
         cn = s->left; \
         if (TIS_BLACK(cn)) { \
           /*
-           * Trường hợp 2, S, DN và CN là các nút đen, (p) có thể
+           * Trường hợp 2, S, DN và CN là các nút đen, (t) có thể
            * có mầu bất kỳ (có mầu đỏ sau khi xử lý trường hợp 1)
            * => Tô s thành đỏ.
            *
-           *    (p)           (p)  <- n mới nếu P là nút đen
+           *    (t)           (t)  <- n mới nếu (t) là nút đen
            *    / \           / \
            *   N   S    -->  N   s
            *      / \           / \
            *     CN  DN        CN  DN
            *
-           * Nếu p là nút đỏ thì có thể khắc phục vi phạm ràng buộc 5
-           * bằng cách tô p thành đen, nếu ngược lại thì đệ quy tại p.
+           * Nếu t là nút đỏ thì có thể khắc phục vi phạm ràng buộc 5
+           * bằng cách tô t thành đen, nếu ngược lại thì đệ quy tại t.
            */ \
           TPAINT_RED(s); \
-          if (TIS_RED(p)) { \
-            TPAINT_BLACK(p); \
+          if (TIS_RED(t)) { \
+            TPAINT_BLACK(t); \
             break; \
           } \
-          n = p; \
-          p = n->top; \
-          if (p) { \
+          n = t; \
+          t = n->top; \
+          if (t) { \
             continue; \
           } else { \
             break; \
           } \
         } \
         /*
-         * Trường hợp 3, S, DN đen, cn đỏ, (p) có thể có mầu bất kỳ
+         * Trường hợp 3, S, DN đen, cn đỏ, (t) có thể có mầu bất kỳ
          * => Xoay phải tại s
          *
-         *              (p)           (p)
+         *              (t)           (t)
          *              / \           / \
          *             N   S    -->  N   cn
          *                / \             \
          *               cn  DN            S
          *                                  \
          *                                   DN
-         * Nếu p là nút đỏ thì cả p và cn đều là các nút đỏ sau khi xoay
+         * Nếu t là nút đỏ thì cả t và cn đều là các nút đỏ sau khi xoay
          * (vi phạm ràng buộc 4).
          */ \
-        prefix##rotate_## right(t, s); \
+        prefix##rotate_## right(tm, s); \
         /*
-         * + Đường đi từ p qua cn sau đó rẽ về phía N  bị giảm 1
+         * + Đường đi từ t qua cn sau đó rẽ về phía N  bị giảm 1
          * nút đen (S) (vi phạm tính chất 5).
          *
-         * Các vấn đề này được xử lý bằng cách xoay trái tại p
-         * Sau đó tô cn bằng mầu cũ của (p), tô (p) thành đen
+         * Các vấn đề này được xử lý bằng cách xoay trái tại t
+         * Sau đó tô cn bằng mầu cũ của (t), tô (t) thành đen
          *
-         *   (p)                 (cn)
+         *   (t)                 (cn)
          *   / \     -->         /  \
-         *  N   cn <- s mới     P    S
+         *  N   cn <- s mới     T    S
          *       \             /      \
          *        S           N        DN
          *         \
          *          DN
          */ \
-        prefix##rotate_ ##left(t, p); \
-        TPAINT(cn, p->color); \
-        TPAINT_BLACK(p); \
+        prefix##rotate_ ##left(tm, t); \
+        TPAINT(cn, t->color); \
+        TPAINT_BLACK(t); \
         break; \
       } \
-      /* Trường hợp 4 - S là nút đen, dn là nút đỏ, (p) và (cn) có thể có mầu bất kỳ
-       * => Xoay trái ở p, tô s bằng mầu cũ của p, còn p và dn được tô mầu đen.
+      /* Trường hợp 4 - S là nút đen, dn là nút đỏ, (t) và (cn) có thể có mầu bất kỳ
+       * => Xoay trái ở t, tô s bằng mầu cũ của t, còn t và dn được tô mầu đen.
        *
-       *      (p)             (s)
+       *      (t)             (s)
        *      / \             / \
-       *     N   S     -->   P   DN
+       *     N   S     -->   T   DN
        *        / \         / \
        *      (cn) dn      N  (cn)
        */ \
       dn = s->right; \
-      prefix##rotate_ ##left(t, p); \
-      TPAINT(s, p->color); \
-      TPAINT_BLACK(p); \
+      prefix##rotate_ ##left(tm, t); \
+      TPAINT(s, t->color); \
+      TPAINT_BLACK(t); \
       TPAINT_BLACK(dn); \
       break; \
     } else { \
-      /* Đối xứng với trường hợp n là con trái của p */ \
-      s = p->left; \
+      /* Đối xứng với trường hợp n là con trái của t */ \
+      s = t->left; \
       if (TIS_RED(s)) { \
-        prefix##rotate_## right(t, p); \
-        TPAINT_RED(p); \
+        prefix##rotate_## right(tm, t); \
+        TPAINT_RED(t); \
         TPAINT_BLACK(s); \
-        s = p->left; \
+        s = t->left; \
       } \
       dn = s->left; \
       if (TIS_BLACK(dn)) { \
         cn = s->right; \
         if (TIS_BLACK(cn)) { \
           TPAINT_RED(s); \
-          if (TIS_RED(p)) { \
-            TPAINT_BLACK(p); \
+          if (TIS_RED(t)) { \
+            TPAINT_BLACK(t); \
           } else { \
-            n = p; \
-            p = n->top; \
-            if (p) { \
+            n = t; \
+            t = n->top; \
+            if (t) { \
               continue; \
             } \
           } \
           break; \
         } \
-        prefix##rotate_## left(t, s); \
-        s = p->left; \
+        prefix##rotate_## left(tm, s); \
+        s = t->left; \
       } \
       dn = s->left; \
-      prefix##rotate_ ##right(t, p); \
-      TPAINT(s, p->color); \
-      TPAINT_BLACK(p); \
+      prefix##rotate_ ##right(tm, t); \
+      TPAINT(s, t->color); \
+      TPAINT_BLACK(t); \
       TPAINT_BLACK(dn); \
       break; \
     } \
@@ -422,14 +421,14 @@ struct TNN(tname) *prefix##prev_lnr(struct TNN(tname) *n) { \
   } \
   return top; \
 } \
-struct TNN(tname) *prefix##first_lrn(struct tname *t) { \
-  return t->root? prefix##left_deepest(t->root): NULL; \
+struct TNN(tname) *prefix##first_lrn(struct tname *tm) { \
+  return tm->root? prefix##left_deepest(tm->root): NULL; \
 } \
-struct TNN(tname) *prefix##first_lnr(struct tname *t) { \
-  return t->root? prefix##left_most(t->root): NULL; \
+struct TNN(tname) *prefix##first_lnr(struct tname *tm) { \
+  return tm->root? prefix##left_most(tm->root): NULL; \
 } \
-struct TNN(tname) *prefix##last_lnr(struct tname *t) { \
-  return t->root? prefix##right_most(t->root): NULL; \
+struct TNN(tname) *prefix##last_lnr(struct tname *tm) { \
+  return tm->root? prefix##right_most(tm->root): NULL; \
 } \
 struct TNN(tname) *prefix##pval_node(void *pv) { \
   return pv? pv - offsetof(struct TNN(tname), value): NULL; \
@@ -439,42 +438,42 @@ struct tname *prefix##create(compare_fnt cmp) { \
     FLOG("Không thể tạo bảng cây nếu không biết hàm so sánh."); \
     return NULL; \
   } \
-  struct tname *t = malloc(sizeof(struct tname)); \
-  if (!t) { \
+  struct tname *tm = malloc(sizeof(struct tname)); \
+  if (!tm) { \
     FLOG("Không thể cấp phát bộ nhớ."); \
     return NULL; \
   } \
-  t->root = NULL; \
-  t->cmp = cmp; \
-  t->fk = NULL; \
-  t->fv = NULL; \
-  t->size = 0; \
-  return t; \
+  tm->root = NULL; \
+  tm->cmp = cmp; \
+  tm->fk = NULL; \
+  tm->fv = NULL; \
+  tm->size = 0; \
+  return tm; \
 } \
 struct tname *tname(compare_fnt cmp) { \
   return prefix##create(cmp); \
 } \
-void prefix##clear(struct tname *t) { \
-  struct TNN(tname) *n = prefix##first_lrn(t); \
+void prefix##clear(struct tname *tm) { \
+  struct TNN(tname) *n = prefix##first_lrn(tm); \
   struct TNN(tname) *tmp = NULL; \
   while (n) { \
-    if (t->fk) { \
-      t->fk(n->key); \
+    if (tm->fk) { \
+      tm->fk(n->key); \
     } \
-    if (t->fv) { \
-      t->fv(n->value); \
+    if (tm->fv) { \
+      tm->fv(n->value); \
     } \
     tmp = n; \
     n = prefix##next_lrn(n); \
     free(tmp); \
   } \
-  t->size = 0; \
+  tm->size = 0; \
 } \
-void prefix##free(struct tname *t) { \
-  prefix##clear(t); \
-  free(t); \
+void prefix##free(struct tname *tm) { \
+  prefix##clear(tm); \
+  free(tm); \
 } \
-static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
+static struct tname *prefix##delete(struct tname *tm, struct TNN(tname) *dn) { \
   struct TNN(tname) *node = dn; \
   struct TNN(tname) *child = node->right, \
             *tmp = node->left, \
@@ -486,7 +485,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
    * mầu trong lân cận để giữ các tính chất cây đỏ-dên.
    */ \
   if (!tmp) { \
-    prefix##change(node, child, t); \
+    prefix##change(tm, node, child); \
     if (child) { \
       /* node phải là nút đen và child phải là nút đỏ */ \
       TPAINT_BLACK(child); \
@@ -499,7 +498,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
     } \
   } else if (!child) { \
     /* node phải là nút đen và tmp là nút đỏ */ \
-    prefix##change(node, tmp, t); \
+    prefix##change(tm, node, tmp); \
     TPAINT_BLACK(tmp); \
     rebalance = NULL; \
   } else { \
@@ -523,7 +522,7 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
        *    / \          / \
        *  (x) (y)  ->  (x) (y)
        *      /            /
-       *    (p)          (p)
+       *    (t)          (t)
        *    /            /
        *  (s)          (c2)
        *    \
@@ -557,26 +556,26 @@ static struct tname *prefix##delete(struct tname *t, struct TNN(tname) *dn) { \
        * bị giảm 1 => vi phạm tính chất 5 */ \
       rebalance = TIS_BLACK(successor) ? top: NULL; \
     }\
-    prefix##change(node, successor, t); \
+    prefix##change(tm, node, successor); \
     TPAINT(successor, node->color); \
   } \
   if (rebalance) { \
     /* Nút rebalance có 1 con NULL sao cho đường đi qua đó
      * ngắn hơn 1 so với các đường đi khác */ \
-    prefix##delete_fixup(t, rebalance); \
+    prefix##delete_fixup(tm, rebalance); \
   } \
   free(dn); \
-  --(t->size); \
-  return t; \
+  --(tm->size); \
+  return tm; \
 } \
-vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
+vtype *prefix##put(struct tname *tm, ktype key, vtype value) { \
   struct TNN(tname) *nn = TNN(tname)(key, value), \
                     *top = NULL, \
-                    *x = t->root, \
-                   **loc = &t->root; \
+                    *x = tm->root, \
+                   **loc = &tm->root; \
   int rl = 0; \
   while (x) { \
-    rl = t->cmp(&key, &x->key); \
+    rl = tm->cmp(&key, &x->key); \
     if (rl == 0) { \
       free(nn); \
       return &x->value; \
@@ -597,15 +596,15 @@ vtype *prefix##put(struct tname *t, ktype key, vtype value) { \
   } else if (TIS_RED(top)) { \
     /* Vi phạm tính chất 4 (sau thao tác thêm vào chỉ có tính chất 4
        có thể bị vi phạm). */ \
-    prefix##put_fixup(t, nn); \
+    prefix##put_fixup(tm, nn); \
   } \
-  ++t->size; \
+  ++tm->size; \
   return NULL; \
 } \
-vtype *prefix##get(struct tname *t, ktype key) { \
-  struct TNN(tname) *x = t->root; \
+vtype *prefix##get(struct tname *tm, ktype key) { \
+  struct TNN(tname) *x = tm->root; \
   while (x) { \
-    int rl = t->cmp(&key, &x->key); \
+    int rl = tm->cmp(&key, &x->key); \
     if (rl == 0) { \
       break; \
     } \
@@ -616,19 +615,19 @@ vtype *prefix##get(struct tname *t, ktype key) { \
   } \
   return &x->value; \
 } \
-struct tname *prefix##remove(struct tname *t, ktype key) { \
-  struct TNN(tname) *n = prefix##pval_node(prefix##get(t, key)); \
+struct tname *prefix##remove(struct tname *tm, ktype key) { \
+  struct TNN(tname) *n = prefix##pval_node(prefix##get(tm, key)); \
   if (!n) { \
     return NULL; \
   } \
-  if (t->fk) { \
-    t->fk(n->key); \
+  if (tm->fk) { \
+    tm->fk(n->key); \
   } \
-  if (t->fv) { \
-    t->fv(n->value); \
+  if (tm->fv) { \
+    tm->fv(n->value); \
   }\
-  prefix##delete(t, n);\
-  return t; \
+  prefix##delete(tm, n);\
+  return tm; \
 }
 
 #define TDECL_IMPL(tname, keytype, valtype, prefix) \
