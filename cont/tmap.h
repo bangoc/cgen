@@ -502,10 +502,10 @@ static struct tname *prefix##delete(struct tname *tm, struct TNN(tname) *dn) { \
     TPAINT_BLACK(tmp); \
     rebalance = NULL; \
   } else { \
-    struct TNN(tname) *successor = child, *child2; \
+    struct TNN(tname) *sss = child, *child2; \
     tmp = child->left; \
     if (!tmp) { \
-      /* Trường hợp 2: Nút liền sau node là con phải của node.
+      /* Trường hợp 2: Nút liền sau node (sss - successor) là con phải của node.
        *
        *    (n)          (s)
        *    / \          / \
@@ -513,8 +513,8 @@ static struct tname *prefix##delete(struct tname *tm, struct TNN(tname) *dn) { \
        *        \
        *        (c2)
        */ \
-      top = successor; \
-      child2 = successor->right; \
+      top = sss; \
+      child2 = sss->right; \
     } else { \
       /* Trường hợp 3: Con phải của node có con trái.
        *
@@ -529,35 +529,35 @@ static struct tname *prefix##delete(struct tname *tm, struct TNN(tname) *dn) { \
        *    (c2)
        */ \
       do { \
-        successor = tmp; \
+        sss = tmp; \
         tmp = tmp->left; \
       } while (tmp); \
-      top = successor->top; \
-      child2 = successor->right; \
+      top = sss->top; \
+      child2 = sss->right; \
       top->left = child2; \
       if (child2) { \
         child2->top = top; \
       } \
-      successor->right = child; \
-      child->top = successor; \
+      sss->right = child; \
+      child->top = sss; \
     } \
-    /* Cấy successor vào vị trí của node cho cả trường hợp 2 và 3 */ \
+    /* Cấy sss vào vị trí của node cho cả trường hợp 2 và 3 */ \
     tmp = node->left; \
-    successor->left = tmp; \
-    tmp->top = successor; \
+    sss->left = tmp; \
+    tmp->top = sss; \
     if (child2) { \
       /* child2 phải là nút đỏ và top của nó phải là nút đen do top của nó
        * không có con trái */ \
       TPAINT_BLACK(child2); \
       rebalance = NULL; \
     } else {\
-      /* child2 == NULL => Vị trí cũ của successor được thay bằng NULL,
-       * Nếu successor là nút đen thì độ cao đen của đường đi qua child2
+      /* child2 == NULL => Vị trí cũ của sss được thay bằng NULL,
+       * Nếu sss là nút đen thì độ cao đen của đường đi qua child2
        * bị giảm 1 => vi phạm tính chất 5 */ \
-      rebalance = TIS_BLACK(successor) ? top: NULL; \
+      rebalance = TIS_BLACK(sss) ? top: NULL; \
     }\
-    prefix##change(tm, node, successor); \
-    TPAINT(successor, node->color); \
+    prefix##change(tm, node, sss); \
+    TPAINT(sss, node->color); \
   } \
   if (rebalance) { \
     /* Nút rebalance có 1 con NULL sao cho đường đi qua đó
