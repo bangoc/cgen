@@ -13,11 +13,12 @@ int main(int argc, char *argv[]) {
   }
   for (int i = 1; i < argc; ++i) {
     sscanf(argv[i], "%d", &k);
-    int *pos = binsearch(&k, a, n, sizeof(int), icmp);
-    if (pos) {
+    int *pos = bnear_search(&k, a, n, sizeof(int), icmp);
+    if (*pos == k) {
       printf("Found %d at position %ld\n", k, pos - a);
     } else {
-      printf("Not found %d\n", k);
+      printf("Not found %d.", k);
+      printf(" Near %ld - %d\n", pos - a, *pos);
     }
   }
 }

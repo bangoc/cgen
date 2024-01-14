@@ -47,21 +47,38 @@ static void q2sort(void *a, int n, int sz, compare_fnt cmp) {
   q2sort(right, (a - right)/sz + n, sz, cmp);
 }
 
-static int binsearch(const void *a, int n, int sz, const void *v, compare_fnt cmp) {
-  int l = 0, r = n - 1;
+static void *binsearch(const void *k, void *a, int n, int sz, compare_fnt cmp) {
+  int l = 0, r = n - 1, m, o;
   while (l <= r) {
-    int m = (l + r) / 2;
-    int x = cmp(a + m * sz, v);
-    if (x == 0) {
-      return m;
+    m = (l + r) / 2;
+    o = cmp(k, a + m * sz);
+    if (o == 0) {
+      return a + m * sz;
     }
-    if (x < 0) {
-      l = m + 1;
-    } else if (x > 0) {
+    if (o < 0) {
       r = m - 1;
+    } else {
+      l = m + 1;
     }
   }
-  return -1;
+  return NULL;
+}
+
+static void *bnear_search(const void *k, void *a, int n, int sz, compare_fnt cmp) {
+  int l = 0, r = n - 1, m = 0, o;
+  while (l <= r) {
+    m = (l + r) / 2;
+    o = cmp(k, a + m * sz);
+    if (o == 0) {
+      break;
+    }
+    if (o < 0) {
+      r = m - 1;
+    } else {
+      l = m + 1;
+    }
+  }
+  return a + m * sz;
 }
 
 #define HTOP(i) (((i) - 1) >> 1)

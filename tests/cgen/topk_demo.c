@@ -6,7 +6,7 @@
 
 /***** ./base/flog.h *****/
 #ifndef BASE_FLOG_H_
-#define BASE_FLOG_H_ 
+#define BASE_FLOG_H_
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
@@ -30,7 +30,7 @@ static inline void _flog(const char *file, int line, const char *fmt, ...) {
 
 /***** ./base/fnt.h *****/
 #ifndef BASE_FNT_H_
-#define BASE_FNT_H_ 
+#define BASE_FNT_H_
 #include <stdlib.h>
 #include <string.h>
 typedef int (*compare_fnt)(const void *p1, const void *p2);
@@ -73,7 +73,7 @@ static inline void frees(char *s) {
 
 /***** ./algo/algo.h *****/
 #ifndef ALGO_ALGO_H_
-#define ALGO_ALGO_H_ 
+#define ALGO_ALGO_H_
 #include <stdlib.h>
 static inline void vswap(void *o1, void *o2, int sz) {
   char tmp, *p = o1, *q = o2;
@@ -114,37 +114,21 @@ static void q2sort(void *a, int n, int sz, compare_fnt cmp) {
   q2sort(a, (left - a)/sz + 1, sz, cmp);
   q2sort(right, (a - right)/sz + n, sz, cmp);
 }
-static void *binsearch(const void *k, void *a, int n, int sz, compare_fnt cmp) {
-  int l = 0, r = n - 1, m, o;
+static int binsearch(const void *a, int n, int sz, const void *v, compare_fnt cmp) {
+  int l = 0, r = n - 1;
   while (l <= r) {
-    m = (l + r) / 2;
-    o = cmp(k, a + m * sz);
-    if (o == 0) {
-      return a + m * sz;
+    int m = (l + r) / 2;
+    int x = cmp(a + m * sz, v);
+    if (x == 0) {
+      return m;
     }
-    if (o < 0) {
-      r = m - 1;
-    } else {
+    if (x < 0) {
       l = m + 1;
+    } else if (x > 0) {
+      r = m - 1;
     }
   }
-  return NULL;
-}
-static void *bnear_search(const void *k, void *a, int n, int sz, compare_fnt cmp) {
-  int l = 0, r = n - 1, m = 0, o;
-  while (l <= r) {
-    m = (l + r) / 2;
-    o = cmp(k, a + m * sz);
-    if (o == 0) {
-      break;
-    }
-    if (o < 0) {
-      r = m - 1;
-    } else {
-      l = m + 1;
-    }
-  }
-  return a + m * sz;
+  return -1;
 }
 #define HTOP(i) (((i) - 1) >> 1)
 #define HLEFT(i) (((i) << 1) + 1)
@@ -272,7 +256,7 @@ static void free_comb(int *a) {
 
 /***** ./cont/slist.h *****/
 #ifndef CONT_SLIST_H_
-#define CONT_SLIST_H_ 
+#define CONT_SLIST_H_
 #define SDEFN(sname,dtype) \
 struct sname##_node { \
   dtype data; \
@@ -409,7 +393,7 @@ SIMPL(sname, dtype, prefix)
 
 /***** ./cont/tmap.h *****/
 #ifndef CONT_TMAP_H_
-#define CONT_TMAP_H_ 
+#define CONT_TMAP_H_
 #include <stddef.h>
 enum tcolors {
   RED = 0,
@@ -897,7 +881,7 @@ TIMPL(tname, keytype, valtype, prefix)
 
 /***** ./cont/vector.h *****/
 #ifndef CONT_VECTOR_H_
-#define CONT_VECTOR_H_ 
+#define CONT_VECTOR_H_
 #define VDEFN(vecname,elemtype) \
   struct vecname { \
     elemtype *elems; \
@@ -1021,3 +1005,26 @@ VDECL(vecname, elemtype, prefix); \
 VIMPL(vecname, elemtype, prefix)
 #endif
 #endif  // CGEN_H_
+
+#include <stdio.h>
+VDECL_IMPL(dvect, double, dv)
+int main() {
+  int k, n;
+  scanf("%d%d", &k, &n);
+  struct dvect *v = dvect(0);
+  double tmp;
+  for (int i = 0; i < n; ++i) {
+    scanf("%lf", &tmp);
+    if (i < k) {
+      dvappend(v, tmp);
+      heap_shift_up(v->elems, v->size, sizeof(v->elems[0]), v->size - 1, cmpi);
+    } else if (tmp < v->elems[0]) {
+      v->elems[0] = tmp;
+      heap_shift_down(v->elems, v->size, sizeof(v->elems[0]), 0, cmpi);
+    }
+  }
+  qsort(v->elems, v->size, sizeof(v->elems[0]), cmpi);
+  for (int i = 0; i < v->size; ++i) {
+    printf("%.2f\n", v->elems[i]);
+  }
+}
