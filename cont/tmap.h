@@ -209,8 +209,8 @@ static inline void prefix##put_fixup(struct tname *tm, struct TNN(tname) *n) {\
   } \
 }\
 static inline void prefix##delete_fixup(struct tname *tm, struct TNN(tname)* t) {\
-  /* n - nút, s - nút cạnh n (side), cn - nút cháu ở phía n (close nephew),
-   * dn - nút cháu ở xa n (distant nephew) */\
+  /* n - nút, s - nút cạnh n (side), cn - nút dưới phía gần n (close node),
+   * dn - nút dưới phía xa n (distant node) */\
   struct TNN(tname) *n = NULL, *s, *cn, *dn; \
   /*
    * Các tính chất bất biến trong vòng lặp:
@@ -251,14 +251,16 @@ static inline void prefix##delete_fixup(struct tname *tm, struct TNN(tname)* t) 
            * có mầu bất kỳ (có mầu đỏ sau khi xử lý trường hợp 1)
            * => Tô s thành đỏ.
            *
-           *    (t)           (t)  <- n mới nếu (t) là nút đen
+           *    (t)            T  <- n mới (nếu (t) là nút đen có đỉnh).
            *    / \           / \
            *   N   S    -->  N   s
            *      / \           / \
            *     CN  DN        CN  DN
            *
            * Nếu t là nút đỏ thì có thể khắc phục vi phạm ràng buộc 5
-           * bằng cách tô t thành đen, nếu ngược lại thì đệ quy tại t.
+           * bằng cách tô t thành đen, nếu ngược lại, nếu t là gốc cây
+           * thì các tính chất đỏ đen đã được đáp ứng, nếu t có đỉnh
+           * thì lặp lại với t là n mới.
            */ \
           TPAINT_RED(s); \
           if (TIS_RED(t)) { \
@@ -297,7 +299,7 @@ static inline void prefix##delete_fixup(struct tname *tm, struct TNN(tname)* t) 
          *
          *   (t)                 (cn)
          *   / \     -->         /  \
-         *  N   cn <- s mới     T    S
+         *  N   cn              T    S
          *       \             /      \
          *        S           N        DN
          *         \
