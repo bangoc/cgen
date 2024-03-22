@@ -80,19 +80,22 @@ struct bst_node *bst_search(struct bst_tree *t, int key) {
   return NULL;
 }
 
+int bst_equal_lnr(struct bst_node *n1, struct bst_node *n2) {
+  if (n1 != NULL && n2 == NULL || n1 == NULL && n2 != NULL) {
+    return 0;
+  }
+  if (n1 == NULL && n2 == NULL) {
+    return 1;
+  }
+  return bst_equal_lnr(n1->left, n2->left) && n1->key == n2->key &&
+         bst_equal_lnr(n1->right, n2->right);
+}
+
 int bst_equal(struct bst_tree *t1, struct bst_tree *t2) {
   if (t1->size != t2->size) {
     return 0;
   }
-  struct bst_node *n1 = bst_first_lnr(t1), *n2 = bst_first_lnr(t2);
-  while (n1 && n2) {
-    if (n1->key != n2->key) {
-      return 0;
-    }
-    n1 = bst_next_lnr(n1);
-    n2 = bst_next_lnr(n2);
-  }
-  return 1;
+  return bst_equal_lnr(t1->root, t2->root);
 }
 
 void bst_change(struct bst_node *old_node, struct bst_node *new_node,
@@ -208,26 +211,4 @@ void bst_free(struct bst_tree *t) {
     bst_node_free_lrn(t->root);
   }
   free(t);
-}
-
-struct bst_node *bst_left_most(struct bst_node *n) {
-  while (n->left) {
-    n = n->left;
-  }
-  return n;
-}
-
-struct bst_node *bst_first_lnr(struct bst_tree *t) {
-  return bst_left_most(t->root);
-}
-struct bst_node *bst_next_lnr(struct bst_node *n) {
-  if (n->right) {
-    return bst_left_most(n->right);
-  }
-  struct bst_node *top = n->top;
-  while (top != NULL && n == top->right) {
-    n = top;
-    top = n->top;
-  }
-  return top;
 }

@@ -8,8 +8,6 @@ struct bst_node *bst_node(int key);
 struct bst_tree *bst_tree();
 struct bst_node *bst_put(struct bst_tree *t, int key);
 struct bst_node *bst_search(struct bst_tree *t, int key);
-struct bst_node *bst_first_lnr(struct bst_tree *t);
-struct bst_node *bst_next_lnr(struct bst_node *n);
 int bst_equal(struct bst_tree *t1, struct bst_tree *t2);
 int bst_remove(struct bst_tree *t, int key);
 void bst_pprint(struct bst_tree *t);
