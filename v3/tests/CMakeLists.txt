@@ -1,0 +1,7 @@
+add_executable(ivec_ut ivec_ut.c)
+add_executable(heap_sort_ut heap_sort_ut.c)
+add_executable(q2insort_ut q2insort_ut.c)
+add_executable(binsearch_ut binsearch_ut.c)
+add_executable(hmap_demo_ut hmap_demo_ut.c)
+add_executable(ivec_sort_ut ivec_sort_ut.c)
+add_executable(ivec_put_rem_demo_ut ivec_put_rem_demo_ut.c)
