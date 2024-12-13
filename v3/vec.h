@@ -18,37 +18,37 @@ void pre##vec_del(struct pre##vector *v);
 
 #define VEC_IMPL(pre, elem_t) \
 struct pre##vector { \
-  int sz; \
+  int size; \
   int cap; \
   elem_t *elems; \
 }; \
 struct pre##vector *pre##vector(int n) {  \
   struct pre##vector *v = malloc(sizeof(struct pre##vector)); \
-  v->sz = n; \
-  v->cap = v->sz > 0? v->sz: 8; \
+  v->size = n; \
+  v->cap = v->size > 0? v->size: 8; \
   v->elems = calloc(v->cap, sizeof(elem_t)); \
   return v; \
 } \
 elem_t pre##vec_rem(struct pre##vector *v, int idx) { \
   elem_t tmp = v->elems[idx]; \
-  for (int i = idx; i < v->sz - 1; ++i) { \
+  for (int i = idx; i < v->size - 1; ++i) { \
     v->elems[i] = v->elems[i + 1]; \
   } \
-  --v->sz; \
-  if (v->sz > 8 && v->cap > v->sz * 2) { \
-    pre##vec_reserve(v, v->sz * 1.33); \
+  --v->size; \
+  if (v->size > 8 && v->cap > v->size * 2) { \
+    pre##vec_reserve(v, v->size * 1.33); \
   } \
   return tmp; \
 } \
 void pre##vec_put(struct pre##vector *v, elem_t elem, int idx) { \
   pre##vec_append(v, elem); \
-  for (int i = v->sz; i > idx; --i) { \
+  for (int i = v->size; i > idx; --i) { \
     v->elems[i] = v->elems[i - 1]; \
   } \
   v->elems[idx] = elem; \
 } \
 int pre##vec_reserve(struct pre##vector *v, int newcap) { \
-  if (newcap <= v->sz) { \
+  if (newcap <= v->size) { \
     return 1; \
   } \
   v->elems = realloc(v->elems, newcap * sizeof(elem_t)); \
@@ -61,17 +61,17 @@ int pre##vec_reserve(struct pre##vector *v, int newcap) { \
 void pre##vec_append(struct pre##vector *v, elem_t value) { \
   if (v->cap == 0) { \
     pre##vec_reserve(v, 16); \
-  } else if (v->sz == v->cap) { \
+  } else if (v->size == v->cap) { \
     pre##vec_reserve(v, 2 * v->cap); \
   } \
-  v->elems[v->sz] = value; \
-  ++v->sz; \
+  v->elems[v->size] = value; \
+  ++v->size; \
 } \
 void pre##vec_resize(struct pre##vector *v, int newsize) { \
   if (newsize > v->cap) { \
     pre##vec_reserve(v, newsize); \
   } \
-  v->sz = newsize; \
+  v->size = newsize; \
 } \
 void pre##vec_del(struct pre##vector *v) { \
   if (!v) { \

@@ -75,7 +75,7 @@ struct pre##hmap { \
   struct pre##hmap_node *end; \
   int mod; \
   unsigned mask; \
-  int sz; \
+  int size; \
   int cap; \
   int used; \
   unsigned (*ha)(key_t); \
@@ -145,7 +145,7 @@ static void relocate_map(struct pre##hmap *hm, unsigned ocap, \
 } \
 static void pre##hmap_realloc(struct pre##hmap *hm) { \
   int ocap = hm->cap; \
-  pre##hmap_set_shift_from_cap(hm, hm->sz * 1.333); \
+  pre##hmap_set_shift_from_cap(hm, hm->size * 1.333); \
   if (hm->cap > ocap) { \
     pre##hmap_realloc_arrays(hm); \
     memset(hm->nodes + ocap, 0, (hm->cap - ocap) * sizeof(struct pre##hmap_node)); \
@@ -156,11 +156,11 @@ static void pre##hmap_realloc(struct pre##hmap *hm) { \
   if (hm->cap < ocap) { \
     pre##hmap_realloc_arrays(hm); \
   } \
-  hm->used = hm->sz; \
+  hm->used = hm->size; \
 } \
 static inline int pre##hmap_maybe_realloc(struct pre##hmap *hm) { \
   unsigned used = hm->used, cap = hm->cap; \
-  if ((cap > hm->sz * 4 && cap > 1 << HASH_MIN_SHIFT) || \
+  if ((cap > hm->size * 4 && cap > 1 << HASH_MIN_SHIFT) || \
       (cap <= used + (used/16))) { \
     pre##hmap_realloc(hm); \
     return 1; \
@@ -170,7 +170,7 @@ static inline int pre##hmap_maybe_realloc(struct pre##hmap *hm) { \
 static struct pre##hmap_node *pre##hmap_rem_node(struct pre##hmap *hm, int idx) { \
   struct pre##hmap_node *n = hm->nodes + idx; \
   n->state = DELETED; \
-  hm->sz--; \
+  hm->size--; \
   return n; \
 } \
 static inline int pre##hmap_lookup(struct pre##hmap *hm, key_t key, \
@@ -203,7 +203,7 @@ static inline int pre##hmap_lookup(struct pre##hmap *hm, key_t key, \
 } \
 struct pre##hmap *pre##hmap(int shift, unsigned (*ha)(), int (*eq)()) { \
   struct pre##hmap *hm = malloc(sizeof(struct pre##hmap)); \
-  hm->sz = 0; \
+  hm->size = 0; \
   hm->used = 0; \
   hm->ha = ha; \
   hm->eq = eq; \
@@ -220,7 +220,7 @@ struct pre##hmap_node *pre##hmap_put(struct pre##hmap *hm, key_t k, value_t v) {
   n->hash = key_hash; \
   n->key = k; \
   n->value = v; \
-  ++hm->sz; \
+  ++hm->size; \
   int new_usage = n->state == UNUSED; \
   n->state = USING; \
   if (new_usage) { \

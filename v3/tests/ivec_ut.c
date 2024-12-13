@@ -9,7 +9,7 @@ int main() {
   for (int i = 0; i < 5; ++i) {
     ivec_append(v, i);
   }
-  printf("sz = %d\ncap = %d\n", v->sz, v->cap);
+  printf("sz = %d\ncap = %d\n", v->size, v->cap);
   for (int i = 0; i < 5; ++i) {
     printf("%d ", v->elems[i]);
   }

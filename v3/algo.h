@@ -146,7 +146,7 @@ static void heapsort(void *a, int n, int sz,
   }
 }
 
-#define VHEAPSORT(v, order) heapsort(v->elems, v->sz, sizeof(v->elems[0]), order)
-#define VQ2INSORT(v, order) q2insort(v->elems, v->sz, sizeof(v->elems[0]), order)
+#define VHEAPSORT(v, order) heapsort(v->elems, v->size, sizeof(v->elems[0]), order)
+#define VQ2INSORT(v, order) q2insort(v->elems, v->size, sizeof(v->elems[0]), order)
 
 #endif  // ALGO_H_

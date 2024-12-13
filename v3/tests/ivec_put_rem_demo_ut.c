@@ -7,8 +7,8 @@
 VEC_DECL_IMPL(i, int)
 
 void ivec_print(struct ivector *v) {
-  printf("sz: %d\ncap: %d\n", v->sz, v->cap);
-  for (int i = 0; i < v->sz; ++i) {
+  printf("sz: %d\ncap: %d\n", v->size, v->cap);
+  for (int i = 0; i < v->size; ++i) {
     printf("%d\n", v->elems[i]);
   }
 }
