@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-VEC_DECL_IMPL(i, int)
+VECT_DECL_IMPL(ivec, int)
 
-void ivec_print(struct ivector *v) {
+void ivec_print(struct ivec *v) {
   printf("sz: %d\ncap: %d\n", v->size, v->cap);
   for (int i = 0; i < v->size; ++i) {
     printf("%d\n", v->elems[i]);
@@ -15,7 +15,7 @@ void ivec_print(struct ivector *v) {
 
 int main() {
   srand(time(NULL));
-  struct ivector *v = ivector(0);
+  struct ivec *v = ivec(0);
   ivec_put(v, 1, 0);
   ivec_put(v, 2, 0);
   ivec_put(v, 3, 1);

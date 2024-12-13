@@ -2,10 +2,10 @@
 
 #include <stdio.h>
 
-VEC_DECL_IMPL(i, int)
+VECT_DECL_IMPL(ivec, int)
 
 int main() {
-  struct ivector *v = ivector(0);
+  struct ivec *v = ivec(0);
   for (int i = 0; i < 5; ++i) {
     ivec_append(v, i);
   }

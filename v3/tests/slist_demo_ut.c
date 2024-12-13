@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-SDECL_IMPL(slist, int)
+SLIST_DECL_IMPL(slist, int)
 
 void print_lst(struct slist *lst) {
   printf("size = %d\n", lst->size);

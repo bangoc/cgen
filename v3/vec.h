@@ -5,49 +5,49 @@
 #include <string.h>
 
 /* (C) Nguyễn Bá Ngọc 2024 */
-#define VEC_DECL(pre, elem_t) \
+#define VECT_DECL(vname, elem_t) \
 \
-struct pre##vector; \
-struct pre##vector *pre##vector(int n); \
-int pre##vec_reserve(struct pre##vector *v, int new_cap); \
-void pre##vec_append(struct pre##vector *v, elem_t elem); \
-elem_t pre##vec_rem(struct pre##vector *v, int idx); \
-void pre##vec_put(struct pre##vector *v, elem_t elem, int idx); \
-void pre##vec_resize(struct pre##vector *v, int new_sz); \
-void pre##vec_del(struct pre##vector *v);
+struct vname; \
+struct vname *vname(int n); \
+int vname##_reserve(struct vname *v, int new_cap); \
+void vname##_append(struct vname *v, elem_t elem); \
+elem_t vname##_rem(struct vname *v, int idx); \
+void vname##_put(struct vname *v, elem_t elem, int idx); \
+void vname##_resize(struct vname *v, int new_sz); \
+void vname##_del(struct vname *v);
 
-#define VEC_IMPL(pre, elem_t) \
-struct pre##vector { \
+#define VECT_IMPL(vname, elem_t) \
+struct vname { \
   int size; \
   int cap; \
   elem_t *elems; \
 }; \
-struct pre##vector *pre##vector(int n) {  \
-  struct pre##vector *v = malloc(sizeof(struct pre##vector)); \
+struct vname *vname(int n) {  \
+  struct vname *v = malloc(sizeof(struct vname)); \
   v->size = n; \
   v->cap = v->size > 0? v->size: 8; \
   v->elems = calloc(v->cap, sizeof(elem_t)); \
   return v; \
 } \
-elem_t pre##vec_rem(struct pre##vector *v, int idx) { \
+elem_t vname##_rem(struct vname *v, int idx) { \
   elem_t tmp = v->elems[idx]; \
   for (int i = idx; i < v->size - 1; ++i) { \
     v->elems[i] = v->elems[i + 1]; \
   } \
   --v->size; \
   if (v->size > 8 && v->cap > v->size * 2) { \
-    pre##vec_reserve(v, v->size * 1.33); \
+    vname##_reserve(v, v->size * 1.33); \
   } \
   return tmp; \
 } \
-void pre##vec_put(struct pre##vector *v, elem_t elem, int idx) { \
-  pre##vec_append(v, elem); \
+void vname##_put(struct vname *v, elem_t elem, int idx) { \
+  vname##_append(v, elem); \
   for (int i = v->size; i > idx; --i) { \
     v->elems[i] = v->elems[i - 1]; \
   } \
   v->elems[idx] = elem; \
 } \
-int pre##vec_reserve(struct pre##vector *v, int newcap) { \
+int vname##_reserve(struct vname *v, int newcap) { \
   if (newcap <= v->size) { \
     return 1; \
   } \
@@ -58,22 +58,22 @@ int pre##vec_reserve(struct pre##vector *v, int newcap) { \
   v->cap = newcap; \
   return 0; \
 } \
-void pre##vec_append(struct pre##vector *v, elem_t value) { \
+void vname##_append(struct vname *v, elem_t value) { \
   if (v->cap == 0) { \
-    pre##vec_reserve(v, 16); \
+    vname##_reserve(v, 16); \
   } else if (v->size == v->cap) { \
-    pre##vec_reserve(v, 2 * v->cap); \
+    vname##_reserve(v, 2 * v->cap); \
   } \
   v->elems[v->size] = value; \
   ++v->size; \
 } \
-void pre##vec_resize(struct pre##vector *v, int newsize) { \
+void vname##_resize(struct vname *v, int newsize) { \
   if (newsize > v->cap) { \
-    pre##vec_reserve(v, newsize); \
+    vname##_reserve(v, newsize); \
   } \
   v->size = newsize; \
 } \
-void pre##vec_del(struct pre##vector *v) { \
+void vname##_del(struct vname *v) { \
   if (!v) { \
     return; \
   } \
@@ -81,8 +81,8 @@ void pre##vec_del(struct pre##vector *v) { \
   free(v); \
 }
 
-#define VEC_DECL_IMPL(pre, elem_t) \
-VEC_DECL(pre, elem_t) \
-VEC_IMPL(pre, elem_t)
+#define VECT_DECL_IMPL(pre, elem_t) \
+VECT_DECL(pre, elem_t) \
+VECT_IMPL(pre, elem_t)
 
 #endif  // VEC_H_

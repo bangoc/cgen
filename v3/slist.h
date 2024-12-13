@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-#define SDECL(sname, elem_t) \
+#define SLIST_DECL(sname, elem_t) \
 struct sname##_node; \
 struct sname; \
 struct sname##_node *sname##_node(elem_t value); \
@@ -20,7 +20,7 @@ elem_t *sname##_peek(struct sname *list); \
 struct sname *sname##_deque(struct sname *list); \
 int sname##_empty(struct sname *list);
 
-#define SIMPL(sname, elem_t) \
+#define SLIST_IMPL(sname, elem_t) \
 struct sname##_node { \
   elem_t value; \
   struct sname##_node *next; \
@@ -112,8 +112,8 @@ int sname##_empty(struct sname *list) { \
   return list->first == NULL || list->last == NULL; \
 }
 
-#define SDECL_IMPL(sname, elem_t) \
-SDECL(sname, elem_t) \
-SIMPL(sname, elem_t)
+#define SLIST_DECL_IMPL(sname, elem_t) \
+SLIST_DECL(sname, elem_t) \
+SLIST_IMPL(sname, elem_t)
 
 #endif  // SLIST_H_

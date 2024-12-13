@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-HMAP_DECL_IMPL(si, char *, int)
+HMAP_DECL_IMPL(sihmap, char *, int)
 
 const char letters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const int n = sizeof(letters) - 1;

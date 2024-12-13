@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-VEC_DECL_IMPL(i, int)
+VECT_DECL_IMPL(ivec, int)
 
 int lte(const void *o1, const void *o2) {
   return *((const int *)o1) <= *((const int *)o2);
@@ -13,7 +13,7 @@ int lte(const void *o1, const void *o2) {
 
 int main() {
   srand(time(NULL));
-  struct ivector *v = ivector(0);
+  struct ivec *v = ivec(0);
   for (int i = 0; i < 10; ++i) {
     ivec_append(v, rand());
   }

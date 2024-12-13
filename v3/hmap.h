@@ -55,24 +55,24 @@ const int prime_mod [] =
 #define SET_BIT(bitmap, index) ((bitmap)[(index) / 8] |= 1U << ((index) % 8))
 
 #define HMAP_DECL(pre, key_t, value_t) \
-struct pre##hmap_node; \
-struct pre##hmap; \
-struct pre##hmap *pre##hmap(int cap, unsigned (*ha)(), int (*eq)()); \
-struct pre##hmap_node *pre##hmap_put(struct pre##hmap *hm, key_t k, value_t v); \
-value_t *pre##hmap_get(struct pre##hmap *hm, key_t k); \
-struct pre##hmap_node *pre##hmap_rem(struct pre##hmap *hm, key_t k); \
-void pre##hmap_del(struct pre##hmap *hm);
+struct hname##_node; \
+struct hname; \
+struct hname *hname(int cap, unsigned (*ha)(), int (*eq)()); \
+struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v); \
+value_t *hname##_get(struct hname *hm, key_t k); \
+struct hname##_node *hname##_rem(struct hname *hm, key_t k); \
+void hname##_del(struct hname *hm);
 
-#define HMAP_IMPL(pre, key_t, value_t) \
-struct pre##hmap_node { \
+#define HMAP_IMPL(hname, key_t, value_t) \
+struct hname##_node { \
   key_t key; \
   value_t value; \
   unsigned hash; \
   enum hmap_node_state state; \
 }; \
-struct pre##hmap { \
-  struct pre##hmap_node *nodes; \
-  struct pre##hmap_node *end; \
+struct hname { \
+  struct hname##_node *nodes; \
+  struct hname##_node *end; \
   int mod; \
   unsigned mask; \
   int size; \
@@ -88,31 +88,31 @@ static int closest_shift(int n) { \
   } \
   return i; \
 } \
-static void pre##hmap_set_shift(struct pre##hmap *hm, int shift) { \
+static void hname##_set_shift(struct hname *hm, int shift) { \
   hm->cap = 1 << shift; \
   hm->mod = prime_mod[shift]; \
   hm->mask = hm->cap - 1; \
 } \
-static void pre##hmap_set_shift_from_cap(struct pre##hmap *hm, int cap) { \
+static void hname##_set_shift_from_cap(struct hname *hm, int cap) { \
   int shift = closest_shift(cap); \
   if (shift < HASH_MIN_SHIFT) { \
     shift = HASH_MIN_SHIFT; \
   } \
-  pre##hmap_set_shift(hm, shift); \
+  hname##_set_shift(hm, shift); \
 } \
-static void pre##hmap_setup(struct pre##hmap *hm, int shift) { \
+static void hname##_setup(struct hname *hm, int shift) { \
   if (shift < HASH_MIN_SHIFT) { \
     shift = HASH_MIN_SHIFT; \
   } \
-  pre##hmap_set_shift(hm, shift); \
-  hm->nodes = calloc(hm->cap, sizeof(struct pre##hmap_node)); \
+  hname##_set_shift(hm, shift); \
+  hm->nodes = calloc(hm->cap, sizeof(struct hname##_node)); \
   hm->end = hm->nodes + hm->cap; \
 } \
-static void pre##hmap_realloc_arrays(struct pre##hmap *hm) { \
-  hm->nodes = realloc(hm->nodes, hm->cap * sizeof(struct pre##hmap_node)); \
+static void hname##_realloc_arrays(struct hname *hm) { \
+  hm->nodes = realloc(hm->nodes, hm->cap * sizeof(struct hname##_node)); \
   hm->end = hm->nodes + hm->cap; \
 } \
-static void relocate_map(struct pre##hmap *hm, unsigned ocap, \
+static void relocate_map(struct hname *hm, unsigned ocap, \
           unsigned char *reallocated_flags) { \
   for (int i = 0; i < ocap; ++i) { \
     if (hm->nodes[i].state != USING) { \
@@ -122,7 +122,7 @@ static void relocate_map(struct pre##hmap *hm, unsigned ocap, \
     if (GET_BIT(reallocated_flags, i)) { \
       continue; \
     } \
-    struct pre##hmap_node n = hm->nodes[i]; \
+    struct hname##_node n = hm->nodes[i]; \
     hm->nodes[i].state = UNUSED; \
     for (;;) { \
       unsigned idx, step = 0; \
@@ -137,50 +137,50 @@ static void relocate_map(struct pre##hmap *hm, unsigned ocap, \
         hm->nodes[idx] = n; \
         break; \
       } \
-      struct pre##hmap_node tmp = hm->nodes[idx]; \
+      struct hname##_node tmp = hm->nodes[idx]; \
       hm->nodes[idx] = n; \
       n = tmp; \
     } \
   } \
 } \
-static void pre##hmap_realloc(struct pre##hmap *hm) { \
+static void hname##_realloc(struct hname *hm) { \
   int ocap = hm->cap; \
-  pre##hmap_set_shift_from_cap(hm, hm->size * 1.333); \
+  hname##_set_shift_from_cap(hm, hm->size * 1.333); \
   if (hm->cap > ocap) { \
-    pre##hmap_realloc_arrays(hm); \
-    memset(hm->nodes + ocap, 0, (hm->cap - ocap) * sizeof(struct pre##hmap_node)); \
+    hname##_realloc_arrays(hm); \
+    memset(hm->nodes + ocap, 0, (hm->cap - ocap) * sizeof(struct hname##_node)); \
   } \
   unsigned char *reallocated_flags = calloc((hm->cap + 7) / 8, sizeof(unsigned char)); \
   relocate_map(hm, ocap, reallocated_flags); \
   free(reallocated_flags); \
   if (hm->cap < ocap) { \
-    pre##hmap_realloc_arrays(hm); \
+    hname##_realloc_arrays(hm); \
   } \
   hm->used = hm->size; \
 } \
-static inline int pre##hmap_maybe_realloc(struct pre##hmap *hm) { \
+static inline int hname##_maybe_realloc(struct hname *hm) { \
   unsigned used = hm->used, cap = hm->cap; \
   if ((cap > hm->size * 4 && cap > 1 << HASH_MIN_SHIFT) || \
       (cap <= used + (used/16))) { \
-    pre##hmap_realloc(hm); \
+    hname##_realloc(hm); \
     return 1; \
   } \
   return 0; \
 } \
-static struct pre##hmap_node *pre##hmap_rem_node(struct pre##hmap *hm, int idx) { \
-  struct pre##hmap_node *n = hm->nodes + idx; \
+static struct hname##_node *hname##_rem_node(struct hname *hm, int idx) { \
+  struct hname##_node *n = hm->nodes + idx; \
   n->state = DELETED; \
   hm->size--; \
   return n; \
 } \
-static inline int pre##hmap_lookup(struct pre##hmap *hm, key_t key, \
+static inline int hname##_lookup(struct hname *hm, key_t key, \
       unsigned *hash_return) { \
   unsigned lookup_hash = hm->ha(key); \
   if (hash_return) { \
     *hash_return = lookup_hash; \
   } \
   int idx = HASH2IDX(hm, lookup_hash); \
-  struct pre##hmap_node *n = hm->nodes + idx; \
+  struct hname##_node *n = hm->nodes + idx; \
   int first_deleted = -1; \
   int step = 0; \
   while (n->state != UNUSED) { \
@@ -201,19 +201,19 @@ static inline int pre##hmap_lookup(struct pre##hmap *hm, key_t key, \
   } \
   return idx; \
 } \
-struct pre##hmap *pre##hmap(int shift, unsigned (*ha)(), int (*eq)()) { \
-  struct pre##hmap *hm = malloc(sizeof(struct pre##hmap)); \
+struct hname *hname(int shift, unsigned (*ha)(), int (*eq)()) { \
+  struct hname *hm = malloc(sizeof(struct hname)); \
   hm->size = 0; \
   hm->used = 0; \
   hm->ha = ha; \
   hm->eq = eq; \
-  pre##hmap_setup(hm, shift); \
+  hname##_setup(hm, shift); \
   return hm; \
 } \
-struct pre##hmap_node *pre##hmap_put(struct pre##hmap *hm, key_t k, value_t v) { \
+struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v) { \
   unsigned key_hash; \
-  int idx = pre##hmap_lookup(hm, k, &key_hash); \
-  struct pre##hmap_node *n = hm->nodes + idx; \
+  int idx = hname##_lookup(hm, k, &key_hash); \
+  struct hname##_node *n = hm->nodes + idx; \
   if (n->state == USING) { \
     return n; \
   } \
@@ -225,42 +225,42 @@ struct pre##hmap_node *pre##hmap_put(struct pre##hmap *hm, key_t k, value_t v) {
   n->state = USING; \
   if (new_usage) { \
     ++hm->used; \
-    pre##hmap_maybe_realloc(hm); \
+    hname##_maybe_realloc(hm); \
   } \
   return NULL; \
 } \
-value_t *pre##hmap_get(struct pre##hmap *hm, key_t k) { \
-  int idx = pre##hmap_lookup(hm, k, NULL); \
-  struct pre##hmap_node *n = hm->nodes + idx; \
+value_t *hname##_get(struct hname *hm, key_t k) { \
+  int idx = hname##_lookup(hm, k, NULL); \
+  struct hname##_node *n = hm->nodes + idx; \
   if (n->state == USING) { \
     return &n->value; \
   } \
   return NULL; \
 } \
-struct pre##hmap_node *pre##hmap_rem(struct pre##hmap *hm, key_t key) { \
-  int idx = pre##hmap_lookup(hm, key, NULL); \
+struct hname##_node *hname##_rem(struct hname *hm, key_t key) { \
+  int idx = hname##_lookup(hm, key, NULL); \
   if (hm->nodes[idx].state != USING) { \
     return NULL; \
   } \
-  pre##hmap_rem_node(hm, idx); \
-  if (pre##hmap_maybe_realloc(hm)) { \
-    idx = pre##hmap_lookup(hm, key, NULL); \
+  hname##_rem_node(hm, idx); \
+  if (hname##_maybe_realloc(hm)) { \
+    idx = hname##_lookup(hm, key, NULL); \
   } \
   return hm->nodes + idx; \
 } \
-void pre##hmap_del(struct pre##hmap *hm) { \
+void hname##_del(struct hname *hm) { \
   free(hm->nodes); \
   free(hm); \
 } \
-struct pre##hmap_node *pre##hmap_first(struct pre##hmap *hm) {\
-  for (struct pre##hmap_node *iter = hm->nodes; iter < hm->end; ++iter) { \
+struct hname##_node *hname##_first(struct hname *hm) {\
+  for (struct hname##_node *iter = hm->nodes; iter < hm->end; ++iter) { \
     if (iter->state == USING) { \
       return iter; \
     } \
   } \
   return NULL; \
 } \
-struct pre##hmap_node *pre##hmap_next(struct pre##hmap *hm, struct pre##hmap_node *n) { \
+struct hname##_node *hname##_next(struct hname *hm, struct hname##_node *n) { \
   ++n; \
   while (n < hm->end) { \
     if (n->state == USING) { \
