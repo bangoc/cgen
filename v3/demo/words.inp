@@ -1,0 +1,12 @@
+insert aaa
+insert bbb
+insert aaa
+insert ccc
+freq bbb
+freq aaa
+print
+rem aaa
+print
+freq aaa
+insert aaa
+print
