@@ -5,6 +5,7 @@
 #include <string.h>
 
 /* (C) Nguyễn Bá Ngọc 2024 */
+
 #define VECT_DECL(vname, elem_t) \
 \
 struct vname; \
