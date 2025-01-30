@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 HMAP_DECL_IMPL(sihmap, char *, int)
@@ -21,7 +22,7 @@ char *gens() {
 
 int main() {
   srand(time(NULL));
-  struct sihmap *hm = sihmap(0, hash_s, eq_s);
+  struct sihmap *hm = sihmap(0, hash_s, strcmp);
   for (int i = 0; i < 100000; ++i) {
     char *key = strdup(gens());
     struct sihmap_node *n = sihmap_put(hm, key, rand());

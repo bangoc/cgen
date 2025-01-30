@@ -80,7 +80,7 @@ struct hname { \
   int cap; \
   int used; \
   unsigned (*ha)(key_t); \
-  int (*eq)(key_t, key_t); \
+  int (*cmp)(key_t, key_t); \
   void (*fk)(); \
   void (*fv)(); \
 }; \
@@ -194,7 +194,7 @@ static inline int hname##_lookup(struct hname *hm, key_t key, \
   int step = 0; \
   while (n->state != UNUSED) { \
     if (n->state == USING) { \
-      if (n->hash == lookup_hash && hm->eq(n->key, key)) { \
+      if (n->hash == lookup_hash && hm->cmp(n->key, key) == 0) { \
         return idx; \
       } \
     } else if (n->state == DELETED && first_deleted < 0) { \
@@ -210,12 +210,12 @@ static inline int hname##_lookup(struct hname *hm, key_t key, \
   } \
   return idx; \
 } \
-struct hname *hname(int shift, unsigned (*ha)(), int (*eq)()) { \
+struct hname *hname(int shift, unsigned (*ha)(), int (*cmp)()) { \
   struct hname *hm = malloc(sizeof(struct hname)); \
   hm->size = 0; \
   hm->used = 0; \
   hm->ha = ha; \
-  hm->eq = eq; \
+  hm->cmp = cmp; \
   hname##_setup(hm, shift); \
   return hm; \
 } \
@@ -300,12 +300,6 @@ static inline unsigned hash_s(const char *s) {
     h = (h << 5) + h + *s;
   }
   return h;
-}
-
-static inline int eq_s(const char *s1, const char *s2) {
-  for (;*s1 && *s2 && *s1 == *s2; ++s1, ++s2) {
-  }
-  return *s1 == *s2;
 }
 
 #endif  // HMAP_H_
