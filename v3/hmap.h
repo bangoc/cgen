@@ -81,6 +81,8 @@ struct hname { \
   int used; \
   unsigned (*ha)(key_t); \
   int (*eq)(key_t, key_t); \
+  void (*fk)(); \
+  void (*fv)(); \
 }; \
 static int closest_shift(int n) { \
   int i = 0; \
@@ -170,6 +172,12 @@ static inline int hname##_maybe_realloc(struct hname *hm) { \
 } \
 static struct hname##_node *hname##_rem_node(struct hname *hm, int idx) { \
   struct hname##_node *n = hm->nodes + idx; \
+  if (hm->fk) { \
+    hm->fk(n->key); \
+  } \
+  if (hm->fv) { \
+    hm->fv(n->value); \
+  } \
   n->state = DELETED; \
   hm->size--; \
   return n; \
@@ -250,6 +258,16 @@ int hname##_rem(struct hname *hm, key_t key) { \
   return 1; \
 } \
 void hname##_free(struct hname *hm) { \
+  for (struct hname##_node *iter = hm->nodes; iter < hm->end; ++iter) { \
+    if (iter->state == USING) { \
+      if (hm->fk) { \
+        hm->fk(iter->key); \
+      } \
+      if (hm->fv) { \
+        hm->fv(iter->value); \
+      } \
+    } \
+  } \
   free(hm->nodes); \
   free(hm); \
 } \
