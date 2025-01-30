@@ -14,9 +14,7 @@ const static char k_bst_version[] = "3.0.0";
   struct bst##_node *bst##_node(const char *key, value_t value); \
   struct bst *bst(); \
   struct bst##_node *bst##_put(struct bst *t, const char *key, value_t value); \
-  struct bst##_node *bst##_first(struct bst *t); \
-  struct bst##_node *bst##_next(struct bst##_node *n); \
-  struct bst##_node *bst##_search(struct bst *t, const char *key); \
+  struct bst##_node *bst##_get(struct bst *t, const char *key); \
   int bst##_rem(struct bst *t, const char *key); \
   void bst##_free(struct bst *t);
 
@@ -75,32 +73,7 @@ struct bst##_node *bst##_put(struct bst *t, const char *key, value_t value) { \
   return NULL; \
 } \
 \
-static inline struct bst##_node *bst##_left_most(struct bst##_node *n) { \
-  struct bst##_node *top = NULL; \
-  while (n) { \
-    top = n; \
-    n = n->left; \
-  } \
-  return top; \
-}\
-struct bst##_node *bst##_first(struct bst *t) { \
-  return bst##_left_most(t->root); \
-} \
-\
-struct bst##_node *bst##_next(struct bst##_node *n) { \
-  if (n->right) { \
-    return bst##_left_most(n->right); \
-  } \
-  while (n->top) { \
-    if (n->top->left == n) { \
-      return n->top; \
-    } \
-    n = n->top; \
-  } \
-  return NULL; \
-} \
-\
-struct bst##_node *bst##_search(struct bst *t, const char *key) { \
+struct bst##_node *bst##_get(struct bst *t, const char *key) { \
   struct bst##_node *n = t->root; \
   while (n) { \
     int o = t->cmp(key, n->key); \
@@ -129,7 +102,7 @@ static inline void bst##_change(struct bst *t, struct bst##_node *old, struct bs
 } \
 \
 int bst##_rem(struct bst *t, const char *key) { \
-  struct bst##_node *n = bst##_search(t, key); \
+  struct bst##_node *n = bst##_get(t, key); \
   if (!n) { \
     return 0; \
   } \
