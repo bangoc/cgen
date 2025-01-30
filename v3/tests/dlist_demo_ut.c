@@ -1,3 +1,5 @@
+/* (C) Nguyễn Bá Ngọc 2025 */
+
 #include "dlist.h"
 
 #include <stdio.h>

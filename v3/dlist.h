@@ -1,3 +1,5 @@
+/* (C) Nguyễn Bá Ngọc 2025 */
+
 #ifndef DLIST_H_
 #define DLIST_H_
 

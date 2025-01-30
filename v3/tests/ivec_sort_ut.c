@@ -7,8 +7,8 @@
 
 VECT_DECL_IMPL(ivec, int)
 
-int lte(const void *o1, const void *o2) {
-  return *((const int *)o1) <= *((const int *)o2);
+int icmp(const void *o1, const void *o2) {
+  return *((const int *)o1) - *((const int *)o2);
 }
 
 int main() {
@@ -17,9 +17,9 @@ int main() {
   for (int i = 0; i < 10; ++i) {
     ivec_append(v, rand());
   }
-  VQ2INSORT(v, lte);
+  VQ2INSORT(v, icmp);
   for (int i = 0; i < v->size; ++i) {
-    if (i > 0 && !lte(v->elems + i - 1, v->elems + i)) {
+    if (i > 0 && icmp(v->elems + i - 1, v->elems + i) > 0) {
       return 1;
     }
   }

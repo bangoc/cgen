@@ -19,4 +19,34 @@ int main() {
       binsearch((int[]){-10}, a, n, sizeof(int), icmp) != 0) {
     return 1;
   }
+  int *tmp = binsearch_lte((int[]){7}, a, n, sizeof(int), icmp);
+  if (*tmp != 6) {
+    printf("%d - error\n", *tmp);
+    return 1;
+  }
+  tmp = binsearch_gte((int[]){7}, a, n, sizeof(int), icmp);
+  if (*tmp != 8) {
+    printf("%d - error\n", *tmp);
+    return 1;
+  }
+  tmp = binsearch_lte((int[]){0}, a, n, sizeof(int), icmp);
+  if (tmp) {
+    printf("Error lte\n");
+    return 1;
+  }
+  tmp = binsearch_gte((int[]){11}, a, n, sizeof(int), icmp);
+  if (tmp) {
+    printf("Error gte\n");
+    return 1;
+  }
+  tmp = binsearch_lte((int[]){11}, a, n, sizeof(int), icmp);
+  if (*tmp != 10) {
+    printf("%d - error\n", *tmp);
+    return 1;
+  }
+  tmp = binsearch_gte((int[]){0}, a, n, sizeof(int), icmp);
+  if (*tmp != 1) {
+    printf("%d - error\n", *tmp);
+    return 1;
+  }
 }
