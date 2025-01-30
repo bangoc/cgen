@@ -1,17 +1,17 @@
+/* (C) Nguyễn Bá Ngọc 2024 */
+
 #ifndef VEC_H_
 #define VEC_H_
 
 #include <stdlib.h>
 #include <string.h>
 
-/* (C) Nguyễn Bá Ngọc 2024 */
-
 #define VECT_DECL(vname, elem_t) \
 \
 struct vname; \
 struct vname *vname(int n); \
-void vname##_append(struct vname *v, elem_t elem); \
-int vname##_ins(struct vname *v, elem_t elem, int idx); \
+struct vname *vname##_append(struct vname *v, elem_t elem); \
+struct vname *vname##_ins(struct vname *v, elem_t elem, int idx); \
 int vname##_del(struct vname *v, int idx); \
 elem_t *vname##_at(struct vname *v, int idx); \
 void vname##_free(struct vname *v);
@@ -29,37 +29,39 @@ struct vname *vname(int n) {  \
   v->elems = calloc(v->cap, sizeof(elem_t)); \
   return v; \
 } \
-int vname##_reserve(struct vname *v, int newcap) { \
+struct vname *vname##_reserve(struct vname *v, int newcap) { \
   if (newcap <= v->size) { \
-    return 1; \
+    return v; \
   } \
   v->elems = realloc(v->elems, newcap * sizeof(elem_t)); \
   if (v->cap < newcap) { \
     memset(v->elems + v->cap, 0, sizeof(elem_t) * (newcap - v->cap)); \
   } \
   v->cap = newcap; \
-  return 0; \
+  return v; \
 } \
-void vname##_resize(struct vname *v, int newsize) { \
+struct vname *vname##_resize(struct vname *v, int newsize) { \
   if (newsize > v->cap) { \
     vname##_reserve(v, newsize); \
   } \
   v->size = newsize; \
+  return v; \
 } \
-void vname##_append(struct vname *v, elem_t value) { \
+struct vname *vname##_append(struct vname *v, elem_t value) { \
   if (v->size == v->cap) { \
     vname##_reserve(v, v->cap == 0? 16: 2 * v->cap); \
   } \
   v->elems[v->size] = value; \
   ++v->size; \
+  return v; \
 } \
-int vname##_ins(struct vname *v, elem_t elem, int idx) { \
+struct vname *vname##_ins(struct vname *v, elem_t elem, int idx) { \
   if (idx < 0 || idx > v->size) { \
-    return 1; \
+    return v; \
   } \
   if (idx == v->size) { \
     vname##_append(v, elem); \
-    return 0; \
+    return v; \
   } \
   if (v->size == v->cap) { \
     vname##_reserve(v, v->cap == 0? 16: 2 * v->cap); \
@@ -69,11 +71,11 @@ int vname##_ins(struct vname *v, elem_t elem, int idx) { \
   } \
   ++v->size; \
   v->elems[idx] = elem; \
-  return 0; \
+  return v; \
 } \
 int vname##_del(struct vname *v, int idx) { \
   if (idx < 0 || idx >= v->size) { \
-    return 1; \
+    return 0; \
   } \
   for (int i = idx; i < v->size - 1; ++i) { \
     v->elems[i] = v->elems[i + 1]; \
@@ -82,7 +84,7 @@ int vname##_del(struct vname *v, int idx) { \
   if (v->size > 8 && v->cap > v->size * 2) { \
     vname##_reserve(v, v->size * 1.33); \
   } \
-  return 0; \
+  return 1; \
 } \
 elem_t *vname##_at(struct vname *v, int idx) { \
   if (!v || idx < 0 || idx >= v->size) { \

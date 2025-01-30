@@ -1,3 +1,4 @@
+/* (C) Nguyễn Bá Ngọc 2024-2025 */
 #ifndef HMAP_H_
 #define HMAP_H_
 
@@ -60,7 +61,7 @@ struct hname; \
 struct hname *hname(int cap, unsigned (*ha)(), int (*eq)()); \
 struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v); \
 value_t *hname##_get(struct hname *hm, key_t k); \
-struct hname##_node *hname##_rem(struct hname *hm, key_t k); \
+int hname##_rem(struct hname *hm, key_t k); \
 void hname##_free(struct hname *hm);
 
 #define HMAP_IMPL(hname, key_t, value_t) \
@@ -237,16 +238,16 @@ value_t *hname##_get(struct hname *hm, key_t k) { \
   } \
   return NULL; \
 } \
-struct hname##_node *hname##_rem(struct hname *hm, key_t key) { \
+int hname##_rem(struct hname *hm, key_t key) { \
   int idx = hname##_lookup(hm, key, NULL); \
   if (hm->nodes[idx].state != USING) { \
-    return NULL; \
+    return 0; \
   } \
   hname##_rem_node(hm, idx); \
   if (hname##_maybe_realloc(hm)) { \
     idx = hname##_lookup(hm, key, NULL); \
   } \
-  return hm->nodes + idx; \
+  return 1; \
 } \
 void hname##_free(struct hname *hm) { \
   free(hm->nodes); \

@@ -29,11 +29,18 @@ void nprint(struct bst_node *n, void *u) {
 int main() {
   srand(time(NULL));
   struct bst *t = bst();
+  int sz = 0;
   for (int i = 0; i < 100000; ++i) {
     struct bst_node *n = bst_put(t, gens(), rand());
     if (n) {
       printf("Trùng khóa: %s\n", n->key);
+    } else {
+      ++sz;
     }
+  }
+  if (sz != t->size) {
+    printf("Size = %d -- error -- sz = %d\n", t->size, sz);
+    return 1;
   }
   struct bst_node *n = bst_first_lnr(t);
   const char *key = n->key;
@@ -55,7 +62,12 @@ int main() {
     const char *key = gens();
     if (bst_rem(t, gens())) {
       printf("Removed random key: %s\n", key);
+      --sz;
     }
+  }
+  if (sz != t->size) {
+    printf("After rem: Size = %d -- error -- sz = %d\n", t->size, sz);
+    return 1;
   }
   n = bst_first_lnr(t);
   key = n->key;
@@ -70,4 +82,5 @@ int main() {
   bst_trav(t->root, nprint, NULL, LEFT, NODE, RIGHT);
   printf("\n");
   bst_free(t);
+  printf("Test Ok!\n");
 }

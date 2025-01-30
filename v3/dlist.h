@@ -13,13 +13,13 @@ struct sname##_node *sname##_node(elem_t value); \
 struct sname *sname(); \
 struct sname *sname##_append(struct sname *list, elem_t value); \
 struct sname *sname##_prepend(struct sname *list, elem_t value); \
-int sname##_ins(struct sname *list, elem_t value, int idx); \
-int sname##_insa(struct sname *list, elem_t value, struct sname##_node *node); \
-int sname##_insb(struct sname *list, elem_t value, struct sname##_node *node); \
+struct sname *sname##_ins(struct sname *list, elem_t value, int idx); \
+struct sname *sname##_insa(struct sname *list, elem_t value, struct sname##_node *node); \
+struct sname *sname##_insb(struct sname *list, elem_t value, struct sname##_node *node); \
 struct sname##_node *sname##_at(struct sname *list, int idx); \
-struct sname *sname##_dfirst(struct sname *list); \
-struct sname *sname##_dlast(struct sname *list); \
-struct sname *sname##_dnode(struct sname *list, struct sname##_node *node); \
+int sname##_dfirst(struct sname *list); \
+int sname##_dlast(struct sname *list); \
+int sname##_dnode(struct sname *list, struct sname##_node *node); \
 int sname##_del(struct sname *list, int idx); \
 int sname##_empty(struct sname *list); \
 void sname##_free(struct sname *list);
@@ -60,9 +60,6 @@ void sname##_free(struct sname *list) { \
 } \
 struct sname *sname##_append(struct sname *list, elem_t value) {\
   struct sname##_node *nn = sname##_node(value); \
-  if (!nn) { \
-    return NULL; \
-  } \
   if (list->first == NULL) { \
     list->first = list->last = nn; \
   } else { \
@@ -74,31 +71,26 @@ struct sname *sname##_append(struct sname *list, elem_t value) {\
   return list; \
 } \
 struct sname *sname##_prepend(struct sname *list, elem_t value) {\
-  struct sname##_node *node = sname##_node(value); \
-  if (!node) { \
-    return NULL; \
-  } \
+  struct sname##_node *nn = sname##_node(value); \
   if (list->first == NULL) { \
-    list->first = list->last = node; \
+    list->first = list->last = nn; \
   } else { \
-    node->next = list->first; \
-    list->first->prev = node; \
-    list->first = node; \
+    nn->next = list->first; \
+    list->first->prev = nn; \
+    list->first = nn; \
   } \
   ++list->size; \
   return list; \
 } \
-int sname##_ins(struct sname *list, elem_t value, int idx) { \
+struct sname *sname##_ins(struct sname *list, elem_t value, int idx) { \
   if (!list || idx < 0 || idx > list->size) { \
-    return 1; \
+    return list; \
   } \
   if (idx == 0) { \
-    sname##_prepend(list, value); \
-    return 0; \
+    return sname##_prepend(list, value); \
   } \
   if (idx == list->size) { \
-    sname##_append(list, value); \
-    return 0; \
+    return sname##_append(list, value); \
   } \
   struct sname##_node *p = sname##_at(list, idx - 1), *nn = sname##_node(value); \
   nn->next = p->next; \
@@ -106,18 +98,17 @@ int sname##_ins(struct sname *list, elem_t value, int idx) { \
   p->next = nn; \
   nn->prev = p; \
   ++list->size; \
-  return 0; \
+  return list; \
 } \
-int sname##_insa(struct sname *list, elem_t value, struct sname##_node *pos) { \
+struct sname *sname##_insa(struct sname *list, elem_t value, struct sname##_node *pos) { \
   if (!list) { \
-    return 1; \
+    return list; \
   } \
   if (pos == list->last) { \
-    sname##_append(list, value); \
-    return 0; \
+    return sname##_append(list, value); \
   } \
   if (!pos) { \
-    return 1; \
+    return list; \
   } \
   struct sname##_node *nn = sname##_node(value); \
   nn->next = pos->next; \
@@ -125,18 +116,17 @@ int sname##_insa(struct sname *list, elem_t value, struct sname##_node *pos) { \
   pos->next = nn; \
   nn->prev = pos; \
   ++list->size; \
-  return 0; \
+  return list; \
 } \
-int sname##_insb(struct sname *list, elem_t value, struct sname##_node *pos) { \
+struct sname *sname##_insb(struct sname *list, elem_t value, struct sname##_node *pos) { \
   if (!list) { \
-    return 1; \
+    return list; \
   } \
   if (pos == list->first) { \
-    sname##_prepend(list, value); \
-    return 0; \
+    return sname##_prepend(list, value); \
   } \
   if (!pos) { \
-    return 1; \
+    return list; \
   } \
   struct sname##_node *nn = sname##_node(value); \
   nn->prev = pos->prev; \
@@ -144,7 +134,7 @@ int sname##_insb(struct sname *list, elem_t value, struct sname##_node *pos) { \
   nn->next = pos; \
   pos->prev = nn; \
   ++list->size; \
-  return 0; \
+  return list; \
 } \
 struct sname##_node *sname##_at(struct sname *list, int idx) { \
   if (!list || idx < 0 || idx >= list->size) { \
@@ -156,9 +146,9 @@ struct sname##_node *sname##_at(struct sname *list, int idx) { \
   } \
   return n; \
 } \
-struct sname *sname##_dfirst(struct sname *list) { \
+int sname##_dfirst(struct sname *list) { \
   if (!list || sname##_empty(list)) { \
-    return NULL; \
+    return 0; \
   } \
   if (list->first == list->last) { \
     list->last = NULL; \
@@ -167,11 +157,11 @@ struct sname *sname##_dfirst(struct sname *list) { \
   list->first = tmp->next; \
   free(tmp); \
   --list->size; \
-  return list; \
+  return 1; \
 } \
-struct sname *sname##_dlast(struct sname *list) { \
+int sname##_dlast(struct sname *list) { \
   if (!list || list->last == NULL) { \
-    return NULL; \
+    return 0; \
   } \
   if (list->first == list->last) { \
     list->first = NULL; \
@@ -180,11 +170,11 @@ struct sname *sname##_dlast(struct sname *list) { \
   list->last = tmp->prev; \
   free(tmp); \
   --list->size; \
-  return list; \
+  return 1; \
 } \
-struct sname *sname##_dnode(struct sname *list, struct sname##_node *node) { \
+int sname##_dnode(struct sname *list, struct sname##_node *node) { \
   if (!node) { \
-    return NULL; \
+    return 0; \
   } \
   if (node == list->first) {  \
     return sname##_dfirst(list); \
@@ -197,19 +187,17 @@ struct sname *sname##_dnode(struct sname *list, struct sname##_node *node) { \
   next->prev = prev; \
   free(node); \
   --list->size; \
-  return list; \
+  return 1; \
 } \
 int sname##_del(struct sname *list, int idx) { \
   if (!list || idx < 0 || idx >= list->size) { \
-    return 1; \
-  } \
-  if (idx == 0) { \
-    sname##_dfirst(list); \
     return 0; \
   } \
+  if (idx == 0) { \
+    return sname##_dfirst(list); \
+  } \
   struct sname##_node *n = sname##_at(list, idx); \
-  sname##_dnode(list, n); \
-  return 0; \
+  return sname##_dnode(list, n); \
 } \
 int sname##_empty(struct sname *list) { \
   return list->first == NULL || list->last == NULL; \

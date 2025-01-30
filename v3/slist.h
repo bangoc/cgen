@@ -1,3 +1,5 @@
+/* (C) Nguyễn Bá Ngọc 2024-2025 */
+
 #ifndef SLIST_H_
 #define SLIST_H_
 
@@ -11,16 +13,16 @@ struct sname##_node *sname##_node(elem_t value); \
 struct sname *sname(); \
 struct sname *sname##_append(struct sname *list, elem_t value); \
 struct sname *sname##_prepend(struct sname *list, elem_t value); \
-struct sname *sname##_dfirst(struct sname *list); \
-int sname##_ins(struct sname *list, elem_t value, int idx); \
+int sname##_dfirst(struct sname *list); \
+struct sname *sname##_ins(struct sname *list, elem_t value, int idx); \
 struct sname##_node *sname##_at(struct sname *list, int idx); \
 int sname##_del(struct sname *list, int idx); \
 struct sname *sname##_push(struct sname *list, elem_t elem); \
 elem_t *sname##_top(struct sname *list); \
-struct sname *sname##_pop(struct sname *list); \
+int sname##_pop(struct sname *list); \
 struct sname *sname##_enq(struct sname *list, elem_t elem); \
 elem_t *sname##_peek(struct sname *list); \
-struct sname *sname##_deq(struct sname *list); \
+int sname##_deq(struct sname *list); \
 int sname##_empty(struct sname *list); \
 void sname##_free(struct sname *list);
 
@@ -54,36 +56,33 @@ void sname##_free(struct sname *list) { \
   free(list); \
 } \
 struct sname *sname##_append(struct sname *list, elem_t value) {\
-  struct sname##_node *node = sname##_node(value); \
-  if (!node) { \
-    return NULL; \
-  } \
+  struct sname##_node *nn = sname##_node(value); \
   if (list->first == NULL) { \
-    list->first = list->last = node; \
+    list->first = list->last = nn; \
   } else { \
-    list->last->next = node; \
-    list->last = node; \
+    list->last->next = nn; \
+    list->last = nn; \
   } \
   ++list->size; \
   return list; \
 } \
-int sname##_ins(struct sname *list, elem_t value, int idx) { \
+struct sname *sname##_ins(struct sname *list, elem_t value, int idx) { \
   if (!list || idx < 0 || idx > list->size) { \
-    return 1; \
+    return list; \
   } \
   if (idx == 0) { \
     sname##_prepend(list, value); \
-    return 0; \
+    return list; \
   } \
   if (idx == list->size) { \
     sname##_append(list, value); \
-    return 0; \
+    return list; \
   } \
   struct sname##_node *p = sname##_at(list, idx - 1), *n = p->next; \
   p->next = sname##_node(value); \
   p->next->next = n; \
   ++list->size; \
-  return 0; \
+  return list; \
 } \
 struct sname##_node *sname##_at(struct sname *list, int idx) { \
   if (!list || idx < 0 || idx >= list->size) { \
@@ -97,11 +96,10 @@ struct sname##_node *sname##_at(struct sname *list, int idx) { \
 } \
 int sname##_del(struct sname *list, int idx) { \
   if (!list || idx < 0 || idx >= list->size) { \
-    return 1; \
+    return 0; \
   } \
   if (idx == 0) { \
-    sname##_dfirst(list); \
-    return 0; \
+    return sname##_dfirst(list); \
   } \
   struct sname##_node *p = sname##_at(list, idx - 1), *n = p->next; \
   p->next = n->next; \
@@ -110,25 +108,22 @@ int sname##_del(struct sname *list, int idx) { \
   } \
   free(n); \
   --list->size; \
-  return 0; \
+  return 1; \
 } \
 struct sname *sname##_prepend(struct sname *list, elem_t value) {\
-  struct sname##_node *node = sname##_node(value); \
-  if (!node) { \
-    return NULL; \
-  } \
+  struct sname##_node *nn = sname##_node(value); \
   if (list->first == NULL) { \
-    list->first = list->last = node; \
+    list->first = list->last = nn; \
   } else { \
-    node->next = list->first; \
-    list->first = node; \
+    nn->next = list->first; \
+    list->first = nn; \
   } \
   ++list->size; \
   return list; \
 } \
-struct sname *sname##_dfirst(struct sname *list) { \
+int sname##_dfirst(struct sname *list) { \
   if (!list || sname##_empty(list)) { \
-    return NULL; \
+    return 0; \
   } \
   if (list->first == list->last) { \
     list->last = NULL; \
@@ -137,7 +132,7 @@ struct sname *sname##_dfirst(struct sname *list) { \
   list->first = tmp->next; \
   free(tmp); \
   --list->size; \
-  return list; \
+  return 1; \
 } \
 struct sname *sname##_push(struct sname *list, elem_t elem) { \
   return sname##_prepend(list, elem); \
@@ -145,7 +140,7 @@ struct sname *sname##_push(struct sname *list, elem_t elem) { \
 elem_t *sname##_top(struct sname *list) { \
   return &list->first->value; \
 } \
-struct sname *sname##_pop(struct sname *list) {\
+int sname##_pop(struct sname *list) {\
   return sname##_dfirst(list); \
 } \
 struct sname *sname##_enq(struct sname *list, elem_t elem) { \
@@ -154,7 +149,7 @@ struct sname *sname##_enq(struct sname *list, elem_t elem) { \
 elem_t *sname##_peek(struct sname *list) { \
   return &list->first->value; \
 } \
-struct sname *sname##_deq(struct sname *list) { \
+int sname##_deq(struct sname *list) { \
   return sname##_dfirst(list); \
 } \
 int sname##_empty(struct sname *list) { \

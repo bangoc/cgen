@@ -1,4 +1,4 @@
-/* (C) Nguyễn Bá Ngọc 2023-2024 */
+/* (C) Nguyễn Bá Ngọc 2023-2025 */
 
 #ifndef TMAP_H_
 #define TMAP_H_
@@ -29,7 +29,7 @@ struct tname *tname(ifnt cmp, vfnt fk, vfnt fv); \
 void tname##_free(struct tname *tm); \
 struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value); \
 struct tname##_node *tname##_get(struct tname *tm, key_t key); \
-void tname##_rem(struct tname *tm, key_t key); \
+int tname##_rem(struct tname *tm, key_t key); \
 TNAV_DECL(tname)
 
 #define TMAP_FNODE(tm, n) \
@@ -531,13 +531,14 @@ struct tname##_node *tname##_get(struct tname *tm, key_t key) { \
   } \
   return x; \
 } \
-void tname##_rem(struct tname *tm, key_t key) { \
+int tname##_rem(struct tname *tm, key_t key) { \
   struct tname##_node *n = tname##_get(tm, key); \
   if (!n) { \
-    return; \
+    return 0; \
   } \
   tname##_detach_node(tm, n);\
   TMAP_FNODE(tm, n) \
+  return 1; \
 } \
 TNAV_IMPL(tname)
 

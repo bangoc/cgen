@@ -1,7 +1,7 @@
+/* (C) Nguyễn Bá Ngọc 2024 */
+
 #ifndef BST_H_
 #define BST_H_
-
-/* (C) Nguyễn Bá Ngọc 2024 */
 
 const static char k_bst_version[] = "3.0.0";
 
@@ -28,7 +28,7 @@ struct bst##_node { \
 struct bst { \
   struct bst##_node *root; \
   int (*cmp)(const char *, const char *); \
-  long size; \
+  int size; \
 }; \
 \
 struct bst##_node *bst##_node(const char *key, value_t value) { \
@@ -114,6 +114,7 @@ int bst##_rem(struct bst *t, const char *key) { \
     */ \
     bst##_change(t, n, NULL); \
     free(n); \
+    --t->size; \
     return 1; \
   } \
   struct bst##_node *r = n->right, *l = n->left; \
@@ -125,6 +126,7 @@ int bst##_rem(struct bst *t, const char *key) { \
     */ \
     bst##_change(t, n, r); \
     free(n); \
+    --t->size; \
     return 1; \
   } \
   if (r == NULL) { \
@@ -135,6 +137,7 @@ int bst##_rem(struct bst *t, const char *key) { \
     */ \
     bst##_change(t, n, l); \
     free(n); \
+    --t->size; \
     return 1; \
   } \
   if (r->left == NULL) { \
@@ -149,6 +152,7 @@ int bst##_rem(struct bst *t, const char *key) { \
     n->left->top = r; \
     bst##_change(t, n, r); \
     free(n); \
+    --t->size; \
     return 1; \
   } \
   /* TH4:
@@ -175,6 +179,7 @@ int bst##_rem(struct bst *t, const char *key) { \
   r->top = nn; \
   bst##_change(t, n, nn); \
   free(n); \
+  --t->size; \
   return 1; \
 } \
 \
