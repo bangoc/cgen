@@ -61,5 +61,5 @@ int main() {
     key = n->key;
   }
   printf("Valid tree!\n");
-  bst_del(t);
+  bst_free(t);
 }

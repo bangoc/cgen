@@ -18,7 +18,7 @@ const static char k_bst_version[] = "3.0.0";
   struct bst##_node *bst##_next(struct bst##_node *n); \
   struct bst##_node *bst##_search(struct bst *t, const char *key); \
   int bst##_rem(struct bst *t, const char *key); \
-  void bst##_del(struct bst *t);
+  void bst##_free(struct bst *t);
 
 #define BST_IMPL(bst, key_size, value_t) \
 struct bst##_node { \
@@ -205,19 +205,19 @@ int bst##_rem(struct bst *t, const char *key) { \
   return 1; \
 } \
 \
-static void bst##_del_recursive(struct bst##_node *n) { \
+static void bst##_free_lrn(struct bst##_node *n) { \
   if (n->left) { \
-    bst##_del_recursive(n->left); \
+    bst##_free_lrn(n->left); \
   } \
   if (n->right) { \
-    bst##_del_recursive(n->right); \
+    bst##_free_lrn(n->right); \
   } \
   free(n); \
 } \
 \
-void bst##_del(struct bst *t) { \
+void bst##_free(struct bst *t) { \
   if (t->root) { \
-    bst##_del_recursive(t->root); \
+    bst##_free_lrn(t->root); \
   } \
   free(t); \
 }
