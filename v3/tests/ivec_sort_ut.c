@@ -27,5 +27,5 @@ int main() {
   for (int i = 0; i < v->size; ++i) {
     printf("%d\n", v->elems[i]);
   }
-  ivec_del(v);
+  ivec_free(v);
 }

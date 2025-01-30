@@ -33,5 +33,5 @@ int main() {
     ivec_rem(v, i);
   }
   ivec_print(v);
-  ivec_del(v);
+  ivec_free(v);
 }

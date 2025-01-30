@@ -23,5 +23,5 @@ int main() {
   slist_dfirst(lst);
   slist_dfirst(lst);
   print_lst(lst);
-  slist_del(lst);
+  slist_free(lst);
 }

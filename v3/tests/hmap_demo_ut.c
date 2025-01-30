@@ -36,5 +36,5 @@ int main() {
   for (struct sihmap_node *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
     free(n->key);
   }
-  sihmap_del(hm);
+  sihmap_free(hm);
 }

@@ -13,5 +13,5 @@ int main() {
   for (int i = 0; i < 5; ++i) {
     printf("%d ", v->elems[i]);
   }
-  ivec_del(v);
+  ivec_free(v);
 }

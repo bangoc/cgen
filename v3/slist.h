@@ -8,7 +8,7 @@ struct sname##_node; \
 struct sname; \
 struct sname##_node *sname##_node(elem_t value); \
 struct sname *sname(); \
-void sname##_del(struct sname *list); \
+void sname##_free(struct sname *list); \
 struct sname *sname##_append(struct sname *list, elem_t value); \
 struct sname *sname##_prepend(struct sname *list, elem_t value); \
 struct sname *sname##_dfirst(struct sname *list); \
@@ -43,7 +43,7 @@ struct sname *sname() { \
   tmp->size = 0; \
   return tmp; \
 } \
-void sname##_del(struct sname *list) { \
+void sname##_free(struct sname *list) { \
   while (!sname##_empty(list)) { \
     sname##_dfirst(list); \
   } \

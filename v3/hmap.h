@@ -61,7 +61,7 @@ struct hname *hname(int cap, unsigned (*ha)(), int (*eq)()); \
 struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v); \
 value_t *hname##_get(struct hname *hm, key_t k); \
 struct hname##_node *hname##_rem(struct hname *hm, key_t k); \
-void hname##_del(struct hname *hm);
+void hname##_free(struct hname *hm);
 
 #define HMAP_IMPL(hname, key_t, value_t) \
 struct hname##_node { \
@@ -248,7 +248,7 @@ struct hname##_node *hname##_rem(struct hname *hm, key_t key) { \
   } \
   return hm->nodes + idx; \
 } \
-void hname##_del(struct hname *hm) { \
+void hname##_free(struct hname *hm) { \
   free(hm->nodes); \
   free(hm); \
 } \
