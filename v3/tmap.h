@@ -7,9 +7,6 @@
 
 #include <stddef.h>
 
-typedef int(*ifnt)();
-typedef void (*vfnt)();
-
 enum tmap_node_colors {
   RED = 0,
   BLACK = 1
@@ -25,7 +22,8 @@ enum tmap_node_colors {
 #define TMAP_DECL(tname, key_t, value_t) \
 struct tname##_node; \
 struct tname; \
-struct tname *tname(ifnt cmp, vfnt fk, vfnt fv); \
+struct tname *tname(int (*cmp)(const key_t key1, const key_t key2), \
+                    void (*fk)(), void (*fv)()); \
 void tname##_free(struct tname *tm); \
 struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value); \
 struct tname##_node *tname##_get(struct tname *tm, key_t key); \
@@ -54,8 +52,9 @@ struct tname##_node { \
 }; \
 struct tname { \
   struct tname##_node *root; \
-  ifnt cmp; \
-  vfnt fk, fv; \
+  int (*cmp)(const key_t key1, const key_t key2); \
+  void (*fk)(); \
+  void (*fv)(); \
   long size; \
 }; \
 static inline void tname##_change(struct tname *tm, struct tname##_node *old_node, \
@@ -371,7 +370,8 @@ struct tname##_node *tname##_node(key_t key, value_t value) { \
   nn->left = nn->right = nn->top = NULL; \
   return nn; \
 } \
-struct tname *tname(ifnt cmp, vfnt fk, vfnt fv) { \
+struct tname *tname(int (*cmp)(const key_t key1, const key_t key2), \
+                    void (*fk)(), void (*fv)()) { \
   if (!cmp) { \
     return NULL; \
   } \
@@ -491,7 +491,7 @@ struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value) { \
   struct tname##_node *top = NULL, *x = tm->root, **loc = &tm->root; \
   int rl = 0; \
   while (x) { \
-    rl = tm->cmp(&key, &x->key); \
+    rl = tm->cmp(key, x->key); \
     if (rl == 0) { \
       return x; \
     } \
@@ -520,7 +520,7 @@ struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value) { \
 struct tname##_node *tname##_get(struct tname *tm, key_t key) { \
   struct tname##_node *x = tm->root; \
   while (x) { \
-    int rl = tm->cmp(&key, &x->key); \
+    int rl = tm->cmp(key, x->key); \
     if (rl == 0) { \
       break; \
     } \

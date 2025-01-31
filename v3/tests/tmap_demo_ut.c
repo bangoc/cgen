@@ -22,7 +22,7 @@ char *gens() {
 
 int main() {
   srand(time(NULL));
-  struct simap *si = simap(strcmp, NULL, NULL);
+  struct simap *si = simap(strcmp, free, NULL);
   for (int i = 0; i < 100000; ++i) {
     char *key = strdup(gens());
     struct simap_node *n = simap_put(si, key, rand());
@@ -31,11 +31,5 @@ int main() {
       free(key);
     }
   }
-  // for (struct simap_node *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
-  //   printf("%s: %d\n", n->key, *sihmap_get(hm, n->key));
-  // }
-  // for (struct sihmap_node *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
-  //   free(n->key);
-  // }
   simap_free(si);
 }

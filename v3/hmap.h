@@ -58,10 +58,11 @@ const int prime_mod [] =
 #define HMAP_DECL(pre, key_t, value_t) \
 struct hname##_node; \
 struct hname; \
-struct hname *hname(int cap, unsigned (*ha)(), int (*eq)()); \
+struct hname *hname(int cap, unsigned (*ha)(const key_t), \
+                    int (*cmp)(const key_t, const key_t)); \
 struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v); \
-value_t *hname##_get(struct hname *hm, key_t k); \
-int hname##_rem(struct hname *hm, key_t k); \
+value_t *hname##_get(struct hname *hm, const key_t k); \
+int hname##_rem(struct hname *hm, const key_t k); \
 void hname##_free(struct hname *hm);
 
 #define HMAP_IMPL(hname, key_t, value_t) \
@@ -79,8 +80,8 @@ struct hname { \
   int size; \
   int cap; \
   int used; \
-  unsigned (*ha)(key_t); \
-  int (*cmp)(key_t, key_t); \
+  unsigned (*ha)(const key_t); \
+  int (*cmp)(const key_t, const key_t); \
   void (*fk)(); \
   void (*fv)(); \
 }; \
@@ -182,7 +183,7 @@ static struct hname##_node *hname##_rem_node(struct hname *hm, int idx) { \
   hm->size--; \
   return n; \
 } \
-static inline int hname##_lookup(struct hname *hm, key_t key, \
+static inline int hname##_lookup(struct hname *hm, const key_t key, \
       unsigned *hash_return) { \
   unsigned lookup_hash = hm->ha(key); \
   if (hash_return) { \
@@ -210,12 +211,15 @@ static inline int hname##_lookup(struct hname *hm, key_t key, \
   } \
   return idx; \
 } \
-struct hname *hname(int shift, unsigned (*ha)(), int (*cmp)()) { \
+struct hname *hname(int shift, unsigned (*ha)(const key_t), \
+                    int (*cmp)(const key_t, const key_t)) { \
   struct hname *hm = malloc(sizeof(struct hname)); \
   hm->size = 0; \
   hm->used = 0; \
   hm->ha = ha; \
   hm->cmp = cmp; \
+  hm->fk = 0; \
+  hm->fv = 0; \
   hname##_setup(hm, shift); \
   return hm; \
 } \
@@ -238,7 +242,7 @@ struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v) { \
   } \
   return NULL; \
 } \
-value_t *hname##_get(struct hname *hm, key_t k) { \
+value_t *hname##_get(struct hname *hm, const key_t k) { \
   int idx = hname##_lookup(hm, k, NULL); \
   struct hname##_node *n = hm->nodes + idx; \
   if (n->state == USING) { \
@@ -246,7 +250,7 @@ value_t *hname##_get(struct hname *hm, key_t k) { \
   } \
   return NULL; \
 } \
-int hname##_rem(struct hname *hm, key_t key) { \
+int hname##_rem(struct hname *hm, const key_t key) { \
   int idx = hname##_lookup(hm, key, NULL); \
   if (hm->nodes[idx].state != USING) { \
     return 0; \
