@@ -22,7 +22,8 @@ char *gens() {
 
 int main() {
   srand(time(NULL));
-  struct simap *si = simap(strcmp, free, NULL);
+  struct simap *si = simap(strcmp);
+  si->fk = free;
   for (int i = 0; i < 100000; ++i) {
     char *key = strdup(gens());
     struct simap_node *n = simap_put(si, key, rand());

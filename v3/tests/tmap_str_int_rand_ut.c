@@ -69,7 +69,12 @@ static int rb_is_valid(struct tmap *t) {
 }
 
 int main(int argc, char *argv[]) {
-  struct tmap *tm = tmap(strcmp, free, NULL);
+  if (argc != 2) {
+    printf("Usage: ./prog 10000\n");
+    return 1;
+  }
+  struct tmap *tm = tmap(strcmp);
+  tm->fk = free;
   int n;
   sscanf(argv[1], "%d", &n);
   srand(time(NULL));
