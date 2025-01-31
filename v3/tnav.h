@@ -19,7 +19,8 @@ struct tname##_node *tname##_first_lnr(struct tname *tm); \
 struct tname##_node *tname##_next_lnr(struct tname##_node *n); \
 struct tname##_node *tname##_next_rnl(struct tname##_node *n); \
 struct tname##_node *tname##_first_rnl(struct tname *tm); \
-void tname##_trav(struct tname##_node *n, void (*f)(struct tname##_node *n, void *u), \
+void tname##_trav(struct tname *tm, void (*f)(struct tname##_node *n, void *u), void *u); \
+void tname##_walk(struct tname##_node *n, void (*f)(struct tname##_node *n, void *u), \
                      void *u, enum nav_dir first, enum nav_dir second, enum nav_dir third);
 
 #define DIR_SWITCH(traverse, key) \
@@ -40,11 +41,17 @@ void tname##_trav(struct tname##_node *n, void (*f)(struct tname##_node *n, void
   }
 
 #define TNAV_IMPL(tname) \
-void tname##_trav(struct tname##_node *n, void (*f)(struct tname##_node *n, void *u), \
+void tname##_walk(struct tname##_node *n, void (*f)(struct tname##_node *n, void *u), \
                      void *u, enum nav_dir first, enum nav_dir second, enum nav_dir third) { \
-  DIR_SWITCH(tname##_trav, first) \
-  DIR_SWITCH(tname##_trav, second) \
-  DIR_SWITCH(tname##_trav, third) \
+  DIR_SWITCH(tname##_walk, first) \
+  DIR_SWITCH(tname##_walk, second) \
+  DIR_SWITCH(tname##_walk, third) \
+} \
+void tname##_trav(struct tname *tm, void (*f)(struct tname##_node *n, void *u), void *u) { \
+  if (!tm) { \
+    return ; \
+  } \
+  tname##_walk(tm->root, f, u, LEFT, NODE, RIGHT); \
 } \
 struct tname##_node *tname##_left_most(struct tname##_node *n) { \
   while (n->left) { \

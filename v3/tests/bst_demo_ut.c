@@ -79,7 +79,7 @@ int main() {
     key = n->key;
   }
   printf("Valid tree!\n");
-  bst_trav(t->root, nprint, NULL, LEFT, NODE, RIGHT);
+  bst_trav(t, nprint, NULL);
   printf("\n");
   bst_free(t);
   printf("Test Ok!\n");
