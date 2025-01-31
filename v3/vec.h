@@ -10,6 +10,8 @@
 \
 struct vname; \
 struct vname *vname(int n); \
+struct vname *vname##_reserve(struct vname *v, int newcap); \
+struct vname *vname##_resize(struct vname *v, int newsize); \
 struct vname *vname##_append(struct vname *v, elem_t elem); \
 struct vname *vname##_ins(struct vname *v, int idx, elem_t elem); \
 int vname##_del(struct vname *v, int idx); \
