@@ -11,7 +11,7 @@
 struct vname; \
 struct vname *vname(int n); \
 struct vname *vname##_append(struct vname *v, elem_t elem); \
-struct vname *vname##_ins(struct vname *v, elem_t elem, int idx); \
+struct vname *vname##_ins(struct vname *v, int idx, elem_t elem); \
 int vname##_del(struct vname *v, int idx); \
 elem_t *vname##_at(struct vname *v, int idx); \
 void vname##_free(struct vname *v);
@@ -55,7 +55,7 @@ struct vname *vname##_append(struct vname *v, elem_t value) { \
   ++v->size; \
   return v; \
 } \
-struct vname *vname##_ins(struct vname *v, elem_t elem, int idx) { \
+struct vname *vname##_ins(struct vname *v, int idx, elem_t elem) { \
   if (idx < 0 || idx > v->size) { \
     return v; \
   } \

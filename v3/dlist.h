@@ -13,9 +13,9 @@ struct sname##_node *sname##_node(elem_t value); \
 struct sname *sname(); \
 struct sname *sname##_append(struct sname *list, elem_t value); \
 struct sname *sname##_prepend(struct sname *list, elem_t value); \
-struct sname *sname##_ins(struct sname *list, elem_t value, int idx); \
-struct sname *sname##_insa(struct sname *list, elem_t value, struct sname##_node *node); \
-struct sname *sname##_insb(struct sname *list, elem_t value, struct sname##_node *node); \
+struct sname *sname##_ins(struct sname *list, int idx, elem_t value); \
+struct sname *sname##_insa(struct sname *list, struct sname##_node *pos, elem_t value); \
+struct sname *sname##_insb(struct sname *list, struct sname##_node *pos, elem_t value); \
 struct sname##_node *sname##_at(struct sname *list, int idx); \
 int sname##_dfirst(struct sname *list); \
 int sname##_dlast(struct sname *list); \
@@ -82,7 +82,7 @@ struct sname *sname##_prepend(struct sname *list, elem_t value) {\
   ++list->size; \
   return list; \
 } \
-struct sname *sname##_ins(struct sname *list, elem_t value, int idx) { \
+struct sname *sname##_ins(struct sname *list, int idx, elem_t value) { \
   if (!list || idx < 0 || idx > list->size) { \
     return list; \
   } \
@@ -100,7 +100,7 @@ struct sname *sname##_ins(struct sname *list, elem_t value, int idx) { \
   ++list->size; \
   return list; \
 } \
-struct sname *sname##_insa(struct sname *list, elem_t value, struct sname##_node *pos) { \
+struct sname *sname##_insa(struct sname *list, struct sname##_node *pos, elem_t value) { \
   if (!list) { \
     return list; \
   } \
@@ -118,7 +118,7 @@ struct sname *sname##_insa(struct sname *list, elem_t value, struct sname##_node
   ++list->size; \
   return list; \
 } \
-struct sname *sname##_insb(struct sname *list, elem_t value, struct sname##_node *pos) { \
+struct sname *sname##_insb(struct sname *list, struct sname##_node *pos, elem_t value) { \
   if (!list) { \
     return list; \
   } \

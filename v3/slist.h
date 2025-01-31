@@ -14,7 +14,8 @@ struct sname *sname(); \
 struct sname *sname##_append(struct sname *list, elem_t value); \
 struct sname *sname##_prepend(struct sname *list, elem_t value); \
 int sname##_dfirst(struct sname *list); \
-struct sname *sname##_ins(struct sname *list, elem_t value, int idx); \
+struct sname *sname##_ins(struct sname *list, int idx, elem_t value); \
+struct sname *sname##_insa(struct sname *list, struct sname##_node *pos, elem_t value); \
 struct sname##_node *sname##_at(struct sname *list, int idx); \
 int sname##_del(struct sname *list, int idx); \
 struct sname *sname##_push(struct sname *list, elem_t elem); \
@@ -66,7 +67,7 @@ struct sname *sname##_append(struct sname *list, elem_t value) {\
   ++list->size; \
   return list; \
 } \
-struct sname *sname##_ins(struct sname *list, elem_t value, int idx) { \
+struct sname *sname##_ins(struct sname *list, int idx, elem_t value) { \
   if (!list || idx < 0 || idx > list->size) { \
     return list; \
   } \
@@ -81,6 +82,22 @@ struct sname *sname##_ins(struct sname *list, elem_t value, int idx) { \
   struct sname##_node *p = sname##_at(list, idx - 1), *n = p->next; \
   p->next = sname##_node(value); \
   p->next->next = n; \
+  ++list->size; \
+  return list; \
+} \
+struct sname *sname##_insa(struct sname *list, struct sname##_node *pos, elem_t value) { \
+  if (!list) { \
+    return list; \
+  } \
+  if (pos == list->last) { \
+    return sname##_append(list, value); \
+  } \
+  if (!pos) { \
+    return list; \
+  } \
+  struct sname##_node *nn = sname##_node(value); \
+  nn->next = pos->next; \
+  pos->next = nn; \
   ++list->size; \
   return list; \
 } \

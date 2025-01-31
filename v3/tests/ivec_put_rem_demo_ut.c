@@ -16,18 +16,18 @@ void ivec_print(struct ivec *v) {
 int main() {
   srand(time(NULL));
   struct ivec *v = ivec(0);
-  ivec_ins(v, 1, 0);
-  ivec_ins(v, 2, 0);
-  ivec_ins(v, 3, 1);
-  ivec_ins(v, 5, 3);
-  ivec_ins(v, 6, 3);
+  ivec_ins(v, 0, 1);
+  ivec_ins(v, 0, 2);
+  ivec_ins(v, 1, 3);
+  ivec_ins(v, 3, 5);
+  ivec_ins(v, 3, 6);
   ivec_append(v, 10);
   ivec_print(v);
   ivec_del(v, 2);
   ivec_del(v, 3);
   ivec_print(v);
   for (int i = 0; i <= 100; ++i) {
-    ivec_ins(v, rand(), i);
+    ivec_ins(v, i, rand());
   }
   for (int i = 100; i >= 0; --i) {
     ivec_del(v, i);
