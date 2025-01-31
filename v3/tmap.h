@@ -23,6 +23,8 @@ enum tmap_node_colors {
 struct tname##_node; \
 struct tname; \
 struct tname *tname(int (*cmp)(const key_t, const key_t)); \
+struct tname *tname##_fk(struct tname *tm, void (*fk)()); \
+struct tname *tname##_fv(struct tname *tm, void (*fv)()); \
 void tname##_free(struct tname *tm); \
 struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value); \
 struct tname##_node *tname##_get(struct tname *tm, key_t key); \
@@ -379,6 +381,20 @@ struct tname *tname(int (*cmp)(const key_t, const key_t)) { \
   tm->fk = NULL; \
   tm->fv = NULL; \
   tm->size = 0; \
+  return tm; \
+} \
+struct tname *tname##_fk(struct tname *tm, void (*fk)()) { \
+  if (!tm) { \
+    return tm; \
+  } \
+  tm->fk = fk; \
+  return tm; \
+} \
+struct tname *tname##_fv(struct tname *tm, void (*fv)()) { \
+  if (!tm) { \
+    return tm; \
+  } \
+  tm->fv = fv; \
   return tm; \
 } \
 void tname##_free(struct tname *tm) { \

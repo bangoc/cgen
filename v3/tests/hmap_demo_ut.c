@@ -23,6 +23,7 @@ char *gens() {
 int main() {
   srand(time(NULL));
   struct sihmap *hm = sihmap(0, hash_s, strcmp);
+  sihmap_fk(hm, free);
   for (int i = 0; i < 100000; ++i) {
     char *key = strdup(gens());
     struct sihmap_node *n = sihmap_put(hm, key, rand());
@@ -33,9 +34,6 @@ int main() {
   }
   for (struct sihmap_node *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
     printf("%s: %d\n", n->key, *sihmap_get(hm, n->key));
-  }
-  for (struct sihmap_node *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
-    free(n->key);
   }
   sihmap_free(hm);
 }

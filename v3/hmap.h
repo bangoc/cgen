@@ -60,6 +60,8 @@ struct hname##_node; \
 struct hname; \
 struct hname *hname(int cap, unsigned (*ha)(const key_t), \
                     int (*cmp)(const key_t, const key_t)); \
+struct hname *hname##_fk(struct hname* hm, void (*fk)()); \
+struct hname *hname##_fv(struct hname* hm, void (*fv)()); \
 struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v); \
 value_t *hname##_get(struct hname *hm, const key_t k); \
 int hname##_rem(struct hname *hm, const key_t k); \
@@ -221,6 +223,20 @@ struct hname *hname(int shift, unsigned (*ha)(const key_t), \
   hm->fk = 0; \
   hm->fv = 0; \
   hname##_setup(hm, shift); \
+  return hm; \
+} \
+struct hname *hname##_fk(struct hname* hm, void (*fk)()) { \
+  if (!hm) { \
+    return hm; \
+  } \
+  hm->fk = fk; \
+  return hm; \
+} \
+struct hname *hname##_fv(struct hname* hm, void (*fv)()) { \
+  if (!hm) { \
+    return hm; \
+  } \
+  hm->fv = fv; \
   return hm; \
 } \
 struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v) { \

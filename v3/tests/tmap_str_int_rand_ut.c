@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   struct tmap *tm = tmap(strcmp);
-  tm->fk = free;
+  tmap_fk(tm, free);
   int n;
   sscanf(argv[1], "%d", &n);
   srand(time(NULL));
