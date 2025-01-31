@@ -2,6 +2,7 @@
 #ifndef HMAP_H_
 #define HMAP_H_
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -65,6 +66,9 @@ struct hname *hname##_fv(struct hname* hm, void (*fv)()); \
 struct hname##_node *hname##_put(struct hname *hm, key_t k, value_t v); \
 value_t *hname##_get(struct hname *hm, const key_t k); \
 int hname##_rem(struct hname *hm, const key_t k); \
+struct hname##_node *hname##_first(struct hname *hm); \
+struct hname##_node *hname##_next(struct hname *hm, struct hname##_node *n); \
+void hname##_trav(struct hname *hm, void (*f)(struct hname##_node *n, void *u), void *u); \
 void hname##_free(struct hname *hm);
 
 #define HMAP_IMPL(hname, key_t, value_t) \
@@ -106,7 +110,8 @@ static void hname##_set_shift_from_cap(struct hname *hm, int cap) { \
   } \
   hname##_set_shift(hm, shift); \
 } \
-static void hname##_setup(struct hname *hm, int shift) { \
+static void hname##_setup(struct hname *hm, int cap) { \
+  int shift = closest_shift(cap); \
   if (shift < HASH_MIN_SHIFT) { \
     shift = HASH_MIN_SHIFT; \
   } \
@@ -156,7 +161,8 @@ static void hname##_realloc(struct hname *hm) { \
     hname##_realloc_arrays(hm); \
     memset(hm->nodes + ocap, 0, (hm->cap - ocap) * sizeof(struct hname##_node)); \
   } \
-  unsigned char *reallocated_flags = calloc((hm->cap + 7) / 8, sizeof(unsigned char)); \
+  int maxcap = ocap > hm->cap? ocap: hm->cap; \
+  unsigned char *reallocated_flags = calloc((maxcap + 7) / 8, sizeof(unsigned char)); \
   relocate_map(hm, ocap, reallocated_flags); \
   free(reallocated_flags); \
   if (hm->cap < ocap) { \
@@ -213,7 +219,7 @@ static inline int hname##_lookup(struct hname *hm, const key_t key, \
   } \
   return idx; \
 } \
-struct hname *hname(int shift, unsigned (*ha)(const key_t), \
+struct hname *hname(int cap, unsigned (*ha)(const key_t), \
                     int (*cmp)(const key_t, const key_t)) { \
   struct hname *hm = malloc(sizeof(struct hname)); \
   hm->size = 0; \
@@ -222,7 +228,7 @@ struct hname *hname(int shift, unsigned (*ha)(const key_t), \
   hm->cmp = cmp; \
   hm->fk = 0; \
   hm->fv = 0; \
-  hname##_setup(hm, shift); \
+  hname##_setup(hm, cap); \
   return hm; \
 } \
 struct hname *hname##_fk(struct hname* hm, void (*fk)()) { \
@@ -291,7 +297,7 @@ void hname##_free(struct hname *hm) { \
   free(hm->nodes); \
   free(hm); \
 } \
-struct hname##_node *hname##_first(struct hname *hm) {\
+struct hname##_node *hname##_first(struct hname *hm) { \
   for (struct hname##_node *iter = hm->nodes; iter < hm->end; ++iter) { \
     if (iter->state == USING) { \
       return iter; \
@@ -308,7 +314,12 @@ struct hname##_node *hname##_next(struct hname *hm, struct hname##_node *n) { \
     ++n; \
   } \
   return NULL; \
-}
+} \
+void hname##_trav(struct hname *hm, void (*f)(struct hname##_node *n, void *u), void *u) { \
+  for (struct hname##_node *n = hname##_first(hm); n; n = hname##_next(hm, n)) { \
+      f(n, u); \
+  } \
+} \
 
 #define HMAP_DECL_IMPL(pre, key_t, value_t) \
 HMAP_DECL(pre, key_t, value_t) \
