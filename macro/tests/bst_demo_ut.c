@@ -1,5 +1,4 @@
 #include "bst.h"
-#include "tnav.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +6,6 @@
 #include <time.h>
 
 BST_DECL_IMPL(bst, 256, int)
-TNAV_DECL_IMPL(bst)
 
 const char letters[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 const int n = sizeof(letters) - 1;
@@ -80,6 +78,7 @@ int main() {
   }
   printf("Valid tree!\n");
   bst_trav(t, nprint, NULL);
+  bst_walk(t->root, nprint, NULL, RIGHT, LEFT, NODE);
   printf("\n");
   bst_free(t);
   printf("Test Ok!\n");

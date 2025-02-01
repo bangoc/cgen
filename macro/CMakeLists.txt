@@ -6,6 +6,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_C_STANDARD 17)
 
 add_subdirectory(tests)
+add_subdirectory(demo)
 include (CTest)
 add_test(NAME ivec_demo_ut COMMAND ivec_ut)
 add_test(NAME ivec_sort_ut COMMAND ivec_sort_ut)

@@ -11,7 +11,7 @@ int main() {
   while (scanf("%s", cmd) == 1) {
     if (strcmp(cmd, "print") == 0) {
       printf("Traverse: \n");
-      for (struct bst_node *n = bst_first(t); n; n = bst_next(n)) {
+      for (struct bst_node *n = bst_first_lnr(t); n; n = bst_next_lnr(n)) {
         printf("%s: %d\n", n->key, n->value);
       }
       continue;
@@ -26,7 +26,7 @@ int main() {
         printf("Inserted %s\n", word);
       }
     } else if (strcmp(cmd, "freq") == 0) {
-      struct bst_node *n = bst_search(t, word);
+      struct bst_node *n = bst_get(t, word);
       printf("freq(%s) = %d\n", word, n? n->value: 0);
     } else if (strcmp(cmd, "rem") == 0) {
       if (bst_rem(t, word)) {
@@ -34,5 +34,5 @@ int main() {
       }
     }
   }
-  bst_del(t);
+  bst_free(t);
 }

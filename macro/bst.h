@@ -3,6 +3,8 @@
 #ifndef BST_H_
 #define BST_H_
 
+#include "tnav.h"
+
 const static char k_bst_version[] = "3.0.0";
 
 #include <stdlib.h>
@@ -13,10 +15,12 @@ const static char k_bst_version[] = "3.0.0";
   struct bst; \
   struct bst##_node *bst##_node(const char *key, value_t value); \
   struct bst *bst(); \
+  struct bst *bst_cmp(struct bst* t, int (*cmp)(const char *key1, const char *key2)); \
   struct bst##_node *bst##_put(struct bst *t, const char *key, value_t value); \
   struct bst##_node *bst##_get(struct bst *t, const char *key); \
   int bst##_rem(struct bst *t, const char *key); \
-  void bst##_free(struct bst *t);
+  void bst##_free(struct bst *t); \
+  TNAV_DECL(bst)
 
 #define BST_IMPL(bst, key_size, value_t) \
 struct bst##_node { \
@@ -47,6 +51,12 @@ struct bst *bst() { \
   return t; \
 } \
 \
+struct bst *bst_cmp(struct bst* t, int (*cmp)(const char *key1, const char *key2)) { \
+  if (t) { \
+    t->cmp = cmp; \
+  } \
+  return t; \
+} \
 struct bst##_node *bst##_put(struct bst *t, const char *key, value_t value) { \
   struct bst##_node *top = NULL, *n = t->root; \
   int order; \
@@ -198,10 +208,11 @@ void bst##_free(struct bst *t) { \
     bst##_free_lrn(t->root); \
   } \
   free(t); \
-}
+} \
+TNAV_IMPL(bst)
 
-#define BST_DECL_IMPL(struct_name, key_size, value_t) \
-  BST_DECL(struct_name, value_t) \
-  BST_IMPL(struct_name, key_size, value_t)
+#define BST_DECL_IMPL(tname, key_size, value_t) \
+  BST_DECL(tname, value_t) \
+  BST_IMPL(tname, key_size, value_t)
 
 #endif  // BST_H_

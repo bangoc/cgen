@@ -1,0 +1,1 @@
+add_executable(bst_word_demo bst_word_demo.c)
