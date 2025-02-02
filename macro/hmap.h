@@ -65,7 +65,7 @@ struct hname *hname##_fk(struct hname* hm, void (*fk)()); \
 struct hname *hname##_fv(struct hname* hm, void (*fv)()); \
 struct hname *hname##_ak(struct hname *hm, void (*ak)(key_t *des, const key_t src)); \
 struct hname *hname##_av(struct hname *hm, void (*av)(value_t *des, const value_t src)); \
-void hname##_realloc(struct hname *hm, int ncap); \
+struct hname *hname##_realloc(struct hname *hm, int ncap); \
 struct hname##_elem *hname##_put(struct hname *hm, key_t k, value_t v); \
 struct hname##_elem *hname##_get(struct hname *hm, const key_t k); \
 int hname##_rem(struct hname *hm, const key_t k); \
@@ -159,9 +159,9 @@ static void relocate_map(struct hname *hm, unsigned ocap, \
     } \
   } \
 } \
-void hname##_realloc(struct hname *hm, int ncap) { \
-  if (ncap == hm->cap || ncap < hm->used) { \
-    return; \
+struct hname *hname##_realloc(struct hname *hm, int ncap) { \
+  if (ncap == hm->cap || ncap <= hm->size) { \
+    return hm; \
   } \
   int ocap = hm->cap; \
   hname##_set_shift_from_cap(hm, ncap); \
@@ -177,11 +177,12 @@ void hname##_realloc(struct hname *hm, int ncap) { \
     hname##_realloc_arrays(hm); \
   } \
   hm->used = hm->size; \
+  return hm; \
 } \
 static inline int hname##_maybe_realloc(struct hname *hm) { \
-  unsigned size = hm->size, cap = hm->cap; \
+  unsigned size = hm->size, used = hm->used, cap = hm->cap; \
   if (1.1 * size >= cap - 1 || \
-      (cap > 1024 && cap > 3 * size)) { \
+      (cap > 1024 && cap > 3 * size && used > 2 * size)) { \
     hname##_realloc(hm, hm->size * 1.333); \
     return 1; \
   } \
