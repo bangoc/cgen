@@ -1,1 +1,2 @@
 add_executable(bst_word_demo bst_word_demo.c)
+add_executable(tmap_word_demo tmap_word_demo.c)

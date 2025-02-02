@@ -6,6 +6,7 @@
 #include "tnav.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 
 enum tmap_node_colors {
   RED = 0,
@@ -56,7 +57,7 @@ struct tname { \
   int (*cmp)(const key_t key1, const key_t key2); \
   void (*fk)(); \
   void (*fv)(); \
-  long size; \
+  int size; \
 }; \
 static inline void tname##_change(struct tname *tm, struct tname##_node *old_node, \
         struct tname##_node *new_node) { \
