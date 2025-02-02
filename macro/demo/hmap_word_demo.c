@@ -6,8 +6,13 @@
 
 HMAP_DECL_IMPL(hmap, char *, int)
 
+void str_assign(char **des, const char *src) {
+  *des = strdup(src);
+}
+
 int main() {
-  struct hmap *hm = hmap(0, hash_s, strcmp);
+  struct hmap *hm = hmap(hash_s, strcmp);
+  hmap_ak(hm, str_assign);
   hmap_fk(hm, free);
   char cmd[32], word[32];
   while (scanf("%s", cmd) == 1) {
@@ -20,12 +25,10 @@ int main() {
     }
     scanf("%s", word);
     if (strcmp(cmd, "insert") == 0) {
-      char *s = strdup(word);
-      struct hmap_elem *e = hmap_put(hm, s, 1);
+      struct hmap_elem *e = hmap_put(hm, word, 1);
       if (e) {
         ++e->value;
         printf("freq(%s) updated = %d\n", word, e->value);
-        free(s);
       } else {
         printf("Inserted %s\n", word);
       }

@@ -22,7 +22,7 @@ char *gens() {
 
 int main() {
   srand(time(NULL));
-  struct sihmap *hm = sihmap(0, hash_s, strcmp);
+  struct sihmap *hm = sihmap(hash_s, strcmp);
   sihmap_fk(hm, free);
   for (int i = 0; i < 100000; ++i) {
     char *key = strdup(gens());

@@ -11,7 +11,7 @@ void elem_print(struct simap_elem *n, void *u) {
 }
 
 int main() {
-  struct simap *si = simap(10, hash_s, strcmp);
+  struct simap *si = simap(hash_s, strcmp);
   simap_put(si, "abc", 12);
   simap_put(si, "def", 35);
   simap_put(si, "ace", 28);

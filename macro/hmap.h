@@ -59,10 +59,13 @@ const int prime_mod [] =
 #define HMAP_DECL(hname, key_t, value_t) \
 struct hname##_elem; \
 struct hname; \
-struct hname *hname(int cap, unsigned (*ha)(const key_t), \
+struct hname *hname(unsigned (*ha)(const key_t), \
                     int (*cmp)(const key_t, const key_t)); \
 struct hname *hname##_fk(struct hname* hm, void (*fk)()); \
 struct hname *hname##_fv(struct hname* hm, void (*fv)()); \
+struct hname *hname##_ak(struct hname *hm, void (*ak)(key_t *des, const key_t src)); \
+struct hname *hname##_av(struct hname *hm, void (*av)(value_t *des, const value_t src)); \
+void hname##_realloc(struct hname *hm, int ncap); \
 struct hname##_elem *hname##_put(struct hname *hm, key_t k, value_t v); \
 struct hname##_elem *hname##_get(struct hname *hm, const key_t k); \
 int hname##_rem(struct hname *hm, const key_t k); \
@@ -90,6 +93,8 @@ struct hname { \
   int (*cmp)(const key_t, const key_t); \
   void (*fk)(); \
   void (*fv)(); \
+  void (*ak)(key_t *des, const key_t src); \
+  void (*av)(value_t *des, const value_t src); \
 }; \
 static int closest_shift(int n) { \
   int i = 0; \
@@ -154,9 +159,12 @@ static void relocate_map(struct hname *hm, unsigned ocap, \
     } \
   } \
 } \
-static void hname##_realloc(struct hname *hm) { \
+void hname##_realloc(struct hname *hm, int ncap) { \
+  if (ncap == hm->cap || ncap < hm->used) { \
+    return; \
+  } \
   int ocap = hm->cap; \
-  hname##_set_shift_from_cap(hm, hm->size * 1.333); \
+  hname##_set_shift_from_cap(hm, ncap); \
   if (hm->cap > ocap) { \
     hname##_realloc_arrays(hm); \
     memset(hm->elems + ocap, 0, (hm->cap - ocap) * sizeof(struct hname##_elem)); \
@@ -171,10 +179,10 @@ static void hname##_realloc(struct hname *hm) { \
   hm->used = hm->size; \
 } \
 static inline int hname##_maybe_realloc(struct hname *hm) { \
-  unsigned used = hm->used, cap = hm->cap; \
-  if ((cap > hm->size * 4 && cap > 1 << HASH_MIN_SHIFT) || \
-      (cap <= used + (used/16))) { \
-    hname##_realloc(hm); \
+  unsigned size = hm->size, cap = hm->cap; \
+  if (1.1 * size >= cap - 1 || \
+      (cap > 1024 && cap > 3 * size)) { \
+    hname##_realloc(hm, hm->size * 1.333); \
     return 1; \
   } \
   return 0; \
@@ -219,7 +227,7 @@ static inline int hname##_lookup(struct hname *hm, const key_t key, \
   } \
   return idx; \
 } \
-struct hname *hname(int cap, unsigned (*ha)(const key_t), \
+struct hname *hname(unsigned (*ha)(const key_t), \
                     int (*cmp)(const key_t, const key_t)) { \
   struct hname *hm = malloc(sizeof(struct hname)); \
   hm->size = 0; \
@@ -228,7 +236,9 @@ struct hname *hname(int cap, unsigned (*ha)(const key_t), \
   hm->cmp = cmp; \
   hm->fk = 0; \
   hm->fv = 0; \
-  hname##_setup(hm, cap); \
+  hm->ak = 0; \
+  hm->av = 0; \
+  hname##_setup(hm, 0); \
   return hm; \
 } \
 struct hname *hname##_fk(struct hname* hm, void (*fk)()) { \
@@ -245,6 +255,20 @@ struct hname *hname##_fv(struct hname* hm, void (*fv)()) { \
   hm->fv = fv; \
   return hm; \
 } \
+struct hname *hname##_ak(struct hname *hm, void (*ak)(key_t *des, const key_t src)) { \
+if (!hm) { \
+    return hm; \
+  } \
+  hm->ak = ak; \
+  return hm; \
+} \
+struct hname *hname##_av(struct hname *hm, void (*av)(value_t *des, const value_t src)) { \
+  if (!hm) { \
+    return hm; \
+  } \
+  hm->av = av; \
+  return hm; \
+} \
 struct hname##_elem *hname##_put(struct hname *hm, key_t k, value_t v) { \
   unsigned key_hash; \
   int idx = hname##_lookup(hm, k, &key_hash); \
@@ -253,8 +277,16 @@ struct hname##_elem *hname##_put(struct hname *hm, key_t k, value_t v) { \
     return n; \
   } \
   n->hash = key_hash; \
-  n->key = k; \
-  n->value = v; \
+  if (hm->ak) { \
+    hm->ak(&n->key, k); \
+  } else { \
+    n->key = k; \
+  } \
+  if (hm->av) { \
+    hm->av(&n->value, v); \
+  } else { \
+    n->value = v; \
+  } \
   ++hm->size; \
   int new_usage = n->state == UNUSED; \
   n->state = USING; \
