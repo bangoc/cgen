@@ -26,6 +26,8 @@ struct tname; \
 struct tname *tname(int (*cmp)(const key_t, const key_t)); \
 struct tname *tname##_fk(struct tname *tm, void (*fk)()); \
 struct tname *tname##_fv(struct tname *tm, void (*fv)()); \
+struct tname *tname##_ak(struct tname *tm, void (*ak)(key_t *des, const key_t src)); \
+struct tname *tname##_av(struct tname *tm, void (*av)(value_t *des, const value_t src)); \
 void tname##_free(struct tname *tm); \
 struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value); \
 struct tname##_node *tname##_get(struct tname *tm, key_t key); \
@@ -57,6 +59,8 @@ struct tname { \
   int (*cmp)(const key_t key1, const key_t key2); \
   void (*fk)(); \
   void (*fv)(); \
+  void (*ak)(key_t *des, const key_t src); \
+  void (*av)(value_t *des, const value_t src); \
   int size; \
 }; \
 static inline void tname##_change(struct tname *tm, struct tname##_node *old_node, \
@@ -364,10 +368,18 @@ static inline void tname##_detach_node_fixup(struct tname *tm, struct tname##_no
     } \
   } \
 }\
-struct tname##_node *tname##_node(key_t key, value_t value) { \
+struct tname##_node *tname##_node(struct tname *tm, key_t key, value_t value) { \
   struct tname##_node *nn = malloc(sizeof(struct tname##_node)); \
-  nn->key = key; \
-  nn->value = value; \
+  if (tm->ak) { \
+    tm->ak(&nn->key, key); \
+  } else { \
+    nn->key = key; \
+  } \
+  if (tm->av) { \
+    tm->av(&nn->value, value); \
+  } else { \
+    nn->value = value; \
+  } \
   PAINT_RED(nn); \
   nn->left = nn->right = nn->top = NULL; \
   return nn; \
@@ -381,6 +393,8 @@ struct tname *tname(int (*cmp)(const key_t, const key_t)) { \
   tm->cmp = cmp; \
   tm->fk = NULL; \
   tm->fv = NULL; \
+  tm->ak = NULL; \
+  tm->av = NULL; \
   tm->size = 0; \
   return tm; \
 } \
@@ -396,6 +410,20 @@ struct tname *tname##_fv(struct tname *tm, void (*fv)()) { \
     return tm; \
   } \
   tm->fv = fv; \
+  return tm; \
+} \
+struct tname *tname##_ak(struct tname *tm, void (*ak)(key_t *des, const key_t src)) { \
+  if (!tm) { \
+    return tm; \
+  } \
+  tm->ak = ak; \
+  return tm; \
+} \
+struct tname *tname##_av(struct tname *tm, void (*av)(value_t *des, const value_t src)) { \
+  if (!tm) { \
+    return tm; \
+  } \
+  tm->av = av; \
   return tm; \
 } \
 void tname##_free(struct tname *tm) { \
@@ -519,7 +547,7 @@ struct tname##_node *tname##_put(struct tname *tm, key_t key, value_t value) { \
       loc = &top->right; \
     } \
   } \
-  struct tname##_node *nn = tname##_node(key, value); \
+  struct tname##_node *nn = tname##_node(tm, key, value); \
   *loc = nn; \
   nn->top = top; \
   if (top == NULL) { \

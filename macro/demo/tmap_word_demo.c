@@ -6,8 +6,13 @@
 
 TMAP_DECL_IMPL(rbt, char *, int)
 
+void str_assign(char **des, const char *src) {
+  *des = strdup(src);
+}
+
 int main() {
   struct rbt *t = rbt(strcmp);
+  rbt_ak(t, str_assign);
   rbt_fk(t, free);
   char cmd[32], word[32];
   while (scanf("%s", cmd) == 1) {
@@ -20,12 +25,10 @@ int main() {
     }
     scanf("%s", word);
     if (strcmp(cmd, "insert") == 0) {
-      char *s = strdup(word);
-      struct rbt_node *n = rbt_put(t, s, 1);
+      struct rbt_node *n = rbt_put(t, word, 1);
       if (n) {
         ++n->value;
         printf("freq(%s) updated = %d\n", word, n->value);
-        free(s);
       } else {
         printf("Inserted %s\n", word);
       }
