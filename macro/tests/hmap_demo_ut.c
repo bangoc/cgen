@@ -26,14 +26,14 @@ int main() {
   sihmap_fk(hm, free);
   for (int i = 0; i < 100000; ++i) {
     char *key = strdup(gens());
-    struct sihmap_node *n = sihmap_put(hm, key, rand());
+    struct sihmap_elem *n = sihmap_put(hm, key, rand());
     if (n) {
       printf("Trùng khóa: %s\n", n->key);
       free(key);
     }
   }
-  for (struct sihmap_node *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
-    printf("%s: %d\n", n->key, *sihmap_get(hm, n->key));
+  for (struct sihmap_elem *n = sihmap_first(hm); n; n = sihmap_next(hm, n)) {
+    printf("%s: %d\n", n->key, sihmap_get(hm, n->key)->value);
   }
   sihmap_free(hm);
 }
