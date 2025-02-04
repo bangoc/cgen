@@ -29,10 +29,13 @@ static inline void *arr_realloc(void *a, int nmem, int size) {
   *((int *)(a) - 1)
 
 #define arr_reserve(a, cap) \
-  (a) = arr_realloc(a, cap, sizeof(a[0]))
+  ((a) = arr_realloc(a, cap, sizeof(a[0])))
 
 #define arr_for(a, i) \
   for (int i = 0; i < arr_cap(a); ++i)
+
+#define arr_rfor(a, i) \
+  for (int i = arr_cap(a) - 1; i >= 0; --i)
 
 void arr_free(void *a) {
   int *tmp = a - sizeof(int);

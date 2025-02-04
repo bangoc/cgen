@@ -1,3 +1,4 @@
 add_executable(bst_word_demo bst_word_demo.c)
 add_executable(tmap_word_demo tmap_word_demo.c)
 add_executable(hmap_word_demo hmap_word_demo.c)
+add_executable(arr_reverse_demo arr_reverse_demo.c)
