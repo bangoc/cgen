@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define VECT_DECL(vname, elem_t) \
+#define VEC_DECL(vname, elem_t) \
 \
 struct vname; \
 struct vname *vname(int n); \
@@ -18,7 +18,7 @@ int vname##_del(struct vname *v, int idx); \
 elem_t *vname##_at(struct vname *v, int idx); \
 void vname##_free(struct vname *v);
 
-#define VECT_IMPL(vname, elem_t) \
+#define VEC_IMPL(vname, elem_t) \
 struct vname { \
   int size; \
   int cap; \
@@ -102,8 +102,14 @@ void vname##_free(struct vname *v) { \
   free(v); \
 }
 
-#define VECT_DECL_IMPL(pre, elem_t) \
-VECT_DECL(pre, elem_t) \
-VECT_IMPL(pre, elem_t)
+#define VEC_DECL_IMPL(pre, elem_t) \
+VEC_DECL(pre, elem_t) \
+VEC_IMPL(pre, elem_t)
+
+#define vfor(v, i) \
+  for (int i = 0; i < v->size; ++i)
+
+#define vrfor(v, i) \
+  for (int i = v->size - 1; i >= 0; --i)
 
 #endif  // VEC_H_

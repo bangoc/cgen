@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-VECT_DECL_IMPL(ivec, int)
+VEC_DECL_IMPL(ivec, int)
 
 void ivec_print(struct ivec *v) {
   printf("sz: %d\ncap: %d\n", v->size, v->cap);

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-VECT_DECL_IMPL(ivec, int)
+VEC_DECL_IMPL(ivec, int)
 
 int icmp(const void *o1, const void *o2) {
   return *((const int *)o1) - *((const int *)o2);

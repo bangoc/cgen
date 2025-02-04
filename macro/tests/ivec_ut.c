@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-VECT_DECL_IMPL(ivec, int)
+VEC_DECL_IMPL(ivec, int)
 
 int main() {
   struct ivec *v = ivec(0);
